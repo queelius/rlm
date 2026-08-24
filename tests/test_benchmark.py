@@ -123,16 +123,30 @@ def test_oolong_v1_comparison_fixture_round_trips_completely() -> None:
     assert _normalized_elapsed(actual) == _fixture("comparison.json")
 
 
-def test_oolong_v1_checkpoint_fixture_round_trips_completely(tmp_path: Path) -> None:
+def test_oolong_v1_checkpoint_fixture_round_trips_completely(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     value = comparison()
     output = tmp_path / "checkpoint.json"
-    run_comparisons(
+    loaded: list[bool] = []
+    output.write_text((OOLONG_V1_FIXTURES / "checkpoint.json").read_text())
+    original_load = oolong._load_checkpoint
+
+    def load_checkpoint(path: Path, spec: oolong.BenchmarkRunSpec) -> dict[str, Any]:
+        loaded.append(True)
+        return original_load(path, spec)
+
+    monkeypatch.setattr(oolong, "_load_checkpoint", load_checkpoint)
+    calls: list[BenchmarkCondition] = []
+    results = run_comparisons(
         [value],
         targets=benchmark_targets("http://rlm", "http://direct"),
         output=output,
-        call=lambda target, request: successful_call(value),
+        call=lambda target, request: calls.append(target.condition) or successful_call(value),
     )
-    assert _normalized_elapsed(json.loads(output.read_text())) == _fixture("checkpoint.json")
+    assert _normalized_elapsed(results) == _fixture("checkpoint.json")["results"]
+    assert loaded == [True]
+    assert calls == []
 
 
 def test_oolong_v1_fixtures_reject_one_field_drift() -> None:
