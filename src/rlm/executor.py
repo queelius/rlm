@@ -36,7 +36,7 @@ from rlm.errors import (
     error_record_for_exception,
 )
 from rlm.json import json_compatibility_error, strict_json_dumps, strict_json_loads
-from rlm.protocol import extract_text
+from rlm.response import response_output_text
 from rlm.types import (
     AskBatchResult,
     ExecutionException,
@@ -592,7 +592,7 @@ def _worker_main(
     ) -> str:
         body = _text_request(str(prompt), system=system, model=model, options=options)
         response = model_complete(body)
-        text = extract_text(response)
+        text = response_output_text(response)
         if response.get("status") != "completed" or not text.strip():
             failure = _text_failure(0, response)
             raise ModelOutputFault(
@@ -618,7 +618,7 @@ def _worker_main(
         texts: list[str | None] = []
         failures: list[TextFailure] = []
         for index, response in enumerate(responses):
-            text = extract_text(response)
+            text = response_output_text(response)
             if response.get("status") != "completed" or not text.strip():
                 texts.append(None)
                 failures.append(_text_failure(index, response))

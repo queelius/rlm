@@ -11,7 +11,7 @@ The public surface is deliberately narrow:
 - `GET /v1/models` is passed through to the configured upstream.
 - `POST /v1/responses` runs the RLM loop.
 - Chat Completions, streaming, and background Responses are unsupported.
-- `RLM.direct(request)` is the explicit direct-model baseline. The RLM loop
+- `RLM.run_direct(request)` is the explicit, attested direct-model baseline. The RLM loop
   never falls back to it, retries a request, or substitutes an alternate answer.
 
 ## Install
@@ -38,11 +38,14 @@ from rlm import (
     ControllerConfig,
     ExecutionConfig,
     HarnessSpec,
+    RunAttestation,
     OpenAIEndpoint,
     RLM,
     RLMConfig,
     RunLimits,
     TraceConfig,
+    load_trace,
+    response_output_text,
 )
 from rlm.prompts import default_harness_spec
 
@@ -59,15 +62,24 @@ rlm = RLM(OpenAIEndpoint(base_url="https://api.openai.com/v1"), config=config)
 request = {"model": "public-model", "input": "Explain recursion in one paragraph."}
 run = rlm.run(request)
 assert run.response["object"] == "response"
+assert response_output_text(run.response)
+attestation = RunAttestation.from_result(run)
+trace = load_trace(run.trace_directory, expected_run_id=attestation.run_id)
 
-# An evaluation baseline, never an automatic recovery path:
-direct_response = rlm.direct(request)
+# An attested evaluation baseline, never an automatic recovery path:
+direct_run = rlm.run_direct(request)
 ```
 
 `RLM.complete(request)` returns only the completed Responses object.
 `RLM.run(request)` additionally returns the run ID, aggregate reported usage,
 turn count, controller model/options identity, harness fingerprint, duration,
 and optional trace directory.
+
+Python orchestration is preferred for the first A100 experiment because
+`RunResult.trace_directory` names its artifact unambiguously. `RunAttestation`
+provides the same typed execution identity for in-process and HTTP consumers,
+while `load_trace` verifies the manifest, JSONL bytes, schema, causal graph,
+model-call outcomes, and terminal provenance before returning owned values.
 
 ## Kernel contract
 
@@ -139,7 +151,11 @@ uv run rlm serve \
 Controller option values are strict JSON. They cannot replace runtime-owned
 model, instructions, or input fields. Successful proxy responses carry
 `X-RLM-*` run metadata, including controller identity, harness fingerprint,
-and aggregate usage; their body remains a normal Responses object.
+and aggregate usage; their body remains a normal Responses object. HTTP clients
+can decode those case-insensitive headers with
+`RunAttestation.from_headers(response.headers)`. No header exposes an absolute
+path on the server filesystem; artifact transfer remains an explicit
+orchestration responsibility.
 
 ## Traces and research use
 
@@ -150,6 +166,10 @@ fingerprint, exact rendered-prompt digests, ABI identity, raw model requests
 and responses, typed call roles, causal IDs, observations, recovery decisions,
 usage completeness, limits, timings, and a final response or typed failure.
 Unknown trace values are rejected rather than serialized with `repr`.
+Post-hoc consumers should call `load_trace(path, expected_run_id=...)` rather
+than parsing individual lines. Corruption, truncation, run-ID disagreement,
+causal errors, orphaned model calls, and manifest/final-event disagreement are
+fatal `TraceError` failures; the reader never repairs or skips an event.
 
 Task conditioning, datasets, verifiers, rewards, and benchmark recipes belong
 outside `src/rlm/`. The optional `benchmarks/oolong.py` runner performs paired

@@ -1,5 +1,6 @@
 """A small, request-preserving Recursive Language Model runtime."""
 
+from rlm.attestation import RunAttestation
 from rlm.backend import ModelBackend, OpenAIEndpoint
 from rlm.config import ControllerConfig, ExecutionConfig, RLMConfig, RunLimits, TraceConfig
 from rlm.engine import RLM
@@ -9,9 +10,15 @@ from rlm.errors import (
     LimitExceededError,
     ProtocolError,
     RLMError,
+    TraceError,
     UpstreamError,
 )
 from rlm.recovery import Abort, ControllerFault, FaultKind, RecoveryPolicy, Repair
+from rlm.response import (
+    response_output_text,
+    validate_response_envelope,
+    validate_terminal_response,
+)
 from rlm.server import create_app
 from rlm.specs import (
     BootstrapSpec,
@@ -28,7 +35,8 @@ from rlm.specs import (
     SubmissionKind,
     SubmissionStatus,
 )
-from rlm.types import ModelCallContext, ModelRole, RunResult, TokenUsage
+from rlm.trace_reader import TraceArtifact, load_trace
+from rlm.types import ControllerRunIdentity, ModelCallContext, ModelRole, RunResult, TokenUsage
 
 __version__ = "0.1.0"
 
@@ -38,6 +46,7 @@ __all__ = [
     "BootstrapType",
     "ContextSpec",
     "ControllerConfig",
+    "ControllerRunIdentity",
     "ControllerFault",
     "ExecutionConfig",
     "ExecutionTimeoutError",
@@ -63,12 +72,19 @@ __all__ = [
     "RecoverySpec",
     "Repair",
     "RunLimits",
+    "RunAttestation",
     "RunResult",
     "SubmissionKind",
     "SubmissionStatus",
     "TokenUsage",
     "TraceConfig",
+    "TraceArtifact",
+    "TraceError",
     "UpstreamError",
     "__version__",
     "create_app",
+    "load_trace",
+    "response_output_text",
+    "validate_response_envelope",
+    "validate_terminal_response",
 ]

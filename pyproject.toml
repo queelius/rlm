@@ -31,6 +31,7 @@ rlm = "rlm.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/rlm"]
+artifacts = ["src/rlm/schemas/*.json"]
 
 [tool.pytest.ini_options]
 addopts = "-q"

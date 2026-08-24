@@ -9,6 +9,7 @@ from typing import Any, Protocol
 
 from rlm.errors import ProtocolError
 from rlm.json import strict_json_dumps
+from rlm.response import response_output_text
 from rlm.specs import ContextSpec
 
 
@@ -146,31 +147,5 @@ def _python_cell(text: str) -> str:
     return code
 
 
-def extract_text(response: Mapping[str, Any]) -> str:
-    """Return concatenated assistant text from a Responses object.
-
-    This permissive public-response helper is intentionally not part of the
-    controller protocol; executable controller text is extracted only above.
-    """
-
-    direct = response.get("output_text")
-    if isinstance(direct, str):
-        return direct
-    texts: list[str] = []
-    output = response.get("output")
-    if not isinstance(output, list):
-        return ""
-    for item in output:
-        if not isinstance(item, Mapping) or item.get("type") != "message":
-            continue
-        content = item.get("content")
-        if not isinstance(content, list):
-            continue
-        for part in content:
-            if (
-                isinstance(part, Mapping)
-                and part.get("type") in ("output_text", "text")
-                and isinstance(part.get("text"), str)
-            ):
-                texts.append(part["text"])
-    return "".join(texts)
+# Compatibility for internal tests written before the public helper was published.
+extract_text = response_output_text

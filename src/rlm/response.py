@@ -118,6 +118,32 @@ def validate_terminal_response(value: Any) -> str | None:
     return None
 
 
+def response_output_text(response: Mapping[str, Any]) -> str:
+    """Return concatenated assistant text without changing the Responses value."""
+
+    direct = response.get("output_text")
+    if isinstance(direct, str):
+        return direct
+    texts: list[str] = []
+    output = response.get("output")
+    if not isinstance(output, list):
+        return ""
+    for item in output:
+        if not isinstance(item, Mapping) or item.get("type") != "message":
+            continue
+        content = item.get("content")
+        if not isinstance(content, list):
+            continue
+        for part in content:
+            if (
+                isinstance(part, Mapping)
+                and part.get("type") == "output_text"
+                and isinstance(part.get("text"), str)
+            ):
+                texts.append(part["text"])
+    return "".join(texts)
+
+
 def _validate_output_item(value: Any) -> str | None:
     if not isinstance(value, dict):
         return "item must be an object"

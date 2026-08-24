@@ -10,6 +10,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from starlette.concurrency import run_in_threadpool
 
+from rlm.attestation import RunAttestation
 from rlm.backend import ModelCatalogBackend
 from rlm.engine import RLM
 from rlm.errors import InvalidRequestError, RLMError
@@ -92,17 +93,4 @@ async def _read_json_object(request: Request) -> dict[str, Any]:
 
 
 def _run_headers(result: RunResult) -> dict[str, str]:
-    headers = {
-        "X-RLM-Run-ID": result.run_id,
-        "X-RLM-Stop-Reason": result.stop_reason,
-        "X-RLM-Turns": str(result.turns),
-        "X-RLM-Duration-Seconds": f"{result.duration_seconds:.6f}",
-        "X-RLM-Model-Calls": str(result.usage.calls),
-        "X-RLM-Input-Tokens": str(result.usage.input_tokens),
-        "X-RLM-Output-Tokens": str(result.usage.output_tokens),
-        "X-RLM-Usage-Unreported-Calls": str(result.usage.unreported_calls),
-    }
-    headers["X-RLM-Controller-Model"] = result.controller_identity.model
-    headers["X-RLM-Controller-Options-SHA256"] = result.controller_identity.options_sha256
-    headers["X-RLM-Harness-Fingerprint"] = result.harness_fingerprint
-    return headers
+    return RunAttestation.from_result(result).to_headers()
