@@ -1,0 +1,244 @@
+{
+  "checkpoint_sha256": "f4063d58b30e2c7f62acb8c67dee0f73e71078422101ecbb8d4d238af88b49ff",
+  "results": [
+    {
+      "answer": "answer",
+      "budget": {
+        "max_model_calls": 64,
+        "max_total_tokens": 20000,
+        "timeout_seconds": 600
+      },
+      "condition": "rlm",
+      "context": "same context",
+      "context_sha256": "09d23481e0a1cc6563eb19ecab71b1b9b035a2b397d307e555f99a446161129e",
+      "controller_options_sha256": "8fefe127d6b4ea3f3bb4dc99eada04b6134555e971d4cf7c78243456c97a71fa",
+      "dataset_path": "unspecified",
+      "dataset_revision": "unspecified",
+      "dataset_sha256": "unspecified",
+      "elapsed_seconds": 0.0,
+      "episode_id": "22f8cdbe556aceb4a3bdffdfc00272c25bbbbb4cbd0dd1d5a8be03e34fdbc312",
+      "expected_count": 1,
+      "failure": null,
+      "headers": {
+        "x-rlm-controller-model": "qwen",
+        "x-rlm-controller-options-sha256": "8fefe127d6b4ea3f3bb4dc99eada04b6134555e971d4cf7c78243456c97a71fa",
+        "x-rlm-harness-fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "x-rlm-input-tokens": "3",
+        "x-rlm-model-calls": "1",
+        "x-rlm-output-tokens": "2",
+        "x-rlm-run-id": "run-test",
+        "x-rlm-usage-unreported-calls": "0"
+      },
+      "model": "qwen",
+      "observed_input_tokens": 3,
+      "observed_model_calls": 1,
+      "observed_output_tokens": 2,
+      "observed_total_tokens": 5,
+      "pair_id": "de7550607f282095a078ca64d129600d3ddf38017801ef5b7966a7cbe6434b76",
+      "prompt_profile": "rlm_oracle_v1",
+      "prompt_sha256": "5c45be8256e927b395b4b034cf9f57ba8c708cf4d70a0037ba41350a7815d8de",
+      "prompt_text": "Answer this aggregate question exactly:\nsame task\n\nThe input contains 1 questions. Choose one exact TREC coarse answer-type label: abbreviation, entity, human being, numeric value, location, description and abstract concept. Return only the label.\nReturn exactly 1 canonical labels in the requested final answer format.\nCounts must sum to 1.\n\nThis is an explicitly labelled ORACLE scaffold stress condition. In a Python cell, derive prompts\nfrom the input and call:\nbatch = ask_batch(prompts, options={\"temperature\": 0})\nlabels = list(batch.texts)\nif batch.failed_indexes:\n    retry = ask_batch(\n        [prompts[index] for index in batch.failed_indexes], options={\"temperature\": 0}\n    )\n    replacements = retry.require_texts()\n    for index, text in zip(batch.failed_indexes, replacements):\n        labels[index] = text\nassert all(isinstance(label, str) and label.strip() for label in labels)\nCompute and validate the aggregate answer before submission.",
+      "record_sha256": "7b6ac79e5a1f9ef15830ca4e1c0d27da0b3b370cb431f1293ee870c6771286a5",
+      "reference": null,
+      "repetition": 3,
+      "response": {
+        "created_at": 1700000000,
+        "id": "resp_scripted",
+        "model": "qwen",
+        "object": "response",
+        "output": [
+          {
+            "content": [
+              {
+                "annotations": [],
+                "text": "answer",
+                "type": "output_text"
+              }
+            ],
+            "id": "msg_scripted",
+            "role": "assistant",
+            "status": "completed",
+            "type": "message"
+          }
+        ],
+        "status": "completed",
+        "usage": {
+          "input_tokens": 3,
+          "output_tokens": 2,
+          "total_tokens": 5
+        }
+      },
+      "rlm_conditioning_mode": "oracle",
+      "rlm_harness_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "run_id": "run-test",
+      "sampling": {
+        "temperature": 0
+      },
+      "schema_version": 1,
+      "score": null,
+      "seed": 42,
+      "selection": {},
+      "source_id": "source-1",
+      "source_revision": "unspecified",
+      "status": 200,
+      "task": "same task",
+      "verifier": {
+        "name": "unspecified",
+        "sha256": "unspecified",
+        "source_revision": "unspecified",
+        "version": "unspecified"
+      }
+    },
+    {
+      "answer": "answer",
+      "budget": {
+        "max_model_calls": 64,
+        "max_total_tokens": 20000,
+        "timeout_seconds": 600
+      },
+      "condition": "direct",
+      "context": "same context",
+      "context_sha256": "09d23481e0a1cc6563eb19ecab71b1b9b035a2b397d307e555f99a446161129e",
+      "controller_options_sha256": "8fefe127d6b4ea3f3bb4dc99eada04b6134555e971d4cf7c78243456c97a71fa",
+      "dataset_path": "unspecified",
+      "dataset_revision": "unspecified",
+      "dataset_sha256": "unspecified",
+      "elapsed_seconds": 0.0,
+      "episode_id": "a48c56a7c1dc1dfc863229f054e3d5e88789596101f17d8846f79d26a1246d37",
+      "expected_count": 1,
+      "failure": null,
+      "headers": {
+        "x-rlm-controller-model": "qwen",
+        "x-rlm-controller-options-sha256": "8fefe127d6b4ea3f3bb4dc99eada04b6134555e971d4cf7c78243456c97a71fa",
+        "x-rlm-harness-fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "x-rlm-input-tokens": "3",
+        "x-rlm-model-calls": "1",
+        "x-rlm-output-tokens": "2",
+        "x-rlm-run-id": "run-test",
+        "x-rlm-usage-unreported-calls": "0"
+      },
+      "model": "qwen",
+      "observed_input_tokens": 3,
+      "observed_model_calls": 1,
+      "observed_output_tokens": 2,
+      "observed_total_tokens": 5,
+      "pair_id": "de7550607f282095a078ca64d129600d3ddf38017801ef5b7966a7cbe6434b76",
+      "prompt_profile": "direct_v1",
+      "prompt_sha256": "43f6d9fd91076a13eb633e63fac382908c8124c03cc3aa6af5eee3b452afc8cc",
+      "prompt_text": "Answer this aggregate question exactly:\nsame task\n\nThe input contains 1 questions. Choose one exact TREC coarse answer-type label: abbreviation, entity, human being, numeric value, location, description and abstract concept. Return only the label.\nReturn exactly 1 canonical labels in the requested final answer format.\nCounts must sum to 1.",
+      "record_sha256": "88924aaac9e6dd529f620de35f534ea47410bbfa483ba7cdf8d10e6356af043b",
+      "reference": null,
+      "repetition": 3,
+      "response": {
+        "created_at": 1700000000,
+        "id": "resp_scripted",
+        "model": "qwen",
+        "object": "response",
+        "output": [
+          {
+            "content": [
+              {
+                "annotations": [],
+                "text": "answer",
+                "type": "output_text"
+              }
+            ],
+            "id": "msg_scripted",
+            "role": "assistant",
+            "status": "completed",
+            "type": "message"
+          }
+        ],
+        "status": "completed",
+        "usage": {
+          "input_tokens": 3,
+          "output_tokens": 2,
+          "total_tokens": 5
+        }
+      },
+      "rlm_conditioning_mode": null,
+      "rlm_harness_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "run_id": null,
+      "sampling": {
+        "temperature": 0
+      },
+      "schema_version": 1,
+      "score": null,
+      "seed": 42,
+      "selection": {},
+      "source_id": "source-1",
+      "source_revision": "unspecified",
+      "status": 200,
+      "task": "same task",
+      "verifier": {
+        "name": "unspecified",
+        "sha256": "unspecified",
+        "source_revision": "unspecified",
+        "version": "unspecified"
+      }
+    }
+  ],
+  "run_fingerprint": "65ec5f45e5d4af92949f64fbd88bdc5ec813e1a439ebe4096f474663a63d7616",
+  "run_spec": {
+    "comparisons": [
+      {
+        "budget": {
+          "max_model_calls": 64,
+          "max_total_tokens": 20000,
+          "timeout_seconds": 600
+        },
+        "example": {
+          "context": "same context",
+          "context_sha256": "09d23481e0a1cc6563eb19ecab71b1b9b035a2b397d307e555f99a446161129e",
+          "dataset_path": "unspecified",
+          "dataset_revision": "unspecified",
+          "dataset_sha256": "unspecified",
+          "expected_count": 1,
+          "model": "qwen",
+          "reference": null,
+          "selection": {},
+          "source_id": "source-1",
+          "source_revision": "unspecified",
+          "task": "same task"
+        },
+        "mode": "oracle",
+        "prompts": {
+          "direct": {
+            "profile": "direct_v1",
+            "sha256": "43f6d9fd91076a13eb633e63fac382908c8124c03cc3aa6af5eee3b452afc8cc",
+            "text": "Answer this aggregate question exactly:\nsame task\n\nThe input contains 1 questions. Choose one exact TREC coarse answer-type label: abbreviation, entity, human being, numeric value, location, description and abstract concept. Return only the label.\nReturn exactly 1 canonical labels in the requested final answer format.\nCounts must sum to 1."
+          },
+          "rlm": {
+            "profile": "rlm_oracle_v1",
+            "sha256": "5c45be8256e927b395b4b034cf9f57ba8c708cf4d70a0037ba41350a7815d8de",
+            "text": "Answer this aggregate question exactly:\nsame task\n\nThe input contains 1 questions. Choose one exact TREC coarse answer-type label: abbreviation, entity, human being, numeric value, location, description and abstract concept. Return only the label.\nReturn exactly 1 canonical labels in the requested final answer format.\nCounts must sum to 1.\n\nThis is an explicitly labelled ORACLE scaffold stress condition. In a Python cell, derive prompts\nfrom the input and call:\nbatch = ask_batch(prompts, options={\"temperature\": 0})\nlabels = list(batch.texts)\nif batch.failed_indexes:\n    retry = ask_batch(\n        [prompts[index] for index in batch.failed_indexes], options={\"temperature\": 0}\n    )\n    replacements = retry.require_texts()\n    for index, text in zip(batch.failed_indexes, replacements):\n        labels[index] = text\nassert all(isinstance(label, str) and label.strip() for label in labels)\nCompute and validate the aggregate answer before submission."
+          }
+        },
+        "repetition": 3,
+        "rlm_harness_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sampling": {
+          "temperature": 0
+        },
+        "seed": 42,
+        "verifier": {
+          "name": "unspecified",
+          "sha256": "unspecified",
+          "source_revision": "unspecified",
+          "version": "unspecified"
+        }
+      }
+    ],
+    "schema_version": 1,
+    "targets": [
+      {
+        "condition": "rlm",
+        "url": "http://rlm"
+      },
+      {
+        "condition": "direct",
+        "url": "http://direct"
+      }
+    ]
+  },
+  "schema_version": 1
+}

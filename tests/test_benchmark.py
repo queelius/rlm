@@ -72,6 +72,85 @@ def successful_call(value: BenchmarkComparison) -> BenchmarkCall:
     )
 
 
+OOLONG_V1_FIXTURES = Path(__file__).parent / "fixtures" / "oolong-runner-v1"
+
+
+def _normalized_elapsed(value: Any) -> Any:
+    payload = copy.deepcopy(value)
+    if isinstance(payload, dict) and "elapsed_seconds" in payload:
+        payload["elapsed_seconds"] = 0.0
+        payload = oolong._signed_record(
+            {key: item for key, item in payload.items() if key != "record_sha256"}
+        )
+    if isinstance(payload, dict) and isinstance(payload.get("results"), list):
+        payload["results"] = [_normalized_elapsed(item) for item in payload["results"]]
+        payload = oolong._checkpoint_with_digest(
+            {key: item for key, item in payload.items() if key != "checkpoint_sha256"}
+        )
+    if isinstance(payload, list):
+        return [_normalized_elapsed(item) for item in payload]
+    return payload
+
+
+def _fixture(name: str) -> Any:
+    return json.loads((OOLONG_V1_FIXTURES / name).read_text())
+
+
+def test_oolong_v1_synthetic_identity_is_frozen() -> None:
+    value = comparison()
+    assert value.pair_id() == "de7550607f282095a078ca64d129600d3ddf38017801ef5b7966a7cbe6434b76"
+    assert oolong.episode_id(value.pair_id(), BenchmarkCondition.RLM) == (
+        "22f8cdbe556aceb4a3bdffdfc00272c25bbbbb4cbd0dd1d5a8be03e34fdbc312"
+    )
+    assert oolong.episode_id(value.pair_id(), BenchmarkCondition.DIRECT) == (
+        "a48c56a7c1dc1dfc863229f054e3d5e88789596101f17d8846f79d26a1246d37"
+    )
+    assert value.prompts.rlm.sha256 == (
+        "5c45be8256e927b395b4b034cf9f57ba8c708cf4d70a0037ba41350a7815d8de"
+    )
+    assert value.prompts.direct.sha256 == (
+        "43f6d9fd91076a13eb633e63fac382908c8124c03cc3aa6af5eee3b452afc8cc"
+    )
+
+
+def test_oolong_v1_comparison_fixture_round_trips_completely() -> None:
+    value = comparison()
+    actual = run_pair(
+        benchmark_targets("http://rlm", "http://direct"),
+        comparison=value,
+        call=lambda target, request: successful_call(value),
+    )
+    assert _normalized_elapsed(actual) == _fixture("comparison.json")
+
+
+def test_oolong_v1_checkpoint_fixture_round_trips_completely(tmp_path: Path) -> None:
+    value = comparison()
+    output = tmp_path / "checkpoint.json"
+    run_comparisons(
+        [value],
+        targets=benchmark_targets("http://rlm", "http://direct"),
+        output=output,
+        call=lambda target, request: successful_call(value),
+    )
+    assert _normalized_elapsed(json.loads(output.read_text())) == _fixture("checkpoint.json")
+
+
+def test_oolong_v1_fixtures_reject_one_field_drift() -> None:
+    fixture = _fixture("comparison.json")
+    drifted = copy.deepcopy(fixture)
+    drifted[0]["response"]["output"][0]["content"][0]["text"] = "drift"
+    value = comparison()
+    actual = run_pair(
+        benchmark_targets("http://rlm", "http://direct"),
+        comparison=value,
+        call=lambda target, request: successful_call(value),
+    )
+    assert _normalized_elapsed(actual) == fixture
+    assert _normalized_elapsed(actual) != drifted
+    with pytest.raises(ValueError, match="digest"):
+        oolong._validate_record(drifted[0], [value])
+
+
 def test_empty_selection_and_failure_accounting_are_explicit() -> None:
     with pytest.raises(ValueError, match="selected no examples"):
         summarize([])
