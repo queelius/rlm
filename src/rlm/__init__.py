@@ -19,6 +19,7 @@ from rlm.response import (
     validate_response_envelope,
     validate_terminal_response,
 )
+from rlm.run_artifacts import validate_run_artifacts
 from rlm.server import create_app
 from rlm.specs import (
     BootstrapSpec,
@@ -86,5 +87,6 @@ __all__ = [
     "load_trace",
     "response_output_text",
     "validate_response_envelope",
+    "validate_run_artifacts",
     "validate_terminal_response",
 ]

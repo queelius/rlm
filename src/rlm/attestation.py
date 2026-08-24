@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import copy
-import math
 from collections.abc import Mapping
 from dataclasses import dataclass
 
@@ -11,6 +10,7 @@ from rlm.types import (
     ControllerRunIdentity,
     RunResult,
     TokenUsage,
+    _canonical_duration_seconds,
     _snapshot_field,
     _SnapshotAccess,
 )
@@ -46,13 +46,7 @@ class RunAttestation(_SnapshotAccess):
         _require_nonempty_text(self.run_id, name="run_id")
         _require_nonempty_text(self.stop_reason, name="stop_reason")
         _require_nonnegative_integer(self.turns, name="turns")
-        if (
-            isinstance(self.duration_seconds, bool)
-            or not isinstance(self.duration_seconds, (int, float))
-            or not math.isfinite(self.duration_seconds)
-            or self.duration_seconds < 0
-        ):
-            raise ValueError("duration_seconds must be a finite nonnegative number")
+        duration = _canonical_duration_seconds(self.duration_seconds)
         if not isinstance(self.usage, TokenUsage):
             raise TypeError("usage must be TokenUsage")
         for name in ("input_tokens", "output_tokens", "unreported_calls"):
@@ -63,7 +57,7 @@ class RunAttestation(_SnapshotAccess):
         if not isinstance(self.controller_identity, ControllerRunIdentity):
             raise TypeError("controller_identity must be ControllerRunIdentity")
         _require_sha256(self.harness_fingerprint, name="harness_fingerprint")
-        object.__setattr__(self, "duration_seconds", float(self.duration_seconds))
+        object.__setattr__(self, "duration_seconds", duration)
         object.__setattr__(self, "usage", copy.deepcopy(self.usage))
 
     @classmethod
@@ -173,9 +167,7 @@ def _parse_duration(value: str) -> float:
         duration = float(value)
     except ValueError as exc:
         raise ValueError("duration header must be a finite nonnegative number") from exc
-    if not math.isfinite(duration) or duration < 0:
-        raise ValueError("duration header must be a finite nonnegative number")
-    return duration
+    return _canonical_duration_seconds(duration)
 
 
 def _require_sha256(value: object, *, name: str) -> None:

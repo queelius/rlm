@@ -45,9 +45,11 @@ def _headers() -> dict[str, str]:
 def test_attestation_result_headers_round_trip_at_wire_duration_precision() -> None:
     attestation = RunAttestation.from_result(_result())
 
+    assert _result().duration_seconds == 1.234568
+    assert attestation.duration_seconds == 1.234568
     assert attestation.to_headers() == _headers()
     decoded = RunAttestation.from_headers(attestation.to_headers())
-    assert decoded == RunAttestation.from_result(_result(duration_seconds=1.234568))
+    assert decoded == attestation
 
 
 def test_attestation_header_input_is_case_insensitive() -> None:

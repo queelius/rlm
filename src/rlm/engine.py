@@ -80,6 +80,7 @@ from rlm.types import (
     ResponseSubmission,
     RunResult,
     TextSubmission,
+    _canonical_duration_seconds,
 )
 
 
@@ -128,6 +129,7 @@ class RLM:
         stop_reason = "error"
         turns = 0
         error: BaseException | None = None
+        completed_duration: float | None = None
 
         run_started_event_id = trace.event(
             RunStartedPayload(
@@ -167,13 +169,14 @@ class RLM:
                 depth=0,
                 parent_event_id=result.event_id,
             )
+            completed_duration = _canonical_duration_seconds(time.monotonic() - started)
             return RunResult(
                 response=result.response,
                 run_id=run_id,
                 stop_reason=stop_reason,
                 usage=ledger.snapshot(),
                 turns=turns,
-                duration_seconds=time.monotonic() - started,
+                duration_seconds=completed_duration,
                 trace_directory=trace.directory,
                 controller_identity=ControllerRunIdentity(
                     model=config.controller.model or str(public_request["model"]),
@@ -198,6 +201,7 @@ class RLM:
                     stop_reason=stop_reason,
                     turns=turns,
                     started=started,
+                    completed_duration=completed_duration,
                     ledger=ledger,
                     config=config,
                 ),
@@ -227,6 +231,7 @@ class RLM:
         trace = make_trace_sink(config.tracing, run_id=run_id)
         ledger = Ledger(config)
         error: BaseException | None = None
+        completed_duration: float | None = None
         run_started_event_id = trace.event(
             RunStartedPayload(
                 request=public_request,
@@ -261,13 +266,14 @@ class RLM:
                 depth=0,
                 parent_event_id=response_event_id,
             )
+            completed_duration = _canonical_duration_seconds(time.monotonic() - started)
             return RunResult(
                 response=response,
                 run_id=run_id,
                 stop_reason="direct",
                 usage=ledger.snapshot(),
                 turns=0,
-                duration_seconds=time.monotonic() - started,
+                duration_seconds=completed_duration,
                 trace_directory=trace.directory,
                 controller_identity=ControllerRunIdentity(
                     model=config.controller.model or str(public_request["model"]),
@@ -292,6 +298,7 @@ class RLM:
                     stop_reason="direct" if error is None else "error",
                     turns=0,
                     started=started,
+                    completed_duration=completed_duration,
                     ledger=ledger,
                     config=config,
                 ),
@@ -878,6 +885,7 @@ def _trace_manifest(
     stop_reason: str,
     turns: int,
     started: float,
+    completed_duration: float | None,
     ledger: Ledger,
     config: RLMConfig,
 ) -> TraceManifest:
@@ -888,7 +896,9 @@ def _trace_manifest(
         status=RunTraceStatus.FAILED if error is not None else RunTraceStatus.COMPLETED,
         stop_reason=stop_reason,
         turns=turns,
-        duration_seconds=time.monotonic() - started,
+        duration_seconds=(
+            time.monotonic() - started if completed_duration is None else completed_duration
+        ),
         usage=ledger.stats(),
         error=None if error is None else _error_record(error),
         harness=config.harness.to_dict(),

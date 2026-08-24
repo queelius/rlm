@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import math
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass, field
 from enum import Enum
@@ -315,6 +316,7 @@ class RunResult(_SnapshotAccess):
             raise TypeError("run result usage must be TokenUsage")
         if not isinstance(self.controller_identity, ControllerRunIdentity):
             raise TypeError("run result requires a controller identity")
+        duration = _canonical_duration_seconds(self.duration_seconds)
         if (
             not isinstance(self.harness_fingerprint, str)
             or len(self.harness_fingerprint) != 64
@@ -323,9 +325,21 @@ class RunResult(_SnapshotAccess):
             raise ValueError("run result requires a harness SHA-256 fingerprint")
         object.__setattr__(self, "response", copy.deepcopy(dict(self.response)))
         object.__setattr__(self, "usage", copy.deepcopy(self.usage))
+        object.__setattr__(self, "duration_seconds", duration)
 
     def to_dict(self) -> dict[str, Any]:
         result = asdict(self)
         if self.trace_directory is not None:
             result["trace_directory"] = str(self.trace_directory)
         return result
+
+
+def _canonical_duration_seconds(value: object) -> float:
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(value)
+        or value < 0
+    ):
+        raise ValueError("duration_seconds must be a finite nonnegative number")
+    return float(f"{value:.6f}")
