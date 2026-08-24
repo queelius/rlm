@@ -413,7 +413,7 @@ The config must contain repository `lsteno/RLM-Evals`, revision
 `a6aea6d06da9f08d701038b64195049cf71e1997`, source repository
 `oolongbench/oolong-synth`, source revision
 `f0d59eaf0febf130664cfceb710436c8e3216b2b`, relative Parquet path,
-byte count, SHA-256, row count, and all 13 expected Arrow columns.
+byte count, SHA-256, row count, and all 14 expected Arrow columns.
 
 - [ ] **Step 2: Port atomic download, checksum, Arrow loading, and row types**
 
