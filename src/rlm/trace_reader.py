@@ -6,15 +6,20 @@ import copy
 import hashlib
 import math
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from functools import lru_cache
 from importlib.resources import files
 from pathlib import Path
 from typing import Any
 
+from rlm.abi import ENVIRONMENT_ABI
+from rlm.config import ControllerConfig, ExecutionConfig, RLMConfig, RunLimits, TraceConfig
 from rlm.errors import ErrorRecord, TraceError
-from rlm.json import StrictJSONError, strict_json_loads
-from rlm.response import validate_terminal_response
+from rlm.json import StrictJSONError, strict_json_loads, strict_json_sha256
+from rlm.prompts import render_prompt, validate_harness_contract
+from rlm.response import validate_response_envelope, validate_terminal_response
+from rlm.specs import HarnessSpec, harness_spec_from_dict
+from rlm.types import TokenUsage, _snapshot_field, _SnapshotAccess
 
 _CONTEXT_FIELDS = {"run_id", "branch_id", "call_id", "role", "depth"}
 _MODEL_ROLES = {"controller", "public", "subcall"}
@@ -22,12 +27,36 @@ _FINAL_EVENT_TYPES = {"run.completed", "run.failed"}
 
 
 @dataclass(frozen=True, slots=True)
-class TraceArtifact:
+class _TraceUsage:
+    model_calls: int
+    subcalls: int
+    active_model_calls: int
+    peak_parallel_model_calls: int
+    max_model_calls: int
+    max_subcalls: int
+    max_parallel_model_calls: int
+    max_total_tokens: int | None
+    started_at: float
+    deadline_at: float
+    deadline_seconds: float
+    elapsed_seconds: float
+    remaining_seconds: float
+    usage: TokenUsage
+
+
+@dataclass(frozen=True, slots=True)
+class _ManifestIdentity:
+    harness: HarnessSpec
+    config: RLMConfig
+
+
+@dataclass(frozen=True, slots=True)
+class TraceArtifact(_SnapshotAccess):
     """An owned, integrity-checked manifest and event stream."""
 
     directory: Path
-    manifest: dict[str, Any]
-    events: tuple[dict[str, Any], ...]
+    manifest: dict[str, Any] = _snapshot_field()
+    events: tuple[dict[str, Any], ...] = _snapshot_field()
     manifest_sha256: str
     jsonl_sha256: str
 
@@ -65,12 +94,17 @@ def load_trace(directory: Path, *, expected_run_id: str | None = None) -> TraceA
     manifest = _decode_manifest(manifest_bytes)
     events = _decode_events(jsonl_bytes)
     contract = _trace_contract()
-    _validate_trace(
-        manifest,
-        events,
-        contract=contract,
-        expected_run_id=expected_run_id,
-    )
+    try:
+        _validate_trace(
+            manifest,
+            events,
+            contract=contract,
+            expected_run_id=expected_run_id,
+        )
+    except TraceError:
+        raise
+    except (KeyError, TypeError, ValueError, OverflowError) as exc:
+        raise TraceError(f"trace contains malformed nested data: {exc}") from exc
     return TraceArtifact(
         directory=directory,
         manifest=manifest,
@@ -148,7 +182,7 @@ def _validate_trace(
     ):  # pragma: no cover - packaging invariant
         raise TraceError("packaged trace v1 contract has an invalid structure")
 
-    _validate_manifest(manifest, fields=set(manifest_fields), version=version)
+    identity = _validate_manifest(manifest, fields=set(manifest_fields), version=version)
     run_id = manifest["run_id"]
     if expected_run_id is not None and run_id != expected_run_id:
         raise TraceError(
@@ -173,7 +207,7 @@ def _validate_trace(
         if event["type"] in _FINAL_EVENT_TYPES:
             finals.append(event)
         if event["type"] in {"model.request", "model.response", "model.failed"}:
-            _record_model_event(event, model_calls=model_calls)
+            _record_model_event(event, index=index, model_calls=model_calls)
 
     if sum(event["type"] == "run.started" for event in events) != 1:
         raise TraceError("trace must contain exactly one run.started event")
@@ -181,34 +215,50 @@ def _validate_trace(
         raise TraceError("trace must contain exactly one final run event")
     if not events or events[-1] is not finals[0]:
         raise TraceError("the final run event must be the last trace event")
-    _validate_manifest_provenance(manifest, events)
+    _validate_manifest_provenance(manifest, events, identity=identity)
     _validate_terminal_agreement(manifest, finals[0])
     _validate_model_outcomes(model_calls)
 
 
-def _validate_manifest(manifest: dict[str, Any], *, fields: set[str], version: str) -> None:
+def _validate_manifest(
+    manifest: dict[str, Any], *, fields: set[str], version: str
+) -> _ManifestIdentity:
     if set(manifest) != fields:
         raise TraceError("trace manifest fields do not match the v1 contract")
     _require_nonempty_text(manifest["run_id"], name="manifest run_id")
     if manifest["schema_version"] != version:
         raise TraceError("trace manifest schema_version does not match the v1 contract")
-    if manifest["status"] not in {"completed", "failed"}:
+    status = manifest["status"]
+    if not isinstance(status, str) or status not in {"completed", "failed"}:
         raise TraceError("trace manifest status is invalid")
     stop_reason = manifest["stop_reason"]
     if manifest["status"] == "completed" or stop_reason is not None:
         _require_nonempty_text(stop_reason, name="manifest stop_reason")
     _require_nonnegative_integer(manifest["turns"], name="manifest turns")
     _require_nonnegative_number(manifest["duration_seconds"], name="manifest duration_seconds")
-    for name in ("usage", "harness", "effective_config", "environment_abi"):
-        if not isinstance(manifest[name], dict):
-            raise TraceError(f"trace manifest {name} must be an object")
     _require_sha256(manifest["harness_fingerprint"], name="manifest harness_fingerprint")
     _require_sha256(manifest["environment_abi_digest"], name="manifest environment_abi_digest")
+    harness = _decode_harness(manifest["harness"], name="trace manifest harness")
+    if harness.fingerprint() != manifest["harness_fingerprint"]:
+        raise TraceError("trace manifest harness fingerprint does not match its content")
+    config = _decode_effective_config(manifest["effective_config"])
+    if config.harness.to_dict() != harness.to_dict():
+        raise TraceError("trace manifest harness disagrees with the effective config harness")
+    _validate_environment_abi(
+        manifest["environment_abi"],
+        digest=manifest["environment_abi_digest"],
+    )
+    if harness.abi_version != ENVIRONMENT_ABI.version:
+        raise TraceError("trace harness ABI version disagrees with the environment ABI")
+    if harness.abi_digest != manifest["environment_abi_digest"]:
+        raise TraceError("trace harness ABI digest disagrees with the environment ABI")
+    _validate_usage(manifest["usage"], config=config)
     error = manifest["error"]
     if manifest["status"] == "completed" and error is not None:
         raise TraceError("completed trace manifest error must be null")
     if manifest["status"] == "failed":
         _validate_error_record(error, name="trace manifest error")
+    return _ManifestIdentity(harness=harness, config=config)
 
 
 def _validate_event(
@@ -311,6 +361,7 @@ def _validate_payload(event: dict[str, Any]) -> None:
 def _record_model_event(
     event: dict[str, Any],
     *,
+    index: int,
     model_calls: dict[str, dict[str, Any]],
 ) -> None:
     context = event["payload"].get("context")
@@ -324,6 +375,8 @@ def _record_model_event(
             "context": context,
             "request_event_id": event["event_id"],
             "response_event_id": None,
+            "response_index": None,
+            "response": None,
             "failed_event_id": None,
         }
         return
@@ -338,12 +391,16 @@ def _record_model_event(
         if event["parent_event_id"] != call["request_event_id"]:
             raise TraceError("model.response must be caused by its model.request")
         call["response_event_id"] = event["event_id"]
+        call["response_index"] = index
+        call["response"] = event["payload"]["response"]
     else:
         if call["failed_event_id"] is not None:
             raise TraceError(f"model call {call_id!r} has multiple failures")
         expected_parent = call["response_event_id"] or call["request_event_id"]
         if event["parent_event_id"] != expected_parent:
             raise TraceError("model.failed must follow its response or request")
+        if call["response_index"] is not None and index != call["response_index"] + 1:
+            raise TraceError("model.failed must occur immediately after its model.response")
         call["failed_event_id"] = event["event_id"]
 
 
@@ -357,7 +414,8 @@ def _validate_model_context(value: Any, *, event: dict[str, Any]) -> None:
     if value["depth"] != event["depth"]:
         raise TraceError(f"{event['type']} context depth does not match the event")
     _require_nonempty_text(value["call_id"], name=f"{event['type']} context call_id")
-    if value["role"] not in _MODEL_ROLES:
+    role = value["role"]
+    if not isinstance(role, str) or role not in _MODEL_ROLES:
         raise TraceError(f"{event['type']} context role is invalid")
 
 
@@ -365,9 +423,21 @@ def _validate_model_outcomes(model_calls: dict[str, dict[str, Any]]) -> None:
     for call_id, call in model_calls.items():
         if call["response_event_id"] is None and call["failed_event_id"] is None:
             raise TraceError(f"model request {call_id!r} has no response or failure")
+        if call["response"] is None or call["failed_event_id"] is not None:
+            continue
+        error = validate_response_envelope(call["response"])
+        if error is not None:
+            raise TraceError(f"model.response for call {call_id!r} is invalid: {error}")
+        if call["response"]["status"] not in {"completed", "incomplete"}:
+            raise TraceError(f"model.response for call {call_id!r} is not a terminal outcome")
 
 
-def _validate_manifest_provenance(manifest: dict[str, Any], events: list[dict[str, Any]]) -> None:
+def _validate_manifest_provenance(
+    manifest: dict[str, Any],
+    events: list[dict[str, Any]],
+    *,
+    identity: _ManifestIdentity,
+) -> None:
     run_started = events[0]
     if run_started["type"] != "run.started":
         raise TraceError("trace is missing its initial run.started event")
@@ -393,6 +463,132 @@ def _validate_manifest_provenance(manifest: dict[str, Any], events: list[dict[st
             or branch_payload["harness_fingerprint"] != manifest["harness_fingerprint"]
         ):
             raise TraceError("branch.started harness provenance disagrees with the manifest")
+        allow_recursion = event["depth"] < identity.config.limits.max_depth
+        expected_prompt = render_prompt(identity.harness, allow_recursion=allow_recursion)
+        if branch_payload["prompt"] != expected_prompt:
+            raise TraceError("branch.started prompt disagrees with the validated harness")
+        request_model = branch_payload["request"].get("model")
+        expected_model = identity.config.controller.model or request_model
+        if (
+            not isinstance(expected_model, str)
+            or branch_payload["controller_model"] != expected_model
+        ):
+            raise TraceError("branch.started controller model disagrees with effective config")
+
+
+def _decode_harness(value: Any, *, name: str) -> HarnessSpec:
+    raw = _exact_dataclass_mapping(value, HarnessSpec, name=name)
+    try:
+        harness = harness_spec_from_dict(copy.deepcopy(raw))
+        if harness.to_dict() != raw:
+            raise ValueError("typed round-trip changed the value")
+        validate_harness_contract(harness)
+    except Exception as exc:
+        raise TraceError(f"{name} is invalid: {exc}") from exc
+    return harness
+
+
+def _decode_effective_config(value: Any) -> RLMConfig:
+    raw = _exact_dataclass_mapping(value, RLMConfig, name="trace effective config")
+    harness = _decode_harness(raw["harness"], name="trace effective config harness")
+    limits = _exact_dataclass_mapping(
+        raw["limits"], RunLimits, name="trace effective config limits"
+    )
+    controller = _exact_dataclass_mapping(
+        raw["controller"], ControllerConfig, name="trace effective config controller"
+    )
+    execution = _exact_dataclass_mapping(
+        raw["execution"], ExecutionConfig, name="trace effective config execution"
+    )
+    tracing = _exact_dataclass_mapping(
+        raw["tracing"], TraceConfig, name="trace effective config tracing"
+    )
+    try:
+        config = RLMConfig(
+            harness=harness,
+            limits=RunLimits(**limits),
+            controller=ControllerConfig(**controller),
+            execution=ExecutionConfig(**execution),
+            tracing=TraceConfig(**tracing),
+        )
+        if config.to_dict() != raw:
+            raise ValueError("typed round-trip changed the value")
+    except (TypeError, ValueError) as exc:
+        raise TraceError(f"trace effective config is invalid: {exc}") from exc
+    if not config.tracing.enabled:
+        raise TraceError("trace effective config must have tracing enabled")
+    return config
+
+
+def _validate_environment_abi(value: Any, *, digest: str) -> None:
+    if not isinstance(value, dict):
+        raise TraceError("trace environment ABI must be an object")
+    if value != ENVIRONMENT_ABI.to_dict():
+        raise TraceError("trace environment ABI does not match the typed runtime ABI")
+    if strict_json_sha256(value) != digest or digest != ENVIRONMENT_ABI.digest():
+        raise TraceError("trace environment ABI digest does not match its content")
+
+
+def _validate_usage(value: Any, *, config: RLMConfig) -> _TraceUsage:
+    raw = _exact_dataclass_mapping(value, _TraceUsage, name="trace manifest usage")
+    token_raw = _exact_dataclass_mapping(
+        raw["usage"], TokenUsage, name="trace manifest token usage"
+    )
+    for name, item in token_raw.items():
+        _require_nonnegative_integer(item, name=f"trace token usage {name}")
+    token_usage = TokenUsage(**token_raw)
+    integer_fields = (
+        "model_calls",
+        "subcalls",
+        "active_model_calls",
+        "peak_parallel_model_calls",
+        "max_model_calls",
+        "max_subcalls",
+        "max_parallel_model_calls",
+    )
+    for name in integer_fields:
+        _require_nonnegative_integer(raw[name], name=f"trace manifest usage {name}")
+    max_total_tokens = raw["max_total_tokens"]
+    if max_total_tokens is not None:
+        _require_nonnegative_integer(max_total_tokens, name="trace manifest usage max_total_tokens")
+    for name in (
+        "started_at",
+        "deadline_at",
+        "deadline_seconds",
+        "elapsed_seconds",
+        "remaining_seconds",
+    ):
+        _require_nonnegative_number(raw[name], name=f"trace manifest usage {name}")
+    usage = _TraceUsage(**{**raw, "usage": token_usage})
+    if usage.model_calls != token_usage.calls:
+        raise TraceError("trace manifest usage model_calls disagrees with token usage calls")
+    if token_usage.unreported_calls > token_usage.calls:
+        raise TraceError("trace manifest unreported usage calls exceed total calls")
+    if usage.active_model_calls != 0:
+        raise TraceError("trace manifest must not retain active model calls")
+    if usage.peak_parallel_model_calls > usage.max_parallel_model_calls:
+        raise TraceError("trace manifest peak model calls exceed the configured maximum")
+    if usage.model_calls > usage.max_model_calls or usage.subcalls > usage.max_subcalls:
+        raise TraceError("trace manifest usage exceeds configured call limits")
+    expected_limits = config.limits
+    if (
+        usage.max_model_calls != expected_limits.max_model_calls
+        or usage.max_subcalls != expected_limits.max_subcalls
+        or usage.max_parallel_model_calls != expected_limits.max_parallel_model_calls
+        or usage.max_total_tokens != expected_limits.max_total_tokens
+        or usage.deadline_seconds != expected_limits.deadline_seconds
+    ):
+        raise TraceError("trace manifest usage disagrees with effective config limits")
+    return usage
+
+
+def _exact_dataclass_mapping(value: Any, data_type: type[Any], *, name: str) -> dict[str, Any]:
+    if not isinstance(value, dict):
+        raise TraceError(f"{name} must be an object")
+    expected = {item.name for item in fields(data_type)}
+    if set(value) != expected:
+        raise TraceError(f"{name} fields do not match {data_type.__name__}")
+    return value
 
 
 def _validate_terminal_agreement(manifest: dict[str, Any], final_event: dict[str, Any]) -> None:

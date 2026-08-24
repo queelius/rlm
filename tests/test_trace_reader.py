@@ -106,6 +106,24 @@ def test_trace_artifact_defensively_owns_nested_inputs(tmp_path: Path) -> None:
         artifact.directory = Path("changed")  # type: ignore[misc]
 
 
+def test_trace_artifact_access_cannot_mutate_nested_snapshot_values(tmp_path: Path) -> None:
+    artifact = TraceArtifact(
+        tmp_path,
+        {"nested": {"value": 1}},
+        ({"payload": {"response": {"output": [1]}}},),
+        "a" * 64,
+        "b" * 64,
+    )
+
+    manifest = artifact.manifest
+    events = artifact.events
+    manifest["nested"]["value"] = 2
+    events[0]["payload"]["response"]["output"].append(2)
+
+    assert artifact.manifest == {"nested": {"value": 1}}
+    assert artifact.events == ({"payload": {"response": {"output": [1]}}},)
+
+
 def test_load_trace_accepts_repaired_trace(repaired_trace: Path) -> None:
     artifact = load_trace(repaired_trace)
 
@@ -144,6 +162,57 @@ def test_load_trace_accepts_response_then_failure_for_same_call(
     assert model_types == ["model.request", "model.response", "model.failed"]
 
 
+def test_load_trace_rejects_nonadjacent_response_then_failure(
+    post_response_failed_trace: Path,
+) -> None:
+    manifest, events = _read_trace_values(post_response_failed_trace)
+    response_index = next(
+        index for index, event in enumerate(events) if event["type"] == "model.response"
+    )
+    response = events[response_index]
+    failure = events[response_index + 1]
+    terminal = events[response_index + 2]
+    intervening = {
+        "schema_version": response["schema_version"],
+        "run_id": response["run_id"],
+        "event_id": f"evt-{response_index + 1:06d}",
+        "parent_event_id": response["event_id"],
+        "branch_id": response["branch_id"],
+        "depth": response["depth"],
+        "timestamp": response["timestamp"],
+        "type": "controller.observation",
+        "payload": {"observation": {}},
+    }
+    failure["event_id"] = f"evt-{response_index + 2:06d}"
+    terminal["event_id"] = f"evt-{response_index + 3:06d}"
+    terminal["parent_event_id"] = failure["event_id"]
+    events.insert(response_index + 1, intervening)
+    _write_trace_values(post_response_failed_trace, manifest, events)
+
+    with pytest.raises(TraceError, match="immediately"):
+        load_trace(post_response_failed_trace)
+
+
+def test_load_trace_rejects_malformed_standalone_model_response(completed_trace: Path) -> None:
+    manifest, events = _read_trace_values(completed_trace)
+    model_response = next(event for event in events if event["type"] == "model.response")
+    model_response["payload"]["response"] = {}
+    _write_trace_values(completed_trace, manifest, events)
+
+    with pytest.raises(TraceError, match="model.response"):
+        load_trace(completed_trace)
+
+
+def test_load_trace_rejects_nonterminal_standalone_model_response(completed_trace: Path) -> None:
+    manifest, events = _read_trace_values(completed_trace)
+    model_response = next(event for event in events if event["type"] == "model.response")
+    model_response["payload"]["response"]["status"] = "in_progress"
+    _write_trace_values(completed_trace, manifest, events)
+
+    with pytest.raises(TraceError, match="terminal outcome"):
+        load_trace(completed_trace)
+
+
 @pytest.mark.parametrize("missing", ["manifest.json", "trace.jsonl"])
 def test_load_trace_rejects_a_missing_artifact_file(tmp_path: Path, missing: str) -> None:
     for name in {"manifest.json", "trace.jsonl"} - {missing}:
@@ -171,6 +240,123 @@ def test_load_trace_rejects_truncated_jsonl(completed_trace: Path) -> None:
     path.write_bytes(path.read_bytes()[:-1])
 
     with pytest.raises(TraceError, match="truncated"):
+        load_trace(completed_trace)
+
+
+@pytest.mark.parametrize(
+    ("target", "field"),
+    [
+        ("manifest", "status"),
+        ("model_context", "role"),
+    ],
+)
+def test_load_trace_wraps_unhashable_wrong_types_as_trace_errors(
+    completed_trace: Path,
+    target: str,
+    field: str,
+) -> None:
+    manifest, events = _read_trace_values(completed_trace)
+    if target == "manifest":
+        manifest[field] = []
+    else:
+        model_event = next(event for event in events if event["type"] == "model.request")
+        model_event["payload"]["context"][field] = []
+    _write_trace_values(completed_trace, manifest, events)
+
+    with pytest.raises(TraceError):
+        load_trace(completed_trace)
+
+
+def _synchronize_harness(
+    manifest: dict[str, Any], events: list[dict[str, Any]], harness: dict[str, Any]
+) -> None:
+    manifest["harness"] = copy.deepcopy(harness)
+    manifest["effective_config"]["harness"] = copy.deepcopy(harness)
+    started = events[0]["payload"]
+    started["harness"] = copy.deepcopy(harness)
+    started["effective_config"] = copy.deepcopy(manifest["effective_config"])
+    for event in events:
+        if event["type"] == "branch.started":
+            event["payload"]["harness"] = copy.deepcopy(harness)
+
+
+def test_load_trace_recomputes_consistently_modified_harness_fingerprint(
+    completed_trace: Path,
+) -> None:
+    manifest, events = _read_trace_values(completed_trace)
+    harness = copy.deepcopy(manifest["harness"])
+    harness["prompt"]["policy"] = "tampered but synchronized"
+    _synchronize_harness(manifest, events, harness)
+    _write_trace_values(completed_trace, manifest, events)
+
+    with pytest.raises(TraceError, match="harness"):
+        load_trace(completed_trace)
+
+
+def test_load_trace_recomputes_consistently_modified_environment_abi_digest(
+    completed_trace: Path,
+) -> None:
+    manifest, events = _read_trace_values(completed_trace)
+    environment_abi = copy.deepcopy(manifest["environment_abi"])
+    environment_abi["version"] = "tampered"
+    manifest["environment_abi"] = copy.deepcopy(environment_abi)
+    events[0]["payload"]["environment_abi"] = copy.deepcopy(environment_abi)
+    _write_trace_values(completed_trace, manifest, events)
+
+    with pytest.raises(TraceError, match="environment ABI"):
+        load_trace(completed_trace)
+
+
+@pytest.mark.parametrize(
+    "tamper",
+    [
+        lambda usage: usage["usage"].__setitem__("input_tokens", -1),
+        lambda usage: usage["usage"].pop("output_tokens"),
+        lambda usage: usage.pop("model_calls"),
+    ],
+)
+def test_load_trace_rejects_negative_or_missing_typed_usage(
+    completed_trace: Path,
+    tamper: Any,
+) -> None:
+    manifest, events = _read_trace_values(completed_trace)
+    tamper(manifest["usage"])
+    _write_trace_values(completed_trace, manifest, events)
+
+    with pytest.raises(TraceError, match="usage"):
+        load_trace(completed_trace)
+
+
+def test_load_trace_rejects_malformed_effective_config_section(completed_trace: Path) -> None:
+    manifest, events = _read_trace_values(completed_trace)
+    manifest["effective_config"]["limits"] = []
+    events[0]["payload"]["effective_config"] = copy.deepcopy(manifest["effective_config"])
+    _write_trace_values(completed_trace, manifest, events)
+
+    with pytest.raises(TraceError, match="effective config"):
+        load_trace(completed_trace)
+
+
+def test_load_trace_rejects_malformed_nested_harness(completed_trace: Path) -> None:
+    manifest, events = _read_trace_values(completed_trace)
+    harness = copy.deepcopy(manifest["harness"])
+    harness["prompt"] = []
+    _synchronize_harness(manifest, events, harness)
+    _write_trace_values(completed_trace, manifest, events)
+
+    with pytest.raises(TraceError, match="harness"):
+        load_trace(completed_trace)
+
+
+def test_load_trace_rejects_malformed_nested_environment_abi(completed_trace: Path) -> None:
+    manifest, events = _read_trace_values(completed_trace)
+    environment_abi = copy.deepcopy(manifest["environment_abi"])
+    environment_abi["functions"] = {}
+    manifest["environment_abi"] = copy.deepcopy(environment_abi)
+    events[0]["payload"]["environment_abi"] = copy.deepcopy(environment_abi)
+    _write_trace_values(completed_trace, manifest, events)
+
+    with pytest.raises(TraceError, match="environment ABI"):
         load_trace(completed_trace)
 
 

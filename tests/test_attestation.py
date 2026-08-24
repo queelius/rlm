@@ -69,6 +69,29 @@ def test_attestation_defensively_owns_mutable_usage() -> None:
         attestation.run_id = "changed"  # type: ignore[misc]
 
 
+def test_attestation_usage_access_cannot_mutate_the_snapshot() -> None:
+    attestation = RunAttestation.from_result(_result())
+
+    retrieved = attestation.usage
+    retrieved.input_tokens = 999
+
+    assert attestation.usage.input_tokens == 11
+    assert attestation.to_headers()["X-RLM-Input-Tokens"] == "11"
+
+
+def test_run_result_access_cannot_mutate_response_or_usage_snapshot() -> None:
+    result = _result()
+
+    response = result.response
+    usage = result.usage
+    response["output"][0]["content"][0]["text"] = "mutated"
+    usage.calls = 999
+
+    assert result.response["output"][0]["content"][0]["text"] == "done"
+    assert result.usage.calls == 3
+    assert result.to_dict()["usage"]["calls"] == 3
+
+
 @pytest.mark.parametrize("missing", tuple(_headers()))
 def test_attestation_rejects_each_missing_header(missing: str) -> None:
     headers = _headers()

@@ -11,6 +11,28 @@ from typing import Any, cast
 
 from rlm.errors import ErrorRecord, ModelOutputFault
 
+_COPY_ON_ACCESS = "rlm.copy_on_access"
+
+
+def _snapshot_field() -> Any:
+    """Mark a dataclass field as an owned value copied on every public access."""
+
+    return field(metadata={_COPY_ON_ACCESS: True})
+
+
+class _SnapshotAccess:
+    """Keep frozen public snapshots from exposing their mutable stored values."""
+
+    __slots__ = ()
+
+    def __getattribute__(self, name: str) -> Any:
+        value = object.__getattribute__(self, name)
+        dataclass_fields = object.__getattribute__(self, "__dataclass_fields__")
+        descriptor = dataclass_fields.get(name)
+        if descriptor is not None and descriptor.metadata.get(_COPY_ON_ACCESS, False):
+            return copy.deepcopy(value)
+        return value
+
 
 class ModelRole(str, Enum):
     CONTROLLER = "controller"
@@ -275,11 +297,11 @@ class ControllerRunIdentity:
 
 
 @dataclass(frozen=True, slots=True)
-class RunResult:
-    response: dict[str, Any]
+class RunResult(_SnapshotAccess):
+    response: dict[str, Any] = _snapshot_field()
     run_id: str
     stop_reason: str
-    usage: TokenUsage
+    usage: TokenUsage = _snapshot_field()
     turns: int
     duration_seconds: float
     controller_identity: ControllerRunIdentity

@@ -7,7 +7,13 @@ import math
 from collections.abc import Mapping
 from dataclasses import dataclass
 
-from rlm.types import ControllerRunIdentity, RunResult, TokenUsage
+from rlm.types import (
+    ControllerRunIdentity,
+    RunResult,
+    TokenUsage,
+    _snapshot_field,
+    _SnapshotAccess,
+)
 
 _HEADER_NAMES = {
     "run_id": "X-RLM-Run-ID",
@@ -25,14 +31,14 @@ _HEADER_NAMES = {
 
 
 @dataclass(frozen=True, slots=True)
-class RunAttestation:
+class RunAttestation(_SnapshotAccess):
     """The complete execution identity carried by a successful run."""
 
     run_id: str
     stop_reason: str
     turns: int
     duration_seconds: float
-    usage: TokenUsage
+    usage: TokenUsage = _snapshot_field()
     controller_identity: ControllerRunIdentity
     harness_fingerprint: str
 
@@ -130,15 +136,16 @@ class RunAttestation:
     def to_headers(self) -> dict[str, str]:
         """Encode the stable wire representation used by the HTTP adapter."""
 
+        usage = self.usage
         return {
             _HEADER_NAMES["run_id"]: self.run_id,
             _HEADER_NAMES["stop_reason"]: self.stop_reason,
             _HEADER_NAMES["turns"]: str(self.turns),
             _HEADER_NAMES["duration_seconds"]: f"{self.duration_seconds:.6f}",
-            _HEADER_NAMES["calls"]: str(self.usage.calls),
-            _HEADER_NAMES["input_tokens"]: str(self.usage.input_tokens),
-            _HEADER_NAMES["output_tokens"]: str(self.usage.output_tokens),
-            _HEADER_NAMES["unreported_calls"]: str(self.usage.unreported_calls),
+            _HEADER_NAMES["calls"]: str(usage.calls),
+            _HEADER_NAMES["input_tokens"]: str(usage.input_tokens),
+            _HEADER_NAMES["output_tokens"]: str(usage.output_tokens),
+            _HEADER_NAMES["unreported_calls"]: str(usage.unreported_calls),
             _HEADER_NAMES["controller_model"]: self.controller_identity.model,
             _HEADER_NAMES["controller_options_sha256"]: self.controller_identity.options_sha256,
             _HEADER_NAMES["harness_fingerprint"]: self.harness_fingerprint,
