@@ -1,153 +1,147 @@
 # RLM design
 
-## Contract
+## Public contract
 
-An RLM is a model decorator:
+RLM accepts one non-streaming OpenAI Responses request and returns one completed
+Responses object. Unknown, strict-JSON provider fields are preserved. Its only
+HTTP operations are `GET /v1/models` pass-through and `POST /v1/responses`.
+Chat Completions, streaming, background Responses, and implicit API conversion
+are unsupported.
+
+`RLM.direct(request)` is a deliberate direct-model control for evaluation. It
+is never used to recover an RLM failure. The runtime has no retry policy,
+alternate-model path, answer fallback, or error-to-empty conversion.
+
+## Structural configuration and harness identity
+
+`RLMConfig` has five nested sections:
 
 ```text
-RLM : OpenAI-compatible model -> OpenAI-compatible model
+RLMConfig(harness: HarnessSpec,
+          limits: RunLimits,
+          controller: ControllerConfig,
+          execution: ExecutionConfig,
+          tracing: TraceConfig)
 ```
 
-It accepts one complete, non-streaming request for either
-`POST /v1/chat/completions` or `POST /v1/responses` and returns a response for
-the same API family. The exact request body is retained as an opaque object.
-Unknown provider fields are not normalized away.
+`HarnessSpec` is canonical JSON with a SHA-256 fingerprint. It contains the
+prompt fragments, digests of both exact rendered controller-prompt variants,
+the typed bootstrap specification, environment ABI version and digest,
+recovery specification, observation specification, and context specification.
+Initialization verifies the ABI and both rendered prompt digests before model
+work; the selected variant is checked again when rendered. Controller
+model/options are separate from the harness, and limits are externally enforced
+experiment controls.
 
-The public request and the controller conversation are different objects. The
-RLM protocol prompt is never inserted into the caller's message history.
+The structural specification dataclasses are frozen. `ControllerConfig.options`
+is deliberately an owned mutable mapping between runs so an experiment can
+change sampling without rebuilding a configuration graph. `RLM.run()` and
+`RLM.run_direct()` take one deep strict-JSON snapshot before work starts; that
+snapshot, not a claim that the whole graph is immutable, provides per-run
+isolation and trace reproducibility.
 
-Streaming is intentionally outside the contract. `stream: true` is rejected
-with an OpenAI-shaped invalid-request error.
+## Exact controller/executor loop
 
-## Runtime
-
-Each branch has three parts:
-
-1. A host-side endpoint transport owns credentials and all model calls.
-2. A controller model receives a small, private protocol conversation.
-3. A fresh persistent IPython subprocess holds the exact public request and
-   intermediate state.
-
-The kernel exposes typed host bridges:
+Each branch has a private controller conversation and persistent IPython child:
 
 ```python
-model_complete(request=None, api=None) -> dict
-model_complete_batch(requests, api=None) -> list[dict]
-ask(prompt, system=None, model=None, api=None) -> str
-ask_batch(prompts, system=None, model=None, api=None) -> list[str]
-rlm_complete(request=None, api=None) -> dict       # when recursion is enabled
-rlm_complete_batch(requests, api=None) -> list[dict]
-FINAL_RESPONSE(response) -> None
-FINAL_TEXT(text) -> None
-SHOW_VARS() -> dict[str, str]
+for turn in range(1, limits.max_turns + 1):
+    response = controller.complete(private_request, timeout=remaining, context=context)
+    action = parse_exactly_one_python_cell(response)
+    result = executor.execute(action.code, timeout=remaining)
+    if result.submission:
+        return validate_final(result.submission)
+    append_latest_controller_items_and_observation()
+raise LimitExceededError
 ```
 
-Calling `model_complete()` without arguments sends the exact original request
-to the upstream model. This is the identity/pass-through path and makes the
-base model a contained special case of the RLM.
+The private context starts with a typed `rlm.controller_bootstrap` schema-v2
+envelope. Its `content_in_message: false` invariant is part of `HarnessSpec`;
+its request binding comes from the environment ABI. Its required `submission`
+contract derives allowed final kinds from the exact public request: ordinary
+requests allow `text` and `response`, while requests that cannot be represented
+by a minimal text response allow only `response`. The envelope is runtime
+metadata, not caller content. A controller determines the task by inspecting
+needed fields of the bound request or deliberately delegating with
+`model_complete(request)`. This does not impose a separate inspection turn.
 
-`FINAL_RESPONSE` is the lossless path: it submits a complete response object.
-`FINAL_TEXT` wraps caller-facing text for an ordinary text request. A branch
-terminates only when one of these functions is invoked by executable IPython;
-controller prose, printed output, and a cell's last expression are never
-implicit finals. Requests involving caller tools or structured output must
-finish with `FINAL_RESPONSE`.
+Controller output is strict: exactly one assistant message, exactly one
+`output_text` item, and exactly one non-empty fenced `python` cell with no extra
+prose or fences. Every nonterminal result becomes one strict-JSON
+`rlm.controller_observation` schema-v2 user item. It binds the observation to
+`request`, marks the required submission absent, and nests the bounded execution
+record; execution status `ok` means only that the cell ran, and submission status
+`absent` means that no valid final was accepted. An accepted final terminates the
+branch without another observation. Configured observation budgets have a
+512-character floor that supports every built-in repair identity. There are no
+XML wrappers or imperative prompt suffixes. The private context keeps the bootstrap,
+every eligible item from the latest controller response—including reasoning
+items when enabled—and that observation. IPython holds prior state.
 
-Host bridges never place API keys in the kernel.
-All child/host pipe frames use strict UTF-8 JSON rather than pickle and have a
-64 MiB frame ceiling. Public library requests and submitted response objects
-must therefore use the ordinary JSON data model: null, booleans, finite
-numbers, Unicode strings, lists, and string-keyed objects.
+The versioned ABI is one typed registry shared by prompt documentation,
+executor globals, IPC operations, and trace manifest. It exposes
+`model_complete`, `model_complete_batch`, `ask`, `ask_batch`, `FINAL_TEXT`,
+`FINAL_RESPONSE`, and `SHOW_VARS`; recursive helpers are enabled only within
+the depth limit. Host IPC accepts strict JSON typed payloads.
 
-## Controller action protocols
+`ask_batch` returns `AskBatchResult`, retaining aligned successes and
+`TextFailure` records. `failed_indexes` identifies only failed entries;
+`require_texts()` raises a typed `ModelOutputFault` if any remain. There is no
+singleton pending-error state, implicit retry, or recomputation of successes.
 
-The engine has one semantic action—execute an IPython cell—but two encodings:
+`ExecutionResult.submission` is the closed union
+`TextSubmission | ResponseSubmission | None`, so mismatched FINAL kind/value
+pairs cannot exist. `FINAL_TEXT` is permitted only for public requests that a
+minimal synthetic text response can faithfully satisfy, and it accepts only an
+already-formed string. A non-string is a recoverable `final_submission` fault,
+never an implicit `str(...)` conversion. A cell that submits a final and then has
+a Python exception or host fault has no final submission.
+Captured stderr is data, not an error status. Printed, displayed, or returned
+intermediate values never become a public answer; every successful branch ends
+only through an explicit valid `FINAL_TEXT` or `FINAL_RESPONSE` call.
 
-- `tool`: advertise one OpenAI function tool named `ipython`; this is the
-  default for tool-capable models.
-- `code`: parse one fenced `python`, `py`, or `repl` cell from controller text;
-  this is the portability fallback for endpoints with weak tool support.
+## Fault and deadline boundaries
 
-In either mode, a controller turn with no executable action is a recoverable
-protocol error. The raw controller response is retained in its private history,
-followed by repair feedback directing it to execute `FINAL_TEXT` or
-`FINAL_RESPONSE`. Execution feedback is bounded before it re-enters the
-controller context; a larger, independently bounded capture remains in the
-debug trace.
+Recoverable controller faults are malformed controller output, execution
+exceptions, strict-text helper failures, and invalid final submissions. The
+sealed `RecoveryPolicy` maps them to typed `Repair` or `Abort` decisions.
+Repairs are observations and consume ordinary turns; they do not retry an
+operation.
 
-## Recursion and limits
+Invalid public requests, upstream HTTP/transport/timeout/non-JSON failures,
+malformed completed Responses, host bridge and executor failures, deadline or
+other limit exhaustion, and strict trace failures are fatal. They bypass the
+recovery policy and preserve their typed error record.
 
-An ordinary subcall is a model call, not another agent. `rlm_complete` invokes
-the same engine with a new controller conversation and kernel, an incremented
-depth, and the same shared ledger and trace tree.
+The shared ledger owns a monotonic run deadline, model/subcall/parallel/depth
+limits, and aggregate reported usage. Every backend call receives a remaining
+timeout and `ModelCallContext` with role, run/branch/call IDs, and depth. The
+built-in endpoint uses the minimum transport and supplied timeout. The ledger
+checks again after every call; custom backends must comply rather than relying
+on leaked helper threads or a fallback.
 
-Recursive children are disabled by default. The host, not the model, enforces:
+## Trace and experiment boundary
 
-- root turns per branch;
-- total model and submodel calls;
-- concurrent fan-out;
-- recursive depth;
-- wall-clock deadline;
-- cell timeout, captured output size, and controller-visible observation size;
-- consecutive protocol or execution errors.
+Disabled tracing uses a null sink with no payload conversion, event retention,
+manifest construction, serialization, or filesystem work. Enabled tracing is
+strict JSONL with frozen event payloads and causal-parent validation. The
+manifest is a validated final schema object; trace write/finalization failures
+are fatal. Trace serialization rejects unknown values rather than using
+`repr`.
 
-No automatic compaction is performed in version 0.1. Compaction changes the
-sampled transcript and will be introduced only behind an explicit policy.
+Canonical events retain exact public and model-visible requests, raw Responses
+objects, reasoning output, roles, IDs, actions, execution/observation/recovery
+records, branch relationships, usage completeness, limits, timings, complete
+harness identity, and final response or run failure.
 
-## Debug trace
+The runtime owns this execution contract. Benchmarks own task conditioning,
+data splits, verifier/reward code, and reports. The Oolong runner creates
+typed RLM/direct prompt profiles from one immutable comparison, keeps paired
+conditions identical in task/context/model/seed/sampling/budget, records full
+provenance and repeated rollouts, audits RLM aggregate usage, and retains
+failures outside verifier scoring. Context-sharing rows are split as groups.
 
-Debug mode writes an append-only `trace.jsonl`. Every event has stable causal
-coordinates:
-
-```text
-run_id, event_id, parent_event_id, branch_id, depth, timestamp, type, payload
-```
-
-The trace records exact public traffic, every private controller request and
-raw response, provider-exposed reasoning fields, code, bounded captured and
-visible execution output, subcalls, timings, usage, prompt hashes, termination,
-and the final response. A Markdown rendering is derived from JSONL for reading.
-
-Hidden chain-of-thought that an endpoint does not return cannot be recorded.
-Debug mode is data-sensitive and intended for trusted local research.
-
-## Compatibility scope
-
-Version 0.1 targets the create operations of Chat Completions and Responses.
-It does not implement streaming, WebSockets, background mode, or OpenAI's
-retrieve/delete/list resource endpoints. Stateful identifiers such as
-`previous_response_id` are preserved and forwarded to the upstream endpoint;
-the RLM does not invent a second provider-side conversation store.
-
-The transport preserves arbitrary JSON. Provider capability failures are
-surfaced explicitly rather than silently dropping request fields.
-
-### Distinct Codex controller semantics
-
-`CodexAgentBackend` is a controller-evaluation adapter, not another public
-OpenAI-compatible endpoint. It serializes a private controller request into a
-single `codex exec` instruction and synthesizes the selected response family
-from the last observable `agent_message` event. The Codex agent's own system
-behavior and internal tool loop mean this transformation cannot provide raw
-model-completion equivalence.
-
-Accordingly, it is supported only as a private controller in `code` action
-mode. Native tool-call requests are rejected. Every call uses an ephemeral
-read-only CLI session in a new empty temporary Git workspace; the CLI remains
-solely responsible for its existing authentication. The subprocess inherits
-the normal environment, but the adapter does not inspect, extract, copy, or
-reconstruct authentication values. Observable JSONL events are retained as a
-provider extension for the normal debug trace, while hidden reasoning remains
-unavailable. The temporary directory isolates working context, not all
-filesystem reads; the installed Codex sandbox remains the security boundary.
-
-## Research boundary
-
-This repository contains inference machinery, conformance tests, debug events,
-and tiny examples. Benchmarks, graders, reward functions, prompt evolution,
-Continual Harness refinement, RL algorithms, token-exact renderer integration,
-and layer-selection experiments belong in downstream research projects.
-
-For future policy-gradient training, OpenAI wire compatibility is not enough:
-the integration must additionally preserve exact sampled token IDs,
-log-probabilities, masks, and renderer behavior.
+The executor is process-isolated, not sandboxed: it must never run untrusted
+code in a security-sensitive environment. On POSIX the worker must establish a
+dedicated process group during bootstrap; failure is fatal because descendant
+containment would otherwise be unverifiable.

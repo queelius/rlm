@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from collections.abc import Mapping
 from contextlib import asynccontextmanager
 from typing import Any
@@ -11,9 +10,11 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from starlette.concurrency import run_in_threadpool
 
+from rlm.backend import ModelCatalogBackend
 from rlm.engine import RLM
 from rlm.errors import InvalidRequestError, RLMError
-from rlm.types import API, RunResult
+from rlm.json import StrictJSONError, strict_json_loads
+from rlm.types import RunResult
 
 
 def create_app(
@@ -52,27 +53,30 @@ def create_app(
     async def health() -> dict[str, str]:
         return {"status": "ok"}
 
-    @app.post("/v1/chat/completions")
-    async def chat_completions(request: Request) -> JSONResponse:
-        return await _run_request(rlm, "chat.completions", request)
+    @app.get("/v1/models")
+    async def models() -> JSONResponse:
+        if not isinstance(rlm.backend, ModelCatalogBackend):
+            raise RLMError(
+                "configured public backend does not support model listing",
+                code="models_not_supported",
+                status_code=501,
+            )
+        payload = await run_in_threadpool(rlm.backend.list_models)
+        return JSONResponse(content=payload)
 
     @app.post("/v1/responses")
     async def responses(request: Request) -> JSONResponse:
-        return await _run_request(rlm, "responses", request)
+        body = await _read_json_object(request)
+        result = await run_in_threadpool(rlm.run, body)
+        return JSONResponse(content=result.response, headers=_run_headers(result))
 
     return app
 
 
-async def _run_request(rlm: RLM, api: API, request: Request) -> JSONResponse:
-    body = await _read_json_object(request)
-    result = await run_in_threadpool(rlm.run, api, body)
-    return JSONResponse(content=result.response, headers=_run_headers(result))
-
-
 async def _read_json_object(request: Request) -> dict[str, Any]:
     try:
-        value = await request.json()
-    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        value = strict_json_loads(await request.body())
+    except (StrictJSONError, UnicodeDecodeError) as exc:
         raise InvalidRequestError(
             "request body must be a valid JSON object",
             code="invalid_json",
@@ -88,7 +92,7 @@ async def _read_json_object(request: Request) -> dict[str, Any]:
 
 
 def _run_headers(result: RunResult) -> dict[str, str]:
-    return {
+    headers = {
         "X-RLM-Run-ID": result.run_id,
         "X-RLM-Stop-Reason": result.stop_reason,
         "X-RLM-Turns": str(result.turns),
@@ -96,4 +100,9 @@ def _run_headers(result: RunResult) -> dict[str, str]:
         "X-RLM-Model-Calls": str(result.usage.calls),
         "X-RLM-Input-Tokens": str(result.usage.input_tokens),
         "X-RLM-Output-Tokens": str(result.usage.output_tokens),
+        "X-RLM-Usage-Unreported-Calls": str(result.usage.unreported_calls),
     }
+    headers["X-RLM-Controller-Model"] = result.controller_identity.model
+    headers["X-RLM-Controller-Options-SHA256"] = result.controller_identity.options_sha256
+    headers["X-RLM-Harness-Fingerprint"] = result.harness_fingerprint
+    return headers

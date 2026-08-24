@@ -1,8 +1,7 @@
 """A small, request-preserving Recursive Language Model runtime."""
 
 from rlm.backend import ModelBackend, OpenAIEndpoint
-from rlm.codex_backend import CodexAgentBackend
-from rlm.config import DebugConfig, RLMConfig
+from rlm.config import ControllerConfig, ExecutionConfig, RLMConfig, RunLimits, TraceConfig
 from rlm.engine import RLM
 from rlm.errors import (
     ExecutionTimeoutError,
@@ -12,29 +11,63 @@ from rlm.errors import (
     RLMError,
     UpstreamError,
 )
-from rlm.prompts import Prompt
+from rlm.recovery import Abort, ControllerFault, FaultKind, RecoveryPolicy, Repair
 from rlm.server import create_app
-from rlm.types import API, ActionMode, RunResult, TokenUsage
+from rlm.specs import (
+    BootstrapSpec,
+    BootstrapType,
+    ContextSpec,
+    HarnessSpec,
+    HistoryMode,
+    ObservationSpec,
+    ObservationType,
+    PromptDigests,
+    PromptSpec,
+    RecoveryMode,
+    RecoverySpec,
+    SubmissionKind,
+    SubmissionStatus,
+)
+from rlm.types import ModelCallContext, ModelRole, RunResult, TokenUsage
 
 __version__ = "0.1.0"
 
 __all__ = [
-    "API",
-    "ActionMode",
-    "CodexAgentBackend",
-    "DebugConfig",
+    "Abort",
+    "BootstrapSpec",
+    "BootstrapType",
+    "ContextSpec",
+    "ControllerConfig",
+    "ControllerFault",
+    "ExecutionConfig",
     "ExecutionTimeoutError",
     "InvalidRequestError",
     "LimitExceededError",
+    "FaultKind",
+    "HarnessSpec",
+    "HistoryMode",
     "ModelBackend",
+    "ModelCallContext",
+    "ModelRole",
+    "ObservationSpec",
+    "ObservationType",
     "OpenAIEndpoint",
-    "Prompt",
+    "PromptSpec",
+    "PromptDigests",
     "ProtocolError",
     "RLM",
     "RLMConfig",
     "RLMError",
+    "RecoveryMode",
+    "RecoveryPolicy",
+    "RecoverySpec",
+    "Repair",
+    "RunLimits",
     "RunResult",
+    "SubmissionKind",
+    "SubmissionStatus",
     "TokenUsage",
+    "TraceConfig",
     "UpstreamError",
     "__version__",
     "create_app",

@@ -9,8 +9,8 @@ from contextlib import contextmanager
 from typing import Any
 
 from rlm.config import RLMConfig
-from rlm.errors import LimitExceededError
-from rlm.types import API, TokenUsage
+from rlm.errors import BackendProtocolError, LimitExceededError
+from rlm.types import TokenUsage
 
 
 class Ledger:
@@ -38,16 +38,17 @@ class Ledger:
         self.config = config
         self._clock = clock
         self.started_at = clock()
-        self.deadline_at = self.started_at + config.deadline_seconds
+        self.deadline_at = self.started_at + config.limits.deadline_seconds
 
         self._lock = threading.Lock()
-        self._model_slots = threading.BoundedSemaphore(config.max_parallel_subcalls)
+        self._model_slots = threading.BoundedSemaphore(config.limits.max_parallel_model_calls)
         self._model_calls = 0
         self._subcalls = 0
         self._active_model_calls = 0
         self._peak_parallel_model_calls = 0
         self._input_tokens = 0
         self._output_tokens = 0
+        self._unreported_calls = 0
 
     def check(self) -> None:
         """Raise if the shared wall-clock deadline has been reached."""
@@ -60,9 +61,9 @@ class Ledger:
         with self._lock:
             now = self._clock()
             self._check_deadline_locked(now)
-            if self._model_calls >= self.config.max_model_calls:
+            if self._model_calls >= self.config.limits.max_model_calls:
                 raise LimitExceededError(
-                    f"model call limit reached ({self.config.max_model_calls})",
+                    f"model call limit reached ({self.config.limits.max_model_calls})",
                     code="model_call_limit",
                 )
             self._model_calls += 1
@@ -81,11 +82,11 @@ class Ledger:
             now = self._clock()
             self._check_deadline_locked(now)
             requested_total = self._subcalls + count
-            if requested_total > self.config.max_subcalls:
+            if requested_total > self.config.limits.max_subcalls:
                 raise LimitExceededError(
                     (
                         f"subcall limit would be exceeded: requested {count}, "
-                        f"used {self._subcalls}, limit {self.config.max_subcalls}"
+                        f"used {self._subcalls}, limit {self.config.limits.max_subcalls}"
                     ),
                     code="subcall_limit",
                 )
@@ -131,19 +132,32 @@ class Ledger:
         with self.model_slot():
             yield
 
-    def record_response(self, api: API, response: Mapping[str, Any]) -> TokenUsage:
-        """Record provider usage from either supported OpenAI response shape.
+    def record_response(self, response: Mapping[str, Any]) -> TokenUsage:
+        """Record provider usage from an OpenAI Responses object.
 
-        Compatible endpoints are allowed to omit usage.  Missing or malformed
-        token counts are therefore treated as zero instead of invalidating an
-        otherwise usable response.  The returned value describes this one
-        response; aggregate call count remains authoritative from
-        ``reserve_model_call``.
+        When an aggregate token budget is configured, every response must
+        include valid input and output token counts so enforcement cannot hide
+        behind missing provider accounting.
         """
-        usage = usage_from_response(api, response)
+        usage = usage_from_response(response)
         with self._lock:
+            if self.config.limits.max_total_tokens is not None and usage.unreported_calls:
+                raise BackendProtocolError(
+                    "token budget requires usage from every backend response"
+                )
             self._input_tokens += usage.input_tokens
             self._output_tokens += usage.output_tokens
+            self._unreported_calls += usage.unreported_calls
+            if (
+                self.config.limits.max_total_tokens is not None
+                and self._input_tokens + self._output_tokens > self.config.limits.max_total_tokens
+            ):
+                raise LimitExceededError(
+                    "token limit exceeded "
+                    f"({self._input_tokens + self._output_tokens}/"
+                    f"{self.config.limits.max_total_tokens})",
+                    code="token_limit",
+                )
         return usage
 
     def snapshot(self) -> TokenUsage:
@@ -161,12 +175,13 @@ class Ledger:
                 "subcalls": self._subcalls,
                 "active_model_calls": self._active_model_calls,
                 "peak_parallel_model_calls": self._peak_parallel_model_calls,
-                "max_model_calls": self.config.max_model_calls,
-                "max_subcalls": self.config.max_subcalls,
-                "max_parallel_subcalls": self.config.max_parallel_subcalls,
+                "max_model_calls": self.config.limits.max_model_calls,
+                "max_subcalls": self.config.limits.max_subcalls,
+                "max_parallel_model_calls": self.config.limits.max_parallel_model_calls,
+                "max_total_tokens": self.config.limits.max_total_tokens,
                 "started_at": self.started_at,
                 "deadline_at": self.deadline_at,
-                "deadline_seconds": self.config.deadline_seconds,
+                "deadline_seconds": self.config.limits.deadline_seconds,
                 "elapsed_seconds": max(0.0, now - self.started_at),
                 "remaining_seconds": max(0.0, self.deadline_at - now),
                 "usage": usage.to_dict(),
@@ -191,6 +206,7 @@ class Ledger:
             input_tokens=self._input_tokens,
             output_tokens=self._output_tokens,
             calls=self._model_calls,
+            unreported_calls=self._unreported_calls,
         )
 
     def _check_deadline_locked(self, now: float) -> None:
@@ -202,7 +218,7 @@ class Ledger:
         raise LimitExceededError(
             (
                 f"run deadline exceeded after {elapsed:.3f} seconds "
-                f"(limit {self.config.deadline_seconds:.3f} seconds)"
+                f"(limit {self.config.limits.deadline_seconds:.3f} seconds)"
             ),
             code="deadline_exceeded",
         )
@@ -213,17 +229,20 @@ class Ledger:
 RunLedger = Ledger
 
 
-def usage_from_response(api: API, response: Mapping[str, Any]) -> TokenUsage:
-    """Extract token counts from a Chat Completions or Responses response."""
+def usage_from_response(response: Mapping[str, Any]) -> TokenUsage:
+    """Extract token counts from a Responses response."""
     raw = response.get("usage")
+    if raw is None or "usage" not in response:
+        return TokenUsage(calls=1, unreported_calls=1)
     if not isinstance(raw, Mapping):
-        return TokenUsage(calls=1)
-    if api == "chat.completions":
-        input_tokens = _token_count(raw.get("prompt_tokens"))
-        output_tokens = _token_count(raw.get("completion_tokens"))
-    else:
-        input_tokens = _token_count(raw.get("input_tokens"))
-        output_tokens = _token_count(raw.get("output_tokens"))
+        raise BackendProtocolError("backend response usage must be an object or null")
+    input_tokens = _token_count(raw.get("input_tokens"), name="input_tokens")
+    output_tokens = _token_count(raw.get("output_tokens"), name="output_tokens")
+    total_tokens = _token_count(raw.get("total_tokens"), name="total_tokens")
+    if total_tokens != input_tokens + output_tokens:
+        raise BackendProtocolError(
+            "backend response usage total_tokens must equal input_tokens + output_tokens"
+        )
     return TokenUsage(
         input_tokens=input_tokens,
         output_tokens=output_tokens,
@@ -231,7 +250,7 @@ def usage_from_response(api: API, response: Mapping[str, Any]) -> TokenUsage:
     )
 
 
-def _token_count(value: Any) -> int:
+def _token_count(value: Any, *, name: str) -> int:
     if isinstance(value, bool) or not isinstance(value, int) or value < 0:
-        return 0
+        raise BackendProtocolError(f"backend response usage {name} must be a non-negative integer")
     return value

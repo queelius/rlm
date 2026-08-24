@@ -1,94 +1,59 @@
 from __future__ import annotations
 
+import argparse
+
 import pytest
 
-from rlm.backend import OpenAIEndpoint
-from rlm.cli import _build_model, build_parser
-from rlm.codex_backend import CodexAgentBackend
+from rlm import ControllerConfig
+from rlm.cli import _build_model, _parse_options, _positive_float, build_parser
 
 
 def parse_serve(*arguments: str):
     return build_parser().parse_args(("serve", *arguments))
 
 
-def test_serve_parser_defaults_to_openai_compatible_controller() -> None:
+def test_serve_parser_defaults_to_the_openai_compatible_upstream() -> None:
     args = parse_serve()
 
-    assert args.controller_backend == "openai"
-    assert args.codex_reasoning_effort is None
-    assert args.action_mode == "tool"
+    assert args.controller_model is None
+    assert not hasattr(args, "worker_model")
+    assert not hasattr(args, "action_mode")
+    assert args.max_parallel_model_calls == 8
+    assert args.max_total_tokens is None
+    assert args.trace_dir is None
+    assert args.trace_markdown is False
+    assert not hasattr(args, "max_parallel_subcalls")
+    assert not hasattr(args, "debug_dir")
 
 
-def test_build_model_selects_codex_only_for_private_controller() -> None:
-    args = parse_serve(
-        "--upstream-base-url",
-        "http://192.168.0.204:11434/v1",
-        "--upstream-api-key",
-        "ollama",
-        "--controller-backend",
-        "codex",
-        "--controller-model",
-        "gpt-5.6-sol",
-        "--codex-reasoning-effort",
-        "max",
-        "--action-mode",
-        "code",
-        "--worker-model",
-        "qwen3.5:latest",
-    )
-
-    model = _build_model(args)
-    try:
-        assert isinstance(model.backend, OpenAIEndpoint)
-        assert model.worker_backend is model.backend
-        assert isinstance(model.controller_backend, CodexAgentBackend)
-        assert model.controller_backend is not model.backend
-        assert model.controller_backend.model == "gpt-5.6-sol"
-        assert model.controller_backend.reasoning_effort == "max"
-        assert model.config.worker_model == "qwen3.5:latest"
-        assert model.config.action_mode == "code"
-    finally:
-        model.close()
-
-
-def test_build_model_defaults_all_roles_to_openai_compatible_upstream() -> None:
+def test_build_model_uses_one_backend_by_default() -> None:
     model = _build_model(parse_serve("--controller-model", "qwen3.5:latest"))
     try:
         assert model.controller_backend is model.backend
-        assert model.worker_backend is model.backend
     finally:
         model.close()
 
 
-@pytest.mark.parametrize(
-    ("arguments", "message"),
-    [
-        (("--controller-backend", "codex", "--action-mode", "code"), "--controller-model"),
-        (
-            ("--controller-backend", "codex", "--controller-model", "gpt-5.6-sol"),
-            "--action-mode code",
-        ),
-        (
-            ("--codex-reasoning-effort", "max"),
-            "--controller-backend codex",
-        ),
-        (
-            (
-                "--controller-backend",
-                "codex",
-                "--controller-model",
-                "gpt-5.6-sol",
-                "--action-mode",
-                "code",
-                "--controller-option",
-                "temperature=0",
-            ),
-            "--controller-option",
-        ),
-    ],
-)
-def test_build_model_rejects_invalid_controller_combinations(
-    arguments: tuple[str, ...], message: str
-) -> None:
-    with pytest.raises(ValueError, match=message):
-        _build_model(parse_serve(*arguments))
+def test_controller_option_requires_valid_json_value() -> None:
+    with pytest.raises(ValueError, match="valid JSON"):
+        _parse_options(["reasoning_effort=high"])
+
+    assert _parse_options(['reasoning_effort="high"', "temperature=0", "think=false"]) == {
+        "reasoning_effort": "high",
+        "temperature": 0,
+        "think": False,
+    }
+
+    with pytest.raises(ValueError, match="valid JSON"):
+        _parse_options(["temperature=NaN"])
+
+
+def test_background_controller_option_is_rejected() -> None:
+    with pytest.raises(ValueError, match="background"):
+        ControllerConfig(options={"background": True})
+
+
+@pytest.mark.parametrize("value", ["nan", "inf", "-inf"])
+def test_positive_float_rejects_non_finite_values(value: str) -> None:
+    with pytest.raises(argparse.ArgumentTypeError):
+        _positive_float(value)

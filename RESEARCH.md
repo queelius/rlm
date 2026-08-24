@@ -1,131 +1,87 @@
 # Research notes
 
-This design was reviewed against public work available on 2026-08-10. The
-central conclusion is deliberately conservative: make programmatic interaction
-with external context reliable first; make recursion optional and measurable.
+RLM is an experimental kernel, not a benchmark, verifier, trainer, or general
+agent framework. It keeps a large public request in persistent Python working
+memory while a controller produces exact Python actions and may make bounded
+model calls. The runtime deliberately preserves a small, inspectable
+Responses-only contract so experimental changes are attributable.
 
-## Primary RLM sources
+## Experimental boundary
 
-- [Recursive Language Models, v3](https://arxiv.org/html/2512.24601v3)
-- [Official RLM implementation](https://github.com/alexzhang13/rlm)
-- [Prime Intellect rlm-harness](https://github.com/PrimeIntellect-ai/rlm-harness)
-- [Prime Agent](https://www.primeintellect.ai/blog/prime-agent)
+The kernel owns controller context, the ABI, typed recovery/fatal semantics,
+deadlines and budgets, executor/IPC behavior, and canonical causal traces.
+Datasets, task conditioning, splits, verifiers, rewards, training, and reports
+remain external. Verifier answers and rewards never enter controller context.
 
-The paper's durable idea is not a particular `FINAL(...)` string protocol. It
-is keeping large context in a persistent environment while generated programs
-can transform it and invoke models over values constructed at runtime. The
-official implementation and paper expose several practical lessons:
+Harness behavior is explicit and fingerprinted: frozen structural `HarnessSpec`
+contains the prompt, exact rendered-prompt digests, typed first-turn bootstrap,
+ABI identity, recovery, observation, and context settings. Bootstrap schema v2
+tells the controller that caller content is absent, names the ABI-bound request,
+and derives the allowed explicit final kinds from the request. Observation
+schema v2 separates runtime feedback from caller turns and distinguishes cell
+execution from final submission. Neither envelope copies task data into the
+private conversation. The fixed global
+`RunLimits` are not harness-search variables. This prevents an optimizer from
+claiming reward by enlarging time, token, call, recursion, or concurrency
+budgets, weakening tracing, or changing fatal behavior. Controller options may
+change between runs, but each run owns a deep strict-JSON snapshot before
+rollout; no option mutation can alter an in-flight run.
 
-- Root prompts are model-specific policy and must be versioned.
-- Qwen variants can generate pathological fan-out without explicit limits.
-- `FINAL`/`FINAL_VAR` was brittle enough to require substantial training-data
-  repair; typed final submission is safer.
-- Higher recursive depth is not monotonically useful and compounds syntax and
-  planning failures.
-- Captured observations belong in immutable logs even when the controller sees
-  a more aggressively truncated view; capture itself needs a hard bound.
-- A subprocess kernel with deadlines is operationally preferable to in-process
-  `exec`, but neither one is a security sandbox by itself.
+The controller protocol is intentionally narrow: one exact Python cell per
+turn, a choice between inspecting needed request fields and deliberately
+delegating the bound request, no mandatory separate inspection turn, persistent
+IPython state, retained reasoning output, strict
+`FINAL_TEXT`/`FINAL_RESPONSE` submissions, and typed observations. Controller
+and Python faults can be repaired by a normal next turn; infrastructure,
+validation, deadline, budget, executor, and trace faults are fatal. There is no
+automatic retry, direct answer fallback, or conversion of a failure to an empty
+response. Final text is also exact: the executor rejects non-string values for
+self-correction instead of silently applying `str(...)`.
 
-This repository therefore uses complete response objects, prompt hashes,
-shared budgets, a host-owned model broker, fresh recursive kernels, and a
-canonical event stream.
+## Evidence and limitations
 
-## Evidence against recursion by default
+Recursive language model work motivates programmatic interaction with external
+context, but recursion itself is not presumed beneficial. Fixed depth and
+shared budgets make the non-recursive/controller-only baseline measurable.
+Process isolation improves operational containment but is not a security
+sandbox: generated code retains the current user's OS permissions.
 
-- [SRLM](https://arxiv.org/html/2603.15653) separates gains from programmatic
-  context interaction from gains due specifically to recursive model calls.
-- [Think, But Don't Overthink](https://arxiv.org/abs/2603.02615) reports that
-  additional RLM depth can sharply increase latency and reduce accuracy.
-- [TimeRLM](https://arxiv.org/html/2608.03391) shows strong structured-context
-  interaction and RL results under hard turn and efficiency budgets, often
-  without recursive subcalls.
-- [lambda-RLM](https://arxiv.org/abs/2603.20105) motivates typed, bounded
-  composition over unconstrained recursive fan-out.
+The current benchmark implementation is `benchmarks/oolong.py` (runner schema
+version 1), an optional stress runner rather than evidence of general
+capability. Its small locally pinned Oolong subset can contain very few unique
+long contexts, so row-level scores would overstate independence. It therefore
+groups train/development/test splits by context digest, reports row and unique
+context counts, uses repeated rollouts for stochastic conditions, and retains
+HTTP, transport, timeout, decode, protocol, provenance, and budget failures
+separately from verifier scores.
 
-Accordingly, `max_depth=0` is the default. Ordinary `model_complete` leaf calls
-remain available; recursive `rlm_complete` is an explicit experiment.
+Each RLM-minimal or RLM-oracle condition has a paired direct-model baseline.
+Both arms derive from one immutable comparison with the same task, context,
+model, seed, sampling options, and declared budget. Prompts remain arm-specific:
+the direct arm receives no RLM ABI or retry scaffold. Provenance includes exact
+prompt text/profile/digest, dataset/source/revision, context digest, verifier
+identity, model/checkpoint identity, harness fingerprint, repetition, pair ID,
+and aggregate usage. A successful RLM arm must attest its controller model,
+canonical option digest, and harness fingerprint; its token budget is audited
+from aggregate run counters, not from a leaf response.
 
-## Action and context design
+## Research sequence
 
-- [CodeAct](https://arxiv.org/abs/2402.01030) supports Python as a compositional
-  action space.
-- [Recursive Models](https://arxiv.org/html/2603.02112) and
-  [Recursive Agent Harnesses](https://arxiv.org/html/2606.13643) reinforce
-  isolated child frames and compact parent-visible returns.
-- [LCM](https://arxiv.org/html/2605.04050) motivates immutable raw information
-  and lossless pointers when summaries or compaction are introduced.
+1. Measure plain direct and fixed-harness RLM baselines on held-out,
+   context-grouped conditions.
+2. Collect verified successful fixed-harness trajectories and run self-SFT on
+   controller actions, with a matched plain-model self-training control.
+3. Apply later fixed-harness RL with verifiable rewards using fresh on-policy
+   rollouts from both base and self-SFT checkpoints.
+4. Freeze model weights and search only symbolic `HarnessSpec` candidates on
+   paired development tasks under fixed budgets; then evaluate once on held-out
+   test tasks.
+5. Alternate fixed-harness model updates and fixed-model harness search only
+   after the preceding controls are measured.
 
-The default action is one official `ipython` function tool. A strict fenced-code
-encoding exists because compatible endpoints do not all implement tool history
-equally. Natural-language controller output is a final answer; Python is used
-only when it helps. The public request never becomes a flattened user string.
-
-## Prime ecosystem boundary
-
-- [Continual Harness](https://arxiv.org/html/2605.09998)
-- [Verifiers](https://github.com/PrimeIntellect-ai/verifiers)
-- [Prime-RL](https://github.com/PrimeIntellect-ai/prime-rl)
-
-Prime Agent demonstrates useful host/kernel separation and same-engine child
-agents, but it also includes daemon sessions, schedules, mutable skills,
-memories, and asynchronous messaging. Prime-RL is a distributed vLLM/FSDP
-training system. Neither is the right dependency for this small model adapter.
-
-The useful architectural boundary comes from Verifiers:
-
-- taskset: data, tools, and scoring;
-- harness: how the agent rolls out;
-- runtime: where execution occurs.
-
-`rlm` is the harness/engine. Tasks, graders, rewards, Continual Harness prompt
-mutation, and distributed training stay outside it. Trace events include stable
-run, branch, event, parent, depth, and model-call identifiers so downstream
-systems can reconstruct trajectories without changing inference behavior.
-
-## RL implications
-
-The official RLM training work emphasizes root-policy trajectories, filtering
-malformed or trivial episodes, protocol repair, and eventually on-policy RL.
-TimeRLM separately suggests decomposed reward components and applying
-efficiency pressure primarily to successful trajectories.
-
-The recent [single-layer RL study](https://arxiv.org/html/2607.01232) is the
-strongest direct evidence for the proposed middle-layer experiment. Across
-seven Qwen3/Qwen2.5-derived models, three RL algorithms, and math, code, and
-agentic tasks, its highest-contribution layers were usually around 40--60% of
-network depth. A profiling-free middle-five-layer heuristic beat the paper's
-full-parameter RL baseline on all three tested Qwen3 sizes. This is promising,
-but not yet a universal rule for Qwen3.5 or RLM trajectories. We should make the
-trainable layer set explicit and benchmark at least middle-five, a selected
-single layer, and an appropriate PEFT/full-update control.
-
-Freezing parameters does reduce trainable weights, optimizer state, and weight
-gradient storage. It does not eliminate rollout generation or the full forward
-path, and gradients for a middle block still backpropagate through later frozen
-blocks. We should therefore measure peak memory and step time rather than infer
-an end-to-end savings factor from the fraction of trainable parameters.
-
-For any future trainer, ordinary API response objects are insufficient. It
-must preserve exact sampled token IDs and log probabilities, the renderer that
-produced the sampled context, generated-token masks, branch visibility, and
-weight/version provenance. This is why no RL-specific normalization is hidden
-inside the inference library.
-
-## Codex subscriptions
-
-Official OpenAI documentation distinguishes ChatGPT subscription access from
-usage-billed API access:
-
-- [Codex authentication](https://learn.chatgpt.com/docs/auth)
-- [Codex SDK](https://learn.chatgpt.com/docs/codex-sdk)
-- [Codex app-server](https://learn.chatgpt.com/docs/app-server)
-- [Non-interactive Codex](https://learn.chatgpt.com/docs/non-interactive-mode)
-
-Those surfaces support programmatic local Codex agents. They do not turn a
-subscription into `/v1/chat/completions`, expose hidden chain-of-thought, or
-provide policy token/log-probability telemetry. The current
-[Terms of Use](https://openai.com/policies/terms-of-use/) also restrict
-programmatic output extraction and using output to develop competing models.
-Any Codex integration must therefore be labeled as an agent adapter and kept
-separate from the exact OpenAI-compatible transport.
+Trace exporters use exact model-visible requests as states and model-authored
+reasoning/assistant content as targets. Environment output, observations,
+verifier output, reward, and transport metadata remain context or provenance,
+not SFT targets. On-policy RL additionally needs token IDs, action masks,
+sampling metadata, and old-policy log probabilities; ordinary Responses
+objects alone are not enough.

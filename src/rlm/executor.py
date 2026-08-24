@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import copy
 import io
-import json
 import multiprocessing
 import os
 import signal
@@ -13,39 +12,307 @@ import tempfile
 import threading
 import time
 from collections.abc import Callable, Mapping, Sequence
-from contextlib import suppress
+from dataclasses import dataclass
+from enum import Enum
 from multiprocessing.connection import Connection
 from pathlib import Path
-from typing import Any
+from typing import Any, Protocol
 
-from rlm.errors import ExecutionTimeoutError, RLMError
+from rlm.abi import (
+    ENVIRONMENT_ABI,
+    EnvironmentABI,
+    HostOperation,
+    HostPayload,
+    validate_environment_bindings,
+)
+from rlm.errors import (
+    ErrorRecord,
+    ExecutionTimeoutError,
+    FinalSubmissionFault,
+    HostProtocolError,
+    InvalidRequestError,
+    ModelOutputFault,
+    RLMError,
+    error_record_for_exception,
+)
+from rlm.json import json_compatibility_error, strict_json_dumps, strict_json_loads
 from rlm.protocol import extract_text
-from rlm.response import json_compatibility_error
-from rlm.types import API, ExecutionResult, normalize_api
+from rlm.types import (
+    AskBatchResult,
+    ExecutionException,
+    ExecutionFaultKind,
+    ExecutionResult,
+    HostFailure,
+    HostFailureKind,
+    OutputChannel,
+    OutputTruncation,
+    ResponseSubmission,
+    TextFailure,
+    TextFailureKind,
+    TextSubmission,
+)
 
-HostActionHandler = Callable[[str, dict[str, Any]], Any]
+ActionHandler = Callable[[HostOperation, HostPayload, float], Any]
+HostActionHandler = ActionHandler
 _MAX_IPC_BYTES = 64 * 1024 * 1024
+
+
+@dataclass(frozen=True, slots=True)
+class ExecutorCleanupFailure:
+    """One cleanup-stage failure retained without lossy string formatting."""
+
+    stage: str
+    exception_type: str
+    message: str
+
+    def __post_init__(self) -> None:
+        if not all(
+            isinstance(value, str) and value
+            for value in (self.stage, self.exception_type, self.message)
+        ):
+            raise ValueError("executor cleanup failure fields must be non-empty strings")
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            "stage": self.stage,
+            "exception_type": self.exception_type,
+            "message": self.message,
+        }
+
+
+class ExecutorCloseError(RLMError):
+    """Typed aggregate cleanup failure chained from the first exact cause."""
+
+    def __init__(
+        self,
+        failures: Sequence[ExecutorCleanupFailure],
+        *,
+        cleanup_interruptions: Sequence[BaseException] = (),
+    ) -> None:
+        if not failures:
+            raise ValueError("executor close error requires at least one cleanup failure")
+        self.cleanup_failures = tuple(failures)
+        self.cleanup_interruptions = tuple(cleanup_interruptions)
+        summary = "; ".join(
+            f"{item.stage}: {item.exception_type}: {item.message}" for item in self.cleanup_failures
+        )
+        super().__init__(f"IPython executor cleanup failed: {summary}", code="executor_close")
+
+    def _record_details(self) -> dict[str, Any]:
+        return {"cleanup_failures": [item.to_dict() for item in self.cleanup_failures]}
+
+
+class _ExecutorCleanupInterruptions(Exception):
+    """Structured causal detail for additional non-ordinary cleanup failures."""
+
+    def __init__(self, interruptions: Sequence[BaseException]) -> None:
+        self.interruptions = tuple(interruptions)
+        super().__init__("multiple non-ordinary executor cleanup interruptions")
+
+
+class ExecutionEnvironment(Protocol):
+    abi_version: str
+
+    def __enter__(self) -> ExecutionEnvironment: ...
+
+    def __exit__(self, *exc_info: object) -> None: ...
+
+    def execute(
+        self,
+        code: str,
+        *,
+        action_handler: ActionHandler,
+        timeout: float,
+    ) -> ExecutionResult: ...
+
+
+class ExecutionEnvironmentFactory(Protocol):
+    def __call__(
+        self,
+        *,
+        request: dict[str, Any],
+        allow_recursion: bool,
+        working_directory: str | Path | None,
+        startup_timeout: float,
+        max_output_chars: int,
+    ) -> ExecutionEnvironment: ...
+
+
+class IPCMessageKind(str, Enum):
+    READY = "ready"
+    STARTUP_ERROR = "startup_error"
+    SHUTDOWN = "shutdown"
+    SHUTDOWN_COMPLETE = "shutdown_complete"
+    EXECUTE = "execute"
+    EXECUTION_RESULT = "execution_result"
+    HOST_REQUEST = "host_request"
+    HOST_RESPONSE = "host_response"
+    WORKER_ERROR = "worker_error"
+
+
+def _host_error_record(value: Any) -> ErrorRecord:
+    if not isinstance(value, Mapping):
+        raise ValueError("host error frame must be an object")
+    allowed = {"record", "causal_parent_event_id"}
+    if set(value).difference(allowed) or "record" not in value:
+        raise ValueError("host error frame must contain only a record and optional causal parent")
+    parent = value.get("causal_parent_event_id")
+    if parent is not None and (not isinstance(parent, str) or not parent):
+        raise ValueError("host error causal parent must be a non-empty string or null")
+    return ErrorRecord.from_dict(value["record"])
+
+
+def _host_errors(value: Any) -> list[dict[str, Any]]:
+    if value is None:
+        return []
+    if not isinstance(value, list):
+        raise RLMError("executor host errors must be a list", code="executor_protocol")
+    normalized: list[dict[str, Any]] = []
+    for item in value:
+        try:
+            record = _host_error_record(item)
+        except ValueError as exc:
+            raise RLMError(
+                f"invalid executor host error frame: {exc}", code="executor_protocol"
+            ) from exc
+        assert isinstance(item, Mapping)
+        frame: dict[str, Any] = {"record": record.to_dict()}
+        if "causal_parent_event_id" in item:
+            frame["causal_parent_event_id"] = item["causal_parent_event_id"]
+        normalized.append(frame)
+    return normalized
+
+
+def _execution_exception(value: Any) -> ExecutionException | None:
+    if value is None:
+        return None
+    fields = {"type", "message", "fault_kind", "code", "traceback", "details"}
+    if not isinstance(value, dict) or set(value) != fields:
+        raise HostProtocolError("execution exception frame has an invalid field set")
+    if not isinstance(value["type"], str) or not isinstance(value["message"], str):
+        raise HostProtocolError("execution exception frame requires text identity fields")
+    try:
+        fault_kind = ExecutionFaultKind(value["fault_kind"])
+    except (TypeError, ValueError) as exc:
+        raise HostProtocolError("execution exception fault_kind is invalid") from exc
+    if value["code"] is not None and not isinstance(value["code"], str):
+        raise HostProtocolError("execution exception code must be text or null")
+    if value["traceback"] is not None and not isinstance(value["traceback"], str):
+        raise HostProtocolError("execution exception traceback must be text or null")
+    if value["details"] is not None and not isinstance(value["details"], dict):
+        raise HostProtocolError("execution exception details must be an object or null")
+    return ExecutionException(
+        type=value["type"],
+        message=value["message"],
+        fault_kind=fault_kind,
+        code=value["code"],
+        traceback=value["traceback"],
+        details=value["details"],
+    )
+
+
+def _execution_fault_kind(error: BaseException) -> ExecutionFaultKind:
+    """Classify actual worker exception objects before their type is serialized."""
+
+    if isinstance(error, ModelOutputFault):
+        return ExecutionFaultKind.MODEL_OUTPUT
+    if isinstance(error, FinalSubmissionFault):
+        return ExecutionFaultKind.FINAL_SUBMISSION
+    return ExecutionFaultKind.EXECUTION
+
+
+def _host_failure(value: Any) -> HostFailure | None:
+    if value is None:
+        return None
+    if not isinstance(value, dict) or set(value) != {"kind", "error"}:
+        raise HostProtocolError("host failure frame has an invalid field set")
+    raw_error = value["error"]
+    if not isinstance(raw_error, dict) or set(raw_error) not in (
+        {"record"},
+        {"record", "causal_parent_event_id"},
+    ):
+        raise HostProtocolError("host failure error frame has an invalid field set")
+    try:
+        kind = HostFailureKind(value["kind"])
+        record = ErrorRecord.from_dict(raw_error["record"])
+    except (TypeError, ValueError) as exc:
+        raise HostProtocolError(f"invalid host failure frame: {exc}") from exc
+    parent = raw_error.get("causal_parent_event_id")
+    if parent is not None and (not isinstance(parent, str) or not parent):
+        raise HostProtocolError("host failure causal parent must be text or null")
+    return HostFailure(kind=kind, error=record, causal_parent_event_id=parent)
+
+
+def _submission(value: Any) -> TextSubmission | ResponseSubmission | None:
+    if value is None:
+        return None
+    if not isinstance(value, dict):
+        raise HostProtocolError("execution submission must be an object or null")
+    if set(value) == {"text"} and isinstance(value["text"], str):
+        return TextSubmission(value["text"])
+    if set(value) == {"response"} and isinstance(value["response"], dict):
+        json_error = json_compatibility_error(value["response"])
+        if json_error is None:
+            return ResponseSubmission(value["response"])
+    raise HostProtocolError("execution submission has an invalid shape")
+
+
+def _truncations(value: Any) -> tuple[OutputTruncation, ...]:
+    if not isinstance(value, list):
+        raise HostProtocolError("execution truncations must be a list")
+    decoded: list[OutputTruncation] = []
+    for item in value:
+        if not isinstance(item, dict) or set(item) != {
+            "channel",
+            "original_chars",
+            "retained_chars",
+            "omitted_chars",
+        }:
+            raise HostProtocolError("execution truncation has an invalid field set")
+        try:
+            decoded.append(
+                OutputTruncation(
+                    channel=OutputChannel(item["channel"]),
+                    original_chars=item["original_chars"],
+                    retained_chars=item["retained_chars"],
+                    omitted_chars=item["omitted_chars"],
+                )
+            )
+        except (TypeError, ValueError) as exc:
+            raise HostProtocolError(f"invalid execution truncation: {exc}") from exc
+    return tuple(decoded)
+
+
+class _OutputBudget:
+    def __init__(self, max_chars: int) -> None:
+        self.max_chars = max_chars
+        self.retained_chars = 0
+
+    def take(self, count: int) -> int:
+        accepted = min(count, max(0, self.max_chars - self.retained_chars))
+        self.retained_chars += accepted
+        return accepted
 
 
 class _BoundedStringIO(io.StringIO):
     """Text capture that retains a prefix while counting discarded output."""
 
-    def __init__(self, max_chars: int, *, label: str) -> None:
+    def __init__(self, budget: _OutputBudget, *, channel: OutputChannel) -> None:
         super().__init__()
-        self.max_chars = max_chars
-        self.label = label
+        self.budget = budget
+        self.channel = channel
         self.total_chars = 0
         self.retained_chars = 0
 
     @property
     def truncated(self) -> bool:
-        return self.total_chars > self.max_chars
+        return self.total_chars > self.retained_chars
 
     def write(self, value: str) -> int:
         if not isinstance(value, str):
             raise TypeError(f"write() argument must be str, not {type(value).__name__}")
         length = len(value)
-        room = max(0, self.max_chars - self.retained_chars)
+        room = self.budget.take(length)
         if room:
             # Pipe messages are strict UTF-8 JSON. Replace lone surrogates in
             # only the retained prefix, avoiding a copy of discarded output.
@@ -57,53 +324,18 @@ class _BoundedStringIO(io.StringIO):
         # bounded sink deliberately discards the suffix.
         return len(value)
 
-    def bounded_value(self) -> str:
-        value = super().getvalue()
+    def value(self) -> str:
+        return super().getvalue()
+
+    def truncation(self) -> OutputTruncation | None:
         if not self.truncated:
-            return value
-        omitted = self.total_chars - self.max_chars
-        return (
-            f"{value}\n... [RLM {self.label} truncated after {self.max_chars} characters; "
-            f"{omitted} omitted]\n"
+            return None
+        return OutputTruncation(
+            channel=self.channel,
+            original_chars=self.total_chars,
+            retained_chars=self.retained_chars,
+            omitted_chars=self.total_chars - self.retained_chars,
         )
-
-
-class _ActionHandlerTimeout(TimeoutError):
-    pass
-
-
-def _call_action_handler(
-    handler: HostActionHandler,
-    operation: str,
-    payload: dict[str, Any],
-    *,
-    timeout: float,
-) -> Any:
-    """Run one host callback without letting it block the cell deadline."""
-
-    completed = threading.Event()
-    outcome: list[tuple[bool, Any]] = []
-
-    def invoke() -> None:
-        try:
-            outcome.append((True, handler(operation, payload)))
-        except BaseException as exc:
-            outcome.append((False, exc))
-        finally:
-            completed.set()
-
-    thread = threading.Thread(
-        target=invoke,
-        name="rlm-host-action",
-        daemon=True,
-    )
-    thread.start()
-    if timeout <= 0 or not completed.wait(timeout):
-        raise _ActionHandlerTimeout
-    succeeded, value = outcome[0]
-    if not succeeded:
-        raise value
-    return value
 
 
 def _send_message(connection: Connection, message: dict[str, Any]) -> None:
@@ -112,12 +344,7 @@ def _send_message(connection: Connection, message: dict[str, Any]) -> None:
     json_error = json_compatibility_error(message)
     if json_error is not None:
         raise TypeError(f"executor IPC message requires strict JSON: {json_error}")
-    encoded = json.dumps(
-        message,
-        ensure_ascii=False,
-        allow_nan=False,
-        separators=(",", ":"),
-    ).encode("utf-8")
+    encoded = strict_json_dumps(message, separators=(",", ":")).encode("utf-8")
     if len(encoded) > _MAX_IPC_BYTES:
         raise OSError(
             f"executor IPC message is {len(encoded)} bytes; limit is {_MAX_IPC_BYTES} bytes"
@@ -130,11 +357,7 @@ def _receive_message(connection: Connection) -> dict[str, Any]:
 
     try:
         encoded = connection.recv_bytes(_MAX_IPC_BYTES)
-        value = json.loads(
-            encoded.decode("utf-8"),
-            parse_constant=_reject_json_constant,
-            object_pairs_hook=_object_without_duplicate_keys,
-        )
+        value = strict_json_loads(encoded)
     except (UnicodeError, ValueError, TypeError, RecursionError) as exc:
         # Existing controller loops already treat OSError as a broken protocol
         # channel and reliably tear the worker down on that path.
@@ -147,17 +370,14 @@ def _receive_message(connection: Connection) -> dict[str, Any]:
     return value
 
 
-def _reject_json_constant(value: str) -> Any:
-    raise ValueError(f"non-finite JSON constant {value!r}")
-
-
-def _object_without_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-    value: dict[str, Any] = {}
-    for key, item in pairs:
-        if key in value:
-            raise ValueError(f"duplicate JSON object key {key!r}")
-        value[key] = item
-    return value
+def _message_kind(message: Mapping[str, Any]) -> IPCMessageKind:
+    raw_kind = message.get("type")
+    if not isinstance(raw_kind, str):
+        raise HostProtocolError("executor IPC message requires a string type")
+    try:
+        return IPCMessageKind(raw_kind)
+    except ValueError as exc:
+        raise HostProtocolError(f"unknown executor IPC message type: {raw_kind!r}") from exc
 
 
 def _sanitize_environment(working_directory: str) -> None:
@@ -186,32 +406,62 @@ def _sanitize_environment(working_directory: str) -> None:
     )
 
 
+def _environment_namespace_contract(abi: EnvironmentABI) -> tuple[frozenset[str], frozenset[str]]:
+    """Return ABI-owned and ignored IPython names from one environment descriptor."""
+
+    reserved = frozenset((*[item.name for item in abi.functions], abi.request_name))
+    ignored = frozenset({"In", "Out", "exit", "quit", "get_ipython", "open", *reserved})
+    return reserved, ignored
+
+
 def _worker_main(
     connection: Connection,
     working_directory: str,
-    public_api: API,
-    public_request: dict[str, Any],
-    worker_api: API,
-    worker_model: str | None,
-    worker_options: dict[str, Any],
+    public_request_json: bytes,
     allow_recursion: bool,
     max_output_chars: int,
 ) -> None:
     # Put the kernel and model-spawned descendants in their own POSIX process
     # group so the host can tear down the complete branch.
     if os.name == "posix":
-        with suppress(OSError):
+        try:
             os.setsid()
-        # The parent signals only a group whose id matches this worker's pid,
-        # so a failed setsid safely falls back to direct-process cleanup.
+        except OSError as exc:
+            _send_message(
+                connection,
+                {
+                    "type": IPCMessageKind.STARTUP_ERROR.value,
+                    "error": (
+                        f"could not establish POSIX process group: {type(exc).__name__}: {exc}"
+                    ),
+                },
+            )
+            connection.close()
+            return
     _sanitize_environment(working_directory)
+    try:
+        public_request = strict_json_loads(public_request_json)
+    except (TypeError, ValueError) as exc:
+        _send_message(
+            connection,
+            {"type": IPCMessageKind.STARTUP_ERROR.value, "error": f"invalid request JSON: {exc}"},
+        )
+        connection.close()
+        return
+    if not isinstance(public_request, dict):
+        _send_message(
+            connection,
+            {"type": IPCMessageKind.STARTUP_ERROR.value, "error": "request JSON must be an object"},
+        )
+        connection.close()
+        return
     try:
         from IPython.core.interactiveshell import InteractiveShell
         from IPython.utils.capture import capture_output
     except Exception as exc:
         _send_message(
             connection,
-            {"type": "startup_error", "error": f"{type(exc).__name__}: {exc}"},
+            {"type": IPCMessageKind.STARTUP_ERROR.value, "error": f"{type(exc).__name__}: {exc}"},
         )
         connection.close()
         return
@@ -222,10 +472,9 @@ def _worker_main(
     state: dict[str, Any] = {
         # Spawn already gave this process a private request snapshot. Reuse it
         # across cells instead of copying a potentially huge context each turn.
-        "request": public_request,
-        "final_kind": None,
-        "final_value": None,
-        "host_errors": [],
+        "public_request": public_request,
+        "submission": None,
+        "host_failure": None,
         "next_id": 0,
     }
     cell_thread_ident = threading.get_ident()
@@ -238,54 +487,74 @@ def _worker_main(
                 "use a provided batch helper for parallel calls"
             )
 
-    def host_call(operation: str, payload: dict[str, Any]) -> Any:
-        require_cell_thread(operation)
+    def host_call(operation: HostOperation, payload: dict[str, Any]) -> Any:
+        require_cell_thread(operation.value)
+        if state["host_failure"] is not None:
+            raise RuntimeError("fatal host failure is already latched")
         with bridge_lock:
             request_id = int(state["next_id"])
             state["next_id"] = request_id + 1
             _send_message(
                 connection,
                 {
-                    "type": "host_request",
+                    "type": IPCMessageKind.HOST_REQUEST.value,
                     "request_id": request_id,
-                    "operation": operation,
+                    "operation": operation.value,
                     "payload": payload,
                 },
             )
             reply = _receive_message(connection)
-        if reply.get("type") != "host_response" or reply.get("request_id") != request_id:
+        if (
+            _message_kind(reply) is not IPCMessageKind.HOST_RESPONSE
+            or reply.get("request_id") != request_id
+        ):
             raise RuntimeError(f"invalid host response: {reply!r}")
-        error = reply.get("error")
-        if error:
-            if not isinstance(error, dict):
-                error = {"kind": "exception", "message": str(error)}
-            state["host_errors"].append(copy.deepcopy(error))
-            code = error.get("code")
-            prefix = f"{code}: " if code else ""
-            raise RuntimeError(prefix + str(error.get("message") or error))
+        if "error" in reply:
+            if set(reply) != {"type", "request_id", "error"}:
+                raise HostProtocolError("host response error frame has an invalid field set")
+            error = reply["error"]
+            try:
+                record = _host_error_record(error)
+            except ValueError as exc:
+                raise HostProtocolError(f"invalid executor host error frame: {exc}") from exc
+            # A malformed model-authored request is a controller coding error,
+            # just like invalid Python. Surface it in the cell so the next turn
+            # can repair it. Provider, limit, and transport failures stay fatal.
+            if record.exception_type == "InvalidRequestError":
+                raise InvalidRequestError(record.message, code=record.code)
+            if state["host_failure"] is None:
+                state["host_failure"] = {
+                    "kind": (
+                        HostFailureKind.RLM_ERROR.value
+                        if record.code != "internal_error"
+                        else HostFailureKind.INFRASTRUCTURE.value
+                    ),
+                    "error": copy.deepcopy(error),
+                }
+            raise RuntimeError(record.message)
+        if set(reply) != {"type", "request_id", "value"}:
+            raise HostProtocolError("host response value frame has an invalid field set")
         return reply.get("value")
 
-    def model_complete(
-        request: Mapping[str, Any] | None = None,
-        *,
-        api: str | None = None,
-    ) -> dict[str, Any]:
-        body = None if request is None else copy.deepcopy(dict(request))
-        value = host_call(
-            "model_complete",
-            {"api": api, "request": body},
-        )
+    def model_complete(request_obj: dict[str, Any] | None = None) -> dict[str, Any]:
+        body = None if request_obj is None else copy.deepcopy(dict(request_obj))
+        value = host_call(HostOperation.MODEL_COMPLETE, {"request": body})
         if not isinstance(value, dict):
             raise RuntimeError("model_complete host returned a non-object")
         return value
 
     def model_complete_batch(
-        requests: Sequence[Mapping[str, Any]],
-        *,
-        api: str | None = None,
+        requests: Sequence[dict[str, Any]],
     ) -> list[dict[str, Any]]:
-        bodies = [copy.deepcopy(dict(item)) for item in requests]
-        value = host_call("model_complete_batch", {"api": api, "requests": bodies})
+        bodies = []
+        for index, item in enumerate(requests):
+            if not isinstance(item, Mapping):
+                raise TypeError(
+                    "model_complete_batch expects full request mappings; "
+                    f"item {index} is {type(item).__name__}. Use ask_batch for text prompts."
+                )
+            bodies.append(copy.deepcopy(dict(item)))
+        value = host_call(HostOperation.MODEL_COMPLETE_BATCH, {"requests": bodies})
         if not isinstance(value, list) or not all(isinstance(item, dict) for item in value):
             raise RuntimeError("model_complete_batch host returned an invalid value")
         return value
@@ -295,122 +564,135 @@ def _worker_main(
         *,
         system: str | None,
         model: str | None,
-        api: str | None,
-    ) -> tuple[API, dict[str, Any]]:
-        target_api = normalize_api(api) if api is not None else worker_api
-        body = copy.deepcopy(worker_options)
-        body["model"] = model or worker_model or public_request.get("model")
+        options: dict[str, Any] | None,
+    ) -> dict[str, Any]:
+        body = copy.deepcopy(dict(options or {}))
+        body["model"] = model or public_request.get("model")
         if not body.get("model"):
-            raise ValueError("ask requires a model in the request or RLM configuration")
-        if target_api == "chat.completions":
-            messages: list[dict[str, Any]] = []
-            if system is not None:
-                messages.append({"role": "system", "content": str(system)})
-            messages.append({"role": "user", "content": str(prompt)})
-            body["messages"] = messages
-        else:
-            if system is not None:
-                body["instructions"] = str(system)
-            body["input"] = str(prompt)
-        return target_api, body
+            raise ValueError("ask requires a model")
+        if system is not None:
+            body["instructions"] = str(system)
+        body["input"] = str(prompt)
+        return body
+
+    def _text_failure(index: int, response: dict[str, Any]) -> TextFailure:
+        kind = (
+            TextFailureKind.INCOMPLETE_RESPONSE
+            if response.get("status") == "incomplete"
+            else TextFailureKind.EMPTY_TEXT
+        )
+        return TextFailure(index=index, kind=kind, response=response)
 
     def ask(
         prompt: str,
         *,
         system: str | None = None,
         model: str | None = None,
-        api: str | None = None,
+        options: dict[str, Any] | None = None,
     ) -> str:
-        target_api, body = _text_request(str(prompt), system=system, model=model, api=api)
-        response = model_complete(body, api=target_api)
-        return extract_text(target_api, response)
+        body = _text_request(str(prompt), system=system, model=model, options=options)
+        response = model_complete(body)
+        text = extract_text(response)
+        if response.get("status") != "completed" or not text.strip():
+            failure = _text_failure(0, response)
+            raise ModelOutputFault(
+                "ask returned no usable text",
+                details={"failures": [failure.summary()]},
+            )
+        return text
 
     def ask_batch(
         prompts: Sequence[str],
         *,
         system: str | None = None,
         model: str | None = None,
-        api: str | None = None,
-    ) -> list[str]:
-        requests: list[dict[str, Any]] = []
-        target_api: API | None = None
-        for prompt in prompts:
-            item_api, body = _text_request(str(prompt), system=system, model=model, api=api)
-            target_api = item_api
-            requests.append(body)
-        if target_api is None:
-            return []
-        responses = model_complete_batch(requests, api=target_api)
-        return [extract_text(target_api, response) for response in responses]
+        options: dict[str, Any] | None = None,
+    ) -> AskBatchResult:
+        requests = [
+            _text_request(str(prompt), system=system, model=model, options=options)
+            for prompt in prompts
+        ]
+        responses = model_complete_batch(requests)
+        if len(responses) != len(requests):
+            raise RuntimeError("model_complete_batch returned the wrong number of responses")
+        texts: list[str | None] = []
+        failures: list[TextFailure] = []
+        for index, response in enumerate(responses):
+            text = extract_text(response)
+            if response.get("status") != "completed" or not text.strip():
+                texts.append(None)
+                failures.append(_text_failure(index, response))
+            else:
+                texts.append(text)
+        return AskBatchResult(tuple(texts), tuple(responses), tuple(failures))
 
-    def rlm_complete(
-        request: Mapping[str, Any] | None = None,
-        *,
-        api: str | None = None,
-    ) -> dict[str, Any]:
+    def rlm_complete(request_obj: dict[str, Any] | None = None) -> dict[str, Any]:
         if not allow_recursion:
             raise RuntimeError("recursive RLM calls are disabled for this branch")
-        body = None if request is None else copy.deepcopy(dict(request))
-        value = host_call("rlm_complete", {"api": api, "request": body})
+        body = None if request_obj is None else copy.deepcopy(dict(request_obj))
+        value = host_call(HostOperation.RLM_COMPLETE, {"request": body})
         if not isinstance(value, dict):
             raise RuntimeError("rlm_complete host returned a non-object")
         return value
 
     def rlm_complete_batch(
-        requests: Sequence[Mapping[str, Any]],
-        *,
-        api: str | None = None,
+        requests: Sequence[dict[str, Any]],
     ) -> list[dict[str, Any]]:
         if not allow_recursion:
             raise RuntimeError("recursive RLM calls are disabled for this branch")
         bodies = [copy.deepcopy(dict(item)) for item in requests]
-        value = host_call("rlm_complete_batch", {"api": api, "requests": bodies})
+        value = host_call(HostOperation.RLM_COMPLETE_BATCH, {"requests": bodies})
         if not isinstance(value, list) or not all(isinstance(item, dict) for item in value):
             raise RuntimeError("rlm_complete_batch host returned an invalid value")
         return value
 
-    def FINAL_RESPONSE(response: Mapping[str, Any]) -> None:
+    def FINAL_RESPONSE(response: dict[str, Any]) -> None:
         require_cell_thread("FINAL_RESPONSE")
+        if state["submission"] is not None:
+            raise FinalSubmissionFault("only one final submission is allowed", details={})
+        if not isinstance(response, Mapping):
+            raise FinalSubmissionFault(
+                "FINAL_RESPONSE requires an object",
+                details={"received_type": type(response).__name__},
+            )
         value = copy.deepcopy(dict(response))
         json_error = json_compatibility_error(value)
         if json_error is not None:
-            raise TypeError(f"FINAL_RESPONSE requires strict JSON: {json_error}")
-        state["final_kind"] = "response"
-        state["final_value"] = value
+            raise FinalSubmissionFault(
+                "FINAL_RESPONSE requires strict JSON",
+                details={"reason": json_error},
+            )
+        state["submission"] = {"response": value}
 
-    def FINAL_TEXT(text: Any) -> None:
+    def FINAL_TEXT(text: str) -> None:
         require_cell_thread("FINAL_TEXT")
-        state["final_kind"] = "text"
-        state["final_value"] = str(text)
+        if state["submission"] is not None:
+            raise FinalSubmissionFault("only one final submission is allowed", details={})
+        if not isinstance(text, str):
+            raise FinalSubmissionFault(
+                "FINAL_TEXT requires a string",
+                details={"received_type": type(text).__name__},
+            )
+        state["submission"] = {"text": text}
 
-    ignored = {
-        "In",
-        "Out",
-        "exit",
-        "quit",
-        "get_ipython",
-        "open",
-        "request",
-        "api",
-        "model_complete",
-        "model_complete_batch",
-        "ask",
-        "ask_batch",
-        "FINAL_RESPONSE",
-        "FINAL_TEXT",
-        "SHOW_VARS",
-        "rlm_complete",
-        "rlm_complete_batch",
-    }
+    _, ignored = _environment_namespace_contract(ENVIRONMENT_ABI)
+
+    def _variable_summary(value: Any) -> str:
+        if isinstance(value, AskBatchResult):
+            return f"AskBatchResult(len={len(value.texts)}, failures={len(value.failures)})"
+        kind = type(value).__name__
+        if isinstance(value, (str, bytes, bytearray, list, tuple, dict, set, frozenset)):
+            return f"{kind}(len={len(value)})"
+        return kind
 
     def SHOW_VARS() -> dict[str, str]:
         return {
-            name: type(value).__name__
+            name: _variable_summary(value)
             for name, value in sorted(shell.user_ns.items())
             if not name.startswith("_") and name not in ignored
         }
 
-    reserved: dict[str, Any] = {
+    available_bindings: dict[str, Any] = {
         "model_complete": model_complete,
         "model_complete_batch": model_complete_batch,
         "ask": ask,
@@ -418,25 +700,36 @@ def _worker_main(
         "FINAL_RESPONSE": FINAL_RESPONSE,
         "FINAL_TEXT": FINAL_TEXT,
         "SHOW_VARS": SHOW_VARS,
+        "rlm_complete": rlm_complete,
+        "rlm_complete_batch": rlm_complete_batch,
     }
-    if allow_recursion:
-        reserved.update(
-            {
-                "rlm_complete": rlm_complete,
-                "rlm_complete_batch": rlm_complete_batch,
-            }
-        )
+    reserved = {
+        item.name: available_bindings[item.name]
+        for item in ENVIRONMENT_ABI.enabled_functions(allow_recursion=allow_recursion)
+    }
+    enabled_names = {
+        item.name for item in ENVIRONMENT_ABI.enabled_functions(allow_recursion=allow_recursion)
+    }
+    if set(reserved).union({ENVIRONMENT_ABI.request_name}) != enabled_names.union(
+        {ENVIRONMENT_ABI.request_name}
+    ):
+        raise HostProtocolError("environment ABI namespace contract is inconsistent")
+
+    validate_environment_bindings(
+        ENVIRONMENT_ABI,
+        reserved,
+        allow_recursion=allow_recursion,
+    )
 
     def restore_namespace() -> None:
         shell.user_ns.update(reserved)
-        shell.user_ns["request"] = state["request"]
-        shell.user_ns["api"] = public_api
+        shell.user_ns[ENVIRONMENT_ABI.request_name] = state["public_request"]
 
     restore_namespace()
     _send_message(
         connection,
         {
-            "type": "ready",
+            "type": IPCMessageKind.READY.value,
             "process_group_id": os.getpgrp() if os.name == "posix" else None,
         },
     )
@@ -447,26 +740,46 @@ def _worker_main(
         except EOFError:
             connection.close()
             return
-        command_type = command.get("type")
-        if command_type == "shutdown":
-            _send_message(connection, {"type": "shutdown_complete"})
-            connection.close()
-            return
-        if command_type != "execute":
+        try:
+            command_type = _message_kind(command)
+        except HostProtocolError as exc:
             _send_message(
                 connection,
-                {"type": "worker_error", "error": f"unknown command: {command_type!r}"},
+                {"type": IPCMessageKind.WORKER_ERROR.value, "error": exc.message},
+            )
+            continue
+        if command_type is IPCMessageKind.SHUTDOWN:
+            if set(command) != {"type"}:
+                _send_message(
+                    connection,
+                    {"type": IPCMessageKind.WORKER_ERROR.value, "error": "invalid shutdown frame"},
+                )
+                continue
+            _send_message(connection, {"type": IPCMessageKind.SHUTDOWN_COMPLETE.value})
+            connection.close()
+            return
+        if command_type is not IPCMessageKind.EXECUTE or set(command) != {"type", "code"}:
+            _send_message(
+                connection,
+                {"type": IPCMessageKind.WORKER_ERROR.value, "error": "invalid worker command"},
             )
             continue
 
-        state["final_kind"] = None
-        state["final_value"] = None
-        state["host_errors"] = []
-        code = str(command.get("code", ""))
+        state["submission"] = None
+        state["host_failure"] = None
+        code = command["code"]
+        if not isinstance(code, str):
+            _send_message(
+                connection,
+                {"type": IPCMessageKind.WORKER_ERROR.value, "error": "execute code must be text"},
+            )
+            continue
         started = time.perf_counter()
-        stdout_capture = _BoundedStringIO(max_output_chars, label="stdout")
-        stderr_capture = _BoundedStringIO(max_output_chars, label="stderr")
-        display_capture = _BoundedStringIO(max_output_chars, label="display")
+        budget = _OutputBudget(max_output_chars)
+        stdout_capture = _BoundedStringIO(budget, channel=OutputChannel.STDOUT)
+        stderr_capture = _BoundedStringIO(budget, channel=OutputChannel.STDERR)
+        display_capture = _BoundedStringIO(budget, channel=OutputChannel.DISPLAY)
+        traceback_capture = _BoundedStringIO(budget, channel=OutputChannel.TRACEBACK)
         with capture_output() as captured:
             # Replace capture_output's unbounded StringIO instances while
             # retaining its reliable restoration of IPython global hooks.
@@ -497,31 +810,66 @@ def _worker_main(
 
             shell.display_pub.publish = capture_display
             sys.displayhook = capture_displayhook
-            result = shell.run_cell(code, store_history=True, silent=False)
+            original_showtraceback = shell.showtraceback
+            shell.showtraceback = lambda *args, **kwargs: None
+            try:
+                result = shell.run_cell(code, store_history=True, silent=False)
+            finally:
+                shell.showtraceback = original_showtraceback
         restore_namespace()
-        stdout = stdout_capture.bounded_value()
-        stderr = stderr_capture.bounded_value()
-        display = display_capture.bounded_value().rstrip("\n")
+        stdout = stdout_capture.value()
+        stderr = stderr_capture.value()
+        display = display_capture.value().rstrip("\n")
         error = result.error_before_exec or result.error_in_exec
-        if error is not None and not stderr:
-            stderr = f"{type(error).__name__}: {error}"
-        final_value = state["final_value"]
-        if state["final_kind"] is not None and (error is not None or state["host_errors"]):
-            state["final_kind"] = None
-            final_value = None
-            stderr += "\nRuntimeError: final submission ignored because the cell failed"
+        exception: dict[str, Any] | None = None
+        if error is not None:
+            details = getattr(error, "details", None)
+            exception = {
+                "type": type(error).__name__,
+                "message": str(error),
+                "fault_kind": _execution_fault_kind(error).value,
+                "code": getattr(error, "code", None),
+                "traceback": "".join(
+                    shell.InteractiveTB.structured_traceback(
+                        type(error),
+                        error,
+                        error.__traceback__,
+                    )
+                ),
+                "details": copy.deepcopy(details) if isinstance(details, dict) else None,
+            }
+        if exception is not None and exception["traceback"]:
+            traceback_capture.write(exception["traceback"])
+            exception["traceback"] = traceback_capture.value()
+        submission = state["submission"]
+        if error is not None or state["host_failure"] is not None:
+            submission = None
+        truncations = [
+            capture.truncation()
+            for capture in (stdout_capture, stderr_capture, display_capture, traceback_capture)
+            if capture.truncation() is not None
+        ]
         _send_message(
             connection,
             {
-                "type": "execution_result",
+                "type": IPCMessageKind.EXECUTION_RESULT.value,
                 "stdout": stdout,
                 "stderr": stderr,
                 "display": display,
                 "duration_seconds": time.perf_counter() - started,
-                "final_kind": state["final_kind"],
-                "final_value": final_value,
+                "exception": exception,
+                "host_failure": copy.deepcopy(state["host_failure"]),
+                "submission": copy.deepcopy(submission),
                 "namespace": SHOW_VARS(),
-                "host_errors": copy.deepcopy(state["host_errors"]),
+                "truncations": [
+                    {
+                        "channel": item.channel.value,
+                        "original_chars": item.original_chars,
+                        "retained_chars": item.retained_chars,
+                        "omitted_chars": item.omitted_chars,
+                    }
+                    for item in truncations
+                ],
             },
         )
 
@@ -529,14 +877,12 @@ def _worker_main(
 class IPythonExecutor:
     """Controller for one persistent, non-sandboxed IPython child process."""
 
+    abi_version = ENVIRONMENT_ABI.version
+
     def __init__(
         self,
         *,
-        api: API,
         request: Mapping[str, Any],
-        worker_api: API,
-        worker_model: str | None,
-        worker_options: Mapping[str, Any],
         allow_recursion: bool,
         working_directory: str | Path | None = None,
         startup_timeout: float = 20.0,
@@ -553,6 +899,11 @@ class IPythonExecutor:
             self.working_directory = Path(working_directory).expanduser().resolve()
             self.working_directory.mkdir(parents=True, exist_ok=True)
 
+        request_copy = copy.deepcopy(dict(request))
+        request_error = json_compatibility_error(request_copy)
+        if request_error is not None:
+            raise HostProtocolError(f"executor request must be strict JSON: {request_error}")
+        request_json = strict_json_dumps(request_copy, separators=(",", ":")).encode("utf-8")
         context = multiprocessing.get_context("spawn")
         self._parent, self._child = context.Pipe(duplex=True)
         self._process = context.Process(
@@ -560,11 +911,7 @@ class IPythonExecutor:
             args=(
                 self._child,
                 str(self.working_directory),
-                api,
-                copy.deepcopy(dict(request)),
-                worker_api,
-                worker_model,
-                copy.deepcopy(dict(worker_options)),
+                request_json,
                 allow_recursion,
                 max_output_chars,
             ),
@@ -587,16 +934,23 @@ class IPythonExecutor:
             self._close_child_endpoint()
             message = self._receive(self.startup_timeout, "IPython startup")
         except BaseException as exc:
-            self.close(force=True)
             if isinstance(exc, RLMError) or not isinstance(exc, Exception):
-                raise
-            raise RLMError(
-                f"IPython failed to start: {type(exc).__name__}: {exc}",
-                code="executor_startup",
-            ) from exc
-        if message.get("type") != "ready":
-            self.close(force=True)
-            raise RLMError(f"IPython failed to start: {message!r}", code="executor_startup")
+                self._raise_after_forced_close(exc)
+            primary = RLMError(
+                f"IPython failed to start: {type(exc).__name__}: {exc}", code="executor_startup"
+            )
+            self._raise_after_forced_close(primary)
+        try:
+            message_type = _message_kind(message)
+        except HostProtocolError as exc:
+            self._raise_after_forced_close(exc)
+        if message_type is not IPCMessageKind.READY or set(message) != {
+            "type",
+            "process_group_id",
+        }:
+            self._raise_after_forced_close(
+                RLMError(f"IPython failed to start: {message!r}", code="executor_startup")
+            )
         process_group_id = message.get("process_group_id")
         if (
             os.name == "posix"
@@ -615,80 +969,121 @@ class IPythonExecutor:
     ) -> ExecutionResult:
         self._ensure_running()
         try:
-            _send_message(self._parent, {"type": "execute", "code": code})
+            _send_message(self._parent, {"type": IPCMessageKind.EXECUTE.value, "code": code})
         except (OSError, TypeError) as exc:
-            self.close(force=True)
-            raise RLMError(f"could not send IPython cell: {exc}", code="executor_protocol") from exc
+            self._raise_after_forced_close(
+                RLMError(f"could not send IPython cell: {exc}", code="executor_protocol")
+            )
         deadline = time.monotonic() + timeout
         while True:
             remaining = deadline - time.monotonic()
             if remaining <= 0 or not self._parent.poll(remaining):
-                self.close(force=True)
-                raise ExecutionTimeoutError(timeout)
+                self._raise_after_forced_close(ExecutionTimeoutError(timeout))
             try:
                 message = _receive_message(self._parent)
-            except (EOFError, OSError) as exc:
-                self.close(force=True)
-                raise RLMError(
-                    f"IPython exited unexpectedly with code {self._process.exitcode}",
-                    code="executor_exit",
-                ) from exc
-            message_type = message.get("type")
-            if message_type == "host_request":
-                request_id = message.get("request_id")
-                try:
-                    value = _call_action_handler(
-                        action_handler,
-                        str(message.get("operation")),
-                        dict(message.get("payload") or {}),
-                        timeout=deadline - time.monotonic(),
+            except (EOFError, OSError):
+                self._raise_after_forced_close(
+                    RLMError(
+                        f"IPython exited unexpectedly with code {self._process.exitcode}",
+                        code="executor_exit",
                     )
-                    reply = {"type": "host_response", "request_id": request_id, "value": value}
-                except _ActionHandlerTimeout:
-                    self.close(force=True)
-                    raise ExecutionTimeoutError(timeout) from None
-                except Exception as exc:
-                    if isinstance(exc, RLMError):
-                        error: Any = {
-                            "kind": "rlm_error",
-                            "type": type(exc).__name__,
-                            "message": exc.message,
-                            "code": exc.code,
-                            "status_code": exc.status_code,
-                        }
-                    else:
-                        error = {
-                            "kind": "exception",
-                            "type": type(exc).__name__,
-                            "message": str(exc),
-                        }
+                )
+            try:
+                message_type = _message_kind(message)
+            except HostProtocolError as exc:
+                self._raise_after_forced_close(exc)
+            if message_type is IPCMessageKind.HOST_REQUEST:
+                if set(message) != {"type", "request_id", "operation", "payload"}:
+                    self._raise_after_forced_close(
+                        HostProtocolError("host request frame has an invalid field set")
+                    )
+                request_id = message["request_id"]
+                try:
+                    try:
+                        operation = HostOperation(message["operation"])
+                    except ValueError as exc:
+                        raise HostProtocolError(
+                            f"unknown host operation discriminator: {message['operation']!r}"
+                        ) from exc
+                    payload = operation.decode_payload(message["payload"])
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        raise ExecutionTimeoutError(timeout)
+                    value = action_handler(operation, payload, remaining)
+                    if deadline - time.monotonic() <= 0:
+                        raise ExecutionTimeoutError(timeout)
                     reply = {
-                        "type": "host_response",
+                        "type": IPCMessageKind.HOST_RESPONSE.value,
+                        "request_id": request_id,
+                        "value": value,
+                    }
+                except ExecutionTimeoutError:
+                    self._raise_after_forced_close(ExecutionTimeoutError(timeout))
+                except HostProtocolError as exc:
+                    self._raise_after_forced_close(exc)
+                except Exception as exc:
+                    error: Any = {
+                        "record": error_record_for_exception(exc, source="executor_host").to_dict()
+                    }
+                    if isinstance(exc, RLMError) and exc.causal_parent is not None:
+                        error["causal_parent_event_id"] = exc.causal_parent.event_id
+                    reply = {
+                        "type": IPCMessageKind.HOST_RESPONSE.value,
                         "request_id": request_id,
                         "error": error,
                     }
                 try:
                     _send_message(self._parent, reply)
                 except (OSError, TypeError) as exc:
-                    self.close(force=True)
-                    raise RLMError(
-                        f"could not send IPython host response: {exc}",
-                        code="executor_protocol",
-                    ) from exc
+                    self._raise_after_forced_close(
+                        RLMError(
+                            f"could not send IPython host response: {exc}",
+                            code="executor_protocol",
+                        )
+                    )
                 continue
-            if message_type == "execution_result":
-                return ExecutionResult(
-                    stdout=str(message.get("stdout", "")),
-                    stderr=str(message.get("stderr", "")),
-                    display=str(message.get("display", "")),
-                    duration_seconds=float(message.get("duration_seconds", 0.0)),
-                    final_kind=message.get("final_kind"),
-                    final_value=message.get("final_value"),
-                    namespace=dict(message.get("namespace") or {}),
-                    host_errors=list(message.get("host_errors") or []),
-                )
-            self.close(force=True)
-            raise RLMError(f"unexpected IPython message: {message!r}", code="executor_protocol")
+            if message_type is IPCMessageKind.EXECUTION_RESULT:
+                fields = {
+                    "type",
+                    "stdout",
+                    "stderr",
+                    "display",
+                    "duration_seconds",
+                    "exception",
+                    "host_failure",
+                    "submission",
+                    "namespace",
+                    "truncations",
+                }
+                if set(message) != fields:
+                    self._raise_after_forced_close(
+                        HostProtocolError("execution result frame has an invalid field set")
+                    )
+                try:
+                    exception = _execution_exception(message["exception"])
+                    host_failure = _host_failure(message["host_failure"])
+                    submission = _submission(message["submission"])
+                    if host_failure is not None:
+                        exception = None
+                        submission = None
+                    elif exception is not None:
+                        submission = None
+                    return ExecutionResult(
+                        stdout=message["stdout"],
+                        stderr=message["stderr"],
+                        display=message["display"],
+                        exception=exception,
+                        host_failure=host_failure,
+                        submission=submission,
+                        namespace=message["namespace"],
+                        truncations=_truncations(message["truncations"]),
+                        duration_seconds=message["duration_seconds"],
+                    )
+                except HostProtocolError as exc:
+                    self._raise_after_forced_close(exc)
+            self._raise_after_forced_close(
+                RLMError(f"unexpected IPython message: {message!r}", code="executor_protocol")
+            )
 
     def _receive(self, timeout: float, operation: str) -> dict[str, Any]:
         if not self._parent.poll(timeout):
@@ -705,48 +1100,107 @@ class IPythonExecutor:
         if self._closed or not self._process.is_alive():
             raise RLMError("IPython executor is not running", code="executor_state")
 
+    def _raise_after_forced_close(self, primary: BaseException) -> None:
+        """Preserve one public failure while recording exhaustive forced cleanup."""
+
+        try:
+            self.close(force=True)
+        except BaseException as close_error:
+            raise primary from close_error
+        raise primary
+
     def close(self, *, force: bool = False) -> None:
         if self._closed:
             return
         self._closed = True
-        shutdown_acknowledged = False
-        if self._process.is_alive() and not force:
+        failures: list[ExecutorCleanupFailure] = []
+        causes: list[Exception] = []
+        interruptions: list[BaseException] = []
+
+        def attempt(stage: str, operation: Callable[[], Any], *, default: Any = None) -> Any:
             try:
-                _send_message(self._parent, {"type": "shutdown"})
-                if self._parent.poll(2.0):
+                return operation()
+            except BaseException as exc:
+                if isinstance(exc, Exception):
+                    failures.append(
+                        ExecutorCleanupFailure(
+                            stage,
+                            type(exc).__name__,
+                            str(exc) or type(exc).__name__,
+                        )
+                    )
+                    causes.append(exc)
+                else:
+                    interruptions.append(exc)
+                return default
+
+        def process_is_alive() -> bool:
+            return bool(attempt("process.is_alive", self._process.is_alive, default=False))
+
+        shutdown_acknowledged = False
+        if process_is_alive() and not force:
+
+            def shutdown() -> bool:
+                try:
+                    _send_message(self._parent, {"type": IPCMessageKind.SHUTDOWN.value})
+                    if not self._parent.poll(2.0):
+                        return False
                     message = _receive_message(self._parent)
-                    shutdown_acknowledged = message.get("type") == "shutdown_complete"
-            except (BrokenPipeError, EOFError, OSError):
-                pass
+                    return _message_kind(message) is IPCMessageKind.SHUTDOWN_COMPLETE and set(
+                        message
+                    ) == {"type"}
+                except (EOFError, ConnectionError):
+                    return False
 
-        # The acknowledgement is sent immediately before a normal worker
-        # return. Give that return time to finish rather than always converting
-        # a clean shutdown into SIGTERM.
+            shutdown_acknowledged = bool(attempt("shutdown", shutdown, default=False))
+
         if shutdown_acknowledged and self._started:
-            self._process.join(timeout=0.5)
+            attempt("process.join.graceful", lambda: self._process.join(timeout=0.5))
 
-        group_signalled = self._signal_process_group(signal.SIGTERM)
-        if self._process.is_alive() and not group_signalled:
-            self._process.terminate()
+        group_signalled = bool(
+            attempt("process_group.sigterm", lambda: self._signal_process_group(signal.SIGTERM))
+        )
+        if process_is_alive() and not group_signalled:
+            attempt("process.terminate", self._process.terminate)
         if self._started:
-            self._process.join(timeout=3.0)
-            if self._process.is_alive() or self._process_group_exists():
+            attempt("process.join.terminate", lambda: self._process.join(timeout=3.0))
+            if process_is_alive() or bool(
+                attempt("process_group.exists", self._process_group_exists, default=False)
+            ):
                 group_killed = (
-                    self._signal_process_group(signal.SIGKILL) if os.name == "posix" else False
+                    bool(
+                        attempt(
+                            "process_group.sigkill",
+                            lambda: self._signal_process_group(signal.SIGKILL),
+                        )
+                    )
+                    if os.name == "posix"
+                    else False
                 )
-                if self._process.is_alive() and not group_killed:
-                    self._process.kill()
-                self._process.join(timeout=1.0)
-            self.exitcode = self._process.exitcode
+                if process_is_alive() and not group_killed:
+                    attempt("process.kill", self._process.kill)
+                attempt("process.join.kill", lambda: self._process.join(timeout=1.0))
+            self.exitcode = attempt("process.exitcode", lambda: self._process.exitcode)
 
-        self._close_child_endpoint()
-        self._parent.close()
-        if not self._started or not self._process.is_alive():
+        attempt("child.close", self._close_child_endpoint)
+        attempt("parent.close", self._parent.close)
+        if not self._started or not process_is_alive():
             # Release multiprocessing's sentinel descriptor. A retained closed
             # executor otherwise leaks one descriptor (two after start).
-            self._process.close()
+            attempt("process.close", self._process.close)
         if self._temporary_directory is not None:
-            self._temporary_directory.cleanup()
+            attempt("temporary_directory.cleanup", self._temporary_directory.cleanup)
+        if interruptions:
+            selected = interruptions[0]
+            additional = tuple(interruptions[1:])
+            if failures:
+                aggregate = ExecutorCloseError(failures, cleanup_interruptions=additional)
+                raise selected from aggregate
+            if additional:
+                raise selected from _ExecutorCleanupInterruptions(additional)
+            raise selected
+        if failures:
+            raise ExecutorCloseError(failures) from causes[0]
 
     def _close_child_endpoint(self) -> None:
         child = self._child
@@ -798,5 +1252,15 @@ class IPythonExecutor:
     def __enter__(self) -> IPythonExecutor:
         return self.start()
 
-    def __exit__(self, *_: object) -> None:
-        self.close()
+    def __exit__(
+        self,
+        exception_type: type[BaseException] | None,
+        exception: BaseException | None,
+        traceback: object,
+    ) -> None:
+        try:
+            self.close()
+        except BaseException as close_error:
+            if exception is not None:
+                raise exception from close_error
+            raise

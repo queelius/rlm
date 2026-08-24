@@ -1,6 +1,6 @@
 # RLM Kernel and Experiment Contract Design
 
-**Status:** Proposed for written review
+**Status:** Approved for implementation
 
 **Date:** 2026-08-23
 
@@ -57,20 +57,29 @@ RLMConfig
 class HarnessSpec:
     schema_version: str
     prompt: PromptSpec
+    rendered_prompts: PromptDigests
     abi_version: str
+    abi_digest: str
     recovery: RecoverySpec
     observation: ObservationSpec
     context: ContextSpec
 ```
 
-It has a canonical JSON representation and SHA-256 fingerprint. Initially
-there is one implementation of each policy. The types establish stable seams;
-they are not justification for multiple flags or speculative variants.
+It has a canonical JSON representation and SHA-256 fingerprint. The two
+rendered-prompt digests cover the exact recursion-disabled and recursion-enabled
+controller instructions, not only their source fragments. Run initialization
+verifies both digests before any model call, the renderer rechecks the selected
+variant, and golden files pin both exact strings. Initially there is one
+implementation of each policy. The types
+establish stable seams; they are not justification for multiple flags or
+speculative variants.
 
 `RunLimits` is separate from `HarnessSpec`. Turns, model calls, subcalls,
-parallelism, recursion depth, wall time, execution time, and output bounds are
-externally enforced experimental controls. A harness optimizer must not gain
-reward by increasing them.
+parallelism, recursion depth, wall time, aggregate reported tokens, execution
+time, and output bounds are externally enforced experimental controls. A
+harness optimizer must not gain reward by increasing them. If a token budget is
+enabled, missing provider usage is fatal because that budget cannot otherwise
+be audited.
 
 `ObservationSpec` may choose representation and truncation behavior only
 within the hard output caps imposed by `RunLimits`; it cannot raise those caps.
@@ -101,7 +110,7 @@ class TraceSink(Protocol):
 class ControllerProtocol(Protocol):
     def parse(...) -> ControllerAction: ...
 
-class RecoveryPolicy(Protocol):
+class RecoveryPolicy:
     def decide(...) -> RecoveryDecision: ...
 ```
 
@@ -110,8 +119,11 @@ depth. It lets a local training backend associate token-level rollout data
 with the canonical trace without changing the Responses wire object. The HTTP
 backend ignores training metadata but must honor the supplied timeout.
 
-Effects are replaceable for testing. Protocol and recovery implementations
-are pure, described by `HarnessSpec`, and have no hidden mutable state.
+Effects are replaceable for testing. The controller parser is a concrete
+kernel invariant. Recovery is a sealed, pure interpreter of the discriminated
+`RecoverySpec`, constructed from the run snapshot rather than accepted as an
+arbitrary mutable dependency. Both are described by `HarnessSpec` and have no
+hidden mutable state.
 
 ## Versioned environment ABI
 
@@ -119,6 +131,11 @@ The Python namespace is described by one immutable `EnvironmentABI`. It is a
 typed registry, not a dynamic plugin manager. The executor namespace, host IPC
 dispatcher, prompt documentation, and trace manifest derive from the same
 function definitions so they cannot drift independently.
+
+The ABI has its own canonical JSON and digest over every rendered signature,
+description, operation, and recursion flag. `HarnessSpec` includes that digest,
+so a model-visible ABI edit changes the harness fingerprint even when someone
+forgets to bump a human-readable version.
 
 The initial namespace retains:
 
@@ -183,9 +200,11 @@ Infrastructure and invariant failures are fatal and bypass `RecoveryPolicy`:
 - strict trace-write failures when tracing is enabled.
 
 `stderr` is ordinary captured output, not an execution-status bit.
-`ExecutionResult` carries a separate structured exception field. A warning on
-stderr cannot discard a valid final. A final submitted before a later Python
-exception or host fault is discarded.
+`ExecutionResult` carries a separate structured exception field and one closed
+submission union: `TextSubmission | ResponseSubmission | None`. There is no
+independent kind/value pair capable of representing an invalid combination. A
+warning on stderr cannot discard a valid final. A final submitted before a later
+Python exception or host fault is discarded.
 
 The host does not reject repeated source text heuristically. Persistent state
 can make an identical cell legitimate; maximum turns provide the loop bound.
@@ -208,9 +227,11 @@ parts receive discriminant-specific structural validation. Unknown provider
 fields and well-formed future output-item types are preserved rather than
 normalized away.
 
-`FINAL_TEXT` constructs one minimal completed text response. It is rejected
-when the request requires tool, structured-output, continuation, or other
-semantics that a synthetic text response cannot faithfully provide.
+`FINAL_TEXT` accepts an already-formed string and constructs one minimal
+completed text response. Non-strings are recoverable final-submission faults;
+the executor never applies an implicit `str(...)` conversion. The final is also
+rejected when the request requires tool, structured-output, continuation, or
+other semantics that a synthetic text response cannot faithfully provide.
 
 A successful non-JSON HTTP body is always an upstream protocol error. Error
 status bodies may be preserved as explicitly labeled raw text. Invalid or
@@ -233,10 +254,12 @@ daemon threads or unbounded fallback behavior.
 
 ## Canonical trace and experiment boundary
 
-When disabled, the null trace sink performs no copying, serialization, event
-retention, or filesystem work. When enabled, JSONL is the canonical append-only
-record. Markdown and manifests are derived views. Serialization is strict;
-unknown objects are not replaced with `repr`.
+When disabled, a distinct null trace sink performs no copying, payload
+conversion, manifest construction, serialization, event retention, or
+filesystem work. Manifest construction is supplied lazily so the null sink
+does not force trace-only shaping in the engine. When enabled, JSONL is the
+canonical append-only record. Markdown and manifests are derived views.
+Serialization is strict; unknown objects are not replaced with `repr`.
 
 The trace schema is versioned and records:
 
@@ -249,10 +272,23 @@ The trace schema is versioned and records:
 - final response or explicit run failure;
 - usage completeness, limits, and timings.
 
+The harness identity also covers both exact rendered controller-prompt
+variants. Changing prompt assembly therefore changes the fingerprint and the
+reviewed golden fixtures even if the serialized prompt fragments and ABI are
+unchanged.
+
+Each event kind has one frozen payload type, and finalization accepts one exact
+manifest type. Runtime schema checks are derived from those types; strict JSON
+serializability alone is not considered trace completeness. Missing event
+fields, missing causal parents, or incomplete manifests are fatal trace/data-
+collection failures.
+
 An experiment runner owns model/checkpoint digest, source revision, dependency
 lock hash, dataset revision, example ID, split, condition, repetition, seed,
-verifier result, and reward. It stores them in a sidecar keyed by `run_id`.
-Verifier outputs and rewards never enter controller context.
+verifier result, and reward. It stores them in a sidecar keyed by an
+experiment-owned `episode_id`; RLM records require a `run_id`, direct records
+may use a nullable `run_id`, and paired records share a `pair_id`. Verifier
+outputs and rewards never enter controller context.
 
 Training exporters derive examples from the canonical events:
 
@@ -304,6 +340,24 @@ example, reject empty selections before computing aggregates, and never turn a
 failed request into an empty answer with an ordinary score. Benchmark and task
 conditioning remain outside `src/rlm/`.
 
+Conditioning text and its digest are part of the experiment condition. Rows
+that share one long context are split and counted as a context group rather
+than treated as independent examples. Oracle scaffolds and minimal task
+conditioning are reported separately and paired with the same direct-model
+baseline.
+
+RLM-minimal, RLM-oracle, and direct prompts have distinct typed prompt profiles.
+Both arms derive from one immutable comparison value containing task/context
+provenance, seed, repetition, sampling, and budget, but a direct prompt never
+receives RLM-only ABI or retry scaffolding.
+
+The same effective model-call options, including seed, are used by the direct
+request and every RLM controller call. Successful RLM responses attest the
+effective controller model, canonical options digest, harness fingerprint, and
+aggregate run usage in typed run metadata and HTTP headers. The benchmark
+rejects a mismatch and audits the RLM token budget from aggregate run headers,
+never from a leaf response preserved by `FINAL_RESPONSE`.
+
 ## Test strategy
 
 - Pure unit tests for configuration serialization, fingerprints, parsing,
@@ -316,6 +370,8 @@ conditioning remain outside `src/rlm/`.
 - Regression tests for partial batch failures, harmless stderr, late model
   calls, malformed success bodies, invalid finals, exact code framing,
   reasoning-item replay, and strict CLI option parsing.
+- Regressions for disabled-trace zero work, dangling causal parents, stale ABI
+  and prompt digests, worker-signature drift, and controller-option attestation.
 - End-to-end HTTP and real-IPython tests.
 - Golden tests for canonical harness fingerprints and trace schema.
 - Trajectory-export tests in `rlm-bootstrap` proving observations are masked

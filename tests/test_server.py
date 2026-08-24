@@ -1,141 +1,192 @@
 from __future__ import annotations
 
-from typing import Any
+import asyncio
 
+import httpx
 import pytest
 from fastapi.testclient import TestClient
 
-from rlm.config import RLMConfig
+from rlm.backend import OpenAIEndpoint
+from rlm.config import ControllerConfig, RLMConfig, RunLimits
 from rlm.engine import RLM
+from rlm.json import strict_json_sha256
+from rlm.prompts import default_harness_spec
 from rlm.server import create_app
-from rlm.types import API
-from tests.fakes import ScriptedBackend, chat_text, responses_text
+from rlm.types import ControllerRunIdentity, RunResult, TokenUsage
+from tests.fakes import ScriptedBackend, controller_code, responses_text
 
 
-@pytest.mark.parametrize(
-    ("api", "route", "public_request", "public_response"),
-    [
-        (
-            "chat.completions",
-            "/v1/chat/completions",
-            {
-                "model": "public-model",
-                "messages": [
-                    {"role": "system", "content": "Preserve me."},
-                    {"role": "user", "content": "Use a tool if needed."},
-                ],
-                "tools": [
-                    {
-                        "type": "function",
-                        "function": {
-                            "name": "lookup",
-                            "parameters": {"type": "object", "properties": {}},
-                        },
-                    }
-                ],
-                "seed": 9,
-                "provider_extension": {"keep": [1, 2, 3]},
-            },
-            chat_text("public chat response", model="public-model"),
-        ),
-        (
-            "responses",
-            "/v1/responses",
-            {
-                "model": "public-model",
-                "instructions": "Preserve me.",
-                "input": [{"role": "user", "content": [{"type": "input_text", "text": "Hello"}]}],
-                "tools": [
-                    {
-                        "type": "function",
-                        "name": "lookup",
-                        "description": "Look up data",
-                        "parameters": {"type": "object", "properties": {}},
-                    }
-                ],
-                "previous_response_id": "resp_previous",
-                "provider_extension": {"keep": [1, 2, 3]},
-            },
-            responses_text("public Responses response", model="public-model"),
-        ),
-    ],
-)
-def test_rest_route_preserves_request_and_routes_api_family(
-    api: API,
-    route: str,
-    public_request: dict[str, Any],
-    public_response: dict[str, Any],
-) -> None:
+def test_models_route_passes_through_the_upstream_catalog() -> None:
+    catalog = {
+        "object": "list",
+        "data": [{"id": "model-a", "object": "model", "owned_by": "provider"}],
+    }
+
+    async def upstream(request: httpx.Request) -> httpx.Response:
+        assert request.method == "GET"
+        assert str(request.url) == "https://provider.test/v1/models"
+        assert request.headers["authorization"] == "Bearer secret"
+        return httpx.Response(200, json=catalog)
+
+    http_client = httpx.AsyncClient(transport=httpx.MockTransport(upstream))
+    backend = OpenAIEndpoint(
+        base_url="https://provider.test/v1/",
+        api_key="secret",
+        client=http_client,
+    )
+    try:
+        with TestClient(create_app(RLM(backend), close_on_shutdown=False)) as client:
+            response = client.get("/v1/models")
+    finally:
+        asyncio.run(http_client.aclose())
+
+    assert response.status_code == 200
+    assert response.json() == catalog
+
+
+def test_models_route_reports_an_unsupported_custom_backend() -> None:
+    with TestClient(create_app(RLM(ScriptedBackend()), close_on_shutdown=False)) as client:
+        response = client.get("/v1/models")
+
+    assert response.status_code == 501
+    assert response.json()["error"]["code"] == "models_not_supported"
+
+
+def test_success_headers_attest_effective_controller_identity_and_usage() -> None:
+    options = {"seed": 42, "temperature": 0}
+    config = RLMConfig(controller=ControllerConfig(model="qwen", options=options))
+    app = create_app(
+        RLM(ScriptedBackend([controller_code('FINAL_TEXT("done")')]), config=config),
+        close_on_shutdown=False,
+    )
+
+    with TestClient(app) as client:
+        response = client.post("/v1/responses", json={"model": "qwen", "input": "task"})
+
+    assert response.status_code == 200
+    assert response.headers["x-rlm-controller-model"] == "qwen"
+    assert response.headers["x-rlm-controller-options-sha256"] == strict_json_sha256(options)
+    assert response.headers["x-rlm-harness-fingerprint"] == default_harness_spec().fingerprint()
+    assert int(response.headers["x-rlm-input-tokens"]) >= 0
+    assert int(response.headers["x-rlm-output-tokens"]) >= 0
+    assert int(response.headers["x-rlm-usage-unreported-calls"]) == 0
+
+
+def test_run_result_requires_immutable_complete_attestation() -> None:
+    response = responses_text("done")
+    usage = TokenUsage(input_tokens=1)
+    result = RunResult(
+        response=response,
+        run_id="run",
+        stop_reason="done",
+        usage=usage,
+        turns=1,
+        duration_seconds=1.0,
+        controller_identity=ControllerRunIdentity("qwen", "a" * 64),
+        harness_fingerprint="b" * 64,
+    )
+    response["model"] = "mutated"
+    usage.input_tokens = 99
+    assert result.response["model"] != "mutated"
+    assert result.usage.input_tokens == 1
+    with pytest.raises(AttributeError):
+        result.harness_fingerprint = "c" * 64  # type: ignore[misc]
+
+
+def test_responses_route_preserves_the_request() -> None:
+    request = {
+        "model": "public-model",
+        "instructions": "Preserve me.",
+        "input": [{"role": "user", "content": "Hello"}],
+        "provider_extension": {"keep": [1, 2, 3]},
+    }
+    public_response = responses_text("public answer", model="public-model")
     public = ScriptedBackend([public_response], name="public")
-    controller = ScriptedBackend([chat_text("planning prose without an action")], name="controller")
+    controller = ScriptedBackend(
+        [controller_code("response = model_complete()\nFINAL_RESPONSE(response)")],
+        name="controller",
+    )
     rlm = RLM(
         public,
         controller_backend=controller,
+        config=RLMConfig(controller=ControllerConfig(model="controller")),
+    )
+
+    with TestClient(create_app(rlm, close_on_shutdown=False)) as client:
+        response = client.post("/v1/responses", json=request)
+
+    assert response.status_code == 200
+    assert response.json() == public_response
+    assert response.headers["x-rlm-stop-reason"] == "final_response"
+    assert response.headers["x-rlm-turns"] == "1"
+    assert response.headers["x-rlm-model-calls"] == "2"
+    assert public.calls[0].request == request
+
+
+def test_chat_completions_route_does_not_exist() -> None:
+    with TestClient(create_app(RLM(ScriptedBackend()), close_on_shutdown=False)) as client:
+        response = client.post("/v1/chat/completions", json={})
+
+    assert response.status_code == 404
+
+
+def test_unrepaired_controller_failure_is_an_error_not_a_fallback_response() -> None:
+    rlm = RLM(
+        ScriptedBackend(name="public"),
+        controller_backend=ScriptedBackend([responses_text("not Python")]),
         config=RLMConfig(
-            controller_model="controller",
-            max_consecutive_errors=1,
+            controller=ControllerConfig(model="controller"),
+            limits=RunLimits(max_turns=1),
         ),
     )
 
     with TestClient(create_app(rlm, close_on_shutdown=False)) as client:
-        response = client.post(route, json=public_request)
-
-    assert response.status_code == 200
-    assert response.json() == public_response
-    assert response.headers["x-rlm-stop-reason"] == ("consecutive_protocol_errors_direct_fallback")
-    assert response.headers["x-rlm-turns"] == "1"
-    assert response.headers["x-rlm-model-calls"] == "2"
-    assert response.headers["x-rlm-run-id"]
-    assert len(public.calls) == 1
-    assert public.calls[0].api == api
-    assert public.calls[0].request == public_request
-    public.assert_exhausted()
-    controller.assert_exhausted()
-
-
-@pytest.mark.parametrize("route", ["/v1/chat/completions", "/v1/responses"])
-def test_rest_route_returns_openai_error_for_streaming(route: str) -> None:
-    backend = ScriptedBackend(name="public")
-    rlm = RLM(backend, config=RLMConfig(controller_model="controller"))
-
-    with TestClient(create_app(rlm, close_on_shutdown=False)) as client:
-        response = client.post(route, json={"model": "public-model", "stream": True})
-
-    assert response.status_code == 400
-    assert response.json() == {
-        "error": {
-            "message": "RLM supports only non-streaming requests; set stream to false or omit it",
-            "type": "invalid_request_error",
-            "param": "stream",
-            "code": "streaming_not_supported",
-        }
-    }
-    assert backend.calls == []
-
-
-@pytest.mark.parametrize(
-    ("body", "expected_code", "expected_param"),
-    [
-        ("{", "invalid_json", None),
-        ("[]", "invalid_request", "request"),
-    ],
-)
-def test_rest_route_rejects_invalid_or_non_object_json(
-    body: str,
-    expected_code: str,
-    expected_param: str | None,
-) -> None:
-    backend = ScriptedBackend(name="public")
-    rlm = RLM(backend, config=RLMConfig(controller_model="controller"))
-
-    with TestClient(create_app(rlm, close_on_shutdown=False)) as client:
         response = client.post(
-            "/v1/chat/completions",
-            content=body,
-            headers={"content-type": "application/json"},
+            "/v1/responses",
+            json={"model": "public-model", "input": "hello"},
+        )
+
+    assert response.status_code == 500
+    assert response.json()["error"]["code"] == "max_turns_exceeded"
+
+
+def test_streaming_is_rejected() -> None:
+    with TestClient(create_app(RLM(ScriptedBackend()), close_on_shutdown=False)) as client:
+        response = client.post(
+            "/v1/responses",
+            json={"model": "public-model", "input": "hello", "stream": True},
         )
 
     assert response.status_code == 400
-    assert response.json()["error"]["code"] == expected_code
-    assert response.json()["error"]["param"] == expected_param
-    assert backend.calls == []
+    assert response.json()["error"]["code"] == "streaming_not_supported"
+
+
+def test_route_rejects_invalid_or_non_object_json() -> None:
+    with TestClient(create_app(RLM(ScriptedBackend()), close_on_shutdown=False)) as client:
+        invalid = client.post(
+            "/v1/responses",
+            content="{",
+            headers={"content-type": "application/json"},
+        )
+        non_object = client.post("/v1/responses", json=[])
+
+    assert invalid.status_code == 400
+    assert invalid.json()["error"]["code"] == "invalid_json"
+    assert non_object.status_code == 400
+    assert non_object.json()["error"]["param"] == "request"
+
+
+@pytest.mark.parametrize(
+    "body",
+    [b'{"model":"m","input":"a","input":"b"}', b'{"model":"m","temperature":NaN}'],
+)
+def test_public_request_rejects_non_strict_json(body: bytes) -> None:
+    app = create_app(RLM(ScriptedBackend()), close_on_shutdown=False)
+    with TestClient(app) as client:
+        response = client.post(
+            "/v1/responses",
+            content=body,
+            headers={"content-type": "application/json"},
+        )
+    assert response.status_code == 400
+    assert response.json()["error"]["code"] == "invalid_json"

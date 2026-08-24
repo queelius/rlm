@@ -8,6 +8,8 @@ Runtime code lives in `src/rlm/`. Keep public interfaces in `__init__.py`, entry
 
 - `uv sync --extra dev` creates or updates the environment with test, lint, server, and OpenAI dependencies.
 - `uv run pytest` runs the full test suite using the quiet settings in `pyproject.toml`.
+- `uv run pytest --cov=rlm --cov-report=term-missing` measures runtime coverage; use its
+  missing-branch report diagnostically and add only material contract regressions.
 - `uv run pytest tests/test_engine.py -k final_text` runs a focused subset while iterating.
 - `uv run ruff check .` checks imports, Python errors, upgrades, and configured style rules.
 - `uv run ruff format --check .` verifies formatting; omit `--check` to apply it.
@@ -16,11 +18,11 @@ Runtime code lives in `src/rlm/`. Keep public interfaces in `__init__.py`, entry
 
 ## Coding Style & Naming Conventions
 
-Use four-space indentation, Python 3.10-compatible syntax, and type annotations for public APIs and nontrivial internals. Ruff enforces a 100-character line limit and the `E`, `F`, `I`, `UP`, `B`, and `SIM` rule sets. Use `snake_case` for functions, variables, and modules; `PascalCase` for classes; and leading underscores for private implementation details. Preserve complete OpenAI-compatible request objects rather than silently normalizing unknown fields.
+Use four-space indentation, Python 3.10-compatible syntax, and type annotations for public APIs and nontrivial internals. Ruff enforces a 100-character line limit and the `E`, `F`, `I`, `UP`, `B`, and `SIM` rule sets. Use `snake_case` for functions, variables, and modules; `PascalCase` for classes; and leading underscores for private implementation details. Preserve complete OpenAI-compatible Responses request objects rather than silently normalizing unknown fields. Do not add Chat Completions compatibility, retries, answer fallbacks, permissive controller parsing, or trace `repr` conversion.
 
 ## Testing Guidelines
 
-Pytest discovers `tests/test_*.py`. Name tests after observable behavior, for example `test_streaming_request_is_rejected`. Prefer deterministic fake backends over live network calls, and cover both `chat.completions` and `responses` when behavior is API-family dependent. Add regression tests with every bug fix. No numeric coverage threshold is configured; prioritize protocol, limit, error, and cleanup paths.
+Pytest discovers `tests/test_*.py`. Name tests after observable behavior, for example `test_streaming_request_is_rejected`. Prefer deterministic fake backends over live network calls. The runtime supports only the Responses API; tests should reject accidental Chat Completions compatibility. Add regression tests with every bug fix. No numeric coverage threshold is configured; prioritize protocol, typed recovery/fatal boundaries, deadline, cleanup, serialization, and trace paths over percentage inflation. Benchmark tests must preserve paired direct/RLM conditions, context-group splits, complete provenance, aggregate usage audits, and separate failure accounting.
 
 ## Commit & Pull Request Guidelines
 
