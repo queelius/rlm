@@ -11,6 +11,14 @@ From this directory, with a standard TeX Live installation containing Beamer
 and PGF/TikZ:
 
 ```bash
+make
+```
+
+Use `make clean` to remove temporary LaTeX files while retaining the PDF, or
+`make distclean` to remove the temporary files and PDF. To invoke the compiler
+directly instead:
+
+```bash
 latexmk -pdf -interaction=nonstopmode -halt-on-error rlm-preliminary-results.tex
 ```
 
