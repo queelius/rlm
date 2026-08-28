@@ -15,7 +15,7 @@ questions are in [`preliminary-experiment-analysis.md`](preliminary-experiment-a
 
 ## Compile
 
-From this directory, with a standard TeX Live installation containing Beamer and PGF/TikZ:
+From this directory, with a standard TeX Live installation containing Beamer:
 
 ```bash
 make
