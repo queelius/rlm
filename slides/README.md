@@ -13,6 +13,9 @@ The slides intentionally show only the salient experimental progression. The det
 results, negative findings, limitations, GPU-time accounting, sources, and likely advisor
 questions are in [`preliminary-experiment-analysis.md`](preliminary-experiment-analysis.md).
 
+For presentation help, concrete examples, a short explanation of every slide, and plain-language
+answers to likely questions, see [`speaker-guide.md`](speaker-guide.md).
+
 ## Compile
 
 From this directory, with a standard TeX Live installation containing Beamer:
@@ -41,8 +44,8 @@ pdflatex -interaction=nonstopmode -halt-on-error rlm-preliminary-results.tex
 - Slide 2: 40 seconds -- explain the workspace and smaller model calls.
 - Slide 3: 55 seconds -- explain the compositional-generalization hypothesis.
 - Slide 4: 40 seconds -- summarize the repeatable train, save, serve, and evaluate process.
-- Slide 5: 55 seconds -- show two clear before-and-after supervised-training comparisons.
-- Slide 6: 45 seconds -- distinguish learned local workflows from future recursive delegation.
+- Slide 5: 60 seconds -- use the counting example to explain what basic procedure learning means.
+- Slide 6: 60 seconds -- contrast a local record task with a model-to-model handoff.
 - Slide 7: 50 seconds -- describe the planned direct-practice versus RLM-practice comparison.
 - Slide 8: 40 seconds -- state the larger research questions and solicit input.
 

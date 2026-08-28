@@ -226,73 +226,82 @@
 \end{frame}
 
 % Slide 5 -------------------------------------------------------------------
-\begin{frame}{Training taught the model to use the RLM on controlled tasks.}
-  \centering
-  {\small\color{RlmMuted}New test tasks solved before and after supervised training}
+\begin{frame}{First result: training taught the model a basic RLM routine.}
+  \rlmstagebox{\textbf{Simplified example}\\[.2em]
+    \small Count the numbers divisible by 5 in \texttt{[5, 8, 10, 21, 25]}.}
 
-  \vspace{0.35cm}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.48\textwidth}
-      \centering
-      \rlmstagebox{\textbf{Inspect, then calculate}\\[.45em]
-        \small Before training\\[-.05em]
-        {\Large\color{RlmMuted}\textbf{0/30}}\\[-.05em]
-        {\Large\color{RlmTeal}$\downarrow$}\\[-.1em]
-        \small After supervised training\\[-.05em]
-        {\LARGE\color{RlmNavy}\textbf{29/30}}}
-
+  \vspace{.15cm}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{.27\textwidth}
+      \rlmstagebox{\textbf{Read the task}\\[.1em]
+        \small Inspect the workspace.}
     \end{column}
-
-    \begin{column}{0.48\textwidth}
-      \centering
-      \rlmstagebox{\textbf{Use one program for six operations}\\[.45em]
-        \small Before training\\[-.05em]
-        {\Large\color{RlmMuted}\textbf{0/192}}\\[-.05em]
-        {\Large\color{RlmTeal}$\downarrow$}\\[-.1em]
-        \small After supervised training\\[-.05em]
-        {\LARGE\color{RlmNavy}\textbf{192/192}}}
-
+    \begin{column}{.05\textwidth}
+      \centering\Large\color{RlmTeal}$\rightarrow$
+    \end{column}
+    \begin{column}{.27\textwidth}
+      \rlmfocusbox{\textbf{Use Python}\\[.1em]
+        \small Count the matching values.}
+    \end{column}
+    \begin{column}{.05\textwidth}
+      \centering\Large\color{RlmTeal}$\rightarrow$
+    \end{column}
+    \begin{column}{.27\textwidth}
+      \rlmstagebox{\textbf{Return the answer}\\[.1em]
+        \small The answer is \textbf{3}.}
     \end{column}
   \end{columns}
 
-  \vspace{0.25cm}
-  \begin{block}{What this shows---and what it does not.}
-    Training changed how the model used the RLM on these narrow tests. It does not yet show broad
-    problem-solving or reliable handoffs to other model calls.
-  \end{block}
+  \vspace{.18cm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.47\textwidth}
+      \rlmstagebox{\textbf{Before supervised training}\\[.25em]
+        \small Basic routine: \textbf{0/30}\\[.1em]
+        Fixed program covering six task types: \textbf{0/192}}
+    \end{column}
+    \begin{column}{.47\textwidth}
+      \rlmfocusbox{\textbf{After supervised training}\\[.25em]
+        \small Basic routine: \textbf{29/30}\\[.1em]
+        Fixed program covering six task types: \textbf{192/192}}
+    \end{column}
+  \end{columns}
+
+  \vspace{.12cm}
+  \rlmnextbox{\textbf{Controlled procedure tests---not broad reasoning tests.}}
 \end{frame}
 
 % Slide 6 -------------------------------------------------------------------
-\begin{frame}{The model learned step-by-step work before reliable handoffs.}
+\begin{frame}{A harder test showed what transferred---and what did not.}
+  \rlmstagebox{\textbf{Simplified local example}\\[.2em]
+    \small Records \texttt{A:4, B:3, A:2}. Add the values within each group:
+    \texttt{A:6, B:3}.}
+
+  \vspace{.25cm}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.55\textwidth}
+    \begin{column}{0.48\textwidth}
       \centering
-      \rlmfocusbox{\textbf{Learned: four kinds of local work}\\[.4em]
-        \small
-        Choose and run the right program\\[.15em]
-        Inspect the task, then calculate\\[.15em]
-        Remember and check earlier work\\[.15em]
-        Notice and repair an error\\[.45em]
+      \rlmfocusbox{\textbf{Local work transferred}\\[.35em]
+        \small Inspect the data\\[-.05em]
+        {\color{RlmTeal}$\downarrow$}\\[-.05em]
+        Calculate, remember, and check\\[.4em]
         {\Large\color{RlmNavy}\textbf{24/24 tasks}}}
     \end{column}
 
-    \begin{column}{0.41\textwidth}
+    \begin{column}{0.48\textwidth}
       \centering
-      \rlmnextbox{\textbf{Not yet reliable: handoffs}\\[.4em]
-        \small The main model chooses pieces\\[-.05em]
+      \rlmnextbox{\textbf{Model-to-model handoffs did not}\\[.35em]
+        \small Send pieces to focused model calls\\[-.05em]
         {\color{RlmGold}$\downarrow$}\\[-.05em]
-        Focused model calls work on them\\[-.05em]
-        {\color{RlmGold}$\downarrow$}\\[-.05em]
-        The main model combines the results\\[.45em]
+        Combine their returned answers\\[.4em]
         {\Large\color{RlmRed}\textbf{0/12 tasks}}}
     \end{column}
   \end{columns}
 
-  \vspace{0.4cm}
+  \vspace{0.25cm}
   \begin{beamercolorbox}[wd=\linewidth,sep=.6em,rounded=true]{block body}
     \centering
-    \textbf{Overall: 24 of 36 tasks.} The evidence supports learned step-by-step work inside the
-    workspace, but not yet the full idea of repeatedly dividing a problem among model calls.
+    \textbf{Small exploratory test: six examples per workflow.} Local RLM work transferred, but
+    recursive handoffs did not.
   \end{beamercolorbox}
 \end{frame}
 
