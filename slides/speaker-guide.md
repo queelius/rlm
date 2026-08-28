@@ -451,16 +451,16 @@ Always introduce this slide as planned work.
 
 ### What the audience should remember
 
-The immediate goal is not simply a higher score. It is to determine whether improvement transfers,
-whether decomposition caused it, and whether the training signal is informative.
+The larger hypothesis remains open. The next studies must show both that learning transfers to
+genuinely new problems and that decomposition---rather than extra computation or ordinary
+practice---caused any improvement.
 
 ### Suggested explanation
 
-“Our next studies will test whether any learning carries to new examples, formats, and kinds of
-problem. We will compare decomposition with ordinary practice and with simply giving the model
-more calls. Reward-based training comes later, after we can reliably produce both good and bad
-valid attempts. We would value advice about test domains, fair comparisons, and risks in this
-design.”
+“The larger question remains open: can training help a model divide an unfamiliar problem into
+familiar pieces and solve it more reliably? We need to test whether learning carries to genuinely
+new problems and whether decomposition actually caused any improvement. We would value your
+advice about which tasks, comparisons, and failure cases would make that a convincing test.”
 
 ### Concrete examples of useful input
 
@@ -506,7 +506,8 @@ RLM trace, and verifier score before the trainer publishes a new version.
 ### Important boundary
 
 The purpose of the final slide is to invite criticism and collaboration. Do not imply that the
-future experiments have already succeeded.
+future experiments have already succeeded. Keep reward-based training and implementation details
+for questions; the spoken close should return to the single larger research question.
 
 ## Quick factual reference
 

@@ -47,7 +47,7 @@ pdflatex -interaction=nonstopmode -halt-on-error rlm-preliminary-results.tex
 - Slide 5: 60 seconds -- show the two trained model actions and the RLM observation between them.
 - Slide 6: 60 seconds -- contrast a local record task with a model-to-model handoff.
 - Slide 7: 50 seconds -- describe the planned direct-practice versus RLM-practice comparison.
-- Slide 8: 40 seconds -- state the larger research questions and solicit input.
+- Slide 8: 30 seconds -- close with the larger research question and solicit input.
 
 Total: about five to six minutes, leaving most of a brief meeting for discussion.
 

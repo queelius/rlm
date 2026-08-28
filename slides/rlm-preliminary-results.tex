@@ -346,41 +346,31 @@
 \end{frame}
 
 % Slide 8 -------------------------------------------------------------------
-\begin{frame}{The next experiments will test the larger idea directly.}
+\begin{frame}{The larger research question remains open.}
+  \begin{beamercolorbox}[wd=\linewidth,sep=.6em,rounded=true]{block body}
+    \centering
+    \large\textbf{Can training help a model divide an unfamiliar problem into familiar
+    pieces---and solve it more reliably?}
+  \end{beamercolorbox}
+
+  \vspace{0.55cm}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.31\textwidth}
-      \begin{block}{Does learning carry over?}
-        Does learning carry to new examples, formats, and eventually new kinds of problem?
+    \begin{column}{0.47\textwidth}
+      \begin{block}{What we will test next}
+        Does this learning carry over to genuinely new problems? If performance improves, was
+        decomposition the reason?
       \end{block}
     \end{column}
-    \begin{column}{0.31\textwidth}
-      \begin{block}{What caused improvement?}
-        We will compare dividing the problem with ordinary practice and with simply giving the
-        model more calls.
-      \end{block}
-    \end{column}
-    \begin{column}{0.31\textwidth}
-      \begin{block}{Can scores teach the model?}
-        If scores separate good and bad attempts, reward-based training can improve the model's
-        decisions.
+    \begin{column}{0.47\textwidth}
+      \begin{block}{Where we need input}
+        Which tasks, comparisons, and failure cases would make this a convincing test?
       \end{block}
     \end{column}
   \end{columns}
 
-  \vspace{0.3cm}
-  \begin{beamercolorbox}[wd=\linewidth,sep=.6em,rounded=true]{block body}
-    \centering
-    \large
-    \textbf{The big picture}\par
-    \vspace{0.35em}
-    We are testing whether training a model to use the RLM can help it solve unfamiliar
-    problems by building solutions from familiar pieces.
-  \end{beamercolorbox}
-
-  \vfill
+  \vspace{0.45cm}
   \centering
-  {\color{RlmTeal}\textbf{We welcome suggestions about test problems, comparisons, and overlooked
-  risks.}}
+  {\large\color{RlmTeal}\textbf{We welcome your suggestions.}}
 \end{frame}
 
 \end{document}
