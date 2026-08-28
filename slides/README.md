@@ -1,22 +1,28 @@
 # Preliminary RLM research slides
 
-`rlm-preliminary-results.tex` is a five-slide research update for a short,
-somewhat non-specialist discussion. It uses everyday explanations before any
-method name and separates completed exploratory work from the planned
-self-training experiment in the sibling `rlm-bootstrap` project.
+`rlm-preliminary-results.tex` is an eight-frame research update for a short, somewhat
+non-specialist discussion. It uses plain language to connect three things:
+
+1. the larger idea that an RLM scaffold may help a model build an unfamiliar solution from
+   familiar pieces;
+2. preliminary supervised-training findings; and
+3. the planned self-training and reward-based research that will test the larger idea more
+   directly.
+
+The slides intentionally show only the salient experimental progression. The detailed datasets,
+results, negative findings, limitations, GPU-time accounting, sources, and likely advisor
+questions are in [`preliminary-experiment-analysis.md`](preliminary-experiment-analysis.md).
 
 ## Compile
 
-From this directory, with a standard TeX Live installation containing Beamer
-and PGF/TikZ:
+From this directory, with a standard TeX Live installation containing Beamer and PGF/TikZ:
 
 ```bash
 make
 ```
 
-Use `make clean` to remove temporary LaTeX files while retaining the PDF, or
-`make distclean` to remove the temporary files and PDF. To invoke the compiler
-directly instead:
+Use `make clean` to remove temporary LaTeX files while retaining the PDF, or `make distclean` to
+remove the temporary files and PDF. To invoke the compiler directly instead:
 
 ```bash
 latexmk -pdf -interaction=nonstopmode -halt-on-error rlm-preliminary-results.tex
@@ -31,46 +37,87 @@ pdflatex -interaction=nonstopmode -halt-on-error rlm-preliminary-results.tex
 
 ## Suggested timing
 
-- Slide 1: 30 seconds -- state the motivating question.
-- Slide 2: 45 seconds -- explain that the RLM provides tools while the language
-  model decides how to use them.
-- Slide 3: 75 seconds -- present the exploratory evidence and immediately state
-  its limitations.
-- Slide 4: 60 seconds -- explain the planned one-generation self-training test.
-- Slide 5: 45 seconds -- solicit advice on tasks, controls, and priorities.
+- Slide 1: 25 seconds -- state the motivating question and preliminary status.
+- Slide 2: 40 seconds -- explain the workspace and smaller model calls.
+- Slide 3: 55 seconds -- explain the compositional-generalization hypothesis.
+- Slide 4: 40 seconds -- summarize the repeatable train, save, serve, and evaluate process.
+- Slide 5: 55 seconds -- show two clear before-and-after supervised-training comparisons.
+- Slide 6: 45 seconds -- distinguish learned local workflows from future recursive delegation.
+- Slide 7: 50 seconds -- describe the planned direct-practice versus RLM-practice comparison.
+- Slide 8: 40 seconds -- state the larger research questions and solicit input.
 
-Total: about four to five minutes, leaving most of a brief meeting for
-discussion.
+Total: about five to six minutes, leaving most of a brief meeting for discussion.
 
-## Evidence behind slide 3
+## Evidence behind slides 4--6
 
-- V3A development pilot:
-  `/project/alex_phd/runs/rlm-v2-spikes/broad-policy-sft-v3a-development-pilot-20260825T050000Z/pilot-result.json`
-  - 36 episodes per condition across six task families.
-  - The step-648 controller had macro qualified accuracy `0.6667` and 24
-    qualified-correct episodes.
-  - Direct, base-RLM, and earlier-controller comparison conditions each had
-    macro qualified accuracy `0.0`.
-- V3B paired SFT training:
-  `/project/alex_phd/runs/rlm-v2-spikes/broad-policy-sft-v3b-ops-20260825T235900Z/TRAINING_RESULT.json`
-  - Four successful runs: two curricula crossed with two training seeds.
-  - Runtime ranged from 3,747 to 3,792 seconds.
-  - Mean treatment-minus-control training-loss difference was `+0.00102`;
-    mean runtime difference was `+10` seconds.
-  - The artifact explicitly withholds efficacy conclusions pending held-out
-    paired evaluation.
-- RLVR one-step smoke:
-  `/project/alex_phd/runs/rlm-v2-spikes/rlvr-one-step-smoke-v3-artifacts/V3_TERMINALIZATION.json`
-  - All four stochastic rollouts had reward `1.0` and sample variance `0.0`.
-  - The optimizer did not start.
+### Completed training campaign
 
-## Status of slide 4
+Several supervised-training studies completed, culminating in four matched runs that tested
+canonical versus varied input layouts. Those latest adapters have not yet received their held-out
+paired evaluation, so the slides do not present a behavioral conclusion from them.
 
-Slide 4 describes planned work, not preliminary results. The research question
-and matched plain-self-training control come from the sibling project:
+Primary matched-training record:
 
-- `../rlm-bootstrap/rlm_self_training_experiment_handoff.md`
-- `../rlm-bootstrap/docs/superpowers/specs/2026-08-24-clean-causal-self-sft-design.md`
+- `/project/alex_phd/runs/rlm-v2-spikes/broad-policy-sft-v3b-ops-20260825T235900Z/TRAINING_RESULT.json`
 
-As of this deck, `rlm-bootstrap` has reproducible dataset and experiment-design
-foundations, but no self-training rollout, model training, or evaluation result.
+### Narrow RLM routine: 29/30
+
+The first experiment trained Qwen3-8B on 160 controller-turn examples from 80 symbolic tasks. The
+predeclared endpoint solved 29 of 30 held-back tasks, compared with 11 of 30 for direct answering.
+This was a narrow shared-schema mechanism test, not broad generalization.
+
+Primary result:
+
+- `/project/alex_phd/runs/rlm-v2-spikes/abi-curriculum-sft/RESULTS.md`
+
+### Fixed dispatcher: 192/192
+
+The next clean mechanism experiment trained one byte-identical six-operation Python dispatcher on
+576 examples. After preregistered checkpoint selection, the chosen checkpoint solved all 192
+sealed tasks. The result establishes that supervised training can install a causally valid fixed
+RLM mechanism; it does not establish broad planning or recursive decomposition.
+
+Primary results:
+
+- `/project/alex_phd/runs/rlm-v2-spikes/broad-policy-sft-v2b/EXECUTION_PLAN.md`
+- `/project/alex_phd/runs/rlm-v2-spikes/broad-policy-sft-v2b/evaluation-v2b-development-screen/sealed-test/summary.json`
+
+### Broader workflows: 24/36
+
+The broadest completed training study used 2,592 controller turns covering 24 operations and six
+workflow families. On a disjoint exploratory development confirmation, the selected checkpoint
+solved 24 of 36 tasks. It solved all 24 tasks across four local families: one-turn dispatch,
+inspect-then-compute, persistent-state verification, and repair after a visible fault. It did not
+solve the 12 tasks in the two model-delegation families. This was development-only, used one
+training seed, and was not a sealed or replicated result.
+
+Primary results:
+
+- `/project/alex_phd/runs/rlm-v2-spikes/broad-policy-sft-v3a/EXECUTION_PLAN.md`
+- `/project/alex_phd/runs/rlm-v2-spikes/broad-policy-sft-v3a-development-pilot-20260825T050000Z/confirm/summary.json`
+
+## Why the earlier 43/192 score is not the headline result
+
+The earlier sealed score of 43/192 versus 12/192 for direct answering is a real measurement, but
+the training generator chose operation-specific first-turn targets using information that the
+model could not see. The checkpoints learned fixed favorite operations rather than a
+task-conditioned policy. This is important negative evidence about shortcut learning and is
+documented in the companion analysis rather than presented as the deck's positive training
+result.
+
+Primary diagnosis:
+
+- `/project/alex_phd/runs/rlm-v2-spikes/SESSION_CHECKPOINT_20260824.md`
+
+## Status of planned work
+
+Slide 7 describes planned work, not a completed result. The research question and matched
+plain-self-training control come from the sibling project:
+
+- `/project/alex_phd/repos/rlm-bootstrap/rlm_self_training_experiment_handoff.md`
+- `/project/alex_phd/repos/rlm-bootstrap/docs/superpowers/specs/2026-08-24-clean-causal-self-sft-design.md`
+
+As of this deck, `rlm-bootstrap` has reproducible dataset and experiment-design foundations but no
+self-training rollout, model training, or evaluation result. Likewise, the reward-based training
+diagnostics in the current experiment never reached an optimizer update. The matched input-layout
+evaluation and compact-target training remain future work.

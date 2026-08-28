@@ -87,8 +87,8 @@
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.48\textwidth}
       \centering
-      {\color{RlmTeal}\textbf{We have completed a first prerequisite.}}\\[0.25em]
-      We trained a model to work inside the RLM.
+      {\color{RlmTeal}\textbf{We completed several preliminary training studies.}}\\[0.25em]
+      The model learned several ways to work inside the RLM.
     \end{column}
     \begin{column}{0.48\textwidth}
       \centering
@@ -102,7 +102,7 @@
 \end{frame}
 
 % Slide 2 -------------------------------------------------------------------
-\begin{frame}{An RLM gives the model a workspace and a way to hand off smaller pieces.}
+\begin{frame}{An RLM gives the model a workspace and a way to hand off work.}
   \centering
   \begin{tikzpicture}[node distance=.58cm]
     \node[rlmstage,text width=2.15cm] (workspace) {
@@ -114,7 +114,7 @@
       \footnotesize It inspects the workspace and chooses what to do.
     };
     \node[rlmstage,right=of root,text width=2.35cm] (calls) {
-      \textbf{Smaller model calls}\\
+      \textbf{Focused calls to a model}\\
       \footnotesize They work on selected pieces.
     };
     \node[rlmstage,right=of calls,text width=1.9cm] (answer) {
@@ -127,7 +127,8 @@
     \draw[-{Latex[length=2.3mm]},thick,draw=RlmGold]
       ([yshift=-.13cm]calls.south) to[bend left=28]
       node[below,align=center,font=\scriptsize,text=RlmMuted]
-      {A smaller call can repeat\\the same process.}
+      {A focused call can repeat\\
+      the same process.}
       ([yshift=-.13cm]root.south);
   \end{tikzpicture}
 
@@ -140,16 +141,17 @@
 
   \vspace{0.1cm}
   {\small\color{RlmMuted}
-    The RLM supplies the workspace and the repeated calling pattern. The model still decides what
-    to inspect, how to divide the work, and when it has enough evidence to answer.}
+    The RLM supplies the workspace and lets focused model calls repeat the same process. The main
+    model still decides what to inspect, how to divide the work, and when it has enough evidence
+    to answer.}
 \end{frame}
 
 % Slide 3 -------------------------------------------------------------------
-\begin{frame}{The scaffold may make an unfamiliar problem look familiar in pieces.}
+\begin{frame}{The larger idea: solve a new whole by combining familiar pieces.}
   \centering
   \begin{tikzpicture}[node distance=.42cm]
     \node[rlmstage,text width=2.0cm] (new) {The original problem looks unfamiliar.};
-    \node[rlmfocus,right=of new,text width=2.15cm] (split) {The RLM chooses a useful way to divide it.};
+    \node[rlmfocus,right=of new,text width=2.15cm] (split) {The model chooses a useful way to divide it.};
     \node[rlmstage,right=of split,yshift=1.25cm,text width=2.15cm] (a) {One smaller problem looks familiar.};
     \node[rlmstage,right=of split,text width=2.15cm] (b) {Another smaller problem looks familiar.};
     \node[rlmstage,right=of split,yshift=-1.25cm,text width=2.15cm] (c) {A third smaller problem looks familiar.};
@@ -164,10 +166,10 @@
   \end{tikzpicture}
 
   \vspace{0.3cm}
-  \begin{block}{This idea is called compositional generalization.}
+  \begin{block}{Researchers call this compositional generalization.}
     Each model call may only need to solve a local problem that resembles its training experience.
-    The scaffold connects the work by keeping state, routing the pieces, and bringing the answers
-    together. In this way, the system may solve a new whole by combining familiar parts.
+    The RLM keeps track of the work, sends the pieces to focused model calls, and brings the
+    answers together. In this way, the system may solve a new whole by combining familiar parts.
   \end{block}
 
   \vspace{0.12cm}
@@ -184,7 +186,7 @@
 \end{frame}
 
 % Slide 4 -------------------------------------------------------------------
-\begin{frame}{Our first step was to teach the model how to use the RLM.}
+\begin{frame}{We can now repeat the full supervised train-and-test process.}
   \begin{beamercolorbox}[wd=\linewidth,sep=.75em,rounded=true]{block body}
     \textbf{Supervised fine-tuning (SFT)} means showing the model good worked examples and
     training it to imitate the useful decisions in those examples.
@@ -196,98 +198,140 @@
     \node[rlmstage,text width=2.15cm] (examples) {We created and checked examples of good RLM work.};
     \node[rlmfocus,right=of examples,text width=2.15cm] (train) {We trained a language model on those examples.};
     \node[rlmstage,right=of train,text width=2.15cm] (reload) {We saved the trained model and loaded it into a working RLM.};
-    \node[rlmstage,right=of reload,text width=2.15cm] (evaluate) {We tested its answers and its record of tool use.};
+    \node[rlmstage,right=of reload,text width=2.15cm] (evaluate) {We tested its answers and the steps it took.};
     \draw[rlmarrow] (examples) -- (train);
     \draw[rlmarrow] (train) -- (reload);
     \draw[rlmarrow] (reload) -- (evaluate);
   \end{tikzpicture}
 
   \vspace{0.55cm}
-  \begin{block}{The complete training loop now works.}
-    We can train a model, save intermediate versions, serve a chosen version inside the RLM, and
-    evaluate it on examples that were not used for training.
+  \begin{block}{The complete training loop now works across successive studies.}
+    We can train a model, save intermediate versions, put a chosen version back inside the RLM,
+    and evaluate it on examples that were not used for training.
   \end{block}
 
   \vspace{0.1cm}
   {\small\color{RlmMuted}
-    This step does not yet establish broad generalization. It establishes the experimental
-    foundation needed for careful self-training and reward-based training later.}
+    This turns the idea into a repeatable experiment: we can compare training methods and test
+    whether improvements carry over to genuinely new tasks.}
 \end{frame}
 
 % Slide 5 -------------------------------------------------------------------
-\begin{frame}{A first signal: the trained RLM solved more new examples.}
+\begin{frame}{Training taught the model to use the RLM on controlled tasks.}
+  \centering
+  {\small\color{RlmMuted}New test tasks solved before and after supervised training}
+
+  \vspace{0.35cm}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.53\textwidth}
+    \begin{column}{0.48\textwidth}
       \centering
-      \textbf{The final saved version performed best on the examples used to choose it.}
-
-      \vspace{0.15cm}
-      {\small We checked each saved version on the same 48 development examples.}
-
-      \vspace{0.18cm}
-      \begin{tikzpicture}[x=1.02cm,y=.10cm,font=\scriptsize]
-        \draw[->,draw=RlmMuted] (0,0) -- (4.7,0);
-        \draw[->,draw=RlmMuted] (0,0) -- (0,29);
-        \foreach \y in {0,10,20} {
-          \draw[draw=RlmMuted!20] (0,\y) -- (4.5,\y);
-          \node[anchor=east,text=RlmMuted] at (-.1,\y) {\y\%};
-        }
-        \draw[dashed,thick,draw=RlmGold] (0,6.25) -- (4.45,6.25);
-        \node[anchor=west,text=RlmGold] at (.05,8.6) {Direct model: 6\%};
-        \draw[very thick,draw=RlmTeal]
-          (0.6,16.67) -- (1.7,16.67) -- (2.8,16.67) -- (3.9,22.92);
-        \foreach \x/\y/\label in {0.6/16.67/17\%,1.7/16.67/17\%,2.8/16.67/17\%,3.9/22.92/23\%} {
-          \fill[fill=RlmTeal] (\x,\y) circle (2.3pt);
-          \node[anchor=south,text=RlmNavy,font=\scriptsize\bfseries] at (\x,\y+1.1) {\label};
-        }
-        \node[anchor=north,align=center,text=RlmMuted] at (0.6,-1.1) {25\%};
-        \node[anchor=north,align=center,text=RlmMuted] at (1.7,-1.1) {50\%};
-        \node[anchor=north,align=center,text=RlmMuted] at (2.8,-1.1) {75\%};
-        \node[anchor=north,align=center,text=RlmMuted] at (3.9,-1.1) {100\%};
-        \node[anchor=north,text=RlmMuted] at (2.25,-5.1) {Training completed};
-        \node[rotate=90,anchor=south,text=RlmMuted] at (-.72,14) {Examples solved};
-      \end{tikzpicture}
-    \end{column}
-
-    \begin{column}{0.43\textwidth}
-      \centering
-      \textbf{The chosen version was then tested on 192 held-back examples.}
+      \textbf{Inspect, then calculate}
 
       \vspace{0.25cm}
-      \begin{tikzpicture}[x=.72cm,y=.10cm,font=\scriptsize]
-        \draw[->,draw=RlmMuted] (0,0) -- (6.0,0);
-        \draw[->,draw=RlmMuted] (0,0) -- (0,29);
-        \foreach \y in {0,10,20} {
-          \draw[draw=RlmMuted!20] (0,\y) -- (5.7,\y);
-          \node[anchor=east,text=RlmMuted] at (-.12,\y) {\y\%};
-        }
-        \fill[RlmMuted!55] (1.0,0) rectangle (2.5,6.25);
-        \fill[RlmTeal] (3.35,0) rectangle (4.85,22.40);
-        \node[anchor=south,text=RlmInk,font=\small\bfseries] at (1.75,7.0) {6\%};
-        \node[anchor=south,text=RlmNavy,font=\small\bfseries] at (4.10,23.1) {22\%};
-        \node[anchor=north,align=center,text=RlmMuted] at (1.75,-1.1) {The model\\answered directly};
-        \node[anchor=north,align=center,text=RlmMuted] at (4.10,-1.1) {The trained model\\used the RLM};
-        \node[anchor=north,text=RlmMuted] at (2.95,-8.1) {Held-back examples solved};
+      \begin{tikzpicture}
+        \node[anchor=east,font=\small] at (0,1.18) {Before};
+        \draw[rounded corners=2pt,draw=RlmNavy!28,fill=RlmPaper]
+          (0.18,.98) rectangle (4.18,1.38);
+        \node[anchor=west,font=\small,text=RlmMuted] at (4.28,1.18) {0/30};
+
+        \node[anchor=east,font=\small] at (0,.43) {After};
+        \draw[rounded corners=2pt,draw=RlmNavy!28,fill=RlmPaper]
+          (0.18,.23) rectangle (4.18,.63);
+        \fill[rounded corners=2pt,RlmTeal]
+          (0.18,.23) rectangle (4.05,.63);
+        \node[anchor=west,font=\small,text=RlmNavy] at (4.28,.43) {\textbf{29/30}};
       \end{tikzpicture}
+
+      {\small The model learned a simple two-step routine.}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \centering
+      \textbf{Use one program for six operations}
+
+      \vspace{0.25cm}
+      \begin{tikzpicture}
+        \node[anchor=east,font=\small] at (0,1.18) {Before};
+        \draw[rounded corners=2pt,draw=RlmNavy!28,fill=RlmPaper]
+          (0.18,.98) rectangle (4.18,1.38);
+        \node[anchor=west,font=\small,text=RlmMuted] at (4.28,1.18) {0/192};
+
+        \node[anchor=east,font=\small] at (0,.43) {After};
+        \draw[rounded corners=2pt,draw=RlmNavy!28,fill=RlmPaper]
+          (0.18,.23) rectangle (4.18,.63);
+        \fill[rounded corners=2pt,RlmTeal]
+          (0.18,.23) rectangle (4.18,.63);
+        \node[anchor=west,font=\small,text=RlmNavy] at (4.28,.43) {\textbf{192/192}};
+      \end{tikzpicture}
+
+      {\small The model learned a reusable but narrow mechanism.}
     \end{column}
   \end{columns}
 
-  \vspace{0.15cm}
-  \begin{beamercolorbox}[wd=\linewidth,sep=.55em,rounded=true]{block body}
-    \centering
-    The trained RLM solved \textbf{43 of 192} held-back examples. The model answering directly
-    solved \textbf{12 of 192}.
-  \end{beamercolorbox}
+  \vspace{0.5cm}
+  \begin{block}{The change was large and repeatable within these small, controlled tests.}
+    Before training, the model did not reliably perform either RLM routine. After training, it
+    performed them on almost every new test task.
+  \end{block}
 
-  \vspace{0.12cm}
+  \vspace{0.08cm}
   {\scriptsize\color{RlmMuted}
-    These were simple synthetic counting and summing tasks, and success required the right answer
-    plus a valid work record. The RLM used more model calls, so this compares complete systems
-    rather than equal computing effort.}
+    This establishes that training can change how the model uses the RLM. It does not yet show
+    broad problem-solving or reliable handoffs to other model calls.}
 \end{frame}
 
 % Slide 6 -------------------------------------------------------------------
-\begin{frame}{Next, we want the model to learn from its own successful work.}
+\begin{frame}{The model learned step-by-step work before reliable handoffs.}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.57\textwidth}
+      \centering
+      \textbf{What the model learned in a small test}
+
+      \vspace{0.28cm}
+      \begin{tikzpicture}[node distance=.38cm]
+        \node[rlmfocus,text width=2.05cm] (choose) {\textbf{Choose and run the right program}};
+        \node[rlmfocus,right=of choose,text width=2.05cm] (inspect) {\textbf{Inspect the task, then calculate}};
+        \node[rlmfocus,below=of choose,text width=2.05cm] (remember) {\textbf{Remember and check earlier work}};
+        \node[rlmfocus,right=of remember,text width=2.05cm] (repair) {\textbf{Notice and repair an error}};
+      \end{tikzpicture}
+
+      \vspace{0.25cm}
+      {\small The model solved \textbf{24 of 36 tasks overall}: every task across these four
+      kinds of step-by-step work.}
+    \end{column}
+
+    \begin{column}{0.39\textwidth}
+      \centering
+      \textbf{The key next capability}
+
+      \vspace{0.28cm}
+      \begin{tikzpicture}[node distance=.38cm]
+        \node[rlmstage,text width=2.55cm] (main) {The main model chooses useful pieces.};
+        \node[rlmstage,below left=of main,text width=1.25cm] (a) {Smaller\\call};
+        \node[rlmstage,below right=of main,text width=1.25cm] (b) {Smaller\\call};
+        \node[rlmstage,below=1.25cm of main,text width=1.6cm] (combine) {Combine the results};
+        \draw[-{Latex[length=2.3mm]},thick,draw=RlmGold] (main) -- (a);
+        \draw[-{Latex[length=2.3mm]},thick,draw=RlmGold] (main) -- (b);
+        \draw[-{Latex[length=2.3mm]},thick,draw=RlmGold] (a) -- (combine);
+        \draw[-{Latex[length=2.3mm]},thick,draw=RlmGold] (b) -- (combine);
+      \end{tikzpicture}
+
+      \vspace{0.25cm}
+      {\small It did not solve the \textbf{12 tasks} that required model-to-model handoffs.
+      Learning those handoffs is the bridge to the larger RLM idea.}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.4cm}
+  \begin{beamercolorbox}[wd=\linewidth,sep=.6em,rounded=true]{block body}
+    \centering
+    The current evidence supports learned \textbf{step-by-step work inside the workspace}. It
+    does not yet establish the full idea of repeatedly dividing a problem among model calls.
+  \end{beamercolorbox}
+\end{frame}
+
+% Slide 7 -------------------------------------------------------------------
+\begin{frame}{Next, we will test learning from successful attempts inside the RLM.}
   \begin{beamercolorbox}[wd=\linewidth,sep=.55em,center,rounded=true]{block body alerted}
     \textbf{We have designed this experiment, but we have not run it yet.}
   \end{beamercolorbox}
@@ -297,9 +341,9 @@
   \begin{tikzpicture}[node distance=.48cm]
     \node[rlmstage,text width=1.75cm] (attempt) {The model attempts new tasks inside the RLM.};
     \node[rlmstage,right=of attempt,text width=1.75cm] (check) {An automatic check identifies correct work.};
-    \node[rlmfocus,right=of check,text width=1.75cm] (keep) {We keep the successful sequence of decisions.};
+    \node[rlmfocus,right=of check,text width=1.75cm] (keep) {We keep the successful steps.};
     \node[rlmstage,right=of keep,text width=1.75cm] (train) {We train the same model on that work.};
-    \node[rlmstage,right=of train,text width=1.75cm] (test) {We test it on new, held-back tasks.};
+    \node[rlmstage,right=of train,text width=1.75cm] (test) {We test it on new tasks.};
     \draw[rlmarrow] (attempt) -- (check);
     \draw[rlmarrow] (check) -- (keep);
     \draw[rlmarrow] (keep) -- (train);
@@ -318,11 +362,9 @@
     piece incorrectly, or combined the pieces incorrectly. This makes failures more informative.}
 
   \vfill
-  {\tiny\color{RlmMuted}
-    The adjacent \texttt{rlm-bootstrap} project contains the plan and supporting workflow.}
 \end{frame}
 
-% Slide 7 -------------------------------------------------------------------
+% Slide 8 -------------------------------------------------------------------
 \begin{frame}{The next experiments will test the larger idea directly.}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.31\textwidth}
@@ -333,8 +375,8 @@
     \end{column}
     \begin{column}{0.31\textwidth}
       \begin{block}{Then, we will ask what caused any improvement.}
-        We will compare decomposition with ordinary practice and with simply giving the model more
-        calls.
+        We will compare useful ways of dividing the problem with ordinary practice and with simply
+        giving the model more calls.
       \end{block}
     \end{column}
     \begin{column}{0.31\textwidth}
@@ -351,14 +393,14 @@
     \large
     \textbf{The big picture}\par
     \vspace{0.35em}
-    We are testing whether training a model to use this scaffold can help it solve unfamiliar
+    We are testing whether training a model to use the RLM can help it solve unfamiliar
     problems by building solutions from familiar pieces.
   \end{beamercolorbox}
 
   \vfill
   \centering
-  {\color{RlmTeal}\textbf{We would value suggestions for problem areas where useful decomposition
-  can be measured clearly.}}
+  {\color{RlmTeal}\textbf{We would value suggestions about good test problems, fair comparisons,
+  and risks that we may be overlooking.}}
 \end{frame}
 
 \end{document}
