@@ -226,48 +226,52 @@
 \end{frame}
 
 % Slide 5 -------------------------------------------------------------------
-\begin{frame}{First result: training taught the model a basic RLM routine.}
-  \rlmstagebox{\textbf{Simplified example}\\[.2em]
-    \small Count the numbers divisible by 5 in \texttt{[5, 8, 10, 21, 25]}.}
+\begin{frame}{What did SFT teach? A simple two-step RLM routine.}
+  \rlmstagebox{\small\textbf{Starting point:} The task is in the Python workspace, outside the
+    model's immediate view.}
 
-  \vspace{.15cm}
+  \vspace{.12cm}
   \begin{columns}[c,onlytextwidth]
-    \begin{column}{.27\textwidth}
-      \rlmstagebox{\textbf{Read the task}\\[.1em]
-        \small Inspect the workspace.}
+    \begin{column}{.28\textwidth}
+      \rlmfocusbox{\textbf{1. Model action}\\[.12em]
+        \footnotesize The desired model output inspects the workspace with Python.}
     \end{column}
-    \begin{column}{.05\textwidth}
+    \begin{column}{.04\textwidth}
       \centering\Large\color{RlmTeal}$\rightarrow$
     \end{column}
-    \begin{column}{.27\textwidth}
-      \rlmfocusbox{\textbf{Use Python}\\[.1em]
-        \small Count the matching values.}
+    \begin{column}{.32\textwidth}
+      \rlmstagebox{\textbf{2. RLM observation}\\[.12em]
+        \footnotesize ``Count the numbers divisible by 5 in
+        \texttt{[5, 8, 10, 21, 25]}.''}
     \end{column}
-    \begin{column}{.05\textwidth}
+    \begin{column}{.04\textwidth}
       \centering\Large\color{RlmTeal}$\rightarrow$
     \end{column}
-    \begin{column}{.27\textwidth}
-      \rlmstagebox{\textbf{Return the answer}\\[.1em]
-        \small The answer is \textbf{3}.}
+    \begin{column}{.28\textwidth}
+      \rlmfocusbox{\textbf{3. Model action}\\[.12em]
+        \footnotesize The desired model output uses Python and submits \textbf{3}.}
     \end{column}
   \end{columns}
 
-  \vspace{.18cm}
+  \vspace{.04cm}
+  \centering
+  {\small The two model actions are the SFT targets. The RLM produces the observation.\par}
+
+  \vspace{.10cm}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{.47\textwidth}
       \rlmstagebox{\textbf{Before supervised training}\\[.25em]
-        \small Basic routine: \textbf{0/30}\\[.1em]
-        Fixed program covering six task types: \textbf{0/192}}
+        \small Held-back tasks solved: \textbf{0/30}}
     \end{column}
     \begin{column}{.47\textwidth}
       \rlmfocusbox{\textbf{After supervised training}\\[.25em]
-        \small Basic routine: \textbf{29/30}\\[.1em]
-        Fixed program covering six task types: \textbf{192/192}}
+        \small Held-back tasks solved: \textbf{29/30}}
     \end{column}
   \end{columns}
 
-  \vspace{.12cm}
-  \rlmnextbox{\textbf{Controlled procedure tests---not broad reasoning tests.}}
+  \vspace{.06cm}
+  \rlmnextbox{\textbf{This is a prerequisite for later decomposition experiments---not broad
+    reasoning by itself.}}
 \end{frame}
 
 % Slide 6 -------------------------------------------------------------------

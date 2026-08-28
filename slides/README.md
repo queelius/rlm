@@ -44,7 +44,7 @@ pdflatex -interaction=nonstopmode -halt-on-error rlm-preliminary-results.tex
 - Slide 2: 40 seconds -- explain the workspace and smaller model calls.
 - Slide 3: 55 seconds -- explain the compositional-generalization hypothesis.
 - Slide 4: 40 seconds -- summarize the repeatable train, save, serve, and evaluate process.
-- Slide 5: 60 seconds -- use the counting example to explain what basic procedure learning means.
+- Slide 5: 60 seconds -- show the two trained model actions and the RLM observation between them.
 - Slide 6: 60 seconds -- contrast a local record task with a model-to-model handoff.
 - Slide 7: 50 seconds -- describe the planned direct-practice versus RLM-practice comparison.
 - Slide 8: 40 seconds -- state the larger research questions and solicit input.

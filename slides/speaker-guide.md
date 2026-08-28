@@ -214,30 +214,46 @@ hypothesis is true.
 
 ### What the audience should remember
 
-Supervised training changed the model from failing to use two narrow RLM procedures to performing
-them almost perfectly on new controlled tasks.
+Supervised training taught the model which actions to take inside one narrow RLM routine. The
+model learned to inspect a task through Python and then use the resulting observation to compute
+and submit an answer. This reliable environment use is a prerequisite for later experiments on
+decomposition and delegation.
 
 ### Suggested explanation
 
-“Here is a simplified version of the task. The data and question are available in the workspace.
-The desired behavior is to read the task, use Python to count the matching values, and return 3.
-Before supervised training, the base model did not reliably complete either tested RLM procedure.
-After training, it solved 29 of 30 tasks in the basic-routine test and all 192 tasks in a second
-fixed-program test. These results show procedure learning, not broad reasoning.”
+“This slide shows what we actually trained. The task begins in the Python workspace rather than
+in the model's immediate prompt. The first supervised action tells the model to inspect the
+workspace. The RLM runs that action and reports what it found. The second supervised action uses
+Python to calculate and submit the answer. Before training, the base model inside the RLM solved
+none of the 30 held-back tasks. After training, it solved 29. This shows that SFT taught a narrow
+procedure, not broad reasoning.”
+
+The arithmetic is not the research destination. It gives exact answers and lets us isolate four
+controller prerequisites: interrogate the workspace, generate executable Python that performs
+the intended operation, use an observation across turns, and submit the result through the
+required interface and output format. Later curricula ask whether the controller can also choose
+how to divide a task and hand pieces to other model calls.
 
 ### Walk through the example
 
 The simplified list is `[5, 8, 10, 21, 25]`. The numbers divisible by 5 are 5, 10, and 25, so the
-answer is 3.
+answer is 3. The three boxes have different roles:
 
-The first experiment required two model turns:
+1. The first box is a model action shown during SFT: inspect the workspace with Python.
+2. The middle box is not a model answer or a training label. It is the RLM's observation after
+   executing that Python, simplified to show only the task text.
+3. The final box is another model action shown during SFT: use Python and submit 3.
 
-1. Inspect the hidden task in the workspace.
-2. Use Python and return the answer.
+In the actual retained example, the observation was a machine-readable message saying that
+Python ran successfully, no final answer had been submitted, and the printed task was to count
+the values divisible by 6 in `[28, 30, 45, 21, 53, 36, 48, 44, 20, 2]`. The answer was not
+included in that observation.
 
-The second experiment used one fixed Python program containing six possible operations. The task
-specified which operation and values to use. New test values and renderings were held back, but
-the program itself did not change.
+Each training task produced two controller-turn examples. The first example used the RLM
+instructions and initial workspace notification as context and treated the inspection code as the
+desired model completion. The second used that context, the inspection action, and the resulting
+observation, with the computation-and-submission code as the desired completion. At evaluation
+time, the model had to generate the first action before receiving a live observation.
 
 ### Likely questions
 
@@ -254,18 +270,46 @@ calls differed. That is why the slide focuses on whether SFT installed the inten
 
 **How much training data was used?**
 
-The first study used 80 training tasks exported as 160 model-turn examples. The fixed-program
-study used 576 examples.
+The study shown on this slide used 80 training tasks exported as 160 model-turn examples: two
+controller turns for each task.
 
-**Does 192/192 mean the model learned general reasoning?**
+**Where did the task observation come from?**
 
-No. Every target used the same fixed six-branch Python program. The result shows that SFT can
-install a dependable mechanism within a defined task format.
+It came from the fixed RLM scaffold. The RLM executed the model's first Python action and returned
+a structured message containing execution status and anything the code printed. It was neither
+an answer supplied by the trainer nor a reward.
+
+**Was the model trained on final answers or on RLM actions?**
+
+It was trained on the expert controller's action text: the Python inspection action on the first
+turn and the Python computation-and-submission action on the second turn. The prompts and prior
+history were context; the training loss was applied to the desired assistant action tokens.
+
+**Did any other controlled SFT experiment succeed?**
+
+Yes. A separate experiment installed one fixed six-operation Python dispatcher and reached
+192/192 on its sealed test. We keep it off this slide because it answers a different, narrower
+question and would distract from the concrete explanation of what an SFT example contained. It
+also does not establish broad reasoning.
 
 **Were the test tasks new?**
 
 Yes, within the scope of each controlled test. They used held-back values and surface forms, but
 they did not introduce a broadly new natural-language problem family.
+
+**Did this routine use recursive model-to-model delegation?**
+
+No. This first study deliberately tested the prerequisite behavior of inspecting the workspace,
+computing with Python, and submitting correctly. Recursive delegation was tested only in later,
+harder exploratory workflows and did not yet transfer successfully.
+
+**Why train on simple arithmetic if the research question is decomposition?**
+
+Because arithmetic gives an exact, inexpensive check of whether the controller can use the RLM
+environment correctly. If it cannot inspect the workspace, produce valid Python, interpret the
+next observation, and submit in the required form, then a decomposition experiment would mix up
+interface failures with reasoning failures. These tasks isolate the prerequisite before asking
+the larger scientific question.
 
 **Why not show the earlier 43/192 result?**
 
@@ -275,8 +319,9 @@ preserve it as useful negative evidence in the technical analysis, not as a posi
 
 ### Important boundary
 
-Say “the model learned these procedures.” Do not say “SFT made the model a broadly better
-reasoner.”
+Say “the model learned this narrow procedure.” Do not say “SFT made the model a broadly better
+reasoner.” The observation was produced by executing the model's action; it was not an answer or
+reward inserted by the trainer.
 
 ## Slide 6: Local work versus handoffs
 
@@ -488,4 +533,3 @@ The essential sequence is:
 5. Slide 6: State the most important finding and limitation: local work transferred, handoffs did
    not.
 6. Slides 7--8: Mark future work clearly and ask for input.
-
