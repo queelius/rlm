@@ -1,0 +1,286 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+
+% A small, dependency-light visual system intended to compile with a standard
+% TeX Live installation that includes Beamer and PGF/TikZ.
+\definecolor{RlmNavy}{HTML}{17324D}
+\definecolor{RlmTeal}{HTML}{168A83}
+\definecolor{RlmGold}{HTML}{D49A2A}
+\definecolor{RlmRed}{HTML}{B34C4C}
+\definecolor{RlmInk}{HTML}{263238}
+\definecolor{RlmMuted}{HTML}{65757F}
+\definecolor{RlmPaper}{HTML}{F7F9FA}
+
+\setbeamercolor{normal text}{fg=RlmInk,bg=white}
+\setbeamercolor{structure}{fg=RlmNavy}
+\setbeamercolor{frametitle}{fg=RlmNavy,bg=white}
+\setbeamercolor{alerted text}{fg=RlmRed}
+\setbeamercolor{block title}{fg=white,bg=RlmNavy}
+\setbeamercolor{block body}{fg=RlmInk,bg=RlmPaper}
+\setbeamercolor{block title alerted}{fg=white,bg=RlmRed}
+\setbeamercolor{block body alerted}{fg=RlmInk,bg=RlmRed!7}
+\setbeamercolor{author in head/foot}{fg=RlmMuted,bg=white}
+\setbeamercolor{date in head/foot}{fg=RlmMuted,bg=white}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{itemize item}{\color{RlmTeal}\small$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{\color{RlmTeal}\scriptsize$\bullet$}
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.84\paperwidth,ht=2.7ex,dp=1.1ex,leftskip=.55cm]{author in head/foot}%
+      Preliminary and exploratory research
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.7ex,dp=1.1ex,rightskip=.55cm plus 1fil]{date in head/foot}%
+      \hfill\insertframenumber/\inserttotalframenumber
+    \end{beamercolorbox}%
+  }%
+}
+
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+
+\tikzset{
+  rlmstage/.style={
+    draw=RlmNavy!28,
+    fill=RlmPaper,
+    rounded corners=3pt,
+    minimum height=1.1cm,
+    align=center,
+    inner sep=6pt
+  },
+  rlmfocus/.style={
+    rlmstage,
+    draw=RlmTeal,
+    fill=RlmTeal!9
+  },
+  rlmarrow/.style={-{Latex[length=2.3mm]},thick,draw=RlmTeal}
+}
+
+\begin{document}
+
+% Slide 1 -------------------------------------------------------------------
+\begin{frame}[plain]
+  \vspace{0.4cm}
+  {\usebeamerfont{title}\color{RlmNavy}
+    Can training teach a language model to use tools better?\par}
+
+  \vspace{0.25cm}
+  {\usebeamerfont{subtitle}\color{RlmMuted}
+    Preliminary and exploratory research update\par}
+
+  \vspace{0.65cm}
+  \begin{beamercolorbox}[wd=\linewidth,sep=1em,rounded=true]{block body}
+    \centering
+    \Large
+    A Recursive Language Model (RLM) gives a language model a \textbf{workspace with tools}.\\[0.4em]
+    Our question is whether training can teach the model to use those tools more effectively.
+  \end{beamercolorbox}
+
+  \vfill
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \centering
+      {\color{RlmTeal}\textbf{What we have explored}}\\[0.2em]
+      Training from examples
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      {\color{RlmGold}\textbf{Where we want to go}}\\[0.2em]
+      Training from the model's own successes
+    \end{column}
+  \end{columns}
+
+  \vspace{0.35cm}
+  {\small\color{RlmMuted}Research discussion \hfill 29 August 2026}
+\end{frame}
+
+% Slide 2 -------------------------------------------------------------------
+\begin{frame}{What is an RLM?}
+  \centering
+  \begin{tikzpicture}[node distance=.85cm]
+    \node[rlmstage,text width=1.65cm] (task) {A difficult\\task};
+    \node[rlmfocus,right=of task,text width=5.35cm] (rlm) {
+      \textbf{Language model with a workspace}\\[0.25em]
+      \footnotesize run code \quad inspect results \quad ask the model to do more work
+    };
+    \node[rlmstage,right=of rlm,text width=1.65cm] (answer) {Final\\answer};
+    \draw[rlmarrow] (task) -- (rlm);
+    \draw[rlmarrow] (rlm) -- (answer);
+  \end{tikzpicture}
+
+  \vspace{0.45cm}
+  \begin{block}{The RLM provides the tools; the language model still makes the decisions.}
+    A capable model can still fail if it does not know \emph{when} to use code, \emph{what} to
+    inspect, or \emph{how} to use what it finds. Training may improve those decisions.
+  \end{block}
+
+  \vspace{0.15cm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.31\textwidth}
+      \centering
+      \textcolor{RlmTeal}{\textbf{Now}}\\
+      Train from good examples
+    \end{column}
+    \begin{column}{0.05\textwidth}
+      \centering\color{RlmMuted}$\longrightarrow$
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \centering
+      \textcolor{RlmGold}{\textbf{Next}}\\
+      Train from its own successes
+    \end{column}
+    \begin{column}{0.05\textwidth}
+      \centering\color{RlmMuted}$\longrightarrow$
+    \end{column}
+    \begin{column}{0.27\textwidth}
+      \centering
+      \textcolor{RlmMuted}{\textbf{Later}}\\
+      Learn from scores or rewards
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% Slide 3 -------------------------------------------------------------------
+\begin{frame}{What have we learned so far?}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.43\textwidth}
+      \begin{beamercolorbox}[wd=\linewidth,sep=.8em,rounded=true]{block body}
+        \textbf{Promising small preliminary test}\par
+        \vspace{0.45em}
+
+        {\small Three comparison setups\hfill 0\%}\par
+        {\color{RlmMuted!35}\rule{0.012\linewidth}{0.24cm}}\par
+        \vspace{0.35em}
+
+        {\small\textbf{Model trained for RLM work}\hfill\textbf{67\%}}\par
+        {\color{RlmTeal}\rule{0.67\linewidth}{0.24cm}}\par
+
+        \vspace{0.55em}
+        {\scriptsize\color{RlmMuted}
+          Six kinds of tasks; 36 attempts per setup. A success required a correct answer and a
+          complete, valid record of the model's work.}
+      \end{beamercolorbox}
+    \end{column}
+
+    \begin{column}{0.54\textwidth}
+      \textbf{The larger training runs worked reliably}
+      \begin{itemize}
+        \item All \textbf{four carefully matched training runs} completed successfully.
+        \item Each run took about \textbf{63 minutes}.
+        \item Showing tasks in six different formats took about the same training time as using
+          one standard format.
+      \end{itemize}
+
+      \vspace{0.2em}
+      \textbf{A useful lesson about training from rewards}
+      \begin{itemize}
+        \item Four early attempts all received the same top score.
+        \item With no difference between the scores, there was nothing to learn; a safety check
+          stopped before the model was changed.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.3cm}
+  \begin{alertblock}{Important limitation}
+    We have not yet tested the newest trained models on genuinely new tasks. These findings show
+    that the approach is workable and promising---not that it has been proven to work broadly.
+  \end{alertblock}
+\end{frame}
+
+% Slide 4 -------------------------------------------------------------------
+\begin{frame}{Next: can an RLM learn from its own successes?}
+  \begin{beamercolorbox}[wd=\linewidth,sep=.55em,center,rounded=true]{block body alerted}
+    \textbf{Planned work: we have designed this experiment, but we have not run it yet.}
+  \end{beamercolorbox}
+
+  \vspace{0.45cm}
+  \centering
+  \begin{tikzpicture}[node distance=.44cm]
+    \node[rlmstage,text width=1.65cm] (m0) {Start with a\\language model};
+    \node[rlmstage,right=of m0,text width=2.15cm] (attempt) {Let it solve tasks\\using RLM tools};
+    \node[rlmfocus,right=of attempt,text width=2.15cm] (keep) {Keep its successful\\work};
+    \node[rlmstage,right=of keep,text width=1.75cm] (train) {Train the same\\model from it};
+    \node[rlmstage,right=of train,text width=1.75cm] (test) {Test it on\\new tasks};
+    \draw[rlmarrow] (m0) -- (attempt);
+    \draw[rlmarrow] (attempt) -- (keep);
+    \draw[rlmarrow] (keep) -- (train);
+    \draw[rlmarrow] (train) -- (test);
+  \end{tikzpicture}
+
+  \vspace{0.45cm}
+  \begin{block}{The central question}
+    Can a model become better at using RLM tools by studying its \textbf{own successful work}---
+    without relying on a stronger model as its teacher?
+  \end{block}
+
+  \vspace{0.1cm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.31\textwidth}
+      \centering
+      \textbf{Starting model}\\
+      What can it already do?
+    \end{column}
+    \begin{column}{0.34\textwidth}
+      \centering
+      \textbf{Practice direct answers}\\
+      Learn without RLM tools
+    \end{column}
+    \begin{column}{0.34\textwidth}
+      \centering
+      \textcolor{RlmTeal}{\textbf{Practice with RLM tools}}\\
+      Learn from successful RLM work
+    \end{column}
+  \end{columns}
+
+  \vspace{0.25cm}
+  {\small\color{RlmMuted}
+    Comparing these versions tells us whether experience with RLM tools adds something beyond
+    ordinary practice.}
+\end{frame}
+
+% Slide 5 -------------------------------------------------------------------
+\begin{frame}{What should we test next?}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Tasks and evidence}
+        \begin{itemize}
+          \item Which tasks truly require code and a workspace rather than memorized patterns?
+          \item How much improvement on genuinely new tasks would be convincing?
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Research priorities}
+        \begin{itemize}
+          \item Is one round of learning from the model's own successes the right next test?
+          \item Should we first finish the new-task evaluation, begin learning from the model's
+            own successes, or improve the scores needed for later reward-based training?
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.6cm}
+  \begin{beamercolorbox}[wd=\linewidth,sep=1em,rounded=true]{block body}
+    \centering
+    \large
+    \textbf{Preliminary takeaway}\par
+    \vspace{0.35em}
+    Early tests suggest that training from examples can improve how a model works inside an RLM.\\
+    We now need to show improvement on genuinely new tasks---then ask whether the model can learn
+    from its own successful work.
+  \end{beamercolorbox}
+
+  \vfill
+  \centering
+  {\color{RlmTeal}\textbf{We would value your input on the most informative next experiment.}}
+\end{frame}
+
+\end{document}
