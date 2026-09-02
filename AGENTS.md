@@ -27,6 +27,21 @@ producing information. Maintain a living queue ordered by expected information g
 continually propose new model-training, RLVR, evaluation, decomposition, and harness-adaptation
 experiments from accumulated evidence.
 
+The user grants standing permission for research acquisition. Proactively mine arXiv and other
+primary literature for related methods, questions, benchmarks, and negative results. When useful,
+clone official paper repositories and download public training, validation, or evaluation datasets;
+install the tools needed to inspect or run them without waiting for case-by-case approval. Keep large
+or third-party assets in an external research cache rather than Git. Record source URL, exact commit
+or dataset revision, license, retrieval date, checksums or immutable manifests, and split provenance
+so later results are reproducible. Inspect downloaded code before execution, never expose secrets,
+and do not allow speculative downloads or installs to displace a ready decision-relevant GPU run.
+
+Treat literature and acquired artifacts as inputs to experiments, not as an end in themselves. For
+each promising asset, state the falsifiable question it enables, the smallest informative comparison,
+the expected GPU shape and duration, and the evidence that would promote, revise, or retire the idea.
+Continuously add promising RLM harness modifications, model--harness co-adaptation methods,
+decomposition strategies, RLVR objectives, and evaluation datasets to the ranked research queue.
+
 Follow the durable operating loop in `docs/RESEARCH_OPERATIONS.md` and keep the live experiment
 queue in the active research store current.
 
