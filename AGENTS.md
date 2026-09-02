@@ -35,6 +35,9 @@ or third-party assets in an external research cache rather than Git. Record sour
 or dataset revision, license, retrieval date, checksums or immutable manifests, and split provenance
 so later results are reproducible. Inspect downloaded code before execution, never expose secrets,
 and do not allow speculative downloads or installs to displace a ready decision-relevant GPU run.
+Create isolated project- or experiment-scoped Python environments as needed, preferably from pinned
+`uv` locks. Do not mutate an unrelated active environment; record Python, `uv`, lockfile, CUDA, and
+key package versions with the run so a later session can reconstruct it.
 
 The user also grants standing permission to improve the research filesystem layout when the existing
 organization impedes iteration, analysis, or provenance. Keep source repositories, reusable external
