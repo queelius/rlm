@@ -36,6 +36,13 @@ or dataset revision, license, retrieval date, checksums or immutable manifests, 
 so later results are reproducible. Inspect downloaded code before execution, never expose secrets,
 and do not allow speculative downloads or installs to displace a ready decision-relevant GPU run.
 
+The user also grants standing permission to improve the research filesystem layout when the existing
+organization impedes iteration, analysis, or provenance. Keep source repositories, reusable external
+assets, mutable staging work, immutable run outputs, and synthesized analyses clearly separated.
+Never relocate files beneath a live process. When reorganizing completed artifacts, preserve content
+hashes and leave a machine-readable old-to-new path map so checkpoints and prior reports remain
+findable; prefer additive migration before removing redundant copies.
+
 Treat literature and acquired artifacts as inputs to experiments, not as an end in themselves. For
 each promising asset, state the falsifiable question it enables, the smallest informative comparison,
 the expected GPU shape and duration, and the evidence that would promote, revise, or retire the idea.
