@@ -38,6 +38,10 @@ and do not allow speculative downloads or installs to displace a ready decision-
 Create isolated project- or experiment-scoped Python environments as needed, preferably from pinned
 `uv` locks. Do not mutate an unrelated active environment; record Python, `uv`, lockfile, CUDA, and
 key package versions with the run so a later session can reconstruct it.
+Place heavyweight environments for shared third-party clones in an external environment store keyed
+by repository commit rather than inside the clone. Treat every ignored environment/cache directory as
+potentially owned by another session; never clean or delete it without resolving its owner and live
+processes first.
 
 The user also grants standing permission to improve the research filesystem layout when the existing
 organization impedes iteration, analysis, or provenance. Keep source repositories, reusable external
