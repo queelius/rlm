@@ -1,5 +1,35 @@
 # Repository Guidelines
 
+## Critical: Time-Limited GPU Access
+
+GPU access is scarce and temporary. **An idle reserved GPU is an irreversible missed research
+opportunity.** This is the highest-priority operating constraint for experimental work in this
+repository.
+
+At the start or resumption of every research session, inspect GPU utilization and the ready-run
+queue. If an exclusively reserved GPU is idle, make launching a decision-relevant experiment the
+immediate priority. Do not let documentation, broad test suites, refactoring, production-style
+hardening, or confirmatory-grade review block an independent exploratory run. If no useful run is
+ready, stop polishing and prepare the smallest informative training, rollout, evaluation, ablation,
+data-generation, or harness-search job that can answer a real research question. Keep at least two
+follow-on jobs queued whenever practical so CPU preparation overlaps GPU execution.
+
+Exploratory runs may fail; that is acceptable research evidence. Give them a question, immutable
+inputs, metric, seed, compute cap, checkpoint policy, and artifact location, then run them. Fix
+problems when observed and iterate quickly. Apply exhaustive safeguards only when promoting a result
+to a confirmatory claim. Never run meaningless filler merely to show utilization, but treat avoidable
+GPU idleness as a failure of research operations and record it explicitly.
+
+Research is an adaptive loop, not execution of a static queue. Analyze each completed or failed run
+promptly, record what it changes, and turn its strongest signal or uncertainty into ranked follow-up
+questions. Replicate promising effects, probe plausible mechanisms, and pivot when a direction stops
+producing information. Maintain a living queue ordered by expected information gain and readiness;
+continually propose new model-training, RLVR, evaluation, decomposition, and harness-adaptation
+experiments from accumulated evidence.
+
+Follow the durable operating loop in `docs/RESEARCH_OPERATIONS.md` and keep the live experiment
+queue in the active research store current.
+
 ## Project Structure & Module Organization
 
 Runtime code lives in `src/rlm/`. Keep public interfaces in `__init__.py`, entry points in `cli.py` and `server.py`, and orchestration in focused modules such as `engine.py`, `executor.py`, and `backend.py`. Tests in `tests/` generally mirror source modules; shared test doubles belong in `tests/fakes.py`. Architectural contracts and research boundaries are documented in `DESIGN.md` and `RESEARCH.md`. Generated debug output belongs under the ignored `runs/` directory.
