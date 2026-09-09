@@ -7,8 +7,10 @@ run store is separate from this Git repository and is not uploaded by a Git push
 
 ## A short route through the evidence
 
-1. Read the [overview](../../../runs/rlm-research-r4/analyses/cross-experiment-synthesis-2026-09-09/OVERVIEW.md)
-   for the research question and the most important conclusions.
+1. Read [what we know so far](../../../runs/rlm-research-r4/analyses/CURRENT_SUMMARY.md)
+   for the research question, latest completed results and their limits. The
+   [cross-experiment overview](../../../runs/rlm-research-r4/analyses/cross-experiment-synthesis-2026-09-09/OVERVIEW.md)
+   provides the wider history through its stated cutoff.
 2. Read the [findings](../../../runs/rlm-research-r4/analyses/cross-experiment-synthesis-2026-09-09/FINDINGS.md)
    for what each result supports, possible explanations, and its limitations.
 3. Read the [proposed comparisons](../../../runs/rlm-research-r4/analyses/cross-experiment-synthesis-2026-09-09/NEXT_EXPERIMENTS.md)
