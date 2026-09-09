@@ -1,0 +1,51 @@
+# Reading the research results
+
+The current research store is `/project/alex_phd/runs/rlm-research-r4`.
+Its [reading guide](../../../runs/rlm-research-r4/README.md) is the entry point.
+The links below work in the project layout on the research machine; the large
+run store is separate from this Git repository and is not uploaded by a Git push.
+
+## A short route through the evidence
+
+1. Read the [overview](../../../runs/rlm-research-r4/analyses/cross-experiment-synthesis-2026-09-09/OVERVIEW.md)
+   for the research question and the most important conclusions.
+2. Read the [findings](../../../runs/rlm-research-r4/analyses/cross-experiment-synthesis-2026-09-09/FINDINGS.md)
+   for what each result supports, possible explanations, and its limitations.
+3. Read the [proposed comparisons](../../../runs/rlm-research-r4/analyses/cross-experiment-synthesis-2026-09-09/NEXT_EXPERIMENTS.md)
+   for the questions that would most change our next decision.
+
+The [complete dossier](../../../runs/rlm-research-r4/analyses/cross-experiment-synthesis-2026-09-09/README.md)
+also contains an experiment catalog, limitations, research questions, decision
+history and sources. Machine-readable claim and source inventories connect the
+written conclusions to exact artifacts and content hashes.
+
+## Keep results separate from current activity
+
+The September 9 dossier covers an explicit evidence slice ending at 01:35 UTC.
+It is not silently rewritten whenever a running experiment produces another row.
+Use the [analysis index](../../../runs/rlm-research-r4/analyses/README.md) for later
+reports and the [live queue](../../../runs/rlm-research-r4/RESEARCH_QUEUE.md) for
+what is running or ready. A candidate experiment in the dossier is not itself a
+launched process.
+
+## Organization for future analyses
+
+Use descriptive titles and complete sentences. A report should answer:
+
+- What question did the comparison address?
+- What changed, and what stayed the same?
+- What did we observe, including failures and missing outcomes?
+- What can we conclude, and which explanations remain uncertain?
+- What should we run next, and which result would change that decision?
+
+Keep the readable report alongside its machine-readable results, source manifest
+and focused verification script when useful. Distinguish source examples from
+repeated measurements. Keep operational failures separate from model mistakes,
+and keep wrong answers separate from unobserved outcomes. Report training,
+inference, loading and idle time separately when the measurements allow it.
+
+Do not move or rewrite raw runs to make a report easier to read. Add an analysis
+layer and preserve links to the original evidence. New evidence may revise an
+interpretation; record the revision and its reason instead of hiding the earlier
+result. Follow [research operations](RESEARCH_OPERATIONS.md) so this analysis work
+overlaps useful GPU execution rather than delaying it.

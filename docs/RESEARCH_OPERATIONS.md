@@ -47,3 +47,10 @@ Maintain at least two useful follow-on jobs whenever practical. If a reserved GP
 is ready, preparing the smallest decision-relevant job becomes the immediate priority. Documentation,
 general refactoring, broad test suites, and presentation work do not outrank an independent ready GPU
 experiment.
+
+## Readable research records
+
+Use the [results reading guide](RESEARCH_RESULTS.md) to find the structured dossier,
+later analyses and live queue. Keep plain-language conclusions, detailed evidence,
+limitations and future comparisons in separate, cross-linked documents. Preserve
+raw artifacts and distinguish fixed-cutoff syntheses from changing execution status.
