@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "prepared_utc": "2026-09-11T00:15:00Z",
+  "status": "exploratory",
+  "research_store": "/project/alex_phd/runs/rlm-research-r4",
+  "reward_training": {
+    "metric": "Verified correct final answer; unlike SFT chart, not necessarily the requested calculation",
+    "labels": [
+      "Before reward training",
+      "After six weight updates"
+    ],
+    "correct": [
+      55,
+      47
+    ],
+    "planned": [
+      72,
+      72
+    ],
+    "unavailable": [
+      1,
+      3
+    ],
+    "possible_correct_bounds": [
+      [
+        55,
+        56
+      ],
+      [
+        47,
+        50
+      ]
+    ],
+    "paired_after_minus_before_bounds": [
+      -9,
+      -5
+    ],
+    "context_clusters": 8,
+    "actual_weight_updates": 6,
+    "limitation": "One recipe and previously used panel; evidence against repeating this recipe, not against reward learning in general.",
+    "sources": [
+      {
+        "path": "analyses/root-composed-rl-continuation-live-2026-09-10/REPORT.md",
+        "sha256": "c7317d3f14a7fd6b5c32e735548fc72da85a63257c95aa22c703e9961df8b4d1"
+      },
+      {
+        "path": "analyses/root-composed-rl-continuation-live-2026-09-10/FINAL_SEAL.json",
+        "sha256": "ef8b82b4fc4d1df2865398987673325e82e2cbab572101d05da55ab9c8dafe12"
+      }
+    ]
+  },
+  "sft": {
+    "metric": "Correct answer produced by the requested calculation on the actual child results",
+    "labels": [
+      "Before these\nexperiments",
+      "Trained on one\nexample set",
+      "Trained on another\nexample set"
+    ],
+    "correct": [
+      12,
+      50,
+      55
+    ],
+    "planned": [
+      72,
+      72,
+      72
+    ],
+    "unavailable": [
+      17,
+      0,
+      2
+    ],
+    "context_clusters": 8,
+    "training_examples": 72,
+    "full_corpus_updates": 6,
+    "limitation": "Two separately captured training corpora, one shared research-exposed eight-input evaluation with changed names, weights and thresholds. Both training runs restart from the same already-trained adapter; the third bar is not extra training on the second.",
+    "sources": [
+      {
+        "path": "analyses/root-question-sensitive-readout-followups-2026-09-10/metadata-semantics/REPORT.md",
+        "sha256": "cc77b86e0f0be15b848138cf62576ff5a6e41848c7cebb4292548fe6e54b786d"
+      },
+      {
+        "path": "analyses/root-question-sensitive-sft-new-corpus-live-2026-09-10/FIGURE_DATA_FAITHFUL_CORPUS_REPLICATION.json",
+        "sha256": "9d040c85d29a2d5f4886275def234baf9c3cbf4f5ad49eeafdead8869f426058"
+      },
+      {
+        "path": "analyses/root-question-sensitive-sft-new-corpus-live-2026-09-10/ERRATUM_START_AND_CLAIM.md",
+        "sha256": "7974e7c0ff50ae3ad4dc357b05765445404f9144ff8112e335d8721cb91ba27d"
+      }
+    ],
+    "possible_correct_bounds": [
+      [
+        12,
+        29
+      ],
+      [
+        50,
+        50
+      ],
+      [
+        55,
+        57
+      ]
+    ],
+    "independent_training_corpora": 2
+  },
+  "row_matching": {
+    "metric": "Correct labels at positions 17 through 48",
+    "labels": [
+      "Neither side",
+      "Answers only",
+      "Inputs only",
+      "Both sides"
+    ],
+    "correct": [
+      577,
+      634,
+      626,
+      1340
+    ],
+    "planned_per_bar": 1536,
+    "context_clusters": 16,
+    "reference_conditions": 3,
+    "late_records_per_context": 32,
+    "interaction_correct": 657,
+    "positive_context_interactions": 16,
+    "limitation": "A combined input and constrained-output change, not evidence of a particular internal mechanism. Contexts, not repeated label slots, are the experimental units.",
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-positional-anchor-new-context-live-2026-09-10/AUDIT.json",
+        "sha256": "09bd2921c9100491012bb3198235b6473273635dfd1c880e97713c3488c1ace9"
+      },
+      {
+        "path": "analyses/leaf-mnli-positional-anchor-new-context-live-2026-09-10/ERRATUM.md",
+        "sha256": "a10f76116f7d4a2787a4607d85d99ecc34074cd7a74dc3f30d936d035f51b45b"
+      }
+    ]
+  },
+  "stable_keys": {
+    "metric": "Correct labels at positions 17 through 48 on a new paired panel",
+    "labels": [
+      "No matching\nkeys",
+      "Row\nnumbers",
+      "Shuffled\nnumbers",
+      "Arbitrary\ntags"
+    ],
+    "correct": [
+      525,
+      1312,
+      1323,
+      1304
+    ],
+    "planned_per_bar": 1536,
+    "context_clusters": 16,
+    "reference_conditions": 3,
+    "late_records_per_context": 32,
+    "positive_contexts_arbitrary_vs_none": 16,
+    "limitation": "The format forces the keys and answer order, not the labels. Arbitrary keys are longer than numeric keys. This does not establish freely learned key copying or a unique internal mechanism.",
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-stable-anchor-vs-sequence-counting-live-2026-09-10/FIGURE_DATA.json",
+        "sha256": "47ce60e9ae81f5fc3d81830aaad096ed64213edb07ad55423c453f02811425da"
+      },
+      {
+        "path": "analyses/leaf-mnli-stable-anchor-vs-sequence-counting-live-2026-09-10/FINAL_SEAL.json",
+        "sha256": "f3923f17e472b4ca1051e2448c7175de21f844832c5a822a323b980730c99430"
+      }
+    ]
+  },
+  "wrong_reference": {
+    "labels": [
+      "Points to another record",
+      "Unrelated identifier",
+      "Matches this record"
+    ],
+    "correct": [
+      298,
+      618,
+      611
+    ],
+    "planned_per_arm": 768,
+    "context_clusters": 16,
+    "named_record_correct_on_disagreements": 361,
+    "displayed_record_correct_on_disagreements": 110,
+    "disagreement_slots": 530,
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-new-context-alien-correspondence-live-2026-09-10/AUDIT.json",
+        "sha256": "bac56ed0c16571c96e923e5ec341330f514d379f577a76e48070542e9311385d"
+      }
+    ]
+  },
+  "composition": {
+    "labels": [
+      "Before extra training",
+      "After extra training"
+    ],
+    "correct_labels": [
+      1129,
+      1148
+    ],
+    "label_slots": 1280,
+    "exact_answers": [
+      0,
+      1
+    ],
+    "episodes": 8,
+    "context_clusters": 4,
+    "reference_labels_exact": 8,
+    "total_absolute_error": [
+      117,
+      130
+    ],
+    "limitation": "Supplied plan and fixed Python calculation, not a test of learned planning. Eight episodes share four nested contexts; repeated label slots are not independent. Reference labels are an analysis control, not available to the model.",
+    "sources": [
+      {
+        "path": "analyses/root-lambda-supplied-plan-mixed-child-live-2026-09-10/AUDIT.json",
+        "sha256": "2dae787a48810a15bad46816a655fb303914ad02ea527f72309e70c774ab2f94"
+      }
+    ]
+  },
+  "cross_model_keys": {
+    "metric": "Correct labels at positions17–48, same16 contexts and3 reference conditions in both released models",
+    "labels": [
+      "No matching\ntags",
+      "Row\nnumbers",
+      "Arbitrary\ntags"
+    ],
+    "models": [
+      "Smaller model",
+      "Larger model"
+    ],
+    "correct": [
+      [
+        525,
+        1312,
+        1304
+      ],
+      [
+        484,
+        1313,
+        1245
+      ]
+    ],
+    "planned_per_bar": 1536,
+    "context_clusters": 16,
+    "reference_conditions": 3,
+    "late_records_per_context": 32,
+    "available_calls": [
+      144,
+      144
+    ],
+    "new_calls": 144,
+    "reused_4b_calls": 144,
+    "model_names": [
+      "Qwen3-4B-Instruct-2507",
+      "Qwen3-8B"
+    ],
+    "limitation": "Two models in the same family, one sampling realization and reused research-exposed input panel. Different weights and rendered tokenization: not a pure capacity comparison. Tags/order supplied by structured decoding, not free copying. Arbitrary tags use more tokens.",
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-stable-anchor-qwen8b-live-2026-09-10/FIGURE_DATA.json",
+        "sha256": "0d9e27924d93fee72c085e8d61ddf1cbe5883a73dd244f0c647d97551dfec32b"
+      },
+      {
+        "path": "analyses/leaf-mnli-stable-anchor-qwen8b-live-2026-09-10/FINAL_SEAL.json",
+        "sha256": "b619cb1d4aa79bfa7aa0d292a9e909d640c1efa421b0c0708bd2386bfed0278e"
+      }
+    ]
+  }
+}

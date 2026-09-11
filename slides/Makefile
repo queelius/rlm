@@ -5,9 +5,12 @@ BASENAME := rlm-preliminary-results
 SOURCE := $(BASENAME).tex
 PDF := $(BASENAME).pdf
 
-.PHONY: all clean distclean
+.PHONY: all meeting clean distclean
 
 all: $(PDF)
+
+meeting:
+	$(MAKE) -C 2026-09-11-advisor-meeting pdf LATEXMK="$(LATEXMK)"
 
 $(PDF): $(SOURCE)
 	$(LATEXMK) $(LATEXMK_FLAGS) $(SOURCE)

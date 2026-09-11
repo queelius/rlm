@@ -1,5 +1,20 @@
 # Preliminary RLM research slides
 
+## Current update: 11 September 2026
+
+The new [advisor discussion package](2026-09-11-advisor-meeting/README.md)
+contains a compiled 13-slide Beamer deck, a teaching and speaker guide,
+detailed evidence, and possible publication paths. It includes later supervised
+and reward-training experiments and the input–answer matching studies.
+
+Build it with `make meeting` from this directory.
+
+## Historical update: August 2026
+
+The files and findings described below are preserved from the earlier meeting.
+Statements about work still being planned refer to that earlier evidence cutoff,
+not the current research status.
+
 `rlm-preliminary-results.tex` is an eight-frame research update for a short, somewhat
 non-specialist discussion. It uses plain language to connect three things:
 

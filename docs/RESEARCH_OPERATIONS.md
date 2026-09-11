@@ -48,9 +48,31 @@ is ready, preparing the smallest decision-relevant job becomes the immediate pri
 general refactoring, broad test suites, and presentation work do not outrank an independent ready GPU
 experiment.
 
+Before preparing a new long campaign, compare its data identity, task/schedule hashes,
+starting checkpoint and objective against the completed-run index. A surviving candidate
+directory or old proposal is not evidence that the experiment remains unrun; a failed
+first attempt may have a completed continuation. Do this small check on CPUs while the
+current GPU job runs. Label an intentional replication or changed warm start honestly,
+and retire accidental duplicate proposals before they consume the allocation.
+
 ## Readable research records
 
 Use the [results reading guide](RESEARCH_RESULTS.md) to find the structured dossier,
 later analyses and live queue. Keep plain-language conclusions, detailed evidence,
 limitations and future comparisons in separate, cross-linked documents. Preserve
 raw artifacts and distinguish fixed-cutoff syntheses from changing execution status.
+
+## Turn accumulated evidence into the next research decision
+
+Maintain linked records for questions, experiments, claims, decisions and candidate
+papers. Give each a stable identifier and connect every factual claim to a report
+and immutable evidence. Include contrary results, missing outcomes, exposure and
+independence limits, and the next comparison that could change the conclusion.
+Track whether a claim is exploratory, repeated on the same contexts, tested on new
+data, or ready for confirmation; a promising result is not automatically publishable.
+
+When a result changes an interpretation, preserve the earlier record and add the
+correction and its reason. Keep reusable figures, primary-literature connections,
+concrete examples and unanswered questions findable. Separate measured optimizer,
+training, inference and idle time. Build this research catalog incrementally on
+CPUs while GPU experiments run; it must never become a prerequisite for exploration.
