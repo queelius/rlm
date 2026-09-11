@@ -48,10 +48,10 @@ class TwoModelFigureTests(unittest.TestCase):
         self.assertEqual(work["calls"], work["available_calls"])
         self.assertEqual(work["calls"], work["valid_calls"])
         source = (figures.HERE / "research-update.tex").read_text()
-        for label, correct, seconds in zip(
-            work["slide_labels"], work["correct"], work["seconds"], strict=True
+        for label, calls, correct, seconds in zip(
+            work["slide_labels"], work["calls"], work["correct"], work["seconds"], strict=True
         ):
-            row = f"{label} & {100 * correct / 768:.0f}\\% & {seconds:.0f} seconds"
+            row = f"{label} & {calls} & {100 * correct / 768:.0f}\\% & {seconds:.0f} seconds"
             self.assertIn(row, source)
 
     def test_crossing_keeps_all_planned_positions(self):

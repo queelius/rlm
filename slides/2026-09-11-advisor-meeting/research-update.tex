@@ -150,25 +150,25 @@ Two language models judged statements about short texts, as in the bike example.
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Smaller requests were faster than large requests\\with matching names in this local test.}
-Each method judged the same 768 statements about short texts. We changed how many statements were sent to the helper together.\par
+\frametitle{Smaller requests were a strong alternative\\to adding names to large requests.}
+Each method judged the same 768 text--claim pairs. We changed how many pairs were sent together in each helper request.\par
 \vspace{2mm}
 \centering
 \renewcommand{\arraystretch}{1.15}
-\begin{tabular}{lrr}
+\begin{tabular}{lrrr}
 \toprule
-Statements per request & Correct judgments & Total time \\
+Pairs per request & Requests & Correct & Total time \\
 \midrule
-48, without matching names & 49\% & 19 seconds \\
-48, with matching names & 85\% & 91 seconds \\
-16, without matching names & 81\% & 19 seconds \\
-1, without matching names & 87\% & 31 seconds \\
+48, without matching names & 16 & 49\% & 19 seconds \\
+48, with matching names & 16 & 85\% & 91 seconds \\
+16, without matching names & 48 & 81\% & 19 seconds \\
+1, without matching names & 768 & 87\% & 31 seconds \\
 \bottomrule
 \end{tabular}
 \par\vspace{2mm}
 \raggedright
-Times cover all 768 statements, not one request. Sending one statement at a time was faster here, but repeated more input text.
-\smallnote{We used Qwen3-4B on one A100, with up to four requests at once. Times add the measured test blocks and exclude server startup. All 848 requests had valid formatting. Other setups may give different speeds. [E1]}
+Adding names helped large requests, but smaller requests were a strong alternative. Any proposed RLM improvement should also be compared with this simpler option.
+\smallnote{Times cover all 768 pairs, not one request. Qwen3-4B ran on one A100, with up to four requests at once. One-pair requests used more input text. Timings exclude server startup; other setups may give different speeds. [E1]}
 \end{frame}
 
 \begin{frame}[t]

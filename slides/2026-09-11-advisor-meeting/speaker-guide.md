@@ -189,7 +189,19 @@ Likely Q&A — **Why does Mistral remain much worse?** Matching helps both model
 sufficient for correct reading. This cross-model direction is behavioral evidence, not a clean
 capacity comparison or a mechanism result.
 
-## Main page 7 — Smaller requests were faster than large requests with matching names in this local test.
+## Main page 7 — Smaller requests were a strong alternative to adding names to large requests.
+
+The question is: instead of adding names to a large request, could we get good results simply
+by giving the helper fewer text–claim pairs at once? The work stays the same: all 768 pairs.
+Groups of 48 require 16 requests; groups of 16 require 48 requests; individual pairs require
+768 requests. One pair per request does not mean strictly sequential execution: up to four
+requests ran simultaneously.
+
+Read two comparisons. First, adding names to large requests improves accuracy, but takes longer.
+Second, making requests smaller gives a strong alternative without adding matching names.
+The result qualifies the previous slide: helping large requests does not make them the best
+way to organize the work. This is why our proposed RLM improvement must face a small-request
+comparison, not just the weaker large-request format.
 
 Say: “All four methods judged the same 768 statements. With 48 statements per unnamed request,
 accuracy was 49% and the whole workload took 19 seconds. Adding matching names raised accuracy to 85%, but that workload

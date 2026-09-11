@@ -25,8 +25,8 @@
       "notes": "Qwen and Mistral are two language models. Moving right means more statements in each request. At 64, matching names raised Qwen from 44% to 83%, and Mistral from 35% to 52%.\n\nBoth formats used the same 16 sets of texts. Three Mistral replies broke the required format and were counted as wrong.\n\nThis measures helper judgments, not complete RLM solutions. Backup 6 also shows matching row numbers."
     },
     {
-      "title": "Smaller requests were faster than large requests with matching names in this local test.",
-      "notes": "SAY: All methods judged the same 768 statements. Each time covers that whole workload, not one request. Large named requests scored 85% in 91 seconds; one statement at a time scored 87% in 31 seconds.\n\nIF ASKED: Up to four requests ran at once. Sixteen per request was faster but less accurate.\n\nCAUTION: One-at-a-time sent about 2.5 times as much input as large named requests. This is a local tradeoff."
+      "title": "Smaller requests were a strong alternative to adding names to large requests.",
+      "notes": "Every row covers the same 768 text-claim pairs. Forty-eight per request means 16 requests; one per request means 768. Times cover all the work, with up to four requests running at once.\n\nFirst compare the two large-request rows: names improved accuracy but took longer. Then compare the named row with one pair per request: 85% in 91 seconds versus 87% in 31 seconds.\n\nSmaller requests are a serious alternative. One-pair requests did use about 2.5 times as much input text as large named requests."
     },
     {
       "title": "Next test: let the RLM program organize helper requests and match their answers.",

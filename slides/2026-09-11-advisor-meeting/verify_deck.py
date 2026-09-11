@@ -14,7 +14,7 @@ EXPECTED = [
     "Both separately trained copies solved more of the 72 test tasks.",
     "We tested whether names help link each helper answer to the right statement.",
     "Matching names helped helpers judge many statements in one request.",
-    "Smaller requests were faster than large requests with matching names in this local test.",
+    "Smaller requests were a strong alternative to adding names to large requests.",
     "Next test: let the RLM program organize helper requests and match their answers.",
     "We have a promising handoff result and a focused next research question.",
     "Example: the helper identifies question types, and Python adds the relevant points.",
