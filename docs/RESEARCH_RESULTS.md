@@ -1,5 +1,17 @@
 # Reading the research results
 
+## Public reading copy
+
+The [research notebook on GitHub](https://github.com/queelius/rlm-research)
+contains a curated snapshot of questions, claims, reports, experiment scripts,
+and compact evidence metadata. Start with its
+[reading guide](https://github.com/queelius/rlm-research/blob/main/README.md).
+Its manifest records source paths and hashes. This is not a live mirror or a
+complete reproduction bundle; large artifacts have a separate
+[availability statement](https://github.com/queelius/rlm-research/blob/main/ARTIFACTS.md).
+
+## Local research store
+
 The current research store is `/project/alex_phd/runs/rlm-research-r4`.
 Its [reading guide](../../../runs/rlm-research-r4/README.md) is the entry point.
 The links below work in the project layout on the research machine; the large

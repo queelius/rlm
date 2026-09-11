@@ -24,6 +24,10 @@ uv run pytest
 For a GPU-hosted Hugging Face workflow, including vLLM serving, an A100 smoke test, and a
 trace-to-LoRA iteration loop, see [A100 Experiment Quickstart](docs/A100_EXPERIMENTS.md).
 
+Research questions, findings, and experiment notes are available in the
+[public research notebook](https://github.com/queelius/rlm-research).
+It is a dated publication snapshot; large datasets and checkpoints are not included.
+
 ## Library usage
 
 Configuration is nested. `HarnessSpec`, limits, execution, and trace structure
