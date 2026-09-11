@@ -64,7 +64,7 @@ def launch_args(pdfpc: str, pdf: str, metadata: str, mode: str, duration: int) -
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=["laptop", "rehearse", "dual"], default="laptop")
-    parser.add_argument("--duration", type=int, default=15, help="Talk timer, in minutes")
+    parser.add_argument("--duration", type=int, default=10, help="Talk timer, in minutes")
     parser.add_argument("--pdfpc", default=os.environ.get("PDFPC", "pdfpc"))
     parser.add_argument(
         "--write-notes", action="store_true", help="Regenerate the portable .pdfpc file"

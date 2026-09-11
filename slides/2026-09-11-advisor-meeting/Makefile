@@ -33,7 +33,7 @@ figures:
 	$(PYTHON) figures.py
 
 check:
-	$(PYTHON) -m unittest discover -p test_present.py
+	$(PYTHON) -m unittest discover -p 'test_*.py'
 	$(PYTHON) present.py --check
 	$(PYTHON) verify_deck.py $(MAIN).pdf
 

@@ -1,20 +1,20 @@
 ---
 title: Supporting findings for questions and discussion
-updated_utc: 2026-09-11T03:45:00Z
+updated_utc: 2026-09-11T12:42:00Z
 supporting_results_reviewed_utc: 2026-09-11T03:05:00Z
 status: exploratory_supporting_notes
-main_deck_evidence_cutoff_utc: 2026-09-11T03:45:00Z
+main_deck_evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
 
 # Why these notes are separate
 
-These checks clarify the 14-slide deck's claims without adding more slides.
+These checks clarify the eight-main-slide deck and its six optional backups.
 They were first documented after the earlier draft; the current deck now has a
 later cutoff and includes the fresh-input and batch-size results. This file keeps
 its original name so existing links remain valid. Read it after the slide-by-slide
 guide; it is not additional material you need to present.
 
-## For slide 9: does enforcing the answer format explain the improvement?
+## For backup 2: does enforcing the answer format explain the improvement?
 
 There are two different questions:
 
@@ -22,7 +22,7 @@ There are two different questions:
 - When answers already have the right format, does repeating the input's tag
   beside its answer help the model choose the right reading label?
 
-Slide 9 addresses the second question. Every output was well formed in both
+Backup 2 addresses the second question. Every output was well formed in both
 conditions, yet matching tags improved reading accuracy from 32.6% to 78.8%.
 That difference cannot be explained by more malformed outputs in one condition.
 
@@ -48,7 +48,7 @@ inside the model. We have not yet shown the matching-tag benefit without output
 enforcement; that needs a comparison with both matched and unmatched tags in
 both enforcement conditions.
 
-## For slides 10 and 12: do better helper labels improve the final answer?
+## For main slides 7–8: do better helper labels improve the final answer?
 
 A later exploratory check provides a small encouraging signal, but not a
 successful test of the complete RLM.
@@ -70,10 +70,31 @@ That must be separated from whether the saved helper labels were useful.
 on a few small examples. We still need to show that the main model can use
 those labels reliably in a complete task.”
 
-Do not compare these 2/16 and 5/16 totals directly with slide 10's 0/8 and 1/8.
+Do not compare these 2/16 and 5/16 totals directly with the older C1 study's 0/8 and 1/8.
 They use different tasks, inputs, and interventions. Eight shared inputs are
 also not sixteen independent tests. This is a promising follow-up, not a
 confirmed general benefit.
+
+## Did copying the trained helper API make the handoff easier to use?
+
+A repaired 16-episode diagnostic gave the same saved helper map and public
+records through two interfaces. One was a plain synchronous dictionary. The
+other imitated the asynchronous `.answer` interface seen during training. The
+plain interface produced 8/8 available finals and 7/8 faithful calculations;
+the trained-looking interface produced 7/8 available finals and 7/8 faithful
+calculations. Both gave only 1/8 host-correct answers because the saved helper
+maps themselves contained label errors.
+
+The trained-looking interface therefore did not establish improved faithful use
+on this small, research-exposed panel. Under the prewritten decision rule, the simpler
+dictionary is the preferred local boundary. This is useful interface evidence,
+not a live-helper or complete-RLM comparison: both arms read frozen maps, and
+the prompt wording and API shape changed together.
+
+**A short answer for the meeting:** “Once both interfaces were given the same
+records, the model could use either one. Copying the API shape from training did
+not help on these eight examples, so the simpler dictionary is the better next
+building block.”
 
 ## Evidence and review
 
@@ -88,6 +109,8 @@ These source paths are relative to the research store
 | Partial whole-task report | `analyses/root-stable-anchor-downstream-bridge-live-2026-09-11/REPORT_ATTEMPT003.md` | `973ba23f60b08d0207131ba5c219cb2d5c76f545c027d29c96f65dfb73ee8f29` |
 | Partial whole-task audit | `analyses/root-stable-anchor-downstream-bridge-live-2026-09-11/PARTIAL_NATIVE_ATTEMPT003.json` | `411d80e1a8a5f3d81ae964b498ede05fdc6d0b0ddd27a0857ad1fb0732525574` |
 | Partial whole-task seal | `analyses/root-stable-anchor-downstream-bridge-live-2026-09-11/FINAL_ATTEMPT003.json` | `57fafb8fc24d1b32bfd60cd2b85d21ee9a943b5f593e41126a354319119c448e` |
+| Saved-map API V2 report | `analyses/root-bridge-native-api-transfer-v2-live-2026-09-11/REPORT.md` | `38d43ce8c507873afb15328f558a21e0a6a344f7c467a3912b097bd8a46b65c0` |
+| Saved-map API V2 audit | `analyses/root-bridge-native-api-transfer-v2-live-2026-09-11/AUDIT.json` | `79757f6b9d200e09ee31a0bc9d111f10e27aa180ab9d6e80db87b8ba0ec97600` |
 
 MAIN read both complete audit implementations and reports, checked their sealed
 source and terminal references, independently recounted all 96 format-control
@@ -95,3 +118,8 @@ responses and 24 helper arrays, and independently recomputed all 48 fixed-Python
 answers. The full-RLM availability classification comes from the frozen native
 audit; MAIN did not separately read every root program. No sampled model code
 was executed during this review.
+
+That independent replay statement concerns the format control and earlier bridge.
+For the API V2 probe, MAIN read the completed report and checked the report/audit
+hashes. Its all-path semantic review was performed by the package author after
+collection, was unblinded, and was not independently repeated by MAIN.

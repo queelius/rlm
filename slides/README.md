@@ -3,7 +3,8 @@
 ## Current update: 11 September 2026
 
 The new [advisor discussion package](2026-09-11-advisor-meeting/README.md)
-contains a compiled 14-slide Beamer deck, a teaching and speaker guide,
+contains a compiled Beamer deck with eight main slides for a ten-minute discussion
+and six optional backup slides, a teaching and speaker guide,
 detailed evidence, and possible publication paths. It includes later supervised
 and reward-training experiments and the input–answer matching studies.
 

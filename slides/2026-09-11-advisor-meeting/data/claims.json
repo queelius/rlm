@@ -1,6 +1,207 @@
 {
   "schema_version": 1,
-  "prepared_utc": "2026-09-11T03:45:00Z",
+  "equal_work": {
+    "metric": "Strict correct reading labels over all planned records; all policies process the same 768 records once.",
+    "planned_per_policy": 768,
+    "context_clusters": 16,
+    "policies": [
+      "labels48",
+      "opaque48",
+      "labels16",
+      "labels1"
+    ],
+    "slide_labels": [
+      "48 questions per call, no names",
+      "48 questions per call, matching names",
+      "16 questions per call, no names",
+      "1 question per call, no names"
+    ],
+    "calls": [
+      16,
+      16,
+      48,
+      768
+    ],
+    "available_calls": [
+      16,
+      16,
+      48,
+      768
+    ],
+    "valid_calls": [
+      16,
+      16,
+      48,
+      768
+    ],
+    "correct": [
+      373,
+      651,
+      619,
+      665
+    ],
+    "seconds": [
+      19.27,
+      91.038,
+      18.671,
+      31.08
+    ],
+    "prompt_tokens": [
+      49307,
+      60768,
+      53821,
+      154594
+    ],
+    "output_tokens": [
+      2537,
+      15228,
+      2846,
+      4076
+    ],
+    "cached_tokens": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "workers": 4,
+    "model": "Qwen3-4B-Instruct-2507; no adapter",
+    "timing": "Sum of four nonoverlapping policy blocks per policy; four simultaneous requests; startup excluded; timings rounded to milliseconds.",
+    "limitation": "One exposed panel, one backend and seed per chunk; not universal speed or formal equivalence. Different policies have unequal input and output work.",
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-equal-record-work-live-2026-09-11/REPORT.md",
+        "sha256": "74df0600080d5c609c618ddeed816ae2aa6566e00a6052d2adcdd68215d04db0"
+      },
+      {
+        "path": "analyses/leaf-mnli-equal-record-work-live-2026-09-11/NATIVE_AUDIT.json",
+        "sha256": "ea6e0eb689074bcd58c2181e279365a32161902a649be2031405fe1ae596ea50"
+      },
+      {
+        "path": "analyses/leaf-mnli-equal-record-work-live-2026-09-11/COUNTS.json",
+        "sha256": "934bda255c99e96c2fbbccd4196bb4c6706445a8bc238849923ca8787fb13edc"
+      }
+    ]
+  },
+  "output_order": {
+    "metric": "Strict correct labels over all planned positions; ordered schema selects record keys before freely chosen labels.",
+    "policies": [
+      "original",
+      "reverse",
+      "interleaved"
+    ],
+    "planned_per_policy": 2048,
+    "context_clusters": 16,
+    "repeats": 2,
+    "size": 64,
+    "planned_calls": 96,
+    "available_calls": 96,
+    "valid_calls": 96,
+    "correct": [
+      1704,
+      1687,
+      1668
+    ],
+    "limitation": "Same exposed contexts; only three tested orders. The practical -5pp retention screen is not formal equivalence, arbitrary-order robustness or an internal-mechanism finding.",
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-output-order-crossing-live-2026-09-11/REPORT.md",
+        "sha256": "423c4d342c336a4200403beb29215297e019e300d6625ea08a5745db56bf6703"
+      },
+      {
+        "path": "analyses/leaf-mnli-output-order-crossing-live-2026-09-11/NATIVE_AUDIT.json",
+        "sha256": "83038f4676536fb0bd64e4f692edc234a48475effaf388dac41077d76b298150"
+      },
+      {
+        "path": "analyses/leaf-mnli-output-order-crossing-live-2026-09-11/COUNTS.json",
+        "sha256": "10fc1b782e9b5449379f6eb012ffc27d6b97710128113da94271c299b16936aa"
+      }
+    ]
+  },
+  "nested_batch_mistral": {
+    "metric": "Correct reading labels over all planned positions; authenticated whole-output contract failures score zero.",
+    "models": "Mistral-7B-Instruct-v0.3, no research adapter; exact Qwen H8 panel and request bodies except model/cache salt/seed.",
+    "sizes": [
+      8,
+      16,
+      32,
+      48,
+      64
+    ],
+    "planned_denominators": [
+      128,
+      256,
+      512,
+      768,
+      1024
+    ],
+    "correct": [
+      [
+        77,
+        119,
+        190,
+        292,
+        355
+      ],
+      [
+        86,
+        165,
+        309,
+        453,
+        595
+      ],
+      [
+        89,
+        155,
+        291,
+        406,
+        532
+      ]
+    ],
+    "invalid_calls_by_format": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        1
+      ]
+    ],
+    "planned_calls": 240,
+    "available_calls": 240,
+    "valid_calls": 237,
+    "unavailable_calls": 0,
+    "context_clusters": 16,
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-mistral-nested-batch-live-2026-09-11/REPORT.md",
+        "sha256": "7bbd3d2a84631f290cd3753eb756d28ed65fac64a974b23c4748bdcd3e6f8815"
+      },
+      {
+        "path": "analyses/leaf-mnli-mistral-nested-batch-live-2026-09-11/NATIVE_AUDIT.json",
+        "sha256": "4ab2e1e5b485686785ba84a2c99546846a223d6d91916741545ff6877d9387fb"
+      },
+      {
+        "path": "analyses/leaf-mnli-mistral-nested-batch-live-2026-09-11/NATIVE_AUDIT-COUNTS.json",
+        "sha256": "77579817af47f0c5865bae3b0f8c8125ccf6c60e0b1a8c22678ffa540c1e0077"
+      }
+    ]
+  },
+  "prepared_utc": "2026-09-11T12:55:00Z",
   "status": "exploratory",
   "research_store": "/project/alex_phd/runs/rlm-research-r4",
   "reward_training": {
@@ -517,6 +718,123 @@
       {
         "path": "analyses/leaf-mnli-nested-batch-matching-live-2026-09-11/FINAL.json",
         "sha256": "87e7552988bb16ddb6588b6a814e1f0b3c8c84061f39db50ef12f2f9d7c8ccbb"
+      }
+    ]
+  },
+  "reward_training_longer": {
+    "metric": "Correct final answers, prespecified secondary endpoint; not full faithful-and-correct primary.",
+    "labels": [
+      "Before reward training",
+      "Correct-answer reward",
+      "Answer reward plus calculation check"
+    ],
+    "correct": [
+      57,
+      55,
+      54
+    ],
+    "planned": [
+      72,
+      72,
+      72
+    ],
+    "unavailable": [
+      0,
+      2,
+      0
+    ],
+    "possible_correct_bounds": [
+      [
+        57,
+        57
+      ],
+      [
+        55,
+        57
+      ],
+      [
+        54,
+        54
+      ]
+    ],
+    "context_clusters": 8,
+    "attempted_training_solutions_per_arm": 576,
+    "actual_weight_updates": [
+      19,
+      21
+    ],
+    "optimized_episodes": [
+      108,
+      147
+    ],
+    "limitation": "Exploratory pair, same S3 fixed input panel, equal training opportunities not equal realized updates. Full primary semantic review incomplete.",
+    "sources": [
+      {
+        "path": "analyses/root-authenticated-map-reward-pair-live-2026-09-11/final-pair-2026-09-11T0840Z/AUDIT.json",
+        "sha256": "a529b2fdcdc600d669bb8cc76ef9c7e4c1ed9b262c52e3aeb319b62855eadd09"
+      },
+      {
+        "path": "analyses/root-authenticated-map-reward-pair-live-2026-09-11/final-pair-2026-09-11T0840Z/REPORT.md",
+        "sha256": "eecbb3f8f56ec5450662990fa80e348074ad64623c2e3ea0638a2d141ad366f0"
+      },
+      {
+        "path": "analyses/root-authenticated-map-reward-pair-live-2026-09-11/final-pair-2026-09-11T0840Z/PROVENANCE.json",
+        "sha256": "b274dd6dbc5a4bd850bbe6ccd98c6b913964af93ec0de58c5e01b55c1df74f61"
+      }
+    ]
+  },
+  "compound_execution": {
+    "metric": "Correct final answer AND executed requested calculation; unblinded manual semantic review.",
+    "correct": [
+      2,
+      29
+    ],
+    "planned": [
+      72,
+      72
+    ],
+    "unavailable": [
+      11,
+      1
+    ],
+    "possible_correct_bounds": [
+      [
+        2,
+        13
+      ],
+      [
+        29,
+        30
+      ]
+    ],
+    "strict_correct": [
+      27,
+      57
+    ],
+    "nonzero_planned": 24,
+    "nonzero_correct": [
+      0,
+      12
+    ],
+    "nonzero_unavailable": [
+      2,
+      0
+    ],
+    "context_clusters": 8,
+    "zero_gold_tasks": 48,
+    "limitation": "One trained model; eight previously tested input sets; new combinations absent authored SFT demonstrations. Prompts explicitly supply the two-stage plan. Not autonomous decomposition or pretraining exclusion.",
+    "sources": [
+      {
+        "path": "analyses/root-qs-unseen-operator-composition-live-2026-09-11/REPORT.md",
+        "sha256": "e4d3f07360c9fe0c7309b5685141e6b206d2a47f75fc1aa2ef982e46fe212d99"
+      },
+      {
+        "path": "analyses/root-qs-unseen-operator-composition-live-2026-09-11/SEMANTICS_ALL.json",
+        "sha256": "68dc9dbad9c67487d2633892befeba2e4cb7b43ab5f3cca13e838841c8cf8f11"
+      },
+      {
+        "path": "analyses/root-qs-unseen-operator-composition-live-2026-09-11/FINAL_SEAL.json",
+        "sha256": "bbddbdf42767edfd1e2881851b79b8577fe9cfe8856237860169816ea72224bc"
       }
     ]
   }

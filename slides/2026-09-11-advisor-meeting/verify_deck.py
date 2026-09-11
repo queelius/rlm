@@ -8,20 +8,20 @@ from pathlib import Path
 import fitz
 
 EXPECTED = [
-    "Can a small model solve harder problems",
-    "An RLM lets a language model use Python",
-    "The helper reads the text",
-    "We taught the main model what to do next",
-    "Training improved performance",
-    "An answer can be right for the wrong record",
-    "Matching tags kept answers accurate",
-    "Matching tags helped three models",
-    "Repeating the same tag beside an input",
-    "Small helper improvements were not enough",
-    "Reward training has not yet improved",
-    "The next test is whether these gains",
-    "The longer-term goal is to learn",
-    "Which result should we turn into",
+    "Can better handoffs make an RLM more reliable?",
+    "A long file can become many small questions whose answers Python can combine.",
+    "Training taught a more reliable routine for asking helpers and calculating answers.",
+    "We changed how helper answers are linked to the text they describe.",
+    "Matching names improved accuracy when a helper answered many questions at once.",
+    "Smaller calls were faster than large named calls in this local test.",
+    "Proposed RLM change: manage record links and make helper group size an explicit choice.",
+    "We have a promising handoff result and a focused next research question.",
+    "Example: the helper reads the text, and Python does the counting.",
+    "A control suggests that matching matters, not merely having names on the page.",
+    "Reward training did not improve the final-answer count in this trial.",
+    "Training also helped with new combinations of familiar steps.",
+    "Misleading names can draw an answer toward the wrong input.",
+    "Both row numbers and arbitrary names helped in the larger-batch tests.",
 ]
 
 
@@ -36,13 +36,17 @@ def main():
     problems = []
     page_summaries = []
     for index, page in enumerate(doc):
-        text = " ".join(page.get_text().split())
-        assert EXPECTED[index] in text, (index + 1, EXPECTED[index])
-        assert unicodedata.normalize("NFKC", notes[index]["title"]) in unicodedata.normalize(
-            "NFKC", text
-        ), (index + 1, "Notes title does not match the compiled PDF")
+        text = unicodedata.normalize("NFKC", " ".join(page.get_text().split()))
+        # PDF extraction can omit a space after a ligature even when it is visible.
+        compact = "".join(text.split())
+        assert "".join(EXPECTED[index].split()) in compact, (index + 1, EXPECTED[index])
+        assert "".join(unicodedata.normalize("NFKC", notes[index]["title"]).split()) in compact, (
+            index + 1,
+            "Notes title does not match the compiled PDF",
+        )
         assert not list(page.annots() or []), (index + 1, "Audience PDF contains annotations")
-        assert f"{index + 1}/{len(EXPECTED)}" in text, (index + 1, "missing page footer")
+        footer = f"Main talk {index + 1}/8" if index < 8 else f"Backup {index - 7}/6"
+        assert footer in text, (index + 1, "missing main/backup page footer")
         spans = []
         for block in page.get_text("dict")["blocks"]:
             for line in block.get("lines", []):

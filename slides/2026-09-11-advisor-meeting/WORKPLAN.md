@@ -7,12 +7,61 @@ audience: presenter, advisors, and research colleagues
 
 # Purpose
 
+## Current design: eight main slides for a ten-minute discussion
+
+The user clarified that the advisors saw the earlier eight-slide presentation,
+asked for a concrete RLM architecture/algorithm addition, and requested extremely
+plain, self-explanatory language. Preserve one visual reminder of the larger
+idea: a long file becomes focused reading questions whose answers Python can
+combine. Build the new narrative around training progress, helper handoffs,
+and a clearly labeled proposed program-level change. Use eight main pages plus
+six optional backups; the footer and ten-minute presenter timer reflect that split.
+
+Keep familiar-input task types distinct from new combinations, helper accuracy
+distinct from complete RLM success, and tested matching formats distinct from a
+proposed reusable record-level interface. Existing whole-request batch alignment
+is not a new contribution. Identifiers themselves are established prior art.
+The longer reward run and compound-calculation result belong in backups rather
+than lengthening the main talk. Preserve detailed explanations in the renamed
+detailed-findings-guide.md and provide a fresh slide-indexed speaker-guide.md.
+
+The new two-model main plot shows only unnamed and arbitrary-name conditions;
+the complete three-format plot remains in backup. Increase axis type rather
+than shrinking body text. Compile, inspect all audience pages, and inspect all
+private notes in actual pdfpc. No approval pause is needed: the user delegated
+these design decisions and asked us to continue autonomously.
+
+The completed equal-work comparison revised the recommendation: fewer requests
+were not faster here. Main page 6 now shows all four accuracy/time outcomes, and
+page 7 requires small-call baselines and explicit group-size choice. H10's order
+crossing and the repaired API probe remain in supporting documents. A bounded
+compact-output comparison follows the observed output-cost signal; it may refine
+the proposal but must not delay the verified meeting package.
+
+## Two-hour evidence update, beginning 11:44 UTC
+
+Prioritize the advisor discussion rather than starting a new training campaign.
+The prepared compound-calculation and output-order experiments are now running
+in sequence under a combined 90-minute cap. CPU reviews cover the completed
+reward pair and same-input Mistral batch-size replication. Keep roughly the last
+30 minutes for synthesis, compiling and inspecting the slides and presenter
+notes, and pushing a verified checkpoint. If the first jobs finish early enough,
+the prepared equal-record-work comparison can answer whether smaller batches
+are a better practical alternative to matching tags; do not let it delay the deck.
+
+Update existing slides where possible. A useful result is one that strengthens,
+qualifies, or changes a research conclusion, not necessarily a positive result.
+Retain the same simple examples and distinguish correct final numbers from
+faithful calculations. Do not call explicitly instructed two-stage calculations
+autonomous planning, and do not call fewer requests a measured speed improvement.
+Record all findings in the evidence documents even when they do not merit a slide.
+
 Explain what we are trying to learn, show our strongest preliminary evidence,
 and invite useful advice about a realistic next research contribution. This
 package must also teach the presenter the research; it must not assume that he
 remembers implementation details from the automated experiments.
 
-## September 11 presenter-console update
+## Historical September 11 presenter-console plan
 
 The user requested pdfpc speaker notes, a one-screen laptop launch path, and
 periodic GitHub pushes. Keep the14 audience slides and their03:45 numerical
@@ -23,7 +72,7 @@ the real GUI at laptop resolution, not only PDF text bounds, and document the
 need to share only the audience window. Push the verified package and durable
 operating instructions without including raw runs or model weights.
 
-# Agreed design
+# Historical expanded-deck design (superseded by the eight-main-slide plan)
 
 Use approximately twelve slides, with a complete-sentence message on each slide.
 The reviewed version has thirteen: the completed arbitrary-tag control earned

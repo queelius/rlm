@@ -77,7 +77,9 @@ your one-screen laptop.
 Each slide has three short paragraphs: **SAY**, **IF ASKED**, and **CAUTION**
 (**DISCUSS** on the final slide). These are cues, not a script to read aloud.
 The launcher gives the notes more room by reducing the next-slide preview.
-It starts with a 15-minute timer; discussion can continue after that timer.
+It starts with a 10-minute timer. The main talk ends at page 8; pages 9–14 are
+optional backups, not additional required presentation. Discussion can continue
+after the timer. Use `g` to jump directly to a backup when a question calls for it.
 
 - Right arrow or Space advances; Left arrow goes back.
 - `g` lets you jump to a slide number. Tab opens the slide overview.

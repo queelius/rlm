@@ -1,11 +1,22 @@
 """Checks that presenter notes cannot silently attach to the wrong slides."""
 
 import importlib.util
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
 
 class PresenterTests(unittest.TestCase):
+    def test_default_talk_timer_is_ten_minutes(self):
+        result = subprocess.run(
+            [sys.executable, str(Path(__file__).with_name("present.py")), "--dry-run"],
+            check=True,
+            text=True,
+            capture_output=True,
+        )
+        self.assertIn("--duration=10", result.stdout)
+
     def setUp(self):
         path = Path(__file__).with_name("present.py")
         self.assertTrue(path.exists(), "The presenter launcher has not been implemented")

@@ -1,122 +1,116 @@
 ---
 title: Advisor research discussion — 11 September 2026
 status: reviewable_draft
-evidence_cutoff_utc: 2026-09-11T03:45:00Z
+evidence_cutoff_utc: 2026-09-11T12:55:00Z
+main_slides: 8
+optional_backup_slides: 6
+talk_minutes: 10
 ---
 
 # Start here
 
-This package explains the research for both the presenter and colleagues who
-are new to it. It separates what we observed from what we hope to achieve next.
+[Read the slides](research-update.pdf). Present the first eight pages, then stop
+for discussion. The remaining six are optional answers to questions, clearly
+marked “Backup.” The earlier deck in the parent directory is unchanged.
 
-- [Read the 14-slide PDF](research-update.pdf).
-- [Present with pdfpc and private notes on one laptop screen](PRESENTING.md).
-- [Learn the material with the slide-by-slide guide](speaker-guide.md).
-- [Read the fuller evidence, methods, and unsuccessful experiments](evidence-and-methods.md).
-- [Compare two possible publication paths](publication-options.md).
-- [Read supporting checks for questions and discussion](later-findings.md), including format validity and a first whole-task attempt.
+- [Learn the current talk, with timing and questions for each slide](speaker-guide.md).
+- [Open pdfpc with private notes on a one-screen laptop](PRESENTING.md).
+- [Read the full evidence and methods](evidence-and-methods.md).
+- [Consider the possible publication paths](publication-options.md).
+- [Find additional experimental checks](later-findings.md).
+- [Consult the longer explanations from the expanded draft](detailed-findings-guide.md).
 
-The [Beamer source](research-update.tex), [figure data](data/claims.json),
-and [figure-building script](figures.py) are included. The older deck in the
-parent directory is preserved as a historical update.
+The [Beamer source](research-update.tex), [portable numerical data](data/claims.json),
+and [figure-building script](figures.py) are included.
 
-## The story in three sentences
+## The story
 
-Examples taught a small main model to carry out useful calculations more reliably,
-and two trained versions retained that improvement on newly selected records.
-Separately, matching names beside input records and answers kept reading accuracy
-high as batches grew, with related improvements in three models.
-The next question is whether better helper answers yield more correct complete
-answers when the main model combines them.
+Our earlier talk showed that worked examples could teach a basic Python routine.
+This update asks whether better handoffs can make a more capable RLM reliable.
+A visual example shows the larger idea: divide a long input into focused reading
+questions, then use Python to combine the answers.
 
-Most experiments use Qwen3-4B-Instruct-2507. The matching-tag check also uses
-Qwen3-8B and Mistral-7B-Instruct-v0.3. We used small adapter updates for training,
-not training from scratch. The counting studies use public TREC question texts
-with artificial users and weights; the record-matching studies use MultiNLI
-reading-comprehension judgments. These are different experiments, not one
-shared benchmark score.
+Training improved a more demanding routine on newly selected records. Separately,
+matching arbitrary names beside records and helper answers improved reading
+accuracy in Qwen and Mistral without retraining. That motivates a specific
+proposed RLM change: let the surrounding program preserve record–answer links
+through splitting and recombination, and make the number of questions per helper
+call an explicit choice. A same-work comparison found that small calls were
+faster locally, while single-question calls repeated more input text. The next
+test must measure that tradeoff rather than assume a more elaborate method wins.
 
-## How to prepare for the meeting
+The contribution would not be inventing identifiers. It would be showing when
+a handoff procedure fails, how a targeted change helps, and whether it improves
+complete answers at a useful cost. That last claim remains open.
 
-Read the guide alongside the slides first. It includes a two-minute overview,
-worked examples, an explanation of each figure, and answers to likely questions.
-The evidence document is a reference, not required slide narration.
+## What is in the main talk and the backups?
 
-Allow roughly 10–15 minutes for the slides if all are discussed. For a shorter
-update, emphasize slides 2–3, 5, 7–9, and 14, and use the guide to answer questions.
-Leave time to discuss which result would benefit most from more model families,
-a new task, or a clearer explanation of the failure.
+The main talk contains a brief recap, one RLM picture, a training result, a
+two-record example, the two-model matching result, the same-work accuracy/time
+comparison, a proposed RLM change with its decisive test, and a discussion question.
 
-For the one-screen laptop, run `make -C slides present` from the repository root.
-Click the presenter window and press `w` so the notes fit the full screen.
-Share only the audience slide window, not the whole desktop. `make -C slides rehearse`
-opens the presenter console alone. The [presentation instructions](PRESENTING.md)
-cover installation, note size, controls, and the limits of a mirrored screen.
-The [short per-slide cues](speaker-notes.json) supplement the longer guide; they
-are not embedded in the audience PDF.
+The backups explain the training task, the matching-versus-different-name control,
+longer reward training, new combinations of familiar operations, misleading
+record names, and the full three-format batch-size comparison.
+
+Two newly reviewed training findings are preserved without extending the talk:
+
+- New combinations: correct answers **and requested calculations** increased
+  from 2/72 to 29/72; missing-result bounds are 2–13 and 29–30. Instructions gave
+  the plan, so this is execution transfer, not autonomous planning.
+- Longer reward training: final-answer counts were 57/72 before training,
+  55–57/72 with answer reward, and 54/72 with an extra calculation check.
+  This is a different metric; the full review of the calculations is unfinished.
+
+The counting studies use public TREC question texts with artificial users and
+weights. The matching studies use MultiNLI reading judgments. They are different
+tasks, not one shared benchmark score. Most work uses Qwen3-4B-Instruct-2507;
+the family comparison uses Mistral-7B-Instruct-v0.3. Training uses small adapters,
+not training a model from scratch.
+
+## Present on one laptop screen
+
+From the repository root:
+
+    make -C slides present
+
+Click the presenter window and press `w` to expand it. Share only the audience
+window, never the whole desktop. The timer starts at ten minutes. For private
+rehearsal:
+
+    make -C slides rehearse
+
+The notes are separate from the audience PDF. [Presentation instructions](PRESENTING.md)
+explain installation, window sharing, controls, and the limits of a mirrored screen.
 
 ## Build on another machine
 
-The vector figures are included, so ordinary compilation does not need Python
-or the GPU experiment store. From this directory:
+The vector figures are checked in, so compilation does not need Python plotting
+packages or the GPU experiment store. From this directory:
 
     make
 
-This uses latexmk and a standard LaTeX installation with Beamer, TikZ,
-Latin Modern, and booktabs. Python 3.10+ regenerates the pdfpc notes using only
-its standard library. Alternatively:
+This uses latexmk and ordinary Beamer, TikZ, Latin Modern, and booktabs.
+Python 3.10+ regenerates the private pdfpc metadata. Alternatively:
 
     make tectonic
 
-That uses Tectonic. To build from the repository root with the existing
-slides Makefile:
+From the repository root, `make -C slides meeting` builds this deck.
+To regenerate figures, use the versions in requirements-figures.txt and run
+`make figures`. To check the PDF and render every page, run `make check`.
 
-    make -C slides meeting
+The data are portable. When original experiment files are available, the figure
+script verifies their recorded hashes; elsewhere it reports which source files
+could not be checked. Rebuilding a figure is not an independent experimental audit.
 
-To regenerate the figures, install the versions in requirements-figures.txt
-in a separate Python environment, then run:
+## Review and updates
 
-    make figures
+[VERIFICATION.md](VERIFICATION.md) records actual compilation and visual checks.
+The design uses complete-sentence headlines and evidence that is visible on the
+slide, following [Michael Alley's presentation guidance](https://www.assertion-evidence.org/tutorial.html).
+Secondary details belong in notes and the guide.
 
-To check the PDF's text bounds and render every page for inspection:
-
-    make check
-
-The checked-in numerical file is portable. On the research machine, the figure
-script also verifies the listed original-source hashes. Elsewhere it explicitly
-reports which originals are unavailable; it does not pretend that a local figure
-rebuild is a fresh audit of the raw experiments.
-
-## Evidence cutoff and ongoing work
-
-The deck includes completed, reviewed results available by the cutoff above.
-Slide 5 now shows the new-input training evaluation: 12 verified successes before
-training versus 55 and 53 afterward, out of the same 72 questions. Missing outcomes
-are disclosed. Slide 7 shows the new batch-size curve: untagged accuracy falls
-from about 83% to 44%, while tagged accuracy stays near 85%.
-
-The three-model comparison, matching-versus-different-tag control, helper-training
-limitations, and earlier reward-training results remain. The new figures replace
-two existing figures; the deck stays at 14 slides. Earlier results remain in the
-evidence document and numerical file.
-
-The attempted full-RLM matching test is inconclusive because most final outcomes
-were unavailable. A small fixed-Python calculation improved, but that is not
-successful use by the trained main model. The supporting note explains this.
-New reward-training attempts are ongoing and are not included as findings.
-
-Do not silently replace a figure when a new result arrives. Update its numerical
-evidence, interpretation, pdfpc notes, guide, and cutoff together; then rebuild and inspect
-the PDF. An interesting late result may deserve an extra slide rather than a
-denser existing one.
-
-## Verification and presentation choices
-
-The [verification record](VERIFICATION.md) records compilation and visual review.
-Full sentences carry the main messages, and scientific figures use visible
-denominators and zero-based scales. Secondary details are in the guide rather
-than crowded into slide bodies. This follows
-[Michael Alley's presentation guidance](https://www.assertion-evidence.org/tutorial.html).
-
-The [tooling record](TOOLS.md) documents the isolated CPU environment and compiler.
-No training environment was changed to build this deck.
+When a late result changes the interpretation, update the figure, numerical
+data, notes, guide, and evidence cutoff together. Recompile and inspect the
+audience PDF and the real presenter view before pushing. Prefer replacing
+redundant content or using a backup over lengthening the main talk.

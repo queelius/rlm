@@ -2,7 +2,7 @@
 title: Evidence and methods for the advisor meeting
 meeting_date: 2026-09-11
 status: exploratory_evidence_synthesis
-evidence_cutoff_utc: 2026-09-11T03:45:00Z
+evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
 
 # Evidence and methods for the September 11 advisor meeting
@@ -24,6 +24,242 @@ is that recursive language-model systems have at least three separable problems:
 The strongest positive results concern the first problem and a specific part of the second. The
 strongest negative results show that improvements at either level do not automatically solve the
 third.
+
+## E1: matching helped large calls, but smaller calls were faster locally
+
+**Question.** Is a large named batch preferable to simply making smaller calls?
+Every policy answered the same 768 MultiNLI records: the first 48 records in each
+of 16 previously used input sets. This avoids comparing a large workload with only
+a small, possibly easier subset. Qwen3-4B used no adapter. Four requests ran at
+once; prefix caching was disabled. Four groups of contexts counterbalanced policy
+order in 16 nonoverlapping timing blocks. The seed schedule and comparison rule
+were frozen before collection. All 848 calls were available and passed the output
+contract; no outcomes or usage fields were missing.
+
+| Method | Calls | Correct / 768 | Correct | Seconds | Input tokens | Output tokens |
+|---|---:|---:|---:|---:|---:|---:|
+| 48 questions, no names | 16 | 373 | 48.6% | 19.270 | 49,307 | 2,537 |
+| 48 questions, matching names | 16 | 651 | 84.8% | 91.038 | 60,768 | 15,228 |
+| 16 questions, no names | 48 | 619 | 80.6% | 18.671 | 53,821 | 2,846 |
+| One question, no names | 768 | 665 | 86.6% | 31.080 | 154,594 | 4,076 |
+
+Each time is the **sum of four nonoverlapping workload blocks for that policy**,
+not the sum of overlapping request latencies and not a per-call time. It includes
+request/logging overhead but excludes server startup. It is a measurement on one
+A100 and one backend/concurrency configuration, not a universal speed ranking or
+a billing estimate. Tokens are units of model input/output, not words; the table
+reports the actual counts rather than converting them to a price.
+
+Single-question calls were about three times faster than large named calls here,
+with 14 more correct labels, but sent about 2.5 times as much input text. Calls of
+16 questions were fastest but lost 32 correct labels relative to large named
+calls. Large named calls emitted substantially more output. This experiment does
+not isolate how much of the timing difference was caused by that output.
+
+The frozen exploratory quality screen allowed a two-percentage-point loss. Large
+named calls relative to singletons passed that point-estimate screen (−1.82 pp);
+16-question calls relative to large named calls did not (−4.17 pp). This is **not
+formal statistical equivalence**. Each policy trades one cost or outcome against
+another, and the 16 shared context sets are the relevant clusters.
+
+**Decision.** Keep smaller calls as serious baselines. Test complete RLM answers
+under stated time and token budgets. Explore compact named outputs and explicit
+group-size control, rather than claiming that fewer calls are automatically faster
+or cheaper. E1 changes the proposed architecture study, not just its reporting.
+
+MAIN read the independent native auditor and reran all 848 request/response
+records. The replay exactly matched the adopted audit. Paths below are relative
+to `/project/alex_phd/runs/rlm-research-r4`:
+
+| Evidence | Source | SHA-256 |
+|---|---|---|
+| Report | `analyses/leaf-mnli-equal-record-work-live-2026-09-11/REPORT.md` | `74df0600080d5c609c618ddeed816ae2aa6566e00a6052d2adcdd68215d04db0` |
+| Native audit | `analyses/leaf-mnli-equal-record-work-live-2026-09-11/NATIVE_AUDIT.json` | `ea6e0eb689074bcd58c2181e279365a32161902a649be2031405fe1ae596ea50` |
+| Portable counts | `analyses/leaf-mnli-equal-record-work-live-2026-09-11/COUNTS.json` | `934bda255c99e96c2fbbccd4196bb4c6706445a8bc238849923ca8787fb13edc` |
+
+## H10: named answers mostly followed their requested records across three orders
+
+**Question.** Does matching remain useful when answers are requested in an order
+different from the input? Each of the same 16 exposed contexts contributed 64
+records, two seeds, and three prescribed output orders. The prompt was identical
+across orders. The required output schema placed a record's name before each label;
+the model still selected that label. All 96 responses were available and valid.
+
+| Requested order | Correct / 2,048 | Correct |
+|---|---:|---:|
+| Original input order | 1,704 | 83.2% |
+| Reverse order | 1,687 | 82.4% |
+| Interleaved order | 1,668 | 81.4% |
+
+The two reordered conditions remained within the frozen practical five-point
+retention screen. This is not an equivalence test or evidence about arbitrary
+permutations. On positions where the requested record and same-position input had
+different gold labels, responses agreed with the requested record in about 82%
+of cases, versus about 9–11% for the same-position input. That is a useful
+behavioral check, not a reading of the model's internal mechanism.
+
+**Decision.** Record-based handoffs are plausible enough to test in a complete RLM.
+The result does not establish that the model can invent reliable identifiers,
+that identifiers are novel, or that any whole-task accuracy improvement follows.
+It stays in supporting material rather than lengthening the main talk.
+
+MAIN read the independent auditor and reran all 96 native outcomes; the replay
+exactly matched the adopted audit. Paths are relative to the same research store:
+
+| Evidence | Source | SHA-256 |
+|---|---|---|
+| Report | `analyses/leaf-mnli-output-order-crossing-live-2026-09-11/REPORT.md` | `423c4d342c336a4200403beb29215297e019e300d6625ea08a5745db56bf6703` |
+| Native audit | `analyses/leaf-mnli-output-order-crossing-live-2026-09-11/NATIVE_AUDIT.json` | `83038f4676536fb0bd64e4f692edc234a48475effaf388dac41077d76b298150` |
+| Portable counts | `analyses/leaf-mnli-output-order-crossing-live-2026-09-11/COUNTS.json` | `10fc1b782e9b5449379f6eb012ffc27d6b97710128113da94271c299b16936aa` |
+
+## S4: supervised training helped execute explicitly described new operation combinations
+
+**Question.** Can the root combine familiar counting, maximum, distinct-user, and threshold
+operations in compound forms absent from its two SFT corpora? Each question explicitly said which
+users to find from category A and which category-B aggregation to apply. This tests execution of an
+instructed combination, not autonomous discovery of a plan.
+
+**Method.** The fixed24 starting adapter and original-corpus SFT6 adapter answered the same 72
+questions on eight research-exposed contexts. There were four compound families. Forty-eight gold
+answers were zero and only 24 were nonzero; threshold questions contributed relatively few nonzero
+cases. The audit therefore read every available sampled program and its linked observations without
+re-executing model code. A zero from the wrong operator or scope was not called faithful.
+
+**Result.** Exact-answer bounds were **27–38/72** for fixed24 and **57–58/72** for SFT6.
+Faithful-and-exact bounds were **2–13/72** and **29–30/72**. On the 24 nonzero questions, fixed24 had
+0 faithful-and-exact answers with two NULLs, hence **0–2/24**; SFT6 had **12/24** faithful-and-exact
+answers and 14/24 exact answers, with no NULLs. SFT6's observed gain was positive in all eight
+context clusters. This is evidence that the SFT root more often executed these explicitly described
+new combinations on this panel, not evidence of general compositionality or autonomous planning.
+
+**Availability and cost.** The native reader authenticated 61/72 fixed24 and 71/72 SFT6
+trajectories. Producer convenience summaries reported 48 and 67 because they excluded additional
+authenticated empty or malformed finals; the audit retained those as observed failures. A NULL means
+that no final could be natively authenticated, not a scored zero, while every physical attempt still
+remains in the cost ledger. The all-planned physical union contains **1,143 model calls**: 847 for
+fixed24 and 296 for SFT6.
+
+Sources below are relative to `/project/alex_phd/runs/rlm-research-r4`:
+
+| Evidence | Source | SHA-256 |
+|---|---|---|
+| Frozen producer readiness | `sidecars/root-qs-unseen-operator-composition-v2/READY_V2.json` | `5dfedfdac53e74e8eefcf6041b952126803f83dbee0ccc60946ac0f91d9e110e` |
+| Frozen design | `sidecars/root-qs-unseen-operator-composition-v2/DESIGN.md` | `757bfb26611243dc407a4954516f5e0427507d6debb96c2d4d86f6cb5eefc8e9` |
+| Frozen method | `sidecars/root-qs-unseen-operator-composition-v2/METHOD.md` | `f6353f2377029ab9a83fc45edb3798eafc1c8d4be9767cf5e2542e5d4860ef15` |
+| Native semantic report | `analyses/root-qs-unseen-operator-composition-live-2026-09-11/REPORT.md` | `e4d3f07360c9fe0c7309b5685141e6b206d2a47f75fc1aa2ef982e46fe212d99` |
+| All-row semantic audit | `analyses/root-qs-unseen-operator-composition-live-2026-09-11/SEMANTICS_ALL.json` | `68dc9dbad9c67487d2633892befeba2e4cb7b43ab5f3cca13e838841c8cf8f11` |
+| Native program/observation pack | `analyses/root-qs-unseen-operator-composition-live-2026-09-11/NATIVE_SEMANTIC_PACK.json` | `a4b007c752fc43aed7a580e95c9337152b4fde54d930d20b5efee8cd81897090` |
+| Audit seal | `analyses/root-qs-unseen-operator-composition-live-2026-09-11/FINAL_SEAL.json` | `bbddbdf42767edfd1e2881851b79b8577fe9cfe8856237860169816ea72224bc` |
+
+## R3: adding a calculation check did not improve final-answer counts
+
+**Question.** Can reinforcement learning improve the root by giving extra credit when its final
+number agrees with a calculation over the actual, authenticated helper map, rather than rewarding
+only the final answer?
+
+**Method.** Both exploratory arms began from the same QS6 root and fixed helper. Each had 24 windows,
+576 planned training attempts, the same tasks and sampling schedule, and a fresh optimizer. The
+answer-reward arm made 19 updates from 108 optimized episodes. The arm with an additional
+quarter-point calculation check made 21 updates from 147 optimized episodes. Those are unequal
+realized doses even though the opportunities were matched. The two completed arms used 4 hours 39
+minutes of parent-run time combined; that excludes the earlier failed integration attempts and all
+prior training runs.
+
+**Secondary result.** On the same newly selected 72-question panel used for S3, the starting QS6
+model had 57 correct final answers. Answer-only reward produced 55 observed correct answers and two
+missing outcomes, hence 55–57/72. Adding the calculation check produced 54/72 with no missing
+outcomes. In the paired comparison, the extra-check arm was one to three answers worse than the
+answer-only arm under every possible assignment of the two missing answer-only outcomes. This
+supports the narrow statement that the reward training did not improve the final-answer count; it
+does not establish the study's predeclared faithful-and-correct primary endpoint, which has not been
+fully reviewed.
+
+The numerical check is not proof that the sampled program faithfully solved the requested task. It
+asks only whether the final number matches a host calculation over the authenticated helper map. A
+program can use the wrong operator or scope, use only part of the map, or reach the right number by
+coincidence. Conversely, it can faithfully calculate from a helper map whose labels disagree with
+host gold. Twelve extra-check answers matched the authenticated-map calculation but were wrong
+against host gold.
+
+A bounded agent-authored review covered all nine extra-check paths whose strict outcome changed from
+the QS6 baseline. Three faithfully performed the requested calculation and two were both faithful
+and correct. Of the three apparent answer-count gains, two were faithful and one counted only a
+partial map after a missing-ID error. This changed-path subset was selected systematically, but it is
+not a population estimate: the other 63 extra-check paths and all answer-only paths remain
+unreviewed.
+
+**Architecture implication, still a proposal.** A safer handoff would give each helper request and
+returned label map stable record identifiers, then verify that the root's calculation consumed the
+same identifier-keyed evidence for the requested operator and scope. That could prevent partial,
+misjoined, or fabricated maps from earning calculation credit. The present experiment motivates
+this verified-handoff design; it does not demonstrate that the design improves learning.
+
+Sources below are relative to `/project/alex_phd/runs/rlm-research-r4`:
+
+| Evidence | Source | SHA-256 |
+|---|---|---|
+| Complete native pair audit | `analyses/root-authenticated-map-reward-pair-live-2026-09-11/final-pair-2026-09-11T0840Z/AUDIT.json` | `a529b2fdcdc600d669bb8cc76ef9c7e4c1ed9b262c52e3aeb319b62855eadd09` |
+| Native report | `analyses/root-authenticated-map-reward-pair-live-2026-09-11/final-pair-2026-09-11T0840Z/REPORT.md` | `eecbb3f8f56ec5450662990fa80e348074ad64623c2e3ea0638a2d141ad366f0` |
+| Numerical calculation boundary | `analyses/root-authenticated-map-reward-pair-live-2026-09-11/final-pair-2026-09-11T0840Z/SEMANTIC_BOUNDARY.json` | `a64fc470f0d44381b958a6f5ca02358e4ac19b4b8dc9574e2e607dc9a251824d` |
+| Nine changed-path judgments | `analyses/root-authenticated-map-reward-pair-live-2026-09-11/final-pair-2026-09-11T0840Z/CHANGED_PATH_REVIEW.json` | `585a6d51bbc169de6a692fe3a17997b4b56c212318709c2c97a476b8fca05b83` |
+| Bounded semantic-review note | `analyses/root-authenticated-map-reward-pair-live-2026-09-11/final-pair-2026-09-11T0840Z/SEMANTIC_REVIEW_REPORT.md` | `6314bea53b9cea4e213f312aa1b3bb7c5666897c32c8d0f1b043729ee7664519` |
+| Control owner terminal | `sidecars/root-question-sensitive-authenticated-map-reward-pilot-v3/outputs/control-attempt-001/OWNER_TERMINAL.json` | `1ce99838b9281b24e1aee519abe514f0091a776bf1575b45a8b55be1c7db6218` |
+| Extra-check owner terminal | `sidecars/root-question-sensitive-authenticated-map-reward-pilot-v3/outputs/bonus-attempt-001/OWNER_TERMINAL.json` | `ef9567519e047d3e4e2366adc94486d0eda356dcb1225fe637fb68146f0af458` |
+
+## H9: the batch-size benefit repeats in Mistral, but accuracy remains lower
+
+Main slide 5 and backup slide 6 compare two models on the exact same 16 sets of MultiNLI
+records. Within each model, each set was tested at 8, 16, 32, 48 and 64 records
+with no added matching tags, matching row numbers, or matching arbitrary tags.
+The weights were unchanged. Request contents and order match across models
+apart from model identity, a run-specific cache identifier, and fresh sampling
+seeds. Tokenizers and model parameters differ, so this is not a controlled test
+of model size alone.
+
+| Model and records per call | No matching tags | Row numbers | Arbitrary tags |
+|---|---:|---:|---:|
+| Qwen3-4B, 32 | 289/512 (56.4%) | 445/512 (86.9%) | 439/512 (85.7%) |
+| Mistral-7B, 32 | 190/512 (37.1%) | 309/512 (60.4%) | 291/512 (56.8%) |
+| Qwen3-4B, 64 | 449/1024 (43.8%) | 866/1024 (84.6%) | 854/1024 (83.4%) |
+| Mistral-7B, 64 | 355/1024 (34.7%) | 595/1024 (58.1%) | 532/1024 (52.0%) |
+
+Each denominator includes every planned label, not only later output positions
+or well-formed responses. All 480 calls returned authenticated responses.
+Qwen's 240 outputs were valid; three Mistral arbitrary-tag outputs reached the
+4,096-token cap and failed the complete-output contract. The predeclared rule
+scores all 32, 48 or 64 labels in those failed batches as wrong. These are
+observed failures, not missing outcomes. The partial strings were not repaired
+or salvaged. All missing-outcome bounds therefore collapse to the reported scores.
+
+At 32, 48 and 64 records, row numbers improved accuracy in all 16 contexts for
+both models. Arbitrary tags helped 14, 15 and 15 Mistral contexts respectively.
+The difference between Mistral's row-number and arbitrary-tag curves cannot
+isolate a semantic advantage: each numerical gap is smaller than the size of
+the corresponding failed arbitrary-tag batch. The row-number versus untagged
+comparison has no such formatting failures.
+
+The new result strengthens the claim that correspondence matters across model
+families. It also narrows the stronger Qwen-specific observation: tags do not
+keep every model near 85%. We still need another task and a complete-system
+comparison. The 16 contexts are the paired units; nested prefixes and statements
+sharing a passage are dependent. No universal batch-size threshold or internal
+mechanism has been established.
+
+MAIN read the complete new native auditor and report, then reran its full
+480-response CPU replay. This re-tokenizes frozen prompts, decodes recorded
+completion tokens, checks request/source identity, and recomputes reading scores.
+It reproduced all 30 format/size/model cells. No GPU inference or generated
+Python execution occurred during that review. Mistral used 240 physical requests,
+647,001 prompt and 128,667 completion tokens; owner elapsed time was 682 seconds.
+This mixed-condition run does not establish a speed advantage for matching tags.
+
+Sources below are relative to `/project/alex_phd/runs/rlm-research-r4`:
+
+| Evidence | Source | SHA-256 |
+|---|---|---|
+| Mistral batch-size report | `analyses/leaf-mnli-mistral-nested-batch-live-2026-09-11/REPORT.md` | `7bbd3d2a84631f290cd3753eb756d28ed65fac64a974b23c4748bdcd3e6f8815` |
+| Native replay | `analyses/leaf-mnli-mistral-nested-batch-live-2026-09-11/NATIVE_AUDIT.json` | `4ab2e1e5b485686785ba84a2c99546846a223d6d91916741545ff6877d9387fb` |
+| Portable cell counts | `analyses/leaf-mnli-mistral-nested-batch-live-2026-09-11/NATIVE_AUDIT-COUNTS.json` | `77579817af47f0c5865bae3b0f8c8125ccf6c60e0b1a8c22678ffa540c1e0077` |
 
 ## Finding 1: varied demonstrations taught the root to perform the requested operation
 
@@ -64,8 +300,9 @@ faithfully executed the requested calculation.
 | Correct and performed | 15/72 | 52/72 |
 | Correct and performed on composed questions | 1/48 | 33/48 |
 
-The slide deliberately shows a related check with changed names and numbers,
-not the table above. We kept the same trained checkpoint and eight source
+An earlier slide version showed a related check with changed names and numbers,
+not the table above. The current slide uses the newly selected inputs described
+under S3 below. In the earlier check, we kept the same trained checkpoint and eight source
 inputs, but replaced user names, weights, and thresholds. On those 72 questions,
 correct-and-performed answers rose from **12 to 50**. The requested calculation
 was performed in 17 before-training paths versus 62 after-training paths.

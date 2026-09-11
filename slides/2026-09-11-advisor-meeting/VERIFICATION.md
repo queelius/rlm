@@ -2,10 +2,72 @@
 title: Verification of the advisor-meeting draft
 verified_date: 2026-09-11
 status: compiled_and_visually_reviewed
-evidence_cutoff_utc: 2026-09-11T03:45:00Z
+evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
 
-# Current PDF
+# Current eight-main-slide revision, checked around 13:00 UTC
+
+The audience PDF has **eight main slides and six optional backups**, with a
+ten-minute presenter timer. MAIN compiled with Tectonic 0.17.0, rendered and
+visually inspected every audience page, then inspected all 14 sets of private
+notes in actual stock pdfpc 4.6 at 1280×720 under Xvfb/software rendering.
+No clipping or overlap was observed. The final chart-axis wording change affected
+only page 5's rendered pixels; MAIN inspected that page again in both views.
+The other 13 pages were pixel-identical, and the notes were byte-identical,
+between the two GUI checks.
+
+| Artifact | SHA-256 |
+|---|---|
+| research-update.pdf | `147445b0dfb09c9536b49ddcda825a2f799adf5ae330be8760a7b9fbf1419351` |
+| research-update.tex | `65d568599e337981dd83b4da76d4ec6a51ebcd217ba3a36843f945d884819470` |
+| data/claims.json | `d76713ceae179413b5c50a54aa7e83b5ee25f56376650cb54ce6a13a9b746d3b` |
+| speaker-notes.json | `0fd08055ab9245465ebfc55a344d6d781fe19218e0e6f28d6289be9a4d1ad57d` |
+| research-update.pdfpc | `56e48a99c118d61d869c005b3514ad7ce5b7b3383ec715c7ca577e76f852e13a` |
+| speaker-guide.md | `0638f56fcfffb61737c36100f7aa493357480c7e9091f04e36679bf57fca8449` |
+
+Fresh checks passed: 14 focused slide/launcher tests; all note titles and
+main/backup footers; no audience annotations or out-of-page text; focused Ruff
+and formatting; `git diff --check`; and a log scan with no warnings, overfull or
+underfull boxes, undefined controls, or errors. The numerical file's **43 source
+entries** all matched. The evidence document's **66** table pins and supporting
+notes' **8** pins matched. The two-model test fixture intentionally omits three
+source entries, so its internal printout says 40 rather than the real file's 43.
+Fourteen guide headings match the current source. Independent focused code and
+lay-audience review found no critical or important blocker; a timing ambiguity
+was corrected to specify the sum of four workload blocks per policy.
+
+The new evidence includes S4 compound execution, H9 same-panel Mistral, H10
+output-order crossing, E1 equal-record workload costs, and R3's secondary
+final-answer result. MAIN read and reran the full native readers for H9's 480
+responses, H10's 96 responses, and E1's 848 responses, obtaining exact replay
+matches. S4's 144-endpoint native extraction replay matched byte-for-byte; its
+132 available execution paths were reviewed by an unblinded agent, with selected
+paths independently inspected by MAIN. R3's final-answer endpoints were replayed;
+the full faithful-calculation population review remains unfinished. Do not infer
+that a native arithmetic replay independently repeats every semantic judgment.
+
+The GUI receipts are in
+`/project/alex_phd/research-cache/tools/pdfpc-laptop-20260911/`, runs
+`smoke-014-ten-minute-update` and `smoke-015-final-eight-main`. The final run
+opened separate audience and presenter windows, displayed the ten-minute timer,
+advanced through all pages, and stopped its owned processes. The presenter
+window was expanded programmatically to model pressing `w`; the user must do
+that on the laptop. [The checked presenter preview](presenter-preview.png) is
+from final page 5. No physical laptop, video-meeting app, macOS or projector test
+is claimed. Some isolated-environment toolbar icons are missing; slides, notes,
+navigation and timer render. Share only the audience window, not the desktop.
+
+Reproduction from this directory:
+
+    make figures tectonic check PYTHON=/project/alex_phd/envs/rlm-advisor-figures-20260911/bin/python TECTONIC=/project/alex_phd/research-cache/tools/tectonic-0.17.0-musl/tectonic
+
+The smaller experiments launched after this content cutoff are kept in the
+research store and supporting notes as they are audited. They do not silently
+change the claims or figures in this verified PDF.
+
+# Historical 03:45-cutoff PDF and 06:33 presenter check (superseded)
+
+The following record describes the earlier expanded deck, not the current pages.
 
 The current deck has 14 pages. MAIN compiled it with Tectonic 0.17.0, rendered
 every page, and visually inspected all 14 pages. The final log has no TeX
