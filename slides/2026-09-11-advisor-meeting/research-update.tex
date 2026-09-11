@@ -108,37 +108,37 @@ Success required both the right final answer and the requested calculation using
 \includegraphics[width=0.82\textwidth]{figures/training.pdf}
 \par\vspace{1mm}
 \raggedright
-Seven starting-model results and two second-copy results could not be verified. The bars count only confirmed successes.
-\smallnote{All versions faced the same 72 tasks from eight newly selected input sets. The task types were familiar. Even if every unknown result succeeded, both trained copies would still outperform the starting model. [S3]}
+All 72 attempts count in each comparison. Attempts that timed out or lacked a verifiable final answer are not counted as successes.
+\smallnote{Six attempts before SFT and two in the second copy timed out. One more pre-SFT attempt had no verifiable final answer. All versions faced the same tasks: familiar task types on eight newly selected input sets. [S3]}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{We changed how helper answers\\are linked to the text they describe.}
-Separate helper test: decide whether a statement follows from a short text.\par
+\frametitle{We tested whether names help link\\each helper answer to the right statement.}
+Separate reading test. The text says: \emph{Maya bought a red bike.}\par
 \vspace{1mm}
-Example text: \emph{Maya bought a red bike.}\par
+``Maya bought a vehicle'' is \textbf{supported}: a bike is a vehicle.\\
+``The bike is blue'' is \textbf{contradicted}: the text says red.\par
 \vspace{1mm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.47\textwidth}
-\begin{block}{The input carries matching names.}
-\texttt{k7ab}: Maya bought a vehicle.\par\medskip
-\texttt{z2pm}: The bike is blue.
+\begin{block}{Without names: use answer order.}
+Maya bought a vehicle.\par
+The bike is blue.\par\medskip
+Reply: \texttt{Supported; Contradicted}
 \end{block}
 \end{column}
 \begin{column}{0.47\textwidth}
-\begin{block}{Each answer carries the same name.}
-\texttt{k7ab}: Supported.\par
-A bike is a vehicle.\par\medskip
-\texttt{z2pm}: Contradicted.\par
-The text says red, not blue.
+\begin{block}{With names: repeat each name.}
+\texttt{k7ab}: Maya bought a vehicle.\par
+\texttt{z2pm}: The bike is blue.\par\medskip
+Reply: \texttt{k7ab: Supported}\par
+\texttt{z2pm: Contradicted}
 \end{block}
 \end{column}
 \end{columns}
 \vspace{2mm}
-Without these names, the answers are matched only by their position in a list.
-\par\vspace{1mm}
-The software supplies the names. The model still has to choose the answers.
-\smallnote{Illustration, not literal model output. We changed names and formatting without retraining. The names are arbitrary and give no hint about the correct answer.}
+Does adding names improve accuracy when one request contains many statements?
+\smallnote{Simplified illustration, not literal model output. Software supplies arbitrary names, not correct answers. We changed the request and reply format without retraining the model.}
 \end{frame}
 
 \begin{frame}[t]

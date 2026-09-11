@@ -12,7 +12,7 @@ EXPECTED = [
     "An RLM divides a large task into smaller steps.",
     "We used supervised fine-tuning (SFT) to teach the main model a routine.",
     "Both separately trained copies solved more of the 72 test tasks.",
-    "We changed how helper answers are linked to the text they describe.",
+    "We tested whether names help link each helper answer to the right statement.",
     "Matching names helped helpers judge many statements in one request.",
     "Smaller requests were faster than large requests with matching names in this local test.",
     "Next test: let the RLM program organize helper requests and match their answers.",

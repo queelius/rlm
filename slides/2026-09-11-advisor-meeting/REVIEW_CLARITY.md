@@ -1,6 +1,14 @@
 # Clarity and evidence review
 
-## Current review — explaining SFT before presenting its results
+## Current review — incomplete attempts and an explicit format comparison
+
+Slide 4 replaces “unknown” with the operational facts: eight attempts timed out and one
+additional attempt lacked a verifiable final answer. All attempts remain in the denominator;
+none of these cases counts as a confirmed success. Slide 5 now shows both formats side by
+side after explaining the example judgments. The reader no longer has to imagine the unnamed
+baseline. Speaker notes and the guide explain the same comparison without changing the results.
+
+## Previous review — explaining SFT before presenting its results
 
 The presenter needs to learn from the slides, not reconstruct unexplained shorthand.
 The current deck therefore has nine main pages: page 3 shows what the model sees and the

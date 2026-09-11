@@ -25,13 +25,13 @@
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "The bars show confirmed successes: 12 for\nthe starting model, 55 for one trained\ncopy, and 53 for the other, out of 72\ntasks.\n\nSeven starting-model results and two\nsecond-copy results are unknown. They\ncould raise the totals to 19 and 55,\nrespectively, but cannot erase the\ntraining advantage.\n\nBoth copies started from the same model.\nThese are separate training runs, not\nsuccessive stages of one run."
+      "note": "The bars show confirmed successes out of\nall 72 attempts: 12 before SFT, 55 for one\ntrained copy, and 53 for the other.\n\nSix starting-model attempts and two\nsecond-copy attempts timed out after about\nthree minutes. One further starting-model\nattempt ended without a verifiable final\nanswer. These are not successful\ncompletions, and they remain in the\ndenominator.\n\nBoth copies started from the same model.\nThese are separate training runs, not\nsuccessive stages of one run."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "SAY: This is a separate reading test. Maya\nbought a red bike: a vehicle follows from\nthe text; a blue bike contradicts it. A\nname links each statement to its answer.\n\nIF ASKED: The real task also allows not\nenough information. Software supplies\nnames and format, not correct answers.\nWithout names, order supplies the link.\n\nTRANSITION: Does this help when one\nrequest contains many statements?"
+      "note": "Start with the text and explain the two\ncorrect judgments. Then compare the boxes.\nWithout names, the first answer is taken\nto describe the first statement. With\nnames, each answer repeats its statement's\nname.\n\nThe names are arbitrary: k7ab does not\nmean supported. Software adds names, but\nthe helper must still read and judge\ncorrectly.\n\nThis is a separate experiment, with no\nfurther training. We ask whether names\nhelp when many statements share one\nrequest. The real task also allows not\nenough information."
     },
     {
       "idx": 5,

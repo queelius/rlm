@@ -385,6 +385,22 @@ were not re-executed.
 
 **Result.** Faithful-and-correct totals were **12/72** for fixed24 (seven NULLs, bounds 12–19),
 **55/72** for original-corpus SFT6, and **53/72** for new-corpus SFT6 (two NULLs, bounds 53–55).
+**Clarification after inspecting the failed attempts.** All eight `attempted_missing_result`
+cases have a `FAILURE.json` recording `TimeoutError`: six in fixed24 and two in new-corpus SFT6,
+after 181–185 seconds. The ninth NULL, in fixed24, has a `RESULT.json` with `available: false`,
+an empty reply, and `finish_reason: tool_calls`; it does not establish a completed final answer.
+Thus “missing” does not mean that completed answers were known to exist and then lost.
+Operationally these attempts did not provide verified successful completions. They remain in
+the denominator of 72. The original NULL classifications and sensitivity bounds are preserved;
+the clarification does not change any success count. A timeout alone does not establish whether
+the underlying cause was model behavior, tool execution, or infrastructure delay.
+
+These files are under `sidecars/root-question-sensitive-fresh-input-three-policy-v1/outputs/attempt-003/`
+in the external research store. For a concrete example, the fixed24 attempt
+`cc3c355e25be3563bc259eaf8ec9b6580c143fa7fe64da7c0fd978f46576873f` recorded a timeout after
+181.18 seconds. The additional non-timeout NULL is fixed24 attempt
+`7d33a1954c7180e509ec98585d0dc5f6000d9313af6c1e5362627bc7f02fdaed`.
+
 The corresponding exact-answer-only totals were 23, 57, and 54. Fixed24 had no faithful-and-correct
 composed result; the trained policies had 35/48 and 34/48. Each trained policy had more observed
 faithful-and-correct answers than fixed24 in all eight context clusters.

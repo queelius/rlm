@@ -112,29 +112,46 @@ Say: “We tested all three versions on the same tasks. We confirmed 12 successe
 55 for one trained copy, and 53 for the other. Success means getting the right answer and doing
 the requested calculation using the helper's replies.”
 
-**Why do we mention missing results?** Some outcomes could not be verified from the available
-records. The bars show only confirmed successes; they do not assume unknown results were wrong.
+**What happened to the attempts without a verifiable final answer?** Six starting-model attempts
+and two second-copy attempts timed out after approximately three minutes. Their folders contain
+error reports and intermediate activity, but no completed final-result record. One additional
+starting-model attempt has a result record that ends with a tool call rather than a verifiable
+final answer. This is not evidence that completed answers were lost.
 
-| Version | Confirmed successes | Unknown outcomes | Possible total successes |
+All 72 attempts remain in each comparison. A timeout is an unsuccessful completion within the
+allowed time, even though we cannot judge a final answer that was never received. The original
+analysis used “unknown” for unavailable answer correctness; that bookkeeping term obscured the
+practical meaning and has been removed from the main slide.
+
+| Version | Confirmed successes | No verifiable final answer | Original missing-answer bounds |
 |---|---:|---:|---:|
 | Before this SFT | 12 | 7 | 12–19 |
 | Copy trained with the first example set | 55 | 0 | 55 |
 | Copy trained with a different example set | 53 | 2 | 53–55 |
 
-Even if all seven unknown starting-model results succeeded, its total would be 19, still below
-either trained copy. These ranges describe missing outcomes, not statistical confidence intervals.
+The original analysis also asked whether assigning success to every unavailable answer could
+erase the comparison. Even that generous assumption gives the starting model only 19 successes,
+still below either trained copy. These are bookkeeping bounds, not statistical confidence
+intervals, actual additional successes, or predictions of what more time would achieve.
 The copies were trained separately: the 53 bar is not a later stage of the 55 bar. Their similar
 results support the usefulness of the routine, not a claim that one example set is better.
 
 Likely Q&A — **Does this show generalization?** It transfers to newly selected record sets, but the
 question types are familiar. It does not demonstrate arbitrary new tasks or autonomous planning.
 
-## Main page 5 — We changed how helper answers are linked to the text they describe.
+## Main page 5 — We tested whether names help link each helper answer to the right statement.
 
 Say: “Now we isolate the helper in a separate reading test. Maya bought a red bike. A bike is a
 vehicle, so the first statement is supported. Blue contradicts red, so the second is contradicted.
-We give each statement a name like k7ab and put the same name on its answer. Without names,
-software assumes that the first answer belongs to the first statement.”
+The left box shows replies without names: software takes the first answer to describe the first
+statement. The right box repeats a name beside each statement and its answer. The same statements
+and correct judgments appear on both sides; only the format changes.”
+
+**What does k7ab mean?** Nothing about the content. It is an arbitrary name, like a coat-check
+ticket number. Repeating it on the reply identifies which statement the reply describes.
+It does not tell the helper whether that statement is supported or contradicted. The two correct
+replies on this slide illustrate the formats, not a measured gain. The next slide tests whether
+the named format helps when the model must judge many statements in one request.
 
 **Is this the same task as the training study?** No. The matching experiments use MultiNLI
 text–statement pairs, not the TREC counting tasks. The real task allows three judgments:

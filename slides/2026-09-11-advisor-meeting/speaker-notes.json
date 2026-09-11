@@ -14,11 +14,11 @@
     },
     {
       "title": "Both separately trained copies solved more of the 72 test tasks.",
-      "notes": "The bars show confirmed successes: 12 for the starting model, 55 for one trained copy, and 53 for the other, out of 72 tasks.\n\nSeven starting-model results and two second-copy results are unknown. They could raise the totals to 19 and 55, respectively, but cannot erase the training advantage.\n\nBoth copies started from the same model. These are separate training runs, not successive stages of one run."
+      "notes": "The bars show confirmed successes out of all 72 attempts: 12 before SFT, 55 for one trained copy, and 53 for the other.\n\nSix starting-model attempts and two second-copy attempts timed out after about three minutes. One further starting-model attempt ended without a verifiable final answer. These are not successful completions, and they remain in the denominator.\n\nBoth copies started from the same model. These are separate training runs, not successive stages of one run."
     },
     {
-      "title": "We changed how helper answers are linked to the text they describe.",
-      "notes": "SAY: This is a separate reading test. Maya bought a red bike: a vehicle follows from the text; a blue bike contradicts it. A name links each statement to its answer.\n\nIF ASKED: The real task also allows not enough information. Software supplies names and format, not correct answers. Without names, order supplies the link.\n\nTRANSITION: Does this help when one request contains many statements?"
+      "title": "We tested whether names help link each helper answer to the right statement.",
+      "notes": "Start with the text and explain the two correct judgments. Then compare the boxes. Without names, the first answer is taken to describe the first statement. With names, each answer repeats its statement's name.\n\nThe names are arbitrary: k7ab does not mean supported. Software adds names, but the helper must still read and judge correctly.\n\nThis is a separate experiment, with no further training. We ask whether names help when many statements share one request. The real task also allows not enough information."
     },
     {
       "title": "Matching names helped helpers judge many statements in one request.",

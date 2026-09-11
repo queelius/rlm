@@ -5,7 +5,23 @@ status: compiled_and_visually_reviewed
 evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
 
-# Current revision — explicit SFT example and nine main slides
+# Current revision — explain incomplete attempts and show both matching formats
+
+Slide 4 now explains unsuccessful completions rather than calling them “unknown.” Inspection
+of all eight missing-result cases found recorded timeouts (six before SFT, two in the second
+copy). One additional pre-SFT result ended without a verifiable final answer. Counts and
+denominators are unchanged; the original analysis classifications remain in the evidence guide.
+Slide 5 now explains the reading judgments and shows the unnamed and named formats side by side.
+Both illustrations are explicitly simplified, and the notes and speaker guide match the revision.
+
+The final PDF compiled without warnings; the 14 focused tests and all 15 note/title/bounds
+checks passed. MAIN visually inspected the final audience renders of slides 4 and 5. No new
+full pdfpc GUI sweep was performed. `git diff --check` passed.
+
+Current `research-update.pdf` SHA-256:
+`515f5cf628744f09db2e024904890fcf0c5c9024948798084146197986e1ea5b`.
+
+# Previous revision — explicit SFT example and nine main slides
 
 The current PDF has **nine main slides and six optional backups**. Slide 3 now explains SFT
 through a labeled simplified example of the situation and demonstrated next action. Slide 4
@@ -21,7 +37,7 @@ review remains documented below; the full pdfpc GUI sweep was not repeated for t
 revision, in keeping with the presenter's request for quick delivery. The presenter preview
 image is from that earlier eight-main-slide revision.
 
-Current `research-update.pdf` SHA-256:
+That revision's `research-update.pdf` SHA-256:
 `2b9330892ba65f6b3c7c1ce0ce5de830c32ea04ca813d77c4c6ed9968b028106`.
 
 # Historical revision — whole-deck clarity pass, approximately 14:51 UTC
