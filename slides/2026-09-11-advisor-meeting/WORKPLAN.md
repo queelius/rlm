@@ -35,8 +35,11 @@ The completed equal-work comparison revised the recommendation: fewer requests
 were not faster here. Main page 6 now shows all four accuracy/time outcomes, and
 page 7 requires small-call baselines and explicit group-size choice. H10's order
 crossing and the repaired API probe remain in supporting documents. A bounded
-compact-output comparison follows the observed output-cost signal; it may refine
-the proposal but must not delay the verified meeting package.
+compact-output comparison followed the observed output-cost signal. Its completed
+Qwen and Mistral results reduced output work and local time and are recorded in
+supporting notes. They refine the proposal without adding a main slide. A final
+saved-map root comparison is running under a bounded recovery; only independently
+audited results that materially change the story should alter the meeting deck.
 
 ## Two-hour evidence update, beginning 11:44 UTC
 

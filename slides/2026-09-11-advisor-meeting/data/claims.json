@@ -1,5 +1,112 @@
 {
   "schema_version": 1,
+  "compact_reply": {
+    "metric": "All-planned strict reading accuracy; invalid complete response contracts score zero.",
+    "planned_per_policy": 768,
+    "contexts": 16,
+    "policies": [
+      "object_list",
+      "compact_object"
+    ],
+    "model_results": [
+      {
+        "model": "Qwen3-4B-Instruct-2507",
+        "calls": [
+          16,
+          16
+        ],
+        "available_calls": [
+          16,
+          16
+        ],
+        "valid_calls": [
+          16,
+          16
+        ],
+        "correct": [
+          660,
+          654
+        ],
+        "seconds": [
+          113.48001814074814,
+          86.78978043980896
+        ],
+        "prompt_tokens": [
+          60624,
+          60624
+        ],
+        "output_tokens": [
+          18210,
+          14104
+        ]
+      },
+      {
+        "model": "Mistral-7B-Instruct-v0.3",
+        "calls": [
+          16,
+          16
+        ],
+        "available_calls": [
+          16,
+          16
+        ],
+        "valid_calls": [
+          12,
+          14
+        ],
+        "correct": [
+          318,
+          365
+        ],
+        "seconds": [
+          250.6608287729323,
+          130.94824666157365
+        ],
+        "prompt_tokens": [
+          66748,
+          66748
+        ],
+        "output_tokens": [
+          34988,
+          21721
+        ],
+        "common_valid_contexts": 11,
+        "common_valid_correct": [
+          289,
+          291
+        ],
+        "common_valid_denominator": 528
+      }
+    ],
+    "design": "Within each model, paired native prompts are identical except required output schema; same supplied key order; fresh paired seeds; 8 nonoverlapping 4-worker blocks; prefix cache disabled.",
+    "limitations": "Exploratory same exposed panel. Mistral strict gain mostly reflects different validity; common-valid subset is outcome-selected, not a clean semantic effect. No universal speed, statistical equivalence or whole-RLM gain.",
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-compact-keyed-reply-live-2026-09-11/REPORT.md",
+        "sha256": "b910bf8ed9f059f42d4e9878003466b2ad8a71308349c55e64d501539afa37a2"
+      },
+      {
+        "path": "analyses/leaf-mnli-compact-keyed-reply-live-2026-09-11/NATIVE_AUDIT.json",
+        "sha256": "e5124b7e69547f1ae05325e65a5c72930235c807493a317ed06073832f87947b"
+      },
+      {
+        "path": "analyses/leaf-mnli-compact-keyed-reply-live-2026-09-11/COUNTS.json",
+        "sha256": "c0966be1b4c04137180b6c7e4900b6066df69926d64b8c51c2bb9d86edaea45c"
+      },
+      {
+        "path": "analyses/leaf-mnli-compact-keyed-reply-mistral-live-2026-09-11/REPORT.md",
+        "sha256": "4d4c141d0aec9171802d7b310795e7f119bb1bf6a188f0b983b4930571690503"
+      },
+      {
+        "path": "analyses/leaf-mnli-compact-keyed-reply-mistral-live-2026-09-11/NATIVE_AUDIT.json",
+        "sha256": "cb15dcbc1e9ed1bd05701affc2313973c612eda9d3c1c2edaad9fc115791f655"
+      },
+      {
+        "path": "analyses/leaf-mnli-compact-keyed-reply-mistral-live-2026-09-11/COUNTS.json",
+        "sha256": "41535c58f51720cbe36a740ceaf8aaf6708b245f6f43a773af716da5befe2ebb"
+      }
+    ]
+  },
   "equal_work": {
     "metric": "Strict correct reading labels over all planned records; all policies process the same 768 records once.",
     "planned_per_policy": 768,
@@ -201,7 +308,8 @@
       }
     ]
   },
-  "prepared_utc": "2026-09-11T12:55:00Z",
+  "prepared_utc": "2026-09-11T13:08:00Z",
+  "audience_deck_evidence_cutoff_utc": "2026-09-11T12:55:00Z",
   "status": "exploratory",
   "research_store": "/project/alex_phd/runs/rlm-research-r4",
   "reward_training": {

@@ -5,33 +5,34 @@ status: compiled_and_visually_reviewed
 evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
 
-# Current eight-main-slide revision, checked around 13:00 UTC
+# Current eight-main-slide revision, checked around 13:23 UTC
 
 The audience PDF has **eight main slides and six optional backups**, with a
 ten-minute presenter timer. MAIN compiled with Tectonic 0.17.0, rendered and
 visually inspected every audience page, then inspected all 14 sets of private
 notes in actual stock pdfpc 4.6 at 1280×720 under Xvfb/software rendering.
-No clipping or overlap was observed. The final chart-axis wording change affected
-only page 5's rendered pixels; MAIN inspected that page again in both views.
-The other 13 pages were pixel-identical, and the notes were byte-identical,
-between the two GUI checks.
+No clipping or overlap was observed. A chart-axis wording change affected only
+page 5; MAIN inspected that page again in both views. The latest clarification
+of the Python workspace affected only page 2. MAIN inspected its actual presenter
+view again; the other 13 audience pages were pixel-identical to the preceding
+GUI-checked PDF. Private notes remained byte-identical across these revisions.
 
 | Artifact | SHA-256 |
 |---|---|
-| research-update.pdf | `147445b0dfb09c9536b49ddcda825a2f799adf5ae330be8760a7b9fbf1419351` |
-| research-update.tex | `65d568599e337981dd83b4da76d4ec6a51ebcd217ba3a36843f945d884819470` |
-| data/claims.json | `d76713ceae179413b5c50a54aa7e83b5ee25f56376650cb54ce6a13a9b746d3b` |
+| research-update.pdf | `3b23bb31ebea4aff2f39c93ff2844e66646c12fdb7b27a9497556da52bd9c6dd` |
+| research-update.tex | `9f4abc307d239c7e503892becf8a2e359763dae1f0c6949244963bdf94ad8ff9` |
+| data/claims.json | `aaf365fe34a7762716e8544878ea44e078f7ae45f523f44929272021227a1f98` |
 | speaker-notes.json | `0fd08055ab9245465ebfc55a344d6d781fe19218e0e6f28d6289be9a4d1ad57d` |
 | research-update.pdfpc | `56e48a99c118d61d869c005b3514ad7ce5b7b3383ec715c7ca577e76f852e13a` |
-| speaker-guide.md | `0638f56fcfffb61737c36100f7aa493357480c7e9091f04e36679bf57fca8449` |
+| speaker-guide.md | `cb5c8e1517bd7aff5ae0e4d830b2980e9ef7d57ffafd0b81939a6f6b7d824597` |
 
 Fresh checks passed: 14 focused slide/launcher tests; all note titles and
 main/backup footers; no audience annotations or out-of-page text; focused Ruff
 and formatting; `git diff --check`; and a log scan with no warnings, overfull or
-underfull boxes, undefined controls, or errors. The numerical file's **43 source
+underfull boxes, undefined controls, or errors. The numerical file's **49 source
 entries** all matched. The evidence document's **66** table pins and supporting
-notes' **8** pins matched. The two-model test fixture intentionally omits three
-source entries, so its internal printout says 40 rather than the real file's 43.
+notes' **12** pins matched. The two-model test fixture intentionally omits three
+source entries, so its internal printout says 46 rather than the real file's 49.
 Fourteen guide headings match the current source. Independent focused code and
 lay-audience review found no critical or important blocker; a timing ambiguity
 was corrected to specify the sum of four workload blocks per policy.
@@ -46,14 +47,20 @@ paths independently inspected by MAIN. R3's final-answer endpoints were replayed
 the full faithful-calculation population review remains unfinished. Do not infer
 that a native arithmetic replay independently repeats every semantic judgment.
 
+Supporting documents also include the two compact-reply comparisons. MAIN read
+their full native audit implementations and independently replayed all 64 replies,
+obtaining byte-identical audit files. These additions do not change the audience
+PDF's numerical cutoff or imply complete-RLM gains.
+
 The GUI receipts are in
 `/project/alex_phd/research-cache/tools/pdfpc-laptop-20260911/`, runs
-`smoke-014-ten-minute-update` and `smoke-015-final-eight-main`. The final run
+`smoke-014-ten-minute-update`, `smoke-015-final-eight-main`, and
+`smoke-016-workspace-final`. The latest run
 opened separate audience and presenter windows, displayed the ten-minute timer,
 advanced through all pages, and stopped its owned processes. The presenter
 window was expanded programmatically to model pressing `w`; the user must do
 that on the laptop. [The checked presenter preview](presenter-preview.png) is
-from final page 5. No physical laptop, video-meeting app, macOS or projector test
+from the unchanged page 5. No physical laptop, video-meeting app, macOS or projector test
 is claimed. Some isolated-environment toolbar icons are missing; slides, notes,
 navigation and timer render. Share only the audience window, not the desktop.
 

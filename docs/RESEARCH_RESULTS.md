@@ -1,8 +1,10 @@
 # Reading the research results
 
-The [September 11 presenter and resume checkpoint](research-checkpoints/2026-09-11-presenter.md)
-links the latest advisor package and records the research state at 06:33 UTC.
+The [September 11 advisor-window checkpoint](research-checkpoints/2026-09-11-advisor-two-hour-window.md)
+links the eight-main-slide advisor package and records the research state around 13:00 UTC.
 It distinguishes materials preserved in Git from model checkpoints on project storage.
+The [earlier presenter checkpoint](research-checkpoints/2026-09-11-presenter.md)
+preserves the 06:33 state; it is not the current run queue.
 
 ## Public reading copy
 

@@ -1,7 +1,7 @@
 ---
 title: Supporting findings for questions and discussion
-updated_utc: 2026-09-11T12:42:00Z
-supporting_results_reviewed_utc: 2026-09-11T03:05:00Z
+updated_utc: 2026-09-11T13:08:00Z
+supporting_results_reviewed_utc: 2026-09-11T13:08:00Z
 status: exploratory_supporting_notes
 main_deck_evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
@@ -96,6 +96,49 @@ records, the model could use either one. Copying the API shape from training did
 not help on these eight examples, so the simpler dictionary is the better next
 building block.”
 
+## E2: shorter named replies reduced output work and time in both models
+
+After E1 showed that large named calls were slower locally, we asked whether
+the reply could be shorter without losing the benefit of matching. For example,
+`[{"key":"aa","label":"neutral"}]` can be written as `{"aa":"neutral"}`.
+Both carry the same record name and reading judgment; the second repeats fewer
+field names and punctuation.
+
+For each model, both formats processed the same 768 records in 16 calls. The
+prompt and seed were paired; only the required output schema changed. Each
+policy's time sums four nonoverlapping blocks with four simultaneous calls.
+Startup is excluded, but failed-generation work is included. There were no
+missing responses or unknown token counts, and no prefix-cache reuse.
+
+| Model and format | Correct / 768 | Valid replies / 16 | Seconds | Output tokens |
+|---|---:|---:|---:|---:|
+| Qwen, longer reply | 660 | 16 | 113.48 | 18,210 |
+| Qwen, compact reply | 654 | 16 | 86.79 | 14,104 |
+| Mistral, longer reply | 318 | 12 | 250.66 | 34,988 |
+| Mistral, compact reply | 365 | 14 | 130.95 | 21,721 |
+
+Qwen retained nearly all accuracy: 85.9% versus 85.2%, while compact replies used
+23% less output and 24% less time. Mistral used 38% less output and 48% less time,
+but its accuracy gain mainly reflected fewer malformed replies. All six malformed
+Mistral replies reached the output limit with long whitespace tails. They count
+as wholly wrong under the prewritten metric, not as missing observations.
+
+Among the 11 Mistral contexts valid in both formats, correct labels were 289/528
+and 291/528. That outcome-selected comparison is descriptive, not a clean estimate
+of better reading. Compact Mistral replies still failed twice. Both models passed
+the prewritten exploratory two-percentage-point quality-loss screen; that is not
+a confidence interval or a formal equivalence test.
+
+**A short answer for the meeting:** “We can make the named replies more concise.
+That reduced output work and local time in both tested models. It is a useful
+implementation choice, not proof of better complete RLM solutions.”
+
+This stays in supporting material: it refines the proposed component without
+lengthening the main talk. A future control could hold whitespace formatting
+fixed to distinguish ordinary brevity from avoidance of runaway whitespace.
+Do not compare these fresh-control times directly with E1 as a paired experiment;
+the neutral prompt changed between studies.
+
 ## Evidence and review
 
 These source paths are relative to the research store
@@ -111,6 +154,10 @@ These source paths are relative to the research store
 | Partial whole-task seal | `analyses/root-stable-anchor-downstream-bridge-live-2026-09-11/FINAL_ATTEMPT003.json` | `57fafb8fc24d1b32bfd60cd2b85d21ee9a943b5f593e41126a354319119c448e` |
 | Saved-map API V2 report | `analyses/root-bridge-native-api-transfer-v2-live-2026-09-11/REPORT.md` | `38d43ce8c507873afb15328f558a21e0a6a344f7c467a3912b097bd8a46b65c0` |
 | Saved-map API V2 audit | `analyses/root-bridge-native-api-transfer-v2-live-2026-09-11/AUDIT.json` | `79757f6b9d200e09ee31a0bc9d111f10e27aa180ab9d6e80db87b8ba0ec97600` |
+| Compact Qwen report | `analyses/leaf-mnli-compact-keyed-reply-live-2026-09-11/REPORT.md` | `b910bf8ed9f059f42d4e9878003466b2ad8a71308349c55e64d501539afa37a2` |
+| Compact Qwen native audit | `analyses/leaf-mnli-compact-keyed-reply-live-2026-09-11/NATIVE_AUDIT.json` | `e5124b7e69547f1ae05325e65a5c72930235c807493a317ed06073832f87947b` |
+| Compact Mistral report | `analyses/leaf-mnli-compact-keyed-reply-mistral-live-2026-09-11/REPORT.md` | `4d4c141d0aec9171802d7b310795e7f119bb1bf6a188f0b983b4930571690503` |
+| Compact Mistral native audit | `analyses/leaf-mnli-compact-keyed-reply-mistral-live-2026-09-11/NATIVE_AUDIT.json` | `cb15dcbc1e9ed1bd05701affc2313973c612eda9d3c1c2edaad9fc115791f655` |
 
 MAIN read both complete audit implementations and reports, checked their sealed
 source and terminal references, independently recounted all 96 format-control
@@ -123,3 +170,8 @@ That independent replay statement concerns the format control and earlier bridge
 For the API V2 probe, MAIN read the completed report and checked the report/audit
 hashes. Its all-path semantic review was performed by the package author after
 collection, was unblinded, and was not independently repeated by MAIN.
+
+For both compact-output studies, MAIN read the independent native audit code
+and reports, reran all 64 responses, and obtained byte-identical audit outputs.
+The review includes actual native prompts, strict key/label decoding, invalid
+reply accounting, model identity, timing blocks and complete physical costs.

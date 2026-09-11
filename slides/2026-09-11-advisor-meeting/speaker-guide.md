@@ -48,6 +48,13 @@ themselves are not new inventions.
 Say: “A main model can inspect a long file, ask helpers smaller reading questions, and use Python
 to combine their replies. The hope is that an unfamiliar whole becomes a set of familiar steps.”
 
+Likely Q&A — **Why is this interesting beyond handling long files?** The main model need not read
+the whole input in its prompt. It can inspect the workspace and see only selected pieces or helper
+results. More broadly, a difficult unfamiliar problem might become a sequence of smaller decisions
+and calculations the model already knows how to handle. That is the larger research motivation;
+our experiments test specific parts of it. See [Alex Zhang's explanation of the surrounding program](https://alexzhang13.github.io/blog/2026/harness/)
+and the [RLM paper](https://arxiv.org/abs/2512.24601).
+
 Use the original Ada example if the audience needs something concrete: Ada has two place questions
 with weights 4 and 3, so her total is 7. Ben's only place question has weight 2. Only Ada exceeds
 5, so the final answer is 1 user. The helper decides which questions concern places; Python does
@@ -60,7 +67,8 @@ experiments mostly use one helper layer. Do not claim deep autonomous planning.
 
 Say: “We trained the main model on worked interactions: ask a helper, retain its actual replies,
 then carry out the requested calculation in Python. On the same 72 questions, verified success was
-12 before training and 55 or 53 after training.”
+12 before training and 55 or 53 after training. The input records were new to this test, but the
+kinds of questions were familiar.”
 
 State the denominator and missing-result bounds exactly: **12–19, 55, and 53–55 out of 72**. The
 two trained models used separate training corpora; one was not trained on top of the other. The
@@ -99,8 +107,8 @@ capacity comparison or a mechanism result.
 
 ## Main page 6 — Smaller calls were faster than large named calls in this local test.
 
-Say: “All four methods answered the same 768 reading questions. One large unnamed call was only
-49% accurate and took 19 seconds. Adding matching names raised accuracy to 85%, but that workload
+Say: “All four methods answered the same 768 reading questions. With 48 questions per unnamed call,
+accuracy was 49% and the whole workload took 19 seconds. Adding matching names raised accuracy to 85%, but that workload
 took 91 seconds. Splitting into groups of 16 reached 81% in 19 seconds; one record at a time reached
 87% in 31 seconds.”
 
@@ -115,11 +123,17 @@ answer changes if the constraint is elapsed time, input tokens, output tokens, o
 local result says that fewer calls did not automatically mean less time, and that smaller unnamed
 calls are a serious baseline for a more elaborate interface.
 
+Optional follow-up — **Can the named replies be shorter?** Yes. A paired compact-output check
+reduced output tokens and local elapsed time in both models. Qwen retained about 85% accuracy;
+Mistral had fewer malformed replies but still failed on some batches. This refines the proposed
+interface, not the main claim about complete solutions. See E2 in [supporting findings](later-findings.md).
+
 ## Main page 7 — Proposed RLM change: manage record links and make helper group size an explicit choice.
 
 Say: “The surrounding program would keep each record linked to its returned answer and make group
 size an explicit choice. The model still chooses what to ask. We would compare complete solutions
-against both the current RLM and simpler small-call baselines under the same resource budget.”
+against both the current RLM and simpler small-call baselines under the same resource budget.
+First we would compare fixed group sizes; learning when to change them comes later.”
 
 Be precise: the existing `ask_batch` facility aligns whole requests and responses, but not the
 individual records inside one request. The proposed component would preserve record identifiers
