@@ -1,7 +1,7 @@
 ---
 title: Supporting findings for questions and discussion
-updated_utc: 2026-09-11T13:08:00Z
-supporting_results_reviewed_utc: 2026-09-11T13:08:00Z
+updated_utc: 2026-09-11T13:42:00Z
+supporting_results_reviewed_utc: 2026-09-11T13:42:00Z
 status: exploratory_supporting_notes
 main_deck_evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
@@ -139,6 +139,50 @@ fixed to distinguish ordinary brevity from avoidance of runaway whitespace.
 Do not compare these fresh-control times directly with E1 as a paired experiment;
 the neutral prompt changed between studies.
 
+## Final pilot: the main model also needs clear calling rules
+
+The final short pilot attempted to connect fresh helper judgments to the trained
+main model. Large named calls produced 321/384 correct labels; smaller unnamed
+calls produced 255/384. Both supplied the same kind of record-to-label dictionary
+to the main model. These were eight previously used inputs, with two questions
+per input and 32 planned main-model episodes across the two conditions.
+
+The complete-answer comparison remains inconclusive. At the fixed deadline,
+only four outcomes could be established from native evidence: three empty replies
+and one incorrect number. The other 28 outcomes remain unknown, including 20
+episodes that never started. Unknown outcomes are not counted as observed wrong
+answers, and this run does not establish which handoff produces better solutions.
+
+The traces show a useful operational problem. The main model repeatedly tried
+the calling conventions used in its earlier workflow: it waited for a function
+that returned immediately and looked for an `.answer` field on a plain dictionary.
+Python reported errors, but the model often repeated the same pattern. One path
+called a new helper with an underspecified question and received an unrelated
+answer. The saved record files and label maps were present.
+These examples identify a visible mistake; they do not establish that training
+caused it or how often it would occur on other tasks.
+
+**A short answer for the meeting:** “Better helper answers are not enough. The
+main model also has to understand how to use them. Our late pilot exposed that
+integration problem, so it is not evidence of a complete-system improvement.”
+
+The next check should provide the exact working call example already used in
+the smaller interface diagnostic, then verify that the model uses the returned
+dictionary correctly. This is a proposed repair, not a demonstrated cure. A later
+training study could vary calling conventions to test whether the model learns
+a more flexible routine. Do not change the saved pilot or reroll its outcomes.
+
+Two earlier integration attempts made no root-model calls; their setup failures
+are recorded separately. The final attempt ran for 393.61 seconds and released
+its service. Across all three attempts, the recorded union is 227 model-request
+attempts: 32 initial helper requests and 195 attempts during the root phase, including any
+further helper work. Known totals are 962,802 input tokens, 31,015 output tokens,
+and 890,448 cached tokens; seven requests have unknown usage. Total owner time
+is about 656 seconds across three separate lifecycles, not uninterrupted latency.
+
+This stays in supporting notes because it refines the next experiment rather
+than adding a successful-result claim to the main talk.
+
 ## Evidence and review
 
 These source paths are relative to the research store
@@ -158,6 +202,8 @@ These source paths are relative to the research store
 | Compact Qwen native audit | `analyses/leaf-mnli-compact-keyed-reply-live-2026-09-11/NATIVE_AUDIT.json` | `e5124b7e69547f1ae05325e65a5c72930235c807493a317ed06073832f87947b` |
 | Compact Mistral report | `analyses/leaf-mnli-compact-keyed-reply-mistral-live-2026-09-11/REPORT.md` | `4d4c141d0aec9171802d7b310795e7f119bb1bf6a188f0b983b4930571690503` |
 | Compact Mistral native audit | `analyses/leaf-mnli-compact-keyed-reply-mistral-live-2026-09-11/NATIVE_AUDIT.json` | `cb15dcbc1e9ed1bd05701affc2313973c612eda9d3c1c2edaad9fc115791f655` |
+| Final pilot native audit | `analyses/root-record-map-batch-handoff-live-2026-09-11/NATIVE_AUDIT_ATTEMPT003.json` | `fd141cbd3065322a1e8ac0b045a974a02aa13c7b2a4aa506882b683f60b3056f` |
+| Final pilot report | `analyses/root-record-map-batch-handoff-live-2026-09-11/REPORT_ATTEMPT003.md` | `81b1af396e2ba61855dd1f72aff7d05e80c944631219c101a58adbdf11d1ece5` |
 
 MAIN read both complete audit implementations and reports, checked their sealed
 source and terminal references, independently recounted all 96 format-control
@@ -175,3 +221,10 @@ For both compact-output studies, MAIN read the independent native audit code
 and reports, reran all 64 responses, and obtained byte-identical audit outputs.
 The review includes actual native prompts, strict key/label decoding, invalid
 reply accounting, model identity, timing blocks and complete physical costs.
+
+For the final pilot, MAIN read the independent reader's incremental changes and
+replayed its complete native extraction byte-for-byte. MAIN inspected selected
+programs and observations from each of the four admitted roots, not every
+repeated node. The complete semantic annotations are an unblinded agent review.
+The admission rule distinguishes an authenticated empty response from an unknown
+outcome; the 28 unknowns remain in the planned denominator.

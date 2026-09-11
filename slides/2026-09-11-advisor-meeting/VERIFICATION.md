@@ -5,7 +5,7 @@ status: compiled_and_visually_reviewed
 evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
 
-# Current eight-main-slide revision, checked around 13:23 UTC
+# Current eight-main-slide revision; final supporting checks around 13:41 UTC
 
 The audience PDF has **eight main slides and six optional backups**, with a
 ten-minute presenter timer. MAIN compiled with Tectonic 0.17.0, rendered and
@@ -21,21 +21,23 @@ GUI-checked PDF. Private notes remained byte-identical across these revisions.
 |---|---|
 | research-update.pdf | `3b23bb31ebea4aff2f39c93ff2844e66646c12fdb7b27a9497556da52bd9c6dd` |
 | research-update.tex | `9f4abc307d239c7e503892becf8a2e359763dae1f0c6949244963bdf94ad8ff9` |
-| data/claims.json | `aaf365fe34a7762716e8544878ea44e078f7ae45f523f44929272021227a1f98` |
+| data/claims.json | `8dac2ab8c5972b4bf3ab6d223fcddc8fb050feed3bb76a5fbf85dbb00ae0250d` |
 | speaker-notes.json | `0fd08055ab9245465ebfc55a344d6d781fe19218e0e6f28d6289be9a4d1ad57d` |
 | research-update.pdfpc | `56e48a99c118d61d869c005b3514ad7ce5b7b3383ec715c7ca577e76f852e13a` |
-| speaker-guide.md | `cb5c8e1517bd7aff5ae0e4d830b2980e9ef7d57ffafd0b81939a6f6b7d824597` |
+| speaker-guide.md | `2da7ccac72f4e42637d0ed7f9afbdaef48d5624be1560ff89be19ed1f4331b0f` |
 
 Fresh checks passed: 14 focused slide/launcher tests; all note titles and
 main/backup footers; no audience annotations or out-of-page text; focused Ruff
 and formatting; `git diff --check`; and a log scan with no warnings, overfull or
-underfull boxes, undefined controls, or errors. The numerical file's **49 source
+underfull boxes, undefined controls, or errors. The numerical file's **50 source
 entries** all matched. The evidence document's **66** table pins and supporting
-notes' **12** pins matched. The two-model test fixture intentionally omits three
-source entries, so its internal printout says 46 rather than the real file's 49.
+notes' **14** pins matched. The two-model test fixture intentionally omits three
+source entries, so its internal printout says 47 rather than the real file's 50.
 Fourteen guide headings match the current source. Independent focused code and
 lay-audience review found no critical or important blocker; a timing ambiguity
 was corrected to specify the sum of four workload blocks per policy.
+The guide's subsequent illustrative cross-domain example is explicitly marked
+as motivation, not an observed transfer result; it changes neither slides nor notes.
 
 The new evidence includes S4 compound execution, H9 same-panel Mistral, H10
 output-order crossing, E1 equal-record workload costs, and R3's secondary
@@ -51,6 +53,16 @@ Supporting documents also include the two compact-reply comparisons. MAIN read
 their full native audit implementations and independently replayed all 64 replies,
 obtaining byte-identical audit files. These additions do not change the audience
 PDF's numerical cutoff or imply complete-RLM gains.
+
+The final fixed-deadline handoff pilot remains inconclusive: four native-admitted
+outcomes and 28 unknown outcomes. MAIN read the incremental native audit and
+replayed the complete extraction byte-for-byte, including all 32 original helper
+responses, all 32 planned root slots, and the 227-request physical union. MAIN
+inspected selected programs and observations from each admitted root; all-path
+semantic annotation is an unblinded agent review. This is not a 0/32 observed
+failure rate or evidence of a complete-system benefit. The speaker guide,
+supporting notes, portable data, and delivery checkpoint record the distinction;
+no late pilot number was added to an audience slide.
 
 The GUI receipts are in
 `/project/alex_phd/research-cache/tools/pdfpc-laptop-20260911/`, runs

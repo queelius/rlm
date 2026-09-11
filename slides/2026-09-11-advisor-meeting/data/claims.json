@@ -1,5 +1,34 @@
 {
   "schema_version": 1,
+  "late_handoff_pilot": {
+    "status": "inconclusive_complete_answer_comparison",
+    "context_clusters": 8,
+    "planned_root_episodes": 32,
+    "admitted_root_outcomes": 4,
+    "observed_empty_replies": 3,
+    "observed_wrong_nonempty_replies": 1,
+    "unknown_root_outcomes": 28,
+    "unstarted_root_episodes": 20,
+    "attempted_missing_root_outcomes": 8,
+    "helper_correct_named48": 321,
+    "helper_correct_unnamed16": 255,
+    "helper_denominator_per_arm": 384,
+    "physical_requests_all_attempts": 227,
+    "physical_initial_helper_requests": 32,
+    "physical_requests_during_root_phase": 195,
+    "known_input_tokens": 962802,
+    "known_output_tokens": 31015,
+    "known_cached_tokens": 890448,
+    "requests_with_unknown_usage": 7,
+    "owner_seconds_separate_attempts": [134.4782145023346, 127.99990439414978, 393.6093337535858],
+    "limitations": "Same exposed contexts, fixed acquisition packages, supplied root procedure. Two infrastructure attempts made zero root calls. Exact helper maps reused. Root-phase API misuse and deadline censoring prevent an efficacy comparison; no uninterrupted pipeline latency claim.",
+    "sources": [
+      {
+        "path": "analyses/root-record-map-batch-handoff-live-2026-09-11/NATIVE_AUDIT_ATTEMPT003.json",
+        "sha256": "fd141cbd3065322a1e8ac0b045a974a02aa13c7b2a4aa506882b683f60b3056f"
+      }
+    ]
+  },
   "compact_reply": {
     "metric": "All-planned strict reading accuracy; invalid complete response contracts score zero.",
     "planned_per_policy": 768,
@@ -308,7 +337,7 @@
       }
     ]
   },
-  "prepared_utc": "2026-09-11T13:08:00Z",
+  "prepared_utc": "2026-09-11T13:39:00Z",
   "audience_deck_evidence_cutoff_utc": "2026-09-11T12:55:00Z",
   "status": "exploratory",
   "research_store": "/project/alex_phd/runs/rlm-research-r4",

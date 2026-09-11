@@ -55,6 +55,13 @@ and calculations the model already knows how to handle. That is the larger resea
 our experiments test specific parts of it. See [Alex Zhang's explanation of the surrounding program](https://alexzhang13.github.io/blog/2026/harness/)
 and the [RLM paper](https://arxiv.org/abs/2512.24601).
 
+For a concrete illustration of that hope, compare counting place questions for each user with
+counting faulty-machine reports for each site. The texts and categories differ, but both can use
+the same plan: ask a focused reading question about each record, group the replies, and count.
+Helpers handle the changing subject matter. The main model may be able to reuse the plan.
+This illustrates a possible kind of transfer; our experiments have not established it across
+those two domains.
+
 Use the original Ada example if the audience needs something concrete: Ada has two place questions
 with weights 4 and 3, so her total is 7. Ben's only place question has weight 2. Only Ada exceeds
 5, so the final answer is 1 user. The helper decides which questions concern places; Python does
@@ -151,6 +158,12 @@ Likely Q&A — **What result would convince us?** More reliable complete answers
 availability loss, trace evidence that the requested calculation used correctly joined records,
 and a useful quality/time/token tradeoff versus simply shrinking the helper groups. Identifiers are
 standard, and even perfect matching cannot guarantee that a helper read the source correctly.
+
+Late pilot — **Have we now shown better complete solutions?** No. The last short run did not
+produce enough observed outcomes to compare the two handoffs. It did expose repeated mistakes in
+how the main model called the changed interface. The next test needs an explicit working call
+example as well as reliable record matching. Details are in [supporting findings](later-findings.md).
+This does not change the main slide's status: a complete-system benefit remains unestablished.
 
 ## Main page 8 — We have a promising handoff result and a focused next research question.
 

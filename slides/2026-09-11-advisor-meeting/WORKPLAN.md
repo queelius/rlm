@@ -38,8 +38,10 @@ crossing and the repaired API probe remain in supporting documents. A bounded
 compact-output comparison followed the observed output-cost signal. Its completed
 Qwen and Mistral results reduced output work and local time and are recorded in
 supporting notes. They refine the proposal without adding a main slide. A final
-saved-map root comparison is running under a bounded recovery; only independently
-audited results that materially change the story should alter the meeting deck.
+saved-map root comparison ended at its fixed deadline. Only four outcomes were
+established and 28 remain unknown; repeated calling-convention errors motivate
+a clearer executable interface example. This inconclusive pilot belongs in the
+supporting record, not an extra successful-result slide.
 
 ## Two-hour evidence update, beginning 11:44 UTC
 
