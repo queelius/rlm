@@ -7,14 +7,19 @@ audience: presenter, advisors, and research colleagues
 
 # Purpose
 
-## Current design: eight main slides for a ten-minute discussion
+## Current design: nine main slides for a ten-minute discussion
+
+Presenter feedback prompted one additional main page: explain SFT through a clearly labeled
+simplified training example before showing its results. Keep method and results separate,
+spell out missing outcomes, and use complete sentences throughout. Apply the same approach
+to the backups and private notes. This is a bounded clarity revision, not a new evidence review.
 
 The user clarified that the advisors saw the earlier eight-slide presentation,
 asked for a concrete RLM architecture/algorithm addition, and requested extremely
 plain, self-explanatory language. Preserve one visual reminder of the larger
 idea: a long file becomes focused reading questions whose answers Python can
 combine. Build the new narrative around training progress, helper handoffs,
-and a clearly labeled proposed program-level change. Use eight main pages plus
+and a clearly labeled proposed program-level change. Use nine main pages plus
 six optional backups; the footer and ten-minute presenter timer reflect that split.
 
 Keep familiar-input task types distinct from new combinations, helper accuracy
@@ -32,8 +37,8 @@ private notes in actual pdfpc. No approval pause is needed: the user delegated
 these design decisions and asked us to continue autonomously.
 
 The completed equal-work comparison revised the recommendation: fewer requests
-were not faster here. Main page 6 now shows all four accuracy/time outcomes, and
-page 7 requires small-call baselines and explicit group-size choice. H10's order
+were not faster here. Main page 7 now shows all four accuracy/time outcomes, and
+page 8 requires small-call baselines and explicit group-size choice. H10's order
 crossing and the repaired API probe remain in supporting documents. A bounded
 compact-output comparison followed the observed output-cost signal. Its completed
 Qwen and Mistral results reduced output work and local time and are recorded in

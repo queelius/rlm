@@ -5,7 +5,26 @@ status: compiled_and_visually_reviewed
 evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
 
-# Current revision — whole-deck clarity pass, approximately 14:51 UTC
+# Current revision — explicit SFT example and nine main slides
+
+The current PDF has **nine main slides and six optional backups**. Slide 3 now explains SFT
+through a labeled simplified example of the situation and demonstrated next action. Slide 4
+separately presents the unchanged training results. Later slides and notes replace compressed
+qualifications with explanatory sentences. The guide explains unknown outcomes and links the
+illustration to an actual recorded training example.
+
+The final PDF compiled without warnings. The 14 focused slide/launcher tests passed; all 15
+PDF titles, note titles, and main/backup footers matched, with no out-of-page text or audience
+annotations. Notes passed the existing length and wrapping limits. MAIN visually inspected
+the new slides 3–4 and changed slides 7–8 and 12–13. The preceding revision's full visual
+review remains documented below; the full pdfpc GUI sweep was not repeated for this bounded
+revision, in keeping with the presenter's request for quick delivery. The presenter preview
+image is from that earlier eight-main-slide revision.
+
+Current `research-update.pdf` SHA-256:
+`2b9330892ba65f6b3c7c1ce0ce5de830c32ea04ca813d77c4c6ed9968b028106`.
+
+# Historical revision — whole-deck clarity pass, approximately 14:51 UTC
 
 This revision responds to the presenter's difficulty understanding page 2 and
 request to review every slide for similar missing context. All **eight main pages

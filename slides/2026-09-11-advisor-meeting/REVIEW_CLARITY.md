@@ -1,6 +1,16 @@
 # Clarity and evidence review
 
-## Current review — 11 September, after presenter feedback
+## Current review — explaining SFT before presenting its results
+
+The presenter needs to learn from the slides, not reconstruct unexplained shorthand.
+The current deck therefore has nine main pages: page 3 shows what the model sees and the
+code it learns to produce, and page 4 explains what improved. The miniature example is
+explicitly illustrative, with its connection to a real record in `sft-worked-example.md`.
+The remaining pages and private notes clarify comparisons, define reward training, and
+explain unknown outcomes with full sentences. Results and proposals remain distinct;
+the numerical evidence has not changed. The extra page replaces compression, not scope.
+
+## Previous review — 11 September, after presenter feedback
 
 The presenter could not tell what “a place” meant on page 2. That exposed a
 larger problem: the earlier review assumed background knowledge the audience

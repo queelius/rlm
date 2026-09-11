@@ -2,18 +2,19 @@
 title: Advisor research discussion — 11 September 2026
 status: reviewable_draft
 evidence_cutoff_utc: 2026-09-11T12:55:00Z
-main_slides: 8
+main_slides: 9
 optional_backup_slides: 6
 talk_minutes: 10
 ---
 
 # Start here
 
-[Read the slides](research-update.pdf). Present the first eight pages, then stop
+[Read the slides](research-update.pdf). Present the first nine pages, then stop
 for discussion. The remaining six are optional answers to questions, clearly
 marked “Backup.” The earlier deck in the parent directory is unchanged.
 
 - [Learn the current talk, with timing and questions for each slide](speaker-guide.md).
+- [Understand SFT through a simplified example and an actual training record](sft-worked-example.md).
 - [Open pdfpc with private notes on a one-screen laptop](PRESENTING.md).
 - [Read the full evidence and methods](evidence-and-methods.md).
 - [Consider the possible publication paths](publication-options.md).
@@ -47,7 +48,7 @@ complete answers at a useful cost. That last claim remains open.
 
 ## What is in the main talk and the backups?
 
-The main talk contains a brief recap, one RLM picture, a training result, a
+The main talk contains a brief recap, one RLM picture, a worked SFT example, a training result, a
 two-record example, the two-model matching result, the same-work accuracy/time
 comparison, a proposed RLM change with its decisive test, and a discussion question.
 

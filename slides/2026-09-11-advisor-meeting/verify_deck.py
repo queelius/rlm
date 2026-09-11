@@ -10,7 +10,8 @@ import fitz
 EXPECTED = [
     "Can better handoffs make an RLM more reliable?",
     "An RLM divides a large task into smaller steps.",
-    "Training taught a more reliable routine for asking helpers and calculating answers.",
+    "We used supervised fine-tuning (SFT) to teach the main model a routine.",
+    "Both separately trained copies solved more of the 72 test tasks.",
     "We changed how helper answers are linked to the text they describe.",
     "Matching names helped helpers judge many statements in one request.",
     "Smaller requests were faster than large requests with matching names in this local test.",
@@ -45,7 +46,7 @@ def main():
             "Notes title does not match the compiled PDF",
         )
         assert not list(page.annots() or []), (index + 1, "Audience PDF contains annotations")
-        footer = f"Main talk {index + 1}/8" if index < 8 else f"Backup {index - 7}/6"
+        footer = f"Main talk {index + 1}/9" if index < 9 else f"Backup {index - 8}/6"
         assert footer in text, (index + 1, "missing main/backup page footer")
         spans = []
         for block in page.get_text("dict")["blocks"]:

@@ -17,7 +17,7 @@
 \setbeamerfont{frametitle}{size=\Large,series=\bfseries}
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=8mm,text margin right=8mm}
-\setbeamertemplate{footline}{\hspace{8mm}\scriptsize\color{Muted}Exploratory research\hfill 11 September 2026\hspace{6mm}\ifnum\value{framenumber}<9 Main talk \insertframenumber/8\else Backup \number\numexpr\value{framenumber}-8\relax/6\fi\hspace{8mm}\vspace{3mm}}
+\setbeamertemplate{footline}{\hspace{8mm}\scriptsize\color{Muted}Exploratory research\hfill 11 September 2026\hspace{6mm}\ifnum\value{framenumber}<10 Main talk \insertframenumber/9\else Backup \number\numexpr\value{framenumber}-9\relax/6\fi\hspace{8mm}\vspace{3mm}}
 \setbeamertemplate{frametitle}{\vspace{2mm}\insertframetitle\par}
 \newcommand{\smallnote}[1]{\vfill{\scriptsize\color{Muted}#1\par}}
 \newcommand{\takeaway}[1]{\begin{beamercolorbox}[sep=2.5mm,wd=\linewidth]{block body}#1\end{beamercolorbox}}
@@ -26,7 +26,7 @@
 
 \begin{document}
 
-% Eight main slides for a ten-minute discussion. Further pages are optional.
+% Nine main slides for a ten-minute discussion. Further pages are optional.
 \begin{frame}[t]
 \frametitle{Can better handoffs make an RLM more reliable?}
 In a recursive language model (RLM), a main model can ask helper models to do smaller tasks. We call this exchange of work and answers a \textbf{handoff}.\par
@@ -73,16 +73,43 @@ The hope: solve an unfamiliar whole by combining familiar smaller steps.
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Training taught a more reliable routine\\for asking helpers and calculating answers.}
-Worked examples taught the main model to ask helpers to classify text, then count or add in Python.\par
+\frametitle{We used supervised fine-tuning (SFT)\\to teach the main model a routine.}
+SFT updates a model to imitate the demonstrated action for the situation it sees. Here is a simplified example, after a helper has replied.\par
 \vspace{1mm}
-A success requires the right answer \emph{and} the requested calculation.\par
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.47\textwidth}
+\begin{block}{What the main model sees}
+Task: Count the questions asking for a location.\par\medskip
+The Python list \texttt{types} holds the helper's replies:\par\medskip
+\texttt{location, human being, location}
+\end{block}
+\end{column}
+\begin{column}{0.47\textwidth}
+\begin{block}{What it learns to produce}
+{\ttfamily\small
+count = 0\par
+for kind in types:\par
+\hspace*{2em}if kind == "location":\par
+\hspace*{4em}count += 1\par
+print(count)\par}
+\end{block}
+\end{column}
+\end{columns}
+\vspace{2mm}
+Python prints \textbf{2}. The training target is the action that calculates it, not just the number.
+\smallnote{Illustrative data and shortened code, not a literal training record. Two copies started from the same earlier-trained model; each learned from 72 complete worked interactions. The helper stayed unchanged. [S1--S3]}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Both separately trained copies solved\\more of the 72 test tasks.}
+Success required both the right final answer and the requested calculation using the helper's replies.\par
 \vspace{1mm}
 \centering
-\includegraphics[width=0.87\textwidth]{figures/training.pdf}
-\par
+\includegraphics[width=0.82\textwidth]{figures/training.pdf}
+\par\vspace{1mm}
 \raggedright
-\smallnote{Same 72 tasks: new records, familiar task types. Two copies trained on different examples; the helper stayed fixed. Success uses actual helper replies. Eight input sets; missing outcomes allow 12--19, 55, and 53--55 successes. [S3]}
+Seven starting-model results and two second-copy results could not be verified. The bars count only confirmed successes.
+\smallnote{All versions faced the same 72 tasks from eight newly selected input sets. The task types were familiar. Even if every unknown result succeeded, both trained copies would still outperform the starting model. [S3]}
 \end{frame}
 
 \begin{frame}[t]
@@ -111,7 +138,7 @@ The text says red, not blue.
 Without these names, the answers are matched only by their position in a list.
 \par\vspace{1mm}
 The software supplies the names. The model still has to choose the answers.
-\smallnote{Illustration, not literal model output. We changed names and formatting, not model weights. The names are arbitrary and give no hint about the correct answer.}
+\smallnote{Illustration, not literal model output. We changed names and formatting without retraining. The names are arbitrary and give no hint about the correct answer.}
 \end{frame}
 
 \begin{frame}[t]
@@ -144,7 +171,7 @@ Statements per request & Correct judgments & Total time \\
 \par\vspace{2mm}
 \raggedright
 Times cover all 768 statements, not one request. Sending one statement at a time was faster here, but repeated more input text.
-\smallnote{One Qwen3-4B test on one A100; up to four requests ran at once, with input caching off. Times sum separate workload blocks, excluding startup. All 848 requests had valid formatting. Speed may differ on other setups. [E1]}
+\smallnote{We used Qwen3-4B on one A100, with up to four requests at once. Times add the measured test blocks and exclude server startup. All 848 requests had valid formatting. Other setups may give different speeds. [E1]}
 \end{frame}
 
 \begin{frame}[t]
@@ -164,7 +191,7 @@ The main model would still choose what to ask. A new program component would han
 Compare fixed group sizes with the current RLM and with one item per request, using the same tasks, models, and computing budget.
 \par\vspace{3mm}
 Success means a more reliable \textbf{final calculation}, not just better helper answers.
-\smallnote{Proposed component, not an established whole-RLM gain. Matching cannot guarantee correct reading, and identifiers are not a new invention. A later experiment could learn when to change group size.}
+\smallnote{This is a proposal, not a proven improvement to complete solutions. Matching names is standard and cannot ensure correct reading. Learning when to change group size comes later.}
 \end{frame}
 
 \begin{frame}[t]
@@ -223,7 +250,7 @@ Matching:\par
 \end{columns}
 \vspace{2mm}
 Matching helped in all 16 input sets, even though both versions had valid formatting.
-\smallnote{Qwen3-4B; only the last 32 judgments in each 48-statement request are scored here: 3,072 per bar. Different input sets from slide 5. This tests behavior, not the model's internal mechanism. [H6]}
+\smallnote{Each bar scores 3,072 judgments: the last 32 in each 48-statement request. Qwen3-4B used different input sets from slide 6. This shows behavior, not why it happens inside the model. [H6]}
 \end{frame}
 
 \begin{frame}[t]
@@ -239,7 +266,7 @@ out of 72 questions.
 \end{column}
 \begin{column}{0.31\textwidth}
 \begin{block}{Correct-answer\\reward}
-\centering\vspace{2mm}{\Huge 55--57}\par\vspace{2mm}
+\centering\vspace{2mm}{\Huge 55}\par\vspace{2mm}
 out of 72 questions.
 \end{block}
 \end{column}
@@ -252,7 +279,7 @@ out of 72 questions.
 \end{columns}
 \vspace{2mm}
 The extra check rewarded agreement with Python's calculation from the helper replies. The numbers above count only correct final answers.
-\smallnote{Each run attempted 576 practice solutions, then faced the same 72 test tasks. Two missing test results explain 55--57. Calculation review remains unfinished. One exploratory pair does not show that reward training generally fails. [R3]}
+\smallnote{Each run attempted 576 practice solutions before testing. The middle result has two unknown outcomes, so its total could be 55--57. We have not finished checking the calculations. This trial does not rule out reward training. [R3]}
 \end{frame}
 
 \begin{frame}[t]
@@ -276,7 +303,7 @@ correct answers and calculations.
 \end{columns}
 \vspace{3mm}
 The instructions supplied these steps. Training helped the model carry out a new combination, not invent the plan.
-\smallnote{One trained model, eight previously tested input sets. Missing outcomes allow 2--13 versus 29--30 successes. These combinations were absent from our demonstrations; this is not independent planning. [S4]}
+\smallnote{The displayed totals count confirmed successes. Eleven results before training and one after training are unknown. We reused eight input sets, but these combinations were absent from the training examples. [S4]}
 \end{frame}
 
 \begin{frame}[t]

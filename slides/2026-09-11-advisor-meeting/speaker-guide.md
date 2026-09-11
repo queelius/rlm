@@ -1,15 +1,15 @@
 ---
 title: Speaker guide for the advisor meeting
 meeting_date: 2026-09-11
-deck_structure: 8 main pages plus 6 optional backup pages
+deck_structure: 9 main pages plus 6 optional backup pages
 suggested_talk_time: 10 minutes
 status: current
 ---
 
 # Speaker guide
 
-This is a ten-minute discussion, not a tour through every experiment. Speak through the eight
-main pages and stop. Pages 9–14 are optional answers to questions.
+This is a ten-minute discussion, not a tour through every experiment. Speak through the nine
+main pages and stop. Pages 10–15 are optional answers to questions.
 
 The new story, compared with the prior eight-page deck, is more focused: training transferred to
 newly selected record sets; the helper-interface result now appears in two model families; and the
@@ -20,14 +20,15 @@ These are still exploratory studies on familiar task types.
 
 | Time | Main page | Job |
 |---|---:|---|
-| 0:00–0:45 | 1 | State the question and what changed since the last discussion. |
-| 0:45–1:45 | 2 | Explain the RLM in one concrete workflow. |
-| 1:45–3:00 | 3 | Give the training result and its limits. |
-| 3:00–4:00 | 4 | Introduce explicit input–answer matching. |
-| 4:00–5:15 | 5 | Show the central helper-level result. |
-| 5:15–6:30 | 6 | Explain the measured quality, time, and token tradeoff. |
-| 6:30–7:45 | 7 | Explain the proposed RLM change and its decisive test. |
-| 7:45–10:00 | 8 | Summarize, ask for advice, and discuss. |
+| 0:00–0:40 | 1 | State the research question. |
+| 0:40–1:40 | 2 | Explain the RLM through a concrete task. |
+| 1:40–2:40 | 3 | Show what SFT teaches the model to do. |
+| 2:40–3:40 | 4 | Explain the training results. |
+| 3:40–4:30 | 5 | Introduce matching inputs to answers. |
+| 4:30–5:30 | 6 | Show the helper-level result. |
+| 5:30–6:30 | 7 | Compare accuracy and total time. |
+| 6:30–7:30 | 8 | Explain the proposed RLM change and its test. |
+| 7:30–10:00 | 9 | Summarize and invite discussion. |
 
 ## Main page 1 — Can better handoffs make an RLM more reliable?
 
@@ -81,17 +82,22 @@ each user, not a weighted total. Assigned points are artificial test values, not
 Likely Q&A — **Why call this recursive?** A helper could use the same machinery again, but these
 experiments mostly use one helper layer. Do not claim deep autonomous planning.
 
-## Main page 3 — Training taught a more reliable routine for asking helpers and calculating answers.
+## Main page 3 — We used supervised fine-tuning (SFT) to teach the main model a routine.
 
-Say: “We trained the main model on worked interactions: ask a helper, retain its actual replies,
-then carry out the requested calculation in Python. On the same 72 questions, verified success was
-12 before training and 55 or 53 after training. The input records were new to this test, but the
-kinds of questions were familiar.”
+Say: “SFT means learning to imitate demonstrated actions. Read this example from left to right.
+The task is to count location questions. The helper has already supplied three question types.
+We train the main model to write code that counts the two location replies. The target is that
+useful action, not just the final number.”
 
-State the denominator and missing-result bounds exactly: **12–19, 55, and 53–55 out of 72**. The
-two trained models used separate training corpora; one was not trained on top of the other. The
-helper was unchanged. Success requires both the right final answer and the requested calculation
-using observed helper results.
+The code starts a count at zero, visits each reply, adds one for each location, and prints two.
+This is a simplified illustration of one step, not a literal training record. Full examples also
+show asking the helper and returning the calculated answer. See the
+[worked training example](sft-worked-example.md) for the actual recorded action behind the illustration.
+
+**What changes during SFT?** The main model's learned parameters change. This is not simply putting
+examples in its prompt at test time. Two copies began with the same earlier-trained model; each
+learned from 72 complete worked interactions using a different example set. The helper stayed
+unchanged. These 72 training examples are separate from the 72 later test tasks.
 
 Likely Q&A — **What were the training examples?** They were worked interactions, not just lists
 of correct final numbers. The main model saw examples of inspecting records, asking a helper for
@@ -100,10 +106,30 @@ with artificial users, record names, and numeric weights. The real task distingu
 answer types; the location/not-location example on page 2 is deliberately simpler. Training
 changed a small set of added model parameters (an adapter), not the helper model.
 
+## Main page 4 — Both separately trained copies solved more of the 72 test tasks.
+
+Say: “We tested all three versions on the same tasks. We confirmed 12 successes before this SFT,
+55 for one trained copy, and 53 for the other. Success means getting the right answer and doing
+the requested calculation using the helper's replies.”
+
+**Why do we mention missing results?** Some outcomes could not be verified from the available
+records. The bars show only confirmed successes; they do not assume unknown results were wrong.
+
+| Version | Confirmed successes | Unknown outcomes | Possible total successes |
+|---|---:|---:|---:|
+| Before this SFT | 12 | 7 | 12–19 |
+| Copy trained with the first example set | 55 | 0 | 55 |
+| Copy trained with a different example set | 53 | 2 | 53–55 |
+
+Even if all seven unknown starting-model results succeeded, its total would be 19, still below
+either trained copy. These ranges describe missing outcomes, not statistical confidence intervals.
+The copies were trained separately: the 53 bar is not a later stage of the 55 bar. Their similar
+results support the usefulness of the routine, not a claim that one example set is better.
+
 Likely Q&A — **Does this show generalization?** It transfers to newly selected record sets, but the
 question types are familiar. It does not demonstrate arbitrary new tasks or autonomous planning.
 
-## Main page 4 — We changed how helper answers are linked to the text they describe.
+## Main page 5 — We changed how helper answers are linked to the text they describe.
 
 Say: “Now we isolate the helper in a separate reading test. Maya bought a red bike. A bike is a
 vehicle, so the first statement is supported. Blue contradicts red, so the second is contradicted.
@@ -122,7 +148,7 @@ Likely Q&A — **Could names leak the answer?** They are arbitrary, and a separa
 matching with nonmatching arbitrary names. That supports a matching effect, not a claim about the
 model's internal mechanism.
 
-## Main page 5 — Matching names helped helpers judge many statements in one request.
+## Main page 6 — Matching names helped helpers judge many statements in one request.
 
 Say: “Qwen and Mistral are two language models. Moving right on the plot means each request
 contains more statements to judge. At 64, adding matching names raised Qwen accuracy from
@@ -137,7 +163,7 @@ Likely Q&A — **Why does Mistral remain much worse?** Matching helps both model
 sufficient for correct reading. This cross-model direction is behavioral evidence, not a clean
 capacity comparison or a mechanism result.
 
-## Main page 6 — Smaller requests were faster than large requests with matching names in this local test.
+## Main page 7 — Smaller requests were faster than large requests with matching names in this local test.
 
 Say: “All four methods judged the same 768 statements. With 48 statements per unnamed request,
 accuracy was 49% and the whole workload took 19 seconds. Adding matching names raised accuracy to 85%, but that workload
@@ -164,7 +190,7 @@ reduced output tokens and local elapsed time in both models. Qwen retained about
 Mistral had fewer malformed replies but still failed on some batches. This refines the proposed
 interface, not the main claim about complete solutions. See E2 in [supporting findings](later-findings.md).
 
-## Main page 7 — Next test: let the RLM program organize helper requests and match their answers.
+## Main page 8 — Next test: let the RLM program organize helper requests and match their answers.
 
 Say: “The surrounding program would keep each record linked to its returned answer and make group
 size an explicit choice. The model still chooses what to ask. We would compare complete solutions
@@ -199,7 +225,7 @@ how the main model called the changed interface. The next test needs an explicit
 example as well as reliable record matching. Details are in [supporting findings](later-findings.md).
 This does not change the main slide's status: a complete-system benefit remains unestablished.
 
-## Main page 8 — We have a promising handoff result and a focused next research question.
+## Main page 9 — We have a promising handoff result and a focused next research question.
 
 Say: “Worked examples improved one useful routine. Explicit matching improved helper reading. The
 unresolved question is whether the handoff change improves a complete RLM solution at useful cost.”
@@ -229,14 +255,14 @@ reused the same names on inputs and outputs. Later-answer accuracy rose from 32.
 different panel. This supports matching as a factor, not a causal account of internal attention.
 In both versions, answer position still determined the intended statement. The different-name
 version did not tell the helper to switch to another statement. Only the last 32 judgments from
-each 48-statement request are included in this plot; it is not the all-position score on page 5.
+each 48-statement request are included in this plot; it is not the all-position score on page 6.
 
 ## Backup page 3 — Reward training did not improve the final-answer count in this trial.
 
 Use when asked about reinforcement learning. On this **secondary final-answer metric**, the shared
 baseline was **57/72**, answer-reward training produced **55–57/72**, and answer plus a calculation
 check produced **54/72**. The two runs attempted 576 solutions and made 19 and 21 optimizer updates.
-This metric differs from the faithful-calculation success measure on main page 3; the predeclared
+This metric differs from the faithful-calculation success measure on main page 4; the predeclared
 calculation review is not complete. Treat this as a bounded negative trial, not proof that reward
 learning cannot work.
 
@@ -250,7 +276,9 @@ The 55–57 range reflects two missing test results, not uncertainty across many
 
 Use when asked whether the trained model only learned familiar question types. On 72 questions
 combining familiar operations in new ways, verified correct answers and calculations increased
-from 2 to 29. Missing-result bounds are 2–13 and 29–30. These questions reused eight previously
+from 2 to 29. Eleven earlier outcomes and one later outcome could not be verified. Even if all
+eleven unknown earlier outcomes succeeded, the earlier total would be 13, still below 29.
+These questions reused eight previously
 tested sets of records, so the new part is the combination of operations, not the input text.
 
 Example: first find users who asked for a location, then count those users' questions asking
@@ -275,7 +303,7 @@ has no such second input to point toward. These are invented examples of names, 
 
 ## Backup page 6 — Both row numbers and arbitrary names helped when helpers judged many statements together.
 
-Use when asked for the full format comparison behind main page 5. This is the only page where the
+Use when asked for the full format comparison behind main page 6. This is the only page where the
 row-number condition should be discussed in the prepared deck. Both row numbers and arbitrary
 matching names helped. All 480 calls returned; three malformed Mistral arbitrary-name outputs count
 as wrong and complicate a direct comparison between the two named formats.

@@ -9,8 +9,12 @@
       "notes": "SAY: We want each user's count of questions asking for a location. Oslo and Kyoto qualify; Hamlet asks for a person. Helpers identify question types; Python counts: Ada one, Ben one.\n\nWHY: The main model can inspect a file without reading it all at once. Helpers can divide work again.\n\nCAUTION: This invented example explains the workflow, not a demonstrated ability to plan any unfamiliar task."
     },
     {
-      "title": "Training taught a more reliable routine for asking helpers and calculating answers.",
-      "notes": "SAY: Two copies learned the ask-and-calculate routine from different example sets. Success needs the right final answer and the requested calculation from actual helper replies. On 72 test tasks, successes were 12 before, then 55 or 53.\n\nIF ASKED: Missing outcomes allow 12–19, 55, and 53–55. This is not sequential training.\n\nCAUTION: New records, familiar task types; the helper remained fixed."
+      "title": "We used supervised fine-tuning (SFT) to teach the main model a routine.",
+      "notes": "Read the example left to right. The model sees a counting task and three helper replies. It is trained to produce code that counts the two location replies. SFT changes its learned parameters, not just its prompt.\n\nThis illustrates one step. Full examples also demonstrate asking the helper and returning the calculated answer.\n\nTwo copies started from the same model. Each learned from 72 worked interactions, using different examples and an unchanged helper."
+    },
+    {
+      "title": "Both separately trained copies solved more of the 72 test tasks.",
+      "notes": "The bars show confirmed successes: 12 for the starting model, 55 for one trained copy, and 53 for the other, out of 72 tasks.\n\nSeven starting-model results and two second-copy results are unknown. They could raise the totals to 19 and 55, respectively, but cannot erase the training advantage.\n\nBoth copies started from the same model. These are separate training runs, not successive stages of one run."
     },
     {
       "title": "We changed how helper answers are linked to the text they describe.",
@@ -18,7 +22,7 @@
     },
     {
       "title": "Matching names helped helpers judge many statements in one request.",
-      "notes": "SAY: Qwen and Mistral are two language models. Read left to right as each request contains more statements to judge. At 64, matching names raised Qwen from 44% to 83%, and Mistral from 35% to 52%.\n\nIF ASKED: Same 16 input sets; 160 requests per model shown. Three invalid Mistral responses count wrong.\n\nCAUTION: These are helper judgments, not complete RLM solutions. Backup 6 adds row numbers."
+      "notes": "Qwen and Mistral are two language models. Moving right means more statements in each request. At 64, matching names raised Qwen from 44% to 83%, and Mistral from 35% to 52%.\n\nBoth formats used the same 16 sets of texts. Three Mistral replies broke the required format and were counted as wrong.\n\nThis measures helper judgments, not complete RLM solutions. Backup 6 also shows matching row numbers."
     },
     {
       "title": "Smaller requests were faster than large requests with matching names in this local test.",
@@ -26,7 +30,7 @@
     },
     {
       "title": "Next test: let the RLM program organize helper requests and match their answers.",
-      "notes": "SAY: Add a program component to group input items, preserve their names, and match replies. Compare fixed group sizes against the current RLM and one item per request.\n\nIF ASKED: Current ask_batch matches whole requests. This would track individual items inside each request. Learning when to resize groups comes later.\n\nCAUTION: No complete-RLM benefit is established. Matching names is standard and cannot ensure correct reading."
+      "notes": "The proposed component groups input items and matches each returned answer to its source. The main model still decides what to ask.\n\nToday, the program matches a whole request to its response. We want it to track individual items inside that response, too. First compare fixed group sizes; choosing sizes automatically comes later.\n\nWe have not shown better complete solutions. Even perfectly matched answers can be wrong."
     },
     {
       "title": "We have a promising handoff result and a focused next research question.",
@@ -38,15 +42,15 @@
     },
     {
       "title": "Using the same name on a statement and its answer helped more than using different names.",
-      "notes": "SAY: This tests whether any extra names help, or whether matching matters. Both versions had names and valid formatting. On later judgments, matching raised accuracy from 32.6% to 78.8%.\n\nIF ASKED: Answer order still specified the intended statement, even with different names.\n\nCAUTION: Last 32 judgments per 48-statement request; different input sets from slide 5. This does not explain the model's internal mechanism."
+      "notes": "This asks whether adding any names helps, or whether the names must match. Both versions had names and valid formatting. Matching raised accuracy from 32.6% to 78.8%.\n\nAnswer order still told the model which statement to judge, even when the names differed.\n\nThis plot scores only the last 32 judgments in each request of 48 statements. It uses different texts from slide 6, so compare the two bars here, not across slides."
     },
     {
       "title": "Reward training did not improve the final-answer count in this trial.",
-      "notes": "SAY: Reward training scores the model's attempts and adjusts its learned behavior. We tried correct-answer reward alone, then a separate run adding agreement with Python's calculation from helper replies. Neither improved the test count.\n\nIF ASKED: Each attempted 576 practice solutions. Together they took about four hours and 39 minutes. Two missing tests explain 55–57.\n\nCAUTION: Final numbers only; calculation review is unfinished."
+      "notes": "Unlike SFT, these runs learned from scores on attempted solutions. One rewarded correct final answers. The other also rewarded agreement with Python's calculation from helper replies.\n\nThe middle bar shows 55 confirmed successes. Two results are unknown, so its total could reach 57, matching the starting model.\n\nEach run attempted 576 practice solutions before testing. These scores check final answers only; reviewing the actual calculations is unfinished."
     },
     {
       "title": "Training also helped with new combinations of familiar steps.",
-      "notes": "SAY: First select users using their location questions. Then count their number questions, which are different records. The prompt gave both steps. Training raised verified successes from two to 29 out of 72.\n\nIF ASKED: The combination was absent from our examples; the input sets were reused.\n\nCAUTION: Missing results allow 2–13 versus 29–30. We checked calculations, not just easy-to-guess zeros. This is not inventing a plan."
+      "notes": "First find users who asked a location question. Then count those users' number questions. The instructions supplied both steps. This tests carrying out a new combination, not inventing the plan.\n\nThere were two confirmed successes before SFT and 29 after it. Eleven earlier results and one later result are unknown. Even if all eleven earlier results succeeded, training would still be ahead.\n\nWe checked the calculation as well as the final answer."
     },
     {
       "title": "Misleading names can draw an answer toward the wrong input.",
@@ -54,7 +58,7 @@
     },
     {
       "title": "Both row numbers and arbitrary names helped when helpers judged many statements together.",
-      "notes": "SAY: This adds the third comparison omitted from slide five: use matching row numbers rather than arbitrary names. Both helped the two language models judge statements.\n\nIF ASKED: At 64 statements, Qwen scored 44%, 85%, 83%; Mistral 35%, 58%, 52%. Order: no names, row numbers, arbitrary names.\n\nCAUTION: Three Mistral arbitrary-name responses had invalid formatting. Do not conclude row numbers are inherently better."
+      "notes": "This adds matching row numbers to the comparison on slide 6. Both row numbers and arbitrary names helped.\n\nAt 64 statements, Qwen scored 44% without names, 85% with row numbers, and 83% with arbitrary names. Mistral scored 35%, 58%, and 52%, respectively.\n\nThree Mistral replies with arbitrary names broke the required format. The difference between naming styles therefore does not measure reading ability alone."
     }
   ]
 }
