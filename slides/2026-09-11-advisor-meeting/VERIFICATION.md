@@ -5,21 +5,25 @@ status: compiled_and_visually_reviewed
 evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
 
-# Current revision — explain incomplete attempts and show both matching formats
+# Current revision — explain incomplete attempts and make text–claim pairs explicit
 
 Slide 4 now explains unsuccessful completions rather than calling them “unknown.” Inspection
 of all eight missing-result cases found recorded timeouts (six before SFT, two in the second
 copy). One additional pre-SFT result ended without a verifiable final answer. Counts and
 denominators are unchanged; the original analysis classifications remain in the evidence guide.
-Slide 5 now explains the reading judgments and shows the unnamed and named formats side by side.
-Both illustrations are explicitly simplified, and the notes and speaker guide match the revision.
+Slide 5 now shows three text–claim pairs in a table. Two share a text; the third changes both text
+and claim. This makes the unit of input explicit rather than implying fixed questions applied to
+every text. The slide explains matching by order versus name below the table. Examples are labeled
+simplified; correct judgments are for explanation and are not supplied to the model. Notes and
+the guide match the revision.
 
 The final PDF compiled without warnings; the 14 focused tests and all 15 note/title/bounds
-checks passed. MAIN visually inspected the final audience renders of slides 4 and 5. No new
+checks passed. MAIN visually inspected the updated slide 5; slide 4 is unchanged from its preceding
+visual check. No new
 full pdfpc GUI sweep was performed. `git diff --check` passed.
 
 Current `research-update.pdf` SHA-256:
-`515f5cf628744f09db2e024904890fcf0c5c9024948798084146197986e1ea5b`.
+`ac2c717f8ddf772195a121711742fec3224a652084ff953607cdede22ec5666e`.
 
 # Previous revision — explicit SFT example and nine main slides
 

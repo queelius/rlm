@@ -141,21 +141,30 @@ question types are familiar. It does not demonstrate arbitrary new tasks or auto
 
 ## Main page 5 — We tested whether names help link each helper answer to the right statement.
 
-Say: “Now we isolate the helper in a separate reading test. Maya bought a red bike. A bike is a
-vehicle, so the first statement is supported. Blue contradicts red, so the second is contradicted.
-The left box shows replies without names: software takes the first answer to describe the first
-statement. The right box repeats a name beside each statement and its answer. The same statements
-and correct judgments appear on both sides; only the format changes.”
+Say: “Read across each row. Each input item contains a text and a claim about that text.
+A bike is a vehicle, so the first claim is supported. Blue contradicts red. The third row uses
+a different text: a train arrived at noon. We cannot tell whether it was late without knowing
+its schedule. One helper request contains several such pairs, and asks for one judgment per pair.”
+
+**Are these the same questions applied to many texts?** No. The instruction is always to judge
+a claim against its paired text, but both the text and the claim can vary. Some pairs share a
+text, as the first two rows do. A claim is a statement to check: “The bike is blue” means
+“Does this text support the claim that the bike is blue?” It is not a question about every text.
+
+**What changes between the two formats?** Without added matching names, software uses answer
+order: the first judgment belongs to the first pair. With matching names, the reply repeats
+the name assigned to its pair, such as `k7ab: Supported`. The same pairs are tested in both
+formats. The table shows names for illustration, not because both formats repeat them in replies.
 
 **What does k7ab mean?** Nothing about the content. It is an arbitrary name, like a coat-check
 ticket number. Repeating it on the reply identifies which statement the reply describes.
-It does not tell the helper whether that statement is supported or contradicted. The two correct
-replies on this slide illustrate the formats, not a measured gain. The next slide tests whether
+It does not tell the helper whether that statement is supported or contradicted. The three correct
+judgments on this slide explain the task; they are not given to the model. The next slide tests whether
 the named format helps when the model must judge many statements in one request.
 
 **Is this the same task as the training study?** No. The matching experiments use MultiNLI
 text–statement pairs, not the TREC counting tasks. The real task allows three judgments:
-supported, contradicted, or not enough information. The bike example illustrates two of them.
+supported, contradicted, or not enough information. The table now illustrates all three.
 Explanations on the slide teach what the judgments mean; they are not literal model outputs.
 
 Understand: software supplies the identifiers and checks the format. The model still chooses the

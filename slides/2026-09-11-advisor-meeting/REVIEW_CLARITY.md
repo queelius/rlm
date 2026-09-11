@@ -4,9 +4,11 @@
 
 Slide 4 replaces “unknown” with the operational facts: eight attempts timed out and one
 additional attempt lacked a verifiable final answer. All attempts remain in the denominator;
-none of these cases counts as a confirmed success. Slide 5 now shows both formats side by
-side after explaining the example judgments. The reader no longer has to imagine the unnamed
-baseline. Speaker notes and the guide explain the same comparison without changing the results.
+none of these cases counts as a confirmed success. Slide 5 now shows three text–claim pairs,
+with each pair on its own table row. Two share a text and the third uses a different text and
+claim. The slide explains matching by order versus name beneath the table. This replaces a
+single-text illustration that incorrectly suggested applying fixed questions to every text.
+Speaker notes and the guide explain the same comparison without changing the results.
 
 ## Previous review — explaining SFT before presenting its results
 

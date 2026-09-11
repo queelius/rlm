@@ -114,31 +114,28 @@ All 72 attempts count in each comparison. Attempts that timed out or lacked a ve
 
 \begin{frame}[t]
 \frametitle{We tested whether names help link\\each helper answer to the right statement.}
-Separate reading test. The text says: \emph{Maya bought a red bike.}\par
-\vspace{1mm}
-``Maya bought a vehicle'' is \textbf{supported}: a bike is a vehicle.\\
-``The bike is blue'' is \textbf{contradicted}: the text says red.\par
-\vspace{1mm}
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.47\textwidth}
-\begin{block}{Without names: use answer order.}
-Maya bought a vehicle.\par
-The bike is blue.\par\medskip
-Reply: \texttt{Supported; Contradicted}
-\end{block}
-\end{column}
-\begin{column}{0.47\textwidth}
-\begin{block}{With names: repeat each name.}
-\texttt{k7ab}: Maya bought a vehicle.\par
-\texttt{z2pm}: The bike is blue.\par\medskip
-Reply: \texttt{k7ab: Supported}\par
-\texttt{z2pm: Contradicted}
-\end{block}
-\end{column}
-\end{columns}
+Each input item pairs a \textbf{text} with a \textbf{claim about that text}. One helper request contains several pairs; both texts and claims can vary.\par
 \vspace{2mm}
-Does adding names improve accuracy when one request contains many statements?
-\smallnote{Simplified illustration, not literal model output. Software supplies arbitrary names, not correct answers. We changed the request and reply format without retraining the model.}
+\begingroup
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}p{0.10\textwidth}p{0.29\textwidth}p{0.29\textwidth}p{0.24\textwidth}@{}}
+\toprule
+Name & Text to read & Claim to check & Correct judgment \\
+\midrule
+\texttt{k7ab} & Maya bought a red bike. & Maya bought a vehicle. & Supported \\[1mm]
+\texttt{z2pm} & Maya bought a red bike. & The bike is blue. & Contradicted \\[1mm]
+\texttt{r9cx} & A train arrived at noon. & The train was late. & Not enough information \\
+\bottomrule
+\end{tabular}
+\endgroup
+\par\vspace{2mm}
+Without matching names, replies are matched by order.\\
+With matching names, each reply repeats its pair's name: \texttt{k7ab: Supported}.\par
+\vspace{2mm}
+Does this help the model judge many pairs accurately in one request?
+\smallnote{Simplified examples; correct judgments are shown for explanation, not given to the model. The train's schedule is unstated. This separate experiment changes formatting, not training.}
 \end{frame}
 
 \begin{frame}[t]

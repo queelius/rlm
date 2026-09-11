@@ -18,7 +18,7 @@
     },
     {
       "title": "We tested whether names help link each helper answer to the right statement.",
-      "notes": "Start with the text and explain the two correct judgments. Then compare the boxes. Without names, the first answer is taken to describe the first statement. With names, each answer repeats its statement's name.\n\nThe names are arbitrary: k7ab does not mean supported. Software adds names, but the helper must still read and judge correctly.\n\nThis is a separate experiment, with no further training. We ask whether names help when many statements share one request. The real task also allows not enough information."
+      "notes": "Read across each row: text, claim, judgment. A bike is a vehicle; blue contradicts red. The train's arrival time alone does not tell us whether it was late.\n\nEach row is one input pair. The first two share a text; the third uses another. We do not ask the same claims about every text. The correct judgments are shown for explanation, not given to the model.\n\nWithout matching names, replies follow input order. With names, each reply repeats its pair's arbitrary name. This separate experiment uses no retraining."
     },
     {
       "title": "Matching names helped helpers judge many statements in one request.",

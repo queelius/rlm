@@ -49,7 +49,7 @@ complete answers at a useful cost. That last claim remains open.
 ## What is in the main talk and the backups?
 
 The main talk contains a brief recap, one RLM picture, a worked SFT example, a training result, a
-two-record example, the two-model matching result, the same-work accuracy/time
+three-pair reading example, the two-model matching result, the same-work accuracy/time
 comparison, a proposed RLM change with its decisive test, and a discussion question.
 
 The backups explain the training task, the matching-versus-different-name control,

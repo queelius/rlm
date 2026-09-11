@@ -31,7 +31,7 @@
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "Start with the text and explain the two\ncorrect judgments. Then compare the boxes.\nWithout names, the first answer is taken\nto describe the first statement. With\nnames, each answer repeats its statement's\nname.\n\nThe names are arbitrary: k7ab does not\nmean supported. Software adds names, but\nthe helper must still read and judge\ncorrectly.\n\nThis is a separate experiment, with no\nfurther training. We ask whether names\nhelp when many statements share one\nrequest. The real task also allows not\nenough information."
+      "note": "Read across each row: text, claim,\njudgment. A bike is a vehicle; blue\ncontradicts red. The train's arrival time\nalone does not tell us whether it was\nlate.\n\nEach row is one input pair. The first two\nshare a text; the third uses another. We\ndo not ask the same claims about every\ntext. The correct judgments are shown for\nexplanation, not given to the model.\n\nWithout matching names, replies follow\ninput order. With names, each reply\nrepeats its pair's arbitrary name. This\nseparate experiment uses no retraining."
     },
     {
       "idx": 5,
