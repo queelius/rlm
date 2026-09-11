@@ -9,19 +9,19 @@ import fitz
 
 EXPECTED = [
     "Can better handoffs make an RLM more reliable?",
-    "A long file can become many small questions whose answers Python can combine.",
+    "An RLM divides a large task into smaller steps.",
     "Training taught a more reliable routine for asking helpers and calculating answers.",
     "We changed how helper answers are linked to the text they describe.",
-    "Matching names improved accuracy when a helper answered many questions at once.",
-    "Smaller calls were faster than large named calls in this local test.",
-    "Proposed RLM change: manage record links and make helper group size an explicit choice.",
+    "Matching names helped helpers judge many statements in one request.",
+    "Smaller requests were faster than large requests with matching names in this local test.",
+    "Next test: let the RLM program organize helper requests and match their answers.",
     "We have a promising handoff result and a focused next research question.",
-    "Example: the helper reads the text, and Python does the counting.",
-    "A control suggests that matching matters, not merely having names on the page.",
+    "Example: the helper identifies question types, and Python adds the relevant points.",
+    "Using the same name on a statement and its answer helped more than using different names.",
     "Reward training did not improve the final-answer count in this trial.",
     "Training also helped with new combinations of familiar steps.",
     "Misleading names can draw an answer toward the wrong input.",
-    "Both row numbers and arbitrary names helped in the larger-batch tests.",
+    "Both row numbers and arbitrary names helped when helpers judged many statements together.",
 ]
 
 

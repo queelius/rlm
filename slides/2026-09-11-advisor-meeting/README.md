@@ -28,7 +28,9 @@ and [figure-building script](figures.py) are included.
 Our earlier talk showed that worked examples could teach a basic Python routine.
 This update asks whether better handoffs can make a more capable RLM reliable.
 A visual example shows the larger idea: divide a long input into focused reading
-questions, then use Python to combine the answers.
+questions, then use Python to combine the answers. The visible task is to count
+each user's questions asking for a location; a three-row Ada/Ben example makes
+both the helper's job and the final counts explicit.
 
 Training improved a more demanding routine on newly selected records. Separately,
 matching arbitrary names beside records and helper answers improved reading
@@ -69,6 +71,12 @@ the family comparison uses Mistral-7B-Instruct-v0.3. Training uses small adapter
 not training a model from scratch.
 
 ## Present on one laptop screen
+
+If you are already in this directory:
+
+    make present
+
+For private rehearsal here, use `make rehearse`.
 
 From the repository root:
 

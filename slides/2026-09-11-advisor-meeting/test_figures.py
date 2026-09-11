@@ -76,9 +76,9 @@ class TwoModelFigureTests(unittest.TestCase):
             for phrase in (
                 "Qwen3-4B",
                 "Mistral-7B",
-                "No matching tags",
-                "Row numbers",
-                "Arbitrary tags",
+                "Without names",
+                "Matching row numbers",
+                "Matching arbitrary names",
             ):
                 self.assertIn(phrase, text)
             with fitz.open(root / "figures/batch-size-simple.pdf") as pdf:
@@ -92,7 +92,7 @@ class TwoModelFigureTests(unittest.TestCase):
                 "52%",
             ):
                 self.assertIn(phrase, simple)
-            self.assertNotIn("Row numbers", simple)
+            self.assertNotIn("row numbers", simple)
 
 
 if __name__ == "__main__":

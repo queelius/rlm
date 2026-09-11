@@ -205,7 +205,7 @@ def main():
     ):
         for counts, label, color, marker in zip(
             panel["correct"],
-            ["No matching tags", "Row numbers", "Arbitrary tags"],
+            ["Without names", "Matching row numbers", "Matching arbitrary names"],
             [GREY, TEAL, GOLD],
             ["o", "s", "^"],
             strict=True,
@@ -228,19 +228,22 @@ def main():
             ylim=(0, 100),
             yticks=[0, 25, 50, 75, 100],
             xticks=panel["sizes"],
-            xlabel="Reading questions in one call",
+            xlabel="Statements in one request",
         )
         ax.yaxis.set_major_formatter(PercentFormatter(100, decimals=0))
         style(ax)
-    axes[0].set_ylabel("Correct reading answers")
+        ax.tick_params(labelsize=17)
+        ax.set_xlabel("Statements in one request", fontsize=17)
+        ax.set_title(title, fontsize=20)
+    axes[0].set_ylabel("Correct judgments", fontsize=17)
     # A shared legend avoids six labels competing inside the small panels.
     fig.legend(
         *axes[0].get_legend_handles_labels(),
         loc="outside lower center",
         ncol=3,
         frameon=False,
-        fontsize=14,
-        columnspacing=1.8,
+        fontsize=17,
+        columnspacing=1.2,
     )
     save(fig, "batch-size-models")
 
@@ -284,14 +287,14 @@ def main():
             ylim=(0, 100),
             yticks=[0, 50, 100],
             xticks=panel["sizes"],
-            xlabel="Questions per helper call",
+            xlabel="Statements in one request",
         )
         ax.yaxis.set_major_formatter(PercentFormatter(100, decimals=0))
         style(ax)
         ax.tick_params(labelsize=17)
-        ax.set_xlabel("Questions per helper call", fontsize=17)
+        ax.set_xlabel("Statements in one request", fontsize=17)
         ax.set_title(title, fontsize=20)
-    axes[0].set_ylabel("Correct answers", fontsize=17)
+    axes[0].set_ylabel("Correct judgments", fontsize=17)
     fig.legend(
         *axes[0].get_legend_handles_labels(),
         loc="outside lower center",
@@ -362,10 +365,12 @@ def main():
         yticks=[0, 25, 50, 75, 100],
         xticks=range(2),
         xticklabels=matching["labels"],
-        ylabel="Correct reading labels\n(last 32 answers)",
+        ylabel="Correct judgments\n(last 32 answers)",
     )
     ax.yaxis.set_major_formatter(PercentFormatter(100, decimals=0))
     ax.bar_label(bars, labels=[f"{n:.1f}%" for n in values], padding=7, fontsize=21)
+    ax.tick_params(labelsize=16)
+    ax.set_ylabel("Correct judgments\n(last 32 answers)", fontsize=16)
     style(ax)
     save(fig, "literal-tag-matching")
 

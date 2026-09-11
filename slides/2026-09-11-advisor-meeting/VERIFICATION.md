@@ -5,7 +5,55 @@ status: compiled_and_visually_reviewed
 evidence_cutoff_utc: 2026-09-11T12:55:00Z
 ---
 
-# Current eight-main-slide revision; final supporting checks around 13:41 UTC
+# Current revision — whole-deck clarity pass, approximately 14:51 UTC
+
+This revision responds to the presenter's difficulty understanding page 2 and
+request to review every slide for similar missing context. All **eight main pages
+and six backups** were reviewed, revised where needed, compiled, and visually
+inspected by MAIN. The task, example classifications, and final counts are now
+explicit on page 2. The rest of the deck distinguishes the two studies, explains
+its measures and comparisons, and keeps proposed complete-RLM benefits separate
+from observed helper results. [The clarity review](REVIEW_CLARITY.md) records
+the page-by-page changes. The talk remains eight main pages, about ten minutes.
+
+| Artifact | SHA-256 |
+|---|---|
+| research-update.pdf | `8afc3f183dd65c56cb15501afd5f0cb0b4276695165307695f1d9d2174ae9db5` |
+| research-update.tex | `48021501e486a79b51b09474893264a9da44ef9f309cbf842b6eb4d93885125b` |
+| data/claims.json | `853dcfb4a2d94bfdb06c0b53909b782ee40d454f546ddef1d0232bebd8e27e4f` |
+| speaker-notes.json | `3a72825bb59f7e672056a85cdbfe60c252ee541c00ebddb28808fa08a5f25a00` |
+| research-update.pdfpc | `3439113992b13503447efee2b684e1ecebbd10c9a9ff16c85e39752f230d6244` |
+| speaker-guide.md | `638f19639f59a4b9b1ba81102c52c4932aa79998aa8a2351d50dcf1611eb3cd0` |
+
+Fresh checks passed: 14 focused slide/launcher tests; all PDF titles, guide
+headings, note titles, and main/backup footers; no audience annotations or
+out-of-page text; focused Ruff and formatting; and `git diff --check`.
+The final TeX log contains no overfull/underfull boxes, LaTeX warnings, undefined
+controls, or TeX errors. MAIN inspected all 14 audience renders, including footer
+spacing, table labels, and the enlarged backup-plot text. No clipping or overlap
+was observed. The body font was not reduced to fit the explanations.
+
+All **50 source pins** in the figure data matched. A structured comparison with
+commit `30afe9b` confirmed that only two presentation-label fields changed in
+`data/claims.json`; all measurements, counts, limits, and provenance are identical.
+The numerical evidence cutoff remains 12:55 UTC. This was a communication revision,
+not another experiment or a new independent evidence audit.
+
+MAIN also inspected every note page in actual stock pdfpc 4.6, under an Xvfb
+1280×720 virtual display with software rendering. All notes fit, and separate
+audience/presenter windows and the ten-minute timer appeared. The receipt and
+14 captures are in
+`/project/alex_phd/research-cache/tools/pdfpc-laptop-20260911/smoke-017-clear-examples/`.
+The [presenter preview](presenter-preview.png) now shows the concrete page 2 example.
+The check stopped its owned GUI processes. This is not a physical laptop,
+projector, or video-meeting test; share only the audience window. Some isolated
+toolbar icons remain cosmetic omissions, as in the earlier checks.
+
+Reproduction from this directory:
+
+    make figures tectonic check PYTHON=/project/alex_phd/envs/rlm-advisor-figures-20260911/bin/python TECTONIC=/project/alex_phd/research-cache/tools/tectonic-0.17.0-musl/tectonic
+
+# Historical eight-main-slide revision around 13:41 UTC (superseded)
 
 The audience PDF has **eight main slides and six optional backups**, with a
 ten-minute presenter timer. MAIN compiled with Tectonic 0.17.0, rendered and

@@ -7,43 +7,43 @@
       "idx": 0,
       "label": "1",
       "overlay": 0,
-      "note": "SAY: Last time, we taught a basic Python\nroutine, but reliable helper use remained\nopen. Today adds a harder training result\nand a study of how helper answers return\nto their source records.\n\nFOCUS: Can changing the RLM's surrounding\nprogram make complete solutions more\nreliable?\n\nCAUTION: The old and new training tests\nare different tasks, not points on one\nprogress curve."
+      "note": "SAY: A handoff means passing a smaller\ntask to a helper model and getting its\nanswer back. Last time, we taught a basic\nPython routine. Now we study a routine\nusing helpers and a separate reading test.\n\nFOCUS: Can changing the RLM program make\ncomplete solutions more reliable?\n\nCAUTION: The training and matching results\nare separate studies, not one learning\ncurve."
     },
     {
       "idx": 1,
       "label": "2",
       "overlay": 0,
-      "note": "SAY: Follow one example. A file holds many\nusers' questions. The main model asks\nhelpers which questions concern places,\nthen Python combines those replies into\nuser totals. It can inspect the result and\ncontinue.\n\nWHY: An unfamiliar whole may become\nfamiliar smaller steps.\n\nCAUTION: This motivates RLMs; our\nexperiments do not demonstrate general\nautonomous planning or deep recursion."
+      "note": "SAY: We want each user's count of\nquestions asking for a location. Oslo and\nKyoto qualify; Hamlet asks for a person.\nHelpers identify question types; Python\ncounts: Ada one, Ben one.\n\nWHY: The main model can inspect a file\nwithout reading it all at once. Helpers\ncan divide work again.\n\nCAUTION: This invented example explains\nthe workflow, not a demonstrated ability\nto plan any unfamiliar task."
     },
     {
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "SAY: Worked examples taught what action to\ntake next, not just the final number. On\n72 shared questions, verified successes\nwere 12 before this training and 55 or 53\nafterward.\n\nIF ASKED: Missing outcomes allow 12–19,\n55, and 53–55. The two trained copies used\ndifferent example sets, not sequential\ntraining.\n\nCAUTION: Familiar question types; the\nhelper remained fixed."
+      "note": "SAY: Two copies learned the ask-and-\ncalculate routine from different example\nsets. Success needs the right final answer\nand the requested calculation from actual\nhelper replies. On 72 test tasks,\nsuccesses were 12 before, then 55 or 53.\n\nIF ASKED: Missing outcomes allow 12–19,\n55, and 53–55. This is not sequential\ntraining.\n\nCAUTION: New records, familiar task types;\nthe helper remained fixed."
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "SAY: Maya bought a red bike. The first\nstatement is supported; the second is\ncontradicted. Repeat an arbitrary name\nbeside each statement and its answer, so\nthey can be matched explicitly.\n\nIF ASKED: Software fixed names and format,\nbut not the reading answers. The unnamed\nversion relies on list position.\n\nTRANSITION: Does this small interface\nchange matter when many questions are\nanswered together?"
+      "note": "SAY: This is a separate reading test. Maya\nbought a red bike: a vehicle follows from\nthe text; a blue bike contradicts it. A\nname links each statement to its answer.\n\nIF ASKED: The real task also allows not\nenough information. Software supplies\nnames and format, not correct answers.\nWithout names, order supplies the link.\n\nTRANSITION: Does this help when one\nrequest contains many statements?"
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "SAY: Read left to right as each call\nhandles more questions. At 64, names\nraised Qwen from 44% to 83%, and Mistral\nfrom 35% to 52%.\n\nIF ASKED: Same 16 record sets; 160 calls\nper model shown. Three malformed Mistral\nnamed outputs count wrong, not missing.\n\nCAUTION: These are helper answers, not\ncomplete RLM solutions. Full three-format\nresults are backup 6."
+      "note": "SAY: Qwen and Mistral are two language\nmodels. Read left to right as each request\ncontains more statements to judge. At 64,\nmatching names raised Qwen from 44% to\n83%, and Mistral from 35% to 52%.\n\nIF ASKED: Same 16 input sets; 160 requests\nper model shown. Three invalid Mistral\nresponses count wrong.\n\nCAUTION: These are helper judgments, not\ncomplete RLM solutions. Backup 6 adds row\nnumbers."
     },
     {
       "idx": 5,
       "label": "6",
       "overlay": 0,
-      "note": "SAY: All methods handled the same 768\nquestions. Large named calls scored 85% in\n91 seconds; single-question calls scored\n87% in 31 seconds.\n\nIF ASKED: Four calls ran concurrently,\neven for single-question requests.\nSixteen-question calls were faster but\nless accurate. Startup is excluded.\n\nCAUTION: Single-question calls sent about\n2.5 times as many input tokens as large\nnamed calls. Local speed is not universal\ncost."
+      "note": "SAY: All methods judged the same 768\nstatements. Each time covers that whole\nworkload, not one request. Large named\nrequests scored 85% in 91 seconds; one\nstatement at a time scored 87% in 31\nseconds.\n\nIF ASKED: Up to four requests ran at once.\nSixteen per request was faster but less\naccurate.\n\nCAUTION: One-at-a-time sent about 2.5\ntimes as much input as large named\nrequests. This is a local tradeoff."
     },
     {
       "idx": 6,
       "label": "7",
       "overlay": 0,
-      "note": "SAY: Let the RLM program manage record-\nlevel groups and returned answers. Then\ntest complete solutions against the\ncurrent RLM and simpler small-call\nbaselines at a fixed budget.\n\nIF ASKED: Current ask_batch aligns whole\nrequests. This adds individual-record\nhandling inside requests. Learning when to\nresize groups is a later step.\n\nCAUTION: This component is proposed. IDs\nare standard, and correct matching cannot\nguarantee true reading answers."
+      "note": "SAY: Add a program component to group\ninput items, preserve their names, and\nmatch replies. Compare fixed group sizes\nagainst the current RLM and one item per\nrequest.\n\nIF ASKED: Current ask_batch matches whole\nrequests. This would track individual\nitems inside each request. Learning when\nto resize groups comes later.\n\nCAUTION: No complete-RLM benefit is\nestablished. Matching names is standard\nand cannot ensure correct reading."
     },
     {
       "idx": 7,
@@ -55,37 +55,37 @@
       "idx": 8,
       "label": "9",
       "overlay": 0,
-      "note": "SAY: Ada's place-question weights total\nseven; Ben's total two. Only Ada exceeds\nfive, so the answer is one user.\n\nIF ASKED: The model learns actions that\nquery helpers and calculate from their\nreal replies. Wrong helper labels can\nspoil correct arithmetic.\n\nCAUTION: These four rows are an\nillustration, not a copied training\nexample. The weights are artificial\nvalues, not confidence."
+      "note": "SAY: Count only points attached to\nquestions asking for a location. Ada gets\nfour plus three, or seven. Ben gets two,\nnot the six attached to his person\nquestion. Only Ada exceeds five: one user.\n\nIF ASKED: The helper classifies; Python\nadds and compares. Wrong classifications\ncan spoil correct arithmetic.\n\nCAUTION: This is invented, not a copied\ntraining example. Assigned points are\ncalled weights in the experiment."
     },
     {
       "idx": 9,
       "label": "10",
       "overlay": 0,
-      "note": "SAY: Both versions had names, but only one\nreused the same names on both sides.\nAccuracy on later answers rose from 32.6%\nto 78.8%, with valid formatting\nthroughout.\n\nIF ASKED: Position still specified which\nrecord to answer; different names did not\ninstruct a different task.\n\nCAUTION: Different input panel from main\nslide 5. This supports matching as a\nfactor, not an internal-mechanism claim."
+      "note": "SAY: This tests whether any extra names\nhelp, or whether matching matters. Both\nversions had names and valid formatting.\nOn later judgments, matching raised\naccuracy from 32.6% to 78.8%.\n\nIF ASKED: Answer order still specified the\nintended statement, even with different\nnames.\n\nCAUTION: Last 32 judgments per\n48-statement request; different input sets\nfrom slide 5. This does not explain the\nmodel's internal mechanism."
     },
     {
       "idx": 10,
       "label": "11",
       "overlay": 0,
-      "note": "SAY: Longer reward runs did not improve\nfinal-answer counts: 57 before, 55–57 with\nanswer reward, and 54 with an extra\ncalculation check.\n\nIF ASKED: Each attempted 576 solutions; 19\nand 21 updates actually used informative\ngroups. Together they took about four\nhours and 39 minutes.\n\nCAUTION: This scores final numbers, unlike\nslide 3. Full calculation review is\npending; it does not disprove reward\nlearning."
+      "note": "SAY: Reward training scores the model's\nattempts and adjusts its learned behavior.\nWe tried correct-answer reward alone, then\na separate run adding agreement with\nPython's calculation from helper replies.\nNeither improved the test count.\n\nIF ASKED: Each attempted 576 practice\nsolutions. Together they took about four\nhours and 39 minutes. Two missing tests\nexplain 55–57.\n\nCAUTION: Final numbers only; calculation\nreview is unfinished."
     },
     {
       "idx": 11,
       "label": "12",
       "overlay": 0,
-      "note": "SAY: The trained model executed new\ncombinations more often: two verified\nsuccesses before training, 29 afterward,\nout of 72.\n\nEXAMPLE: Find users who asked about\nplaces, then count their questions asking\nfor numbers. The prompt explicitly gave\nthese two steps.\n\nCAUTION: Missing results allow 2–13 versus\n29–30. Many correct answers were zero, so\nwe checked actual calculations. This is\nnot autonomous planning."
+      "note": "SAY: First select users using their\nlocation questions. Then count their\nnumber questions, which are different\nrecords. The prompt gave both steps.\nTraining raised verified successes from\ntwo to 29 out of 72.\n\nIF ASKED: The combination was absent from\nour examples; the input sets were reused.\n\nCAUTION: Missing results allow 2–13 versus\n29–30. We checked calculations, not just\neasy-to-guess zeros. This is not inventing\na plan."
     },
     {
       "idx": 12,
       "label": "13",
       "overlay": 0,
-      "note": "SAY: If row 7's answer box carries row 8's\nname, the model may answer the wrong\nrecord. Accuracy was 39% with misleading\nvisible-row names and 80% with names\npointing nowhere visible.\n\nCAUTION: This was deliberately misleading\ninput, not normal deployment. We observed\nbehavior, not attention or the model's\ninternal mechanism."
+      "note": "SAY: Imagine being told to answer row\nseven but label it row eight. That name\npoints to another text in the request.\nAccuracy was 39% with such misleading\nnames, versus 80% with unrelated names.\n\nIF ASKED: Order still told the model which\nstatement to judge. Software forced the\nanswer names.\n\nCAUTION: Deliberate stress test, not\nnormal use. We observed output behavior,\nnot the model's attention."
     },
     {
       "idx": 13,
       "label": "14",
       "overlay": 0,
-      "note": "SAY: The main plot omitted row numbers for\nclarity, not because they failed. Both row\nnumbers and arbitrary matching names\nhelped.\n\nIF ASKED: All 480 calls returned. Three\nmalformed Mistral arbitrary-name outputs\ncount wrong. Those failures confound a\ndirect semantic comparison between name\ntypes.\n\nCAUTION: Matching helps but does not\nremove all errors or prove a speed\nadvantage."
+      "note": "SAY: This adds the third comparison\nomitted from slide five: use matching row\nnumbers rather than arbitrary names. Both\nhelped the two language models judge\nstatements.\n\nIF ASKED: At 64 statements, Qwen scored\n44%, 85%, 83%; Mistral 35%, 58%, 52%.\nOrder: no names, row numbers, arbitrary\nnames.\n\nCAUTION: Three Mistral arbitrary-name\nresponses had invalid formatting. Do not\nconclude row numbers are inherently\nbetter."
     }
   ]
 }

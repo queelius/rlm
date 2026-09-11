@@ -1,7 +1,49 @@
 # Clarity and evidence review
 
+## Current review — 11 September, after presenter feedback
+
+The presenter could not tell what “a place” meant on page 2. That exposed a
+larger problem: the earlier review assumed background knowledge the audience
+does not have. This pass reviewed **all eight main pages and six backups** for
+the task being asked, the meaning of terms, the comparison shown, and the claim
+the evidence supports. Separate read-only reviews covered the main results
+and backups; MAIN integrated the revisions and inspected every rendered page.
+
+| Page | Clarification now visible on the slide |
+|---|---|
+| 1 | RLM is expanded; a handoff is the exchange of work and answers. Training and matching are separate studies. |
+| 2 | The task is to count questions asking for a location. Three invented rows show Yes/No decisions and the final Ada/Ben counts. The diagram identifies the main model, helpers, and Python's roles. |
+| 3 | Worked examples teach classification followed by calculation. Success requires both the answer and the requested calculation; the two trained copies use different example sets. |
+| 4 | The helper study is a separate task: judging statements about a short text. The bike example explains both supported and contradicted. |
+| 5 | Two language models judge statements. The horizontal axis counts statements per request; the vertical axis measures correct judgments. |
+| 6 | Every method judges the same 768 statements. Time covers the entire workload, not one request. Repeated input text is the competing cost. |
+| 7 | A proposed program component groups inputs, sends requests, and matches replies. The test concerns the final calculation, not merely helper judgments. |
+| 8 | Observed component results are separated from the proposed complete-solution test. The audience is invited to help choose a convincing task. |
+| 9 / B1 | Assigned test points replace unexplained weights; questions ask for locations. The slide shows exactly which points count and why the answer is one user. |
+| 10 / B2 | Both versions supply names and preserve answer order. The comparison is whether statement and answer use the same name. The later-answer metric is identified. |
+| 11 / B3 | Reward training is explained. The extra rule checks calculation agreement; practice attempts, test questions, and missing results are distinguished. |
+| 12 / B4 | Location and number questions have concrete examples. The model selects users using one question and counts their other questions. The plan was supplied, not invented. |
+| 13 / B5 | The confusing “answer box” metaphor is replaced by an explicit conflict: answer row 7, but label the reply row8. |
+| 14 / B6 | Row numbers and arbitrary names have examples. Larger chart labels use the same request/judgment language as the main plot. |
+
+The public pages use **matching names** consistently, rather than cycling through
+tags, keys, IDs, and labels. Technical equivalents remain available in the guide.
+The guide also distinguishes classifying a question from answering it: “How many
+people live in Oslo?” mentions a place but asks for a number. This is the kind of
+explanation a presenter should not have to reconstruct from shorthand.
+
+No experimental counts, scores, source pins, or evidence cutoff changed. The two
+changed fields in the portable data contain display labels only. Initial builds
+exposed overflow introduced by the added explanations. Shorter text, less excess
+spacing, and removal of repetition fixed it without reducing the body font.
+The main talk remains eight pages. See [VERIFICATION.md](VERIFICATION.md) for the
+final PDF and actual pdfpc checks; clarity remains subject to presenter feedback,
+not something a successful compiler can establish.
+
+## Historical review of the first twelve-slide draft (superseded)
+
 Historical review of the first twelve-slide draft. The issues below were recorded
-before revision; they are not the status of the current thirteen-slide package.
+before revision; they are not the status of the current eight-main-page package.
 See [the verification record](VERIFICATION.md) for the changes and completed checks.
 
 Reviewed files: `research-update.tex`, `figures.py`, and `data/claims.json`, checked against

@@ -31,9 +31,9 @@ These are still exploratory studies on familiar task types.
 
 ## Main page 1 — Can better handoffs make an RLM more reliable?
 
-Say: “Last time, we showed that examples could teach a small model a basic Python routine. The
-open problem was reliable use of helper calls. Today I have a harder transfer result and evidence
-that the way helper answers return to their source records matters.”
+Say: “A handoff is the exchange of work and answers between the main model and a helper model.
+Last time, examples taught a small model a basic Python routine. Today we have a better routine
+using helpers and a separate finding: the way a helper answer is linked to its input matters.”
 
 Understand: the training and handoff studies test different components. They are not points on one
 learning curve, and neither establishes a general-purpose recursive solver.
@@ -43,10 +43,22 @@ on newly selected record sets, the batching effect was observed in Qwen and Mist
 now motivates a falsifiable program-level handoff experiment. Recursive calls and identifiers
 themselves are not new inventions.
 
-## Main page 2 — A long file can become many small questions whose answers Python can combine.
+## Main page 2 — An RLM divides a large task into smaller steps.
 
-Say: “A main model can inspect a long file, ask helpers smaller reading questions, and use Python
-to combine their replies. The hope is that an unfamiliar whole becomes a set of familiar steps.”
+Say: “The task is to count each user's questions that ask for a location. Ada's Oslo question
+qualifies; her Hamlet question asks for a person, so it does not. Ben's Kyoto question qualifies.
+The main model uses Python to divide the file. Helpers decide which questions qualify, and
+Python counts their replies: one for Ada and one for Ben.”
+
+**What does ‘asks for a location’ mean?** It means that the expected answer is a location.
+‘Where is Oslo?’ is a location question. ‘Who wrote Hamlet?’ is a person question. The helper
+classifies the question; it is not being asked to answer Oslo or Hamlet itself. A question can
+mention a place without asking for a location: ‘How many people live in Oslo?’ asks for a number.
+
+**What is a helper?** It is another request to a language model, not necessarily a different
+model or another GPU. It receives a smaller question and the relevant text. Python is the
+programming environment the main model uses to inspect data and calculate. The three rows are
+an invented miniature file so the entire example can be checked on screen.
 
 Likely Q&A — **Why is this interesting beyond handling long files?** The main model need not read
 the whole input in its prompt. It can inspect the workspace and see only selected pieces or helper
@@ -55,17 +67,16 @@ and calculations the model already knows how to handle. That is the larger resea
 our experiments test specific parts of it. See [Alex Zhang's explanation of the surrounding program](https://alexzhang13.github.io/blog/2026/harness/)
 and the [RLM paper](https://arxiv.org/abs/2512.24601).
 
-For a concrete illustration of that hope, compare counting place questions for each user with
+For a concrete illustration of that hope, compare counting questions asking for a location with
 counting faulty-machine reports for each site. The texts and categories differ, but both can use
 the same plan: ask a focused reading question about each record, group the replies, and count.
 Helpers handle the changing subject matter. The main model may be able to reuse the plan.
 This illustrates a possible kind of transfer; our experiments have not established it across
 those two domains.
 
-Use the original Ada example if the audience needs something concrete: Ada has two place questions
-with weights 4 and 3, so her total is 7. Ben's only place question has weight 2. Only Ada exceeds
-5, so the final answer is 1 user. The helper decides which questions concern places; Python does
-the addition and thresholding. The displayed weights are artificial test values, not confidence.
+Backup page 1 extends this to adding assigned points and counting users above a threshold.
+Keep that separate from the simpler main-slide example: there the final answer is a count for
+each user, not a weighted total. Assigned points are artificial test values, not confidence.
 
 Likely Q&A — **Why call this recursive?** A helper could use the same machinery again, but these
 experiments mostly use one helper layer. Do not claim deep autonomous planning.
@@ -82,14 +93,27 @@ two trained models used separate training corpora; one was not trained on top of
 helper was unchanged. Success requires both the right final answer and the requested calculation
 using observed helper results.
 
+Likely Q&A — **What were the training examples?** They were worked interactions, not just lists
+of correct final numbers. The main model saw examples of inspecting records, asking a helper for
+question types, and running Python on the replies. The underlying texts were public TREC questions,
+with artificial users, record names, and numeric weights. The real task distinguishes six broad
+answer types; the location/not-location example on page 2 is deliberately simpler. Training
+changed a small set of added model parameters (an adapter), not the helper model.
+
 Likely Q&A — **Does this show generalization?** It transfers to newly selected record sets, but the
 question types are familiar. It does not demonstrate arbitrary new tasks or autonomous planning.
 
 ## Main page 4 — We changed how helper answers are linked to the text they describe.
 
-Say: “If a helper judges two statements about Maya's bike, we can attach an arbitrary identifier to
-each statement and require the same identifier on its answer. Without that link, software relies on
-list position.”
+Say: “Now we isolate the helper in a separate reading test. Maya bought a red bike. A bike is a
+vehicle, so the first statement is supported. Blue contradicts red, so the second is contradicted.
+We give each statement a name like k7ab and put the same name on its answer. Without names,
+software assumes that the first answer belongs to the first statement.”
+
+**Is this the same task as the training study?** No. The matching experiments use MultiNLI
+text–statement pairs, not the TREC counting tasks. The real task allows three judgments:
+supported, contradicted, or not enough information. The bike example illustrates two of them.
+Explanations on the slide teach what the judgments mean; they are not literal model outputs.
 
 Understand: software supplies the identifiers and checks the format. The model still chooses the
 labels. An identifier is not a hint and cannot guarantee that the model read the right statement.
@@ -98,12 +122,13 @@ Likely Q&A — **Could names leak the answer?** They are arbitrary, and a separa
 matching with nonmatching arbitrary names. That supports a matching effect, not a claim about the
 model's internal mechanism.
 
-## Main page 5 — Matching names improved accuracy when a helper answered many questions at once.
+## Main page 5 — Matching names helped helpers judge many statements in one request.
 
-Say: “At batch size 64, moving from no tags to arbitrary matching tags raised Qwen accuracy from
+Say: “Qwen and Mistral are two language models. Moving right on the plot means each request
+contains more statements to judge. At 64, adding matching names raised Qwen accuracy from
 **44% to 83%** and Mistral accuracy from **35% to 52%**.”
 
-Keep this page to the advertised comparison: **no tags versus arbitrary tags**. The same 16 record
+Keep this page to the advertised comparison: **without versus with matching names**. The same 16 record
 sets were used within each model. Three malformed Mistral tagged responses count as wrong, not
 missing. These are helper reading answers, not complete RLM solutions. The full comparison that
 also includes row numbers is optional backup page 6.
@@ -112,12 +137,16 @@ Likely Q&A — **Why does Mistral remain much worse?** Matching helps both model
 sufficient for correct reading. This cross-model direction is behavioral evidence, not a clean
 capacity comparison or a mechanism result.
 
-## Main page 6 — Smaller calls were faster than large named calls in this local test.
+## Main page 6 — Smaller requests were faster than large requests with matching names in this local test.
 
-Say: “All four methods answered the same 768 reading questions. With 48 questions per unnamed call,
+Say: “All four methods judged the same 768 statements. With 48 statements per unnamed request,
 accuracy was 49% and the whole workload took 19 seconds. Adding matching names raised accuracy to 85%, but that workload
-took 91 seconds. Splitting into groups of 16 reached 81% in 19 seconds; one record at a time reached
+took 91 seconds. Splitting into groups of 16 reached 81% in 19 seconds; one statement at a time reached
 87% in 31 seconds.”
+
+A request is one message to the helper asking it to judge one or more statements. ‘Total time’
+covers all 768 statements for that method, not a single request. A statement and its accompanying
+text are one input item. Repeated input is a cost because the model processes more text.
 
 Explain the tradeoff rather than naming a winner. Large named calls sent less repeated input text
 than single-record calls, but generated much more structured output and were slower here. Groups of
@@ -135,12 +164,17 @@ reduced output tokens and local elapsed time in both models. Qwen retained about
 Mistral had fewer malformed replies but still failed on some batches. This refines the proposed
 interface, not the main claim about complete solutions. See E2 in [supporting findings](later-findings.md).
 
-## Main page 7 — Proposed RLM change: manage record links and make helper group size an explicit choice.
+## Main page 7 — Next test: let the RLM program organize helper requests and match their answers.
 
 Say: “The surrounding program would keep each record linked to its returned answer and make group
 size an explicit choice. The model still chooses what to ask. We would compare complete solutions
 against both the current RLM and simpler small-call baselines under the same resource budget.
 First we would compare fixed group sizes; learning when to change them comes later.”
+
+In the picture, an input item means one question or statement and its relevant text. Group size
+means how many such items we send in one helper request. ‘Match’ means connect k7ab's reply to
+k7ab's original item, not merely take the next answer in the list. The program handles this
+bookkeeping; the language model still decides what to ask and what the text means.
 
 Be precise: the existing `ask_batch` facility aligns whole requests and responses, but not the
 individual records inside one request. The proposed component would preserve record identifiers
@@ -180,16 +214,22 @@ identifier method, guaranteed truthful reading, or general recursive planning.
 
 # Optional backup pages
 
-## Backup page 1 — Example: the helper reads the text, and Python does the counting.
+## Backup page 1 — Example: the helper identifies question types, and Python adds the relevant points.
 
 Use for requests for a worked example. Walk through Ada's 4 + 3 = 7, Ben's 2, and the answer of 1.
 Emphasize that a correct Python calculation can still be wrong if the helper supplies a wrong label.
+‘Points’ are the assigned numeric weights in the experiments. Ben's six points do not count because
+the Hamlet question asks for a person, not a location. Asking for Peru's capital asks for a place
+name, so Ada's three points do count. No geographical answers need to be produced.
 
-## Backup page 2 — A control suggests that matching matters, not merely having names on the page.
+## Backup page 2 — Using the same name on a statement and its answer helped more than using different names.
 
 Use when asked whether any extra text would help. Both conditions had arbitrary names; only one
 reused the same names on inputs and outputs. Later-answer accuracy rose from 32.6% to 78.8% on a
 different panel. This supports matching as a factor, not a causal account of internal attention.
+In both versions, answer position still determined the intended statement. The different-name
+version did not tell the helper to switch to another statement. Only the last 32 judgments from
+each 48-statement request are included in this plot; it is not the all-position score on page 5.
 
 ## Backup page 3 — Reward training did not improve the final-answer count in this trial.
 
@@ -200,6 +240,12 @@ This metric differs from the faithful-calculation success measure on main page 3
 calculation review is not complete. Treat this as a bounded negative trial, not proof that reward
 learning cannot work.
 
+In plain language, worked-example training says ‘copy these useful actions.’ Reward training says
+‘try a solution; use its score to adjust the model.’ The added agreement check compared the final
+number with a Python calculation from helper replies. This is not a guarantee of truth: a helper
+can misclassify text. The 576 attempts are training practice; the 72 questions are the later test.
+The 55–57 range reflects two missing test results, not uncertainty across many repeated runs.
+
 ## Backup page 4 — Training also helped with new combinations of familiar steps.
 
 Use when asked whether the trained model only learned familiar question types. On 72 questions
@@ -207,7 +253,7 @@ combining familiar operations in new ways, verified correct answers and calculat
 from 2 to 29. Missing-result bounds are 2–13 and 29–30. These questions reused eight previously
 tested sets of records, so the new part is the combination of operations, not the input text.
 
-Example: first find users who asked a place question, then count those users' questions asking
+Example: first find users who asked for a location, then count those users' questions asking
 for a number. These are two selections across a user's records; one record need not belong to
 both categories. The instructions explicitly supplied those steps. This tests carrying out a
 new combination, not inventing the plan. Forty-eight answers were zero, so merely obtaining the
@@ -223,13 +269,20 @@ See S4 in the evidence document. The older 0/8-to-1/8 helper-training warning re
 Use when asked for failure evidence. Deliberately misleading visible-record names yielded 39%
 accuracy, versus 80% for unrelated names that pointed to no visible record. This is a stress test of
 output behavior, not evidence that we measured attention or guaranteed which text the model read.
+The example instruction means ‘answer row 7, but label the reply row8.’ Row 8 is also in the input,
+so the label competes with the instruction about which row to answer. The unrelated-name comparison
+has no such second input to point toward. These are invented examples of names, not quoted outputs.
 
-## Backup page 6 — Both row numbers and arbitrary names helped in the larger-batch tests.
+## Backup page 6 — Both row numbers and arbitrary names helped when helpers judged many statements together.
 
 Use when asked for the full format comparison behind main page 5. This is the only page where the
 row-number condition should be discussed in the prepared deck. Both row numbers and arbitrary
 matching names helped. All 480 calls returned; three malformed Mistral arbitrary-name outputs count
 as wrong and complicate a direct comparison between the two named formats.
+Row numbers look like 1 and 2; arbitrary names look like k7ab and z2pm. Both repeat beside the
+statement and its answer. The horizontal axis is the number of statements judged in one request,
+and the vertical axis is the share judged correctly. Qwen and Mistral are the two models, not
+two training stages.
 
 # Supporting material
 

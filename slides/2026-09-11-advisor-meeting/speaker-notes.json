@@ -2,59 +2,59 @@
   "slides": [
     {
       "title": "Can better handoffs make an RLM more reliable?",
-      "notes": "SAY: Last time, we taught a basic Python routine, but reliable helper use remained open. Today adds a harder training result and a study of how helper answers return to their source records.\n\nFOCUS: Can changing the RLM's surrounding program make complete solutions more reliable?\n\nCAUTION: The old and new training tests are different tasks, not points on one progress curve."
+      "notes": "SAY: A handoff means passing a smaller task to a helper model and getting its answer back. Last time, we taught a basic Python routine. Now we study a routine using helpers and a separate reading test.\n\nFOCUS: Can changing the RLM program make complete solutions more reliable?\n\nCAUTION: The training and matching results are separate studies, not one learning curve."
     },
     {
-      "title": "A long file can become many small questions whose answers Python can combine.",
-      "notes": "SAY: Follow one example. A file holds many users' questions. The main model asks helpers which questions concern places, then Python combines those replies into user totals. It can inspect the result and continue.\n\nWHY: An unfamiliar whole may become familiar smaller steps.\n\nCAUTION: This motivates RLMs; our experiments do not demonstrate general autonomous planning or deep recursion."
+      "title": "An RLM divides a large task into smaller steps.",
+      "notes": "SAY: We want each user's count of questions asking for a location. Oslo and Kyoto qualify; Hamlet asks for a person. Helpers identify question types; Python counts: Ada one, Ben one.\n\nWHY: The main model can inspect a file without reading it all at once. Helpers can divide work again.\n\nCAUTION: This invented example explains the workflow, not a demonstrated ability to plan any unfamiliar task."
     },
     {
       "title": "Training taught a more reliable routine for asking helpers and calculating answers.",
-      "notes": "SAY: Worked examples taught what action to take next, not just the final number. On 72 shared questions, verified successes were 12 before this training and 55 or 53 afterward.\n\nIF ASKED: Missing outcomes allow 12–19, 55, and 53–55. The two trained copies used different example sets, not sequential training.\n\nCAUTION: Familiar question types; the helper remained fixed."
+      "notes": "SAY: Two copies learned the ask-and-calculate routine from different example sets. Success needs the right final answer and the requested calculation from actual helper replies. On 72 test tasks, successes were 12 before, then 55 or 53.\n\nIF ASKED: Missing outcomes allow 12–19, 55, and 53–55. This is not sequential training.\n\nCAUTION: New records, familiar task types; the helper remained fixed."
     },
     {
       "title": "We changed how helper answers are linked to the text they describe.",
-      "notes": "SAY: Maya bought a red bike. The first statement is supported; the second is contradicted. Repeat an arbitrary name beside each statement and its answer, so they can be matched explicitly.\n\nIF ASKED: Software fixed names and format, but not the reading answers. The unnamed version relies on list position.\n\nTRANSITION: Does this small interface change matter when many questions are answered together?"
+      "notes": "SAY: This is a separate reading test. Maya bought a red bike: a vehicle follows from the text; a blue bike contradicts it. A name links each statement to its answer.\n\nIF ASKED: The real task also allows not enough information. Software supplies names and format, not correct answers. Without names, order supplies the link.\n\nTRANSITION: Does this help when one request contains many statements?"
     },
     {
-      "title": "Matching names improved accuracy when a helper answered many questions at once.",
-      "notes": "SAY: Read left to right as each call handles more questions. At 64, names raised Qwen from 44% to 83%, and Mistral from 35% to 52%.\n\nIF ASKED: Same 16 record sets; 160 calls per model shown. Three malformed Mistral named outputs count wrong, not missing.\n\nCAUTION: These are helper answers, not complete RLM solutions. Full three-format results are backup 6."
+      "title": "Matching names helped helpers judge many statements in one request.",
+      "notes": "SAY: Qwen and Mistral are two language models. Read left to right as each request contains more statements to judge. At 64, matching names raised Qwen from 44% to 83%, and Mistral from 35% to 52%.\n\nIF ASKED: Same 16 input sets; 160 requests per model shown. Three invalid Mistral responses count wrong.\n\nCAUTION: These are helper judgments, not complete RLM solutions. Backup 6 adds row numbers."
     },
     {
-      "title": "Smaller calls were faster than large named calls in this local test.",
-      "notes": "SAY: All methods handled the same 768 questions. Large named calls scored 85% in 91 seconds; single-question calls scored 87% in 31 seconds.\n\nIF ASKED: Four calls ran concurrently, even for single-question requests. Sixteen-question calls were faster but less accurate. Startup is excluded.\n\nCAUTION: Single-question calls sent about 2.5 times as many input tokens as large named calls. Local speed is not universal cost."
+      "title": "Smaller requests were faster than large requests with matching names in this local test.",
+      "notes": "SAY: All methods judged the same 768 statements. Each time covers that whole workload, not one request. Large named requests scored 85% in 91 seconds; one statement at a time scored 87% in 31 seconds.\n\nIF ASKED: Up to four requests ran at once. Sixteen per request was faster but less accurate.\n\nCAUTION: One-at-a-time sent about 2.5 times as much input as large named requests. This is a local tradeoff."
     },
     {
-      "title": "Proposed RLM change: manage record links and make helper group size an explicit choice.",
-      "notes": "SAY: Let the RLM program manage record-level groups and returned answers. Then test complete solutions against the current RLM and simpler small-call baselines at a fixed budget.\n\nIF ASKED: Current ask_batch aligns whole requests. This adds individual-record handling inside requests. Learning when to resize groups is a later step.\n\nCAUTION: This component is proposed. IDs are standard, and correct matching cannot guarantee true reading answers."
+      "title": "Next test: let the RLM program organize helper requests and match their answers.",
+      "notes": "SAY: Add a program component to group input items, preserve their names, and match replies. Compare fixed group sizes against the current RLM and one item per request.\n\nIF ASKED: Current ask_batch matches whole requests. This would track individual items inside each request. Learning when to resize groups comes later.\n\nCAUTION: No complete-RLM benefit is established. Matching names is standard and cannot ensure correct reading."
     },
     {
       "title": "We have a promising handoff result and a focused next research question.",
       "notes": "SAY: Training improved a routine; matching names improved helper reading. I recommend a focused whole-task study of the handoff procedure.\n\nDISCUSS: Is this a worthwhile contribution? Which realistic task would make a convincing test?\n\nSTOP: This ends the ten-minute main talk. Remaining slides are optional answers to questions, not more required presentation."
     },
     {
-      "title": "Example: the helper reads the text, and Python does the counting.",
-      "notes": "SAY: Ada's place-question weights total seven; Ben's total two. Only Ada exceeds five, so the answer is one user.\n\nIF ASKED: The model learns actions that query helpers and calculate from their real replies. Wrong helper labels can spoil correct arithmetic.\n\nCAUTION: These four rows are an illustration, not a copied training example. The weights are artificial values, not confidence."
+      "title": "Example: the helper identifies question types, and Python adds the relevant points.",
+      "notes": "SAY: Count only points attached to questions asking for a location. Ada gets four plus three, or seven. Ben gets two, not the six attached to his person question. Only Ada exceeds five: one user.\n\nIF ASKED: The helper classifies; Python adds and compares. Wrong classifications can spoil correct arithmetic.\n\nCAUTION: This is invented, not a copied training example. Assigned points are called weights in the experiment."
     },
     {
-      "title": "A control suggests that matching matters, not merely having names on the page.",
-      "notes": "SAY: Both versions had names, but only one reused the same names on both sides. Accuracy on later answers rose from 32.6% to 78.8%, with valid formatting throughout.\n\nIF ASKED: Position still specified which record to answer; different names did not instruct a different task.\n\nCAUTION: Different input panel from main slide 5. This supports matching as a factor, not an internal-mechanism claim."
+      "title": "Using the same name on a statement and its answer helped more than using different names.",
+      "notes": "SAY: This tests whether any extra names help, or whether matching matters. Both versions had names and valid formatting. On later judgments, matching raised accuracy from 32.6% to 78.8%.\n\nIF ASKED: Answer order still specified the intended statement, even with different names.\n\nCAUTION: Last 32 judgments per 48-statement request; different input sets from slide 5. This does not explain the model's internal mechanism."
     },
     {
       "title": "Reward training did not improve the final-answer count in this trial.",
-      "notes": "SAY: Longer reward runs did not improve final-answer counts: 57 before, 55–57 with answer reward, and 54 with an extra calculation check.\n\nIF ASKED: Each attempted 576 solutions; 19 and 21 updates actually used informative groups. Together they took about four hours and 39 minutes.\n\nCAUTION: This scores final numbers, unlike slide 3. Full calculation review is pending; it does not disprove reward learning."
+      "notes": "SAY: Reward training scores the model's attempts and adjusts its learned behavior. We tried correct-answer reward alone, then a separate run adding agreement with Python's calculation from helper replies. Neither improved the test count.\n\nIF ASKED: Each attempted 576 practice solutions. Together they took about four hours and 39 minutes. Two missing tests explain 55–57.\n\nCAUTION: Final numbers only; calculation review is unfinished."
     },
     {
       "title": "Training also helped with new combinations of familiar steps.",
-      "notes": "SAY: The trained model executed new combinations more often: two verified successes before training, 29 afterward, out of 72.\n\nEXAMPLE: Find users who asked about places, then count their questions asking for numbers. The prompt explicitly gave these two steps.\n\nCAUTION: Missing results allow 2–13 versus 29–30. Many correct answers were zero, so we checked actual calculations. This is not autonomous planning."
+      "notes": "SAY: First select users using their location questions. Then count their number questions, which are different records. The prompt gave both steps. Training raised verified successes from two to 29 out of 72.\n\nIF ASKED: The combination was absent from our examples; the input sets were reused.\n\nCAUTION: Missing results allow 2–13 versus 29–30. We checked calculations, not just easy-to-guess zeros. This is not inventing a plan."
     },
     {
       "title": "Misleading names can draw an answer toward the wrong input.",
-      "notes": "SAY: If row 7's answer box carries row 8's name, the model may answer the wrong record. Accuracy was 39% with misleading visible-row names and 80% with names pointing nowhere visible.\n\nCAUTION: This was deliberately misleading input, not normal deployment. We observed behavior, not attention or the model's internal mechanism."
+      "notes": "SAY: Imagine being told to answer row seven but label it row eight. That name points to another text in the request. Accuracy was 39% with such misleading names, versus 80% with unrelated names.\n\nIF ASKED: Order still told the model which statement to judge. Software forced the answer names.\n\nCAUTION: Deliberate stress test, not normal use. We observed output behavior, not the model's attention."
     },
     {
-      "title": "Both row numbers and arbitrary names helped in the larger-batch tests.",
-      "notes": "SAY: The main plot omitted row numbers for clarity, not because they failed. Both row numbers and arbitrary matching names helped.\n\nIF ASKED: All 480 calls returned. Three malformed Mistral arbitrary-name outputs count wrong. Those failures confound a direct semantic comparison between name types.\n\nCAUTION: Matching helps but does not remove all errors or prove a speed advantage."
+      "title": "Both row numbers and arbitrary names helped when helpers judged many statements together.",
+      "notes": "SAY: This adds the third comparison omitted from slide five: use matching row numbers rather than arbitrary names. Both helped the two language models judge statements.\n\nIF ASKED: At 64 statements, Qwen scored 44%, 85%, 83%; Mistral 35%, 58%, 52%. Order: no names, row numbers, arbitrary names.\n\nCAUTION: Three Mistral arbitrary-name responses had invalid formatting. Do not conclude row numbers are inherently better."
     }
   ]
 }

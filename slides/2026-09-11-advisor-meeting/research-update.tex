@@ -18,7 +18,7 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=8mm,text margin right=8mm}
 \setbeamertemplate{footline}{\hspace{8mm}\scriptsize\color{Muted}Exploratory research\hfill 11 September 2026\hspace{6mm}\ifnum\value{framenumber}<9 Main talk \insertframenumber/8\else Backup \number\numexpr\value{framenumber}-8\relax/6\fi\hspace{8mm}\vspace{3mm}}
-\setbeamertemplate{frametitle}{\vspace{3mm}\insertframetitle\par\vspace{2mm}}
+\setbeamertemplate{frametitle}{\vspace{2mm}\insertframetitle\par}
 \newcommand{\smallnote}[1]{\vfill{\scriptsize\color{Muted}#1\par}}
 \newcommand{\takeaway}[1]{\begin{beamercolorbox}[sep=2.5mm,wd=\linewidth]{block body}#1\end{beamercolorbox}}
 \tikzset{card/.style={draw=Teal,rounded corners=2mm,fill=Soft,align=center,inner sep=3mm},flow/.style={-{Stealth[length=2mm]},thick,draw=Teal}}
@@ -29,55 +29,68 @@
 % Eight main slides for a ten-minute discussion. Further pages are optional.
 \begin{frame}[t]
 \frametitle{Can better handoffs make an RLM more reliable?}
+In a recursive language model (RLM), a main model can ask helper models to do smaller tasks. We call this exchange of work and answers a \textbf{handoff}.\par
 \vspace{3mm}
-{\large A follow-up to our earlier training experiments}\par
-\vspace{5mm}
 \begin{block}{Last time, we taught the model a basic routine.}
-It learned to inspect a Python workspace and calculate an answer. Reliable use of helper model calls was still an open problem.
+Training examples taught it to inspect data and calculate with Python. Asking helpers reliably remained harder.
 \end{block}
 \vspace{2mm}
 \begin{block}{This time, we studied the handoffs.}
-Training improved a more demanding routine. We also found that the way helper answers are linked to their inputs can change accuracy substantially.
+Training improved a routine that uses helpers. Separately, we found that linking each helper answer to its input can substantially improve reading accuracy.
 \end{block}
 \smallnote{Alex Towell \quad | \quad Advisor discussion \quad | \quad Preliminary findings, 11 September 2026.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{A long file can become many small questions\\whose answers Python can combine.}
-A recursive language model (RLM) keeps a large input in a Python workspace. The main model can inspect pieces and delegate work.\par
-\vspace{3mm}
+\frametitle{An RLM divides a large task into smaller steps.}
+The file stays in a Python workspace; the main model inspects pieces.\par
+\vspace{1mm}
+\textbf{Task: Count each user's questions that ask for a location.}\par
+\vspace{2mm}
 \centering
-\begin{tikzpicture}[font=\small]
-\node[card,text width=3.0cm] (data) at (0,0) {A long file holds\\many users' questions.};
-\node[card,text width=3.0cm] (root) at (4.8,0) {The main model\\inspects and divides.};
-\node[card,text width=3.0cm] (helper) at (9.6,0) {Helpers decide:\\Is this about\\a place?};
-\node[card,draw=Gold,fill=Gold!10,text width=5.0cm] (combine) at (4.8,-1.7) {Python combines the replies\\into totals for each user.};
-\draw[flow,<->] (data)--(root);
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{lll}
+\toprule
+User & Question in the file & Helper: asks for a location? \\
+\midrule
+Ada & Where is Oslo? & Yes \\
+Ada & Who wrote Hamlet? & No \\
+Ben & Where is Kyoto? & Yes \\
+\bottomrule
+\end{tabular}
+\par\vspace{2mm}
+\begin{tikzpicture}[font=\small,card/.append style={inner sep=2mm}]
+\node[card,text width=3.3cm] (root) at (0,0) {The main model uses\\Python to split the file.};
+\node[card,text width=3.3cm] (helper) at (4.8,0) {Helper model calls\\decide Yes or No\\for each question.};
+\node[card,draw=Gold,fill=Gold!10,text width=3.3cm] (combine) at (9.6,0) {Python counts Yes replies:\\Ada: 1. Ben: 1.};
 \draw[flow] (root)--(helper);
-\draw[flow,draw=Gold] (helper.south) |- (combine.east);
-\draw[flow] (combine.north)--(root.south);
+\draw[flow,draw=Gold] (helper)--(combine);
 \end{tikzpicture}
-\par\vspace{3mm}
+\par\vspace{2mm}
 \raggedright
 The hope: solve an unfamiliar whole by combining familiar smaller steps.
-\smallnote{The input stays in the workspace. Helpers can divide their work again; our tests mostly use one helper layer. RLMs are existing work. Our focus is making the handoffs reliable.}
+\smallnote{Invented example of a recursive language model (RLM). Helpers can divide work again; our tests mostly use one helper layer. The main model need not read the whole file at once.}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{Training taught a more reliable routine\\for asking helpers and calculating answers.}
-Worked examples showed how to ask a helper and calculate from its reply. We tested the trained models on newly selected records.\par
+Worked examples taught the main model to ask helpers to classify text, then count or add in Python.\par
+\vspace{1mm}
+A success requires the right answer \emph{and} the requested calculation.\par
 \vspace{1mm}
 \centering
 \includegraphics[width=0.87\textwidth]{figures/training.pdf}
 \par
 \raggedright
-\smallnote{All models answered the same 72 questions from eight input sets. The two trained copies used different demonstrations; the helper stayed fixed. Missing outcomes allow totals of 12--19, 55, and 53--55. Familiar question types, not autonomous planning. [S3]}
+\smallnote{Same 72 tasks: new records, familiar task types. Two copies trained on different examples; the helper stayed fixed. Success uses actual helper replies. Eight input sets; missing outcomes allow 12--19, 55, and 53--55 successes. [S3]}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{We changed how helper answers\\are linked to the text they describe.}
-Suppose a helper reads: \emph{Maya bought a red bike.} It must judge two statements.\par
-\vspace{3mm}
+Separate helper test: decide whether a statement follows from a short text.\par
+\vspace{1mm}
+Example text: \emph{Maya bought a red bike.}\par
+\vspace{1mm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.47\textwidth}
 \begin{block}{The input carries matching names.}
@@ -87,79 +100,81 @@ Suppose a helper reads: \emph{Maya bought a red bike.} It must judge two stateme
 \end{column}
 \begin{column}{0.47\textwidth}
 \begin{block}{Each answer carries the same name.}
-\texttt{k7ab}: Supported.\par\medskip
-\texttt{z2pm}: Contradicted.
+\texttt{k7ab}: Supported.\par
+A bike is a vehicle.\par\medskip
+\texttt{z2pm}: Contradicted.\par
+The text says red, not blue.
 \end{block}
 \end{column}
 \end{columns}
-\vspace{4mm}
+\vspace{2mm}
 Without these names, the answers are matched only by their position in a list.
-\par\vspace{3mm}
+\par\vspace{1mm}
 The software supplies the names. The model still has to choose the answers.
-\smallnote{Simplified illustration. We changed the input and required output format, not the model's weights. These names are arbitrary identifiers, not hints about the correct answer.}
+\smallnote{Illustration, not literal model output. We changed names and formatting, not model weights. The names are arbitrary and give no hint about the correct answer.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Matching names improved accuracy\\when a helper answered many questions at once.}
-The same records were tested with and without matching names. Neither model was retrained.\par
+\frametitle{Matching names helped helpers judge\\many statements in one request.}
+Two language models judged statements about short texts, as in the bike example. Each request asked for several judgments. Neither model was retrained.\par
 \vspace{1mm}
 \centering
 \includegraphics[width=0.95\textwidth]{figures/batch-size-simple.pdf}
 \par
 \raggedright
-\smallnote{Sixteen sets of records; 160 calls per model shown. Every planned answer counts. Three malformed Mistral responses count as wrong. These are helper answers, not complete RLM solutions. [H8, H9]}
+\smallnote{Same 16 input sets with and without names; 160 requests per model shown. Three Mistral replies broke the required format and count as wrong. These are helper judgments, not complete RLM solutions. [H8, H9]}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Smaller calls were faster than large named calls\\in this local test.}
-All methods answered the same 768 reading questions.\par
+\frametitle{Smaller requests were faster than large requests\\with matching names in this local test.}
+Each method judged the same 768 statements about short texts. We changed how many statements were sent to the helper together.\par
 \vspace{2mm}
 \centering
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{lrr}
 \toprule
-Method & Correct answers & Time \\
+Statements per request & Correct judgments & Total time \\
 \midrule
-48 questions per call, no names & 49\% & 19 seconds \\
-48 questions per call, matching names & 85\% & 91 seconds \\
-16 questions per call, no names & 81\% & 19 seconds \\
-1 question per call, no names & 87\% & 31 seconds \\
+48, without matching names & 49\% & 19 seconds \\
+48, with matching names & 85\% & 91 seconds \\
+16, without matching names & 81\% & 19 seconds \\
+1, without matching names & 87\% & 31 seconds \\
 \bottomrule
 \end{tabular}
 \par\vspace{2mm}
 \raggedright
-Single-question calls sent more input text. The best choice depends on which cost matters.
-\smallnote{One Qwen3-4B test on one A100, with four simultaneous calls and no cache reuse. Times sum separate workload blocks and exclude server startup. All 848 calls returned valid answers. This is a local tradeoff, not a universal speed ranking. [E1]}
+Times cover all 768 statements, not one request. Sending one statement at a time was faster here, but repeated more input text.
+\smallnote{One Qwen3-4B test on one A100; up to four requests ran at once, with input caching off. Times sum separate workload blocks, excluding startup. All 848 requests had valid formatting. Speed may differ on other setups. [E1]}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Proposed RLM change: manage record links\\and make helper group size an explicit choice.}
-The surrounding program would keep track of records and answers, while the model chooses what to ask.\par
+\frametitle{Next test: let the RLM program organize\\helper requests and match their answers.}
+The main model would still choose what to ask. A new program component would handle groups of input items and their replies.\par
 \vspace{4mm}
 \centering
 \begin{tikzpicture}[font=\small]
-\node[card,text width=3.3cm] (a) at (0,0) {Choose a group size\\and keep each\\record's name.};
-\node[card,text width=3.3cm] (b) at (4.8,0) {Ask helpers\\focused questions.};
-\node[card,text width=3.3cm] (c) at (9.6,0) {Join replies by name\\and flag\\missing answers.};
+\node[card,text width=3.3cm] (a) at (0,0) {Group input items\\and give each\\a matching name.};
+\node[card,text width=3.3cm] (b) at (4.8,0) {Send each group\\to a helper model.};
+\node[card,text width=3.3cm] (c) at (9.6,0) {Match each reply\\to its input; report\\any missing answers.};
 \draw[flow] (a)--(b);
 \draw[flow] (b)--(c);
 \end{tikzpicture}
 \par\vspace{5mm}
 \raggedright
-Test against the current RLM and smaller-call baselines, using the same models, tasks, and resource budget.
+Compare fixed group sizes with the current RLM and with one item per request, using the same tasks, models, and computing budget.
 \par\vspace{3mm}
-The result that matters is a more reliable \textbf{complete answer}.
+Success means a more reliable \textbf{final calculation}, not just better helper answers.
 \smallnote{Proposed component, not an established whole-RLM gain. Matching cannot guarantee correct reading, and identifiers are not a new invention. A later experiment could learn when to change group size.}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{We have a promising handoff result\\and a focused next research question.}
 \begin{block}{What we know so far}
-Worked examples improved one useful routine. Matching inputs to helper answers improved reading accuracy without retraining.
+Training examples helped the main model use helpers and calculate. Matching names improved the helpers' reading judgments without retraining.
 \end{block}
 \vspace{2mm}
 \begin{block}{What we want to establish next}
-Can a change to the RLM's handoff procedure produce more reliable complete solutions at a useful cost?
+Can the proposed program change improve the final answer at an acceptable cost in time and computation?
 \end{block}
 \vspace{3mm}
 {\large Would this be a worthwhile next study? What realistic task would make the test convincing?}
@@ -167,14 +182,16 @@ Can a change to the RLM's handoff procedure produce more reliable complete solut
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Example: the helper reads the text,\\and Python does the counting.}
-\takeaway{For each user, add the weights of their place questions. How many users have a total above 5?}
+\frametitle{Example: the helper identifies question types,\\and Python adds the relevant points.}
+The points below are assigned test values, not confidence scores.\par
+\vspace{2mm}
+\takeaway{Add each user's points only for questions asking for a location. How many users have a total above 5?}
 \vspace{2mm}
 \centering
 \renewcommand{\arraystretch}{1.12}
 \begin{tabular}{llrc}
 \toprule
-User & Question & Weight & Place question? \\
+User & Question & Points & Asks for a location? \\
 \midrule
 Ada & Where is Oslo? & 4 & Yes \\
 Ada & What is the capital of Peru? & 3 & Yes \\
@@ -184,12 +201,12 @@ Ben & Where is Kyoto? & 2 & Yes \\
 \end{tabular}
 \par\vspace{2mm}
 Ada: $4+3=7$. Ben: $2$. Only Ada exceeds 5, so the answer is \textcolor{Teal}{\textbf{1 user}}.
-\smallnote{The weights are invented test values, not confidence scores. This illustrates the task; it is not a quoted demonstration.}
+\smallnote{Invented example, not a quoted training demonstration.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{A control suggests that matching matters,\\not merely having names on the page.}
-Both versions gave names to inputs and answers. One reused the same names; the other used different names.\par
+\frametitle{Using the same name on a statement and its answer\\helped more than using different names.}
+The helper judged statements about short texts. Answer order specified which statement to judge; both versions also supplied arbitrary names.\par
 \vspace{1mm}
 \begin{columns}[c,onlytextwidth]
 \begin{column}{0.60\textwidth}
@@ -205,14 +222,14 @@ Matching:\par
 \end{column}
 \end{columns}
 \vspace{2mm}
-All responses had valid formatting. Matching helped in all 16 sets of records.
-\smallnote{Qwen3-4B; last 32 answers in 48-question calls; 3,072 labels per bar. Position specified which input to answer. Different records from slide 5. No internal-mechanism claim. [H6]}
+Matching helped in all 16 input sets, even though both versions had valid formatting.
+\smallnote{Qwen3-4B; only the last 32 judgments in each 48-statement request are scored here: 3,072 per bar. Different input sets from slide 5. This tests behavior, not the model's internal mechanism. [H6]}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{Reward training did not improve\\the final-answer count in this trial.}
-Two runs started from the same trained model. One also rewarded agreement with a calculation based on the helper's answers.\par
-\vspace{2mm}
+Reward training lets the model try solutions, then uses scores to adjust what it learns. We tested two reward rules from the same trained model.\par
+\vspace{1mm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.31\textwidth}
 \begin{block}{Before reward\\training}
@@ -227,75 +244,75 @@ out of 72 questions.
 \end{block}
 \end{column}
 \begin{column}{0.31\textwidth}
-\begin{block}{Answer reward\\plus the extra check}
+\begin{block}{Answer reward\\plus agreement check}
 \centering\vspace{2mm}{\Huge 54}\par\vspace{2mm}
 out of 72 questions.
 \end{block}
 \end{column}
 \end{columns}
 \vspace{2mm}
-Each run attempted 576 solutions. Two missing results create the range.
-\smallnote{One exploratory pair, with 19 and 21 weight updates. These are final-answer counts, unlike slide 3's stricter calculation check. The full review of calculation correctness is not finished. [R3]}
+The extra check rewarded agreement with Python's calculation from the helper replies. The numbers above count only correct final answers.
+\smallnote{Each run attempted 576 practice solutions, then faced the same 72 test tasks. Two missing test results explain 55--57. Calculation review remains unfinished. One exploratory pair does not show that reward training generally fails. [R3]}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{Training also helped with new\\combinations of familiar steps.}
 \begin{block}{Example of a new combination}
-First find users who asked a place question. Then count those users' questions that ask for a number.
+Find users who asked for a location, such as ``Where is Oslo?'' Then count \emph{their other questions} asking for a number, such as ``How many moons does Mars have?''
 \end{block}
-\vspace{2mm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.47\textwidth}
-\begin{block}{Before this training}
+\begin{block}{Before worked-example training}
 \centering{\Huge 2 / 72}\par
 correct answers and calculations.
 \end{block}
 \end{column}
 \begin{column}{0.47\textwidth}
-\begin{block}{After this training}
+\begin{block}{After worked-example training}
 \centering{\Huge 29 / 72}\par
 correct answers and calculations.
 \end{block}
 \end{column}
 \end{columns}
 \vspace{3mm}
-The instructions supplied the plan. The model became better at carrying it out.
+The instructions supplied these steps. Training helped the model carry out a new combination, not invent the plan.
 \smallnote{One trained model, eight previously tested input sets. Missing outcomes allow 2--13 versus 29--30 successes. These combinations were absent from our demonstrations; this is not independent planning. [S4]}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{Misleading names can draw an answer\\toward the wrong input.}
-\begin{block}{Imagine answering row 7 with a box named row 8.}
-The model may give a sensible answer to row 8 instead of the required answer to row 7.
+The helper judged statements about short texts, using misleading answer names.\par
+\vspace{1mm}
+\begin{block}{Example of conflicting instructions}
+``Answer the statement in row 7, but put its answer beside the name \texttt{row8}.'' Row 8 is a different input in the same request.
 \end{block}
-\vspace{3mm}
+\vspace{1mm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.47\textwidth}
-\begin{block}{Names pointed to another input.}
+\begin{block}{Name of another input,\\such as \texttt{row8}}
 \centering{\Huge 39\%}\par
-of reading answers were correct.
+of judgments were correct.
 \end{block}
 \end{column}
 \begin{column}{0.47\textwidth}
-\begin{block}{Names pointed to no visible input.}
+\begin{block}{Unrelated name,\\such as \texttt{k7ab}}
 \centering{\Huge 80\%}\par
-of reading answers were correct.
+of judgments were correct.
 \end{block}
 \end{column}
 \end{columns}
-\smallnote{A deliberate stress test, not normal use. Software fixed answer names and order. Sixteen batches of 48 questions; rounded percentages. Evidence about output behavior, not a measurement of attention. [H1]}
+\smallnote{Invented illustration of a deliberate stress test. Software fixed names and order. Qwen3-4B; 16 groups of 48 statements. This measures output behavior, not attention. [H1]}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Both row numbers and arbitrary names\\helped in the larger-batch tests.}
-These are the full three-format results behind slide 5.\par
+\frametitle{Both row numbers and arbitrary names helped\\when helpers judged many statements together.}
+Two language models judged statements about short texts. We linked each statement to its answer using row numbers (1, 2, \ldots) or arbitrary names (\texttt{k7ab}, \texttt{z2pm}, \ldots).\par
 \vspace{2mm}
 \centering
 \includegraphics[width=0.95\textwidth]{figures/batch-size-models.pdf}
-\par\vspace{1mm}
+\par
 \raggedright
-Matching is helpful, but the Mistral model still made many errors.
-\smallnote{Sixteen shared sets; 240 calls per model. All returned; three malformed Mistral arbitrary-name outputs count as wrong. Those failures confound comparisons between the two named formats. [H8, H9]}
+\smallnote{Same 16 input sets; 240 requests per model. Three Mistral arbitrary-name responses had invalid formatting and count as wrong. This complicates comparing the two naming styles. Helper judgments, not complete RLM solutions. [H8, H9]}
 \end{frame}
 
 \end{document}
