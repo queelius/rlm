@@ -7,6 +7,8 @@ have run. The [first diagnostic execution plan](research-plans/2026-09-11-first-
 turns the approved direction into bounded comparisons; the
 [RAO code notes](research-plans/2026-09-11-rao-code-notes.md) distinguish root feedback from
 independently scored child tasks. Consult the live queue for actual execution status.
+The [post-meeting launch checkpoint](research-checkpoints/2026-09-11-postmeeting-resumption.md)
+records the first new diagnostic and its external resume pointers.
 
 The [September 11 delivery checkpoint](research-checkpoints/2026-09-11-advisor-delivery.md)
 links the eight-main-slide advisor package and records the final short-experiment state.
