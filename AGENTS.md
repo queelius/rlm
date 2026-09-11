@@ -59,6 +59,48 @@ decomposition strategies, RLVR objectives, and evaluation datasets to the ranked
 Follow the durable operating loop in `docs/RESEARCH_OPERATIONS.md` and keep the live experiment
 queue in the active research store current.
 
+For new work or repairs assigned to an existing agent, use `followup_task` so a completed
+agent is actually restarted. `send_message` alone does not wake it. Confirm that GPU-critical
+preparation is running; never mistake a delivered message for active work.
+
+## Codex usage reserve for advisor slides
+
+The user requested roughly 10% of Codex usage be reserved for final slide work
+when they return. During this research period, check the live account quota every
+15 minutes and before substantial new agent fan-out. Begin winding down optional
+research at 20% remaining and pause discretionary Codex work around 15%, allowing
+for in-flight work and reporting lag. Do not spend the reserve on research without
+new user direction. Finish/checkpoint active agent work and preserve a handoff.
+Already accepted local GPU jobs should continue under their existing owners and
+caps; they do not need continuous model generation to run.
+
+Read the applicable `codex` bucket from the supported app-server
+`account/rateLimits/read` endpoint. A Spark-only bucket or cumulative transcript
+token count is not the main account quota. Treat failed, stale, or missing quota
+reads as unknown, not zero usage. The user has another research session sharing
+this subscription; these are account-wide percentages, not per-session budgets.
+Other sessions can consume the shared allowance,
+so the reserve is a conservative operating target, not an enforceable account lock.
+The local monitor and receipts live in the active research store under
+`operations/2026-09-11-codex-usage-reserve/`.
+
+## Advisor deck and remote checkpoints
+
+At completed-result checkpoints, review whether the finding changes the advisor
+deck's main story, a material limitation, or the next research decision. If so,
+update the visible slide, figure/data, concise pdfpc notes, speaker guide, evidence
+links and cutoff together. Keep the audience PDF understandable without narration;
+speaker notes supplement it, never hide essential context. Compile and inspect
+changed slides and laptop presenter notes for overflow before publishing.
+
+The user authorizes periodic GitHub pushes of verified source, slide and research
+document updates so a cluster interruption does not strand the work. Push at
+meaningful completed milestones and before an allocation handoff; do not wait for
+another approval. Review the staged diff and use ordinary non-force pushes.
+Record resume pointers to external runs, but do not commit secrets, raw sensitive
+traces, heavyweight environments or model weights. A GitHub push of these materials
+is not a backup of `/project/alex_phd` or its model checkpoints.
+
 ## Project Structure & Module Organization
 
 Runtime code lives in `src/rlm/`. Keep public interfaces in `__init__.py`, entry points in `cli.py` and `server.py`, and orchestration in focused modules such as `engine.py`, `executor.py`, and `backend.py`. Tests in `tests/` generally mirror source modules; shared test doubles belong in `tests/fakes.py`. Architectural contracts and research boundaries are documented in `DESIGN.md` and `RESEARCH.md`. Generated debug output belongs under the ignored `runs/` directory.

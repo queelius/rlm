@@ -1,0 +1,91 @@
+{
+  "pdfpcFormat": 2,
+  "disableMarkdown": true,
+  "noteFontSize": 16,
+  "pages": [
+    {
+      "idx": 0,
+      "label": "1",
+      "overlay": 0,
+      "note": "SAY: We ask whether a small model can\nsolve harder problems by inspecting stored\ninput, asking helpers, and combining their\nanswers. We can teach a useful routine,\nbut the connections between steps still\nfail.\n\nIF ASKED: The model is Qwen3-4B with small\ntrained adapters, not a model trained from\nscratch.\n\nCAUTION: This is preliminary work on\nnarrow tasks, not a general problem\nsolver."
+    },
+    {
+      "idx": 1,
+      "label": "2",
+      "overlay": 0,
+      "note": "SAY: Follow the loop: the main model\ninspects stored input, asks a helper a\nsmaller question, uses Python to combine\nthe reply, and may continue.\n\nIF ASKED: A helper could divide its task\nagain, which motivates the word recursive.\nOur highlighted tests mostly use one\nhelper layer.\n\nCAUTION: Python makes arithmetic reliable\nonly after the model has obtained the\nright evidence and chosen the right\noperation."
+    },
+    {
+      "idx": 2,
+      "label": "3",
+      "overlay": 0,
+      "note": "SAY: The helper labels which questions\nconcern places. Python then adds weights\nby user: Ada has seven, Ben has two, so\none user exceeds five.\n\nIF ASKED: A wrong reading label can\ncorrupt correct arithmetic; a correct\nlabel map can still be combined with the\nwrong calculation.\n\nCAUTION: The weights and four rows are an\nillustration, not a copied training\nexample or confidence scores."
+    },
+    {
+      "idx": 3,
+      "label": "4",
+      "overlay": 0,
+      "note": "SAY: Each demonstration showed an\nobservation, then actions: ask the helper,\ncalculate from its actual reply, and\nreturn the result. Only the main model's\nactions were training targets.\n\nIF ASKED: There were 72 demonstrations,\nrepeated for six full-data updates; helper\nerrors were retained rather than replaced\nwith reference labels.\n\nCAUTION: The starting point was already\ntrained on an earlier workspace routine.\nThis teaches a routine, not open-ended\nplanning."
+    },
+    {
+      "idx": 4,
+      "label": "5",
+      "overlay": 0,
+      "note": "SAY: On one shared 72-question test, the\nstarting adapter had 12 verified\nsuccesses; two separately trained copies\nhad 55 and 53. Success requires the\nrequested calculation and the correct\nanswer.\n\nIF ASKED: Missing-result bounds are 12–19,\n55, and 53–55. The third bar is a separate\ntraining corpus, not cumulative training\non the second model.\n\nCAUTION: The records were new to our named\nroot-study inventory, but the question\ntypes were familiar and the public text is\nnot claimed unseen."
+    },
+    {
+      "idx": 5,
+      "label": "6",
+      "overlay": 0,
+      "note": "SAY: If row 7's answer carries row 8's\nvisible name, the model may give a\nsensible label for row 8. Format can be\nperfect while correspondence is wrong.\n\nIF ASKED: Accuracy was 39% with misleading\nvisible-record names and 80% with names\npointing to no displayed record. On\nunequal-label positions, outputs favored\nthe named record.\n\nCAUTION: We deliberately supplied the\nnames and fixed output order. This is\nbehavioral evidence, not a measurement of\nattention or internal mechanism."
+    },
+    {
+      "idx": 6,
+      "label": "7",
+      "overlay": 0,
+      "note": "SAY: Without matching tags, accuracy fell\nfrom about 83% at eight questions to 44%\nat 64. With row numbers or arbitrary\nmatching tags, it stayed near 85%.\n\nIF ASKED: The same 16 record sets supplied\nnested batch sizes, and all 240 outputs\nwere valid. Tags identify slots; they do\nnot contain reading labels.\n\nCAUTION: Sixteen contexts are the\ncomparison units. This does not establish\na universal 32-record limit or a speed\nbenefit."
+    },
+    {
+      "idx": 7,
+      "label": "8",
+      "overlay": 0,
+      "note": "SAY: Matching tags helped both Qwen models\nand Mistral without retraining. Mistral\nstill made substantially more errors, so\nthe interface helps but does not solve the\ntask.\n\nIF ASKED: These bars use the same 16\nbatches and score the last 32 positions of\n48-question batches. Slide 7 instead\nscores every position across several batch\nsizes.\n\nCAUTION: Model family, weights, tokenizer,\nand instructions differ together. This is\nnot a clean capacity comparison or a\nuniversal result."
+    },
+    {
+      "idx": 8,
+      "label": "9",
+      "overlay": 0,
+      "note": "SAY: Both conditions tagged inputs and\nanswers, but only one reused the same tag\non both sides. Matching raised later-\nposition accuracy from 32.6% to 78.8%,\nwith valid formatting throughout.\n\nIF ASKED: Position still determined which\nrecord to answer. A mismatched tag did not\ninstruct the model to answer another\nrecord or copy the input tag.\n\nCAUTION: This is consistent with better\ninput–answer matching, but it does not\nreveal the model's internal process or\nprove whole-system benefit."
+    },
+    {
+      "idx": 9,
+      "label": "10",
+      "overlay": 0,
+      "note": "SAY: Helper training slightly improved\nlabels, but exact final answers moved only\nfrom zero of eight to one of eight.\nReference labels made the fixed Python\ncalculation correct on all eight.\n\nIF ASKED: One missed category-A record can\nwrongly exclude a user and all that user's\ncategory-B weights, so errors have unequal\ndownstream effects.\n\nCAUTION: We supplied the calculation here.\nThis is not a planning result or a\nmatching-tag experiment, and eight\nproblems share four inputs."
+    },
+    {
+      "idx": 10,
+      "label": "11",
+      "overlay": 0,
+      "note": "SAY: Two six-update reward runs started\nfrom the same trained model. Larger\nupdates produced a lower bounded result;\nsmaller updates produced no clear change.\n\nIF ASKED: The ranges are 55–56 before\nreward training, 47–50 after larger\nupdates, and 52–56 after smaller updates.\nMissing outcomes create ranges.\n\nCAUTION: Final-answer reward cannot\ndistinguish a lucky correct number from\nthe requested computation. We have not\nshown that reward caused shortcuts or that\nreinforcement learning cannot work."
+    },
+    {
+      "idx": 11,
+      "label": "12",
+      "overlay": 0,
+      "note": "SAY: We have two separate gains: the main\nmodel learned a better routine, and\nmatching tags improved helper labels. The\ndecisive question is whether either\nimproves a complete final result.\n\nIF ASKED: Saved-label calculations favored\ntags, but the attempted main-model test\nhad too few usable outcomes because of\ninterface and input-limit failures.\n\nCAUTION: New operator combinations and a\nreliable whole-system comparison are\nproposed tests, not established\ncapabilities."
+    },
+    {
+      "idx": 12,
+      "label": "13",
+      "overlay": 0,
+      "note": "SAY: The longer-term model would inspect a\nsample, choose useful smaller questions,\ncombine answers, and revise its plan when\nevidence is insufficient.\n\nIF ASKED: Training and tool changes can\nboth help. A clean experiment should cross\nold and new models with old and new tools\nso their effects are separated.\n\nCAUTION: Today we supply demonstration\nroutines. We have not shown autonomous\ninvestigation, unfamiliar-task\ndecomposition, or deep recursion."
+    },
+    {
+      "idx": 13,
+      "label": "14",
+      "overlay": 0,
+      "note": "SAY: My recommendation is a whole-task\ntest of input–answer matching, because the\nhelper effect is large but final\nusefulness remains unresolved.\n\nIF ASKED: A narrow paper needs a\nreplicated failure, a controlled\nimprovement, and evidence that the\nimprovement matters in a complete task;\nnumbering itself is not new.\n\nDISCUSS: Which evidence would be most\nconvincing: another task, another model\nfamily, a clearer mechanism test, or a\nrealistic application from your work?"
+    }
+  ]
+}

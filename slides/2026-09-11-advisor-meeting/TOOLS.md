@@ -51,3 +51,30 @@ their licenses; no third-party package code is copied into this repository.
 
 The input is the included Beamer source and the included portable numerical
 evidence file, not an external slide template or generated bitmap.
+
+# pdfpc laptop verification, September 11
+
+Stock Ubuntu packages were downloaded from signed noble/noble-updates indexes
+and extracted into an external tool store. No system packages or training
+environments changed; binaries were not modified and maintainer scripts did not run.
+
+- pdfpc (`pdf-presenter-console`):4.6.0-3build3, GPL-3+.
+- Xvfb:2:21.1.12-1ubuntu1.6.
+- proot:5.1.0-1.3, providing process-local paths for extracted packages.
+
+The115-package manifest records URLs, versions, verified checksums and licenses:
+`/project/alex_phd/research-cache/tools/pdfpc-laptop-20260911/PACKAGES.json`.
+SHA-256: `bdf89a81594f9247790904f10a1428f5f225b7a4fb9c4ce3cbf0aa079547cc67`.
+The tool store's README and smoke script document replay and process cleanup.
+No binaries are in Git; ordinary laptop installation is in PRESENTING.md.
+
+The application itself rendered the screenshots; Xvfb and Pillow provided
+CPU-only capture. Some SVG icons were unavailable in the extracted environment.
+The checked notes layout needs an effective1280×720 or larger full presenter
+area. Smaller windows or greater display scaling require adjustment.
+
+References: [official installation guide](https://github.com/pdfpc/pdfpc#installation),
+[manual](https://github.com/pdfpc/pdfpc/blob/master/man/pdfpc.in), and
+[4.6 implementation](https://github.com/pdfpc/pdfpc/tree/v4.6.0).
+Flags were checked against actual4.6 help rather than assuming current master
+documentation applies to older packages.

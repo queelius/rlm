@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "prepared_utc": "2026-09-11T00:15:00Z",
+  "prepared_utc": "2026-09-11T03:45:00Z",
   "status": "exploratory",
   "research_store": "/project/alex_phd/runs/rlm-research-r4",
   "reward_training": {
@@ -49,17 +49,72 @@
       }
     ]
   },
+  "reward_training_lower_rate": {
+    "metric": "Verified correct final answer, not necessarily the requested calculation",
+    "correct": [
+      55,
+      52
+    ],
+    "planned": [
+      72,
+      72
+    ],
+    "unavailable": [
+      1,
+      4
+    ],
+    "possible_correct_bounds": [
+      [
+        55,
+        56
+      ],
+      [
+        52,
+        56
+      ]
+    ],
+    "composed_primary_correct": [
+      36,
+      36
+    ],
+    "composed_primary_planned": 48,
+    "composed_known_pairs": 46,
+    "composed_paired_effect_bounds_pp": [
+      -4.166666666666667,
+      4.166666666666667
+    ],
+    "actual_weight_updates": 6,
+    "learning_rate": 0.00001,
+    "training_attempts": 192,
+    "training_available": 188,
+    "context_clusters": 8,
+    "limitation": "Same exposed eight-input panel and starting policy, six small updates. Lower-rate effect inconclusive, not proof of equality or general RL failure. Sparse-head implementation objective-matched, not bitwise identical to the earlier first dense update.",
+    "sources": [
+      {
+        "path": "analyses/root-question-sensitive-terminal-rlvr-lr1e5-live-2026-09-10/REPORT.md",
+        "sha256": "d6901670d6889b9469ba17ab51f39de19166bf013e96a620415a0e0ba9a17df4"
+      },
+      {
+        "path": "analyses/root-question-sensitive-terminal-rlvr-lr1e5-live-2026-09-10/FINAL_SEAL.json",
+        "sha256": "fd1750f6db9c488b5808bda3e395b69d81b23514bfa240785e68c780d6f350d9"
+      },
+      {
+        "path": "analyses/root-question-sensitive-terminal-rlvr-lr1e5-live-2026-09-10/FIGURE_DATA.json",
+        "sha256": "71da3f48b8829e500eaaed25a31aa362da8353b9f5162d511b68d5db7e2d51b6"
+      }
+    ]
+  },
   "sft": {
     "metric": "Correct answer produced by the requested calculation on the actual child results",
     "labels": [
-      "Before these\nexperiments",
+      "Before this\ntraining",
       "Trained on one\nexample set",
       "Trained on another\nexample set"
     ],
     "correct": [
       12,
-      50,
-      55
+      55,
+      53
     ],
     "planned": [
       72,
@@ -67,51 +122,67 @@
       72
     ],
     "unavailable": [
-      17,
+      7,
       0,
       2
-    ],
-    "context_clusters": 8,
-    "training_examples": 72,
-    "full_corpus_updates": 6,
-    "limitation": "Two separately captured training corpora, one shared research-exposed eight-input evaluation with changed names, weights and thresholds. Both training runs restart from the same already-trained adapter; the third bar is not extra training on the second.",
-    "sources": [
-      {
-        "path": "analyses/root-question-sensitive-readout-followups-2026-09-10/metadata-semantics/REPORT.md",
-        "sha256": "cc77b86e0f0be15b848138cf62576ff5a6e41848c7cebb4292548fe6e54b786d"
-      },
-      {
-        "path": "analyses/root-question-sensitive-sft-new-corpus-live-2026-09-10/FIGURE_DATA_FAITHFUL_CORPUS_REPLICATION.json",
-        "sha256": "9d040c85d29a2d5f4886275def234baf9c3cbf4f5ad49eeafdead8869f426058"
-      },
-      {
-        "path": "analyses/root-question-sensitive-sft-new-corpus-live-2026-09-10/ERRATUM_START_AND_CLAIM.md",
-        "sha256": "7974e7c0ff50ae3ad4dc357b05765445404f9144ff8112e335d8721cb91ba27d"
-      }
     ],
     "possible_correct_bounds": [
       [
         12,
-        29
-      ],
-      [
-        50,
-        50
+        19
       ],
       [
         55,
-        57
+        55
+      ],
+      [
+        53,
+        55
       ]
     ],
-    "independent_training_corpora": 2
+    "context_clusters": 8,
+    "training_examples": 72,
+    "full_corpus_updates": 6,
+    "independent_training_corpora": 2,
+    "strict_correct": [
+      23,
+      57,
+      54
+    ],
+    "requested_operation_performed": [
+      15,
+      66,
+      65
+    ],
+    "composed_faithful_correct": [
+      0,
+      35,
+      34
+    ],
+    "composed_planned": 48,
+    "limitation": "Same familiar task families and fixed c32 helper, eight newly selected record contexts excluded from named root-study inventory. Not unseen operator combinations or proof of pretraining exclusion. Two previously trained checkpoints independently restart from same fixed24 adapter, not sequential training. Agent-authored unblinded manual trace judgments for all207 available episodes; MAIN arithmetic/native recount and selective path review.",
+    "sources": [
+      {
+        "path": "analyses/root-question-sensitive-fresh-input-three-policy-live-2026-09-11/REPORT.md",
+        "sha256": "df5db6c9fe798bebe9e4606a3d6ee7ba273d622078e7b8f1351febeb501547e8"
+      },
+      {
+        "path": "analyses/root-question-sensitive-fresh-input-three-policy-live-2026-09-11/SEMANTICS_ALL.json",
+        "sha256": "8d7f0466d423b23a780585f673709af4682dc8da7708e7c485f1f7593aec78ea"
+      },
+      {
+        "path": "analyses/root-question-sensitive-fresh-input-three-policy-live-2026-09-11/FINAL_SEAL.json",
+        "sha256": "9512db664dbe6fdf578ab477aebf8f33ab1808f8bfec1692d8704ffe71c2ae78"
+      }
+    ]
   },
   "row_matching": {
     "metric": "Correct labels at positions 17 through 48",
     "labels": [
-      "Neither side",
-      "Answers only",
-      "Inputs only",
-      "Both sides"
+      "No added\nrow numbers",
+      "Only in\nanswers",
+      "Only in\ninputs",
+      "In inputs\nand answers"
     ],
     "correct": [
       577,
@@ -168,6 +239,41 @@
       }
     ]
   },
+  "literal_tag_matching": {
+    "metric": "Correct reading labels at positions17–48; same record order and task, balanced input/output tag sets",
+    "labels": [
+      "Different tags",
+      "Matching tags"
+    ],
+    "correct": [
+      1000,
+      2420
+    ],
+    "planned_per_bar": 3072,
+    "context_clusters": 16,
+    "reference_conditions": 3,
+    "tag_cells_per_bar": 2,
+    "late_records_per_context": 32,
+    "positive_contexts": 16,
+    "planned_calls": 192,
+    "available_calls": 192,
+    "valid_calls": 192,
+    "limitation": "One Qwen3-4B model on the exposed stable-tag16-context panel. Software supplied output tags and order; model chose reading labels. Matching versus disjoint sets, with identical intended positional task, not a test of freely learned copying or an identified internal mechanism. Not directly comparable with H1 scores.",
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-balanced-tag-match-live-2026-09-11/FIGURE_DATA_ATTEMPT002.json",
+        "sha256": "ae408560e168193da30f0dde7ebe5cdfde16f79dbc6b42d4a31dce674760c712"
+      },
+      {
+        "path": "analyses/leaf-mnli-balanced-tag-match-live-2026-09-11/FINAL_SEAL_ATTEMPT002.json",
+        "sha256": "f7e8954d73dbc00f8e647bbd05968107546df965ecb002b6bbad230b013bb3bf"
+      },
+      {
+        "path": "analyses/leaf-mnli-balanced-tag-match-live-2026-09-11/REPORT_ATTEMPT002.md",
+        "sha256": "c245e4f0f14b194889837c3cc8d5ccfd313d40d2d6e48f94362c635858cbdabf"
+      }
+    ]
+  },
   "wrong_reference": {
     "labels": [
       "Points to another record",
@@ -221,15 +327,16 @@
     ]
   },
   "cross_model_keys": {
-    "metric": "Correct labels at positions17–48, same16 contexts and3 reference conditions in both released models",
+    "metric": "Correct labels at positions17–48, same16 contexts and3 reference conditions in three released models",
     "labels": [
       "No matching\ntags",
       "Row\nnumbers",
       "Arbitrary\ntags"
     ],
     "models": [
-      "Smaller model",
-      "Larger model"
+      "Qwen (4B)",
+      "Qwen (8B)",
+      "Mistral (7B)"
     ],
     "correct": [
       [
@@ -241,6 +348,11 @@
         484,
         1313,
         1245
+      ],
+      [
+        490,
+        857,
+        807
       ]
     ],
     "planned_per_bar": 1536,
@@ -249,15 +361,17 @@
     "late_records_per_context": 32,
     "available_calls": [
       144,
+      144,
       144
     ],
-    "new_calls": 144,
+    "new_calls": 288,
     "reused_4b_calls": 144,
     "model_names": [
       "Qwen3-4B-Instruct-2507",
-      "Qwen3-8B"
+      "Qwen3-8B",
+      "Mistral-7B-Instruct-v0.3"
     ],
-    "limitation": "Two models in the same family, one sampling realization and reused research-exposed input panel. Different weights and rendered tokenization: not a pure capacity comparison. Tags/order supplied by structured decoding, not free copying. Arbitrary tags use more tokens.",
+    "limitation": "Three models across two families, one sampling realization and reused research-exposed input panel. Different weights, tokenizer, chat template and context bounds: not a pure capacity/family comparison. Tags/order supplied by structured decoding, not free copying. Arbitrary tags use more tokens. Direction transfers but Mistral's absolute keyed accuracy is lower.",
     "sources": [
       {
         "path": "analyses/leaf-mnli-stable-anchor-qwen8b-live-2026-09-10/FIGURE_DATA.json",
@@ -266,6 +380,143 @@
       {
         "path": "analyses/leaf-mnli-stable-anchor-qwen8b-live-2026-09-10/FINAL_SEAL.json",
         "sha256": "b619cb1d4aa79bfa7aa0d292a9e909d640c1efa421b0c0708bd2386bfed0278e"
+      },
+      {
+        "path": "analyses/leaf-mnli-stable-anchor-mistral7b-live-2026-09-11/FIGURE_DATA.json",
+        "sha256": "3a098b7149bed629aeb63c40dec66ea87da143ae342ba3c7cbc48a13d8886291"
+      },
+      {
+        "path": "analyses/leaf-mnli-stable-anchor-mistral7b-live-2026-09-11/FINAL_SEAL.json",
+        "sha256": "72bdbde3d6657fe59aff0691c1f5def4c6347d783d116661e1ecd27e6b495c8e"
+      },
+      {
+        "path": "analyses/leaf-mnli-stable-anchor-mistral7b-live-2026-09-11/INTERPRETATION_ERRATUM.md",
+        "sha256": "ff598a168efa1f88f85d1b5e606ddbb91562afe600dcd00c739aef090b96d8df"
+      }
+    ]
+  },
+  "sft_reused_input": {
+    "metric": "Correct answer produced by the requested calculation on the actual child results",
+    "labels": [
+      "Starting\nmodel",
+      "Trained on one\nexample set",
+      "Trained on another\nexample set"
+    ],
+    "correct": [
+      12,
+      50,
+      55
+    ],
+    "planned": [
+      72,
+      72,
+      72
+    ],
+    "unavailable": [
+      17,
+      0,
+      2
+    ],
+    "context_clusters": 8,
+    "training_examples": 72,
+    "full_corpus_updates": 6,
+    "limitation": "Two separately captured training corpora, one shared research-exposed eight-input evaluation with changed names, weights and thresholds. Both training runs restart from the same already-trained adapter; the third bar is not extra training on the second.",
+    "sources": [
+      {
+        "path": "analyses/root-question-sensitive-readout-followups-2026-09-10/metadata-semantics/REPORT.md",
+        "sha256": "cc77b86e0f0be15b848138cf62576ff5a6e41848c7cebb4292548fe6e54b786d"
+      },
+      {
+        "path": "analyses/root-question-sensitive-sft-new-corpus-live-2026-09-10/FIGURE_DATA_FAITHFUL_CORPUS_REPLICATION.json",
+        "sha256": "9d040c85d29a2d5f4886275def234baf9c3cbf4f5ad49eeafdead8869f426058"
+      },
+      {
+        "path": "analyses/root-question-sensitive-sft-new-corpus-live-2026-09-10/ERRATUM_START_AND_CLAIM.md",
+        "sha256": "7974e7c0ff50ae3ad4dc357b05765445404f9144ff8112e335d8721cb91ba27d"
+      }
+    ],
+    "possible_correct_bounds": [
+      [
+        12,
+        29
+      ],
+      [
+        50,
+        50
+      ],
+      [
+        55,
+        57
+      ]
+    ],
+    "independent_training_corpora": 2
+  },
+  "nested_batch": {
+    "metric": "Correct reading labels over all positions in each batch",
+    "sizes": [
+      8,
+      16,
+      32,
+      48,
+      64
+    ],
+    "arms": [
+      "No matching tags",
+      "Matching row numbers",
+      "Matching arbitrary tags"
+    ],
+    "correct": [
+      [
+        106,
+        210,
+        289,
+        378,
+        449
+      ],
+      [
+        112,
+        222,
+        445,
+        656,
+        866
+      ],
+      [
+        108,
+        223,
+        439,
+        657,
+        854
+      ]
+    ],
+    "planned_denominators": [
+      128,
+      256,
+      512,
+      768,
+      1024
+    ],
+    "context_clusters": 16,
+    "planned_calls": 240,
+    "available_calls": 240,
+    "valid_calls": 240,
+    "positive_contexts_at_32_48_64": [
+      16,
+      16,
+      16
+    ],
+    "limitation": "One released Qwen3-4B;16 new named-inventory-excluded contexts; nested prefixes and shared premises are dependent. Input+grammar+decoding package, not an internal mechanism. No universal32 threshold or measured speedup claim.",
+    "sources": [
+      {
+        "path": "analyses/leaf-mnli-nested-batch-matching-live-2026-09-11/REPORT.md",
+        "sha256": "300f66b7ceac1ed3e89a32c2f44008eb201ca958f5b8b2ba00bd9927068c64ef"
+      },
+      {
+        "path": "analyses/leaf-mnli-nested-batch-matching-live-2026-09-11/NATIVE_AUDIT.json",
+        "sha256": "0d14d2abb7631641d403a7cbfdfbe790914d702dfc0651d3f4a55885dcdb6155"
+      },
+      {
+        "path": "analyses/leaf-mnli-nested-batch-matching-live-2026-09-11/FINAL.json",
+        "sha256": "87e7552988bb16ddb6588b6a814e1f0b3c8c84061f39db50ef12f2f9d7c8ccbb"
       }
     ]
   }

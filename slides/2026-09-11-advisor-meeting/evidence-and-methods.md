@@ -2,7 +2,7 @@
 title: Evidence and methods for the advisor meeting
 meeting_date: 2026-09-11
 status: exploratory_evidence_synthesis
-evidence_cutoff_utc: 2026-09-11T00:15:00Z
+evidence_cutoff_utc: 2026-09-11T03:45:00Z
 ---
 
 # Evidence and methods for the September 11 advisor meeting
@@ -132,8 +132,32 @@ after the new corpus, with new-run bounds of 57–59/72.
 captured training corpus. It does not establish corpus superiority or performance on new inputs:
 there are two training corpora but only one shared eight-context evaluation panel. Six available
 new-corpus paths did not perform the requested computation, including two that nevertheless reached
-the correct number by coincidence. The next important test needs newly selected evaluation source
-contexts, followed by additional training realizations if the effect remains useful.
+the correct number by coincidence. This motivated the newly selected evaluation source
+contexts reported next; additional training realizations remain useful.
+
+### Completed follow-up: both trained roots transferred to newly selected inputs [S3]
+
+**Question.** Do the gains appear on source groups outside the earlier root-evaluation inventory?
+
+**Method.** Eight source groups were deterministically selected from public IDs before gold was
+computed and before model outputs. The same 72 questions were asked of the fixed24 starting adapter,
+the original-corpus SFT6 policy, and the new-corpus SFT6 policy. A success required both the correct
+number and an actual path that used genuine child evidence to perform the requested operator, scope,
+categories, threshold, and final reduction. Analysts read all 207 available paths; sampled programs
+were not re-executed.
+
+**Result.** Faithful-and-correct totals were **12/72** for fixed24 (seven NULLs, bounds 12–19),
+**55/72** for original-corpus SFT6, and **53/72** for new-corpus SFT6 (two NULLs, bounds 53–55).
+The corresponding exact-answer-only totals were 23, 57, and 54. Fixed24 had no faithful-and-correct
+composed result; the trained policies had 35/48 and 34/48. Each trained policy had more observed
+faithful-and-correct answers than fixed24 in all eight context clusters.
+
+**Interpretation and limits.** This strengthens the bounded transfer evidence: the result is not
+only a changed-number readout on the original source groups. It remains the same nine studied task
+families, fixed child, and metadata transformation. “New” means absent from named root experiment
+inventories, not unseen in model pretraining, child training, or every research catalog. Manual
+semantic judgments were outcome-visible; MAIN checked the full arithmetic and selected traces, not
+all 207 judgments independently.
 
 ## Finding 2: matching input and output rows repairs late-batch correspondence
 
@@ -244,6 +268,34 @@ The complete GPU job took about 10.8 minutes. The reviewer independently parsed
 and counted the outputs but also authored two pre-run scoring corrections; that
 overlap is disclosed in the audit.
 
+### Completed follow-up: matching keys prevented the large-batch collapse [H8]
+
+**Question.** At what batch size does the labels-only interface break down, and do matching keys
+retain their advantage on newly selected inputs?
+
+**Method.** Sixteen newly selected MultiNLI context clusters supplied nested prefixes of 8, 16, 32,
+48, and 64 records. Each prefix used the same gold labels under three paired output formats: labels
+only, matching sequential row numbers, and matching opaque tags. All 240 calls were available,
+contract-valid, and native-authenticated. Prefix sizes are nested measurements, not independent
+replications.
+
+| Records per call | Labels only | Sequential keys | Opaque keys |
+|---:|---:|---:|---:|
+| 8 | 82.8% | 87.5% | 84.4% |
+| 16 | 82.0% | 86.7% | 87.1% |
+| 32 | 56.4% | 86.9% | 85.7% |
+| 48 | 49.2% | 85.4% | 85.5% |
+| 64 | 43.8% | 84.6% | 83.4% |
+
+The prospectively defined onset rule first passed at 32 records. At 32, 48, and 64 records both keyed
+formats improved all 16 paired context clusters over labels only. At 64 records the gains were
++40.72 and +39.55 percentage points.
+
+**Interpretation and limits.** Matching keys preserved label accuracy as batches grew in this
+Qwen3-4B encoding package. This is not a universal 32-record limit, an internal-mechanism result,
+or evidence that a complete RLM improves. There are 16 context clusters—not thousands of independent
+label trials—and keyed formats change prompt/output tokens as part of the intervention.
+
 ### Completed follow-up: the matching-key pattern also appeared in Qwen3-8B [H4]
 
 **Question.** Does the late-batch matching-key effect appear in another released model size from the
@@ -261,7 +313,9 @@ for 8B, while the difference between sequential and opaque keys was larger than 
 **Interpretation and limits.** This is one 8B realization on the same exposed panel and within the
 same model family. Model weights, tokenizer, and rendered tokenization all changed, so this is not a
 pure capacity comparison. It supports testing the matching interface on fresh evaluation contexts;
-it does not establish behavior on another model family or in an end-to-end root task.
+this particular check does not establish behavior on another family or in a complete
+main-model task. The subsequent H5 check below extends the direction to Mistral;
+the complete-task question remains open.
 
 ## Finding 3: output identifiers can redirect the model toward the wrong record
 
@@ -451,7 +505,7 @@ The most defensible research question is therefore: **which learned or engineere
 useful local predictions remain attached to their sources and survive recursive composition?** This
 is narrower than claiming that decomposition is solved, but it is also more diagnostic.
 
-The latest six-update reinforcement-learning continuation is now final. Its fixed checkpoint 6
+The larger-update reinforcement-learning continuation is final. Its fixed checkpoint 6
 scored 47/72 planned answers (69 available; bounds 47--50), versus 55/72 for the unchanged start
 (71 available; bounds 55--56); exact paired missing-data bounds are -9 to -5. On composed tasks,
 42/45 available endpoints acquired a complete child map, but only 32 performed the requested
@@ -463,6 +517,112 @@ learning in general. The separate-corpus supervised study is now complete: corre
 answers were 55/72, with two attempted endpoints unavailable and bounds of 55–57. Because both
 training runs used the same research-exposed eight-context evaluation panel, newly selected
 evaluation inputs remain the main missing test.
+
+### Smaller reward updates: no clear improvement (R2)
+
+The follow-up restarted from the same trained main model at learning rate 1e-5,
+five times smaller. It completed all eight collection windows and made six actual
+updates; two windows had no useful contrast between their rewards and made no
+update. All 192 attempted training questions were retained, with 188 available
+outcomes. Thirteen mixed-reward groups supplied 50 eligible training attempts.
+
+The final checkpoint gave 52 correct answers out of 72, with four missing outcomes
+and possible totals 52–56. The reused starting model gave 55, with one missing
+outcome and possible totals 55–56. On the primary 48 questions combining operations,
+both models gave 36 correct answers. Among 46 known pairs, there were three wins
+and three losses. The missing-outcome effect range is −4.17 to +4.17 percentage
+points; this range describes missing evidence, not statistical uncertainty.
+The independently prepared, agent-authored complete path review also found no
+combined-operation gain: 33/48 faithful-and-correct in each model. It was not a
+human or blinded review.
+
+This small-dose result gives no reason to keep repeating learning-rate changes
+alone. A useful follow-up would first check whether rewarding intermediate
+calculations supplies a better learning signal. That is a hypothesis, not a
+demonstrated treatment. The smaller-rate implementation used a memory-saving
+calculation of the same objective; it was not bitwise identical to the first
+dense update in the earlier run. Neither comparison isolates every numerical detail.
+
+The full workflow took 3,443.90 seconds: 1,690.67 generating training attempts,
+401.14 updating weights, and 601.10 evaluating, plus service/orchestration overhead.
+The native record contains 1,307 physical requests, 1,303 returns, 2,523,653 known
+input tokens, 173,202 output tokens, and four requests with unknown usage. The
+producer's obsolete-layout cost summary said zero; the native audit corrects it.
+
+### Cross-family matching-tag check (H5)
+
+Mistral-7B-Instruct-v0.3 used the same 16 previously selected batches and three
+identifier conditions as the Qwen comparison. All 144 calls were available,
+native-authenticated, and valid. Accuracy on the later 32 answers was 490/1,536
+(31.9%) without added tags, 857/1,536 (55.8%) with row numbers, and 807/1,536
+(52.5%) with arbitrary tags. Row numbers helped 15/16 input groups; arbitrary
+tags helped 16/16. Both met the prospectively specified directional checks.
+
+This extends the direction of the effect to a second family, but Mistral's final
+accuracy remains substantially below the Qwen models. It is not a clean model-size
+or family comparison: tokenization, weights, chat templates, context limits, and
+decoding also differ. No internal matching mechanism is established. The earlier
+sealed report's interpretation about semantic label names is not needed for this
+claim; the experiment did not separately manipulate those names.
+An additive interpretation erratum preserves the original report while narrowing
+those phrases; no scores or costs changed.
+
+The audit checked exact request bodies, native token IDs, output keys, model
+revision, and Mistral's own end token. Its minimal Python environment lacked
+Transformers, so a disclosed wrapper used tokenizers 0.23.1 with the exact pinned
+tokenizer file; all 144 outputs decoded identically. MAIN checked ten sealed
+artifact/terminal hashes and independently recounted all 144 literal responses.
+Parent time was 517.79 seconds; known usage was 666,729 input and 92,062 output
+tokens. No missing usage or cache tokens were reported; billing was not measured.
+
+### Balanced literal-tag reuse: matching mattered even with both sides tagged [H6]
+
+**Question.** Does repeating the same arbitrary string beside an input and its
+answer help, beyond having an arbitrary tag on each side?
+
+**Method.** The released Qwen3-4B model answered the same exposed 16 batches of
+48 MultiNLI records used in the stable-tag studies. Two disjoint, equal-character-
+length tag sets, A and B, gave four input/output pairings: AA, AB, BA and BB.
+Thus A and B each appeared equally often on each side. We crossed these pairings
+with the three earlier visible-reference conditions: misleading, unrelated and
+aligned names. There were 192 planned responses. Record order, reading task,
+label options and intended positional target were unchanged. Each output position
+always labeled the input at that position, even when the arbitrary tags differed.
+The prompt explicitly instructed this and did not ask for input-tag copying.
+The output rules fixed tags and order, leaving the reading labels to the model.
+
+**Result.** All 192 calls were received, authenticated and format-valid. On the
+prospectively selected later 32 positions, the matched AA/BB conditions scored
+2,420/3,072 (78.78%); disjoint AB/BA scored 1,000/3,072 (32.55%). The paired
+difference was 46.22 percentage points and positive in all 16 input batches.
+The improvement was similar across the three reference conditions: 46.39 points
+with misleading names, 45.70 with unrelated names, and 46.58 with aligned names.
+There were no missing outcomes, invalid outputs or producer/auditor score
+disagreements. The planned exploratory gate passed; this is not a fresh-input
+confirmation. Repeated labels are clustered within 16 inputs, not thousands of
+independent trials.
+
+**Interpretation.** Reuse improved intended-position reading accuracy within
+this interface. The comparison is more specific than adding tags versus none,
+and its scores are not explained by malformed output. It does not identify an
+internal binding or attention mechanism, establish freely learned tag copying,
+or prove an improvement to complete-task answers. Equal character length does
+not mean every paired prompt had exactly the same tokenizer length.
+
+**Why this does not contradict H1.** H1's unrelated names avoided pointing to
+another visible record; H6 changes an additional input/output bookkeeping tag
+while preserving the positional instruction. H6's gain appears in all three
+reference conditions. H1's 80% and H6's 33% are not interchangeable baselines:
+the prompts, interfaces, panels and pooled measures differ.
+
+**Checks and cost.** MAIN verified all 14 original seal entries, rerendered all
+192 frozen requests, checked 9,216 requested tags, and recounted the 192 literal
+response label arrays. Counts and audit summary agreed; the effect differed by
+only about 7e-15 percentage points from floating-point arithmetic. The completed
+attempt used 875,070 input and 237,078 output tokens, no cached tokens or unknown
+usage, and 1,449.67 seconds of parent wall time. The earlier zero-science startup
+failure remains separate. Next: test complete-task value and compare the same
+prompt with output-format constraints turned on and off.
 
 ## Relation to prior work
 
@@ -479,8 +639,10 @@ model calls are new.
 The possible contribution is the empirical decomposition: source-ID redirection, replicated
 late-batch correspondence repair, question-sensitive root learning, and the measured failure of
 local improvements to compose. The second captured SFT corpus and Qwen3-8B component check reduce
-two uncertainties, but a publication claim still needs newly selected evaluation inputs, a second
-task or model family, and a downstream use test of the winning correspondence interface.
+two uncertainties; the subsequent Mistral check extends the direction to another family.
+The fresh-root and nested-batch studies now add newly selected evaluation inputs.
+A stronger publication claim still needs a different task, further replications,
+and a downstream use test of the improved correspondence interface.
 
 ## Technical appendix: definitions, provenance, and exact sources
 
@@ -522,8 +684,22 @@ All paths below are under `/project/alex_phd/runs/rlm-research-r4/`.
 | S2: starting-policy and claim erratum | `analyses/root-question-sensitive-sft-new-corpus-live-2026-09-10/ERRATUM_START_AND_CLAIM.md` | `7974e7c0ff50ae3ad4dc357b05765445404f9144ff8112e335d8721cb91ba27d` |
 | S2: comparison figure data | `analyses/root-question-sensitive-sft-new-corpus-live-2026-09-10/FIGURE_DATA_FAITHFUL_CORPUS_REPLICATION.json` | `9d040c85d29a2d5f4886275def234baf9c3cbf4f5ad49eeafdead8869f426058` |
 | S2: erratum and figure seal | `analyses/root-question-sensitive-sft-new-corpus-live-2026-09-10/ERRATUM_FIGURE_SEAL.json` | `8dd41c3188b67c74a11d475c0e02ddf0e0aa1b9368c75b5e8d12bd9fb411f557` |
+| S3: fresh-input three-policy report | `analyses/root-question-sensitive-fresh-input-three-policy-live-2026-09-11/REPORT.md` | `df5db6c9fe798bebe9e4606a3d6ee7ba273d622078e7b8f1351febeb501547e8` |
+| S3: complete semantic audit | `analyses/root-question-sensitive-fresh-input-three-policy-live-2026-09-11/SEMANTICS_ALL.json` | `8d7f0466d423b23a780585f673709af4682dc8da7708e7c485f1f7593aec78ea` |
+| S3: final audit seal | `analyses/root-question-sensitive-fresh-input-three-policy-live-2026-09-11/FINAL_SEAL.json` | `9512db664dbe6fdf578ab477aebf8f33ab1808f8bfec1692d8704ffe71c2ae78` |
 | R1: reward-training continuation | `analyses/root-composed-rl-continuation-live-2026-09-10/REPORT.md` | `c7317d3f14a7fd6b5c32e735548fc72da85a63257c95aa22c703e9961df8b4d1` |
 | R1: final audit seal | `analyses/root-composed-rl-continuation-live-2026-09-10/FINAL_SEAL.json` | `ef8b82b4fc4d1df2865398987673325e82e2cbab572101d05da55ab9c8dafe12` |
+| R2: smaller-update report | `analyses/root-question-sensitive-terminal-rlvr-lr1e5-live-2026-09-10/REPORT.md` | `d6901670d6889b9469ba17ab51f39de19166bf013e96a620415a0e0ba9a17df4` |
+| R2: final audit seal | `analyses/root-question-sensitive-terminal-rlvr-lr1e5-live-2026-09-10/FINAL_SEAL.json` | `fd1750f6db9c488b5808bda3e395b69d81b23514bfa240785e68c780d6f350d9` |
+| H5: Mistral report | `analyses/leaf-mnli-stable-anchor-mistral7b-live-2026-09-11/REPORT.md` | `d5c48a217eb3f292397fa2d337fb2cc97f005d0243b0109dec0ccbcf8f437470` |
+| H5: final audit seal | `analyses/leaf-mnli-stable-anchor-mistral7b-live-2026-09-11/FINAL_SEAL.json` | `72bdbde3d6657fe59aff0691c1f5def4c6347d783d116661e1ecd27e6b495c8e` |
+| H5: interpretation qualification | `analyses/leaf-mnli-stable-anchor-mistral7b-live-2026-09-11/INTERPRETATION_ERRATUM.md` | `ff598a168efa1f88f85d1b5e606ddbb91562afe600dcd00c739aef090b96d8df` |
+| H6: balanced tag-reuse report | `analyses/leaf-mnli-balanced-tag-match-live-2026-09-11/REPORT_ATTEMPT002.md` | `c245e4f0f14b194889837c3cc8d5ccfd313d40d2d6e48f94362c635858cbdabf` |
+| H6: final audit seal | `analyses/leaf-mnli-balanced-tag-match-live-2026-09-11/FINAL_SEAL_ATTEMPT002.json` | `f7e8954d73dbc00f8e647bbd05968107546df965ecb002b6bbad230b013bb3bf` |
+| H6: plotted counts | `analyses/leaf-mnli-balanced-tag-match-live-2026-09-11/FIGURE_DATA_ATTEMPT002.json` | `ae408560e168193da30f0dde7ebe5cdfde16f79dbc6b42d4a31dce674760c712` |
+| H8: nested batch-size report | `analyses/leaf-mnli-nested-batch-matching-live-2026-09-11/REPORT.md` | `300f66b7ceac1ed3e89a32c2f44008eb201ca958f5b8b2ba00bd9927068c64ef` |
+| H8: native audit | `analyses/leaf-mnli-nested-batch-matching-live-2026-09-11/NATIVE_AUDIT.json` | `0d14d2abb7631641d403a7cbfdfbe790914d702dfc0651d3f4a55885dcdb6155` |
+| H8: final audit seal | `analyses/leaf-mnli-nested-batch-matching-live-2026-09-11/FINAL.json` | `87e7552988bb16ddb6588b6a814e1f0b3c8c84061f39db50ef12f2f9d7c8ccbb` |
 | Zero/nonzero strata | `analyses/controller-zero-support-strata-2026-09-10/REPORT.md` | `d550dd2df5fa13189e14168969fecec4e2851e6bf4ffe8b781a3dd826b7e6507` |
 | Related-readout erratum | `analyses/controller-zero-support-strata-2026-09-10/ERRATUM.md` | `99fa227e2a0d8bdd686353e76811ac39ccf272047dd75c0d0979fd235a817241` |
 | Fresh row-correspondence report | `analyses/leaf-mnli-positional-anchor-new-context-live-2026-09-10/REPORT.md` | `2e0599eb47f2e8bbb73e8ddf7c504763798d089b5e2f507a35696ad1bf9684e5` |

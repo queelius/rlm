@@ -3,11 +3,16 @@
 ## Current update: 11 September 2026
 
 The new [advisor discussion package](2026-09-11-advisor-meeting/README.md)
-contains a compiled 13-slide Beamer deck, a teaching and speaker guide,
+contains a compiled 14-slide Beamer deck, a teaching and speaker guide,
 detailed evidence, and possible publication paths. It includes later supervised
 and reward-training experiments and the input–answer matching studies.
 
 Build it with `make meeting` from this directory.
+
+For pdfpc speaker notes on a one-screen laptop, run `make present`; for private
+rehearsal, run `make rehearse`. See the [presentation instructions](2026-09-11-advisor-meeting/PRESENTING.md).
+In the two-window mode, click the presenter window and press `w` so the notes fit.
+Share only the audience window in a video meeting, not the whole desktop.
 
 ## Historical update: August 2026
 

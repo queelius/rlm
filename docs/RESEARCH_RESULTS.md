@@ -1,5 +1,9 @@
 # Reading the research results
 
+The [September 11 presenter and resume checkpoint](research-checkpoints/2026-09-11-presenter.md)
+links the latest advisor package and records the research state at 06:33 UTC.
+It distinguishes materials preserved in Git from model checkpoints on project storage.
+
 ## Public reading copy
 
 The [research notebook on GitHub](https://github.com/queelius/rlm-research)

@@ -48,6 +48,14 @@ is ready, preparing the smallest decision-relevant job becomes the immediate pri
 general refactoring, broad test suites, and presentation work do not outrank an independent ready GPU
 experiment.
 
+When delegating new work or a repair to an existing agent, use `followup_task`,
+which wakes a completed agent as well as delivering to an active one. Reserve
+`send_message` for informational updates that do not require a new turn. A sent
+message is not evidence that work started. Confirm the agent is running when
+its task is on the GPU critical path. On September 11 a repair sent only as an
+informational message left a completed worker idle and delayed the next GPU job;
+record such orchestration time as avoidable opportunity cost, not GPU research.
+
 Before preparing a new long campaign, compare its data identity, task/schedule hashes,
 starting checkpoint and objective against the completed-run index. A surviving candidate
 directory or old proposal is not evidence that the experiment remains unrun; a failed
@@ -70,6 +78,23 @@ and immutable evidence. Include contrary results, missing outcomes, exposure and
 independence limits, and the next comparison that could change the conclusion.
 Track whether a claim is exploratory, repeated on the same contexts, tested on new
 data, or ready for confirmation; a promising result is not automatically publishable.
+
+## Keep the advisor package and remote checkpoint current
+
+At each completed-run analysis, decide whether the finding changes the main
+message, an important limitation, or the next experiment. Record this editorial
+decision even when the result stays in the supporting report. Promote salient
+evidence or clearly labeled new ideas to `slides/2026-09-11-advisor-meeting/`
+without turning the presentation into a run log. Update slide, data, figure,
+pdfpc notes, guide and evidence cutoff together; rebuild and visually inspect.
+The audience must be able to understand the slides without the private notes.
+
+The user requested periodic GitHub pushes. After useful verified milestones,
+and before allocation changes, commit and push the scoped source and documents
+with ordinary non-force Git operations. Include the compiled audience PDF and
+portable presenter notes. Record what was pushed and what still lives only in
+the external research store. Never mistake pointers to model checkpoints for a
+backup of the checkpoint files themselves.
 
 When a result changes an interpretation, preserve the earlier record and add the
 correction and its reason. Keep reusable figures, primary-literature connections,

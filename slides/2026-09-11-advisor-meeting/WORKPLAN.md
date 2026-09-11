@@ -12,6 +12,17 @@ and invite useful advice about a realistic next research contribution. This
 package must also teach the presenter the research; it must not assume that he
 remembers implementation details from the automated experiments.
 
+## September 11 presenter-console update
+
+The user requested pdfpc speaker notes, a one-screen laptop launch path, and
+periodic GitHub pushes. Keep the14 audience slides and their03:45 numerical
+cutoff unless newly reviewed evidence warrants a content change. Put concise
+speaking cues and likely questions in a separate pdfpc sidecar, with long
+explanations in the existing guide. Make note/slide ordering checkable. Test
+the real GUI at laptop resolution, not only PDF text bounds, and document the
+need to share only the audience window. Push the verified package and durable
+operating instructions without including raw runs or model weights.
+
 # Agreed design
 
 Use approximately twelve slides, with a complete-sentence message on each slide.
@@ -52,7 +63,7 @@ no further approval pause is needed. Independent research continues on the A100.
   checkpoint, not three independent training replications.
 - A later separate training corpus provides a second training realization,
   not a second independent evaluation set or proof that its examples are better.
-- The second-model result compares two released models in one family, not size alone.
+- The model comparison now includes three models from two families, not size alone.
 - Later records within one batch are not independent experimental units.
 - Structured output forces identifiers and syntax, not correct labels.
 - Improved intermediate labels do not automatically mean a correct final answer.
@@ -79,3 +90,52 @@ check, or changes the next research decision. Update the data, figure, plain-lan
 interpretation, presenter questions, limitations, evidence links, and cutoff together.
 Then compile and inspect the PDF. Prefer revising an existing slide when its
 message remains clear; do not add every experiment to the main deck.
+
+## Standalone-reader revision
+
+The user asked that advisors be able to understand the slides without narration.
+This began as a bounded revision of the existing 13-slide story.
+Put the task, what changed, and the metric in the visible slide body or chart.
+Explain the switches between main-model training, helper-interface tests, and
+helper training. Define unfamiliar terms where used. Replace ambiguous chart
+labels such as "Reference labels" and "Verified successes" with their meaning.
+Keep essential limitations visible, with detailed counts and methods in the guide.
+Use examples and short complete sentences, not more dense footnotes. Compile,
+render, inspect all changed pages, and obtain a standalone-reader review.
+
+The revision also incorporates two reviewed results available at 01:30 UTC:
+Mistral repeats the direction of the tag benefit with lower absolute accuracy;
+smaller reward updates show no clear improvement. Both revise existing slides,
+not the slide budget. All three model formats remain paired on the same inputs;
+the two reward runs restart independently rather than forming a training sequence.
+
+## One additional slide for a salient control
+
+The 02:15 evidence revision adds H6 as slide9, taking the deck to14 slides.
+MAIN chose to preserve the future-test and discussion slides instead of merging
+away their questions. The new comparison gets its own small diagram and chart:
+tags on both sides, matching versus different. It reports reading accuracy, not
+an unobserved internal mechanism. The guide explicitly explains why this is not
+a contradiction of the earlier misleading-name study. Slide5 also puts the
+previously used evaluation inputs in the main body. Recompile and inspect the
+revised PDF; do not solve overflow by shrinking body text.
+
+The final wording pass clarifies independent training restarts, previous use of
+the evaluation records, the unchanged reading task across model comparisons,
+and our supplied Python calculation in the helper-training test. Later controls
+belong in later-findings.md for now; they do not increase the slide count.
+
+## New-input and batch-size evidence (03:45 cutoff)
+
+Replace slide 5's figure with the shared newly selected-input evaluation and
+slide 7's figure with the nested batch-size curves. Keep the earlier measurements
+in the evidence document and portable data. Define a matching tag before showing
+the curve; distinguish its all-answer metric from the later-answer cross-model
+chart. Update the future-test slide because new-input evaluation is now complete,
+while new calculation combinations and full-RLM matching benefits remain open.
+
+This bounded revision keeps 14 slides. The initial PDF had two vertical overflows;
+remove redundant text and padding, not body-font size. Compile, check all headings
+and bounds, visually inspect every final page, and keep exact hashes in the
+verification record. The main story should stand on its own; the guide supplies
+examples and questions without becoming required narration.

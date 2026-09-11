@@ -1,0 +1,60 @@
+{
+  "slides": [
+    {
+      "title": "Can a small model solve harder problems by dividing the work?",
+      "notes": "SAY: We ask whether a small model can solve harder problems by inspecting stored input, asking helpers, and combining their answers. We can teach a useful routine, but the connections between steps still fail.\n\nIF ASKED: The model is Qwen3-4B with small trained adapters, not a model trained from scratch.\n\nCAUTION: This is preliminary work on narrow tasks, not a general problem solver."
+    },
+    {
+      "title": "An RLM lets a language model use Python and ask smaller questions.",
+      "notes": "SAY: Follow the loop: the main model inspects stored input, asks a helper a smaller question, uses Python to combine the reply, and may continue.\n\nIF ASKED: A helper could divide its task again, which motivates the word recursive. Our highlighted tests mostly use one helper layer.\n\nCAUTION: Python makes arithmetic reliable only after the model has obtained the right evidence and chosen the right operation."
+    },
+    {
+      "title": "The helper reads the text; Python does the counting.",
+      "notes": "SAY: The helper labels which questions concern places. Python then adds weights by user: Ada has seven, Ben has two, so one user exceeds five.\n\nIF ASKED: A wrong reading label can corrupt correct arithmetic; a correct label map can still be combined with the wrong calculation.\n\nCAUTION: The weights and four rows are an illustration, not a copied training example or confidence scores."
+    },
+    {
+      "title": "We taught the main model what to do next, not just what answer to give.",
+      "notes": "SAY: Each demonstration showed an observation, then actions: ask the helper, calculate from its actual reply, and return the result. Only the main model's actions were training targets.\n\nIF ASKED: There were 72 demonstrations, repeated for six full-data updates; helper errors were retained rather than replaced with reference labels.\n\nCAUTION: The starting point was already trained on an earlier workspace routine. This teaches a routine, not open-ended planning."
+    },
+    {
+      "title": "Training improved performance on newly selected inputs.",
+      "notes": "SAY: On one shared 72-question test, the starting adapter had 12 verified successes; two separately trained copies had 55 and 53. Success requires the requested calculation and the correct answer.\n\nIF ASKED: Missing-result bounds are 12–19, 55, and 53–55. The third bar is a separate training corpus, not cumulative training on the second model.\n\nCAUTION: The records were new to our named root-study inventory, but the question types were familiar and the public text is not claimed unseen."
+    },
+    {
+      "title": "An answer can be right for the wrong record.",
+      "notes": "SAY: If row 7's answer carries row 8's visible name, the model may give a sensible label for row 8. Format can be perfect while correspondence is wrong.\n\nIF ASKED: Accuracy was 39% with misleading visible-record names and 80% with names pointing to no displayed record. On unequal-label positions, outputs favored the named record.\n\nCAUTION: We deliberately supplied the names and fixed output order. This is behavioral evidence, not a measurement of attention or internal mechanism."
+    },
+    {
+      "title": "Matching tags kept answers accurate as the helper handled more records at once.",
+      "notes": "SAY: Without matching tags, accuracy fell from about 83% at eight questions to 44% at 64. With row numbers or arbitrary matching tags, it stayed near 85%.\n\nIF ASKED: The same 16 record sets supplied nested batch sizes, and all 240 outputs were valid. Tags identify slots; they do not contain reading labels.\n\nCAUTION: Sixteen contexts are the comparison units. This does not establish a universal 32-record limit or a speed benefit."
+    },
+    {
+      "title": "Matching tags helped three models, including one from another family.",
+      "notes": "SAY: Matching tags helped both Qwen models and Mistral without retraining. Mistral still made substantially more errors, so the interface helps but does not solve the task.\n\nIF ASKED: These bars use the same 16 batches and score the last 32 positions of 48-question batches. Slide 7 instead scores every position across several batch sizes.\n\nCAUTION: Model family, weights, tokenizer, and instructions differ together. This is not a clean capacity comparison or a universal result."
+    },
+    {
+      "title": "Repeating the same tag beside an input and its answer improved accuracy.",
+      "notes": "SAY: Both conditions tagged inputs and answers, but only one reused the same tag on both sides. Matching raised later-position accuracy from 32.6% to 78.8%, with valid formatting throughout.\n\nIF ASKED: Position still determined which record to answer. A mismatched tag did not instruct the model to answer another record or copy the input tag.\n\nCAUTION: This is consistent with better input–answer matching, but it does not reveal the model's internal process or prove whole-system benefit."
+    },
+    {
+      "title": "Small helper improvements were not enough for reliable final answers.",
+      "notes": "SAY: Helper training slightly improved labels, but exact final answers moved only from zero of eight to one of eight. Reference labels made the fixed Python calculation correct on all eight.\n\nIF ASKED: One missed category-A record can wrongly exclude a user and all that user's category-B weights, so errors have unequal downstream effects.\n\nCAUTION: We supplied the calculation here. This is not a planning result or a matching-tag experiment, and eight problems share four inputs."
+    },
+    {
+      "title": "Reward training has not yet improved this trained model.",
+      "notes": "SAY: Two six-update reward runs started from the same trained model. Larger updates produced a lower bounded result; smaller updates produced no clear change.\n\nIF ASKED: The ranges are 55–56 before reward training, 47–50 after larger updates, and 52–56 after smaller updates. Missing outcomes create ranges.\n\nCAUTION: Final-answer reward cannot distinguish a lucky correct number from the requested computation. We have not shown that reward caused shortcuts or that reinforcement learning cannot work."
+    },
+    {
+      "title": "The next test is whether these gains help solve a complete problem.",
+      "notes": "SAY: We have two separate gains: the main model learned a better routine, and matching tags improved helper labels. The decisive question is whether either improves a complete final result.\n\nIF ASKED: Saved-label calculations favored tags, but the attempted main-model test had too few usable outcomes because of interface and input-limit failures.\n\nCAUTION: New operator combinations and a reliable whole-system comparison are proposed tests, not established capabilities."
+    },
+    {
+      "title": "The longer-term goal is to learn how to investigate and divide a new problem.",
+      "notes": "SAY: The longer-term model would inspect a sample, choose useful smaller questions, combine answers, and revise its plan when evidence is insufficient.\n\nIF ASKED: Training and tool changes can both help. A clean experiment should cross old and new models with old and new tools so their effects are separated.\n\nCAUTION: Today we supply demonstration routines. We have not shown autonomous investigation, unfamiliar-task decomposition, or deep recursion."
+    },
+    {
+      "title": "Which result should we turn into the next focused study?",
+      "notes": "SAY: My recommendation is a whole-task test of input–answer matching, because the helper effect is large but final usefulness remains unresolved.\n\nIF ASKED: A narrow paper needs a replicated failure, a controlled improvement, and evidence that the improvement matters in a complete task; numbering itself is not new.\n\nDISCUSS: Which evidence would be most convincing: another task, another model family, a clearer mechanism test, or a realistic application from your work?"
+    }
+  ]
+}
