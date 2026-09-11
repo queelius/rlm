@@ -1,5 +1,10 @@
 # Reading the research results
 
+After the advisor meeting, the [learned-decomposition research proposal](research-plans/2026-09-11-learned-decomposition.md)
+connects our results to RL feedback, strategy choice, recursive stopping, and tests on new task
+structures and datasets. It is an exploratory proposal, not evidence that those experiments
+have run. Consult the live queue for actual execution status.
+
 The [September 11 delivery checkpoint](research-checkpoints/2026-09-11-advisor-delivery.md)
 links the eight-main-slide advisor package and records the final short-experiment state.
 It distinguishes materials preserved in Git from model checkpoints on project storage.
