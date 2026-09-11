@@ -3,7 +3,10 @@
 After the advisor meeting, the [learned-decomposition research proposal](research-plans/2026-09-11-learned-decomposition.md)
 connects our results to RL feedback, strategy choice, recursive stopping, and tests on new task
 structures and datasets. It is an exploratory proposal, not evidence that those experiments
-have run. Consult the live queue for actual execution status.
+have run. The [first diagnostic execution plan](research-plans/2026-09-11-first-diagnostic-execution.md)
+turns the approved direction into bounded comparisons; the
+[RAO code notes](research-plans/2026-09-11-rao-code-notes.md) distinguish root feedback from
+independently scored child tasks. Consult the live queue for actual execution status.
 
 The [September 11 delivery checkpoint](research-checkpoints/2026-09-11-advisor-delivery.md)
 links the eight-main-slide advisor package and records the final short-experiment state.
