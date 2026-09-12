@@ -20,6 +20,15 @@ problems when observed and iterate quickly. Apply exhaustive safeguards only whe
 to a confirmatory claim. Never run meaningless filler merely to show utilization, but treat avoidable
 GPU idleness as a failure of research operations and record it explicitly.
 
+Keep exploratory preflight proportional to the decision. Perform shared CPU preparation and
+immutable-input checks before acquiring the GPU lock where practical; do not repeatedly walk and
+rehash the same multi-gigabyte ancestry at every wrapper layer. Reuse a verified result within an
+owner while its inputs remain unchanged, and recheck changed inputs. For a thin runtime adapter,
+prefer a focused fixture that exercises an actual saved request, response decoding, and scoring
+over constructor-only checks or a broad test campaign. Preserve failed attempts, fix the observed
+seam, and continue with an independent ready job. Do not edit a live owner's sealed source to
+optimize its preflight; apply the lesson to the next owner.
+
 Research is an adaptive loop, not execution of a static queue. Analyze each completed or failed run
 promptly, record what it changes, and turn its strongest signal or uncertainty into ranked follow-up
 questions. Replicate promising effects, probe plausible mechanisms, and pivot when a direction stops
