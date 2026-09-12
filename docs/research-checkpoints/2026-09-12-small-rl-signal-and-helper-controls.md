@@ -1,6 +1,6 @@
 ---
 schema: research-checkpoint-v1
-updated_utc: 2026-09-12T22:16:00Z
+updated_utc: 2026-09-12T22:55:00Z
 status: exploratory
 questions:
   - Can reward-based training improve a controller that already retrieves the right text?
@@ -118,16 +118,49 @@ alone therefore does not explain these cases.
 
 This is not a paired28→7 model regression: the questions and decoding seeds
 changed. It distinguishes copying contrast from failed literal selection.
-We are testing a generic instruction to inspect actual request strings before
-matching them, with no email-specific patch or supplied answer. A separate
-group-relative update has now completed on the three mixed groups. It credits
-12 actual final answers and keeps the other 20 zero-signal attempts in the
-32-attempt denominator. It took about 33 seconds of training. Its accuracy
-readout is still pending; changing weights is not evidence of improvement.
+We tested a generic instruction to inspect actual request strings before
+matching them, with no email-specific patch or supplied answer. It did not
+produce that behavior in any of the 32 attempts. Exact answers fell from 7 to
+4, correct retrieval fell from 24 to 18, and generated tokens rose by 29%.
+We are retiring this instruction, not concluding that learning to inspect
+the input is impossible. A useful next intervention must actually teach or
+elicit inspection before testing its effect.
+
+A separate group-relative reward update used the three mixed groups. It
+credited 12 actual final answers and retained the other 20 zero-signal
+attempts in the 32-attempt denominator. Training took about 33 seconds.
+The completed readout did not improve the main panels:
+
+| Fixed starting model versus new reward update | Before | After |
+|---|---:|---:|
+| Short answers, same fresh seed block | 25/32 | 25/32 |
+| Longer-input answers | 10/16 | 10/16 |
+| Third/fourth-occurrence answers | 10/16 | 11/16 |
+
+All 64 outcomes were available. The single additional exact answer restored
+two required spaces after otherwise identical retrieval. Another attempt
+recovered a working search program but still copied the final answer
+incorrectly; a different attempt lost usable program generation. Overall,
+59 of 64 complete model-call paths were unchanged. This is not an established
+retrieval improvement or a replicated RL gain.
+
 This recipe changes both training questions and reward baseline relative to
-the earlier update, so it will not isolate the choice of RL objective.
+the earlier update, so it does not isolate the choice of RL objective. We
+are now checking its original training attempts to distinguish local learning
+without transfer from an update too small to change sampled behavior. A CPU
+audit also found that reduced-precision serving perturbs the small updates,
+but does not erase them. It is a possible noise source, not an explanation
+that rescues the accuracy claim.
 
 Evidence: `analyses/openai-mrcr-sft32-fresh8-g4-mechanism-2026-09-12/REPORT.json`.
+Completed follow-ups:
+
+- `analyses/openai-mrcr-fresh8-rloo-paired-2026-09-12/readout-002.json` and
+  `CHANGED_PATHS.md` document every paired outcome and changed model path.
+- `analyses/openai-mrcr-fresh8-literal-inspection-independent-2026-09-12/outcome-002/`
+  documents the unsuccessful instruction and its actual behavior.
+- `analyses/mrcr-serving-precision-audit-2026-09-12/REPORT_V2.md` separates
+  saved-weight and implementation evidence from unobserved live GPU tensors.
 
 ## The supervised routine extends to third and fourth occurrences
 
