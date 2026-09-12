@@ -1,5 +1,12 @@
 # Reading the research results
 
+The [checking-cost and RL-saturation results](research-checkpoints/2026-09-12-checking-cost-and-rl-saturation.md)
+show that selective checking saved tokens compared with three-answer voting but
+did not clearly beat the cheapest single pass on fresh examples. Larger RL
+updates stopped with no relative reward signal and did not improve the evaluated
+answers. A numerical-data pilot exposed code and time limits before it could
+test a functioning Python-assisted policy.
+
 The [exploration and helper-contract comparisons](research-checkpoints/2026-09-12-exploration-and-helper-contracts.md)
 show that higher sampling temperature created more contrasting training answers
 but changed none of the 256 evaluation predictions. A separate complete experiment
