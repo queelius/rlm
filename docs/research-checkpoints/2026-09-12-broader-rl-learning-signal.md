@@ -1,9 +1,11 @@
 # RL gains repeat, but weaken on fresh examples
 
-Evidence cutoff: September 12, 2026, 17:03 UTC. Two training seeds show a
+Evidence cutoff: September 12, 2026, 17:42 UTC. Two training seeds show a
 similar gain on the earlier panel. On 512 fresh examples, the gains are smaller
 and do not clearly beat supervised training. This changes our interpretation:
 we have evidence of modest helper improvement, not a general RL advantage.
+The first test on a different task shows almost no change. Better helper labels
+also failed to improve the complete RLM's final answers in a small paired test.
 
 ## What we tried
 
@@ -88,8 +90,17 @@ is substantially more encouraging and now repeats across two training seeds.
 Both seeds saw the same training data. The fresh-example test now shows a
 smaller positive difference from the starting helper, without a clear advantage
 over supervised training. Neither news panel establishes transfer to a new task.
-More varied training data and more updates changed together, so we cannot yet
-say which caused the improvement. Only 43 of 256 training request groups had
+The initial comparison changed both data variety and update count. A new control
+now separates them more directly: eight updates repeating the same 128 articles
+scored 417/512, compared with 437/512 after eight different article groups and
+422/512 before either run. Against the varied-data model, repetition lost 23
+answers and won three; every answer was available and raw-response audited.
+This supports using varied examples in this setting, rather than simply doing
+more updates. It remains a single repetition run on the earlier test panel;
+its first update was not bitwise identical to the varied-data run despite
+matching sampled inputs, and the choice of the repeated block may matter.
+A fresh-panel comparison is being prepared before making a stronger claim.
+Only 43 of 256 training request groups in the varied-data run had
 different scores among their four samples; useful learning did not require
 every group to provide a contrast.
 
@@ -110,8 +121,47 @@ wrong to right; supervised training changed none.
 
 This small check found no accuracy loss. It does not establish broad retention
 or transfer: the panel has historical evaluation exposure and omits one of
-the dataset's six categories. We are also preparing an encyclopedia-description
-test with 14 different categories, which will be a more distinct task.
+the dataset's six categories.
+
+On a different task, classifying 224 encyclopedia descriptions into 14 categories,
+the starting helper got 209 correct, supervised training got 208, and the two RL
+models got 209 and 210. All answers were available and independently checked
+against the saved raw responses. Each trained model changed only one starting
+prediction. The first RL model changed one wrong label to another wrong label;
+the second corrected one error. This small test does not establish useful
+cross-task improvement, although it found little change in existing performance.
+
+## Do better helpers improve the complete RLM?
+
+Not yet in our small test. We gave the unchanged controller eight fresh sets of
+16 news articles and asked two questions per set, such as counting articles in
+a category or adding their numerical weights. The controller had to call the
+helper and write its own Python code to combine the returned labels.
+
+The helper's correct labels rose from 103 to 108 out of 128 distinct articles,
+but the complete RLM answered only 3 of 16 questions correctly with either
+helper. Without helper calls, the tested controller answered none correctly.
+All 48 scheduled outcomes were available. These are eight context groups,
+not 48 independent problems or evidence about unfamiliar question types.
+
+The saved programs explain some of the gap. Four count attempts assigned a
+Python variable but did not print its value. The controller therefore received
+an empty observation, then answered anyway. Some programs also counted the
+wrong subset of articles. In contrast, all 20 supported programs that returned
+a scalar observation had final answers matching their computed value—even
+when that value was wrong. The controller does not generally ignore its helper.
+
+There is another caution: the only newly exact helper-derived aggregate came
+from two label mistakes cancelling each other, not from a faithful set of labels.
+Six other unique label mistakes were genuinely corrected, but this did not
+produce another exact final answer. We should measure correct intermediate
+work as well as final scores.
+
+The controller's authenticated training examples all printed their intermediate
+results. Silent assignment was not a demonstrated target. We will therefore
+test whether the model retains the execution procedure on fresh inputs and
+whether a clearer result-return mechanism helps. Simply adding more examples
+of the same routine may not fix incorrect interpretation of the question.
 
 ## The controller needs a different investigation
 
@@ -136,41 +186,53 @@ user request, and return the following assistant reply. The demonstration
 program solves all 32 training conversations using their public text and
 questions. That validates the demonstrations, not the model's ability. The
 model still needs to learn the procedure and be tested on held-out conversations.
-A fixed four-update supervised run and a separate one-update RL comparison are
-queued. The latter gives partial reward only for a near-exact answer, and full
-reward for an exact answer. It may still reward broad conversation printing, so
-we will inspect the procedure and observation size as well as answer scores.
+A fixed four-update supervised run is queued. A separate proposed RL update
+gives partial reward only for a near-exact answer, and full reward for an exact
+answer. Its first attempt stopped before changing weights: the probabilities
+computed by the training and answer-generation engines differed enough that
+whole-trajectory importance weights became highly uneven. This is a failed
+training qualification, not evidence that RL learned nothing. We are checking
+whether small numerical differences accumulate across long action sequences,
+and whether a standard lower-variance correction is appropriate. The reward may
+still favor broad conversation printing, so procedure and observation size
+remain necessary diagnostics.
 
 A new record-selection interface exposed a similar problem. Only 11 of 48
 episodes produced a strictly formatted final answer; only nine also agreed
 with the declared finish action. The original exporter rejected the modified
 prompts, so these are separately audited raw-trace diagnostics, not an accuracy
-comparison. A paired syntax-example experiment has completed, but the same
-exporter mistake rejected its modified prompts. All 48 actual initial prompts
-match the condition-specific prompts frozen before the run. A separate audit is
-recovering what can be learned without rerunning the model. Raw traces show fewer
-rejected interface actions after the syntax example (35 to eight), but not better
-agreement between the model's declared finish and final answer. This is not yet
-a positive architecture result.
+comparison. A paired syntax-example experiment also encountered the exporter
+mistake. Its corrected, call-free audit now authenticates all 48 initial prompts
+against the condition-specific prompts frozen before the run; it does not change
+model outputs. Correct endpoint answers fell from 5 to 2 out of 24, with two and
+three provider-error outcomes respectively kept unknown. Under the interface's
+stricter finish contract, usable answers fell from five to zero. Rejected
+interface actions fell from 35 to eight, but this did not improve answers.
+We are retiring this syntax-example variant rather than spending more GPU time
+on the same intervention.
 
 ## What we will do next
 
-The new official-test comparison above is complete, with all four fixed models
-reported. A queued encyclopedia-description test asks whether changes survive a
-different task with 14 categories. A released-base model reference will help
+The news and encyclopedia comparisons above are complete, with all four fixed
+models reported. A released-base model reference will help
 distinguish new capability from undoing earlier specialization.
+Its first launch failed before making any model calls because a helper-specific
+launcher was incorrectly reused for the unadapted model. A narrow, additive
+repair will retain the same frozen questions and preserve the failed attempt.
 
-A training run completed eight updates by repeating the first 128 articles.
-Its fixed final evaluation is queued. Comparing it with eight different blocks
-helps separate training breadth from update count. All eight updates had usable
-reward contrasts and saved optimizer checkpoints. The training score increased,
-but that is not yet a held-out improvement.
+The repeated-data run improved its sampled training score but reduced its test
+score, as reported above. We will test its fixed checkpoint on the same fresh
+panel already used for the other four models; no best-checkpoint selection is
+involved. This is a stronger follow-up than repeating the same training recipe
+without checking where its improvement applies.
 
-Another queued experiment keeps the controller unchanged and uses live helper
-calls on eight new news contexts. It asks whether better local category labels
-actually lead to better final counts and sums. The controller must write its
-own aggregation code. A helper gain with no final-answer gain would point us
-toward a different bottleneck than a failure to improve the helper itself.
+The whole-RLM comparison above now points toward controller interpretation and
+execution as additional bottlenecks. A queued conversation-retrieval comparison
+tests supervised procedural training against a small RL update once its
+training-engine mismatch is addressed. A separate training-only measurement
+is conditional on an actual update and will check whether it changes
+the probability of the sampled actions. This distinguishes a negligible update
+from a substantial update that does not help on new examples.
 
 We also queued a small multi-hop question-answering comparison: does allowing
 helpers to call their own helpers improve answers under the same total-call
@@ -181,8 +243,10 @@ The strongest potential research story is therefore not simply that RL works.
 It is identifying which component improves, under what training conditions,
 and whether that improvement survives changes in examples and reaches the
 whole system's answers. We have promising evidence for the first part, but
-fresh-example evidence is weaker than the first panel suggested. The remaining
-parts are experiments in progress, not publication-ready conclusions.
+fresh-example evidence is weaker than the first panel suggested, and the first
+whole-system and cross-task comparisons show little or no endpoint improvement.
+These limitations are guiding the next experiments, not being hidden behind
+the most favorable initial score. The broader story is not publication-ready.
 
 ## Evidence
 
@@ -208,3 +272,14 @@ its independent four-arm source-to-raw audit is in
 The controller procedure correction is
 `analyses/openai-mrcr-short32-outcomes-2026-09-12/PROGRAM_VS_TERMINAL_ADDENDUM.json`,
 SHA256 `858fb090ea54796da506b1a155461dd7291e0da8022b115238868bfddffbcebb`.
+
+The encyclopedia audit is
+`analyses/helper-dbpedia224-transfer-independent-2026-09-12/RESULT.json`.
+The whole-RLM mechanism and training-corpus audit is
+`analyses/root-qs6-ag-live-helper-transfer-mechanism-2026-09-12/REPORT.json`;
+it uses static recognition and trusted host reductions, never executing saved
+generated programs. The corrected syntax readout is in
+`analyses/root-qs6-budgeted-evidence-syntax-corrected-readout-2026-09-12/`.
+The repetition control is
+`analyses/helper-agnews-repeat128-live-audit-2026-09-12/outcomes/RAW_AUDIT.json`,
+SHA256 `510c93109e2db100c844086d73d81395cb620326688516f9435bb237452ac9a4`.
