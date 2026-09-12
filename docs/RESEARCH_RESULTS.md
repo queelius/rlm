@@ -1,5 +1,11 @@
 # Reading the research results
 
+The [completed helper-information intervention](research-checkpoints/2026-09-12-helper-intervention.md)
+reports 26/48 correct with original helper replies, 27/48 when replaying those
+replies, and 44/48 when supplying correct local labels. It explains the remaining
+root mistakes, the limits of this two-context diagnostic, and the next helper
+training and request-size experiments.
+
 The [completed September 12 learning comparison](research-checkpoints/2026-09-12-learning-comparison.md)
 reports 53 correct answers for the unchanged model, 52 after one root-only RL
 update, and 57 after learning from successful own attempts, on the same 72-question
