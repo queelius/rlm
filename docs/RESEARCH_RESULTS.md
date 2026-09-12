@@ -1,5 +1,10 @@
 # Reading the research results
 
+The [September 12 helper-feedback update](research-checkpoints/2026-09-12-helper-feedback.md)
+reports the first paired root-RL result (52 correct versus 53 unchanged) and the
+trace evidence motivating a helper-focused diagnostic. The oracle, replay and
+helper-training ideas are clearly separated from completed findings.
+
 The [September 12 learning checkpoint](research-checkpoints/2026-09-12-onebatch-learning.md)
 records a completed 48-attempt feedback diagnostic, saved RL and self-SFT updates,
 and the running paired evaluation. It distinguishes successful training execution
