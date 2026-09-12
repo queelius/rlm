@@ -1,5 +1,12 @@
 # Reading the research results
 
+The [first completed helper-RL readout](research-checkpoints/2026-09-12-helper-rl-first-readout.md)
+separates working training mechanics from answer quality: one qualified update
+gave 119→120 correct new questions, 112→112 news examples, and 245→244 familiar
+answers. The original model scored 92/128 on those new questions, providing a
+stronger transfer result for the earlier supervised training. The report explains
+the sparse RL signal and the planned four-update test.
+
 The [downstream helper-size comparison](research-checkpoints/2026-09-12-helper-size-downstream.md)
 connects actual saved helper replies to final task results: 12, 18 and 17 correct
 answers out of 24 for replies generated in groups of sixteen, four and one.
