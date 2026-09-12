@@ -1,7 +1,8 @@
 # A broader RL gain repeats with a second training seed
 
-Evidence cutoff: September 12, 2026, 15:10 UTC. Two training seeds now show a
-similar gain on the same test panel. A separate-panel test is being prepared.
+Evidence cutoff: September 12, 2026, 16:00 UTC. Two training seeds show a
+similar gain on the same test panel. A separate-panel test is queued. The
+retention and controller findings below are newer than the first report.
 
 ## What we tried
 
@@ -79,25 +80,65 @@ These are workflow times, not isolated GPU-compute measurements. The accuracy
 table is not evidence that RL is more compute-efficient or generally superior
 to supervised training.
 
+## Did the helper lose its earlier skill?
+
+On 128 previously evaluated question-classification examples, the starting
+helper got 121 right, the first RL model got 122, and the supervised model
+got 121. Every answer was available. RL changed exactly one answer, from
+wrong to right; supervised training changed none.
+
+This small check found no accuracy loss. It does not establish broad retention
+or transfer: the panel has historical evaluation exposure and omits one of
+the dataset's six categories. We are also preparing an encyclopedia-description
+test with 14 different categories, which will be a more distinct task.
+
+## Why we are not yet training the controller with the same recipe
+
+The helper result does not mean that the controller can already plan well.
+In a separate 32-trial search of one long conversation, the controller returned
+no exact requested answers. Many attempts copied a user's request instead of
+the assistant's reply. Its low, varying text-overlap scores mostly measured
+differences between wrong answers. We did not treat those scores as sufficient
+reason to begin RL.
+
+We are instead testing shorter conversations and preparing examples that teach
+a clear retrieval procedure: identify the requested message, find the matching
+user request, and return the following assistant reply. The demonstration
+program solves all 32 training conversations using their public text and
+questions. That validates the demonstrations, not the model's ability. The
+model still needs to learn the procedure and be tested on held-out conversations.
+
+A new record-selection interface exposed a similar problem. Only 11 of 48
+episodes produced a strictly formatted final answer; only nine also agreed
+with the declared finish action. The original exporter rejected the modified
+prompts, so these are separately audited raw-trace diagnostics, not an accuracy
+comparison. A paired syntax-example experiment now asks whether the model can
+learn to use this interface before we assess the quality of its selection policy.
+
 ## What we will do next
 
 Evaluate all four fixed models on 512 separately selected articles from the
 dataset's official test partition. Their selection was frozen before the second
 RL test score was known. This checks different examples within the same task,
-not transfer to a new domain. A separate question-category test checks retention
-of previously learned skills; those records have historical local evaluation
-exposure and must not be described as wholly unseen.
+not transfer to a new domain. All four models remain in the comparison; we
+have not selected a better seed based on the earlier scores.
 
-Another queued training run repeats the first 128 articles eight times. Comparing
+A training run now repeats the first 128 articles eight times. Comparing
 it with eight different blocks helps separate training breadth from update count.
 If repetition stops early because the sampled answers all receive the same
 reward, we will report that stop rather than call it an eight-update comparison.
 
-In parallel, a separate experiment lets the RLM choose which records to ask
-about and explicitly decide when to finish. Another conversation-search study
-targets the controller's own Python-based procedure. Those are ongoing
-experiments, not demonstrated benefits. A new 32-train/16-test conversation
-split is ready for a later test on different underlying conversations.
+Another queued experiment keeps the controller unchanged and uses live helper
+calls on eight new news contexts. It asks whether better local category labels
+actually lead to better final counts and sums. The controller must write its
+own aggregation code. A helper gain with no final-answer gain would point us
+toward a different bottleneck than a failure to improve the helper itself.
+
+The strongest potential research story is therefore not simply that RL works.
+It is identifying which component improves, under what training conditions,
+and whether that improvement survives changes in examples and reaches the
+whole system's answers. We have promising evidence for the first part; the
+remaining parts are experiments in progress, not publication-ready conclusions.
 
 ## Evidence
 
