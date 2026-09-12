@@ -1,5 +1,12 @@
 # Reading the research results
 
+The [replication and next learning study](research-checkpoints/2026-09-12-replication-and-next-learning-study.md)
+shows that a one-answer RL gain on new news articles did not survive a fresh-seed
+repeat. An eight-update supervised comparator is complete and a broader RL run
+is active; their separate, fixed final test has not yet established improvement.
+The report explains the sparse training contrast and why controller learning
+remains important.
+
 The [reward-feedback and input-size checks](research-checkpoints/2026-09-12-feedback-and-input-shape.md)
 found no new RL gain. Giving more training questions nonzero feedback changed
 none of the 256 evaluated labels, and evaluating one item at a time did not
