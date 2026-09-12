@@ -29,6 +29,14 @@ over constructor-only checks or a broad test campaign. Preserve failed attempts,
 seam, and continue with an independent ready job. Do not edit a live owner's sealed source to
 optimize its preflight; apply the lesson to the next owner.
 
+After service startup, verify a real scientific model response promptly (normally within
+90 seconds of the first request). A running process, occupied GPU memory, or growing request
+log is not evidence of useful GPU work. Inspect returned/error counts and service throughput;
+all-transport-error loops must not run unnoticed until the experiment cap. Stop only the
+authenticated faulty collector through its existing owner, preserve the failed attempt, and
+release to a ready independent experiment while repairing the actual transport seam on CPUs.
+Record the wasted interval honestly. This is a lightweight live check, not another broad preflight.
+
 Research is an adaptive loop, not execution of a static queue. Analyze each completed or failed run
 promptly, record what it changes, and turn its strongest signal or uncertainty into ranked follow-up
 questions. Replicate promising effects, probe plausible mechanisms, and pivot when a direction stops

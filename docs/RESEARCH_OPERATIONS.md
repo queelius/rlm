@@ -17,6 +17,25 @@ runs.
 
 Exploration must not wait for confirmatory infrastructure.
 
+## Check actual scientific progress, not merely a loaded model
+
+After the first scientific request, check for a real returned model response,
+normally within 90 seconds. Inspect native returned/error counts and inference
+throughput. GPU memory allocation and a growing request log are insufficient:
+a September 12 temperature screen made 238 failed connection attempts while a
+model remained loaded, producing no model-quality evidence. That interval was
+wasted opportunity, not GPU experimentation.
+
+If all requests fail transport, diagnose immediately and use the existing
+authenticated owner to stop its collector and release the service. Preserve
+the attempt and move to a ready independent comparison. Test the repaired
+request through the actual native endpoint, parser and observation path;
+checking a configuration object's temperature alone does not qualify it.
+Include the installed experiment hooks: in this failure an audit hook rejected
+the new temperature before the network request, while a fixture without that
+hook passed. Test the observed failure boundary, not a growing generic checklist.
+Do not add broad test suites or change a live owner's sealed code to do this.
+
 ## Continuous operating loop
 
 1. Keep the GPUs working on the highest-information ready jobs.
