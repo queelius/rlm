@@ -1,5 +1,11 @@
 # Reading the research results
 
+The [new decomposition and four-update RL results](research-checkpoints/2026-09-12-decomposition-transfer-and-four-step-rl.md)
+show why adaptation matters: smaller requests helped slightly on question
+categories but hurt on news, at higher token cost. Four RL updates produced
+exactly the same evaluation answers as the earlier one-update pilot. The report
+explains the limited feedback and the next task-targeted helper experiment.
+
 The [serving-probability stability probe](research-checkpoints/2026-09-12-serving-probability-stability.md)
 shows that an existing vLLM option eliminated the observed probability variation
 in one small controlled workload, at increased runtime. It motivates a fresh
