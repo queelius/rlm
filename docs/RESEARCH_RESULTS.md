@@ -1,11 +1,16 @@
 # Reading the research results
 
+The [broader-data RL result](research-checkpoints/2026-09-12-broader-rl-learning-signal.md)
+is a promising new lead: 437/512 correct after eight RL updates, versus 422
+before training and 427 after supervised training. It needs a training-seed
+replication, and it does not yet demonstrate learned decomposition or broader
+task transfer. The report keeps the differing training costs visible.
+
 The [replication and next learning study](research-checkpoints/2026-09-12-replication-and-next-learning-study.md)
 shows that a one-answer RL gain on new news articles did not survive a fresh-seed
-repeat. An eight-update supervised comparator is complete and a broader RL run
-is active; their separate, fixed final test has not yet established improvement.
-The report explains the sparse training contrast and why controller learning
-remains important.
+repeat. It records the earlier cutoff when the broader study was still running;
+its completed comparison is in the newer report above. The earlier result and
+its limitations remain part of the evidence.
 
 The [reward-feedback and input-size checks](research-checkpoints/2026-09-12-feedback-and-input-shape.md)
 found no new RL gain. Giving more training questions nonzero feedback changed
