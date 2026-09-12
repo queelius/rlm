@@ -1,21 +1,24 @@
 ---
 schema: research-checkpoint-v1
-updated_utc: 2026-09-12T21:49:00Z
+updated_utc: 2026-09-12T22:16:00Z
 status: exploratory
 questions:
   - Can reward-based training improve a controller that already retrieves the right text?
   - Does an extra helper improve reasoning, or merely change how the answer is written?
-claim_level: small_unreplicated_rl_signal_and_mechanism_controls
+claim_level: rl_gain_did_not_replicate_and_same_family_sft_transfer
 ---
 
-# A small RL signal, and a reason to test simpler helpers
+# Retrieval transfers, but the small RL gain did not replicate
 
-We have a small positive result from reward-based training, but not yet a
-reliable general improvement. We also found that an apparently helpful extra
-reasoning step improved answer wording rather than solving new reasoning steps.
-Both findings suggest concrete next comparisons.
+The supervised-trained search routine works on longer conversations and on
+third/fourth occurrences that were not in its demonstrations. Reward-based
+training is less convincing: an initial small gain reversed when we repeated
+the comparison with new decoding seeds. An apparently helpful extra reasoning
+step also improved answer wording rather than solving new reasoning steps.
+These results help us choose what to try next; they are not evidence of a
+generally successful RL method or learned recursive decomposition.
 
-## Reward-based training improved two short answers, but not longer ones
+## The first RL gain reversed under new decoding seeds
 
 We started from the supervised-trained model that already knows how to search
 the conversation through Python. We then made one reward-based weight update,
@@ -34,6 +37,7 @@ a standard policy-gradient idea, not a new RL method.
 | Exact short answers | 23/32 | 25/32 |
 | Exact longer-input answers | 10/16 | 10/16 |
 | Available outcomes | 48/48 | 48/48 |
+| Short answers, fresh paired seed block | 25/32 | 22/32 |
 
 The short evaluation contains 16 conversations with two requested decoding
 seeds each. The longer evaluation contains 16 different conversations with one
@@ -54,11 +58,20 @@ gradient was overwhelmingly concentrated on erroneous whitespace, not on the
 answer body. This explains the local training signal; it does not by itself
 explain every changed evaluation answer.
 
-These are research-exposed evaluation panels, one training update and reused
-qualified control outputs. We have not established statistical reliability,
-new-task transfer, or that the gains persist under new decoding seeds. A new
-paired evaluation will run **both** models on all 16 short conversations with
-two additional seeds each. It will retain every outcome, not just the two wins.
+We then ran **both** fixed models on all 16 short conversations with two new
+decoding seeds each, retaining every outcome. All 32 pairs were available.
+The starting model scored 25/32 and the updated model 22/32: three losses and
+no gains. All three losses added a final line break after otherwise correct
+retrieval. They occurred on two conversations; repeated seeds are not
+independent conversations. The complete token paths changed in five attempts,
+including two that remained wrong. Returned calls rose from 64 to 66 and
+completion tokens from 20,739 to 23,170.
+
+The two short blocks therefore give inconsistent signs, not a replicated
+improvement. These are research-exposed panels and one trained checkpoint;
+we will not select the favorable seed block and call RL successful. The
+longer-input result remains unchanged. This does not show that RL cannot work;
+it retires the positive claim for this particular one-step recipe.
 
 The exact primary score retains spaces and line breaks. A correct answer with
 missing required spaces is wrong under this copying task's contract. This is
@@ -69,6 +82,8 @@ Evidence in the external research store:
 
 - `analyses/openai-mrcr-fixed-baseline-rl-paired-2026-09-12/readout-002.json`
   independently reproduces native outputs, scores, pairing and costs.
+- `analyses/openai-mrcr-fixed-rl-decode-replica-2026-09-12/RESULTS.json`
+  reproduces both newly generated seed-block arms and the reversal.
 - `analyses/openai-mrcr-cp32-fixed-baseline-rl-update-audit-2026-09-12/RESULTS.json`
   records the actual update and gradient decomposition.
 - `sidecars/openai-mrcr-cp32-fixed-baseline-final-rl-v1/outputs/attempt-001/checkpoint-0001/`
@@ -103,11 +118,40 @@ alone therefore does not explain these cases.
 
 This is not a paired28→7 model regression: the questions and decoding seeds
 changed. It distinguishes copying contrast from failed literal selection.
-We are preparing a generic instruction to inspect actual request strings
-before matching them, with no email-specific patch or supplied answer. The
-third- and fourth-request transfer evaluation is now running separately.
+We are testing a generic instruction to inspect actual request strings before
+matching them, with no email-specific patch or supplied answer. A separate
+group-relative update has now completed on the three mixed groups. It credits
+12 actual final answers and keeps the other 20 zero-signal attempts in the
+32-attempt denominator. It took about 33 seconds of training. Its accuracy
+readout is still pending; changing weights is not evidence of improvement.
+This recipe changes both training questions and reward baseline relative to
+the earlier update, so it will not isolate the choice of RL objective.
 
 Evidence: `analyses/openai-mrcr-sft32-fresh8-g4-mechanism-2026-09-12/REPORT.json`.
+
+## The supervised routine extends to third and fourth occurrences
+
+The demonstrations taught the model to retrieve the first or second response
+to a repeated request. We froze 16 new conversations asking for the third or
+fourth response, eight of each, before running either model. Exact conversation
+and target overlaps with prior research panels were excluded.
+
+The base model scored 0/16; the supervised-trained model scored 10/16. All
+outcomes were available, with five gains in each requested position. The
+trained model selected the correct text in 13/16 attempts. Three then omitted
+only the required two trailing spaces. Of the other three failures, two
+searched for altered request wording and one exhausted its output allowance
+before completing an action. The native audit accounted for all 83 model
+calls and replayed all 32 episode records without integrity discrepancies.
+
+Together with the separate longer-input result, this supports a narrow but
+useful conclusion: the learned Python search routine is not limited to the
+exact lengths and occurrence positions in its demonstrations. Both tests use
+the same public repeated-request task family. Neither shows new-task transfer,
+recursive delegation, or freedom from unknown pretraining exposure.
+
+Evidence: `analyses/openai-mrcr-fourneedle-ordinal-transfer-independent-2026-09-12/`
+contains the paired outcome, native-validation-v2 and residual mechanism reports.
 
 ## The extra helper changed wording, not the facts it could answer
 
@@ -168,9 +212,11 @@ score as a failure of decomposition.
 A publishable result would need a repeatable intervention that addresses a
 specific failure and works on new material, with its cost and limits measured.
 We do not yet have evidence for learned recursive decomposition or a broadly
-successful RL method. The stronger established result remains supervised
-retrieval transfer to new, longer conversations; the reward update is now a
-small, testable extension to that baseline.
+successful RL method. The stronger result remains supervised retrieval
+transfer to longer conversations and new occurrence positions. We are testing
+whether more informative reward contrasts improve final delivery, while
+preparing a different task with verifiable intermediate results to investigate
+decomposition itself rather than continuing to optimize copying alone.
 
 The already-presented advisor deck remains a historical snapshot. This report
 is a post-meeting research checkpoint, not a silent revision of that deck.
