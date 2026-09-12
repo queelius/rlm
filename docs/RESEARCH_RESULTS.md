@@ -1,5 +1,10 @@
 # Reading the research results
 
+The [fresh-seed learning repeat](research-checkpoints/2026-09-12-learning-repeat.md)
+finds 55 correct answers for the unchanged model and 57 for self-SFT, with two
+unavailable answers each. It explains the mixed paired changes and why the earlier
+apparent compute saving did not repeat.
+
 The [completed helper-information intervention](research-checkpoints/2026-09-12-helper-intervention.md)
 reports 26/48 correct with original helper replies, 27/48 when replaying those
 replies, and 44/48 when supplying correct local labels. It explains the remaining
