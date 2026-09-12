@@ -1,5 +1,10 @@
 # Reading the research results
 
+The [helper request-size comparison and training-exposure audit](research-checkpoints/2026-09-12-helper-size-and-training-exposure.md)
+finds modest gains from smaller requests, with more token use and some losses.
+It also establishes that these questions were in the helper's earlier supervised
+training, so these results cannot demonstrate unseen-question generalization.
+
 The [fresh-seed learning repeat](research-checkpoints/2026-09-12-learning-repeat.md)
 finds 55 correct answers for the unchanged model and 57 for self-SFT, with two
 unavailable answers each. It explains the mixed paired changes and why the earlier
