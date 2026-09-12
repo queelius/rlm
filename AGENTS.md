@@ -65,6 +65,13 @@ preparation is running; never mistake a delivered message for active work.
 
 ## Codex usage reserve for advisor slides
 
+**September 12 research override:** The user explicitly authorized spending the
+remaining approximately 19% on continued research, including the earlier slide
+reserve. For this resumed campaign, do not wind down solely at the old 20%/15%
+thresholds. Continue monitoring the shared account and checkpoint work regularly.
+The user expects an additional reset, but do not assume it has happened until the
+account endpoint reports it. Preserve the earlier policy below as historical context.
+
 The user requested roughly 10% of Codex usage be reserved for final slide work
 when they return. During this research period, check the live account quota every
 15 minutes and before substantial new agent fan-out. Begin winding down optional

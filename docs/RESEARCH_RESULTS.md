@@ -1,5 +1,10 @@
 # Reading the research results
 
+The [September 12 learning checkpoint](research-checkpoints/2026-09-12-onebatch-learning.md)
+records a completed 48-attempt feedback diagnostic, saved RL and self-SFT updates,
+and the running paired evaluation. It distinguishes successful training execution
+from an answer-quality improvement that has not yet been established.
+
 After the advisor meeting, the [learned-decomposition research proposal](research-plans/2026-09-11-learned-decomposition.md)
 connects our results to RL feedback, strategy choice, recursive stopping, and tests on new task
 structures and datasets. It is an exploratory proposal, not evidence that those experiments
