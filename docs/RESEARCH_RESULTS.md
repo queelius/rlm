@@ -1,5 +1,11 @@
 # Reading the research results
 
+The [grouping and faster-RL qualification results](research-checkpoints/2026-09-12-grouping-and-fast-rollout-qualification.md)
+show that changing neighboring records or their order can change a helper's
+answers even at fixed group size. A separate fresh 48-sample batch passes the
+original probability checks for a future faster RL update; no optimizer step
+is attributed to that qualification.
+
 The [new decomposition and four-update RL results](research-checkpoints/2026-09-12-decomposition-transfer-and-four-step-rl.md)
 show why adaptation matters: smaller requests helped slightly on question
 categories but hurt on news, at higher token cost. Four RL updates produced
