@@ -1,5 +1,11 @@
 # Reading the research results
 
+The [reward-feedback and input-size checks](research-checkpoints/2026-09-12-feedback-and-input-shape.md)
+found no new RL gain. Giving more training questions nonzero feedback changed
+none of the 256 evaluated labels, and evaluating one item at a time did not
+reveal a hidden benefit. These results shift attention toward broader training
+data and learning the root's procedure.
+
 The [checking-cost and RL-saturation results](research-checkpoints/2026-09-12-checking-cost-and-rl-saturation.md)
 show that selective checking saved tokens compared with three-answer voting but
 did not clearly beat the cheapest single pass on fresh examples. Larger RL
