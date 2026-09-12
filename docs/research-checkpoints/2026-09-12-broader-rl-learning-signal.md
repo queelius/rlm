@@ -1,8 +1,9 @@
-# A broader RL gain repeats with a second training seed
+# RL gains repeat, but weaken on fresh examples
 
-Evidence cutoff: September 12, 2026, 16:00 UTC. Two training seeds show a
-similar gain on the same test panel. A separate-panel test is queued. The
-retention and controller findings below are newer than the first report.
+Evidence cutoff: September 12, 2026, 17:03 UTC. Two training seeds show a
+similar gain on the earlier panel. On 512 fresh examples, the gains are smaller
+and do not clearly beat supervised training. This changes our interpretation:
+we have evidence of modest helper improvement, not a general RL advantage.
 
 ## What we tried
 
@@ -24,17 +25,36 @@ losses, sampled answers, token counts and computation were not matched.
 
 ## What happened
 
-| Model | Correct out of 512 | Accuracy |
+Each column below contains 512 different examples. The earlier panel had been
+examined during this research; the fresh panel was separately frozen from the
+dataset's official test partition. These are not training-set scores.
+
+| Model | Earlier panel: correct / 512 | Fresh panel: correct / 512 |
 |---|---:|---:|
-| Before this training | 422 | 82.4% |
-| After supervised training | 427 | 83.4% |
-| After RL | 437 | 85.4% |
-| After RL, second training seed | 436 | 85.2% |
+| Before this training | 422 | 422 |
+| After supervised training | 427 | 426 |
+| After RL | 437 | 427 |
+| After RL, second training seed | 436 | 429 |
 
 Every model returned all 512 answers. The test used the preselected eighth
 checkpoint; we did not choose the best checkpoint after looking at test scores.
-All 512 raw test responses were decoded again and checked against their saved
-results and model identities.
+All four models' raw four-article responses on each panel were decoded again
+and checked against their saved results and model identities.
+
+On the fresh panel, RL corrected 11 starting-model mistakes but introduced six
+or four new mistakes, depending on the training seed. The net gains were five
+and seven answers. Supervised training corrected four mistakes and introduced
+none. RL therefore exceeded supervised training by only one and three answers;
+both descriptive uncertainty intervals for that difference include zero.
+
+Both RL models gained ten correct science-and-technology labels out of 128,
+but lost two business labels and two to four world-news labels. This is
+consistent with a shift in category preferences, rather than a broad new
+capability. We have not established what caused the smaller gain on this panel.
+The two RL models still agree on 508 of 512 labels. Repeating across training
+seeds and transferring to fresh examples are different requirements.
+
+### Details of the earlier panel
 
 The second RL run corrected 16 starting-model mistakes and introduced the same
 two regressions: a net gain of 14 answers, or 2.73 percentage points. The two RL
@@ -65,8 +85,9 @@ confirmatory significance claim.
 
 The earlier one-update gain of one answer did not repeat. This broader result
 is substantially more encouraging and now repeats across two training seeds.
-Both seeds saw the same training data and test panel, so this does not yet show
-that the gain transfers to different examples or tasks.
+Both seeds saw the same training data. The fresh-example test now shows a
+smaller positive difference from the starting helper, without a clear advantage
+over supervised training. Neither news panel establishes transfer to a new task.
 More varied training data and more updates changed together, so we cannot yet
 say which caused the improvement. Only 43 of 256 training request groups had
 different scores among their four samples; useful learning did not require
@@ -92,7 +113,7 @@ or transfer: the panel has historical evaluation exposure and omits one of
 the dataset's six categories. We are also preparing an encyclopedia-description
 test with 14 different categories, which will be a more distinct task.
 
-## Why we are not yet training the controller with the same recipe
+## The controller needs a different investigation
 
 The helper result does not mean that the controller can already plan well.
 In a separate 32-trial search of one long conversation, the controller returned
@@ -101,32 +122,49 @@ the assistant's reply. Its low, varying text-overlap scores mostly measured
 differences between wrong answers. We did not treat those scores as sufficient
 reason to begin RL.
 
-We are instead testing shorter conversations and preparing examples that teach
+On eight shorter conversations, 32 trials produced no exact answers; 30 trials
+were available and two exceeded the model's context limit. Four answers were
+nearly correct, with literal backslash-n characters instead of actual newlines.
+However, their Python programs had not correctly extracted the answer. They
+printed much of the conversation, after which the root model picked out the
+requested passage. We must not call this successful programmatic retrieval or
+learned decomposition. We preserved the original scores without repairing text.
+
+We are testing examples that teach
 a clear retrieval procedure: identify the requested message, find the matching
 user request, and return the following assistant reply. The demonstration
 program solves all 32 training conversations using their public text and
 questions. That validates the demonstrations, not the model's ability. The
 model still needs to learn the procedure and be tested on held-out conversations.
+A fixed four-update supervised run and a separate one-update RL comparison are
+queued. The latter gives partial reward only for a near-exact answer, and full
+reward for an exact answer. It may still reward broad conversation printing, so
+we will inspect the procedure and observation size as well as answer scores.
 
 A new record-selection interface exposed a similar problem. Only 11 of 48
 episodes produced a strictly formatted final answer; only nine also agreed
 with the declared finish action. The original exporter rejected the modified
 prompts, so these are separately audited raw-trace diagnostics, not an accuracy
-comparison. A paired syntax-example experiment now asks whether the model can
-learn to use this interface before we assess the quality of its selection policy.
+comparison. A paired syntax-example experiment has completed, but the same
+exporter mistake rejected its modified prompts. All 48 actual initial prompts
+match the condition-specific prompts frozen before the run. A separate audit is
+recovering what can be learned without rerunning the model. Raw traces show fewer
+rejected interface actions after the syntax example (35 to eight), but not better
+agreement between the model's declared finish and final answer. This is not yet
+a positive architecture result.
 
 ## What we will do next
 
-Evaluate all four fixed models on 512 separately selected articles from the
-dataset's official test partition. Their selection was frozen before the second
-RL test score was known. This checks different examples within the same task,
-not transfer to a new domain. All four models remain in the comparison; we
-have not selected a better seed based on the earlier scores.
+The new official-test comparison above is complete, with all four fixed models
+reported. A queued encyclopedia-description test asks whether changes survive a
+different task with 14 categories. A released-base model reference will help
+distinguish new capability from undoing earlier specialization.
 
-A training run now repeats the first 128 articles eight times. Comparing
-it with eight different blocks helps separate training breadth from update count.
-If repetition stops early because the sampled answers all receive the same
-reward, we will report that stop rather than call it an eight-update comparison.
+A training run completed eight updates by repeating the first 128 articles.
+Its fixed final evaluation is queued. Comparing it with eight different blocks
+helps separate training breadth from update count. All eight updates had usable
+reward contrasts and saved optimizer checkpoints. The training score increased,
+but that is not yet a held-out improvement.
 
 Another queued experiment keeps the controller unchanged and uses live helper
 calls on eight new news contexts. It asks whether better local category labels
@@ -134,11 +172,17 @@ actually lead to better final counts and sums. The controller must write its
 own aggregation code. A helper gain with no final-answer gain would point us
 toward a different bottleneck than a failure to improve the helper itself.
 
+We also queued a small multi-hop question-answering comparison: does allowing
+helpers to call their own helpers improve answers under the same total-call
+limit? We will record whether deeper calls actually occur. Merely allowing
+recursion is not evidence that the model learned when to use it.
+
 The strongest potential research story is therefore not simply that RL works.
 It is identifying which component improves, under what training conditions,
 and whether that improvement survives changes in examples and reaches the
-whole system's answers. We have promising evidence for the first part; the
-remaining parts are experiments in progress, not publication-ready conclusions.
+whole system's answers. We have promising evidence for the first part, but
+fresh-example evidence is weaker than the first panel suggested. The remaining
+parts are experiments in progress, not publication-ready conclusions.
 
 ## Evidence
 
@@ -156,3 +200,11 @@ SHA256 `970ba89011ccbeb91ed8065c49dc81615d91fa31b723a76424745fec1d7ee395`.
 Its source-to-raw audit is
 `analyses/helper-agnews-eightstep-seed2-live-audit-2026-09-12/outcomes/RAW_AUDIT.json`,
 SHA256 `c17259f5951693f50773ab78f7295cda2b9147230d0780251ca5f57fc59b834b`.
+
+The fresh official-test synthesis is
+`analyses/helper-agnews-official-test-transfer-findings-2026-09-12/FINDINGS.json`;
+its independent four-arm source-to-raw audit is in
+`analyses/helper-agnews-official-test-fresh512-independent-2026-09-12/RESULT.json`.
+The controller procedure correction is
+`analyses/openai-mrcr-short32-outcomes-2026-09-12/PROGRAM_VS_TERMINAL_ADDENDUM.json`,
+SHA256 `858fb090ea54796da506b1a155461dd7291e0da8022b115238868bfddffbcebb`.
