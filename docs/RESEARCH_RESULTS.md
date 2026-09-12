@@ -1,10 +1,11 @@
 # Reading the research results
 
 The [broader-data RL result](research-checkpoints/2026-09-12-broader-rl-learning-signal.md)
-is a promising new lead: 437/512 correct after eight RL updates, versus 422
-before training and 427 after supervised training. It needs a training-seed
-replication, and it does not yet demonstrate learned decomposition or broader
-task transfer. The report keeps the differing training costs visible.
+now repeats across two training seeds: 437 and 436 correct out of 512 after
+eight RL updates, versus 422 before training and 427 after supervised training.
+The trained models agree on 511 answers. This is a same-panel helper result,
+not yet learned decomposition or broader task transfer. The report keeps the
+differing training costs visible and describes the new-example test.
 
 The [replication and next learning study](research-checkpoints/2026-09-12-replication-and-next-learning-study.md)
 shows that a one-answer RL gain on new news articles did not survive a fresh-seed
