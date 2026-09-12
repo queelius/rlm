@@ -1,5 +1,11 @@
 # Reading the research results
 
+The [completed September 12 learning comparison](research-checkpoints/2026-09-12-learning-comparison.md)
+reports 53 correct answers for the unchanged model, 52 after one root-only RL
+update, and 57 after learning from successful own attempts, on the same 72-question
+panel. It separates observed-answer changes from recovered unavailable attempts
+and explains why the next experiment targets helper feedback.
+
 The [September 12 helper-feedback update](research-checkpoints/2026-09-12-helper-feedback.md)
 reports the first paired root-RL result (52 correct versus 53 unchanged) and the
 trace evidence motivating a helper-focused diagnostic. The oracle, replay and
