@@ -1,5 +1,10 @@
 # Reading the research results
 
+The [downstream helper-size comparison](research-checkpoints/2026-09-12-helper-size-downstream.md)
+connects actual saved helper replies to final task results: 12, 18 and 17 correct
+answers out of 24 for replies generated in groups of sixteen, four and one.
+It explains the matched comparison, reporting correction, and remaining limits.
+
 The [helper request-size comparison and training-exposure audit](research-checkpoints/2026-09-12-helper-size-and-training-exposure.md)
 finds modest gains from smaller requests, with more token use and some losses.
 It also establishes that these questions were in the helper's earlier supervised
