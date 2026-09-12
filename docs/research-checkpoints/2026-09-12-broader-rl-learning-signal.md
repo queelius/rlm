@@ -1,5 +1,9 @@
 # RL gains repeat, but weaken on fresh examples
 
+Later evidence: the [18:23 follow-up](2026-09-12-controller-learning-and-transfer.md)
+reports the completed repetition control on fresh examples and new controller
+tests. The dated report below retains its earlier evidence cutoff.
+
 Evidence cutoff: September 12, 2026, 17:42 UTC. Two training seeds show a
 similar gain on the earlier panel. On 512 fresh examples, the gains are smaller
 and do not clearly beat supervised training. This changes our interpretation:
