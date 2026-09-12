@@ -1,5 +1,11 @@
 # Reading the research results
 
+The [exploration and helper-contract comparisons](research-checkpoints/2026-09-12-exploration-and-helper-contracts.md)
+show that higher sampling temperature created more contrasting training answers
+but changed none of the 256 evaluation predictions. A separate complete experiment
+found 31/48 correct category counts from full labels versus 20/48 from targeted
+yes/no answers. These results narrow the next RL and harness decisions.
+
 The [grouping and faster-RL qualification results](research-checkpoints/2026-09-12-grouping-and-fast-rollout-qualification.md)
 show that changing neighboring records or their order can change a helper's
 answers even at fixed group size. A separate fresh 48-sample batch passes the
