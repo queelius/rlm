@@ -1,5 +1,10 @@
 # Reading the research results
 
+The [serving-probability stability probe](research-checkpoints/2026-09-12-serving-probability-stability.md)
+shows that an existing vLLM option eliminated the observed probability variation
+in one small controlled workload, at increased runtime. It motivates a fresh
+RL qualification test, not retroactive approval of old samples.
+
 The [first completed helper-RL readout](research-checkpoints/2026-09-12-helper-rl-first-readout.md)
 separates working training mechanics from answer quality: one qualified update
 gave 119→120 correct new questions, 112→112 news examples, and 245→244 familiar
