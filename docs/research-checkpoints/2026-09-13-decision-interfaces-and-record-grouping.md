@@ -2,7 +2,7 @@
 date: 2026-09-13
 status: exploratory
 question: Can organizing the input and reducing each helper's scope improve selection?
-evidence_cutoff_utc: '2026-09-13T18:28:00Z'
+evidence_cutoff_utc: '2026-09-13T19:00:00Z'
 ---
 
 # Organize the information, then give each helper a smaller decision
@@ -16,8 +16,8 @@ compared with 10 of 24 for whole-input true/false decisions. The smaller request
 cost much more input overall. Both tests remain within one generated task family.
 
 This follows the [earlier research checkpoint](2026-09-13-from-answer-delivery-to-information-selection.md).
-All experiments below use the released Qwen3-4B-Instruct-2507 model without an
-adapter. They concern one selection step in our generated database task, not
+The input and decomposition comparisons use the released Qwen3-4B-Instruct-2507
+model without an adapter. They concern one selection step in our generated database task, not
 the complete planning problem or learned recursive decomposition.
 
 “Complete correct” here means exactly the right candidates, ignoring list order.
@@ -136,15 +136,92 @@ that need a smaller view, rather than pay for a separate helper for every item?
 A useful next comparison would give targeted and randomly chosen refinements
 the same number of helper calls. We must measure both complete answers and cost.
 
-In parallel, a fresh batch of 64 model attempts provides variation for an RL
-comparison: give feedback to individual decisions versus giving every decision
-the same overall-answer feedback. The cases and future evaluation inputs were
-fixed in advance. This batch produced 33 complete answers; it is training data,
-not a training improvement. No new RL improvement is claimed here.
+A small analysis of already-saved outputs cautions against assuming confidence
+solves this. Applying a fixed rule that revisits the two least-confident decisions
+raised complete answers from10/24 to12/24 on the replication panel. Revisiting
+the first two candidates instead reached13/24; random two-candidate selection
+had an analytical expectation of about12.06/24. Most reported chosen-token log
+probabilities were exactly zero, creating many ties. This is an exploratory
+calculation using saved helper answers, not a new run of that policy or evidence
+of learned routing. It does not establish useful savings
+from confidence-based routing.
+
+## Training produced a small, mixed improvement on new cases
+
+We tested reinforcement learning: improving the model using feedback on its own
+attempted answers. The model generated four answers for each of sixteen training
+problems. Both training conditions used those same 64 answers, matching initial
+weights, and one update to a small set of trainable parameters.
+
+In one condition, each true/false decision received feedback about its own
+correctness. In the other, every decision received the same feedback about the
+fraction of the complete answer that was correct. Neither condition was trained
+by simply supplying the ideal answer to copy. The training batch was valid but
+only six problems produced differing decisions across their four attempts;
+many consistently wrong decisions still supplied no contrasting feedback.
+
+We then tested the unchanged model and both trained models on twelve new
+problems, each answered twice. These evaluation inputs and sampling seeds had
+been fixed before training.
+
+| Condition | Complete correct answers | Gains / losses against unchanged model |
+|---|---:|---:|
+| Unchanged model | 6/24 | — |
+| Feedback for each individual decision | 8/24 | 3 / 1 |
+| Shared feedback for the whole answer | 7/24 | 2 / 1 |
+
+All 72 model calls returned. Each condition had two malformed answers, counted
+as failures. Both updates completed and saved resumable checkpoints; preceding
+execution failures happened before any weight update and are retained separately.
+
+This is encouraging evidence that reward training can change the selection
+step, not just final answer formatting. It is not yet a robust improvement:
+there are only twelve evaluation problems, both updates introduce a regression,
+and the one-answer difference between feedback methods is too small to establish
+which is better. We will not select the favorable arm and call it a confirmed
+result.
+
+We repeated this evaluation with new sampling seeds, keeping the same twelve
+problems and both trained models unchanged:
+
+| Sampling block | Unchanged model | Individual-decision feedback | Whole-answer feedback |
+|---|---:|---:|---:|
+| First two attempts per problem | 6/24 | 8/24 | 7/24 |
+| Two new attempts per problem | 5/24 | 7/24 | 7/24 |
+
+In the repeat, each trained model gained two complete answers and lost none.
+Both gains were the two attempts at the same problem. All 72 calls returned;
+each condition had four malformed answers, counted as failures. The local
+method repaired one previously malformed answer but introduced another, so
+equal invalid counts do not mean identical failures.
+
+The small advantage survives resampling, but these are still only twelve
+independent problems, not 48. Across all four attempts per problem, the totals
+are 11/48 unchanged, 15/48 individual feedback, and 14/48 shared feedback.
+Those totals describe repeated attempts, not a larger independent test set.
+Neither method is established as better. The next useful training experiment
+should address consistently wrong decisions that never vary across sampled
+attempts, and then test on new problems rather than repeatedly inspecting this
+panel. No further update or checkpoint selection was made after either readout.
 
 The bigger research question remains whether a model can learn to choose an
 effective decomposition. These experiments establish useful comparisons and
 expose failure modes; they do not yet answer that bigger question.
+
+## What could become a paper?
+
+The promising story is that separating mechanical record handling from small
+model decisions can improve reliable selection. The replicated helper result
+provides a concrete starting point; it does not establish a novel general method.
+A useful next test would ask how much of the improvement survives with only a
+few carefully chosen helper calls, followed by a genuinely different dataset.
+
+This constructed task also has an important limitation: an ordinary program
+can apply its explicit rules exactly. Our goal here is to diagnose how a model
+handles different presentations and divisions of work, not to beat that program.
+A stronger methods claim will need tasks where model judgment is useful, clear
+comparisons with existing decomposition methods, and gains that survive a
+fixed evaluation protocol and realistic cost accounting.
 
 ## Evidence and reproducibility
 
@@ -162,6 +239,12 @@ Immutable run artifacts live outside Git under
 - `b05-singleton-decomposition-replica-v1`: 328 calls on twelve fresh cases;
   independent audit report SHA-256
   `f969d2d649721d38a1c0c280dadbe43c0b9672d2fb1a7d32e96b2079f915c6f9`.
+- `b05-vector-credit-local-v3` and `b05-vector-credit-joint-v3`: matched
+  one-update training, saved adapters and optimizer/RNG checkpoints.
+- `b05-vector-credit-held72-eval-v4`: first 72-call held readout;
+  independent audit `analyses/b05-vector-credit-held72-independent-2026-09-13/`.
+- `b05-vector-credit-held72-seed2-v1`: final 72-call sampling repeat;
+  result SHA-256 `52b4394eb6fe21a8427ec19954781d7c7b940aa791c2433f4f09c19e45e2cfb5`.
 
 Each result is `outputs/attempt-001/RESULT.json`. Public-input manifests and
 source closures preserve generation and sampling seeds. The representation
