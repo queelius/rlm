@@ -2,7 +2,7 @@
 date: 2026-09-13
 status: exploratory
 question: Can organizing the input and reducing each helper's scope improve selection?
-evidence_cutoff_utc: '2026-09-13T07:12:00Z'
+evidence_cutoff_utc: '2026-09-13T18:28:00Z'
 ---
 
 # Organize the information, then give each helper a smaller decision
@@ -11,8 +11,9 @@ The strongest new lead is a change to the model's working environment, not a
 training gain. On a small fresh comparison, asking one helper about each
 candidate recovered the entire correct set in 10 of 12 attempts. Asking the
 same model about all candidates at once recovered it in 4 of 12 attempts.
-The smaller requests cost much more input overall. We are checking this result
-on more cases before making a broader claim.
+The advantage persisted on twelve new problems: 22 of 24 complete answers,
+compared with 10 of 24 for whole-input true/false decisions. The smaller requests
+cost much more input overall. Both tests remain within one generated task family.
 
 This follows the [earlier research checkpoint](2026-09-13-from-answer-delivery-to-information-selection.md).
 All experiments below use the released Qwen3-4B-Instruct-2507 model without an
@@ -88,7 +89,8 @@ combines all of their true/false decisions. No candidates are filtered out.
 | One helper decides about each candidate | 10/12 | 152 | 103,002 |
 
 The helpers made 150 of 152 individual decisions correctly. They found every
-eligible candidate and incorrectly included two others. They recovered the
+eligible candidate and made two incorrect inclusions: the same candidate failed
+the quality threshold but was accepted in both attempts. They recovered the
 complete set on all four twenty-candidate attempts; both whole-input conditions
 recovered none of those four. All 176 calls returned, and every singleton
 response was usable. Whole-list and whole-array invalid outputs remain failures
@@ -98,8 +100,34 @@ This result does not demonstrate learned planning, a learned stopping rule, or
 recursive depth. The decomposition is fixed and the local rule is separable
 across candidates. Input cost is about 3.8 times the list condition, and the
 prompts and output contracts differ. Six problems are too few for a strong
-generalization claim. The raw result is preserved; independent auditing and a
-fresh, broader within-family replication are the next steps.
+generalization claim. An independent raw-response audit found no discrepancies.
+
+### The advantage persisted on fresh cases
+
+A second test fixed twelve new problems covering 6, 12, or 20 candidates, shorter
+or longer update histories, and one or three check revisions. Each was answered
+twice. Every candidate was retained, and all answers were collected.
+
+| Candidate count | One call makes every decision | One helper per candidate |
+|---|---:|---:|
+| 6 | 4/8 | 8/8 |
+| 12 | 3/8 | 8/8 |
+| 20 | 3/8 | 6/8 |
+| All attempts | 10/24 | 22/24 |
+
+There were twelve gains and no losses, spread across seven problems. Even after
+restricting the comparison to usable whole-input answers, helpers corrected
+fifteen individual decisions and damaged none. They made 302 of 304 individual
+decisions correctly. The two errors were the same candidate accepted twice
+despite capacity of −4 when the rule required at least 8. An independent audit
+checked every actual response and found no discrepancies.
+
+The cost is still substantial: 304 helper calls instead of 24 whole-input calls,
+207,004 input tokens instead of 56,088, and about 3.7 times as many total tokens.
+These are not equal-compute comparisons. More complicated record histories
+test the complete Python-plus-model system: Python, not the model, resolves
+the latest records. We have not established transfer to a different dataset,
+learned planning, or that splitting as much as possible is generally optimal.
 
 ## What this changes about the research plan
 
@@ -131,9 +159,12 @@ Immutable run artifacts live outside Git under
   requests, responses, token IDs, log probabilities, costs, and owner terminal.
 - `b05-varied-vector-rollouts-v1`: 64 training attempts; separately frozen
   12-case future evaluation panel. No evaluation calls in this collection.
+- `b05-singleton-decomposition-replica-v1`: 328 calls on twelve fresh cases;
+  independent audit report SHA-256
+  `f969d2d649721d38a1c0c280dadbe43c0b9672d2fb1a7d32e96b2079f915c6f9`.
 
 Each result is `outputs/attempt-001/RESULT.json`. Public-input manifests and
 source closures preserve generation and sampling seeds. The representation
-and initial vector comparisons have independent raw-response audits under
+and initial vector and singleton comparisons have independent raw-response audits under
 `analyses/` in the same research store. GitHub documents are not a backup of
 external run data or model checkpoints.

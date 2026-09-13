@@ -82,6 +82,15 @@ preparation is running; never mistake a delivered message for active work.
 
 ## Codex usage reserve for advisor slides
 
+**September 13 consolidation override (current):** The user now explicitly asks
+to preserve 10% of the shared account allowance. At 14% remaining, use only
+about 4% for consolidating findings and small targeted experiments. This
+supersedes the September 12 permission to spend the reserve. Avoid new research
+branches, finish/checkpoint bounded accepted work, and publish a clear handoff
+before reaching 10%. Check quota more often near this boundary; the other session
+shares the same allowance. Do not assume a reset or treat the old monitor's
+20%/15% action labels as the current decision policy.
+
 **September 12 research override:** The user explicitly authorized spending the
 remaining approximately 19% on continued research, including the earlier slide
 reserve. For this resumed campaign, do not wind down solely at the old 20%/15%
