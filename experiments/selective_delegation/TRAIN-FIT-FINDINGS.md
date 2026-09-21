@@ -22,6 +22,21 @@ All64 attempts were recorded, with no failed or unknown calls. The report is
 `R/analysis-rl-trainfit-001.json` and its Markdown sibling, where `R` is the
 September21 selective-delegation external research store.
 
+## What changed in the four wins
+
+A native-trace audit identifies four distinct parents, one improved candidate
+each. Two changes sharpen the requested answer: a year becomes a full date,
+and a county becomes the specific park requested. One repairs a wrong dependency
+route, and one removes an irrelevant ship-construction step. None uses more
+steps. All four improved finals agree with their terminal helper answer; this
+is trace-consistent improvement, not proof that the helper caused the final.
+
+Trace identities are `c423…/c0`, `03a6…/c0`, `2e14…/c1`, and `9b78…/c1`,
+fully resolved in the report's paired rows. Baselines are under
+`R/rl-fullpass-001/batch-0001/{episodes,calls}` and new observations under
+`R/rl-trainfit-001/{episodes,calls}`. The abbreviated IDs are analysis pointers,
+not intended as audience-facing result labels.
+
 ## What this changes
 
 It weakens the explanation that the small root updates cannot improve reward

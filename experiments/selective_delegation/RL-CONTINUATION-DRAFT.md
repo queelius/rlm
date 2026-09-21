@@ -1,9 +1,12 @@
 # Conditional eight-update continuation, preserving the optimizer
 
-September21,15:00UTC. CPU preparation accepted; **no GPU training accepted yet**.
+September21,15:18UTC (rounded): **accepted and running**, source020 and external
+`RL-CONTINUATION-DECISION-001.json`, supervisor2126. Original draft15:00 retained
+below; repeated-execution and plan-only diagnostics have now completed.
 TRAIN fit rose45→49/64 with four both-valid wins and no losses on16TRAINparents;
-fresh performance rose53→56/128 but remains uncertain. Finish repeated-execution
-and plan-only diagnostics before accepting a training launch.
+fresh performance rose53→56/128 but remains uncertain. Repeated execution gives
+little evidence to favor multiple reward samples per plan; plan-only remains
+competitive, so this is one bounded dose test, not proof delegation helps.
 
 Extend the existing `rl_planner.py` flow, not a second training framework. A new
 explicit continuation option loads the completed `rl-fullpass-001/checkpoint-0016`

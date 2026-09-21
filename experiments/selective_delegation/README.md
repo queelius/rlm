@@ -65,21 +65,29 @@ recursive composition.
 
 The completed [single-call trained-adapter control](DIRECT-ADAPTED-FINDINGS.md)
 scores49/128 versus54/128 for base direct, an uncertain decline rather than a
-generic answering benefit. The queued [plan-only comparison](PLAN-ONLY-DIAGNOSTIC.md)
-asks whether executing helpers adds value beyond presenting their saved plan.
+generic answering benefit. The completed [plan-only comparison](PLAN-ONLY-FINDINGS.md)
+finds similar accuracy at about one third of executed-policy token cost; the
+uncertain differences do not establish equivalence or a decomposition advantage.
 Read the
 [document exposure audit](DOCUMENT-EXPOSURE.md) before calling a panel unseen:
 new questions do not imply new source documents. The small
 [annotation-compatible check](HELPER-ANNOTATION-COMPATIBLE.md) also cautions
 against interpreting final-answer gains as uniformly better intermediate steps.
-[INCREMENTAL-DESIGN.md](INCREMENTAL-DESIGN.md) is conditional preparation for
-testing answer-conditioned next-question choice, not a completed experiment.
+The completed [next-question screen](NEXT-QUESTION-FINDINGS.md) changes questions
+with feedback but finds no exact-answer gain. It is not a trained incremental
+policy or a general test of adaptive decomposition.
 The completed [training replay](TRAIN-FIT-FINDINGS.md) improves45/64 to49/64,
 with four both-valid wins and no losses. It is training-set fit, not generalization.
-The active [repeated-execution diagnostic](FROZEN-EXECUTION-DIAGNOSTIC.md) tests
-whether the same plans receive stable rewards across downstream sampling seeds.
-The [matched Hotpot direct control](HOTPOT-DIRECT-CONTROL.md) is queued to test
-whether helper training also helps single-call answering on that dataset.
+The completed [repeated-execution diagnostic](FROZEN-EXECUTION-FINDINGS.md) finds
+13/64 plans change outcome across four executions, but selecting with three
+executions instead of one adds only one correct held-seed answer out of64.
+The [matched Hotpot direct control](HOTPOT-DIRECT-CONTROL.md) scores31/64 with
+the helper adapter versus36/64 with base weights; multi-call trained helpers
+score40/64. Paired architecture analysis and new-data replication are needed.
+One [bounded RL continuation](RL-CONTINUATION-DRAFT.md) is running, preserving
+the optimizer and selecting checkpoint24 before its development readout.
+The [latest prior-art check](LITERATURE-UPDATE-1515.md) narrows what would be novel
+beyond existing planner/executor training and adaptive retrieval methods.
 The [larger Hotpot validation asset](HOTPOT-DEV-ASSET.md) is now cached with a
 pinned revision; no new evaluation panel has been selected from it yet.
 
