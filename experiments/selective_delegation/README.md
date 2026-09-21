@@ -52,8 +52,10 @@ now supports a fixed trained helper:28/64 correct versus19/64 for base helpers
 and22/64 for the format reminder. Both interventions eliminate helper-format
 failures, but the trained helper also has additional both-valid-answer gains.
 This is a promising development result, not established generalization.
-The [frozen-plan transfer checks](HELPER-TRANSFER-PLAN.md) are queued to test
-that limitation on harder MuSiQue questions and HotpotQA.
+The [completed transfer checks](HELPER-TRANSFER-FINDINGS.md) find strong Hotpot
+improvement but little exact-answer gain on four-hop MuSiQue. A format-reminder
+control explains much of the improvement; trained-versus-reminder differences
+must be reported separately from protocol recovery.
 The [accepted full-pass RL comparison](FULLPASS-PLAN.md) tests whether root
 learning adds value under that fixed helper. If it offers no useful signal,
 [COMPOSITION-DIRECTION.md](COMPOSITION-DIRECTION.md) and the
@@ -61,18 +63,23 @@ learning adds value under that fixed helper. If it offers no useful signal,
 Existing fixed-decomposition successes must not be relabeled as newly learned
 recursive composition.
 
-The queued [single-call trained-adapter control](DIRECT-ADAPTED-PLAN.md) asks
-whether the helper's gain also appears without any decomposition. Read the
+The completed [single-call trained-adapter control](DIRECT-ADAPTED-FINDINGS.md)
+scores49/128 versus54/128 for base direct, an uncertain decline rather than a
+generic answering benefit. The queued [plan-only comparison](PLAN-ONLY-DIAGNOSTIC.md)
+asks whether executing helpers adds value beyond presenting their saved plan.
+Read the
 [document exposure audit](DOCUMENT-EXPOSURE.md) before calling a panel unseen:
 new questions do not imply new source documents. The small
 [annotation-compatible check](HELPER-ANNOTATION-COMPATIBLE.md) also cautions
 against interpreting final-answer gains as uniformly better intermediate steps.
 [INCREMENTAL-DESIGN.md](INCREMENTAL-DESIGN.md) is conditional preparation for
 testing answer-conditioned next-question choice, not a completed experiment.
-Two accepted, queued diagnostics separate
-[learning on the training examples](TRAIN-FIT-DIAGNOSTIC.md) from
-[unreliable rewards when the same plan is executed again](FROZEN-EXECUTION-DIAGNOSTIC.md).
-Neither is evidence of improved performance on new questions.
+The completed [training replay](TRAIN-FIT-FINDINGS.md) improves45/64 to49/64,
+with four both-valid wins and no losses. It is training-set fit, not generalization.
+The active [repeated-execution diagnostic](FROZEN-EXECUTION-DIAGNOSTIC.md) tests
+whether the same plans receive stable rewards across downstream sampling seeds.
+The [matched Hotpot direct control](HOTPOT-DIRECT-CONTROL.md) is queued to test
+whether helper training also helps single-call answering on that dataset.
 The [larger Hotpot validation asset](HOTPOT-DEV-ASSET.md) is now cached with a
 pinned revision; no new evaluation panel has been selected from it yet.
 

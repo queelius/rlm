@@ -208,3 +208,17 @@ tested interaction. FRESH-RL-STRUCTURE.md retains all64primary and final/last-st
 discordance limitations. Source/docs3b2b6f2 pushed to research branch, notmain;
 next-question feedback analyzer is CPU preparation only. GPU helper transfer
 has1,100returned calls/0runtime failures; quota78% at14:28, reserve10%.
+
+15:10 UTC: Helper transfer complete: fourhop base25/trained27/reminder27of128;
+Hotpot base22/trained40/reminder35of64. Most fourhop F1gain and much Hotpot
+accuracy gain are protocol recovery; Hotpot trained-versus-reminder has6valid
+wins/1valid loss. Matched Hotpot direct-adapter control accepted source019,
+supervisor61945,128calls/20minutes, after plan-only. Fresh MuSiQue direct-adapter
+control49/128 versusbase54/128 does not establish generic answering improvement.
+
+TRAIN-fit complete45→49/64,4both-valid wins/0losses, same16TRAIN parents and
+original seeds. Frozen-execution diagnostic still running, no errors. Source017
+next-question andsource018plan-only screens accepted/serialized afterward.
+Explicit RL continuation16→24 is CPU-ready (16focused tests plus launcher3tests
+passed on main), not GPU-accepted. Choose from results, not blind dose expansion.
+Quota75%15:08, preserve10%; no live source edited or checkpoints committed to Git.

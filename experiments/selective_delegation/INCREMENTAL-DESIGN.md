@@ -1,13 +1,19 @@
 # Incremental planning: a feedback diagnostic, not a novelty claim
 
-Design only, 2026-09-21. Do not launch before the selected-helper and fixed-helper
-RL readouts. This follows `NEXT-ARCHITECTURE-DECISION.md`; it does not change the
+Screen accepted and queued September21 at14:44UTC, after the selected-helper and
+fixed-helper RL readouts. The full incremental policy remains conditional.
+This follows `NEXT-ARCHITECTURE-DECISION.md`; it does not change the
 running jobs or reserve fresh-dev-inputs-003. Sequential planning is established
 prior art. The local question is whether **actual intermediate answers improve
 subsequent questions**, beyond changing the representation or spending more
 generated tokens.
 
 ## Decision and smallest informative screen
+
+CPU validation binds15eligible prefixes among16selected parents; the remaining
+parent stays unavailable, not replaced. Source017 and
+`R/NEXT-QUESTION-DECISION-001.json` seal the comparison. Supervisor9181 waits the
+accepted frozen-execution diagnostic before collecting at most192new calls.
 
 Prefer a small, frozen-state next-question screen before implementing a complete
 new policy. From completed trained-helper four-hop traces, select 16 already

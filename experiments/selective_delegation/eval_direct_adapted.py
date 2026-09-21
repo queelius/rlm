@@ -21,6 +21,7 @@ import probe
 
 CONDITIONS = ("base_direct", "helper_sft_direct")
 CASES_SHA = "6251b27db8acc4fcc195f614b661acc49e5dcdb60c9c61f01826d3c4caf86153"
+HOTPOT_CASES_SHA = "f16bc99b6b786920a5fecc516d6e2ecfc7c566cf0c38377764e7a8469e424417"
 SAMPLING = {
     "do_sample": True,
     "temperature": 0.5,
@@ -32,24 +33,53 @@ SAMPLING = {
 STOP = False
 
 
-def validate_panel(cases):
+def panel_spec(panel="fresh003"):
+    if panel == "fresh003":
+        return {
+            "parents": 64,
+            "split": "development",
+            "dataset": "musique",
+            "cases_sha256": CASES_SHA,
+            "seed": evaluation.SEED,
+            "metric": "official_musique_alias_max_em_f1",
+            "hours": 1.0,
+        }
+    if panel == "hotpot_explorer32":
+        return {
+            "parents": 32,
+            "split": "transfer",
+            "dataset": "hotpotqa",
+            "cases_sha256": HOTPOT_CASES_SHA,
+            "seed": eval_helper.SEED,
+            "metric": "official_hotpotqa_em_f1",
+            "hours": 1 / 3,
+        }
+    raise ValueError("unknown fixed direct panel")
+
+
+def validate_panel(cases, panel="fresh003"):
+    spec = panel_spec(panel)
     if (
-        len(cases) != 64
-        or len({c["id"] for c in cases}) != 64
+        len(cases) != spec["parents"]
+        or len({c["id"] for c in cases}) != spec["parents"]
         or any(
-            c["split"] != "development" or c.get("dataset", "musique") != "musique" for c in cases
+            c["split"] != spec["split"] or c.get("dataset", "musique") != spec["dataset"]
+            for c in cases
         )
     ):
-        raise ValueError("expected all64 unique MuSiQue development parents")
+        raise ValueError(
+            f"expected all{spec['parents']} unique {spec['dataset']} {spec['split']} parents"
+        )
 
 
 class DirectClient:
     """Native HF receipts with explicit direct-answer identities; no hidden root calls."""
 
-    def __init__(self, model, tokenizer, output, deadline, adapter_sha):
+    def __init__(self, model, tokenizer, output, deadline, adapter_sha, seed_base=evaluation.SEED):
         self.model, self.tokenizer = model, tokenizer
         self.output, self.deadline, self.adapter_sha = Path(output), deadline, adapter_sha
         self.returned = self.failed = self.consecutive_failures = 0
+        self.seed_base = seed_base
 
     def call(self, case, condition, repeat):
         import torch
@@ -66,7 +96,7 @@ class DirectClient:
             add_generation_prompt=True,
             enable_thinking=False,
         )
-        seed = evaluation.SEED + int(probe.runtime.digest(case["id"])[:6], 16) + repeat * 100 + 2
+        seed = self.seed_base + int(probe.runtime.digest(case["id"])[:6], 16) + repeat * 100 + 2
         request = {
             "prompt": prompt,
             "input_token_ids": ids,
@@ -180,7 +210,7 @@ class DirectClient:
 def collect_episode(client, case, condition, repeat):
     call = client.call(case, condition, repeat)
     identity = f"{case['id']}-r{repeat}-{condition}"
-    grade = probe.grade(call["text"] if call["available"] else "", case)
+    grade = eval_helper.grade_final(call["text"] if call["available"] else "", case)
     row = {
         "episode_id": identity,
         "case_id": case["id"],
@@ -250,7 +280,7 @@ def summarize(output, plan):
                 changes[("win_" if change > 0 else "loss_") + category] += 1
     return {
         "conditions": groups,
-        "metric": "official_musique_alias_max_em_f1",
+        "metric": plan.get("metric", "official_musique_alias_max_em_f1"),
         "physical_cost": evaluation.cost(calls + unresolved),
         "unresolved_start_receipts": len(unresolved),
         "paired_changes": dict(changes),
@@ -272,17 +302,21 @@ def run(args):
     from peft import PeftModel
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    if not 0 < args.hours <= 1:
-        raise ValueError("at most one cumulative hour")
+    panel = getattr(args, "panel", "fresh003")
+    spec = panel_spec(panel)
+    if args.hours is None:
+        args.hours = spec["hours"]
+    if not 0 < args.hours <= spec["hours"]:
+        raise ValueError(f"at most {spec['hours'] * 60:g} cumulative minutes for {panel}")
     cases_path, adapter, output = (
         args.cases.resolve(),
         args.helper_adapter.resolve(),
         args.output.resolve(),
     )
-    if probe.campaign.sha(cases_path) != CASES_SHA:
-        raise ValueError("requires authoritative fresh-dev-inputs-003 cases")
+    if probe.campaign.sha(cases_path) != spec["cases_sha256"]:
+        raise ValueError("requires authoritative fixed panel cases: " + panel)
     cases = [json.loads(line) for line in cases_path.open()]
-    validate_panel(cases)
+    validate_panel(cases, panel)
     binding = evaluation.adapter_identity(adapter)
     state, training = (
         eval_helper.read(adapter / "STATE.json"),
@@ -301,13 +335,13 @@ def run(args):
         "schema": "paired-direct-helper-adapter-v1",
         "mode": "direct_adapted",
         "cases": str(cases_path),
-        "cases_sha256": CASES_SHA,
+        "cases_sha256": spec["cases_sha256"],
         "case_ids": [c["id"] for c in cases],
-        "split": "development",
-        "parents": 64,
+        "split": spec["split"],
+        "parents": spec["parents"],
         "repeats": 2,
         "conditions": list(CONDITIONS),
-        "maximum_calls": 256,
+        "maximum_calls": spec["parents"] * 4,
         "model": str(model_path),
         "model_manifest_sha256": manifest_sha,
         "generation_config_sha256": probe.campaign.sha(model_path / "generation_config.json"),
@@ -315,10 +349,11 @@ def run(args):
         "helper_adapter_binding": binding,
         "helper_training_plan_sha256": probe.campaign.sha(adapter.parent / "PLAN.json"),
         "root_adapter_loaded": False,
-        "seed": evaluation.SEED,
+        "seed": spec["seed"],
         "sampling": SAMPLING,
-        "seed_policy": "eval_planner.SEED + int(digest(case_id)[:6],16) + repeat*100 + 2",
-        "metric": "official_musique_alias_max_em_f1",
+        "seed_policy": ("eval_planner.SEED" if panel == "fresh003" else "eval_helper.SEED")
+        + " + int(digest(case_id)[:6],16) + repeat*100 + 2",
+        "metric": spec["metric"],
         "budget_seconds": args.hours * 3600,
         "architecture": "Same direct_prompt for both arms; base versus helper-SFT36 "
         "enabled for one direct_answer call. No planner, decomposition, helper or extra final.",
@@ -331,7 +366,7 @@ def run(args):
                 Path(evaluation.planner.__file__),
                 Path(eval_helper.__file__),
                 Path(probe.__file__),
-                probe.MUSIQUE / "metrics/answer.py",
+                *eval_helper.metric_sources(spec["dataset"]),
             )
         },
         "environment": {
@@ -340,6 +375,8 @@ def run(args):
             **{p: importlib.metadata.version(p) for p in ("torch", "transformers", "peft")},
         },
     }
+    if panel != "fresh003":
+        plan.update(panel=panel, dataset=spec["dataset"], summary_every_episodes=16)
     output.mkdir(parents=True, exist_ok=True)
     if (output / "PLAN.json").exists():
         if eval_helper.read(output / "PLAN.json") != plan:
@@ -419,8 +456,14 @@ def run(args):
             },
         )
         client = DirectClient(
-            model, tokenizer, output, deadline, binding["adapter_model.safetensors"]
+            model,
+            tokenizer,
+            output,
+            deadline,
+            binding["adapter_model.safetensors"],
+            seed_base=spec["seed"],
         )
+        visited = 0
         for case in cases:
             for repeat in range(2):
                 order = (
@@ -433,7 +476,19 @@ def run(args):
                         STOP = True
                         break
                     collect_episode(client, case, condition, repeat)
-                    probe.campaign.snapshot(output / "SUMMARY.json", summarize(output, plan))
+                    visited += 1
+                    if panel == "fresh003" or visited % 16 == 0:
+                        probe.campaign.snapshot(output / "SUMMARY.json", summarize(output, plan))
+                    if panel != "fresh003":
+                        probe.campaign.snapshot(
+                            output / "STATUS.json",
+                            {
+                                "visited_episodes_this_owner": visited,
+                                "returned_this_owner": client.returned,
+                                "failed_this_owner": client.failed,
+                                "updated": time.time(),
+                            },
+                        )
                     if (client.returned == 0 and client.failed) or client.consecutive_failures >= 2:
                         raise RuntimeError("scientific response check failed")
                 if STOP:
@@ -468,5 +523,6 @@ if __name__ == "__main__":
     parser.add_argument("--cases", type=Path, required=True)
     parser.add_argument("--helper-adapter", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--hours", type=float, default=1)
+    parser.add_argument("--panel", choices=("fresh003", "hotpot_explorer32"), default="fresh003")
+    parser.add_argument("--hours", type=float, help="default/cap: fresh003=1; Hotpot=1/3")
     run(parser.parse_args())

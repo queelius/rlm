@@ -30,7 +30,10 @@ def validate_call(call, case, repeat, condition, plan):
         "adapter_enabled": enabled,
         "adapter_name": "helper_sft" if enabled else None,
         "adapter_sha256": adapter,
-        "seed": evaluation.SEED + int(probe.runtime.digest(case["id"])[:6], 16) + repeat * 100 + 2,
+        "seed": plan.get("seed", evaluation.SEED)
+        + int(probe.runtime.digest(case["id"])[:6], 16)
+        + repeat * 100
+        + 2,
         "sampling": runner.SAMPLING,
     }
     if probe.runtime.digest(request) != call["request_digest"] or any(
@@ -115,17 +118,28 @@ def analyze(
         hashes[str(path)] = digest
 
     plan = read(output / "PLAN.json")
+    panel = plan.get("panel", "fresh003")
+    spec = runner.panel_spec(panel)
+    if panel != "fresh003" and (baseline_output or planner_outputs):
+        raise ValueError(
+            "Hotpot optional historical comparisons unsupported: incompatible seeds/schema"
+        )
     track(cases_path, plan["cases_sha256"])
     cases = [json.loads(line) for line in cases_path.read_text().splitlines() if line.strip()]
-    runner.validate_panel(cases)
+    runner.validate_panel(cases, panel)
     parents, repeats = plan["case_ids"], plan["repeats"]
     if (
         plan["schema"] != "paired-direct-helper-adapter-v1"
         or plan["conditions"] != list(runner.CONDITIONS)
         or parents != [c["id"] for c in cases]
         or repeats != 2
-        or plan["cases_sha256"] != runner.CASES_SHA
-        or plan["seed"] != evaluation.SEED
+        or plan["cases_sha256"] != spec["cases_sha256"]
+        or plan["seed"] != spec["seed"]
+        or plan["metric"] != spec["metric"]
+        or plan["split"] != spec["split"]
+        or plan["parents"] != spec["parents"]
+        or plan["maximum_calls"] != spec["parents"] * 4
+        or (panel != "fresh003" and plan.get("dataset") != spec["dataset"])
         or plan["sampling"] != runner.SAMPLING
         or draws < 1
     ):
@@ -182,7 +196,9 @@ def analyze(
         row, call = indexed.get((p, r, c)), calls.get(cid)
         if row is not None and call is None:
             raise ValueError("direct episode references missing call")
-        grade = probe.grade(call["text"] if call and call["available"] else "", by_id[p])
+        grade = runner.eval_helper.grade_final(
+            call["text"] if call and call["available"] else "", by_id[p]
+        )
         status = (
             "missing_episode"
             if row is None
@@ -232,7 +248,10 @@ def analyze(
         if baseline_output
         else output.parent / "fresh-contract-direct-001"
     )
-    baseline_agreement = {"output": str(baseline), "present": (baseline / "PLAN.json").exists()}
+    baseline_agreement = {
+        "output": str(baseline) if panel == "fresh003" else None,
+        "present": panel == "fresh003" and (baseline / "PLAN.json").exists(),
+    }
     if baseline_agreement["present"]:
         old_plan = read(baseline / "PLAN.json")
         fields = ("cases_sha256", "case_ids", "repeats", "seed", "model", "model_manifest_sha256")
@@ -395,7 +414,7 @@ def analyze(
         Path(analyze_helper.__file__),
         Path(runner.__file__),
         Path(probe.__file__),
-        probe.MUSIQUE / "metrics/answer.py",
+        *runner.eval_helper.metric_sources(spec["dataset"]),
     ):
         track(path)
     return {
@@ -408,10 +427,15 @@ def analyze(
             "clusters": clusters,
             "draws": draws,
             "seed": seed,
-            "metric": "official_musique_alias_max_em_f1",
+            "metric": spec["metric"],
+            "panel": panel,
+            "parents_missing_component_ids": sum(
+                not c.get("metadata", {}).get("component_ids") for c in cases
+            ),
             "bootstrap": "Connected component clusters, parent-weighted paired repeat means; "
             "Python Random.randrange and interpolated percentile95; "
-            "missing/invalid planned outcomes zero.",
+            "missing/invalid planned outcomes zero; missing component IDs use singleton-parent "
+            "fallback, not verified atomic independence.",
         },
         "groups": groups,
         "comparisons": pairs,
@@ -420,12 +444,13 @@ def analyze(
         "input_source_receipt_sha256": hashes,
         "unlinked_call_ids": sorted(set(calls) - linked),
         "unresolved_start_ids": [r["call_id"] for r in unresolved],
-        "all_direct_episodes_present": len(episodes) == 256,
+        "all_direct_episodes_present": len(episodes) == len(parents) * repeats * 2,
         "cautions": [
             "Missing outcomes are incomplete lower bounds, not observed errors; "
             "unknown cost is not zero.",
-            "64 parents, not128 independent repeats;47 expected component clusters "
-            "are calculated from cases.",
+            f"{len(parents)} parents, not{len(parents) * repeats} independent repeats; "
+            "clusters calculated from cases. Missing component IDs use singleton-parent "
+            "fallback, not verified atomic independence.",
             "Both-valid gains are not proof of a decomposition mechanism. Helper adapter "
             "is transferred from subquestion training to an original-question prompt.",
             "Optional planner comparisons are saved adaptive-development architecture "
@@ -442,7 +467,9 @@ def markdown(report):
         f"Source: `{report['output']}`",
         "",
         f"{method['parents']} parents, {method['episodes_per_arm']} planned attempts per arm; "
-        f"{len(method['clusters'])} component clusters. Official MuSiQue EM/F1.",
+        f"{len(method['clusters'])} bootstrap clusters. Metric: {method['metric']}. "
+        f"{method.get('parents_missing_component_ids', 0)} parents lack component IDs "
+        "and use singleton-parent fallback, not verified atomic independence.",
         "",
         "| Arm | EM | F1 | Correct/planned | Calls | Tokens |",
         "|---|---:|---:|---:|---:|---:|",
