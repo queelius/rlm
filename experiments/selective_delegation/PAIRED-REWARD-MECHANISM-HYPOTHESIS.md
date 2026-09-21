@@ -64,3 +64,14 @@ The first is particularly relevant to compositional generalization. None proves
 absence from pretraining. Do not silently loosen the current frozen panel, but do
 not let its strict exclusion rule erase the deeper compositions we actually want
 to study in a separately declared experiment.
+
+The subsequent CPU feasibility audit clarifies this distinction: after exact
+question exclusions,385 three-hop and189 four-hop candidate parents remain.
+None shares an atomic step ID with official TRAIN, but prior study DEV panels
+cover atoms in382 of the385 three-hop parents and all189 four-hop parents.
+Thus prior evaluation exposure, not demonstrated overlap with TRAIN atomic IDs,
+is the important obstacle in this candidate pool. A new declared panel can test
+new combinations of previously evaluated components, with that limitation stated.
+It must not be described as recombination of *training*-seen atoms when the audit
+finds no such overlap. Exact TRAIN document reuse remains widespread and is a
+different exposure measure. The existing frozen two-hop panel is unchanged.

@@ -3,7 +3,7 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September21 research update](RESEARCH-UPDATE-20260921.md).
 
-Current operations, September 21, 18:18 UTC: the
+Current operations, September 21, 18:37 UTC: the
 [fresh128-question Hotpot replication](HOTPOT-FRESH-FINDINGS.md) is complete:
 151/256 planner versus152/256 direct, with 3.44 times the tokens and unresolved
 differences. The completed [three-answer voting control](HOTPOT-VOTE-FINDINGS.md)
@@ -31,9 +31,15 @@ questions. The [many-answer passage-reading screen](QAMPARI-FINDINGS.md) is
 complete: splitting has lower precision and an uncertain overall score change,
 with shorter measured native inference time. Both sufficiency-training arms and
 fixed-endpoint readouts are complete: [the answer/refusal tradeoff](SUFFICIENCY-TRAINING-FINDINGS.md)
-does not establish improved joint correctness. Fresh replication is running;
-fresh household tasks, a decoding control, paired-reward RL, matched extra SFT,
-and a frozen held readout are accepted in sequence. The actual queue and owners
+does not establish improved joint correctness. The [fresh replication](SUFFICIENCY-CANONICAL-FINDINGS.md)
+is complete and repeats the answer/refusal tradeoff. Fresh household tasks are
+running; a decoding control, paired-reward RL, matched extra SFT,
+a frozen held readout, and public-action SFT are accepted in sequence.
+The [bounded semantic audit](SUFFICIENCY-SEMANTIC-AUDIT.md) illustrates why a
+literal answer mention is not necessarily sufficient evidence, and why the
+official negative labels are not infallible.
+The [TextCraft qualification](TEXTCRAFT-CPU-READINESS.md) has passed CPU gold
+replay but has no model results yet. The actual queue and owners
 remain in the external research store, not this narrative summary.
 [Recent primary work](LITERATURE-UPDATE-1625.md)
 narrows the novelty of generic answerability training and adaptive evidence trees.
@@ -125,14 +131,14 @@ The [matched Hotpot direct control](HOTPOT-DIRECT-CONTROL.md) scores31/64 with
 the helper adapter versus36/64 with base weights; multi-call trained helpers
 score40/64. The [paired architecture analysis](HOTPOT-MATCHED-ARCHITECTURE.md)
 finds the advantage over base direct uncertain, at3.50times its token cost.
-The [new-data replication](HOTPOT-FRESH-PANEL.md) is running.
+The [new-data replication](HOTPOT-FRESH-FINDINGS.md) is complete.
 The [bounded RL continuation](RL-CONTINUATION-DRAFT.md) preserved the optimizer
 but stopped at checkpoint21 under its declared admission rule; its separately
-named development readout is pending.
+named development readout is [complete](RL-STOPPED-DOSE-FINDINGS.md).
 The [latest prior-art check](LITERATURE-UPDATE-1515.md) narrows what would be novel
 beyond existing planner/executor training and adaptive retrieval methods.
 The [larger Hotpot validation asset](HOTPOT-DEV-ASSET.md) is now cached with a
-pinned revision; no new evaluation panel has been selected from it yet.
+pinned revision; its fresh panel has now been evaluated as reported above.
 
 ## What was controlled in the initial screen
 
