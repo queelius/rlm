@@ -11,6 +11,13 @@ Start with [DESIGN.md](DESIGN.md), [LEDGER.md](LEDGER.md), and
 existence does not mean a training run has happened.
 
 For the current evidence and direction, read [FINDINGS.md](FINDINGS.md) first.
+The latest [fresh fixed-helper comparison](FRESH-CONTRACT-FINDINGS.md) adds an
+important update: after a full training pass, RL answers 56/128 correctly versus
+53/128 for its supervised starting point, with a paired interval spanning no
+improvement. All seven changed outcomes have valid answers on both sides, but
+some correct finals still contradict their helper chains. Direct answering gets
+54/128 with about 28% of the multi-call policies' inference tokens. These are
+exploratory results, not an established decomposition or RL advantage.
 The initial action-choice screen found little reliable advantage from choosing
 among fixed helper strategies. Follow-ups now separate three possible problems:
 writing the wrong subquestions, failing to execute them, and ignoring useful
@@ -62,7 +69,7 @@ new questions do not imply new source documents. The small
 against interpreting final-answer gains as uniformly better intermediate steps.
 [INCREMENTAL-DESIGN.md](INCREMENTAL-DESIGN.md) is conditional preparation for
 testing answer-conditioned next-question choice, not a completed experiment.
-Two other conditional diagnostics separate
+Two accepted, queued diagnostics separate
 [learning on the training examples](TRAIN-FIT-DIAGNOSTIC.md) from
 [unreliable rewards when the same plan is executed again](FROZEN-EXECUTION-DIAGNOSTIC.md).
 Neither is evidence of improved performance on new questions.
@@ -111,7 +118,7 @@ External study root:
 - `rl-fullpass-001`: root-only RL with frozen helper-SFT36,
   completed16updates over256training parents,1,024attempts and4,335calls;
   [training-process findings](FULLPASS-TRAINING-FINDINGS.md). Its new-question
-  comparison is running; no held-out outcome yet.
+  fresh-panel comparison is complete; see [FRESH-CONTRACT-FINDINGS.md](FRESH-CONTRACT-FINDINGS.md).
 - `fresh-dev-inputs-003`: new64-question panel with prior-study parent/component
   exclusions. Earlier001/002 preparation versions are superseded; see
   [FRESH-DEV-PANEL.md](FRESH-DEV-PANEL.md).

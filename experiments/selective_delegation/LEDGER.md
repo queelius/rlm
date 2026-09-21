@@ -179,3 +179,32 @@ not support the simple extra-SFT-overtraining explanation; paired dose analysis
 pending. KeepSFT48primary. Next CPU preparation targets exact frozen-root helper
 transfer, with official Hotpot metrics. Quota85% at12:12; preserve10%. Latest
 pushed8098d07 on research branch, notmain; raw runs/modelweights stay external.
+
+13:36 UTC: Full-pass root RL completed16updates/1,024trajectories/4,335calls in
+84.4minutes. All16checkpoints committed, all updates finite/nonzero. Seventy-three
+of256training groups contain both right and wrong fully scored answers, so the
+signal is not exclusively protocol failures. This is not a training learning
+curve: batches contain different questions. Last checkpoint0016 remains primary.
+
+14:15 UTC: Fresh fixed-helper readouts completed: baseplanner46/128, SFT53/128,
+RL56/128, direct54/128. RL−SFT+2.34pp, component interval[-1.67,+6.25]. Fivewins
+andtwolosses allbothvalid; no established gain or faithful-chain claim. Direct
+uses28.5%SFTinference tokens. See FRESH-CONTRACT-FINDINGS.md and immutable native
+analysis-fresh-contract-policy-001.json. Corrected the working renderer's old
+four-hop title with a failing/passing fixture; sealed report left unchanged.
+
+14:20 UTC adaptive decision: accept exact TRAIN-fit readout of checkpoint0016
+against the saved first16-parent pre-update baseline, followed by four executions
+of64frozen TRAINplans. These distinguish visible learning from unstable rewards
+before another blind dose increase. Source016 and RL-DIAGNOSTICS-DECISION-001.json
+bind caps/inputs/seeds. Supervisor18699/PID3746344 waits the accepted helper-transfer
+and direct-adapter controls; no concurrent GPU owners. Checkpoints remain external.
+
+14:34 UTC: Bounded full-panel structure audit finds10extra planned questions on
+three-hop attempts andnone net on two-hop. The five RL wins include2longer,
+2same-length changed,1shorter plan;4wins outside exact TRAINparagraph overlap.
+Three-hop27/64RL vs22SFT but28direct; exploratory subgroup intervals are not a
+tested interaction. FRESH-RL-STRUCTURE.md retains all64primary and final/last-step
+discordance limitations. Source/docs3b2b6f2 pushed to research branch, notmain;
+next-question feedback analyzer is CPU preparation only. GPU helper transfer
+has1,100returned calls/0runtime failures; quota78% at14:28, reserve10%.
