@@ -69,3 +69,18 @@ modelplan vsreference-question plan, bothfreshhelper+final,3newseeds,312calls.
 Only annotatedquestionsenteroraclehelper, neverannotatedanswers; finalretains
 sameoriginalcheckpoint. This tests plancontentbottleneck, notdeployableperformance.
 No automaticcontrollertraining onweak32-parentheadroom. Account97% at09:42UTC.
+
+10:05 UTC: Validation completed704calls: finish36/96, reconsider30/96,
+targeted39/96,decompose35/96. Reference-question diagnostic completed312calls:
+model35/78,reference39/78; all4wins concentrated2parents. No optimizer run yet.
+Inspection shows helpers sometimes ignore supplied plans and answer the original
+composed question instead. New execution-probe-001 launched10:04 with sealed
+source-004; first scientific return succeeded by10:04:53. It crosses plan source
+and bundled/isolated execution on26two-hoptrainingparents,2repeats,520calls.
+Each isolated helper receives only its current subquestion/fullsource; #1 binds
+to an actual prediction. Finals retain original checkpoints. This is a package
+intervention (visibility, granularity, helper answer format), not a pure recursion
+or compute-controlled effect. Model plans have0/26literal#1 links, references26/26.
+The ~2minute gap after prior owner completed was CPU launch preparation, not GPU
+science. Question-planSFT inputs256parents and48update trainer are CPU-prepared;
+paired base/SFT evaluator being prepared with frozen helpers. Quota96%@09:56.

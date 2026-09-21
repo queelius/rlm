@@ -10,6 +10,13 @@ Start with [DESIGN.md](DESIGN.md), [LEDGER.md](LEDGER.md), and
 [TRAINING-DRAFT.md](TRAINING-DRAFT.md) describes conditional training work; its
 existence does not mean a training run has happened.
 
+For the current evidence and direction, read [FINDINGS.md](FINDINGS.md) first.
+The initial action-choice screen found little reliable advantage from choosing
+among fixed helper strategies. Follow-ups now separate three possible problems:
+writing the wrong subquestions, failing to execute them, and ignoring useful
+helper answers because of an earlier wrong answer. This is an adaptive study,
+not a claim that the original action-router plan succeeded.
+
 ## What is controlled
 
 Each question produces one initial attempt. Four alternatives start from that
@@ -37,6 +44,18 @@ External study root:
   reporting and add optional span instructions without changing that live copy.
 - `pilot-001`: plans, owner receipts, native calls, checkpoints and arm outcomes.
 - `ENVIRONMENT.json`: observed environment versions and allocation information.
+- `plan-probe-001`: completed model-versus-reference question diagnostic.
+- `execution-probe-001`: bundled-versus-step-by-step execution diagnostic.
+- `planner-sft-inputs-001`: 256 question-list training targets, with token audit.
+- `planner-sft-001`: destination for the accepted 48-update planner training run;
+  inspect its actual checkpoint and terminal receipts before claiming completion.
+
+`train_planner.py` trains only question-list generation. `eval_planner.py`
+compares base and trained planners under the same title-index-only observation,
+with base-model helpers and final answers in both conditions. Its `--execution`
+option selects bundled or isolated helpers. The primary trained checkpoint is
+fixed at update48, not chosen by validation score. See
+[PLAN-SFT-DRAFT.md](PLAN-SFT-DRAFT.md) for the supervision and architecture limits.
 
 These cluster-specific scripts reuse the existing native inference client and
 owned-service launcher under `sidecars/unattended-breadth-20260914`, plus cached

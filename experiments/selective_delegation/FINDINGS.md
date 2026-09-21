@@ -1,7 +1,7 @@
 ---
 question_id: selective-delegation-20260921
 status: exploratory
-cutoff_utc: 2026-09-21T09:43:00Z
+cutoff_utc: 2026-09-21T10:05:00Z
 model: Qwen3-4B-Instruct-2507
 training_performed: false
 ---
@@ -65,8 +65,47 @@ cosmetic mechanism.
 With the new instruction, other-repeat per-question selection reaches 50.0%
 versus 46.9% for the corresponding fixed strategy, an exploratory +3.1-point
 difference with conditional interval 0 to 8.3 points. This is weak possible routing
-headroom, not established learnability. A new 32-parent validation block is now
-running under the frozen short-answer contract.
+headroom, not established learnability.
+
+## Completed: 32 different questions under the clearer answer contract
+
+On a fresh exploratory validation block, finishing scored 37.5%, reconsidering
+31.3%, targeted evidence 40.6%, and proposed subquestions 36.5%. Each percentage
+uses 96 continuations on 32 questions. All 704 calls completed successfully.
+The helper choices required about 60% more tokens than finishing.
+
+The privileged other-repeat selector reached 41.7%, versus 40.6% for its fixed
+strategy; the conditional parent-bootstrap interval for that difference is
+0 to 3.1 points. These results do not justify a claim that a learned action
+router is likely to help. They motivate testing the quality and execution of
+the actual subquestions before optimizing a choice among these four actions.
+
+## Completed: supplying reference subquestions
+
+For the 26 two-hop training questions, fresh helper/final calls scored 35/78
+(44.9%) with model-generated questions and 39/78 (50.0%) with annotated questions.
+There were four improved continuations and none harmed, but the gains came from
+only two parent questions. All 312 calls completed. Annotated answers were never
+provided. Reference questions are still privileged information, so this is a
+diagnostic, not a deployable improvement.
+
+Inspection revealed a crucial limitation: a helper can ignore the supplied plan.
+For a question about when a car's manufacturer ended, even the helper given
+manufacturer-focused reference questions answered with the car's final production
+year. The original provisional answer and composed question remained visible.
+Therefore this small comparison cannot cleanly distinguish poor plans from a
+failure to execute the plans.
+
+The next comparison crosses model/reference plans with bundled/step-by-step
+execution. In the step-by-step condition, each helper sees only its current
+subquestion and the documents; a `#1` reference is replaced by the first helper's
+actual answer. Both final answerers retain the original checkpoint and full
+documents. This changes visibility, call granularity, and helper response format
+together, not just the number of calls. The helper output allowance is 384 tokens
+in both conditions, but step-by-step execution pays for an additional input pass.
+Generated plans have no literal `#1` links in this panel, whereas all reference
+plans do; this execution-compatibility difference must be reported, not repaired
+silently or mistaken for a pure content-quality effect.
 
 ## What changed our next experiment
 
@@ -81,14 +120,14 @@ limit, with no gold-dependent answer cleanup. The harder four-hop transfer panel
 remains unused. See
 [DATA-AUDIT.md](DATA-AUDIT.md) for the source-data caveat.
 
-We next investigate whether the proposed subquestions themselves are wrong.
+We investigated whether the proposed subquestions themselves are wrong.
 For example, the model asks about a product's production dates when the question
-asks about its manufacturer. A reference-question diagnostic is being prepared
+asks about its manufacturer. The completed reference-question diagnostic used
 for the 26 two-hop training parents, holding the number of subquestions at two.
 Both model and reference plans receive fresh matched helper/final calls. Only
 annotated questions, never annotated answers, enter the reference helper prompt.
-This is still privileged annotation assistance, not a deployable result. It can
-distinguish a planning bottleneck from poor execution of a good plan.
+This is still privileged annotation assistance, not a deployable result. The
+execution limitation above motivates the more explicit follow-up.
 
 ## Evidence and scope
 
@@ -105,3 +144,8 @@ cost includes one initial attempt and only its chosen continuation.
 This is a prerequisite diagnostic, not an RL improvement, a generalization claim,
 or evidence that learning to delegate is new. The advisor deck is unchanged:
 the current finding is too provisional and technical to replace its main story.
+
+Further completed artifacts: `analysis-validation-001.json` and `.md`, raw
+`validation-span-001`; `plan-probe-001/SUMMARY.json` and its immutable calls and
+episodes. The live execution comparison is `execution-probe-001` with sealed
+`source-004`. No new optimizer has run as of this cutoff.
