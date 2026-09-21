@@ -62,6 +62,12 @@ new questions do not imply new source documents. The small
 against interpreting final-answer gains as uniformly better intermediate steps.
 [INCREMENTAL-DESIGN.md](INCREMENTAL-DESIGN.md) is conditional preparation for
 testing answer-conditioned next-question choice, not a completed experiment.
+Two other conditional diagnostics separate
+[learning on the training examples](TRAIN-FIT-DIAGNOSTIC.md) from
+[unreliable rewards when the same plan is executed again](FROZEN-EXECUTION-DIAGNOSTIC.md).
+Neither is evidence of improved performance on new questions.
+The [larger Hotpot validation asset](HOTPOT-DEV-ASSET.md) is now cached with a
+pinned revision; no new evaluation panel has been selected from it yet.
 
 ## What was controlled in the initial screen
 
