@@ -9,6 +9,7 @@ import re
 import string
 from collections import Counter
 from datetime import datetime, timezone
+from itertools import combinations
 from pathlib import Path
 
 EVALUATOR = Path("/project/alex_phd/research-cache/repos/") / (
@@ -112,11 +113,10 @@ def _markdown(report: dict) -> str:
             f"{row['missing_episode']} | "
             f"{row['em']:.4f} | {row['f1']:.4f} |"
         )
-    paired = report["paired_comparison"]
-    if paired is None:
+    if not report["comparisons"]:
         lines.extend(["", "Unpaired single-condition report; no effect estimate."])
-    else:
-        left, right = report["condition_order"]
+    for paired in report["comparisons"].values():
+        left, right = paired["first_condition"], paired["second_condition"]
         lines.extend(
             [
                 "",
@@ -142,7 +142,7 @@ def _markdown(report: dict) -> str:
 
 
 def score(cases_path: Path, evaluation: Path, output: Path, *, comparison_output=None) -> dict:
-    """Regrade one/two conditions, optionally pairing matching single-condition saved runs."""
+    """Regrade one to three conditions, optionally joining disjoint matching saved runs."""
     cases_path, evaluation, output = map(Path, (cases_path, evaluation, output))
     if output.exists():
         raise FileExistsError(output)
@@ -154,11 +154,11 @@ def score(cases_path: Path, evaluation: Path, output: Path, *, comparison_output
         comparison_output = Path(comparison_output)
         other = json.loads((comparison_output / "PLAN.json").read_text())
         if (
-            len(plan.get("conditions", [])) != 1
-            or len(other.get("conditions", [])) != 1
+            not plan.get("conditions")
+            or not other.get("conditions")
             or set(plan["conditions"]) & set(other["conditions"])
         ):
-            raise ValueError("comparison requires distinct single-condition outputs")
+            raise ValueError("comparison requires disjoint nonempty condition sets")
         for field in ("cases_sha256", "case_ids", "repeats", "seed", "execution"):
             if field not in plan or field not in other or plan[field] != other[field]:
                 raise ValueError("comparison contract differs: " + field)
@@ -181,8 +181,8 @@ def score(cases_path: Path, evaluation: Path, output: Path, *, comparison_output
         sources.append((comparison_output, other))
     conditions = [c for _, p in sources for c in p.get("conditions", [])]
     repeats = plan.get("repeats")
-    if not 1 <= len(conditions) <= 2 or len(set(conditions)) != len(conditions):
-        raise ValueError("evaluation plan must declare one or two distinct conditions")
+    if not 1 <= len(conditions) <= 3 or len(set(conditions)) != len(conditions):
+        raise ValueError("evaluation plan must declare one to three distinct conditions")
     if type(repeats) is not int or repeats < 1:
         raise ValueError("evaluation plan requires positive repeats")
     if plan.get("cases_sha256") and plan["cases_sha256"] != sha256(cases_path):
@@ -343,9 +343,8 @@ def score(cases_path: Path, evaluation: Path, output: Path, *, comparison_output
             "em": em_total / planned,
             "f1": f1_total / planned,
         }
-    paired = None
-    if len(conditions) == 2:
-        left, right = conditions
+    comparisons = {}
+    for left, right in combinations(conditions, 2):
         counts = Counter()
         f1_difference = 0.0
         for case_id in parents:
@@ -382,19 +381,21 @@ def score(cases_path: Path, evaluation: Path, output: Path, *, comparison_output
             **dict(counts),
             "mean_f1_difference_first_minus_second": f1_difference / (len(parents) * repeats),
         }
-        if conditions == ["base", "sft"]:
+        if [left, right] == ["base", "sft"]:
             paired.update(
                 base_only_correct=counts["first_only_correct"],
                 sft_only_correct=counts["second_only_correct"],
             )
+        comparisons[right + "_minus_" + left] = paired
     report = {
         "schema": "selective-delegation-hotpot-official-regrade-v2",
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "condition_order": conditions,
         "conditions": summaries,
-        "paired_comparison": paired,
+        "paired_comparison": next(iter(comparisons.values())) if len(conditions) == 2 else None,
+        "comparisons": comparisons,
         "planned_case_ids": parents,
-        "denominator_note": "Every prepared transfer parent and planned repeat contributes; "
+        "denominator_note": "Every planned transfer parent and planned repeat contributes; "
         "missing, unavailable, and malformed finals score zero and remain explicit.",
         "scoring": {
             "authoritative": "cached official HotpotQA answer EM/F1 implementation",

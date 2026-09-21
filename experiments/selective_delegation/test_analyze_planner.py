@@ -201,6 +201,31 @@ def test_joins_separate_trained_conditions_with_source_hashes_and_no_base_rerun(
     assert "rl_minus_sft" in m.markdown(result) and str(rl) in m.markdown(result)
 
 
+def test_joins_base_sft_run_with_rl_run_and_reports_all_three_pairs(tmp_path):
+    m = implementation()
+    sft, rl, cases = split_fixture(tmp_path)
+    plan_path = sft / "PLAN.json"
+    plan = json.loads(plan_path.read_text())
+    plan["conditions"] = ["base", "sft"]
+    plan_path.write_text(json.dumps(plan))
+    for directory in ("calls", "episodes"):
+        for path in list((sft / directory).glob("*.json")):
+            row = json.loads(path.read_text())
+            row["condition"] = "base"
+            for field in ("call_id", "episode_id"):
+                if field in row:
+                    row[field] = row[field].replace("-sft", "-base")
+            if "call_ids" in row:
+                row["call_ids"] = [cid.replace("-sft", "-base") for cid in row["call_ids"]]
+            (sft / directory / path.name.replace("-sft", "-base")).write_text(json.dumps(row))
+    result = m.analyze(sft, cases, comparison_output=rl, draws=100)
+    assert set(result["groups"]) == {"base", "sft", "rl"}
+    assert set(result["comparisons"]) == {"sft_minus_base", "rl_minus_base", "rl_minus_sft"}
+    assert all(group["planned_episodes"] == 4 for group in result["groups"].values())
+    assert result["comparisons"]["sft_minus_base"]["em"]["estimate"] == 0
+    assert [s["conditions"] for s in result["source_plans"]] == [["base", "sft"], ["rl"]]
+
+
 @pytest.mark.parametrize(
     "field,value",
     [
@@ -211,6 +236,9 @@ def test_joins_separate_trained_conditions_with_source_hashes_and_no_base_rerun(
         ("execution", "bundled"),
         ("source_sha256", "other-source"),
         ("conditions", ["sft"]),
+        ("conditions", []),
+        ("mode", "direct"),
+        ("architecture", "different architecture"),
     ],
 )
 def test_comparison_rejects_mismatched_contract_or_duplicate_condition(tmp_path, field, value):

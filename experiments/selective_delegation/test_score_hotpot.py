@@ -201,3 +201,39 @@ def test_native_receipt_digest_and_unavailable_final_accounting(tmp_path):
     path.write_text(json.dumps(receipt))
     with pytest.raises(ValueError, match="request digest"):
         m.score(cases, output, tmp_path / "bad-digest")
+
+
+def test_three_condition_join_preserves_all_pairs_and_rejects_overlap_or_mode_change(tmp_path):
+    m, cases, left, plan = single_fixture(tmp_path, "sft")
+    plan["conditions"] = ["base", "sft"]
+    (left / "PLAN.json").write_text(json.dumps(plan))
+    right = tmp_path / "rl"
+    (right / "episodes").mkdir(parents=True)
+    (right / "calls").mkdir()
+    other = {**plan, "conditions": ["rl"]}
+    (right / "PLAN.json").write_text(json.dumps(other))
+    row = episode("a", "rl", "a-r0-rl-final")
+    row.update(call_ids=["a-r0-rl-final"], status="scored")
+    (right / "episodes" / (row["episode_id"] + ".json")).write_text(json.dumps(row))
+    receipt = call("a-r0-rl-final", '{"answer":"yes"}')
+    receipt.update(condition="rl", role="final")
+    (right / "calls" / "a-r0-rl-final.json").write_text(json.dumps(receipt))
+    report = m.score(cases, left, tmp_path / "report", comparison_output=right)
+    assert report["condition_order"] == ["base", "sft", "rl"]
+    assert report["paired_comparison"] is None
+    assert set(report["comparisons"]) == {"sft_minus_base", "rl_minus_base", "rl_minus_sft"}
+    assert report["comparisons"]["rl_minus_sft"]["second_only_correct"] == 1
+    assert all(row["planned"] == 2 for row in report["conditions"].values())
+    markdown = (tmp_path / "report/REPORT.md").read_text()
+    assert markdown.count("Paired `") == 3
+    assert "Unpaired" not in markdown
+    for field, value in (
+        ("conditions", ["sft"]),
+        ("conditions", []),
+        ("seed", 99),
+        ("mode", "direct"),
+        ("architecture", "different"),
+    ):
+        (right / "PLAN.json").write_text(json.dumps({**other, field: value}))
+        with pytest.raises(ValueError, match="comparison"):
+            m.score(cases, left, tmp_path / "bad-report", comparison_output=right)

@@ -19,11 +19,19 @@ explanation is not confirmed. This is an adaptive study,
 not a claim that the original action-router plan succeeded.
 
 Question-plan SFT and four fresh-rollout RL updates are now complete. The initial
-SFT validation gain is small and uncertain; RL held-out evaluation is pending.
+SFT validation gain is small and uncertain. RL scored19/64 versus18/64 for SFT
+on the other32 validation questions, with only protocol-related wins and a wide
+interval. This is not convincing evidence of improved reasoning.
 See [RL-PLAN.md](RL-PLAN.md), [EXECUTION-FINDINGS.md](EXECUTION-FINDINGS.md), and
 [AGGREGATION-PLAN.md](AGGREGATION-PLAN.md) for the distinct questions being tested.
 The broader [HOTPOT-DIAGNOSTIC.md](HOTPOT-DIAGNOSTIC.md) readout is a small official
 explorer sample, not a canonical benchmark result.
+
+The [aggregation result](AGGREGATION-FINDINGS.md) supports retaining full-source
+final answers. [Executor failure analysis](EXECUTOR-BOTTLENECKS.md) motivates
+the next [helper-only training comparison](HELPER-TRAINING-DRAFT.md). A
+[search-headroom diagnostic](SEARCH-HEADROOM.md) records why simply adding
+tree search is not yet the first priority.
 
 ## What was controlled in the initial screen
 
@@ -58,8 +66,9 @@ External study root:
 - `planner-sft-001`: completed48-update supervised training; fixed checkpoint0048.
 - `planner-eval-isolated-001`: completed matched base/SFT validation on32 parents.
 - `rl-planner-001`: completed four-update root-only RL,256 fresh trajectories.
-- `held-sft-001` and `held-rl-001`: queued readouts on the other32 validation parents.
-- `aggregation-probe-001`: queued frozen-trace final-evidence comparison.
+- `held-sft-001` and `held-rl-001`: completed readouts on the other32 validation parents.
+- `aggregation-probe-001`: completed frozen-trace final-evidence comparison.
+- `helper-sft-inputs-001`:570 train-only annotated step-answer examples, sealed.
 
 `train_planner.py` trains only question-list generation. `eval_planner.py`
 compares base and trained planners under the same title-index-only observation,

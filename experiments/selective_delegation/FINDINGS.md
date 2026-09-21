@@ -1,12 +1,17 @@
 ---
 question_id: selective-delegation-20260921
 status: exploratory
-cutoff_utc: 2026-09-21T10:44:29Z
+cutoff_utc: 2026-09-21T10:57:00Z
 model: Qwen3-4B-Instruct-2507
 training_performed: true
 ---
 
 # What the first controlled comparison tells us
+
+Scope: these are controlled question-planning and helper experiments motivated
+by RLMs. The learned planner emits a question list, not arbitrary Python or a
+recursive call tree. Results here do not establish improvements to the full RLM
+runtime; they identify which component might be worth changing there.
 
 An extra reasoning step sometimes helps, but this first small experiment does
 not yet show that choosing a different step for each question is better than
@@ -180,7 +185,7 @@ a correct last-helper answer in only two. Simply trusting the last helper is
 not an evidence-supported default. These are descriptive conditional counts,
 not a causal intervention on the final model.
 
-## Completed training; evaluation pending: learn plans from answer rewards
+## Completed: learn plans from answer rewards
 
 An actual on-policy RL run updated only the planner adapter, starting from
 the supervised checkpoint. Each update samples four new plans for each of16
@@ -196,17 +201,39 @@ with no generation failures or unknown token usage. Training rewards were
 37/64,36/64,40/64,37/64 across the four batches: no monotonic improvement, and
 these changing sampled trajectories are not a fixed evaluation set.
 
-The other32 validation questions are reserved for a matched SFT-versus-RL
-readout. Additional frozen readouts cover64 four-hop MuSiQue questions and32
+The other32 validation questions gave18/64 correct answers for SFT and19/64 for
+RL checkpoint4. The paired difference is+1.56 percentage points, with an
+exploratory parent interval of−6.25 to+10.94. Three improved attempts all involved
+recovery from a helper-format failure; two harmed attempts had valid final answers
+in both conditions. This does **not** establish improved semantic planning.
+Helper-format failures fell from12 to10; every root plan parsed successfully.
+Both evaluations completed all planned attempts, totaling511 actual model calls.
+See `analysis-held-rl-001.json/.md` for the paired receipt analysis.
+
+Additional frozen readouts cover64 four-hop MuSiQue questions and32
 HotpotQA explorer-sample questions. The latter is a small diagnostic, not the
 canonical HotpotQA development benchmark. Simple direct-answer controls are
 included so a more elaborate system does not win merely by lacking a baseline.
 
-A separate frozen-trace experiment asks whether showing the final model all
-documents hides the consequences of good and bad plans. It compares new finals
-with documents against new finals with only the question, plan, and actual
-helper answers. Higher reward variation alone would not establish better credit
-assignment; answer quality and repeat noise must be examined together.
+A completed frozen-trace experiment compared new finals with documents against
+new finals with only the question, plan, and actual helper answers. Full document
+access scored78/128, versus74/128 for trace-only access: four losses, no wins.
+These are16 training parents ×4 candidate plans ×2 final repeats, not128
+independent questions. Both versions had zero answer-correctness disagreement
+between their two repeats on58 complete helper traces. Six failed helper paths
+remained explicit zeroes in both conditions. All232 new final calls returned.
+Removing the documents neither improved accuracy nor exposed more candidate
+reward differences here. Keep full-source finals for the next helper comparison;
+do not assume a noisier reward or a narrower interface would improve learning.
+
+The next accepted training comparison targets the helper, not another planner
+dose. It uses570 annotated subquestions from the existing256 training parents,
+one fixed epoch, and a fresh helper-only adapter. Evaluation will reuse exactly
+the same sampled SFT plans in both conditions and keep the final model unchanged.
+Gold previous-step answers are used only to construct training examples; deployed
+helpers must use their own predictions. This exposure difference is a limitation.
+The experiment asks whether reduced execution failures translate into better
+answers; it will report protocol recovery separately from content changes.
 
 ## What changed our next experiment
 
@@ -254,5 +281,5 @@ eight updates through `checkpoint-0048`; sealed trainer/evaluator: `source-005`.
 The completed earlier-answer replay is `checkpoint-replay-001` from `source-006`:
 412 actual new finals after the two source helper failures. The SFT validation
 report is `analysis-planner-sft-001.json/.md`. Actual RL training is
-`rl-planner-001`, source007, checkpoints0001..0004. Its held-out readouts and
-aggregation/transfer queue have not yet established an RL benefit at this cutoff.
+`rl-planner-001`, source007, checkpoints0001..0004. The completed held-out readout
+does not establish an RL reasoning benefit; aggregation/transfer remain pending.

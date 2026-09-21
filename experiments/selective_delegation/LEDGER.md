@@ -130,3 +130,28 @@ Independent review reconstructed all64 frozen RL trajectories and found no
 blocking defect in the aggregation comparison (58 complete helper traces,
 six explicit source-failure zeros). GPU jobs remain serialized under the owner
 lock. Quota92% at10:38 UTC; preserve10% shared reserve.
+
+10:56 UTC: Held readout complete: SFT18/64, RL4 19/64; paired+1.56pp interval
+−6.25..+10.94. All three wins involve protocol recovery, both losses have valid
+finals. No convincing semantic-planning gain. The earlier 10:46 entry described
+an interim three-update state; actual RL completion was10:44:29 (four updates,
+1,053 calls,1,026.8 seconds). Direct and single-helper controls completed17/64
+and14/64 respectively on initial validation32. Baseline and held readouts used
+source008/009; actual summaries and terminal receipts establish their cutoffs.
+
+Aggregation source010 is now loading. Transfer selection fixed to RL4 before
+examining transfer outcomes. Accepted next CPU preparation:570 helper-SFT steps,
+one fixed epoch/36 updates, fresh helper adapter, exact frozen SFT plans reused
+for both evaluation arms, all new helpers/finals. This changes the trained role
+while keeping the planner/final frozen. Helpers' gold-bound training histories
+must not be mistaken for predicted-history training. No helper GPU run yet.
+Quota91% at10:52; latest source checkpoint3d44d54 pushed to research branch.
+
+10:58 UTC: Aggregation completed232 fresh finals, no errors. Full-source78/128
+vs trace-only74/128; trace-only loses four and gains none. No observed final-repeat
+EM disagreements in either condition across58 eligible candidate traces. Candidate
+variation occurs in four parents with documents versus three without. This does
+not support document removal or an immediate extra final-noise pilot. Keep the
+full-source final; proceed with the accepted helper-only training comparison.
+Frozen MuSiQue four-hop readout is already running. No transfer results have been
+used to choose helper dose, inputs, architecture, or checkpoint (one epoch36updates).

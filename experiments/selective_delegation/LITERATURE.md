@@ -113,3 +113,21 @@ license declaration was found; no code was executed, installed, or redistributed
 Its final synthesis can omit original documents. Our queued frozen-trace
 comparison tests that information-access difference locally; it does not claim
 the no-document interface is new. See [AGGREGATION-PLAN.md](AGGREGATION-PLAN.md).
+
+## Counterfactual credit check: September 21, 10:51 UTC
+
+[C3](https://arxiv.org/html/2603.06859v1) already compares alternative messages
+under identical saved contexts and frozen downstream policies, then uses
+leave-one-out return differences. Its method also discusses shared decoding
+seeds and repeated continuations. Therefore our common-seed root-plan RLOO is
+not a novel credit-assignment algorithm, and frozen-context replay itself is
+not a publication claim.
+
+The actionable question is whether a candidate plan's apparent advantage
+survives new downstream samples. Our queued aggregation probe supplies two
+new finals per frozen trace, but cannot separate plan quality from the already
+sampled helper answers. If final-repeat noise is small but ranking remains
+uncertain, rerunning the same plans with fresh helper seeds is the next targeted
+comparison (about256 helper/final calls on16 parents, one A100). Promote repeated
+reward estimation only if it improves ranking reliability enough to justify
+those calls; otherwise spend the budget on more distinct training questions.

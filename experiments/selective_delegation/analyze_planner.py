@@ -48,11 +48,11 @@ def analyze(output: Path, cases_path: Path, *, draws=DRAWS, seed=SEED, compariso
         comparison_output = Path(comparison_output).resolve()
         other = read(comparison_output / "PLAN.json")
         if (
-            len(plan["conditions"]) != 1
-            or len(other["conditions"]) != 1
+            not plan["conditions"]
+            or not other["conditions"]
             or set(plan["conditions"]) & set(other["conditions"])
         ):
-            raise ValueError("comparison requires distinct single-condition outputs")
+            raise ValueError("comparison requires disjoint nonempty condition sets")
         for field in ("cases_sha256", "case_ids", "repeats", "seed", "execution"):
             if field not in plan or field not in other or plan[field] != other[field]:
                 raise ValueError("comparison contract differs: " + field)
