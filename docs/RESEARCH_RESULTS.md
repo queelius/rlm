@@ -27,8 +27,12 @@ examples increases refusals, including mistaken refusals. A paired-reward RL
 comparison and an extra-SFT control are queued to test whether that tradeoff can
 improve. In the small household-task screen, a manager and a single agent that
 briefly explains its next action both solve six of16 attempts, compared with one
-for action-only prompting. The new-task comparison is still running; neither a
-hierarchy-specific gain nor generalization is established.
+for action-only prompting. On the completed new-task comparison, manager and
+action-only policies each solve four of24 attempts, while local reasoning solves
+six. None of the paired differences establishes an improvement, and local
+reasoning takes3.8 times the action-only policy's summed model-call time. The
+earlier manager advantage did not replicate. See the
+[fresh household findings](../experiments/selective_delegation/ALFWORLD-UNSEEN-FINDINGS.md).
 
 See the [reading guide](../experiments/selective_delegation/README.md),
 [fresh RL comparison](../experiments/selective_delegation/FRESH-CONTRACT-FINDINGS.md),

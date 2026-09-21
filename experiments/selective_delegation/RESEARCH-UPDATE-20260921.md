@@ -1,6 +1,6 @@
 ---
 status: exploratory_running
-evidence_cutoff_utc: 2026-09-21T18:21:00Z
+evidence_cutoff_utc: 2026-09-21T19:26:00Z
 model: Qwen3-4B-Instruct-2507
 primary_question: When does asking helpers earn its extra computation?
 publication_status: promising_questions_not_established_architecture_improvement
@@ -111,8 +111,16 @@ delegation. The manager uses about one-third as much summed native generation ti
 as this explanation-based control, despite using more total tokens. These small,
 exposed-game results do not establish equivalence or a general speed advantage.
 See [the completed control and examples](ALFWORLD-LOCAL-REASON-FINDINGS.md).
-The unchanged three policies will next be compared on new household tasks.
-It is not yet a new algorithm or a general result.
+The new-task comparison is now complete: on twelve previously unused games,
+sampled twice, the manager and flat policy each solve four of 24 attempts. Local
+reasoning solves six, but takes 3.8 times the flat policy's summed generation
+time. All paired improvement intervals include zero. These twelve games cover
+only four scenes, so the evidence is less independent than the attempt count
+suggests. The earlier manager advantage did not replicate. We retain the simpler
+flat baseline and will test whether action training improves execution, without
+assuming a hierarchy is better.
+See [the fresh comparison and concrete examples](ALFWORLD-UNSEEN-FINDINGS.md).
+This is not yet a new algorithm or a general result.
 See [the environment screen](ALFWORLD-SCREEN-DESIGN.md).
 The [completed interface follow-up](ALFWORLD-CLOSED-LOOP-FINDINGS.md) includes
 concrete successful and failed action sequences.

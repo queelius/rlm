@@ -3,7 +3,7 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September21 research update](RESEARCH-UPDATE-20260921.md).
 
-Current operations, September 21, 19:01 UTC: the
+Current operations, September 21, 19:26 UTC: the
 [fresh128-question Hotpot replication](HOTPOT-FRESH-FINDINGS.md) is complete:
 151/256 planner versus152/256 direct, with 3.44 times the tokens and unresolved
 differences. The completed [three-answer voting control](HOTPOT-VOTE-FINDINGS.md)
@@ -16,6 +16,10 @@ with a manager, versus one without it. The completed local-deliberation control
 also solves six, so the gain is not unique to a manager-worker division. It takes
 about 2.8 times the manager's summed native generation time despite fewer tokens.
 See [the control and concrete examples](ALFWORLD-LOCAL-REASON-FINDINGS.md).
+The [fresh household-task comparison](ALFWORLD-UNSEEN-FINDINGS.md) is now complete:
+flat and manager each solve four of24 attempts; local reasoning solves six at
+3.8 times flat's summed generation time. No paired contrast establishes an
+improvement. The earlier manager advantage did not replicate.
 See [the completed comparison](ALFWORLD-CLOSED-LOOP-FINDINGS.md).
 See [the stopped-run analysis](RL-STOPPED-DOSE.md) and
 [the new screen's design](ALFWORLD-SCREEN-DESIGN.md). These are exploratory jobs;
@@ -33,7 +37,7 @@ with shorter measured native inference time. Both sufficiency-training arms and
 fixed-endpoint readouts are complete: [the answer/refusal tradeoff](SUFFICIENCY-TRAINING-FINDINGS.md)
 does not establish improved joint correctness. The [fresh replication](SUFFICIENCY-CANONICAL-FINDINGS.md)
 is complete and repeats the answer/refusal tradeoff. Fresh household tasks are
-running; a decoding control, paired-reward RL, matched extra SFT,
+complete; a decoding control, paired-reward RL, matched extra SFT,
 a frozen held readout, and public-action SFT are accepted in sequence.
 The [bounded semantic audit](SUFFICIENCY-SEMANTIC-AUDIT.md) illustrates why a
 literal answer mention is not necessarily sufficient evidence, and why the
