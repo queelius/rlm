@@ -107,3 +107,14 @@ Three focused tests pass: gold-independent hash order and exclusions, host-only
 projection/document audit, and within-pool normalized-question deduplication.
 Ruff passes. Four launcher fixtures also pass. Source and staged data are separate;
 the supervisor is queued, not an active Hotpot GPU collector at this cutoff.
+
+### Predecessor amendment,15:51UTC
+
+RL continuation stopped at batch22's predeclared admission check, leaving
+checkpoint21 rather than24. Its exact24 readout was not run. The independent
+Hotpot comparison was therefore advanced after authenticated training release,
+with no panel, model, prompt, seed, or cap change. Original supervisor16674 was
+stopped while waiting; amended supervisor11339 now owns the queue via
+`HOTPOT-FRESH-AMENDMENT-001.json`. The first native root/helper/final responses
+were checked within90seconds of launch. This is an operational dependency
+amendment, not selection on Hotpot outcomes.
