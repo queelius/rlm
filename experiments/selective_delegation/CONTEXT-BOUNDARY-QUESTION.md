@@ -1,12 +1,20 @@
 ---
 question_id: rq:delegation_context_boundary
 created_utc: 2026-09-21T18:40:00Z
-status: prospective_not_gpu_accepted
+status: original_proposal_retired_for_current_textcraft_world
 depends_on: source044_textcraft_interface_qualification
 novelty: mechanism_question_not_claimed_new_framework
 ---
 
 # What should a child agent know about its parent's task?
+
+**September21,19:36 update:** The [native feasibility check](CONTEXT-SUFFICIENCY-FEASIBILITY.md)
+did not establish the missing-child-constraint mechanism proposed below. The
+concrete quantity example is a parent request-planning error, not a necessary
+tradeoff between locally correct child actions. Do not launch this proposed
+comparison on that rationale. The original hypothesis is retained below as a
+record of how the question changed; generic context isolation remains a broader
+question, not a demonstrated result in our recipe world.
 
 Delegation changes more than who writes the next action. It also changes which
 information the model sees. A fresh child context may remove distracting history,

@@ -55,9 +55,11 @@ narrows the novelty of generic answerability training and adaptive evidence tree
 The [further literature update](LITERATURE-UPDATE-1653.md) connects these results
 to existing planner-training and evidence-integration research.
 
-Prospective questions, not completed findings: [what a child should know about
-its parent](CONTEXT-BOUNDARY-QUESTION.md), [recursion versus subtask practice](TEXTCRAFT-TRAINING-CONTROLS.md),
+Prospective questions, not completed findings: [recursion versus subtask practice](TEXTCRAFT-TRAINING-CONTROLS.md),
 and [terminal-reward action learning](ALFWORLD-TERMINAL-RL-DRAFT.md).
+The [context-boundary feasibility check](CONTEXT-SUFFICIENCY-FEASIBILITY.md)
+retired one proposed crafting comparison: its concrete example was a parent
+quantity error, not a demonstrated missing constraint for the child.
 The [small weighting calculation](RAO-WEIGHTING-CAVEAT.md) is a CPU training-design
 caution, not a new algorithm or a GPU performance result.
 
