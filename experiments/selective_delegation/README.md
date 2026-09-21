@@ -3,7 +3,7 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September21 research update](RESEARCH-UPDATE-20260921.md).
 
-Current operations, September 21, 18:37 UTC: the
+Current operations, September 21, 19:01 UTC: the
 [fresh128-question Hotpot replication](HOTPOT-FRESH-FINDINGS.md) is complete:
 151/256 planner versus152/256 direct, with 3.44 times the tokens and unresolved
 differences. The completed [three-answer voting control](HOTPOT-VOTE-FINDINGS.md)
@@ -39,12 +39,21 @@ The [bounded semantic audit](SUFFICIENCY-SEMANTIC-AUDIT.md) illustrates why a
 literal answer mention is not necessarily sufficient evidence, and why the
 official negative labels are not infallible.
 The [TextCraft qualification](TEXTCRAFT-CPU-READINESS.md) has passed CPU gold
-replay but has no model results yet. The actual queue and owners
+replay, and its [bounded model comparison](TEXTCRAFT-PILOT-PLAN.md) is now queued.
+A [separately declared deeper-question readout](SUFFICIENCY-COMPOSITIONAL-PANEL.md)
+will test the fixed RL/SFT endpoints on new composed questions, with prior-study
+component exposure disclosed. Neither has model results yet. The actual queue and owners
 remain in the external research store, not this narrative summary.
 [Recent primary work](LITERATURE-UPDATE-1625.md)
 narrows the novelty of generic answerability training and adaptive evidence trees.
 The [further literature update](LITERATURE-UPDATE-1653.md) connects these results
 to existing planner-training and evidence-integration research.
+
+Prospective questions, not completed findings: [what a child should know about
+its parent](CONTEXT-BOUNDARY-QUESTION.md), [recursion versus subtask practice](TEXTCRAFT-TRAINING-CONTROLS.md),
+and [terminal-reward action learning](ALFWORLD-TERMINAL-RL-DRAFT.md).
+The [small weighting calculation](RAO-WEIGHTING-CAVEAT.md) is a CPU training-design
+caution, not a new algorithm or a GPU performance result.
 
 This exploratory study asks whether a controller can learn when to finish an
 answer, reconsider it, ask a focused evidence question, or work through proposed

@@ -153,7 +153,26 @@ def save_plan(path, plan):
         native.save(path, plan)
 
 
-def prepare(args):
+def validate_panel(cases_path, manifest, profile=None):
+    expected = CASES_SHA if profile is None else profile["cases_sha256"]
+    seed = 2026092198 if profile is None else profile["selection_seed"]
+    if sha(cases_path) != expected or manifest["cases_sha256"] != expected:
+        raise ValueError("fixed paired32 panel differs")
+    if manifest["selection_seed"] != seed:
+        raise ValueError("selection differs")
+    if profile is not None and (
+        sha(cases_path.with_name("MANIFEST.json")) != profile["manifest_sha256"]
+        or manifest["component_cluster_count"] != profile["component_cluster_count"]
+    ):
+        raise ValueError("panel manifest/component inventory differs")
+    metrics = manifest["official_metric_sha256"] if profile is None else profile["metric_sha256"]
+    for path, digest in metrics.items():
+        if sha(Path(path)) != digest:
+            raise ValueError("official grader changed")
+    return expected
+
+
+def prepare(args, *, profile=None):
     warm = adapter_runtime.adapter_identity(args.warm_adapter.resolve(), "joint")
     rl = endpoint_identity(args.rl_output.resolve(), "rl", warm)
     if skip_reason(rl):
@@ -188,13 +207,7 @@ def prepare(args):
         raise ValueError("at most one hour for384 calls")
     cases_path = args.cases.resolve()
     manifest = read(cases_path.with_name("MANIFEST.json"))
-    if sha(cases_path) != CASES_SHA or manifest["cases_sha256"] != CASES_SHA:
-        raise ValueError("fixed held32 panel differs")
-    if manifest["selection_seed"] != 2026092198:
-        raise ValueError("selection differs")
-    for path, digest in manifest["official_metric_sha256"].items():
-        if sha(Path(path)) != digest:
-            raise ValueError("official grader changed")
+    cases_sha = validate_panel(cases_path, manifest, profile)
     from transformers import AutoTokenizer
 
     cases = panel.read_jsonl(cases_path)
@@ -212,7 +225,7 @@ def prepare(args):
     plan = {
         "schema": "paired-sufficiency-held32-terminal-v1",
         "cases": str(cases_path),
-        "cases_sha256": CASES_SHA,
+        "cases_sha256": cases_sha,
         "manifest_sha256": sha(cases_path.with_name("MANIFEST.json")),
         "conditions": list(CONDITIONS),
         "adapters": identities,
@@ -242,6 +255,9 @@ def prepare(args):
             **{p: importlib.metadata.version(p) for p in ("torch", "transformers", "peft")},
         },
     }
+    if profile is not None:
+        plan["panel_profile"] = profile
+        plan["schema"] = profile["readout_schema"]
     save_plan(args.output / "PLAN.json", plan)
     for condition in CONDITIONS:
         save_plan(
@@ -269,9 +285,9 @@ def summaries(output, plan, cases):
     }
 
 
-def run(args):
+def run(args, *, profile=None):
     args.output = args.output.resolve()
-    plan, cases, tokenizer = prepare(args)
+    plan, cases, tokenizer = prepare(args, profile=profile)
     if plan is None or args.prepare_only:
         print(json.dumps({"model_loaded": False, "planned_calls": 0 if plan is None else 384}))
         return

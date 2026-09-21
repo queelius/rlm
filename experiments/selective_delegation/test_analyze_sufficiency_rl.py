@@ -1,6 +1,22 @@
 import pytest
 
 
+@pytest.mark.parametrize("component_count", [20, 30])
+def test_frozen_panel_partition_accepts_exact20_or30_and_rejects_overlap(component_count):
+    import analyze_sufficiency_rl as analysis
+
+    parents = [f"p{i}" for i in range(32)]
+    cases = [{"parent_id": parent} for parent in parents for _ in range(2)]
+    paired_count = 32 - component_count
+    clusters = [parents[i : i + 2] for i in range(0, 2 * paired_count, 2)]
+    clusters += [[p] for p in parents[2 * paired_count :]]
+    assert analysis.frozen_clusters(cases, {"component_clusters": clusters}, 384) == clusters
+    with pytest.raises(ValueError, match="partition"):
+        analysis.frozen_clusters(cases, {"component_clusters": clusters + [[parents[0]]]}, 384)
+    with pytest.raises(ValueError, match="partition"):
+        analysis.frozen_clusters(cases, {"component_clusters": clusters[:-1]}, 384)
+
+
 def test_reward_protocol_and_zero_advantage_accounting():
     import analyze_sufficiency_rl as analysis
 

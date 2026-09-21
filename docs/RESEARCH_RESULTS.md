@@ -16,9 +16,19 @@ token cost. These are question-list experiments, not learned Python recursion.
 
 A promising small HotpotQA result did not establish an architecture advantage
 on its larger replication: decomposition gets 151 of 256 answers correct,
-versus 152 for direct answering, at 3.44 times the tokens. This motivates a
-cheap repeated-answer control and new tasks where additional work can uncover
+versus 152 for direct answering, at 3.44 times the tokens. The completed
+three-answer voting control selects exactly the same answers as the original
+direct policy. We are now testing tasks where additional work can uncover
 information or enable actions, rather than merely rewrite a fully visible input.
+
+The evidence-sufficiency experiments reveal a repeatable answer/refusal tradeoff:
+training only on answerable examples increases answering, while including negative
+examples increases refusals, including mistaken refusals. A paired-reward RL
+comparison and an extra-SFT control are queued to test whether that tradeoff can
+improve. In the small household-task screen, a manager and a single agent that
+briefly explains its next action both solve six of16 attempts, compared with one
+for action-only prompting. The new-task comparison is still running; neither a
+hierarchy-specific gain nor generalization is established.
 
 See the [reading guide](../experiments/selective_delegation/README.md),
 [fresh RL comparison](../experiments/selective_delegation/FRESH-CONTRACT-FINDINGS.md),

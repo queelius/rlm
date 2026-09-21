@@ -1,5 +1,10 @@
 # Source043 CPU bridge and frozen inputs
 
+Update, September21 18:51 UTC: main accepted the separately sealed source044
+pilot after four focused native/recursive fixtures passed. It is queued after the
+trained ALFWorld readout. There are no TextCraft model results yet. The readiness
+account below records the earlier CPU-only stage; see [the pilot plan](TEXTCRAFT-PILOT-PLAN.md).
+
 No GPU accepted/launched; source044 collector remains a separate step.
 Eight official VAL tasks were frozen **before** any replay, using selection
 seed2026092203 and hash order within the predeclared depth strata. No tasks were

@@ -295,6 +295,23 @@ def training_report(output, audit, tokenizer):
     }
 
 
+def frozen_clusters(cases, manifest, planned_calls):
+    clusters = manifest["component_clusters"]
+    parents = Counter(c["parent_id"] for c in cases)
+    flattened = [parent for cluster in clusters for parent in cluster]
+    if (
+        len(cases) != 64
+        or len(parents) != 32
+        or set(parents.values()) != {2}
+        or planned_calls != 384
+        or not all(clusters)
+        or len(flattened) != len(set(flattened))
+        or set(flattened) != set(parents)
+    ):
+        raise ValueError("frozen held32/384call component partition differs")
+    return clusters
+
+
 def held_report(output, cases_path, audit, tokenizer, draws=20000):
     output = output.resolve()
     audit.terminal(output)
@@ -321,9 +338,7 @@ def held_report(output, cases_path, audit, tokenizer, draws=20000):
         or plan["prompt_instruction"] != paired.baseline.INSTRUCTION
     ):
         raise ValueError("held model/public instruction differs")
-    clusters = manifest["component_clusters"]
-    if len(cases) != 64 or len(clusters) != 30 or plan["planned_calls"] != 384:
-        raise ValueError("frozen held32/30component/384call contract differs")
+    clusters = frozen_clusters(cases, manifest, plan["planned_calls"])
     lookup, groups, all_rows = {c["id"]: c for c in cases}, {}, {}
     for condition in plan["conditions"]:
         subplan = audit.read(output / condition / "PLAN.json")
@@ -415,7 +430,7 @@ def held_report(output, cases_path, audit, tokenizer, draws=20000):
         "plan": plan,
         "method": {
             "parent_count": 32,
-            "component_count": 30,
+            "component_count": len(clusters),
             "clusters": clusters,
             "unit": "frozen atomic-component clusters, both variants and repeats retained",
             "draws": draws,
@@ -451,7 +466,7 @@ def markdown(report):
         lines += [
             "## Frozen held readout",
             "",
-            "32 parents /30 frozen component clusters; "
+            f"32 parents /{held['method']['component_count']} frozen component clusters; "
             "two seeds retain paired positive/negative dependence.",
             "",
         ]
