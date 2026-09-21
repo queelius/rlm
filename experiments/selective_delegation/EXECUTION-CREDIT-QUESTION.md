@@ -63,6 +63,15 @@ must explicitly specify that tradeoff and retain absolute accuracy and direct
 answering controls. Counterfactual credit assignment itself is established
 prior art; the proposed diagnostic is not a novelty claim.
 
+There is a cleaner possible use of D: learning whether to execute an already
+written plan. For that binary decision, D estimates the difference between the
+two available actions; extra execution cost can be charged explicitly. This is
+distinct from rewarding the planner for producing a large D. A later learned
+gate would need fresh training examples, input features available before helper
+execution, and comparison with always-cheap, always-execute, and a simple public
+plan-length rule. An oracle choosing with saved gold-scored outcomes is only
+headroom, never a deployable policy or evidence that such a gate can learn.
+
 Accepted at16:06UTC after the stopped-batch audit reinforced this question.
 `EXECUTION-CREDIT-DECISION-001.json` binds sealed `source-023-execution-credit`
 and the CPU-prepared output PLAN. Supervisor47179 waits for the ALFWorld screen,

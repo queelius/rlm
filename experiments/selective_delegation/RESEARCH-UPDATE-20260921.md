@@ -1,6 +1,6 @@
 ---
 status: exploratory_running
-evidence_cutoff_utc: 2026-09-21T16:00:00Z
+evidence_cutoff_utc: 2026-09-21T16:23:00Z
 model: Qwen3-4B-Instruct-2507
 primary_question: When does asking helpers earn its extra computation?
 publication_status: promising_questions_not_established_architecture_improvement
@@ -26,7 +26,10 @@ the apparent gain.** On the small HotpotQA panel, trained helpers give 40 correc
 answers out of 64 attempts, versus 22 with unchanged helpers. A simple formatting
 reminder already raises the latter to 35. Against the strongest direct-answer
 baseline, the comparison is 40 versus 36, with substantial uncertainty and about
-3.5 times the tokens. A replication on 128 new questions is running.
+3.5 times the tokens. The larger replication on 128 new questions is now
+complete: decomposition gets 151 of 256 attempts correct, versus 152 for direct
+answering, at 3.44 times the tokens. Its small partial-answer-score advantage
+is also uncertain. This does not establish an advantage for decomposition.
 See [the matched architecture comparison](HOTPOT-MATCHED-ARCHITECTURE.md).
 
 **Root reinforcement learning produces real updates, but its new-question gain

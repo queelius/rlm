@@ -3,13 +3,21 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September21 research update](RESEARCH-UPDATE-20260921.md).
 
-Current operations, September21,16:00UTC: the fresh128-question Hotpot replication
-is running. Root RL continuation saved checkpoint21 and then stopped at a batch
+Current operations, September21,16:26UTC: the
+[fresh128-question Hotpot replication](HOTPOT-FRESH-FINDINGS.md) is complete:
+151/256 planner versus152/256 direct, with 3.44 times the tokens and unresolved
+differences. Root RL continuation saved checkpoint21 and then stopped at a batch
 with no within-question reward differences. A separately labeled checkpoint21
-readout is queued, followed by a small frozen-model environment-action screen.
+readout is running, followed by a small frozen-model environment-action screen.
 See [the stopped-run analysis](RL-STOPPED-DOSE.md) and
 [the new screen's design](ALFWORLD-SCREEN-DESIGN.md). These are exploratory jobs;
 the original exact-checkpoint24 readout was not run or silently substituted.
+
+A [simple helper-skipping rule](HELPER-GATING-DIAGNOSTIC.md) failed to improve
+answers; its corrected analysis preserves both repeats and component clusters.
+The [evidence-sufficiency baseline](SUFFICIENCY-BASELINE.md) is accepted and
+queued after the execution-credit diagnostic. [Recent primary work](LITERATURE-UPDATE-1625.md)
+narrows the novelty of generic answerability training and adaptive evidence trees.
 
 This exploratory study asks whether a controller can learn when to finish an
 answer, reconsider it, ask a focused evidence question, or work through proposed
