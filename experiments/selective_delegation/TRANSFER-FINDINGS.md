@@ -1,6 +1,6 @@
 # Can short-plan training handle longer questions?
 
-Cutoff: September 21, 11:33 UTC. Exploratory results; direct-answer and
+Cutoff: September 21, 11:42 UTC. Exploratory results; the
 second-dataset transfer comparisons are still running. Checkpoints were fixed
 before these outcomes were inspected.
 
@@ -14,6 +14,9 @@ not change, and every helper/final retained access to the original documents.
 |---|---:|---:|---:|
 | Released model | 27/128 | 108/128 | 84/128 |
 | Supervised planner | 24/128 | 128/128 | 89/128 |
+
+The subsequently completed direct-answer control is stronger than either trained
+planner on this panel; see the end-to-end comparison below.
 
 Supervised training did not improve answer accuracy on this panel. The paired
 difference is −2.34 percentage points, with an exploratory parent-bootstrap
@@ -91,6 +94,39 @@ concerns SFT versus base only, not this later RL comparison.
 The result supports fixing execution before treating another planner update as
 a likely answer improvement. It does not justify calling RL ineffective in
 general: four updates on 16 repeated training questions are a very small dose.
+
+## One direct answer beats the trained multi-step systems here
+
+| Complete system | Correct answers | Actual tokens per attempt |
+|---|---:|---:|
+| Released model, one direct answer | 36/128 | 2,970 |
+| Released planner, helpers, and final | 27/128 | 10,984 |
+| Supervised planner, helpers, and final | 24/128 | 10,290 |
+| RL planner, helpers, and final | 24/128 | 10,103 |
+
+Direct versus supervised planning improves by 9.38 percentage points, with a
+component-cluster interval of +2.73 to +17.86 points, while using 28.9% as many
+tokens. There are 17 improved attempts and five worsened ones. Eleven wins and
+all five losses have valid outputs in both systems; six wins avoid upstream
+protocol failures. Thus the observed difference is not solely a parsing issue.
+
+These are different complete policies, not an isolated causal effect of
+decomposition. The direct final sees the question and documents; the planner's
+final also sees generated questions and helper answers, and can be prevented from
+running by an earlier failure. Seeds, base model, final temperature and final
+output cap match; prompts, intermediate information, calls and total computation
+do not. This short-document task also does not test an RLM's ability to inspect
+input that cannot fit in one model call.
+
+The secondary policy audit checks all 1,800 native calls and reports both primary
+contrasts: direct minus SFT, and RL minus SFT. The latter's component-cluster
+interval is −3.62 to +5.56 points. See `analysis-transfer-policy-001.json/.md`
+and its reproducer `compare_musique_policies.py`.
+
+Decision: retain the direct-answer control in subsequent studies. A helper or
+planner improvement must be evaluated against this simpler alternative as well
+as against its own starting checkpoint. Otherwise we could improve a complicated
+system while it remains less accurate and more expensive than one call.
 
 This result does not show that decomposition or reinforcement learning cannot
 work. It shows that this short supervised recipe did not establish longer-chain
