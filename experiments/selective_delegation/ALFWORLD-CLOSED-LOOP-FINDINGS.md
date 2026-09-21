@@ -56,6 +56,14 @@ over eight games, keeping both seeds together, gives a 95% interval of 6.25 to
 62.50 points. The panel is tiny, exposed, and not proven scene-independent.
 The interval does not justify a general ALFWorld superiority claim.
 
+A small-sample sensitivity check makes that caution concrete. Average differences
+by game are `[1, 1, 0, 0.5, 0, 0, 0, 0]`: only three games contribute a gain.
+Enumerating all256 game-level sign flips gives a two-sided value of .25, under
+the assumption that signs are exchangeable under the null. This posthoc check
+does not replace the original bootstrap, but shows why its interval excluding
+zero should not be treated as robust significance. The separate receipt is
+`analysis-alfworld-signflip-sensitivity-001.json`; no new model calls were needed.
+
 The earlier string-command screen was dominated by inadmissible actions. This
 new package includes numbered choices and rejection feedback, so comparing the
 two screens does not isolate a single interface change. In this completed run,

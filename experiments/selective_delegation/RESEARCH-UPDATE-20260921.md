@@ -1,6 +1,6 @@
 ---
 status: exploratory_running
-evidence_cutoff_utc: 2026-09-21T17:20:00Z
+evidence_cutoff_utc: 2026-09-21T18:00:00Z
 model: Qwen3-4B-Instruct-2507
 primary_question: When does asking helpers earn its extra computation?
 publication_status: promising_questions_not_established_architecture_improvement
@@ -125,14 +125,40 @@ to retain alternate evidence for the answer. We must not equate every official
 negative-label answer with an unsupported hallucination.
 See [the paired-data audit](MISSING-EVIDENCE-PAIR-AUDIT.md).
 
-A third screen is running on QAMPARI, where one question can require
+Two supervised-training comparisons now show why this is not just a matter of
+showing the model more examples. Training only on answerable inputs raises correct
+answers on those inputs from 16 to 25 of 64, but the model then answers every
+negative input too. Training on both positive and negative inputs reduces answers
+on negative inputs from 23 to six, but increases refusals on answerable inputs
+from 24 to 37. The combined score barely changes: ten correct pairs instead of
+nine, with substantial uncertainty. All outputs are correctly formatted, so this
+tradeoff is not a JSON problem. A fresh-question replication is queued. We are
+preparing paired-reward RL against an additional supervised-training control to
+ask whether both behaviors can improve together. These are official dataset
+labels, not a perfect test of whether an answer has semantic support.
+See [the training comparison](SUFFICIENCY-TRAINING-FINDINGS.md).
+
+A third screen is complete on QAMPARI, where one question can require
 collecting many answers from 200 retrieved passages. It compares reading the
 whole supplied pool with reading four groups and combining their answer lists.
 The base model can fit the full input, so direct answering will not be artificially
-truncated. This known baseline tests a different decomposition regime; we will
-not present simple passage splitting as a novel contribution.
+truncated. Across16 questions sampled twice, splitting has a lower answer-set
+score (.166 versus .186), with an uncertain paired difference. It finds slightly
+more correct entities but introduces more wrong ones. Splitting uses about28%
+less summed native inference time despite slightly more tokens, so token counts
+alone miss an important computation trade-off. Output limits also matter:
+22 calls end with incomplete lists, mostly repeated names rather than useful
+unfinished answers. We will qualify decoding before more splitting experiments.
+See [the complete findings and concrete examples](QAMPARI-FINDINGS.md).
+This known baseline does not establish a new passage-splitting contribution.
 
 The publication-oriented target is a repeatable improvement that survives a
 simple control, transfers to new cases, and earns its measured cost. We do not
 yet have that claim for the current planner. The present evidence helps us
 choose what to test next and avoid mistaking interface compliance for reasoning.
+
+The [latest interactive-agent literature review](LITERATURE-UPDATE-1721.md)
+also narrows the novelty boundary: learned subgoal switching and learned external
+workspace use already have direct precedents. Our next result must explain a
+specific useful decision or information boundary, not merely add a manager or
+memory and call it a new architecture.

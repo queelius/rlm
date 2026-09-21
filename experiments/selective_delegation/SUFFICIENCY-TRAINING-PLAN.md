@@ -62,3 +62,13 @@ retaining supported-answer competence. A gain solely from more abstention is not
 evidence of improved reading. Mixed results motivate a targeted support/answer audit,
 not a larger hierarchy or RL claim. This previously examined small DEV panel is an
 exploratory qualification, not held-out confirmation.
+
+## Small public-feature check before the trained readout
+
+All512 training variants and all64 initial DEV variants have20 documents, so
+document count alone cannot distinguish the official labels here. Mean document
+title-plus-text length is10,242 characters for TRAIN positives and9,656 for
+negatives, versus9,571 and9,595 on the initial DEV panel. These descriptive
+length checks do not rule out other shortcuts or establish evidence-sensitive
+reasoning. They were computed from the frozen public inputs before reading any
+trained evaluation outcome; no classifier was fitted or example removed.
