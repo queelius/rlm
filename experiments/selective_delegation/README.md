@@ -3,21 +3,28 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September21 research update](RESEARCH-UPDATE-20260921.md).
 
-Current operations, September21,16:26UTC: the
+Current operations, September 21, 16:56 UTC: the
 [fresh128-question Hotpot replication](HOTPOT-FRESH-FINDINGS.md) is complete:
 151/256 planner versus152/256 direct, with 3.44 times the tokens and unresolved
-differences. Root RL continuation saved checkpoint21 and then stopped at a batch
-with no within-question reward differences. A separately labeled checkpoint21
-readout is running, followed by a small frozen-model environment-action screen.
+differences. The completed [three-answer voting control](HOTPOT-VOTE-FINDINGS.md)
+chooses exactly the same answers as single-call direct answering. Root RL
+continuation saved checkpoint21 and then stopped at a batch with no within-question
+reward differences. Its completed readout gives54/128 versus56 at checkpoint16.
+The first environment-action screen exposed repeated inadmissible commands;
+an indexed-action, explicit-feedback follow-up is now running.
 See [the stopped-run analysis](RL-STOPPED-DOSE.md) and
 [the new screen's design](ALFWORLD-SCREEN-DESIGN.md). These are exploratory jobs;
 the original exact-checkpoint24 readout was not run or silently substituted.
 
 A [simple helper-skipping rule](HELPER-GATING-DIAGNOSTIC.md) failed to improve
 answers; its corrected analysis preserves both repeats and component clusters.
-The [evidence-sufficiency baseline](SUFFICIENCY-BASELINE.md) is accepted and
-queued after the execution-credit diagnostic. [Recent primary work](LITERATURE-UPDATE-1625.md)
+The [evidence-sufficiency baseline](SUFFICIENCY-FINDINGS.md) and
+[TRAIN execution-credit diagnostic](TRAIN-EXECUTION-CREDIT-FINDINGS.md) are complete.
+A direct TRAIN control and a [many-answer passage-reading screen](QAMPARI-READINESS.md)
+are in CPU preparation. [Recent primary work](LITERATURE-UPDATE-1625.md)
 narrows the novelty of generic answerability training and adaptive evidence trees.
+The [further literature update](LITERATURE-UPDATE-1653.md) connects these results
+to existing planner-training and evidence-integration research.
 
 This exploratory study asks whether a controller can learn when to finish an
 answer, reconsider it, ask a focused evidence question, or work through proposed

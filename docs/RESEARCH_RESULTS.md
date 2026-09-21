@@ -1,21 +1,29 @@
 # Reading the research results
 
-## September21: planning, execution, and actual RL
+## September 21: what survived stronger comparisons
 
-The [current selective-delegation findings](../experiments/selective_delegation/FINDINGS.md)
-separate a working training procedure from an answer-quality improvement.
-Question-plan SFT completed48 updates, followed by four fresh-rollout RL updates.
-On32 separately held validation questions, RL answered19/64 attempts correctly
-versus18/64 for SFT; all three wins involved recovery from helper-format failures.
-This is not convincing evidence of better reasoning. A frozen-trace comparison
-also found that removing original documents from the final model hurt rather
-than helped. Harder-question and second-dataset readouts are running; helper-only
-training and a simple format-reminder control are the accepted next comparison.
+The [current research update](../experiments/selective_delegation/RESEARCH-UPDATE-20260921.md)
+is the starting point. We can train the model to write subquestions and execute
+real reinforcement-learning updates. We have not yet established that this
+system answers new questions better than simpler, cheaper alternatives.
 
-Start with the experiment [reading guide](../experiments/selective_delegation/README.md),
-[training audit](../experiments/selective_delegation/RL-TRAINING-FINDINGS.md), and
-[next component comparison](../experiments/selective_delegation/HELPER-TRAINING-DRAFT.md).
-These are controlled question-list experiments, not yet learned Python recursion.
+On 64 new MuSiQue questions, sampled twice, the supervised planner gets 53 of
+128 answers correct; 16 RL updates raise this to 56, while direct answering gets
+54. The paired improvement interval includes zero. Five further RL updates give
+54, not a demonstrated dose benefit. Giving the final model the plan without
+actually executing its helpers performs similarly at roughly one-third the
+token cost. These are question-list experiments, not learned Python recursion.
+
+A promising small HotpotQA result did not establish an architecture advantage
+on its larger replication: decomposition gets 151 of 256 answers correct,
+versus 152 for direct answering, at 3.44 times the tokens. This motivates a
+cheap repeated-answer control and new tasks where additional work can uncover
+information or enable actions, rather than merely rewrite a fully visible input.
+
+See the [reading guide](../experiments/selective_delegation/README.md),
+[fresh RL comparison](../experiments/selective_delegation/FRESH-CONTRACT-FINDINGS.md),
+[plan-only control](../experiments/selective_delegation/PLAN-ONLY-FINDINGS.md), and
+[larger Hotpot replication](../experiments/selective_delegation/HOTPOT-FRESH-FINDINGS.md).
 The earlier evidence below remains historical context, not the current run queue.
 
 ## Earlier completed research
@@ -24,8 +32,10 @@ The [broader-data RL result](research-checkpoints/2026-09-12-broader-rl-learning
 now repeats across two training seeds: 437 and 436 correct out of 512 after
 eight RL updates, versus 422 before training and 427 after supervised training.
 The trained models agree on 511 answers. This is a same-panel helper result,
-not yet learned decomposition or broader task transfer. The report keeps the
-differing training costs visible and describes the new-example test.
+not learned decomposition or broader task transfer. The completed fresh-example
+test is substantially weaker: base 422, supervised 426, and the two RL models
+427 and 429 out of 512. The RL-versus-supervised intervals include zero. Both
+panels, rather than only the more favorable one, inform the current assessment.
 
 The [replication and next learning study](research-checkpoints/2026-09-12-replication-and-next-learning-study.md)
 shows that a one-answer RL gain on new news articles did not survive a fresh-seed

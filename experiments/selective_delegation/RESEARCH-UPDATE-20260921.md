@@ -1,6 +1,6 @@
 ---
 status: exploratory_running
-evidence_cutoff_utc: 2026-09-21T16:23:00Z
+evidence_cutoff_utc: 2026-09-21T16:56:00Z
 model: Qwen3-4B-Instruct-2507
 primary_question: When does asking helpers earn its extra computation?
 publication_status: promising_questions_not_established_architecture_improvement
@@ -31,6 +31,9 @@ complete: decomposition gets 151 of 256 attempts correct, versus 152 for direct
 answering, at 3.44 times the tokens. Its small partial-answer-score advantage
 is also uncertain. This does not establish an advantage for decomposition.
 See [the matched architecture comparison](HOTPOT-MATCHED-ARCHITECTURE.md).
+The completed [three-answer voting control](HOTPOT-VOTE-FINDINGS.md) also gives
+152 correct: extra samples scarcely change the normalized answers at the fixed
+temperature, and every voted answer equals its original direct answer.
 
 **Root reinforcement learning produces real updates, but its new-question gain
 is not established.** On 64 new MuSiQue questions, each sampled twice, the
@@ -63,13 +66,24 @@ batch contained varied valid plans but no within-question reward differences:
 12 questions were always correct and four always wrong across four candidates.
 The declared pilot rule stopped the run. This is not proof of convergence;
 stopping at one uninformative batch is a rule we should reconsider in future
-training. A separately declared checkpoint-21 evaluation is queued.
-See [the stopped-run analysis](RL-STOPPED-DOSE.md).
+training. The separately declared checkpoint-21 evaluation is complete: 54 of
+128 correct, versus 56 at checkpoint16. The difference is uncertain; there is
+no demonstrated benefit from this continuation. We are not extending the same
+recipe again without a new reason.
+See [the stopped-run analysis](RL-STOPPED-DOSE.md) and
+[the completed readout and examples](RL-STOPPED-DOSE-FINDINGS.md).
 
-The next diagnostic asks whether ordinary final-answer reward agrees with the
-measured benefit of executing helpers. An action-dependent counterfactual would
-change the learning objective, not simply provide a free variance-reduction
-trick. We will measure that distinction before adopting a new reward.
+The execution-credit diagnostic is now complete. On a small training panel,
+helper execution gets 198 of 320 answers correct, compared with 99 when only the
+plan is supplied. These 320 attempts reuse 16 questions, four plans per question,
+and five execution settings; they are not 320 independent questions. The much
+larger training-set effect does not establish a benefit on new questions.
+Moreover, credit based on the measured helper benefit mostly agrees with ordinary
+final-answer reward. It does not yet justify a more elaborate RL objective.
+We are preparing a direct-answer control to check whether helpers add useful
+information or mainly repair harm caused by supplying the plan alone.
+An action-dependent counterfactual changes the learning objective; it is not
+simply a free variance-reduction trick.
 See [the execution-credit question](EXECUTION-CREDIT-QUESTION.md).
 
 ## What could become a stronger research direction
@@ -79,15 +93,35 @@ information or useful action**, rather than generating a longer plan for a
 fully visible problem. A small text-environment comparison is now queued:
 ordinary action selection versus a short-term goal manager, under the same
 action and output-token limits. Both receive the same kind of public feedback
-and admissible-action assistance. It is an exposed development screen, not a
-new hierarchy algorithm or a benchmark superiority claim.
+and admissible-action assistance. The first screen completed: the flat policy
+solves one of 16 attempts and the manager-worker policy solves two. Most runs
+stop after repeatedly choosing commands outside the supplied admissible list.
+This is too weak to support a hierarchy claim. A follow-up replaces command
+strings with numbered choices and explicitly reports rejected actions, in both
+policies. That combined interface change tests whether this environment is
+ready for a meaningful learning comparison; it is not itself a new algorithm.
 See [the environment screen](ALFWORLD-SCREEN-DESIGN.md).
 
 A second possibility is deciding whether evidence is sufficient before answering
 or requesting more. The canonical MuSiQue paired variants support an initial
 test, but change distractors and titles as well as supporting material. They
-cannot be described as a clean intervention that removes only one fact.
+cannot be described as a clean intervention that removes only one fact. The
+baseline completed all 128 variant attempts: it refuses 24 of 64 answerable
+inputs, yet answers 23 of 64 inputs labeled unanswerable. It handles both
+answerability labels correctly for only 17 of 64 paired attempts, and gets the
+joint exact-answer-and-sufficiency score on nine. This identifies a concrete
+competency gap under the official labels, not evidence that a proposed new
+method solves it. Inspection also found a labeled-negative input that appears
+to retain alternate evidence for the answer. We must not equate every official
+negative-label answer with an unsupported hallucination.
 See [the paired-data audit](MISSING-EVIDENCE-PAIR-AUDIT.md).
+
+A third screen is being prepared on QAMPARI, where one question can require
+collecting many answers from 200 retrieved passages. It compares reading the
+whole supplied pool with reading four groups and combining their answer lists.
+The base model can fit the full input, so direct answering will not be artificially
+truncated. This known baseline tests a different decomposition regime; we will
+not present simple passage splitting as a novel contribution.
 
 The publication-oriented target is a repeatable improvement that survives a
 simple control, transfers to new cases, and earns its measured cost. We do not
