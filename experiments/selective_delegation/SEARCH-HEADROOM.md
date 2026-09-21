@@ -39,3 +39,23 @@ Reproduction: group `batch-*/episodes/*.json` by `case_id`, sort by `candidate`,
 use saved binary `reward` for final scoring, and count normalized
 `score.parsed` among rows with `score.valid=true`. All16 parents stay in each
 denominator. No additional GPU calls or model updates were performed.
+
+## Exact request reuse is a smaller opportunity than tree search
+
+A secondary CPU audit grouped frozen helper/final calls by their entire saved
+request within each update. It did not group roots or reuse samples across
+updates. All 126 duplicate groups returned identical text, native token IDs,
+availability, and finish/error status in the observed run.
+
+Keeping each group's first successful response would avoid 210 of 797 downstream
+calls: 174 helpers and 36 finals. That is 26.3% of downstream calls, 19.9% of all
+1,053 calls, and 24.1% of all recorded tokens. The duplicate calls took 117.5
+seconds of recorded service time, or 12.5% of call service time. These are
+retrospective avoidable costs, **not a measured wall-clock speedup**.
+
+This supports a modest, exact within-update reuse optimization if later runs
+scale up. It does not establish better answers, more informative samples, or
+the value of MCTS. No cache was implemented. Preserve strict request identity,
+seeds, frozen model identity, and separate physical versus logical call costs
+if testing reuse. The reproducer is `audit_memoization.py`; the external receipt
+is `analysis-rl-memoization-001.json/.md`.
