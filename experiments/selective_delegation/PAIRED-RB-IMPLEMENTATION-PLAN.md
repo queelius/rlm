@@ -30,8 +30,8 @@
 
 Files: modify `rl_sufficiency.py`; extend `test_rl_sufficiency.py`. Use a pure helper such as `response_advantages(groups, estimator)` returning one `(positive, negative)` coefficient pair per candidate in each parent group.
 
-- [ ] Add a failing fixture for the mispaired-success case and a direct24-permutation expectation fixture with nonconstant scalar score features.
-- [ ] Implement the following coefficients, with four successes per side and no standard-deviation normalization:
+- [x] Add a failing fixture for the mispaired-success case and a direct24-permutation expectation fixture with nonconstant scalar score features.
+- [x] Implement the following coefficients, with four successes per side and no standard-deviation normalization:
 
 ```python
 def marginal_credit(positive, negative):
@@ -44,20 +44,29 @@ def marginal_credit(positive, negative):
     ]
 ```
 
-- [ ] In collection, compute each positive marginal with the official score against a synthetic known-correct negative; compute the negative marginal from its parsed official answerability requirement. Save both marginals and assert their product equals the existing paired reward. Never put these host scores in a model prompt.
-- [ ] For default `diagonal`, return `(a,a)` for each current RLOO advantage. For explicit `pairing_mean`, return the formula above. Reject unknown estimator names.
-- [ ] Cover all-zero marginals, all-one negative marginals, malformed numeric answers and native unavailability using the existing parse/reward fixtures.
+- [x] In collection, compute each positive marginal with the official score against a synthetic known-correct negative; compute the negative marginal from its parsed official answerability requirement. Save both marginals and assert their product equals the existing paired reward. Never put these host scores in a model prompt.
+- [x] For default `diagonal`, return `(a,a)` for each current RLOO advantage. For explicit `pairing_mean`, return the formula above. Reject unknown estimator names.
+- [x] Cover all-zero marginals, all-one negative marginals, malformed numeric answers and native unavailability using the existing parse/reward fixtures.
 
 ## Task2: Integrate only the selected credit into the existing trainer
 
-- [ ] Add CLI `--estimator` with choices `diagonal,pairing_mean`, default `diagonal`; use `getattr(args, "estimator", "diagonal")` for existing programmatic callers. Reject `pairing_mean` in SFT mode, where it has no meaning.
-- [ ] Record estimator and its exact loss definition in PLAN. For each sampled block, compute coefficients once and pass them to effective-group counting, state advancement and optimization. Preserve diagonal reward summaries separately; they remain valid observations, not the averaged estimator.
-- [ ] Apply response-specific loss `-advantage * emitted_token_logps.sum() / 64`; preserve original sampling, replay, clipping, optimizer and checkpoint code. Save each actual coefficient with each likelihood audit. Record selected effective groups and comparable two-response absolute coefficient mass.
-- [ ] Extend a tiny real-PEFT CPU fixture to show nonzero adapter movement in a mispaired group, then an all-zero block after populated Adam state leaves weights and optimizer state unchanged. Pin the default estimator's coefficient/loss behavior to the existing diagonal fixture.
-- [ ] Run only relevant paired-training tests and Ruff from the worktree. Report source diff, fixture results and any necessary analyzer changes; do not claim old analyzer002 qualifies the new estimator.
+- [x] Add CLI `--estimator` with choices `diagonal,pairing_mean`, default `diagonal`; use `getattr(args, "estimator", "diagonal")` for existing programmatic callers. Reject `pairing_mean` in SFT mode, where it has no meaning.
+- [x] Record estimator and its exact loss definition in PLAN. For each sampled block, use the same deterministic coefficient function in effective-group counting, state advancement and optimization. Preserve diagonal reward summaries separately; they remain valid observations, not the averaged estimator.
+- [x] Apply response-specific loss `-advantage * emitted_token_logps.sum() / 64`; preserve original sampling, replay, clipping, optimizer and checkpoint code. Save each actual coefficient with each likelihood audit. Record selected effective groups and comparable two-response absolute coefficient mass.
+- [x] Extend a tiny real-PEFT CPU fixture to show nonzero adapter movement in a mispaired group, then an all-zero block after populated Adam state leaves weights and optimizer state unchanged. Pin the default estimator's coefficient/loss behavior to the existing diagonal fixture.
+- [x] Run only relevant paired-training tests and Ruff from the worktree. Report source diff, fixture results and any necessary analyzer changes; do not claim old analyzer002 qualifies the new estimator.
 
 ## Decision before a GPU run
 
 Main reviews the pending039/046 evidence and the corrected CPU audit. If accepted, use a new immutable source/output, start from the same joint32 warmstart (not the037 endpoint), and collect fresh on-policy samples with the same declared seeds and fixed parent blocks. Later trajectories can diverge as policies change. Compare clipping, actual credit and held behavior, not only TRAIN reward. This is one exploratory training seed, not a replicated algorithm result. An additional readout must explicitly authenticate the new endpoint; do not reuse an old decision file or silently replace a checkpoint.
 
 The raw-gradient conditional-expectation identity does not guarantee improvement after clipping/Adam. Saving roughly ten otherwise inactive parent groups is a plausible small intervention, not a cure for pervasive wrong answers or missing task competence. If the eventual result is uninformative, prioritize the action-learning/recursive-task experiments rather than extending this estimator indefinitely.
+
+## CPU implementation result
+
+Implemented and CPU-qualified in the mutable worktree only: the focused paired-training suite
+checks the 24-permutation identity, response-specific cursor advancement, default diagonal
+compatibility, and real-PEFT nonzero/zero-credit optimizer behavior with zero weight decay. Ruff
+also passes. No GPU run, source seal, acceptance, launcher, or evaluator was created. The completed
+`analysis-paired-reward-pairing-002` audit describes the old diagonal samples and does **not**
+qualify this new estimator; any run needs a new immutable source, output, and analysis binding.

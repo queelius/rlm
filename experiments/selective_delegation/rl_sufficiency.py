@@ -38,10 +38,47 @@ def pair_loss(model, records, advantage):
     return -float(advantage) * sum(rl.root_logps(model, r).sum() for r in records) / 64
 
 
-def advance(state, rewards):
-    if len(rewards) != 16:
+def marginal_credit(positive, negative):
+    if len(positive) != 4 or len(negative) != 4:
+        raise ValueError("four marginal successes per side required")
+    pmean, nmean = sum(positive) / 4, sum(negative) / 4
+    return [
+        (
+            nmean * (p - (sum(positive) - p) / 3),
+            pmean * (n - (sum(negative) - n) / 3),
+        )
+        for p, n in zip(positive, negative, strict=True)
+    ]
+
+
+def response_advantages(groups, estimator="diagonal"):
+    if estimator not in ("diagonal", "pairing_mean"):
+        raise ValueError("unknown estimator")
+    result = []
+    for group in groups:
+        if len(group) != 4:
+            raise ValueError("four paired candidates per parent required")
+        if estimator == "diagonal":
+            result.append([(value, value) for value in rl.rloo([pair["reward"] for pair in group])])
+        else:
+            result.append(
+                marginal_credit(
+                    [pair["positive_success"] for pair in group],
+                    [pair["negative_success"] for pair in group],
+                )
+            )
+    return result
+
+
+def advance(state, advantages):
+    if len(advantages) != 16:
         raise ValueError("complete16-parent batch required")
-    effective = sum(any(a != 0 for a in rl.rloo(group)) for group in rewards)
+    if all(
+        len(group) == 4 and all(isinstance(value, (int, float)) for value in group)
+        for group in advantages
+    ):
+        advantages = [[(value, value) for value in rl.rloo(group)] for group in advantages]
+    effective = sum(any(value != 0 for pair in group for value in pair) for group in advantages)
     return {
         **state,
         "sample_cursor": state["sample_cursor"] + 1,
@@ -232,10 +269,18 @@ def collect(model, tokenizer, directory, deadline, cases, parents, cursor, adapt
                 except (ValueError, TypeError):
                     predictions.append(None)
             reward = pair_reward(pairs[parent][0], predictions)
+            positive_success = pair_reward(
+                pairs[parent][0], [predictions[0], {"answerable": False, "answer": ""}]
+            )
+            negative_success = int(predictions[1] is not None and not predictions[1]["answerable"])
+            if reward != positive_success * negative_success:
+                raise ValueError("saved marginal successes differ from official paired reward")
             item = {
                 "parent_id": parent,
                 "candidate": candidate,
                 "reward": reward,
+                "positive_success": positive_success,
+                "negative_success": negative_success,
                 "all_valid": all(p is not None for p in predictions),
                 "predictions": predictions,
                 "call_ids": [r["call_id"] for r in records],
@@ -248,10 +293,11 @@ def collect(model, tokenizer, directory, deadline, cases, parents, cursor, adapt
     return groups, rewards
 
 
-def optimize_rl(model, optimizer, groups, deadline):
+def optimize_rl(model, optimizer, groups, deadline, estimator="diagonal"):
     import torch
 
-    if not any(a for group in groups for a in rl.rloo([p["reward"] for p in group])):
+    credits = response_advantages(groups, estimator)
+    if not any(value for group in credits for pair in group for value in pair):
         return {"optimizer_called": False}
     parameters = rl.planner_parameters(model)
     before = [p.detach().cpu().clone() for p in parameters]
@@ -263,11 +309,11 @@ def optimize_rl(model, optimizer, groups, deadline):
     model.config.use_cache = False
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
     total, audits = 0.0, []
-    for group in groups:
-        for pair, advantage in zip(group, rl.rloo([p["reward"] for p in group]), strict=True):
-            if advantage == 0:
-                continue
-            for record in pair["records"]:
+    for group, group_credits in zip(groups, credits, strict=True):
+        for pair, pair_credits in zip(group, group_credits, strict=True):
+            for record, advantage in zip(pair["records"], pair_credits, strict=True):
+                if advantage == 0:
+                    continue
                 check(deadline, 90)
                 values = rl.root_logps(model, record)
                 loss = -float(advantage) * values.sum() / 64
@@ -413,6 +459,11 @@ def prepare(args):
         args.output.resolve(),
         args.adapter.resolve(),
     )
+    estimator = getattr(args, "estimator", "diagonal")
+    if estimator not in ("diagonal", "pairing_mean"):
+        raise ValueError("unknown estimator")
+    if args.mode != "rl" and estimator != "diagonal":
+        raise ValueError("pairing_mean applies only to RL")
     cap = 0.75 if args.mode == "rl" else 0.5
     if not 0 < args.hours <= cap:
         raise ValueError("fixed45minute RL/30minute SFT cumulative cap")
@@ -444,6 +495,7 @@ def prepare(args):
     plan = {
         "schema": "paired-sufficiency-finite-training-v1",
         "mode": args.mode,
+        "estimator": estimator,
         "cases": str(cases_path),
         "cases_sha256": manifest["cases_sha256"],
         "input_manifest_sha256": probe.campaign.sha(manifest_path),
@@ -475,7 +527,11 @@ def prepare(args):
         "sampling_top_k": 0,
         "max_new_tokens": 128,
         "max_context": 8192,
-        "objective": "official paired EM RLOO, both response token-logp sums /64"
+        "objective": (
+            "official paired EM diagonal RLOO, both response token-logp sums /64"
+            if estimator == "diagonal"
+            else "official paired EM pairing-mean RLOO expectation, response coefficients /64"
+        )
         if args.mode == "rl"
         else "paired gold JSON+EOS masked SFT, target-token mean; "
         "same RL updated/skipped blocks,4copies/variant, dose not FLOP matched",
@@ -691,7 +747,8 @@ def run(args):
                         "sample_cursor": state["sample_cursor"],
                     },
                 )
-                next_state = advance(state, rewards)
+                credits = response_advantages(groups, plan["estimator"])
+                next_state = advance(state, credits)
                 diagnostics = {
                     "rewards": rewards,
                     "parents": parents,
@@ -699,12 +756,17 @@ def run(args):
                     "fully_valid_mixed_groups": sum(
                         len({p["reward"] for p in g if p["all_valid"]}) == 2 for g in groups
                     ),
+                    "estimator": plan["estimator"],
                     "effective_groups": next_state["effective_groups"],
+                    "response_advantages": credits,
                     "reward_success_count_histogram": dict(
                         Counter(sum(group) for group in rewards)
                     ),
                     "absolute_advantage_mass": sum(
-                        abs(a) for group in rewards for a in rl.rloo(group)
+                        abs(value) for group in rewards for value in rl.rloo(group)
+                    ),
+                    "absolute_response_advantage_mass": sum(
+                        abs(value) for group in credits for pair in group for value in pair
                     ),
                     "distinct_valid_pair_predictions": [
                         len(
@@ -719,7 +781,7 @@ def run(args):
                     "updated": next_state["step"] > state["step"],
                 }
                 probe.runtime.save(directory / "ROLLOUT.json", diagnostics)
-                statistics = optimize_rl(model, optimizer, groups, deadline)
+                statistics = optimize_rl(model, optimizer, groups, deadline, plan["estimator"])
             else:
                 source_state = control[cursor]["state"]
                 next_state = {**source_state, "plan_sha256": state["plan_sha256"]}
@@ -762,6 +824,7 @@ def run(args):
             output / "SUMMARY.json",
             {
                 "mode": args.mode,
+                "estimator": plan["estimator"],
                 "max_planned_calls": plan["max_calls"],
                 "committed_sampled_blocks": state["sample_cursor"],
                 "actual_optimizer_steps": state["step"],
@@ -809,6 +872,7 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=("rl", "sft_control"), required=True)
+    parser.add_argument("--estimator", choices=("diagonal", "pairing_mean"), default="diagonal")
     parser.add_argument("--prepared", type=Path, required=True)
     parser.add_argument("--adapter", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)

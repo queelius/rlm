@@ -1,5 +1,6 @@
 import copy
 import time
+from itertools import permutations
 
 import pytest
 
@@ -13,6 +14,11 @@ def test_paired_reward_and_zero_cursor_not_optimizer():
     wrong = copy.deepcopy(good)
     wrong[0] = {"answerable": False, "answer": ""}
     assert run.pair_reward(positive, wrong) == 0
+    wrong[0] = {"answerable": True, "answer": "Madrid"}
+    assert run.pair_reward(positive, wrong) == 0
+    with pytest.raises(ValueError, match="answer:string"):
+        run.baseline.parse_output('{"answerable":true,"answer":80}')
+    assert run.pair_reward(positive, [None, good[1]]) == 0
     state = {"step": 0, "sample_cursor": 0, "zero_streak": 0}
     for i in range(4):
         state = run.advance(state, [[0, 0, 0, 0]] * 16)
@@ -22,6 +28,72 @@ def test_paired_reward_and_zero_cursor_not_optimizer():
         {"step": 0, "sample_cursor": 0, "zero_streak": 0}, [[0, 0, 0, 1]] + [[0, 0, 0, 0]] * 15
     )
     assert state["step"] == 1 and state["effective_groups"] == 1
+
+
+def test_pairing_mean_credits_mispaired_marginal_successes_and_matches_all_pairings():
+    import rl_sufficiency as run
+
+    group = [
+        {"positive_success": 1, "negative_success": 0, "reward": 0},
+        {"positive_success": 0, "negative_success": 1, "reward": 0},
+        {"positive_success": 0, "negative_success": 0, "reward": 0},
+        {"positive_success": 0, "negative_success": 0, "reward": 0},
+    ]
+    credits = run.response_advantages([group], "pairing_mean")[0]
+    assert any(value for pair in credits for value in pair)
+    assert run.response_advantages([group], "diagonal") == [[(0, 0)] * 4]
+    diagonal = run.response_advantages([[{"reward": value} for value in (0, 0, 0, 1)]], "diagonal")[
+        0
+    ]
+    assert diagonal == [(-1 / 3, -1 / 3)] * 3 + [(1, 1)]
+
+    pos_scores = [1.5, -2.0, 0.25, 4.0]
+    neg_scores = [-1.0, 3.0, 2.5, -0.5]
+    enumerated = 0.0
+    for perm in permutations(range(4)):
+        rewards = [
+            group[i]["positive_success"] * group[perm[i]]["negative_success"] for i in range(4)
+        ]
+        advantages = run.rl.rloo(rewards)
+        enumerated += sum(advantages[i] * (pos_scores[i] + neg_scores[perm[i]]) for i in range(4))
+    closed = sum(p * s for (p, _), s in zip(credits, pos_scores, strict=True)) + sum(
+        n * s for (_, n), s in zip(credits, neg_scores, strict=True)
+    )
+    assert closed == pytest.approx(enumerated / 24)
+
+
+def test_pairing_mean_preserves_marginal_edge_cases_and_rejects_unknown_estimator():
+    import rl_sufficiency as run
+
+    all_zero = [{"positive_success": 0, "negative_success": 0, "reward": 0}] * 4
+    assert run.response_advantages([all_zero], "pairing_mean") == [[(0, 0)] * 4]
+    uniform_negative = [
+        {"positive_success": value, "negative_success": 1, "reward": value}
+        for value in (1, 0, 0, 0)
+    ]
+    credits = run.response_advantages([uniform_negative], "pairing_mean")[0]
+    assert any(pos for pos, _ in credits)
+    assert all(neg == 0 for _, neg in credits)
+    with pytest.raises(ValueError, match="unknown estimator"):
+        run.response_advantages([all_zero], "not-an-estimator")
+
+
+def test_pairing_mean_nonzero_credit_advances_step_when_diagonal_rewards_are_zero():
+    import rl_sufficiency as run
+
+    mispaired = [
+        {"positive_success": 1, "negative_success": 0, "reward": 0},
+        {"positive_success": 0, "negative_success": 1, "reward": 0},
+        {"positive_success": 0, "negative_success": 0, "reward": 0},
+        {"positive_success": 0, "negative_success": 0, "reward": 0},
+    ]
+    zero = [{"positive_success": 0, "negative_success": 0, "reward": 0}] * 4
+    state = {"step": 0, "sample_cursor": 0, "zero_streak": 0}
+    state = run.advance(state, run.response_advantages([mispaired] + [zero] * 15, "pairing_mean"))
+    assert state == {"step": 1, "sample_cursor": 1, "zero_streak": 0, "effective_groups": 1}
+    assert all(pair["reward"] == 0 for pair in mispaired)
+    state = run.advance(state, run.response_advantages([zero] * 16, "pairing_mean"))
+    assert state == {"step": 1, "sample_cursor": 2, "zero_streak": 1, "effective_groups": 0}
 
 
 def test_native_paired_logp_gradient_includes_only_emitted_eos():
@@ -139,6 +211,73 @@ def test_native_sampling_replay_and_zero_adam_preserve_state(tmp_path):
     other = torch.optim.AdamW(run.rl.planner_parameters(model), lr=2e-5)
     other.load_state_dict(torch.load(saved / "optimizer.pt", weights_only=True))
     assert len(other.state_dict()["state"]) == len(adam_before["state"])
+
+
+def test_pairing_mean_moves_tiny_peft_for_mispaired_group_then_skips_zero_block():
+    import rl_sufficiency as run
+    import torch
+    from peft import LoraConfig, get_peft_model
+    from transformers import Qwen3Config, Qwen3ForCausalLM
+
+    torch.manual_seed(41)
+    model = get_peft_model(
+        Qwen3ForCausalLM(
+            Qwen3Config(
+                vocab_size=32,
+                hidden_size=16,
+                intermediate_size=32,
+                num_hidden_layers=1,
+                num_attention_heads=2,
+                num_key_value_heads=2,
+                head_dim=8,
+            )
+        ),
+        LoraConfig(r=2, lora_alpha=4, target_modules=["q_proj"], task_type="CAUSAL_LM"),
+    )
+    optimizer = torch.optim.AdamW(run.rl.planner_parameters(model), lr=2e-5, weight_decay=0)
+    group = []
+    for index, (positive, negative) in enumerate(((1, 0), (0, 1), (0, 0), (0, 0))):
+        records = [
+            {
+                "call_id": f"p{index}",
+                "input_token_ids": [1, 2 + index],
+                "output_token_ids": [6 + index],
+                "generation_logps": [0.0],
+            },
+            {
+                "call_id": f"n{index}",
+                "input_token_ids": [1, 12 + index],
+                "output_token_ids": [16 + index],
+                "generation_logps": [0.0],
+            },
+        ]
+        group.append(
+            {
+                "positive_success": positive,
+                "negative_success": negative,
+                "reward": 0,
+                "records": records,
+            }
+        )
+    before = [parameter.detach().clone() for parameter in model.parameters()]
+    result = run.optimize_rl(model, optimizer, [group], time.time() + 180, "pairing_mean")
+    assert result["parameter_delta_l2"] > 0
+    assert any(
+        not torch.equal(old, new) for old, new in zip(before, model.parameters(), strict=True)
+    )
+    after = [parameter.detach().clone() for parameter in model.parameters()]
+    adam_after = copy.deepcopy(optimizer.state_dict())
+    zero = [{"positive_success": 0, "negative_success": 0, "reward": 0}] * 4
+    assert run.optimize_rl(model, optimizer, [zero], time.time() + 180, "pairing_mean") == {
+        "optimizer_called": False
+    }
+    for old, new in zip(after, model.parameters(), strict=True):
+        torch.testing.assert_close(old, new, atol=0, rtol=0)
+    for key, value in adam_after["state"].items():
+        for field, tensor in value.items():
+            torch.testing.assert_close(
+                tensor, optimizer.state_dict()["state"][key][field], atol=0, rtol=0
+            )
 
 
 def test_boundary_cursors_reject_skipped_updates_and_out_of_range():
