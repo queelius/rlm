@@ -226,6 +226,31 @@ def test_joins_base_sft_run_with_rl_run_and_reports_all_three_pairs(tmp_path):
     assert [s["conditions"] for s in result["source_plans"]] == [["base", "sft"], ["rl"]]
 
 
+def test_helper_checkpoint_is_hashed_and_mutation_rejected(tmp_path):
+    m = implementation()
+    output, cases = fixture(tmp_path)
+    helper = tmp_path / "helper" / "checkpoint-36"
+    helper.mkdir(parents=True)
+    state = helper / "STATE.json"
+    state.write_text('{"step":36}')
+    training_plan = helper.parent / "PLAN.json"
+    training_plan.write_text('{"role":"helper"}')
+    path = output / "PLAN.json"
+    plan = json.loads(path.read_text())
+    plan["helper_contract"] = {
+        "mode": "trained_helper",
+        "adapter": str(helper),
+        "adapter_binding": {"STATE.json": hashlib.sha256(state.read_bytes()).hexdigest()},
+        "training_plan_sha256": hashlib.sha256(training_plan.read_bytes()).hexdigest(),
+    }
+    path.write_text(json.dumps(plan))
+    report = m.analyze(output, cases, draws=10)
+    assert str(state) in report["input_source_checkpoint_sha256"]
+    state.write_text('{"step":35}')
+    with pytest.raises(ValueError, match="hash changed"):
+        m.analyze(output, cases, draws=10)
+
+
 @pytest.mark.parametrize(
     "field,value",
     [
@@ -239,6 +264,7 @@ def test_joins_base_sft_run_with_rl_run_and_reports_all_three_pairs(tmp_path):
         ("conditions", []),
         ("mode", "direct"),
         ("architecture", "different architecture"),
+        ("helper_contract", {"mode": "format_reminder"}),
     ],
 )
 def test_comparison_rejects_mismatched_contract_or_duplicate_condition(tmp_path, field, value):

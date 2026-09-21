@@ -146,3 +146,203 @@ def test_root_logprob_alignment_includes_every_emitted_token_including_eos():
     )
     assert selected.shape == (1, 3)
     assert torch.allclose(selected, expected, atol=1e-6)
+
+
+def test_fixed_parent_blocks_preserve_first_panel_and_repeat_default():
+    mod = implementation()
+    training = [{"id": f"p{i:03}", "split": "train"} for i in range(256)]
+    repeated = mod.parent_schedule(training, 4)
+    blocks = mod.parent_schedule(training, 4, "consecutive")
+    assert all(batch == repeated[0] for batch in repeated)
+    assert blocks[0] == repeated[0]
+    assert len({c["id"] for batch in blocks for c in batch}) == 64
+    assert all(len(batch) == 16 for batch in blocks)
+    assert blocks == mod.parent_schedule(list(reversed(training)), 4, "consecutive")
+
+
+def test_reminder_is_exact_eval_helper_contract_and_checkpoint_identity_is_bound():
+    import eval_helper
+
+    mod = implementation()
+    case = {"question": "Original?", "documents": [{"id": "p", "title": "T", "text": "DOC"}]}
+    base = mod.rollout_helper_prompt(case, "Step?", {"mode": "base"})
+    reminder = mod.build_helper_contract("format_reminder")
+    assert reminder["format_reminder"] == eval_helper.FORMAT_REMINDER
+    assert mod.rollout_helper_prompt(case, "Step?", reminder) == base + eval_helper.FORMAT_REMINDER
+    plan = {
+        "helper_contract": reminder,
+        "parent_schedule": "consecutive",
+        "case_ids_by_update": [["a"], ["b"]],
+    }
+    binding = mod.component_identity(plan)
+    mod.validate_component_resume({"component_identity": binding}, plan)
+    changed = {**plan, "helper_contract": {**reminder, "format_reminder": "other"}}
+    with pytest.raises(ValueError, match="component"):
+        mod.validate_component_resume({"component_identity": binding}, changed)
+    with pytest.raises(ValueError, match="adapter"):
+        mod.build_helper_contract("base", Path("unused"))
+
+
+def test_two_tiny_models_route_freeze_helper_and_keep_final_base_unchanged():
+    from peft import LoraConfig, get_peft_model
+    from transformers import Qwen3Config, Qwen3ForCausalLM
+
+    mod = implementation()
+
+    def tiny():
+        return get_peft_model(
+            Qwen3ForCausalLM(
+                Qwen3Config(
+                    vocab_size=32,
+                    hidden_size=16,
+                    intermediate_size=32,
+                    num_hidden_layers=1,
+                    num_attention_heads=2,
+                    num_key_value_heads=1,
+                    head_dim=8,
+                    attention_dropout=0.0,
+                )
+            ),
+            LoraConfig(
+                r=2,
+                lora_alpha=4,
+                target_modules=["q_proj"],
+                lora_dropout=0.0,
+                bias="none",
+                task_type="CAUSAL_LM",
+            ),
+        ).eval()
+
+    root, helper = tiny(), tiny()
+    parameters = mod.planner_parameters(root)
+    mod.freeze_helper_model(helper, root)
+    mod.assert_frozen_helper(helper, parameters)
+    assert mod.model_for_role(root, helper, "root", "trained_helper") == (root, True, "root")
+    assert mod.model_for_role(root, helper, "helper", "trained_helper") == (helper, True, "helper")
+    assert mod.model_for_role(root, helper, "final", "trained_helper") == (root, False, "root")
+    assert mod.model_for_role(root, None, "helper", "format_reminder") == (root, False, "root")
+    ids = torch.tensor([[1, 2, 3]])
+    with torch.no_grad(), root.disable_adapter():
+        final_before = root(input_ids=ids).logits.clone()
+    with torch.no_grad():
+        helper_before = helper(input_ids=ids).logits.clone()
+    optimizer = torch.optim.SGD(parameters, lr=0.5)
+    mod.policy_loss(
+        mod.root_logps(root, {"input_token_ids": [1, 2], "output_token_ids": [3]}), 1.0
+    ).backward()
+    optimizer.step()
+    mod.assert_frozen_helper(helper, parameters)
+    with torch.no_grad(), root.disable_adapter():
+        assert torch.equal(final_before, root(input_ids=ids).logits)
+    with torch.no_grad():
+        assert torch.equal(helper_before, helper(input_ids=ids).logits)
+    with pytest.raises(ValueError, match="separate"):
+        mod.freeze_helper_model(root, root)
+
+
+def test_native_call_receipts_keep_root_temperature_and_separate_frozen_helper_identity(tmp_path):
+    import time
+    from contextlib import contextmanager
+    from types import SimpleNamespace
+
+    mod = implementation()
+
+    class Model:
+        device = "cpu"
+
+        def __init__(self):
+            self.config = SimpleNamespace(use_cache=False)
+            self.disabled = False
+            self.calls = []
+
+        def eval(self):
+            return self
+
+        def gradient_checkpointing_disable(self):
+            pass
+
+        @contextmanager
+        def disable_adapter(self):
+            self.disabled = True
+            try:
+                yield
+            finally:
+                self.disabled = False
+
+        def generate(self, input_ids, generation_config, **kwargs):
+            self.calls.append(
+                (self.disabled, generation_config.temperature, generation_config.output_scores)
+            )
+            return SimpleNamespace(
+                sequences=torch.cat((input_ids, torch.tensor([[3, 2]])), dim=1),
+                scores=[torch.zeros((1, 4))] * 2,
+            )
+
+    class Tokenizer:
+        eos_token_id = pad_token_id = 2
+
+        def apply_chat_template(self, messages, **kwargs):
+            return [1, 2]
+
+        def decode(self, ids, **kwargs):
+            return '{"answer":"actual"}'
+
+    root, helper = Model(), Model()
+    client = mod.Client(
+        root,
+        Tokenizer(),
+        tmp_path,
+        time.time() + 100,
+        "root-sha",
+        helper_model=helper,
+        helper_contract={
+            "mode": "trained_helper",
+            "adapter_binding": {"adapter_model.safetensors": "helper-sha"},
+        },
+    )
+    rows = [client.call(role, "prompt", role, 1, 128) for role in ("root", "helper", "final")]
+    assert root.calls == [(False, 0.8, True), (True, 0.5, False)]
+    assert helper.calls == [(False, 0.5, False)]
+    assert [row["adapter_sha256"] for row in rows] == ["root-sha", "helper-sha", None]
+    assert [row["model_instance"] for row in rows] == ["root", "helper", "root"]
+    assert ["generation_logps" in row for row in rows] == [True, False, False]
+    assert all(row["available"] and row["usage"]["completion_tokens"] == 2 for row in rows)
+
+
+def test_trained_helper_contract_requires_committed_helper_role_and_fixed_dose(tmp_path):
+    import json
+
+    mod = implementation()
+    adapter = tmp_path / "checkpoint-0036"
+    adapter.mkdir()
+    (adapter / "adapter_model.safetensors").write_bytes(b"fixture-only-not-a-model")
+    (adapter / "adapter_config.json").write_text(json.dumps({"r": 8, "lora_dropout": 0}))
+    (adapter / "STATE.json").write_text(json.dumps({"step": 36, "epoch": 1}))
+    (adapter / "COMMIT.json").write_text(
+        json.dumps(
+            {
+                "step": 36,
+                "files": {
+                    name: mod.probe.campaign.sha(adapter / name)
+                    for name in ("adapter_model.safetensors", "adapter_config.json", "STATE.json")
+                },
+            }
+        )
+    )
+    training = {
+        "role": "helper",
+        "model": str(mod.evaluation.planner.BASE),
+        "model_manifest_sha256": mod.build_helper_contract()["base_manifest_sha256"],
+    }
+    (tmp_path / "PLAN.json").write_text(json.dumps(training))
+    contract = mod.build_helper_contract("trained_helper", adapter)
+    assert contract["weights_frozen"] and contract["separate_model"]
+    assert contract["adapter"] == str(adapter)
+    assert contract["training_plan_sha256"] == mod.probe.campaign.sha(tmp_path / "PLAN.json")
+    (tmp_path / "PLAN.json").write_text(json.dumps({**training, "role": "planner"}))
+    with pytest.raises(ValueError, match="role"):
+        mod.build_helper_contract("trained_helper", adapter)
+    (tmp_path / "PLAN.json").write_text(json.dumps(training))
+    (adapter / "STATE.json").write_text(json.dumps({"step": 35, "epoch": 0}))
+    with pytest.raises(ValueError, match="hash"):
+        mod.build_helper_contract("trained_helper", adapter)

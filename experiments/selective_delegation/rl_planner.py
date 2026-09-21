@@ -25,6 +25,119 @@ SEED = 2026092108
 TEMPERATURE = 0.8
 DENOMINATOR = 64
 STOP = False
+HELPER_MODES = ("base", "format_reminder", "trained_helper")
+
+
+def parent_schedule(training, updates, schedule="repeated"):
+    if schedule not in ("repeated", "consecutive") or not 1 <= updates <= 4:
+        raise ValueError("unknown bounded parent schedule")
+    ordered = sorted(training, key=lambda case: case["id"])
+    if (
+        len(ordered) != 256
+        or len({c["id"] for c in ordered}) != 256
+        or any(c["split"] != "train" for c in ordered)
+    ):
+        raise ValueError("expected256 unique training parents")
+    random.Random(SEED).shuffle(ordered)
+    return [
+        ordered[16 * i : 16 * (i + 1)] if schedule == "consecutive" else ordered[:16]
+        for i in range(updates)
+    ]
+
+
+def build_helper_contract(mode="base", adapter=None):
+    if mode not in HELPER_MODES:
+        raise ValueError("unknown helper contract")
+    if mode != "trained_helper" and adapter is not None:
+        raise ValueError("helper adapter only belongs to trained_helper contract")
+    contract = {
+        "mode": mode,
+        "model": str(evaluation.planner.BASE),
+        "base_manifest_sha256": probe.campaign.sha(
+            evaluation.planner.BASE / "local-research-manifest.json"
+        ),
+    }
+    if mode == "format_reminder":
+        import eval_helper
+
+        contract.update(
+            format_reminder=eval_helper.FORMAT_REMINDER,
+            reminder_source=str(Path(eval_helper.__file__).resolve()),
+            reminder_source_sha256=probe.campaign.sha(Path(eval_helper.__file__)),
+        )
+    elif mode == "trained_helper":
+        if adapter is None:
+            raise ValueError("trained_helper requires a committed helper adapter")
+        adapter = Path(adapter).resolve()
+        binding = evaluation.adapter_identity(adapter)
+        state = json.loads((adapter / "STATE.json").read_text())
+        training_path = adapter.parent / "PLAN.json"
+        training = json.loads(training_path.read_text())
+        if training.get("role") != "helper" or training.get("model") != contract["model"]:
+            raise ValueError("helper adapter training role/base identity differs")
+        if training.get("model_manifest_sha256") != contract["base_manifest_sha256"]:
+            raise ValueError("helper training base manifest differs")
+        if state["step"] != 36 or state.get("epoch") != 1:
+            raise ValueError("helper contract requires completed one-epoch checkpoint36")
+        contract.update(
+            adapter=str(adapter),
+            adapter_binding=binding,
+            training_plan_sha256=probe.campaign.sha(training_path),
+            weights_frozen=True,
+            separate_model=True,
+        )
+    return contract
+
+
+def rollout_helper_prompt(case, question, contract):
+    if contract["mode"] not in HELPER_MODES:
+        raise ValueError("unknown helper contract")
+    return evaluation.isolated_helper_prompt(case, question) + (
+        contract["format_reminder"] if contract["mode"] == "format_reminder" else ""
+    )
+
+
+def component_identity(plan):
+    return probe.runtime.digest(
+        {key: plan[key] for key in ("helper_contract", "parent_schedule", "case_ids_by_update")}
+    )
+
+
+def validate_component_resume(state, plan):
+    if state.get("component_identity") != component_identity(plan):
+        raise ValueError("checkpoint component/helper/schedule identity differs")
+
+
+def freeze_helper_model(helper, root):
+    root_ids = {id(p) for p in root.parameters()}
+    if helper is root or any(id(p) in root_ids for p in helper.parameters()):
+        raise ValueError("helper must be a separate model without shared parameter objects")
+    helper.eval()
+    for parameter in helper.parameters():
+        parameter.requires_grad_(False)
+        parameter.grad = None
+    helper.gradient_checkpointing_disable()
+    helper.config.use_cache = True
+
+
+def assert_frozen_helper(helper, optimizer_parameters):
+    if helper is None:
+        return
+    optimizer_ids = {id(p) for p in optimizer_parameters}
+    if any(
+        p.requires_grad or p.grad is not None or id(p) in optimizer_ids for p in helper.parameters()
+    ):
+        raise ValueError("helper must remain frozen and outside root optimizer")
+
+
+def model_for_role(root, helper, role, helper_mode):
+    if role not in ("root", "helper", "final") or helper_mode not in HELPER_MODES:
+        raise ValueError("unknown model role/helper contract")
+    if role == "helper" and helper_mode == "trained_helper":
+        if helper is None:
+            raise ValueError("trained helper model missing")
+        return helper, True, "helper"
+    return root, role == "root", "root"
 
 
 class MissingGroup(RuntimeError):
@@ -122,17 +235,39 @@ def root_logps(model, record):
 class Client:
     """No external server, no retries, no cached rollouts across policy updates."""
 
-    def __init__(self, model, tokenizer, output, deadline, adapter_sha):
+    def __init__(
+        self,
+        model,
+        tokenizer,
+        output,
+        deadline,
+        adapter_sha,
+        *,
+        helper_contract=None,
+        helper_model=None,
+    ):
         self.model, self.tokenizer = model, tokenizer
         self.output, self.deadline, self.adapter_sha = output, deadline, adapter_sha
         self.returned = 0
+        self.helper_contract = helper_contract or {"mode": "base"}
+        self.helper_model = helper_model
 
     def call(self, identity, prompt, role, seed, cap):
         import torch
         from transformers import GenerationConfig
 
-        enabled = role == "root"
-        temperature = TEMPERATURE if enabled else 0.5
+        selected, enabled, instance = model_for_role(
+            self.model, self.helper_model, role, self.helper_contract["mode"]
+        )
+        is_root = role == "root"
+        adapter_sha = (
+            self.adapter_sha
+            if is_root
+            else self.helper_contract["adapter_binding"]["adapter_model.safetensors"]
+            if enabled
+            else None
+        )
+        temperature = TEMPERATURE if is_root else 0.5
         ids = self.tokenizer.apply_chat_template(
             [{"role": "user", "content": prompt}],
             tokenize=True,
@@ -146,7 +281,9 @@ class Client:
             "role": role,
             "model": str(evaluation.planner.BASE),
             "adapter_enabled": enabled,
-            "adapter_sha256": self.adapter_sha if enabled else None,
+            "adapter_sha256": adapter_sha,
+            "model_instance": instance,
+            "helper_contract": self.helper_contract,
             "seed": seed,
             "temperature": temperature,
             "top_p": 1.0,
@@ -165,6 +302,9 @@ class Client:
             "input_token_ids": ids,
             "role": role,
             "adapter_enabled": enabled,
+            "adapter_sha256": adapter_sha,
+            "model": str(evaluation.planner.BASE),
+            "model_instance": instance,
             "available": False,
             "text": None,
             "usage": {"prompt_tokens": len(ids)},
@@ -176,12 +316,13 @@ class Client:
             guard(self.deadline, 1)
             if len(ids) + cap > 8192:
                 raise ValueError("context limit; no truncation")
-            self.model.eval()
-            self.model.gradient_checkpointing_disable()
-            self.model.config.use_cache = True
+            selected.eval()
+            selected.gradient_checkpointing_disable()
+            selected.config.use_cache = True
             torch.manual_seed(seed)
-            torch.cuda.manual_seed_all(seed)
-            tensor = torch.tensor([ids], device=self.model.device)
+            if str(selected.device).startswith("cuda"):
+                torch.cuda.manual_seed_all(seed)
+            tensor = torch.tensor([ids], device=selected.device)
             config = GenerationConfig(
                 do_sample=True,
                 temperature=temperature,
@@ -195,10 +336,10 @@ class Client:
                 eos_token_id=self.tokenizer.eos_token_id,
                 pad_token_id=self.tokenizer.pad_token_id or self.tokenizer.eos_token_id,
                 return_dict_in_generate=True,
-                output_scores=enabled,
+                output_scores=is_root,
             )
-            with nullcontext() if enabled else self.model.disable_adapter(), torch.no_grad():
-                generated = self.model.generate(
+            with nullcontext() if enabled else selected.disable_adapter(), torch.no_grad():
+                generated = selected.generate(
                     input_ids=tensor,
                     attention_mask=torch.ones_like(tensor),
                     generation_config=config,
@@ -217,7 +358,7 @@ class Client:
             eos = emitted[-1] == self.tokenizer.eos_token_id
             if not eos and len(emitted) < cap:
                 raise TimeoutError("generation stopped before EOS or token cap")
-            if enabled:
+            if is_root:
                 record["generation_logps"] = [
                     float(torch.log_softmax(score.float(), -1)[0, token])
                     for score, token in zip(generated.scores, emitted, strict=True)
@@ -279,7 +420,7 @@ def rollout(client, case, update, parent_index, candidate):
             row["status"] = "helper"
             helper = client.call(
                 key + f"-helper-{index + 1}",
-                evaluation.isolated_helper_prompt(case, resolved),
+                rollout_helper_prompt(case, resolved, client.helper_contract),
                 "helper",
                 seeds["downstream"] + index + 1,
                 cap,
@@ -347,6 +488,10 @@ def run(args):
     if not 1 <= args.updates <= 4 or not 0 < args.hours <= 3:
         raise ValueError("bounded run requires 1..4 updates and <=3 hours")
     output, adapter = args.output.resolve(), args.adapter.resolve()
+    helper_contract = build_helper_contract(
+        getattr(args, "helper_contract", "base"), getattr(args, "helper_adapter", None)
+    )
+    schedule_kind = getattr(args, "parent_schedule", "repeated")
     binding = evaluation.adapter_identity(adapter)
     if checkpoint_valid(adapter)["step"] != 48:
         raise ValueError("warmstart must be SFT checkpoint48")
@@ -356,12 +501,14 @@ def run(args):
         )
     if len(training) != 256:
         raise ValueError("expected the entire frozen256 training parent pool")
-    random.Random(SEED).shuffle(training)
-    cases = training[:16]
+    scheduled_cases = parent_schedule(training, args.updates, schedule_kind)
     manifest = evaluation.planner.BASE / "local-research-manifest.json"
     plan = {
         "schema": "fresh-planner-rloo-v1",
-        "case_ids": [c["id"] for c in cases],
+        "case_ids": list(dict.fromkeys(c["id"] for batch in scheduled_cases for c in batch)),
+        "case_ids_by_update": [[c["id"] for c in batch] for batch in scheduled_cases],
+        "parent_schedule": schedule_kind,
+        "helper_contract": helper_contract,
         "cases_sha256": probe.campaign.sha(args.cases),
         "adapter": str(adapter),
         "adapter_binding": binding,
@@ -382,7 +529,10 @@ def run(args):
         "objective": "-sum(leave-other-three-out reward advantage * sum root logp(T=.8))/64",
         "admission": "at least2/16 groups with >=2 distinct valid plans and mixed exact-EM "
         "among valid plans; invalid plans remain reward zero in all64 loss trajectories",
-        "frozen_helpers": "adapter disabled for every helper/final; base parameters frozen",
+        "frozen_helpers": "Separate frozen helper adapter; final uses root instance with adapter "
+        "disabled"
+        if helper_contract["mode"] == "trained_helper"
+        else "adapter disabled for every helper/final; base parameters frozen",
         "dependencies": {
             str(p): probe.campaign.sha(p)
             for p in (
@@ -409,6 +559,8 @@ def run(args):
     committed = sorted(p for p in output.glob("checkpoint-*") if (p / "COMMIT.json").exists())
     restored = committed[-1] if args.resume and committed else None
     state = checkpoint_valid(restored) if restored else {"step": 0, "cursor": 0}
+    if restored:
+        validate_component_resume(state, plan)
     if (output / f"batch-{state['step'] + 1:04d}").exists():
         raise ValueError("uncommitted rollout batch exists; no implicit retries or regeneration")
     spent = sum(
@@ -424,7 +576,7 @@ def run(args):
     lock = (probe.campaign.STORE / "sidecars/root-rlvr-campaign-v1/COORDINATOR.lock").open("a")
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     invocation, started = uuid.uuid4().hex[:12], time.time()
-    model = optimizer = None
+    model = optimizer = helper_model = None
     failure, status = None, "starting"
     try:
         probe.runtime.save(
@@ -467,6 +619,23 @@ def run(args):
         parameters = planner_parameters(model)
         if len(parameters) != 504:
             raise ValueError("expected504 rank8 Qwen LoRA tensors")
+        if helper_contract["mode"] == "trained_helper":
+            helper_base = AutoModelForCausalLM.from_pretrained(
+                plan["model"],
+                local_files_only=True,
+                trust_remote_code=False,
+                dtype=torch.bfloat16,
+                attn_implementation="sdpa",
+                device_map={"": "cuda:0"},
+            )
+            helper_model = PeftModel.from_pretrained(
+                helper_base,
+                helper_contract["adapter"],
+                is_trainable=False,
+                autocast_adapter_dtype=True,
+            )
+            freeze_helper_model(helper_model, model)
+            assert_frozen_helper(helper_model, parameters)
         if restored:
             optimizer = torch.optim.AdamW(parameters, lr=2e-5, weight_decay=0.0)
             optimizer.load_state_dict(
@@ -485,13 +654,21 @@ def run(args):
                 "all_non_lora_frozen": all(
                     not p.requires_grad for n, p in model.named_parameters() if "lora_" not in n
                 ),
-                "helpers_adapter_disabled": True,
+                "helpers_adapter_disabled": helper_model is None,
+                "helper_weights_frozen": True,
+                "helper_contract": helper_contract,
+                "helper_trainable_parameters": sum(
+                    p.numel() for p in helper_model.parameters() if p.requires_grad
+                )
+                if helper_model
+                else 0,
                 "base_manifest_sha256": plan["base_manifest_sha256"],
                 "cuda": torch.version.cuda,
                 "gpu": torch.cuda.get_device_name(),
             },
         )
         for update in range(state["step"] + 1, args.updates + 1):
+            cases = scheduled_cases[update - 1]
             guard(deadline, 180)
             if (output / "STOP").exists():
                 status = "stopped_at_update_boundary"
@@ -505,6 +682,8 @@ def run(args):
                 batch_dir,
                 deadline,
                 probe.campaign.sha(policy_path / "adapter_model.safetensors"),
+                helper_contract=helper_contract,
+                helper_model=helper_model,
             )
             groups, roots = [], []
             for index, case in enumerate(cases):
@@ -530,6 +709,9 @@ def run(args):
                 status = "admission_failed_no_update"
                 break
             guard(deadline, 180)
+            if [id(p) for p in planner_parameters(model)] != [id(p) for p in parameters]:
+                raise ValueError("root trainability changed during rollout")
+            assert_frozen_helper(helper_model, parameters)
             model.eval()
             model.config.use_cache = False
             model.gradient_checkpointing_disable()
@@ -582,6 +764,7 @@ def run(args):
                 loss = policy_loss(values, advantage)
                 objective += float(loss.detach())
                 loss.backward()
+            assert_frozen_helper(helper_model, parameters)
             norm = float(torch.nn.utils.clip_grad_norm_(parameters, 1.0, error_if_nonfinite=True))
             if not math.isfinite(norm) or norm == 0:
                 raise ValueError("zero or nonfinite admitted gradient")
@@ -598,7 +781,9 @@ def run(args):
                 "step": update,
                 "cursor": 0,
                 "next_update": update + 1,
-                "case_ids": plan["case_ids"],
+                "case_ids": [c["id"] for c in cases],
+                "component_identity": component_identity(plan),
+                "helper_contract": helper_contract,
                 "batch_sha256": probe.campaign.sha(batch_dir / "BATCH.json"),
                 "objective": objective,
                 "gradient_norm": norm,
@@ -642,6 +827,8 @@ def run(args):
         try:
             if model is not None:
                 del model
+            if helper_model is not None:
+                del helper_model
             gc.collect()
             torch.cuda.empty_cache()
             calls = [json.loads(p.read_text()) for p in output.glob("batch-*/calls/*.json")]
@@ -673,4 +860,9 @@ if __name__ == "__main__":
     parser.add_argument("--updates", type=int, default=4)
     parser.add_argument("--hours", type=float, default=3)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--helper-contract", choices=HELPER_MODES, default="base")
+    parser.add_argument("--helper-adapter", type=Path)
+    parser.add_argument(
+        "--parent-schedule", choices=("repeated", "consecutive"), default="repeated"
+    )
     run(parser.parse_args())

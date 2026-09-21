@@ -2,6 +2,8 @@
 
 import importlib.util
 import json
+import subprocess
+import sys
 import time
 from contextlib import contextmanager
 from pathlib import Path
@@ -33,6 +35,23 @@ CASE = {
 PLAN = {"subquestions": ["Who designed it?", "Did #1 build it?"]}
 
 
+def test_cli_accepts_authoritative_development_split_before_help():
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(Path(__file__).with_name("eval_planner.py")),
+            "--split",
+            "development",
+            "--help",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "{train,validation,development,transfer}" in result.stdout
+
+
 def test_rl_checkpoint_is_named_rl_and_only_its_root_enables_adapter():
     m = module()
     assert m.mode_conditions("planner", "rl") == ("base", "rl")
@@ -50,6 +69,94 @@ def test_trained_only_readout_avoids_repeating_the_base_control():
     assert m.mode_conditions("planner", "sft", trained_only=True) == ("sft",)
     with pytest.raises(ValueError):
         m.mode_conditions("direct", "rl", trained_only=True)
+
+
+def test_fixed_helper_contract_uses_exact_reminder_and_rejects_wrong_execution():
+    import eval_helper
+    import rl_planner
+
+    m = module()
+    contract = m.evaluation_helper_contract("format_reminder", None, "planner", "isolated")
+    assert contract == rl_planner.build_helper_contract("format_reminder")
+    prompt = m.contracted_helper_prompt(CASE, "Resolved question?", contract)
+    assert (
+        prompt == m.isolated_helper_prompt(CASE, "Resolved question?") + eval_helper.FORMAT_REMINDER
+    )
+    assert "GOLD_SECRET" not in prompt and CASE["question"] not in prompt
+    for mode, execution in (("direct", "isolated"), ("planner", "bundled")):
+        with pytest.raises(ValueError, match="isolated planner"):
+            m.evaluation_helper_contract("format_reminder", None, mode, execution)
+
+
+def test_rl_checkpoint_requires_its_declared_helper_contract(tmp_path):
+    m = module()
+    state = tmp_path / "STATE.json"
+    state.write_text(json.dumps({"helper_contract": {"mode": "format_reminder"}}))
+    m.validate_rl_helper_contract(tmp_path, "rl", {"mode": "format_reminder"})
+    with pytest.raises(ValueError, match="RL training helper contract"):
+        m.validate_rl_helper_contract(tmp_path, "rl", {"mode": "base"})
+    m.validate_rl_helper_contract(tmp_path, "sft", {"mode": "base"})
+    state.write_text('{"step":4}')
+    m.validate_rl_helper_contract(tmp_path, "rl", {"mode": "base"})
+
+
+def test_trained_helper_routes_separately_with_rl_root_at_evaluation_temperature(tmp_path):
+    import torch
+
+    m = module()
+
+    class Model:
+        device = "cpu"
+        disabled = False
+
+        def __init__(self):
+            self.observed = []
+
+        @contextmanager
+        def disable_adapter(self):
+            self.disabled = True
+            try:
+                yield
+            finally:
+                self.disabled = False
+
+        def generate(self, input_ids, **kwargs):
+            self.observed.append((self.disabled, kwargs["temperature"], kwargs["max_new_tokens"]))
+            return torch.cat((input_ids, torch.tensor([[7, 2]])), dim=1)
+
+    class Tokenizer:
+        eos_token_id = pad_token_id = 2
+
+        def apply_chat_template(self, *args, **kwargs):
+            return [10, 11]
+
+        def decode(self, *args, **kwargs):
+            return '{"answer":"actual"}'
+
+    root, helper = Model(), Model()
+    contract = {
+        "mode": "trained_helper",
+        "model": "base4b",
+        "adapter_binding": {"adapter_model.safetensors": "helper-sha"},
+    }
+    client = m.HFClient(
+        root,
+        Tokenizer(),
+        tmp_path,
+        time.time() + 1000,
+        "root-sha",
+        helper_contract=contract,
+        helper_model=helper,
+    )
+    rows = [client.call(role, "prompt", "rl", role, 17) for role in ("root", "helper", "final")]
+    assert root.observed == [(False, 0.5, 128), (True, 0.5, 128)]
+    assert helper.observed == [(False, 0.5, 384)]
+    assert [r["adapter_sha256"] for r in rows] == ["root-sha", "helper-sha", None]
+    assert [r["model_instance"] for r in rows] == ["root", "helper", "root"]
+    assert all(r["helper_contract"] == r["request"]["helper_contract"] == contract for r in rows)
+    client.helper_contract = {**contract, "mode": "base"}
+    with pytest.raises(ValueError, match="cached request"):
+        client.call("final", "prompt", "rl", "final", 17)
 
 
 def test_all_evaluation_prompts_exclude_host_labels_and_keep_public_evidence():

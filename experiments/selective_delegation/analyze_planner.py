@@ -68,6 +68,7 @@ def analyze(output: Path, cases_path: Path, *, draws=DRAWS, seed=SEED, compariso
             "caps",
             "max_context",
             "helper_budget_policy",
+            "helper_contract",
             "architecture",
         ):
             if plan.get(field) != other.get(field):
@@ -96,6 +97,14 @@ def analyze(output: Path, cases_path: Path, *, draws=DRAWS, seed=SEED, compariso
     for source_output, source_plan in sources:
         for path, expected in source_plan.get("dependencies", {}).items():
             track(path, expected)
+        helper = source_plan.get("helper_contract", {})
+        if helper.get("adapter"):
+            helper_adapter = Path(helper["adapter"])
+            for name, expected in helper.get("adapter_binding", {}).items():
+                track(helper_adapter / name, expected)
+            track(helper_adapter.parent / "PLAN.json", helper["training_plan_sha256"])
+        if helper.get("reminder_source"):
+            track(helper["reminder_source"], helper["reminder_source_sha256"])
         if source_plan.get("adapter"):
             adapter = Path(source_plan["adapter"])
             for name, expected in source_plan.get("adapter_files_sha256", {}).items():
@@ -293,6 +302,7 @@ def analyze(output: Path, cases_path: Path, *, draws=DRAWS, seed=SEED, compariso
                 "execution",
                 "architecture",
                 "policy",
+                "helper_contract",
                 "conditions",
             )
         },

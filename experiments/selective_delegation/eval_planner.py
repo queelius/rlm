@@ -26,6 +26,31 @@ CAPS = {"root": 128, "helper": 384, "final": 128}
 SEED = 202609219
 STOP = False
 MODES = ("planner", "direct", "single_helper")
+HELPER_MODES = ("base", "format_reminder", "trained_helper")
+
+
+def evaluation_helper_contract(helper_mode, adapter, mode, execution):
+    if helper_mode != "base" and (mode != "planner" or execution != "isolated"):
+        raise ValueError("non-base helper contracts require isolated planner evaluation")
+    # Runtime-only import: both modules have finished defining their APIs before this call.
+    # Reuse identity validation, never the RL client's T=.8 generation policy.
+    import rl_planner
+
+    return rl_planner.build_helper_contract(helper_mode, adapter)
+
+
+def contracted_helper_prompt(case, question, contract):
+    return isolated_helper_prompt(case, question) + (
+        contract["format_reminder"] if contract["mode"] == "format_reminder" else ""
+    )
+
+
+def validate_rl_helper_contract(adapter, condition, contract):
+    if condition != "rl":
+        return
+    state = json.loads((Path(adapter) / "STATE.json").read_text())
+    if "helper_contract" in state and state["helper_contract"] != contract:
+        raise ValueError("RL training helper contract differs from evaluation contract")
 
 
 def mode_conditions(mode, trained_condition="sft", *, trained_only=False):
@@ -144,16 +169,40 @@ def cost(records):
 class HFClient:
     """Single-thread caller: PEFT adapter enable/disable state is process-global."""
 
-    def __init__(self, model, tokenizer, output, deadline, adapter_sha):
+    def __init__(
+        self,
+        model,
+        tokenizer,
+        output,
+        deadline,
+        adapter_sha,
+        *,
+        helper_contract=None,
+        helper_model=None,
+    ):
         self.model, self.tokenizer = model, tokenizer
         self.output, self.deadline = Path(output), deadline
         self.adapter_sha = adapter_sha
+        self.helper_contract = helper_contract or {"mode": "base", "model": str(planner.BASE)}
+        self.helper_model = helper_model
+        if self.helper_contract["mode"] not in HELPER_MODES:
+            raise ValueError("unknown helper contract")
+        if self.helper_contract["mode"] == "trained_helper" and (
+            helper_model is None or helper_model is model
+        ):
+            raise ValueError("trained helper requires a separate model")
         self.returned = self.failed = self.consecutive_failures = 0
 
     def call(self, identity, prompt, condition, role, seed, *, max_new_tokens=None):
         import torch
 
         enabled = adapter_enabled(condition, role)
+        selected_model, instance = self.model, "root"
+        selected_sha = self.adapter_sha if enabled else None
+        if role == "helper" and self.helper_contract["mode"] == "trained_helper":
+            selected_model, instance, enabled = self.helper_model, "helper", True
+            selected_sha = self.helper_contract["adapter_binding"]["adapter_model.safetensors"]
+        model_name = self.helper_contract["model"] if instance == "helper" else str(planner.BASE)
         cap = CAPS[role] if max_new_tokens is None else max_new_tokens
         if type(cap) is not int or not 1 <= cap <= CAPS[role]:
             raise ValueError("generation cap outside declared role budget")
@@ -169,9 +218,11 @@ class HFClient:
             "input_token_ids": ids,
             "condition": condition,
             "role": role,
-            "model": str(planner.BASE),
+            "model": model_name,
+            "model_instance": instance,
+            "helper_contract": self.helper_contract,
             "adapter_enabled": enabled,
-            "adapter_sha256": self.adapter_sha if enabled else None,
+            "adapter_sha256": selected_sha,
             "seed": seed,
             "sampling": {
                 "do_sample": True,
@@ -203,9 +254,11 @@ class HFClient:
             "text": None,
             "usage": {},
             "started": time.time(),
-            "model": str(planner.BASE),
+            "model": model_name,
+            "model_instance": instance,
+            "helper_contract": self.helper_contract,
             "adapter_enabled": enabled,
-            "adapter_sha256": self.adapter_sha if enabled else None,
+            "adapter_sha256": selected_sha,
         }
         probe.runtime.save(
             self.output / "starts" / (identity + "-" + uuid.uuid4().hex + ".json"), record
@@ -217,13 +270,13 @@ class HFClient:
             if len(ids) + cap > 8192:
                 raise ValueError("context limit exceeded; no truncation")
             torch.manual_seed(seed)
-            if str(self.model.device).startswith("cuda"):
+            if str(selected_model.device).startswith("cuda"):
                 torch.cuda.manual_seed_all(seed)
-            tensor = torch.tensor([ids], dtype=torch.long, device=self.model.device)
+            tensor = torch.tensor([ids], dtype=torch.long, device=selected_model.device)
             record["effective_max_time"] = remaining
             record["usage"]["prompt_tokens"] = len(ids)
-            with nullcontext() if enabled else self.model.disable_adapter(), torch.no_grad():
-                sequences = self.model.generate(
+            with nullcontext() if enabled else selected_model.disable_adapter(), torch.no_grad():
+                sequences = selected_model.generate(
                     input_ids=tensor,
                     attention_mask=torch.ones_like(tensor),
                     do_sample=True,
@@ -374,6 +427,9 @@ def collect_baseline(client, case, condition, repeat, mode):
 
 
 def collect_episode(client, case, condition, repeat, execution="bundled", mode="planner"):
+    contract = getattr(client, "helper_contract", {"mode": "base"})
+    if contract["mode"] != "base" and (mode != "planner" or execution != "isolated"):
+        raise ValueError("non-base helper contracts require isolated planner evaluation")
     mode_conditions(mode)
     if mode != "planner":
         return collect_baseline(client, case, condition, repeat, mode)
@@ -390,6 +446,7 @@ def collect_episode(client, case, condition, repeat, execution="bundled", mode="
         "case_id": case["id"],
         "split": case["split"],
         "condition": condition,
+        "helper_contract": contract,
         "execution": execution,
         "repeat": repeat,
         "seed": seed,
@@ -440,7 +497,7 @@ def collect_episode(client, case, condition, repeat, execution="bundled", mode="
                 result["status"] = "helper_failure"
                 helper = client.call(
                     identity + f"-helper-{index + 1}",
-                    isolated_helper_prompt(case, resolved),
+                    contracted_helper_prompt(case, resolved, contract),
                     condition,
                     "helper",
                     seed + index + 1,
@@ -587,6 +644,14 @@ def run(args):
     trained_condition = getattr(args, "trained_condition", "sft")
     trained_only = getattr(args, "trained_only", False)
     conditions = mode_conditions(mode, trained_condition, trained_only=trained_only)
+    helper_contract = evaluation_helper_contract(
+        getattr(args, "helper_contract", "base"),
+        getattr(args, "helper_adapter", None),
+        mode,
+        args.execution,
+    )
+    import rl_planner
+
     if args.start < 0 or args.limit < 1 or args.repeats < 1 or args.hours <= 0:
         raise ValueError("positive bounded evaluation inventory required")
     cases = [json.loads(line) for line in args.cases.open()]
@@ -596,6 +661,8 @@ def run(args):
     if not cases:
         raise ValueError("empty evaluation panel")
     binding = adapter_identity(adapter)
+    if mode == "planner":
+        validate_rl_helper_contract(adapter, trained_condition, helper_contract)
     training_plan = adapter.parent / "PLAN.json"
     model_manifest = planner.BASE / "local-research-manifest.json"
     plan = {
@@ -613,6 +680,7 @@ def run(args):
         "seed": SEED,
         "caps": CAPS,
         "execution": args.execution,
+        "helper_contract": helper_contract,
         "helper_budget_policy": "384 total output tokens: bundled one call; isolated "
         "floor(384/n) per sequential step. Isolated helpers see only resolved current question "
         "and full public source; dependencies bind prior predictions, never reference answers.",
@@ -623,6 +691,8 @@ def run(args):
             for path in (
                 Path(planner.__file__),
                 Path(probe.__file__),
+                Path(rl_planner.__file__),
+                Path(rl_planner.train_planner.__file__),
                 probe.MUSIQUE / "metrics/answer.py",
             )
         },
@@ -635,7 +705,8 @@ def run(args):
         "training_kind": trained_condition,
         "trained_only": trained_only,
         "policy": f"Only {trained_condition.upper()} root enables adapter; "
-        "base root and all helpers/finals disable it.",
+        "base root and final disable it. Helpers use the immutable helper_contract, "
+        "with a separate frozen model only for trained_helper.",
         "architecture": "Title-index-only question planner without provisional answer; "
         "identical contracts for base and adapted root. Different from old shared checkpoint.",
         "temperature": 0.5,
@@ -690,7 +761,7 @@ def run(args):
     lock = (probe.campaign.STORE / "sidecars/root-rlvr-campaign-v1/COORDINATOR.lock").open("a")
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     invocation, started = uuid.uuid4().hex[:12], time.time()
-    model = None
+    model = helper_model = None
     failure = None
     try:
         probe.runtime.save(
@@ -728,12 +799,35 @@ def run(args):
         model.eval()
         model.gradient_checkpointing_disable()
         model.config.use_cache = True
+        for parameter in model.parameters():
+            parameter.requires_grad_(False)
+        if helper_contract["mode"] == "trained_helper":
+            helper_base = AutoModelForCausalLM.from_pretrained(
+                planner.BASE,
+                local_files_only=True,
+                trust_remote_code=False,
+                dtype=torch.bfloat16,
+                attn_implementation="sdpa",
+                device_map={"": "cuda:0"},
+            )
+            helper_model = PeftModel.from_pretrained(
+                helper_base,
+                helper_contract["adapter"],
+                is_trainable=False,
+                autocast_adapter_dtype=True,
+            )
+            rl_planner.freeze_helper_model(helper_model, model)
+            rl_planner.assert_frozen_helper(helper_model, [])
         probe.runtime.save(
             output / f"LOAD-{invocation}.json",
             {
                 "model": str(planner.BASE),
                 "adapter": str(adapter),
                 "adapter_files_sha256": binding,
+                "helper_contract": helper_contract,
+                "helper_trainable_parameters": 0
+                if helper_model is None
+                else sum(p.numel() for p in helper_model.parameters() if p.requires_grad),
                 "model_training": model.training,
                 "use_cache": model.config.use_cache,
                 "gradient_checkpointing": model.is_gradient_checkpointing,
@@ -741,7 +835,15 @@ def run(args):
                 "gpu": torch.cuda.get_device_name(),
             },
         )
-        client = HFClient(model, tokenizer, output, deadline, binding["adapter_model.safetensors"])
+        client = HFClient(
+            model,
+            tokenizer,
+            output,
+            deadline,
+            binding["adapter_model.safetensors"],
+            helper_contract=helper_contract,
+            helper_model=helper_model,
+        )
         for case in cases:
             for repeat in range(args.repeats):
                 order = (
@@ -779,6 +881,8 @@ def run(args):
         failure = f"{type(error).__name__}: {error}"
         raise
     finally:
+        if helper_model is not None:
+            del helper_model
         if model is not None:
             del model
         gc.collect()
@@ -812,7 +916,7 @@ if __name__ == "__main__":
     parser.add_argument("--adapter", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
-        "--split", choices=("train", "validation", "transfer"), default="validation"
+        "--split", choices=("train", "validation", "development", "transfer"), default="validation"
     )
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--limit", type=int, default=32)
@@ -822,4 +926,6 @@ if __name__ == "__main__":
     parser.add_argument("--trained-condition", choices=("sft", "rl"), default="sft")
     parser.add_argument("--trained-only", action="store_true")
     parser.add_argument("--mode", choices=MODES, default="planner")
+    parser.add_argument("--helper-contract", choices=HELPER_MODES, default="base")
+    parser.add_argument("--helper-adapter", type=Path)
     run(parser.parse_args())
