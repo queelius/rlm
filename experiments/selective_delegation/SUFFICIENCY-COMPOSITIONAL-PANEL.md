@@ -1,9 +1,15 @@
 # Compositional sufficiency panel: prospective CPU freeze
 
 The frozen panel deliberately contains 16 three-hop and 16 four-hop MuSiQue DEV parents,
-with both official evidence-availability variants retained. It is a depth-transfer
-diagnostic, not a natural DEV mixture or an unseen-facts evaluation. No model outcomes
+with both official evidence-availability variants retained. It is a higher-hop
+new-question diagnostic, not a natural DEV mixture or an unseen-facts evaluation. No model outcomes
 were used for selection or inspected during preparation.
+
+Training already includes these depths. The 128-parent paired-RL/extra-SFT input
+contains95 two-hop,26 three-hop and7 four-hop questions; the earlier supervised
+initializer also included all three depths. Consequently this readout cannot
+establish extrapolation beyond training depth. It complements the separately
+frozen two-hop panel by testing new questions with more reasoning steps.
 
 Selection takes the first 16 SHA256(`2026092205:` + official parent ID) values within
 each hop stratum after exact parent-ID or normalized-question exclusion. The exclusion
