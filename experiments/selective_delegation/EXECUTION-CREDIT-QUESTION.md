@@ -1,7 +1,7 @@
 ---
 question_id: SD-EXECUTION-CREDIT
-status: conditional_diagnostic_not_accepted
-updated_utc: 2026-09-21T15:48:00Z
+status: accepted_queued
+updated_utc: 2026-09-21T16:06:00Z
 depends_on:
   - PLAN-ONLY-FINDINGS.md
   - FROZEN-EXECUTION-FINDINGS.md
@@ -63,6 +63,15 @@ must explicitly specify that tradeoff and retain absolute accuracy and direct
 answering controls. Counterfactual credit assignment itself is established
 prior art; the proposed diagnostic is not a novelty claim.
 
-This document records a conditional question. No collector or GPU run is
-accepted by its existence. Do not modify ongoing RL training, sealed sources,
-or existing reports to implement it.
+Accepted at16:06UTC after the stopped-batch audit reinforced this question.
+`EXECUTION-CREDIT-DECISION-001.json` binds sealed `source-023-execution-credit`
+and the CPU-prepared output PLAN. Supervisor47179 waits for the ALFWorld screen,
+then collects at most330calls/20minutes and performs the native paired analysis.
+Eight focused fixtures passed, including actual saved RL/frozen request formats
+and unavailable-control accounting. All320 source finals and ten replay controls
+are available. No new diagnostic outcomes existed at acceptance.
+
+There are16parents and15atomic components, not16verified independent examples.
+Source acquisition contains1,109deduplicated historical calls, accounted
+separately from new controls/finals. No optimizer/root/helper generation is
+accepted here; existing training, sealed sources and reports remain unchanged.

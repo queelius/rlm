@@ -1,5 +1,16 @@
 # Learning when another reasoning step is worthwhile
 
+For a short plain-language account of the latest findings and decisions, start
+with [the September21 research update](RESEARCH-UPDATE-20260921.md).
+
+Current operations, September21,16:00UTC: the fresh128-question Hotpot replication
+is running. Root RL continuation saved checkpoint21 and then stopped at a batch
+with no within-question reward differences. A separately labeled checkpoint21
+readout is queued, followed by a small frozen-model environment-action screen.
+See [the stopped-run analysis](RL-STOPPED-DOSE.md) and
+[the new screen's design](ALFWORLD-SCREEN-DESIGN.md). These are exploratory jobs;
+the original exact-checkpoint24 readout was not run or silently substituted.
+
 This exploratory study asks whether a controller can learn when to finish an
 answer, reconsider it, ask a focused evidence question, or work through proposed
 subquestions. The helpers initially remain unchanged. This is a small controlled
@@ -85,9 +96,10 @@ The [matched Hotpot direct control](HOTPOT-DIRECT-CONTROL.md) scores31/64 with
 the helper adapter versus36/64 with base weights; multi-call trained helpers
 score40/64. The [paired architecture analysis](HOTPOT-MATCHED-ARCHITECTURE.md)
 finds the advantage over base direct uncertain, at3.50times its token cost.
-New-data replication is being prepared.
-One [bounded RL continuation](RL-CONTINUATION-DRAFT.md) is running, preserving
-the optimizer and selecting checkpoint24 before its development readout.
+The [new-data replication](HOTPOT-FRESH-PANEL.md) is running.
+The [bounded RL continuation](RL-CONTINUATION-DRAFT.md) preserved the optimizer
+but stopped at checkpoint21 under its declared admission rule; its separately
+named development readout is pending.
 The [latest prior-art check](LITERATURE-UPDATE-1515.md) narrows what would be novel
 beyond existing planner/executor training and adaptive retrieval methods.
 The [larger Hotpot validation asset](HOTPOT-DEV-ASSET.md) is now cached with a

@@ -34,6 +34,12 @@ Primary sources: [ALFWorld](https://arxiv.org/abs/2010.03768),
 [Reflexion](https://proceedings.neurips.cc/paper_files/paper/2023/hash/1b44b878bb782e6954cd888628510e90-Abstract-Conference.html),
 and [ArCHer](https://proceedings.mlr.press/v235/zhou24t.html).
 
+**Retrieval note.** This note's prior-art boundary was checked against the
+ALFWorld arXiv abstract and official project page, the ReAct ICLR record/abstract,
+the Reflexion NeurIPS proceedings page, and the ArCHer PMLR proceedings page on
+September 21. No further ALFWorld hierarchy result is asserted from uninspected
+prior knowledge.
+
 ## 1. Public-state change gating in ALFWorld — recommended screen
 
 **Falsifiable question.** Does a manager help only when public feedback changes
