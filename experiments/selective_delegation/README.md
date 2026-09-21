@@ -108,8 +108,10 @@ External study root:
 - `helper-sft-001`: completed one-epoch helper training,36updates,584.5 training seconds.
 - `helper-eval-001`: completed base/trained/reminder helper comparison,
   192episodes/613newcalls; `analysis-helper-001.json/.md` is authoritative.
-- `rl-fullpass-001`: accepted/running root-only RL with frozen helper-SFT36,
-  up to16updates over256training parents; no held-out outcome yet.
+- `rl-fullpass-001`: root-only RL with frozen helper-SFT36,
+  completed16updates over256training parents,1,024attempts and4,335calls;
+  [training-process findings](FULLPASS-TRAINING-FINDINGS.md). Its new-question
+  comparison is running; no held-out outcome yet.
 - `fresh-dev-inputs-003`: new64-question panel with prior-study parent/component
   exclusions. Earlier001/002 preparation versions are superseded; see
   [FRESH-DEV-PANEL.md](FRESH-DEV-PANEL.md).
