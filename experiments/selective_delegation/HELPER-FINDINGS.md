@@ -93,9 +93,16 @@ search in this comparison.
   that performed *Attics to Eden*. The trained second helper answers “Chicago”
   to `Madina Lake >> formed`; the final nevertheless recovers “2005.”
 
+The narrow [annotation-compatible first-step audit](HELPER-ANNOTATION-COMPATIBLE.md)
+scores only21/64 generated first questions with literal unique reference matches.
+Base/reminder score14/21 and trained11/21; the three losses represent one
+reference-granularity disagreement and one clear factual error repeated twice.
+This selected subset cannot estimate general intermediate accuracy, but reinforces
+the need to distinguish better final answers from reliably better helper steps.
+
 The two Vatican-related parents share an atomic component; the clustered analysis
-keeps them together. No annotated-step accuracy was assigned to generated
-questions. Exact helper answer strings changed at 55/129 both-valid step pairs
+keeps them together. Outside the literal-compatible subset above, no annotated-step
+accuracy was assigned to generated questions. Exact helper answer strings changed at 55/129 both-valid step pairs
 between trained and base; 18 compared steps had different resolved questions
 because upstream predictions changed. These are agreement diagnostics, not
 ground-truth intermediate reasoning scores.
