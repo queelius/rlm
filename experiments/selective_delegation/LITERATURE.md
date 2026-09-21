@@ -160,3 +160,33 @@ than our four-step probe. Our weak result cannot distinguish an inadequate
 training dose from a fundamental limit of terminal-reward planner learning.
 If the helper comparison exposes usable answer variation, a predeclared
 larger-data/dose test is warranted before rejecting that learning approach.
+
+## Executor training and credit allocation: September21,12:22UTC
+
+[MetaAgent-X](https://arxiv.org/html/2605.14212v1) is especially close prior art
+for the current decision. It trains both workflow design and execution, using
+four sampled designs and four executions per design, and alternates role-specific
+training stages. Its main setup shares weights, with separate-policy ablations.
+Thus neither an executor bottleneck nor planner–executor co-adaptation is a new
+claim for us. Our current separate, frozen helper makes the incremental root
+effect easier to isolate, but differs from its jointly evolving system.
+
+Local implication, not a reported paper result: if the new root-RL readout is
+weak, replay the same frozen plans with several fresh helper seeds before adding
+tree search or repeated reward estimation. This tests whether plan rankings
+survive execution noise. A bounded64-plan ×four-continuation pilot would require
+roughly800–1,100 new helper/final calls for typical plans, with a one-A100-hour
+cap. Promote repeated execution only if ranking stability improves enough to
+justify its cost; otherwise prefer more distinct training questions. This is
+conditional preparation, not an accepted additional GPU job.
+
+[SkillGate](https://arxiv.org/html/2608.18852v1) separates skill-selection tokens
+from execution tokens and supplies selection-specific credit using a known
+correct skill. Its diagnosis includes diluted and wrong-signed outcome credit.
+That does not directly diagnose our current runner: only root-plan tokens enter
+our loss, so long helper outputs cannot dilute them. We also do not have a unique
+known-correct generated plan. Copying its auxiliary objective would add privileged
+supervision, not simply repair our implementation. The useful local question is
+whether varying downstream execution changes a plan's reward despite unchanged
+planning; our fixed-helper and conditional repeated-execution comparisons address
+that without inventing a gold planner action.

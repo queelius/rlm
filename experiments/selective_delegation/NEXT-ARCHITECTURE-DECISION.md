@@ -51,9 +51,12 @@ selected-helper/fixed-helper-RL full-pass readout, not a future clean architectu
 panel. The already exposed four-hop panel can support a clearly exploratory
 failure diagnostic because it contains the observed self-reference issue; use
 new identities only after a credible signal. A 32-parent, two-repeat diagnostic
-(one-shot, incremental, direct) is roughly 320--450 model calls depending on
-early `FINAL` decisions, plausibly one A100-hour; verify a real full-source
-helper and one native trace before extending.
+(one-shot, incremental, direct) is roughly 800--1,100 model calls for typical
+three/four-step traces, not 320--450 calls: incremental planning adds a root call
+at each decision. With at most eight root decisions/helpers its upper bound is
+1,792 calls across all three policies. Early `FINAL` changes actual cost. One
+A100-hour is an exploratory cap, not a guaranteed completion time; verify a real
+full-source helper and one native trace before extending.
 
 **Go/no-go.** Report dependency/protocol recovery and both-valid-final EM as
 separate outcomes. A repeated protocol-mediated end-to-end gain is useful

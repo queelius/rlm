@@ -72,6 +72,55 @@ All frozen cases remain in the official planned denominator, including protocol
 zeros. This panel has now been examined and is no longer an untouched test set.
 Later comparisons on it must be labeled exploratory; a fresh panel should be
 used to evaluate choices made from these results. Report protocol and both-scored
-content changes separately. A single predeclared one-epoch SFT checkpoint readout
-is queued as an exploratory dose check, not a search for a better-looking primary
-checkpoint.
+content changes separately. The predeclared one-epoch SFT checkpoint readout is
+now complete; it is an exploratory dose check, not a search for a better-looking
+primary checkpoint.
+
+## Early versus full SFT dose: no early-checkpoint rescue
+
+The same 32 parents and two repeats were evaluated at update 16 (one epoch) and
+update 48 (three epochs). The source009 collector, case hash, model, sampling
+seeds, caps and isolated execution contract match. Only the root adapter
+checkpoint changes; helpers and finals remain the released base model. Native
+finals were independently regraded using the official Hotpot scorer.
+
+| Fixed checkpoint | Correct / planned | Official F1 | Valid finals | Protocol failures |
+|---|---:|---:|---:|---:|
+| SFT16, one epoch | 20/64 | 34.15% | 35/64 | 29 |
+| SFT48, three epochs | 23/64 | 45.42% | 49/64 | 15 |
+
+Full dose minus early dose is +4.69 EM points, with an exploratory paired-parent
+95% interval of −9.38 to +18.75. F1 changes by +11.27 points, interval −4.18 to
++26.36. These intervals use 20,000 parent-bootstrap draws, seed 2026092116;
+repeats stay together. Hotpot atomic-component metadata are unavailable, so this
+is not a verified independent-component uncertainty estimate.
+
+SFT48 wins nine attempts on seven parents, all involving protocol recovery. It
+loses six attempts on four parents: five protocol-related and one with valid
+answers in both conditions. The early model has 27 invalid-dependency episodes
+and two invalid-helper episodes; the full-dose model has no invalid-dependency
+episodes and 15 invalid-helper episodes. Thus later training improves one
+execution interface while failures remain elsewhere. For example, an early plan
+for Lars Lunde consisted of one question containing `#1` and `#2`: neither answer
+exists when the first question is executed.
+
+The sole both-valid scored regression is also answer-granularity-sensitive:
+parent `1a849a6f3ce9cf54dfc17685`, repeat 1, returns the reference `Runaways` at
+SFT16 but `Runaways vol. 2 #7` at SFT48. Official EM remains unchanged; the more
+specific response should not automatically be called a semantically unrelated
+answer.
+
+The early checkpoint does not recover the released planner's 30/64 performance.
+This weakens the simple explanation that the additional two SFT epochs alone
+caused the observed transfer loss. It does not establish that SFT is free of
+overfitting, that more training is always beneficial, or that the dose difference
+is reliable on other panels. No new primary checkpoint is selected: the fixed
+SFT48 warm start remains unchanged for the accepted next training run.
+
+All 441 selected-SFT native calls returned, with no missing outcomes or unknown
+usage. SFT16 used 197 calls and 240,055 tokens; SFT48 used 244 calls and 316,917
+tokens. This is an actual-cost comparison, not a compute-matched one. Reproducible
+source: `audit_hotpot_dose.py`. Immutable paired audit and source/receipt hashes:
+`analysis-hotpot-dose-001.json/.md` in the external study root. Original official
+reports remain at `analysis-sft-epoch1-hotpot-001/REPORT.json` and
+`analysis-transfer-hotpot-001/REPORT.json`.

@@ -40,8 +40,16 @@ the next [helper-only training comparison](HELPER-TRAINING-DRAFT.md). A
 tree search is not yet the first priority.
 
 [NEXT-COMPONENT-RL.md](NEXT-COMPONENT-RL.md) describes the conditional next
-training comparison, not an already accepted run. If helper training offers no
-useful signal, [COMPOSITION-DIRECTION.md](COMPOSITION-DIRECTION.md) and the
+training comparison. The [completed helper comparison](HELPER-FINDINGS.md)
+now supports a fixed trained helper:28/64 correct versus19/64 for base helpers
+and22/64 for the format reminder. Both interventions eliminate helper-format
+failures, but the trained helper also has additional both-valid-answer gains.
+This is a promising development result, not established generalization.
+The [frozen-plan transfer checks](HELPER-TRANSFER-PLAN.md) are queued to test
+that limitation on harder MuSiQue questions and HotpotQA.
+The [accepted full-pass RL comparison](FULLPASS-PLAN.md) tests whether root
+learning adds value under that fixed helper. If it offers no useful signal,
+[COMPOSITION-DIRECTION.md](COMPOSITION-DIRECTION.md) and the
 [local asset inventory](COMPOSITION-ASSETS.md) describe a possible alternative.
 Existing fixed-decomposition successes must not be relabeled as newly learned
 recursive composition.
@@ -83,8 +91,10 @@ External study root:
 - `aggregation-probe-001`: completed frozen-trace final-evidence comparison.
 - `helper-sft-inputs-001`:570 train-only annotated step-answer examples, sealed.
 - `helper-sft-001`: completed one-epoch helper training,36updates,584.5 training seconds.
-- `helper-eval-001`: matched base/trained/reminder helper comparison; check its
-  terminal receipt before interpreting results.
+- `helper-eval-001`: completed base/trained/reminder helper comparison,
+  192episodes/613newcalls; `analysis-helper-001.json/.md` is authoritative.
+- `rl-fullpass-001`: accepted/running root-only RL with frozen helper-SFT36,
+  up to16updates over256training parents; no held-out outcome yet.
 - `fresh-dev-inputs-003`: new64-question panel with prior-study parent/component
   exclusions. Earlier001/002 preparation versions are superseded; see
   [FRESH-DEV-PANEL.md](FRESH-DEV-PANEL.md).

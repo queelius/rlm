@@ -101,6 +101,13 @@ def analyze(output, cases_path, *, draws=20000, seed=SEED):
         or any(p not in by_id for p in parents)
     ):
         raise ValueError("unexpected helper evaluation inventory")
+    dataset, metric_name = eval_helper.scoring_identity([by_id[p] for p in parents])
+    if plan.get("dataset", dataset) != dataset or plan.get("metric", metric_name) != metric_name:
+        raise ValueError("declared dataset/metric differs from selected cases")
+    if "split" in plan and any(by_id[p].get("split") != plan["split"] for p in parents):
+        raise ValueError("declared split differs from selected cases")
+    for path, digest in plan.get("metric_sources_sha256", {}).items():
+        track(path, digest)
     # Hash the analysis inputs once. Record checkpoint bindings, but do not repeatedly
     # reread multi-GB model/checkpoint ancestry already sealed by the collector.
     for path, digest in plan.get("source_hashes", {}).items():
@@ -235,7 +242,7 @@ def analyze(output, cases_path, *, draws=20000, seed=SEED):
                 if len(finals) > 1:
                     raise ValueError("multiple final calls")
                 final = finals[0] if finals else None
-                grade = probe.grade("", by_id[p])
+                grade = eval_helper.grade_final("", by_id[p])
                 if final:
                     expected = eval_planner.final_prompt(
                         by_id[p], row["plan"], {"execution": "isolated", "steps": trace}
@@ -243,7 +250,7 @@ def analyze(output, cases_path, *, draws=20000, seed=SEED):
                     if final["request"]["prompt"] != expected:
                         raise ValueError("final request differs from frozen plan/helper trace")
                     if final["available"]:
-                        grade = probe.grade(final["text"], by_id[p])
+                        grade = eval_helper.grade_final(final["text"], by_id[p])
                         status = "scored" if grade["valid"] else "invalid_final"
                     else:
                         status = "final_unavailable"
@@ -384,7 +391,7 @@ def analyze(output, cases_path, *, draws=20000, seed=SEED):
         Path(eval_helper.__file__),
         Path(eval_planner.__file__),
         Path(probe.__file__),
-        probe.MUSIQUE / "metrics/answer.py",
+        *eval_helper.metric_sources(dataset),
     ):
         track(path)
     return {
@@ -404,7 +411,8 @@ def analyze(output, cases_path, *, draws=20000, seed=SEED):
             "parents_missing_component_ids": [
                 p for p in parents if not by_id[p].get("metadata", {}).get("component_ids")
             ],
-            "metric": "official MuSiQue alias-max EM/F1 via probe.grade",
+            "dataset": dataset,
+            "metric": metric_name,
         },
         "primary_comparison": "trained_helper_minus_base_helper",
         "groups": groups,
@@ -417,6 +425,8 @@ def analyze(output, cases_path, *, draws=20000, seed=SEED):
             "All planned outcomes remain in denominators. Missing/unavailable outcomes are "
             "unobserved, not demonstrated scientific failures; incomplete scores are lower bounds.",
             "Primary intervals resample connected atomic-component clusters with parent weighting; "
+            "parents missing component IDs use singleton-parent fallback, not verified atomic "
+            "independence. "
             "missing component IDs fall back to singleton parents. Parent-only intervals are also "
             "reported. Few clusters can make bootstrap intervals misleadingly narrow.",
             "Helper agreement is exact string agreement at matching generated plan steps, not "
@@ -440,9 +450,14 @@ def markdown(report):
         "",
         f"Source: `{report['output']}`",
         "",
+        f"Scoring: `{method['metric']}`; saved final answers are regraded with the "
+        "dataset-specific official answer rules (Hotpot yes/no/noanswer F1 is exact-only).",
+        "",
         f"{method['parents']} parents; {method['episodes_per_condition']} planned "
         "episodes per arm. "
-        f"{len(method['component_clusters'])} connected atomic-component clusters.",
+        f"{len(method['component_clusters'])} bootstrap clusters; "
+        f"{len(method['parents_missing_component_ids'])} parents lack component IDs and use "
+        "singleton-parent fallback (not verified atomic independence).",
         "",
         "| Arm | EM | F1 | Correct / planned | Unobserved | Invalid protocol | "
         "New calls | New tokens |",

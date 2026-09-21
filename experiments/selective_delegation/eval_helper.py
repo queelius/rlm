@@ -31,6 +31,45 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
+def scoring_identity(cases):
+    datasets = {case.get("dataset", "musique") for case in cases}
+    if len(datasets) != 1 or not datasets <= {"musique", "hotpotqa"}:
+        raise ValueError("expected one supported dataset in the selected panel")
+    dataset = datasets.pop()
+    return dataset, (
+        "official_hotpotqa_em_f1" if dataset == "hotpotqa" else "official_musique_alias_max_em_f1"
+    )
+
+
+def metric_sources(dataset):
+    if dataset == "hotpotqa":
+        import score_hotpot
+
+        return (Path(score_hotpot.__file__), score_hotpot.EVALUATOR)
+    return (probe.MUSIQUE / "metrics/answer.py",)
+
+
+def grade_final(text, case):
+    if case.get("dataset", "musique") != "hotpotqa":
+        return probe.grade(text, case)
+    import score_hotpot
+
+    result = {
+        "valid": False,
+        "correct": False,
+        "f1": 0.0,
+        "parsed": None,
+        "metric": "official_hotpotqa_em_f1",
+    }
+    try:
+        answer = score_hotpot.parse_answer(text)
+        em, f1 = score_hotpot.official_score(answer, case["answer"])
+        result.update(valid=True, correct=bool(em), f1=f1, parsed=answer)
+    except (ValueError, TypeError):
+        pass
+    return result
+
+
 def validate_helper_training(training_plan, model):
     if training_plan.get("role") != "helper" or training_plan.get("model") != str(model):
         raise ValueError("helper training role/model mismatch")
@@ -246,6 +285,9 @@ def validate_root(root, case, model, adapter_sha):
 def prepare_roots(source, cases_path, root_adapter):
     source, root_adapter = Path(source), Path(root_adapter)
     source_plan = read(source / "PLAN.json")
+    parents, split = source_plan["case_ids"], source_plan.get("split")
+    if split not in ("validation", "development", "transfer"):
+        raise ValueError("source split must be validation, development, or transfer")
     binding = evaluation.adapter_identity(root_adapter)
     if (
         read(root_adapter / "STATE.json")["step"] != 48
@@ -253,10 +295,11 @@ def prepare_roots(source, cases_path, root_adapter):
         or source_plan["cases_sha256"] != probe.campaign.sha(cases_path)
         or source_plan["execution"] != "isolated"
         or "sft" not in source_plan["conditions"]
-        or len(source_plan["case_ids"]) != 32
+        or not parents
+        or len(set(parents)) != len(parents)
         or source_plan["repeats"] != 2
     ):
-        raise ValueError("expected completed32-parent two-repeat SFT48 source panel")
+        raise ValueError("expected complete unique-parent two-repeat SFT48 source panel")
     owners = {p.stem.removeprefix("OWNER-") for p in source.glob("OWNER-*.json")}
     terminals = {p.stem.removeprefix("TERMINAL-") for p in source.glob("TERMINAL-*.json")}
     if not owners or owners != terminals:
@@ -276,7 +319,15 @@ def prepare_roots(source, cases_path, root_adapter):
     for name, digest in binding.items():
         hashes[str(root_adapter / name)] = digest
     with Path(cases_path).open() as stream:
-        cases = {c["id"]: c for c in map(json.loads, stream)}
+        rows = list(map(json.loads, stream))
+    cases = {c["id"]: c for c in rows}
+    if len(cases) != len(rows) or any(cid not in cases for cid in parents):
+        raise ValueError("missing or duplicate source case identity")
+    if any(cases[cid]["split"] != split for cid in parents):
+        raise ValueError("source declared split differs from selected case split")
+    dataset, _ = scoring_identity([cases[cid] for cid in parents])
+    if "dataset" in source_plan and source_plan["dataset"] != dataset:
+        raise ValueError("source dataset differs from selected cases")
     indexed = {}
     for path in (source / "episodes").glob("*.json"):
         row = read(path)
@@ -285,10 +336,10 @@ def prepare_roots(source, cases_path, root_adapter):
             if key in indexed:
                 raise ValueError("duplicate source SFT root episode")
             indexed[key] = path, row
+    if set(indexed) != {(cid, repeat) for cid in parents for repeat in range(2)}:
+        raise ValueError("unexpected source SFT episode inventory")
     jobs = []
     for cid in source_plan["case_ids"]:
-        if cases[cid]["split"] != "validation":
-            raise ValueError("helper development requires validation parents")
         for repeat in range(2):
             path, row = indexed[cid, repeat]
             root_path = source / "calls" / (row["episode_id"] + "-root.json")
@@ -313,8 +364,6 @@ def prepare_roots(source, cases_path, root_adapter):
                     "source_hashes": pair_hashes,
                 }
             )
-    if len(indexed) != 64:
-        raise ValueError("unexpected source SFT episode inventory")
     return source_plan, cases, jobs, hashes
 
 
@@ -329,6 +378,9 @@ def collect_episode(client, case, job, condition):
         "case_id": case["id"],
         "repeat": job["repeat"],
         "condition": condition,
+        "split": case["split"],
+        "dataset": case.get("dataset", "musique"),
+        "metric": grade_final("", case)["metric"],
         "seed": job["seed"],
         "plan": plan,
         "plan_valid": bool(plan),
@@ -384,7 +436,7 @@ def collect_episode(client, case, job, condition):
             records.append(final)
             if not final["available"]:
                 raise RuntimeError("final generation unavailable")
-            grade = probe.grade(final["text"], case)
+            grade = grade_final(final["text"], case)
             row.update(
                 available=True,
                 valid=grade["valid"],
@@ -480,6 +532,9 @@ def summarize(output, plan, jobs):
     roots = [job["root"] for job in jobs]
     return {
         "conditions": groups,
+        "dataset": plan.get("dataset", "musique"),
+        "metric": plan.get("metric", "official_musique_alias_max_em_f1"),
+        "metric_sources_sha256": plan.get("metric_sources_sha256", {}),
         "paired_em_trained_minus_base": {
             "estimate": sum(differences) / len(differences),
             "parent_bootstrap_95": [samples[49], samples[1949]],
@@ -523,6 +578,8 @@ def run(args):
     source_plan, cases, jobs, hashes = prepare_roots(
         source, args.cases, args.root_adapter.resolve()
     )
+    dataset, metric = scoring_identity([cases[cid] for cid in source_plan["case_ids"]])
+    scoring_hashes = {str(p): probe.campaign.sha(p) for p in metric_sources(dataset)}
     helper_binding = evaluation.adapter_identity(helper_adapter)
     if read(helper_adapter / "STATE.json")["step"] != 36:
         raise ValueError("primary helper checkpoint must be fixed update36")
@@ -541,6 +598,11 @@ def run(args):
         "source_hashes": hashes,
         "cases_sha256": probe.campaign.sha(args.cases),
         "case_ids": source_plan["case_ids"],
+        "parents": len(source_plan["case_ids"]),
+        "split": source_plan["split"],
+        "dataset": dataset,
+        "metric": metric,
+        "metric_sources_sha256": scoring_hashes,
         "repeats": 2,
         "conditions": list(CONDITIONS),
         "model": str(model_path),
@@ -567,7 +629,7 @@ def run(args):
                 Path(evaluation.__file__),
                 Path(evaluation.planner.__file__),
                 Path(probe.__file__),
-                probe.MUSIQUE / "metrics/answer.py",
+                *metric_sources(dataset),
             )
         },
         "environment": {

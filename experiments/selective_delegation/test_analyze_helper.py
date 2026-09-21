@@ -24,6 +24,29 @@ def save(path, value):
     path.write_text(json.dumps(value))
 
 
+def test_hotpot_regrade_labels_official_metric_and_hashes_scorer(tmp_path):
+    import score_hotpot
+
+    m = implementation()
+    output, cases_path = fixture(tmp_path)
+    cases = [json.loads(line) for line in cases_path.read_text().splitlines()]
+    for case in cases:
+        case.update(dataset="hotpotqa", answer="yes")
+    cases_path.write_text("\n".join(json.dumps(case) for case in cases))
+    plan = json.loads((output / "PLAN.json").read_text())
+    plan["cases_sha256"] = probe.campaign.sha(cases_path)
+    save(output / "PLAN.json", plan)
+    for path in (output / "calls").glob("*-final.json"):
+        call = json.loads(path.read_text())
+        call["text"] = '{"answer":"yes indeed"}'
+        save(path, call)
+    report = m.analyze(output, cases_path, draws=10)
+    assert report["method"]["metric"] == "official_hotpotqa_em_f1"
+    assert all(row["f1"] == 0 for row in report["groups"].values())
+    assert str(score_hotpot.EVALUATOR) in report["input_receipt_analysis_sha256"]
+    assert str(Path(score_hotpot.__file__).resolve()) in report["input_receipt_analysis_sha256"]
+
+
 def fixture(tmp_path):
     output, cases_path = tmp_path / "run", tmp_path / "cases.jsonl"
     cases = [

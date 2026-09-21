@@ -35,6 +35,111 @@ def job(plan=PLAN):
     }
 
 
+def source_fixture(tmp_path, count=32, split="transfer", *, case_split=None):
+    m = implementation()
+    source, adapter = tmp_path / "source", tmp_path / "adapter"
+    source.mkdir()
+    adapter.mkdir()
+    for name, value in (
+        ("STATE.json", {"step": 48}),
+        ("adapter_config.json", {"r": 8, "lora_dropout": 0}),
+        ("adapter_model.safetensors", "fixture"),
+    ):
+        (adapter / name).write_text(json.dumps(value))
+    hashes = {p.name: m.probe.campaign.sha(p) for p in adapter.iterdir()}
+    m.probe.runtime.save(adapter / "COMMIT.json", {"step": 48, "files": hashes})
+    binding = m.evaluation.adapter_identity(adapter)
+    cases = [{**CASE, "id": f"p{i:03}", "split": case_split or split} for i in range(count)]
+    cases_path = tmp_path / "cases.jsonl"
+    cases_path.write_text("\n".join(json.dumps(case) for case in cases))
+    code = tmp_path / "sealed-source.py"
+    code.write_text("# immutable fixture\n")
+    plan = {
+        "case_ids": [case["id"] for case in cases],
+        "split": split,
+        "adapter_files_sha256": binding,
+        "cases_sha256": m.probe.campaign.sha(cases_path),
+        "execution": "isolated",
+        "conditions": ["sft"],
+        "repeats": 2,
+        "model": "model",
+        "source_sha256": m.probe.campaign.sha(code),
+    }
+    m.probe.runtime.save(source / "PLAN.json", plan)
+    m.probe.runtime.save(source / "OWNER-owner.json", {"source": str(code)})
+    m.probe.runtime.save(source / "TERMINAL-owner.json", {})
+    for index, case in enumerate(cases):
+        for repeat in range(2):
+            identity = f"{case['id']}-r{repeat}-sft-isolated"
+            predicted = None if index == 0 else {"subquestions": ["Where was #2 born?"]}
+            request = {
+                "prompt": m.evaluation.planner_prompt(case),
+                "model": "model",
+                "adapter_enabled": True,
+                "adapter_sha256": binding["adapter_model.safetensors"],
+            }
+            root = {
+                "call_id": identity + "-root",
+                "role": "root",
+                "condition": "sft",
+                "available": True,
+                "text": json.dumps(predicted),
+                "request": request,
+                "request_digest": m.probe.runtime.digest(request),
+                "adapter_enabled": True,
+                "adapter_sha256": binding["adapter_model.safetensors"],
+            }
+            episode = {
+                "episode_id": identity,
+                "case_id": case["id"],
+                "repeat": repeat,
+                "condition": "sft",
+                "plan_valid": bool(predicted),
+                "plan": predicted,
+                "call_ids": [root["call_id"]],
+                "status": "invalid_plan" if predicted is None else "invalid_dependency",
+            }
+            m.probe.runtime.save(source / "calls" / (root["call_id"] + ".json"), root)
+            m.probe.runtime.save(source / "episodes" / (identity + ".json"), episode)
+    return source, cases_path, adapter
+
+
+@pytest.mark.parametrize(
+    "count,split", [(32, "validation"), (32, "development"), (32, "transfer"), (64, "transfer")]
+)
+def test_completed_source_inventory_infers_size_split_and_keeps_failed_roots(
+    tmp_path, count, split
+):
+    m = implementation()
+    source, cases, adapter = source_fixture(tmp_path, count, split)
+    plan, _, jobs, _ = m.prepare_roots(source, cases, adapter)
+    assert plan["split"] == split and len(jobs) == count * 2
+    assert sum(job["plan"] is None for job in jobs) == 2
+    assert jobs[2]["plan"] == {"subquestions": ["Where was #2 born?"]}
+    assert [(j["case_id"], j["repeat"]) for j in jobs] == [
+        (f"p{i:03}", r) for i in range(count) for r in range(2)
+    ]
+
+
+@pytest.mark.parametrize("split,case_split", [("train", "train"), ("transfer", "validation")])
+def test_source_rejects_training_or_mismatched_case_split(tmp_path, split, case_split):
+    m = implementation()
+    source, cases, adapter = source_fixture(tmp_path, split=split, case_split=case_split)
+    with pytest.raises(ValueError, match="split"):
+        m.prepare_roots(source, cases, adapter)
+
+
+def test_hotpot_helper_final_uses_official_yes_no_rule_not_musique_overlap():
+    m = implementation()
+    case = {**CASE, "dataset": "hotpotqa", "answer": "yes"}
+    partial = m.grade_final('{"answer":"yes indeed"}', case)
+    assert partial["valid"] and partial["f1"] == 0 and not partial["correct"]
+    exact = m.grade_final('{"answer":"Yes!"}', case)
+    assert exact["correct"] and exact["f1"] == 1
+    assert exact["metric"] == "official_hotpotqa_em_f1"
+    assert not m.grade_final('{"answer":"yes","extra":1}', case)["valid"]
+
+
 def test_same_frozen_plan_binds_each_arms_actual_predictions_without_gold(tmp_path):
     m = implementation()
 

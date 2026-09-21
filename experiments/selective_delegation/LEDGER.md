@@ -155,3 +155,27 @@ not support document removal or an immediate extra final-noise pilot. Keep the
 full-source final; proceed with the accepted helper-only training comparison.
 Frozen MuSiQue four-hop readout is already running. No transfer results have been
 used to choose helper dose, inputs, architecture, or checkpoint (one epoch36updates).
+
+12:14 UTC: Fixed transfer complete; direct answering beats SFT/RL on four-hop
+(36vs24/128) and descriptively on Hotpot explorer (36vs23/24of64). These short
+inputs fit one call. The new helper-only study completed36updates and192matched
+episodes: base19/64, trained28/64, reminder22/64. Both interventions fix all11
+base protocol failures, but trained vs reminder also has7both-valid wins/1loss.
+Independent native routing audit passed613calls; full-source finals sometimes
+rescue wrong chains, so this is not proof of faithful decomposition.
+
+Selected frozen helperSFT36, original prompt without reminder. Accepted source013
+full-pass rootRL fromSFT48, up to16fresh updates on256uniqueTRAINparents,3hours,
+same RLOO objective/caps/optimizer and per-batch admission. Last committed
+checkpoint fixed by stopping rule, never held score. Fresh00364parents reserved
+for matched base/SFT/RL-with-same-helper plus direct controls. Actual GPU owner
+started12:11:44, first24+calls verified by12:12, two models use17,160MiB and
+helper has zero trainable parameters. Supervisor52519 queues independent readouts.
+CPU support was focused-tested (31RL/eval tests); no production-wide suite.
+
+Earlier one-epoch planner checkpoint Hotpot readout completed20/64, compared
+with23/64 for three epochs, with more protocol failures at one epoch. This does
+not support the simple extra-SFT-overtraining explanation; paired dose analysis
+pending. KeepSFT48primary. Next CPU preparation targets exact frozen-root helper
+transfer, with official Hotpot metrics. Quota85% at12:12; preserve10%. Latest
+pushed8098d07 on research branch, notmain; raw runs/modelweights stay external.
