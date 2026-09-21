@@ -190,3 +190,22 @@ supervision, not simply repair our implementation. The useful local question is
 whether varying downstream execution changes a plan's reward despite unchanged
 planning; our fixed-helper and conditional repeated-execution comparisons address
 that without inventing a gold planner action.
+
+## Atomic skills versus composition: September21,12:45UTC
+
+[Compositional Reasoning under RL Post-Training, v1, September16](https://arxiv.org/html/2609.19465v1)
+compares atomic and compound training on exactly scored data-structure tasks.
+It reports asymmetric transfer: atomic training often fails on composed tasks,
+while compound training transfers more readily back to individual operations.
+Its theory assumes equal error probabilities for equivalent local decision
+contexts; the authors explicitly note this excludes additional errors caused by
+embedding a step in a larger prompt. These are controlled algorithmic results,
+not evidence that our QA helpers obey that assumption.
+
+Our inference: a harness could be tested as a way to preserve the local interface
+as global tasks grow. Keep the same local input and required operation, vary only
+surrounding task/history, and compare isolated calls with embedded execution.
+Use exact end-to-end and local scores, matched information, and actual cost.
+This is a conditional research question, not a new accepted GPU run or a claim
+that isolation itself is novel. Existing B05 singleton gains already motivate
+it; a new test must examine transfer or robustness rather than repeat those wins.

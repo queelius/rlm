@@ -54,6 +54,15 @@ learning adds value under that fixed helper. If it offers no useful signal,
 Existing fixed-decomposition successes must not be relabeled as newly learned
 recursive composition.
 
+The queued [single-call trained-adapter control](DIRECT-ADAPTED-PLAN.md) asks
+whether the helper's gain also appears without any decomposition. Read the
+[document exposure audit](DOCUMENT-EXPOSURE.md) before calling a panel unseen:
+new questions do not imply new source documents. The small
+[annotation-compatible check](HELPER-ANNOTATION-COMPATIBLE.md) also cautions
+against interpreting final-answer gains as uniformly better intermediate steps.
+[INCREMENTAL-DESIGN.md](INCREMENTAL-DESIGN.md) is conditional preparation for
+testing answer-conditioned next-question choice, not a completed experiment.
+
 ## What was controlled in the initial screen
 
 Each question produces one initial attempt. Four alternatives start from that
