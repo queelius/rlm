@@ -3,7 +3,7 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September21 research update](RESEARCH-UPDATE-20260921.md).
 
-Current operations, September 21, 19:26 UTC: the
+Current operations, September 21, 19:31 UTC: the
 [fresh128-question Hotpot replication](HOTPOT-FRESH-FINDINGS.md) is complete:
 151/256 planner versus152/256 direct, with 3.44 times the tokens and unresolved
 differences. The completed [three-answer voting control](HOTPOT-VOTE-FINDINGS.md)
@@ -37,8 +37,10 @@ with shorter measured native inference time. Both sufficiency-training arms and
 fixed-endpoint readouts are complete: [the answer/refusal tradeoff](SUFFICIENCY-TRAINING-FINDINGS.md)
 does not establish improved joint correctness. The [fresh replication](SUFFICIENCY-CANONICAL-FINDINGS.md)
 is complete and repeats the answer/refusal tradeoff. Fresh household tasks are
-complete; a decoding control, paired-reward RL, matched extra SFT,
-a frozen held readout, and public-action SFT are accepted in sequence.
+complete. The [sampling control](QAMPARI-SAMPLING-FINDINGS.md) did not rescue
+many-answer reading, so we are retiring further fan-out tuning for now.
+Paired-reward RL is running; matched extra SFT, a frozen held readout, and
+public-action SFT are accepted in sequence.
 The [bounded semantic audit](SUFFICIENCY-SEMANTIC-AUDIT.md) illustrates why a
 literal answer mention is not necessarily sufficient evidence, and why the
 official negative labels are not infallible.
