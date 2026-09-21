@@ -1,6 +1,7 @@
 """CPU contracts for on-policy root-only RLOO, sampling, and frozen downstream weights."""
 
 import importlib.util
+import random
 from pathlib import Path
 
 import pytest
@@ -175,6 +176,178 @@ def test_consecutive_full_pass_covers_all_training_parents_once_with_fixed_order
             mod.parent_schedule(training, count, "consecutive")
     with pytest.raises(ValueError, match="bounded"):
         mod.parent_schedule(training, 5, "repeated")
+
+
+def test_continuation_schedule_preserves_prefix_and_uses_second_shuffle_global_updates():
+    mod = implementation()
+    training = [{"id": f"p{i:03}", "split": "train"} for i in range(256)]
+    blocks = mod.continuation_schedule(training)
+    assert blocks[:16] == mod.parent_schedule(training, 16, "consecutive")
+    expected = list(training)
+    random.Random(2026092109).shuffle(expected)
+    assert [c for b in blocks[16:] for c in b] == expected[:128]
+    assert len(blocks) == 24 and len({c["id"] for b in blocks[16:] for c in b}) == 128
+    assert mod.seed_schedule(17, 0, 0) != mod.seed_schedule(1, 0, 0)
+
+
+def test_continuation_bounds_cannot_expand_fresh_run_or_dose():
+    mod = implementation()
+    mod.validate_run_bounds(4, 3, "repeated", False)
+    mod.validate_run_bounds(16, 3, "consecutive", False)
+    mod.validate_run_bounds(24, 1.5, "consecutive", True)
+    for args in (
+        (24, 3, "consecutive", False),
+        (25, 1, "consecutive", True),
+        (24, 1.6, "consecutive", True),
+        (24, 1, "repeated", True),
+    ):
+        with pytest.raises(ValueError):
+            mod.validate_run_bounds(*args)
+
+
+def test_restore_retains_adam_moments_steps_and_python_torch_rng(tmp_path):
+    mod = implementation()
+    parameter = torch.nn.Parameter(torch.tensor([1.0, -2.0]))
+    old = torch.optim.AdamW([parameter], lr=2e-5, weight_decay=0.0)
+    for _ in range(16):
+        old.zero_grad()
+        parameter.square().sum().backward()
+        old.step()
+    torch.save(old.state_dict(), tmp_path / "optimizer.pt")
+    random.seed(17)
+    torch.manual_seed(17)
+    rng = {"python": random.getstate(), "torch": torch.get_rng_state(), "cuda": []}
+    torch.save(rng, tmp_path / "rng.pt")
+    expected_random, expected_torch = random.random(), torch.rand(3)
+    restored_parameter = torch.nn.Parameter(parameter.detach().clone())
+    restored = mod.restore_optimizer_rng([restored_parameter], tmp_path, 16)
+    assert random.random() == expected_random
+    assert torch.equal(torch.rand(3), expected_torch)
+    for key in ("step", "exp_avg", "exp_avg_sq"):
+        assert torch.equal(restored.state[restored_parameter][key], old.state[parameter][key])
+    for optimizer, param in ((old, parameter), (restored, restored_parameter)):
+        optimizer.zero_grad()
+        param.square().sum().backward()
+        optimizer.step()
+    assert torch.equal(parameter, restored_parameter)
+    with pytest.raises(ValueError, match="optimizer step"):
+        mod.restore_optimizer_rng([restored_parameter], tmp_path, 17)
+    bad = old.state_dict()
+    bad["param_groups"][0]["lr"] = 1e-3
+    torch.save(bad, tmp_path / "optimizer.pt")
+    with pytest.raises(ValueError, match="hyperparameters"):
+        mod.restore_optimizer_rng([restored_parameter], tmp_path, 17)
+
+
+def test_continuation_ancestry_contract_and_local_resume_precedence(tmp_path):
+    import copy
+
+    mod = implementation()
+    training = [{"id": f"p{i:03}", "split": "train"} for i in range(256)]
+    schedule = [[c["id"] for c in b] for b in mod.continuation_schedule(training)]
+    old = {
+        "schema": "fresh-planner-rloo-v1",
+        "parent_schedule": "consecutive",
+        "case_ids_by_update": schedule[:16],
+        "updates": 16,
+        "helper_contract": {"mode": "trained_helper"},
+        "cases_sha256": "cases",
+        "adapter": "sft48",
+        "adapter_binding": {},
+        "model": "base",
+        "base_manifest_sha256": "base-sha",
+        "seed": 2026092108,
+        "parents_per_update": 16,
+        "candidates_per_parent": 4,
+        "denominator": 64,
+        "root_temperature": 0.8,
+        "helper_final_temperature": 0.5,
+        "learning_rate": 2e-5,
+        "weight_decay": 0.0,
+        "clip": 1.0,
+        "caps": {"root": 128, "helper_total": 384, "final": 128},
+        "objective": "RLOO",
+        "admission": "fixed",
+        "frozen_helpers": "fixed",
+        "dependencies": {},
+        "environment": {"torch": "T", "transformers": "F", "peft": "P"},
+    }
+    ancestor = tmp_path / "ancestor"
+    checkpoint = ancestor / "checkpoint-0016"
+    checkpoint.mkdir(parents=True)
+    state = {
+        "step": 16,
+        "cursor": 0,
+        "next_update": 17,
+        "case_ids": schedule[15],
+        "helper_contract": old["helper_contract"],
+        "component_identity": mod.component_identity(old),
+    }
+
+    def commit(path, value):
+        mod.probe.runtime.save(path / "STATE.json", value)
+        for name in ("optimizer.pt", "rng.pt", "adapter_model.safetensors", "adapter_config.json"):
+            (path / name).write_text("fixture")
+        mod.probe.runtime.save(
+            path / "COMMIT.json",
+            {
+                "step": value["step"],
+                "files": {
+                    p.name: mod.probe.campaign.sha(p)
+                    for p in path.iterdir()
+                    if p.name != "COMMIT.json"
+                },
+            },
+        )
+
+    commit(checkpoint, state)
+    mod.probe.runtime.save(ancestor / "PLAN.json", old)
+    mod.probe.runtime.save(ancestor / "OWNER-a.json", {})
+    mod.probe.runtime.save(
+        ancestor / "TERMINAL-a.json",
+        {"failure": None, "state": "completed_updates", "optimizer_steps": 16},
+    )
+    new = {**old, "updates": 24, "case_ids_by_update": schedule}
+    ancestry, restored_state = mod.validate_continuation(checkpoint, new)
+    assert restored_state == state
+    assert ancestry["starting_step"] == 16 and ancestry["additional_updates"] == 8
+    assert ancestry["checkpoint_files_sha256"]["optimizer.pt"]
+    for key, value in (
+        ("learning_rate", 0.01),
+        ("helper_contract", {"mode": "base"}),
+        ("base_manifest_sha256", "other"),
+    ):
+        with pytest.raises(ValueError, match="continuation contract"):
+            mod.validate_continuation(checkpoint, {**new, key: value})
+    bad = copy.deepcopy(new)
+    bad["case_ids_by_update"][0].reverse()
+    with pytest.raises(ValueError, match="prefix"):
+        mod.validate_continuation(checkpoint, bad)
+    plan = {**new, "continuation": ancestry}
+    output = tmp_path / "fork"
+    output.mkdir()
+    restored, s = mod.select_restore(output, plan, False, restored_state)
+    assert restored == checkpoint and s["step"] == 16
+    local = output / "checkpoint-0017"
+    local.mkdir()
+    commit(
+        local,
+        {
+            **state,
+            "step": 17,
+            "next_update": 18,
+            "case_ids": schedule[16],
+            "component_identity": mod.component_identity(plan),
+            "continuation_identity": mod.probe.runtime.digest(ancestry),
+        },
+    )
+    restored, s = mod.select_restore(output, plan, True, restored_state)
+    assert restored == local and s["step"] == 17
+    with pytest.raises(ValueError, match="resume"):
+        mod.select_restore(output, plan, False, restored_state)
+    mod.probe.runtime.save(ancestor / "OWNER-unresolved.json", {})
+    with pytest.raises(ValueError, match="completed ancestor"):
+        mod.validate_continuation(checkpoint, new)
 
 
 def test_reminder_is_exact_eval_helper_contract_and_checkpoint_identity_is_bound():

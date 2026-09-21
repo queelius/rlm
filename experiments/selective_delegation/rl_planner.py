@@ -14,6 +14,7 @@ import signal
 import sys
 import time
 import uuid
+from collections import Counter
 from contextlib import nullcontext
 from pathlib import Path
 
@@ -44,6 +45,51 @@ def parent_schedule(training, updates, schedule="repeated"):
         ordered[16 * i : 16 * (i + 1)] if schedule == "consecutive" else ordered[:16]
         for i in range(updates)
     ]
+
+
+def continuation_schedule(training):
+    """Fixed global updates1..24; only17..24 execute in the new output."""
+    prefix = parent_schedule(training, 16, "consecutive")
+    second = sorted(training, key=lambda case: case["id"])
+    random.Random(SEED + 1).shuffle(second)
+    return prefix + [second[16 * i : 16 * (i + 1)] for i in range(8)]
+
+
+def validate_run_bounds(updates, hours, schedule, continuation):
+    if continuation:
+        if updates != 24 or not 0 < hours <= 1.5 or schedule != "consecutive":
+            raise ValueError(
+                "continuation requires --updates24, consecutive schedule and <=1.5 hours"
+            )
+    elif not 1 <= updates <= 16 or not 0 < hours <= 3:
+        raise ValueError("bounded run requires 1..16 updates and <=3 hours")
+
+
+def restore_optimizer_rng(parameters, checkpoint, expected_step):
+    """Restore committed Adam moments and all saved RNGs, never fresh-Adam warmstart."""
+    import torch
+
+    optimizer = torch.optim.AdamW(parameters, lr=2e-5, weight_decay=0.0)
+    saved = torch.load(
+        checkpoint / "optimizer.pt", map_location=parameters[0].device, weights_only=True
+    )
+    actual_groups = [{k: v for k, v in g.items() if k != "params"} for g in saved["param_groups"]]
+    expected_groups = [
+        {k: v for k, v in g.items() if k != "params"}
+        for g in optimizer.state_dict()["param_groups"]
+    ]
+    if actual_groups != expected_groups:
+        raise ValueError("saved optimizer hyperparameters differ")
+    if len(saved["state"]) != len(parameters) or any(
+        float(state["step"]) != expected_step for state in saved["state"].values()
+    ):
+        raise ValueError("saved optimizer step/parameter inventory differs")
+    optimizer.load_state_dict(saved)
+    rng = torch.load(checkpoint / "rng.pt", map_location="cpu", weights_only=True)
+    random.setstate(rng["python"])
+    torch.set_rng_state(rng["torch"])
+    torch.cuda.set_rng_state_all(rng["cuda"])
+    return optimizer
 
 
 def build_helper_contract(mode="base", adapter=None):
@@ -107,6 +153,10 @@ def component_identity(plan):
 def validate_component_resume(state, plan):
     if state.get("component_identity") != component_identity(plan):
         raise ValueError("checkpoint component/helper/schedule identity differs")
+    if "continuation" in plan and state.get("continuation_identity") != probe.runtime.digest(
+        plan["continuation"]
+    ):
+        raise ValueError("checkpoint continuation ancestry differs")
 
 
 def freeze_helper_model(helper, root):
@@ -475,7 +525,141 @@ def checkpoint_valid(path):
     for name, digest in commit["files"].items():
         if probe.campaign.sha(path / name) != digest:
             raise ValueError("checkpoint changed: " + name)
-    return json.loads((path / "STATE.json").read_text())
+    state = json.loads((path / "STATE.json").read_text())
+    if commit["step"] != state["step"]:
+        raise ValueError("checkpoint COMMIT/STATE step differs")
+    return state
+
+
+def validate_continuation(checkpoint, plan):
+    """Validate the completed ancestor before giving its state a new schedule identity."""
+    checkpoint = Path(checkpoint).resolve()
+    ancestor = checkpoint.parent
+    old = json.loads((ancestor / "PLAN.json").read_text())
+    state = checkpoint_valid(checkpoint)
+    commit = json.loads((checkpoint / "COMMIT.json").read_text())
+    required = {
+        "STATE.json",
+        "optimizer.pt",
+        "rng.pt",
+        "adapter_model.safetensors",
+        "adapter_config.json",
+    }
+    owners = {p.stem.removeprefix("OWNER-") for p in ancestor.glob("OWNER-*.json")}
+    terminals = {p.stem.removeprefix("TERMINAL-") for p in ancestor.glob("TERMINAL-*.json")}
+    terminal_rows = [json.loads(p.read_text()) for p in ancestor.glob("TERMINAL-*.json")]
+    if (
+        checkpoint.name != "checkpoint-0016"
+        or state["step"] != 16
+        or state.get("cursor") != 0
+        or state.get("next_update") != 17
+        or old.get("updates") != 16
+        or old.get("parent_schedule") != "consecutive"
+        or plan["updates"] != 24
+        or old.get("helper_contract", {}).get("mode") != "trained_helper"
+        or not required <= commit["files"].keys()
+        or not owners
+        or owners != terminals
+        or not any(
+            t.get("state") == "completed_updates"
+            and t.get("optimizer_steps") == 16
+            and t.get("failure") is None
+            for t in terminal_rows
+        )
+        or any(
+            p.name > checkpoint.name
+            for p in ancestor.glob("checkpoint-*")
+            if (p / "COMMIT.json").exists()
+        )
+    ):
+        raise ValueError("continuation requires completed ancestor checkpoint16")
+    validate_component_resume(state, old)
+    if (
+        len(plan["case_ids_by_update"]) != 24
+        or old["case_ids_by_update"] != plan["case_ids_by_update"][:16]
+        or state["case_ids"] != old["case_ids_by_update"][15]
+    ):
+        raise ValueError("ancestor schedule prefix differs")
+    for key in (
+        "schema",
+        "parent_schedule",
+        "helper_contract",
+        "cases_sha256",
+        "adapter",
+        "adapter_binding",
+        "model",
+        "base_manifest_sha256",
+        "seed",
+        "parents_per_update",
+        "candidates_per_parent",
+        "denominator",
+        "root_temperature",
+        "helper_final_temperature",
+        "learning_rate",
+        "weight_decay",
+        "clip",
+        "caps",
+        "objective",
+        "admission",
+        "frozen_helpers",
+    ):
+        if old.get(key) != plan.get(key):
+            raise ValueError("continuation contract differs: " + key)
+    if state.get("helper_contract") != old["helper_contract"]:
+        raise ValueError("ancestor STATE helper contract differs")
+    for package in ("torch", "transformers", "peft"):
+        if old["environment"][package] != plan["environment"][package]:
+            raise ValueError("continuation library version differs: " + package)
+    for path, digest in old["dependencies"].items():
+        if probe.campaign.sha(Path(path)) != digest:
+            raise ValueError("ancestor sealed source differs: " + path)
+    return {
+        "ancestor_checkpoint": str(checkpoint),
+        "ancestor_plan_sha256": probe.campaign.sha(ancestor / "PLAN.json"),
+        "ancestor_state_sha256": probe.campaign.sha(checkpoint / "STATE.json"),
+        "ancestor_commit_sha256": probe.campaign.sha(checkpoint / "COMMIT.json"),
+        "checkpoint_files_sha256": commit["files"],
+        "ancestor_source_sha256": old["dependencies"],
+        "ancestor_terminal_sha256": {
+            str(p): probe.campaign.sha(p) for p in sorted(ancestor.glob("TERMINAL-*.json"))
+        },
+        "starting_step": 16,
+        "additional_updates": 8,
+        "second_shuffle_seed": SEED + 1,
+        "schedule_prefix_sha256": probe.runtime.digest(old["case_ids_by_update"]),
+        "parent_occurrences": dict(Counter(p for b in plan["case_ids_by_update"] for p in b)),
+        "new_parent_occurrences": dict(
+            Counter(p for b in plan["case_ids_by_update"][16:] for p in b)
+        ),
+        "maximum_new_rollouts": 512,
+        "maximum_new_calls": 5120,
+    }, state
+
+
+def select_restore(output, plan, resume, ancestor_state=None):
+    committed = sorted(p for p in output.glob("checkpoint-*") if (p / "COMMIT.json").exists())
+    if committed:
+        if not resume:
+            raise ValueError("explicit resume required for existing checkpoints")
+        restored = committed[-1]
+        state = checkpoint_valid(restored)
+        validate_component_resume(state, plan)
+        minimum = 17 if "continuation" in plan else 1
+        if not minimum <= state["step"] <= plan["updates"]:
+            raise ValueError("local checkpoint outside planned update boundaries")
+        if "continuation" in plan and (
+            restored.name != f"checkpoint-{state['step']:04d}"
+            or state.get("cursor") != 0
+            or state.get("next_update") != state["step"] + 1
+            or state.get("case_ids") != plan["case_ids_by_update"][state["step"] - 1]
+        ):
+            raise ValueError("local continuation checkpoint cursor/schedule differs")
+        return restored, state
+    if "continuation" in plan:
+        if ancestor_state is None or ancestor_state["step"] != 16:
+            raise ValueError("validated ancestor state required")
+        return Path(plan["continuation"]["ancestor_checkpoint"]), dict(ancestor_state)
+    return None, {"step": 0, "cursor": 0}
 
 
 def run(args):
@@ -486,9 +670,13 @@ def run(args):
     from peft import PeftModel
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    if not 1 <= args.updates <= 16 or not 0 < args.hours <= 3:
-        raise ValueError("bounded run requires 1..16 updates and <=3 hours")
+    continuation = getattr(args, "continue_from", None)
+    validate_run_bounds(
+        args.updates, args.hours, getattr(args, "parent_schedule", "repeated"), bool(continuation)
+    )
     output, adapter = args.output.resolve(), args.adapter.resolve()
+    if continuation and output.is_relative_to(continuation.resolve().parent):
+        raise ValueError("continuation output must be outside immutable ancestor")
     helper_contract = build_helper_contract(
         getattr(args, "helper_contract", "base"), getattr(args, "helper_adapter", None)
     )
@@ -502,7 +690,11 @@ def run(args):
         )
     if len(training) != 256:
         raise ValueError("expected the entire frozen256 training parent pool")
-    scheduled_cases = parent_schedule(training, args.updates, schedule_kind)
+    scheduled_cases = (
+        continuation_schedule(training)
+        if continuation
+        else parent_schedule(training, args.updates, schedule_kind)
+    )
     manifest = evaluation.planner.BASE / "local-research-manifest.json"
     plan = {
         "schema": "fresh-planner-rloo-v1",
@@ -551,17 +743,16 @@ def run(args):
             **{p: importlib.metadata.version(p) for p in ("torch", "transformers", "peft")},
         },
     }
+    ancestor_state = None
+    if continuation:
+        plan["continuation"], ancestor_state = validate_continuation(continuation, plan)
     output.mkdir(parents=True, exist_ok=True)
     if (output / "PLAN.json").exists():
         if not args.resume or json.loads((output / "PLAN.json").read_text()) != plan:
             raise ValueError("explicit resume and unchanged plan required")
     else:
         probe.runtime.save(output / "PLAN.json", plan)
-    committed = sorted(p for p in output.glob("checkpoint-*") if (p / "COMMIT.json").exists())
-    restored = committed[-1] if args.resume and committed else None
-    state = checkpoint_valid(restored) if restored else {"step": 0, "cursor": 0}
-    if restored:
-        validate_component_resume(state, plan)
+    restored, state = select_restore(output, plan, args.resume, ancestor_state)
     if (output / f"batch-{state['step'] + 1:04d}").exists():
         raise ValueError("uncommitted rollout batch exists; no implicit retries or regeneration")
     spent = sum(
@@ -638,14 +829,7 @@ def run(args):
             freeze_helper_model(helper_model, model)
             assert_frozen_helper(helper_model, parameters)
         if restored:
-            optimizer = torch.optim.AdamW(parameters, lr=2e-5, weight_decay=0.0)
-            optimizer.load_state_dict(
-                torch.load(restored / "optimizer.pt", map_location="cuda:0", weights_only=True)
-            )
-            rng = torch.load(restored / "rng.pt", map_location="cpu", weights_only=True)
-            random.setstate(rng["python"])
-            torch.set_rng_state(rng["torch"])
-            torch.cuda.set_rng_state_all(rng["cuda"])
+            optimizer = restore_optimizer_rng(parameters, restored, state["step"])
         model.enable_input_require_grads()
         probe.runtime.save(
             output / f"LOAD-{invocation}.json",
@@ -666,6 +850,16 @@ def run(args):
                 "base_manifest_sha256": plan["base_manifest_sha256"],
                 "cuda": torch.version.cuda,
                 "gpu": torch.cuda.get_device_name(),
+                **(
+                    {
+                        "restored_checkpoint": str(restored),
+                        "restored_global_step": state["step"],
+                        "optimizer_and_rng_restored": True,
+                        "continuation": plan["continuation"],
+                    }
+                    if continuation
+                    else {}
+                ),
             },
         )
         for update in range(state["step"] + 1, args.updates + 1):
@@ -792,6 +986,11 @@ def run(args):
                 "train_eval_replay_max_abs_difference": replay_gap,
                 "mean_reward": diagnostics["mean_reward"],
                 "qualifying_groups": diagnostics["qualifying_groups"],
+                **(
+                    {"continuation_identity": probe.runtime.digest(plan["continuation"])}
+                    if continuation
+                    else {}
+                ),
             }
             restored = train_planner.save_checkpoint(model, optimizer, output, state)
             model.eval()
@@ -840,7 +1039,21 @@ def run(args):
                 "optimizer_steps": state["step"],
                 "failure": failure,
                 "physical_cost": evaluation.cost(calls),
-                "planned_max_rollouts": args.updates * 64,
+                "planned_max_rollouts": (args.updates - (16 if continuation else 0)) * 64,
+                **(
+                    {
+                        "starting_global_step": 16,
+                        "additional_optimizer_steps": state["step"] - 16,
+                        "planned_max_calls": 5120,
+                        "new_committed_parent_occurrences": dict(
+                            Counter(
+                                p for b in plan["case_ids_by_update"][16 : state["step"]] for p in b
+                            )
+                        ),
+                    }
+                    if continuation
+                    else {}
+                ),
                 "unresolved_started_attempts": sum(s["call_id"] not in known for s in starts),
                 "elapsed_seconds": time.time() - started,
                 "ended": time.time(),
@@ -861,6 +1074,11 @@ if __name__ == "__main__":
     parser.add_argument("--updates", type=int, default=4)
     parser.add_argument("--hours", type=float, default=3)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--continue-from",
+        type=Path,
+        help="fork completed RL checkpoint16; requires updates24/consecutive/hours<=1.5",
+    )
     parser.add_argument("--helper-contract", choices=HELPER_MODES, default="base")
     parser.add_argument("--helper-adapter", type=Path)
     parser.add_argument(
