@@ -1,6 +1,6 @@
 ---
 status: exploratory_running
-evidence_cutoff_utc: 2026-09-21T18:00:00Z
+evidence_cutoff_utc: 2026-09-21T18:21:00Z
 model: Qwen3-4B-Instruct-2507
 primary_question: When does asking helpers earn its extra computation?
 publication_status: promising_questions_not_established_architecture_improvement
@@ -104,9 +104,15 @@ This was too weak to support a hierarchy claim. The follow-up with numbered
 choices is now complete: the manager solves six of 16 attempts, versus one for
 the flat policy, with no invalid outputs in either arm. The gains occur on
 three placement games, not heating or cleaning. It uses fewer tokens but slightly
-more summed model-call time. This is worth following up with a flat agent that
-explains its next action, to separate ordinary deliberation from a benefit of
-the manager-worker division. It is not yet a new algorithm or a general result.
+more summed model-call time. The control with a single agent that briefly explains
+its next action is now complete: it also solves six of 16 attempts, with one win
+and one loss relative to the manager. Thus the gain is not unique to manager-worker
+delegation. The manager uses about one-third as much summed native generation time
+as this explanation-based control, despite using more total tokens. These small,
+exposed-game results do not establish equivalence or a general speed advantage.
+See [the completed control and examples](ALFWORLD-LOCAL-REASON-FINDINGS.md).
+The unchanged three policies will next be compared on new household tasks.
+It is not yet a new algorithm or a general result.
 See [the environment screen](ALFWORLD-SCREEN-DESIGN.md).
 The [completed interface follow-up](ALFWORLD-CLOSED-LOOP-FINDINGS.md) includes
 concrete successful and failed action sequences.
@@ -132,8 +138,13 @@ negative input too. Training on both positive and negative inputs reduces answer
 on negative inputs from 23 to six, but increases refusals on answerable inputs
 from 24 to 37. The combined score barely changes: ten correct pairs instead of
 nine, with substantial uncertainty. All outputs are correctly formatted, so this
-tradeoff is not a JSON problem. A fresh-question replication is queued. We are
-preparing paired-reward RL against an additional supervised-training control to
+tradeoff is not a JSON problem. The fresh-question replication shows the same
+pattern: positive-only training answers every variant; joint training refuses 41
+of 64 answerable inputs. Joint correctness is 11 pairs versus six for the base,
+but its paired improvement interval still spans zero. This new panel contains
+only two-hop questions and has substantial document overlap with official TRAIN.
+See [the replication](SUFFICIENCY-CANONICAL-FINDINGS.md). We have queued
+paired-reward RL against an additional supervised-training control to
 ask whether both behaviors can improve together. These are official dataset
 labels, not a perfect test of whether an answer has semantic support.
 See [the training comparison](SUFFICIENCY-TRAINING-FINDINGS.md).
@@ -149,6 +160,11 @@ less summed native inference time despite slightly more tokens, so token counts
 alone miss an important computation trade-off. Output limits also matter:
 22 calls end with incomplete lists, mostly repeated names rather than useful
 unfinished answers. We will qualify decoding before more splitting experiments.
+The timing benefit also needs qualification: among the 21 attempts where both
+methods returned valid answers without hitting the output limit, splitting was
+about 10% slower. That outcome-selected subset is descriptive, not a causal
+comparison, but it shows why the aggregate speed difference cannot be credited
+to more efficient attention alone. Direct-model repetition loops affect it.
 See [the complete findings and concrete examples](QAMPARI-FINDINGS.md).
 This known baseline does not establish a new passage-splitting contribution.
 

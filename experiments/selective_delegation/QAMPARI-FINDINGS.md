@@ -103,7 +103,8 @@ Do not equate every official mismatch or missing literal alias with reader failu
    was considered but is not the proposed control: HF also penalizes prompt
    tokens, potentially hurting copying of evidence names. Cap 30 minutes,
    expected 5–10 minutes but conservatively allow the original direct cost
-   (approximately 10.4 native minutes). No implementation or GPU acceptance yet.
+   (approximately 10.4 native minutes). Main subsequently accepted source036;
+   supervisor98312 waits for the fresh household-task comparison to finish.
    If direct substantially improves validity/content, give map the same sampling
    package; otherwise end this fan-out branch rather than sweep chunk sizes.
 3. Do not train a router or recursive controller from this screen. Establish a
@@ -121,3 +122,6 @@ Analyzer: `R/analysis-source-qampari-001/analyze_qampari.py`; five focused tests
 passed before outcomes. The report binds every consumed receipt and small source
 dependency. Reproduce to a **new** report destination with `--output`, `--cases`,
 and `--report`; no GPU/model-weight loading is needed.
+# Timing sensitivity: aggregate speed does not identify an attention mechanism
+
+The full 32 paired attempts use 623.98 native seconds and 12,962 generated tokens for direct, versus 450.35 seconds and 9,688 generated tokens for map-union. The apparent 27.8% time saving changes direction in the post-hoc subset where both policies return valid outputs and every call ends in EOS: 21 attempts across 12 parents, direct 180.85 seconds / 2,568 output tokens versus map 198.16 seconds / 3,837 output tokens. Map is 9.6% slower in that conditional subset. Validity and output length are post-treatment variables, so this is descriptive sensitivity, not a corrected causal estimate. In particular, ten long looping direct calls materially affect aggregate timing; the experiment does not establish attention scaling as its cause. Immutable details: `analysis-qampari-timing-sensitivity-001.json`, hash-bound to the original native audit. No new model calls.
