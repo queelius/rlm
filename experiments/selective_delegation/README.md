@@ -26,8 +26,12 @@ See [RL-PLAN.md](RL-PLAN.md), [EXECUTION-FINDINGS.md](EXECUTION-FINDINGS.md), an
 [AGGREGATION-PLAN.md](AGGREGATION-PLAN.md) for the distinct questions being tested.
 The broader [HOTPOT-DIAGNOSTIC.md](HOTPOT-DIAGNOSTIC.md) readout is a small official
 explorer sample, not a canonical benchmark result.
-The completed first [longer-question transfer comparison](TRANSFER-FINDINGS.md)
-finds no supervised answer improvement, despite more compact, parseable plans.
+The completed [four-hop transfer comparison](TRANSFER-FINDINGS.md) finds no
+supervised or RL answer improvement: both trained planners score24/128 versus
+36/128 for a direct answer using less than a third as many tokens. The
+[HotpotQA comparison](HOTPOT-FINDINGS.md) also favors the direct control on its
+small exploratory sample. These inputs fit in one call: this is a limitation of
+our present question-planner setup, not a refutation of long-context RLMs.
 
 The [aggregation result](AGGREGATION-FINDINGS.md) supports retaining full-source
 final answers. [Executor failure analysis](EXECUTOR-BOTTLENECKS.md) motivates
@@ -78,10 +82,19 @@ External study root:
 - `held-sft-001` and `held-rl-001`: completed readouts on the other32 validation parents.
 - `aggregation-probe-001`: completed frozen-trace final-evidence comparison.
 - `helper-sft-inputs-001`:570 train-only annotated step-answer examples, sealed.
+- `helper-sft-001`: completed one-epoch helper training,36updates,584.5 training seconds.
+- `helper-eval-001`: matched base/trained/reminder helper comparison; check its
+  terminal receipt before interpreting results.
+- `fresh-dev-inputs-003`: new64-question panel with prior-study parent/component
+  exclusions. Earlier001/002 preparation versions are superseded; see
+  [FRESH-DEV-PANEL.md](FRESH-DEV-PANEL.md).
 
-`train_planner.py` trains only question-list generation. `eval_planner.py`
-compares base and trained planners under the same title-index-only observation,
-with base-model helpers and final answers in both conditions. Its `--execution`
+`train_planner.py` trains question-list generation by default; explicit
+`--role helper` instead trains short step answers on separate prepared examples.
+`eval_planner.py` compares base and trained planners under the same
+title-index-only observation, with a fixed helper contract and unchanged base
+final model. The original comparisons use base helpers; later comparisons must
+name any reminder or helper adapter explicitly. Its `--execution`
 option selects bundled or isolated helpers. The primary trained checkpoint is
 fixed at update48, not chosen by validation score. See
 [PLAN-SFT-DRAFT.md](PLAN-SFT-DRAFT.md) for the supervision and architecture limits.

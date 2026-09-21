@@ -1,8 +1,12 @@
 # Conditional next step: planner RL with a fixed helper contract
 
-CPU readiness design only; no implementation or GPU launch. Leave sealed sources
-011/012 unchanged. Proceed only if the three-arm helper readout justifies the
-next learning test. The question is whether fresh planner RL adds value **after**
+CPU readiness implementation is available; no new GPU launch is authorized by this
+document. Existing sealed sources remain unchanged. The runner supports immutable
+base, exact-format-reminder, or separate frozen helper-SFT36 contracts, with matched
+T=.5 evaluation and base finals. Consecutive schedules now support up to16 updates;
+the existing repeated16-parent, four-update default is unchanged. Choose the fixed
+helper contract from the three-arm readout before accepting and sealing a run.
+The question is whether fresh planner RL adds value **after**
 fixing the helper, not whether changing two components beats the old system.
 
 ## Choose the cheapest supported helper contract first
@@ -68,9 +72,8 @@ two-adapter design is possible with careful inference-mode switching and explici
 gradient restoration, but adds a failure mode to the policy replay path. It is not
 the smallest safe modification for this short experiment.
 
-The existing `rl_planner.Client` holds one model and enables its adapter only for
-root calls. The proposed narrow change is a role-based selection of model and
-adapter identity: root→A enabled; helper→B enabled; final→A disabled. Keep calls
+The implemented `rl_planner.Client` selects model and
+adapter identity by role: root→A enabled; helper→B enabled; final→A disabled. Keep calls
 sequential, local HF, and retain actual token IDs/usage. Root behavior logps remain
 root-only; never request helper gradients or include helper tokens in the loss.
 
@@ -116,7 +119,8 @@ Required narrow invariants:
 
 Keep four fresh root candidates per parent,16 parent groups per update, denominator
 64 including zero advantages, one accumulation pass and one AdamW step. Use the
-existing LR2e-5, weight decay0, clip1, maximum four updates; no cached trajectories
+existing LR2e-5, weight decay0, clip1, and a declared maximum of up to16 consecutive
+updates within three cumulative hours; no cached trajectories
 across updates, PPO reuse, new reward shaping or helper/final optimization.
 Root cap128, total helper output384 divided by plan length, final128; helpers and
 final T=.5, common downstream seeds across candidates. Full-source final remains
@@ -156,12 +160,23 @@ five always right, and only72/256 trajectories received nonzero advantages. F1
 provided no additional mixed groups on that original panel. Do not select new
 parents by their observed helper gains or rewards.
 
-Recommended bounded schedule: retain the existing deterministic shuffle of all256
-train parents, then use consecutive disjoint16-parent blocks for updates1–4.
-This covers64 training parents at the same maximum256-rollout budget and keeps
-update1's parent panel comparable with the earlier admission diagnostic. Declare
-`case_ids_by_update` in PLAN before collection; retain the64 denominator and the
-existing admission/stop rule. Do not search more blocks until one passes.
+Conditional full-pass schedule: retain the existing deterministic shuffle of all256
+train parents, then use consecutive disjoint16-parent blocks for updates1–16.
+This covers each training parent once, for at most1024 fresh root trajectories,
+with no within-pass parent duplicates. Four updates on the original16 parents
+established gradient feasibility, not an adequate test of RL efficacy; this bounded
+pass tests a larger training dose and broader coverage without adding a new reward,
+KL term, sampling policy, or warmstart. Update1 preserves the old admission panel.
+Declare all `case_ids_by_update` in PLAN before collection; retain the64 denominator,
+existing admission/stop rule, and one committed checkpoint per completed update.
+Do not skip failed admission blocks or extend the pass after inspecting rewards.
+The hard bounds are16 updates and three cumulative hours (also allocation-minus600s);
+an interrupted/capped run is not a completed pass. Repeated-panel schedules remain
+limited to four updates. The default remains four repeated-panel updates.
+
+The opt-in schedule is `--parent-schedule consecutive --updates 16 --hours 3`,
+with the selected immutable helper contract and original SFT48 warmstart. This is
+CPU-ready support, not an accepted GPU launch or a claim that16 updates suffice.
 
 This changes coverage as well as the helper relative to the old four-update run;
 it is not a pure old-versus-new training mechanism comparison. Per-update rewards
@@ -178,7 +193,7 @@ Predeclare the same evaluation parents, repeats, sampling and source contract:
 |---|---|---|---|
 | A | SFT48 | Released base | Released base |
 | B | SFT48 | Selected fixed helper contract | Released base |
-| C | New planner-RL4 | Same fixed helper contract | Released base |
+| C | New planner-RL, predeclared completed checkpoint | Same fixed helper contract | Released base |
 
 The selected contract is either base+format-reminder or helper-SFT36, fixed before
 RL. **B−A is helper-contract gain; C−B is incremental planner-RL gain. C−A combines
@@ -191,9 +206,14 @@ root conditions, rather than silently using the RL rollout temperature for only 
 Keep strict parsers, all planned denominators, protocol/content decomposition,
 parent-cluster intervals, and native call/token/latency costs.
 
-If matched A/B receipts already exist on that panel, reuse them with verified
-source/checkpoint/case identities; do not rerun the base unnecessarily. Existing
-validation results are adaptive development evidence, not a fresh confirmatory
-test. Freeze component/checkpoint choices before touching the remaining transfer
-outputs. Do not declare planner improvement from training reward alone or count
-two repeats as twice as many independent parents.
+Keep the earlier helper-effect panel separate. Its `eval_helper` downstream seed
+base differs from `eval_planner`, so do not reuse it as the new C-versus-B baseline.
+Collect matched SFT and new-RL evaluations with the same fixed helper, sealed source,
+case inventory, and evaluator root/downstream seed formula on authoritative
+`fresh-dev-inputs-003` (`split=development`,64 parents,32/32 panels). Record the
+predeclared checkpoint/dose and stopping rule before inspecting those outcomes;
+do not choose the best checkpoint on the final comparison panel. Historical
+exclusions do not make an adaptively chosen experiment confirmatory. Freeze
+component/checkpoint choices before touching remaining transfer outputs. Do not
+declare planner improvement from training reward alone or count two repeats as
+twice as many independent parents.

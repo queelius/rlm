@@ -29,7 +29,8 @@ HELPER_MODES = ("base", "format_reminder", "trained_helper")
 
 
 def parent_schedule(training, updates, schedule="repeated"):
-    if schedule not in ("repeated", "consecutive") or not 1 <= updates <= 4:
+    maximum = 16 if schedule == "consecutive" else 4
+    if schedule not in ("repeated", "consecutive") or not 1 <= updates <= maximum:
         raise ValueError("unknown bounded parent schedule")
     ordered = sorted(training, key=lambda case: case["id"])
     if (
@@ -485,8 +486,8 @@ def run(args):
     from peft import PeftModel
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    if not 1 <= args.updates <= 4 or not 0 < args.hours <= 3:
-        raise ValueError("bounded run requires 1..4 updates and <=3 hours")
+    if not 1 <= args.updates <= 16 or not 0 < args.hours <= 3:
+        raise ValueError("bounded run requires 1..16 updates and <=3 hours")
     output, adapter = args.output.resolve(), args.adapter.resolve()
     helper_contract = build_helper_contract(
         getattr(args, "helper_contract", "base"), getattr(args, "helper_adapter", None)

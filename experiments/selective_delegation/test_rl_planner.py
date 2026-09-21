@@ -160,6 +160,23 @@ def test_fixed_parent_blocks_preserve_first_panel_and_repeat_default():
     assert blocks == mod.parent_schedule(list(reversed(training)), 4, "consecutive")
 
 
+def test_consecutive_full_pass_covers_all_training_parents_once_with_fixed_order():
+    mod = implementation()
+    training = [{"id": f"p{i:03}", "split": "train"} for i in range(256)]
+    blocks = mod.parent_schedule(training, 16, "consecutive")
+    assert len(blocks) == 16 and all(len(batch) == 16 for batch in blocks)
+    flattened = [case["id"] for batch in blocks for case in batch]
+    assert len(set(flattened)) == 256
+    assert set(flattened) == {case["id"] for case in training}
+    assert blocks[:4] == mod.parent_schedule(training, 4, "consecutive")
+    assert blocks == mod.parent_schedule(list(reversed(training)), 16, "consecutive")
+    for count in (0, 17):
+        with pytest.raises(ValueError, match="bounded"):
+            mod.parent_schedule(training, count, "consecutive")
+    with pytest.raises(ValueError, match="bounded"):
+        mod.parent_schedule(training, 5, "repeated")
+
+
 def test_reminder_is_exact_eval_helper_contract_and_checkpoint_identity_is_bound():
     import eval_helper
 
