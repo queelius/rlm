@@ -55,3 +55,22 @@ Reports are immutable JSON with a readable Markdown sibling. Focused CPU tests
 cover native PEFT enable state observed during forward passes, actual prediction
 binding, final trace shape, held-seed leakage, missing values, deterministic ties,
 receipt ordering, and reward-variability arithmetic.
+
+## A reward change that would not change this update
+
+The final model can sometimes solve the question without using the helper trace.
+It is tempting to subtract a direct-answer score from each plan's reward to
+reward only the value added by decomposition. With our current four-candidate
+leave-other-three-out advantage, a shared per-question subtraction cancels:
+
+`(r_i - b) - mean_j!=i(r_j - b) = r_i - mean_j!=i(r_j)`.
+
+Thus one shared direct baseline per question would be useful for interpreting
+performance, but would not change these root-policy gradients if all other
+conditions stay fixed. It is not a new RL treatment worth an otherwise identical
+training run. This statement concerns a common baseline, not different
+candidate-dependent interventions. Repeated execution can change estimated
+candidate returns; action-dependent computation costs can change preferences;
+and adding a genuine finish-versus-delegate choice changes the decision problem.
+Those require separate comparisons and are not accepted by this note. A final
+answer gain alone still does not establish faithful use of a decomposition.
