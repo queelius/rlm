@@ -17,10 +17,13 @@ recovers a failure of the empty-report plan-only path. It does not establish
 that the learned planner caused the gain: the five settings and four candidates
 share parents, documents, source plans, and final seeds; they are not 320
 independent cases. Nor does it establish that helpers add value over a
-no-plan/no-helper direct answer. That missing direct comparison is the next
-small control.
+no-plan/no-helper direct answer. The subsequently completed
+[direct comparison](TRAIN-DIRECT-CONTROL-FINDINGS.md) scores148/320 versus198/320
+with helpers. That strengthens the TRAIN-local helper signal without establishing
+fresh-data generalization.
 
-Credit and terminal-reward ranking differed in 26/320 candidate slots
+The two rewards differed in whether to encourage, discourage or leave a
+candidate unchanged in 26/320 candidate slots
 (`terminal_only` 20, `execution_only` 4, `opposite` 2); most slots were tied
 or zero. Therefore larger terminal reward should not be read as clean credit
 for a better plan. The analysis's ten factual-replay controls all reproduced

@@ -3,7 +3,7 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September21 research update](RESEARCH-UPDATE-20260921.md).
 
-Current operations, September 21, 16:56 UTC: the
+Current operations, September 21, 17:20 UTC: the
 [fresh128-question Hotpot replication](HOTPOT-FRESH-FINDINGS.md) is complete:
 151/256 planner versus152/256 direct, with 3.44 times the tokens and unresolved
 differences. The completed [three-answer voting control](HOTPOT-VOTE-FINDINGS.md)
@@ -11,7 +11,10 @@ chooses exactly the same answers as single-call direct answering. Root RL
 continuation saved checkpoint21 and then stopped at a batch with no within-question
 reward differences. Its completed readout gives54/128 versus56 at checkpoint16.
 The first environment-action screen exposed repeated inadmissible commands;
-an indexed-action, explicit-feedback follow-up is now running.
+the completed indexed-action follow-up gives six successes out of 16 attempts
+with a manager, versus one without it. A local-deliberation control is being
+prepared before attributing this small, exposed-game result to hierarchy.
+See [the completed comparison](ALFWORLD-CLOSED-LOOP-FINDINGS.md).
 See [the stopped-run analysis](RL-STOPPED-DOSE.md) and
 [the new screen's design](ALFWORLD-SCREEN-DESIGN.md). These are exploratory jobs;
 the original exact-checkpoint24 readout was not run or silently substituted.
@@ -20,8 +23,11 @@ A [simple helper-skipping rule](HELPER-GATING-DIAGNOSTIC.md) failed to improve
 answers; its corrected analysis preserves both repeats and component clusters.
 The [evidence-sufficiency baseline](SUFFICIENCY-FINDINGS.md) and
 [TRAIN execution-credit diagnostic](TRAIN-EXECUTION-CREDIT-FINDINGS.md) are complete.
-A direct TRAIN control and a [many-answer passage-reading screen](QAMPARI-READINESS.md)
-are in CPU preparation. [Recent primary work](LITERATURE-UPDATE-1625.md)
+The [direct TRAIN control](TRAIN-DIRECT-CONTROL-FINDINGS.md) is complete:
+helper execution198/320, direct148/320, and plan-only99/320, on16 reused training
+questions. The [many-answer passage-reading screen](QAMPARI-READINESS.md) is
+running; two matched sufficiency-training arms and fixed-endpoint readouts are
+accepted next. [Recent primary work](LITERATURE-UPDATE-1625.md)
 narrows the novelty of generic answerability training and adaptive evidence trees.
 The [further literature update](LITERATURE-UPDATE-1653.md) connects these results
 to existing planner-training and evidence-integration research.

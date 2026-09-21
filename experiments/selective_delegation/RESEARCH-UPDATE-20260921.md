@@ -1,6 +1,6 @@
 ---
 status: exploratory_running
-evidence_cutoff_utc: 2026-09-21T16:56:00Z
+evidence_cutoff_utc: 2026-09-21T17:20:00Z
 model: Qwen3-4B-Instruct-2507
 primary_question: When does asking helpers earn its extra computation?
 publication_status: promising_questions_not_established_architecture_improvement
@@ -80,8 +80,12 @@ and five execution settings; they are not 320 independent questions. The much
 larger training-set effect does not establish a benefit on new questions.
 Moreover, credit based on the measured helper benefit mostly agrees with ordinary
 final-answer reward. It does not yet justify a more elaborate RL objective.
-We are preparing a direct-answer control to check whether helpers add useful
-information or mainly repair harm caused by supplying the plan alone.
+The completed direct-answer control gets 148 of 320 correct. Helpers therefore
+beat both direct answering and the plan-only condition on this training panel;
+their benefit is not just recovery from plan-induced harm. The helper-minus-direct
+difference is 15.63 percentage points, with a component-clustered interval from
+1.76 to 32.67 points. This is a useful training signal, not a fresh-data result.
+See [the direct-control analysis](TRAIN-DIRECT-CONTROL-FINDINGS.md).
 An action-dependent counterfactual changes the learning objective; it is not
 simply a free variance-reduction trick.
 See [the execution-credit question](EXECUTION-CREDIT-QUESTION.md).
@@ -90,17 +94,22 @@ See [the execution-credit question](EXECUTION-CREDIT-QUESTION.md).
 
 One possibility is learning **when additional work changes the available
 information or useful action**, rather than generating a longer plan for a
-fully visible problem. A small text-environment comparison is now queued:
+fully visible problem. A small text-environment comparison tested
 ordinary action selection versus a short-term goal manager, under the same
 action and output-token limits. Both receive the same kind of public feedback
 and admissible-action assistance. The first screen completed: the flat policy
 solves one of 16 attempts and the manager-worker policy solves two. Most runs
 stop after repeatedly choosing commands outside the supplied admissible list.
-This is too weak to support a hierarchy claim. A follow-up replaces command
-strings with numbered choices and explicitly reports rejected actions, in both
-policies. That combined interface change tests whether this environment is
-ready for a meaningful learning comparison; it is not itself a new algorithm.
+This was too weak to support a hierarchy claim. The follow-up with numbered
+choices is now complete: the manager solves six of 16 attempts, versus one for
+the flat policy, with no invalid outputs in either arm. The gains occur on
+three placement games, not heating or cleaning. It uses fewer tokens but slightly
+more summed model-call time. This is worth following up with a flat agent that
+explains its next action, to separate ordinary deliberation from a benefit of
+the manager-worker division. It is not yet a new algorithm or a general result.
 See [the environment screen](ALFWORLD-SCREEN-DESIGN.md).
+The [completed interface follow-up](ALFWORLD-CLOSED-LOOP-FINDINGS.md) includes
+concrete successful and failed action sequences.
 
 A second possibility is deciding whether evidence is sufficient before answering
 or requesting more. The canonical MuSiQue paired variants support an initial
@@ -116,7 +125,7 @@ to retain alternate evidence for the answer. We must not equate every official
 negative-label answer with an unsupported hallucination.
 See [the paired-data audit](MISSING-EVIDENCE-PAIR-AUDIT.md).
 
-A third screen is being prepared on QAMPARI, where one question can require
+A third screen is running on QAMPARI, where one question can require
 collecting many answers from 200 retrieved passages. It compares reading the
 whole supplied pool with reading four groups and combining their answer lists.
 The base model can fit the full input, so direct answering will not be artificially

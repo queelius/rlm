@@ -103,3 +103,58 @@ either change alone causes improvement. No game reselection, new benchmark or
 novelty claim is intended. A later strong result would require separate mechanism
 ablations; none is inferred from this combined qualification. GPU acceptance and
 launch remain separate main-owned decisions.
+
+## Completed combined-interface qualification (source026)
+
+All32 original slots completed: flat1/16 wins, manager/worker6/16. All1478 native
+calls were available; neither policy produced an invalid schema/index/goal response.
+No missing outcomes, unresolved starts, unlinked calls, token-budget stops, or
+three-invalid stops. The flat policy instead exhausted50 actions in15/16 attempts;
+manager/worker did so in10/16. Both see the same native affordance-assisted command
+lists. The planned rejection-feedback path was never exercised because all outputs
+were valid; this does not isolate feedback's contribution.
+
+| Policy | Wins / planned | Environment actions | Calls incl. manager | Input tokens | Output tokens | Total tokens |
+|---|---:|---:|---:|---:|---:|---:|
+| Flat |1/16|781|781|1,366,335|6,880|1,373,215|
+| Manager/worker |6/16|551|697|1,244,970|7,434|1,252,404|
+
+Paired differences: five manager wins, zero losses, eleven ties. The wins occur
+on games0 and1 at both seeds and game3 at one seed—not five independent tasks.
+Game-cluster bootstrap (20,000 draws, seed2026092180; both repeats kept together)
+gives +31.25 percentage points, exploratory95% interval[+6.25,+62.50]. Only eight
+already-exposed seen-development games were used; scene/atomic independence is not
+verified. These results do not establish benchmark superiority or generalization.
+
+Native action replay shows the remaining seam: game0's flat policy moved a bowl,
+picked up lettuce, then alternated locations; the manager/worker found the egg and
+placed it in the microwave in11 actions at each seed. But manager/worker still
+failed every heating/cleaning attempt. In game7 it repeatedly cleaned the same
+cloth without completing the task. Perfect membership compliance is not task
+competence. All gains are placement-task outcomes on this panel, not a general
+long-horizon success claim.
+
+Total acquisition was2,625,619 tokens,696.44 summed model-service seconds and
+923.32 wall seconds. Manager cost is included:146 calls/255,587 tokens. Earlier
+success reduced downstream actions and aggregate manager-policy tokens, although
+its output total is larger and summed service time356.46s exceeds flat339.98s.
+The new interface qualified execution, but did not improve flat's1/16 success.
+
+Next useful control is matched periodic **local deliberation in one flat agent**,
+with the same public state, refresh schedule, generation budget, and full cost
+accounting, before attributing manager gains specifically to hierarchy or accepting
+RL. This is a proposed comparison, not accepted work. The current contrast combines
+manager-generated goal text, additional model calls, and role organization; it does
+not isolate any one of them.
+
+Immutable evidence: `R/alfworld-closed-loop-001/`, `R/source-026-alfworld-closed-loop/`,
+`R/analysis-source-alfworld-002/`, and `R/analysis-alfworld-closed-loop-001.json/.md`.
+Analysis JSON SHA256
+`14588000396b1bc625a0a00e9a03121678cb453259353067804797f36a1810e2`;
+analyzer SHA256
+`c2b1bf8383236ce1b6a2c1fc97784f1a82ca124234042275165e7a98deb1ffe2`;
+collector PLAN SHA256
+`74e76cecd88d744f9ee6c2f308fd890f1c0d6634cf0550c9819fb5e8a19deefe`.
+The analyzer reconstructs every native public prompt, indexed mapping, seed,
+response, counter, and cost under the sealed combined-interface contract. Original
+source022 findings and immutable reports above are preserved.
