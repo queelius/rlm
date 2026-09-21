@@ -61,3 +61,55 @@ do not describe this as a newly submitted September21 paper without verification
    action suffices or action-value differences do not repeat.
 4. Later: vary helper visibility or add a second decision step. These should
    answer an observed limitation, not merely make the harness more elaborate.
+
+## Follow-up literature check: September 21, 10:23 UTC
+
+These primary sources were read while the GPU ran validation. They constrain
+our novelty claims; they are not evidence that our own experiments work.
+
+### Planning and execution are already studied separately
+
+[GlobalRAG](https://arxiv.org/html/2510.20548v1) trains with plan-structure,
+plan-meaning, subgoal-completion, format and final-answer rewards. Its training
+uses teacher trajectories and a changing balance between process and outcome
+rewards. Our finding that plans can be ignored is therefore not a new failure
+category. The useful local question is narrower: does our particular frozen
+executor make alternative plans produce sufficiently different outcomes for
+terminal-reward learning? The accepted16-parent, four-plan RL pilot tests this
+on one A100, with a three-hour overall cap. If rewards are flat, intermediate
+supervision is a candidate comparison, not an automatic success claim.
+
+### Learning to stop searching is not new by itself
+
+[FrugalRAG, ICLR2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/ede6f43d254731152970009c172d5561-Abstract-Conference.html)
+starts with supervised exploration and uses RL to reduce retrieval steps while
+balancing answer quality and cost. Thus “use SFT, then learn decomposition depth
+with RL” is not a sufficient novelty claim. Our first RL test deliberately uses
+only answer reward to diagnose learning before adding a cost trade-off. A later
+cost-aware comparison would need actual token/call accounting, competitive fixed
+budgets, and an advantage beyond simply shortening every plan. Do not launch a
+large depth sweep before the present variance and held-out checks.
+
+### Executable plans and role-by-role training are also prior art
+
+[PyRAG](https://arxiv.org/html/2605.12975v1) represents retrieval and answering as
+Python programs with explicit intermediate variables. Its appendix describes
+training the answer role before planning and decomposition, with other roles
+frozen, because later decisions depend on the executor's quality. It also reports
+cases where final aggregation misuses correct intermediate values. Our explicit
+question binding and the Hudson example therefore do not establish novelty.
+
+The practical implication is to test which component limits improvement. If the
+planner's rewards stay flat, a matched stronger-helper or helper-training test
+may be more informative than increasing planner RL dose. A small comparison
+could reuse fixed plans on32 parents and replace only the helper model, recording
+fresh final calls and changed compute (one A100, roughly20–60minutes). Promote
+that direction only if stronger helpers expose a repeatable planning advantage;
+otherwise reconsider the task and information-access constraints. The published
+[implementation](https://github.com/GasolSun36/PyRAG) was subsequently cloned for
+read-only inspection at commit `5d8ab2ea10b9bf3da1ab2581c8ad5aa93d5df263` into
+`/project/alex_phd/research-cache/repos/PyRAG-inspect-20260921`. No project-level
+license declaration was found; no code was executed, installed, or redistributed.
+Its final synthesis can omit original documents. Our queued frozen-trace
+comparison tests that information-access difference locally; it does not claim
+the no-document interface is new. See [AGGREGATION-PLAN.md](AGGREGATION-PLAN.md).

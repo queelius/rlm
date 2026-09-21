@@ -84,3 +84,49 @@ or compute-controlled effect. Model plans have0/26literal#1 links, references26/
 The ~2minute gap after prior owner completed was CPU launch preparation, not GPU
 science. Question-planSFT inputs256parents and48update trainer are CPU-prepared;
 paired base/SFT evaluator being prepared with frozen helpers. Quota96%@09:56.
+
+10:16 UTC: Executionprobe completed208episodes/518calls, with2reference-isolated
+helperJSONfailures. Modelbundled24/52,referencebundled28/52,modelisolated24/52,
+referenceisolated26/52. Noaggregateisolationadvantage. Hudsonisolatedreference
+helpercorrect1954 butfinalwrong1932 inbothrepeats; allotherexamplesretained.
+SFTaccepteddespiteweakreferenceeffect: cheaptestoflearnableexecutablecontracts,
+notassumptionofdownstreamgain. Owner launched10:10:22 immediatelyafterprobe;
+48updatescomplete10:15:35,297.2optimizerseconds, threeepochs256parents. Source005
+sealed,checkpoint0048primaryfixed. Adapterhashchanged; trainingloss2.250/.663/.468
+perepoch. Noheldoutresultyet. Sameparentearlieranswerreplay started10:15:36 from
+source006,412eligiblefinals; first57callsreturned0errors by10:16:27. Thenqueued
+matchedbase/SFT isolatedvalidation32x2 undernew no-provisional-answer architecture.
+Isolatedexecutor selectedfor explicitdependencycontract, notwinningpriorprobe.
+Quota95%@10:08; source/docs8e50183pushedresearchbranch, notmain.
+
+RL preparation decision: terminal-EM RLOO on fresh root plans, frozenhelpers,
+common downstreamseeds acrossfourplans/parent;16trainparents fixedbeforeoutcomes.
+PositiveSFTheldoutgain notrequired: protocolfitting mayprecederewardimprovement.
+Requireatleast2mixed-valid-distinct-plan traininggroups for exploratoryupdates;
+flatgroupbatchesarestoppedandreported. Fourupdatesmaximum,64freshrolloutseach,
+LR2e-5. NoPPOmachineryforoneonpolicypass; noofflinebanditclaimmasqueradingasRL.
+Agentimplementsboundedrunner; notlaunchedandnoRLclaimyet.
+
+10:46 UTC: Actual planner RL is running from sealed source007. Three optimizer
+updates are committed; update4 is collecting. Each uses64 fresh trajectories
+(16 training parents ×4 candidate plans), frozen downstream models, terminal
+exact-match rewards and leave-one-out advantages. Nonzero gradients and adapter
+deltas are recorded; no held-out RL claim yet. Cache-versus-full-forward BF16
+log probabilities differ slightly; full-forward train/eval replay matches exactly.
+Retain this numerical limitation in interpretation, not an exact-policy claim.
+
+Initial SFT validation completed: base16/64 versus SFT19/64, paired+4.7 points
+with interval−4.7..+15.6. Protocol changes explain part of the difference.
+Checkpoint-removal replay completed412 new finals with no aggregate gains.
+The original anchoring hypothesis is not confirmed; stop multiplying that ablation.
+
+Accepted serialized queue: direct and one-helper baselines on the first32
+validation questions; SFT and last-committed-RL on validation questions32..63;
+new full-source versus trace-only final calls on frozen RL batch1; then frozen
+base/SFT/RL/direct comparisons on64 four-hop MuSiQue and32 Hotpot explorer cases.
+Transfer checkpoint selection is fixed before reading transfer outcomes. The
+Hotpot result must use official answer metrics, not the native MuSiQue summary.
+Independent review reconstructed all64 frozen RL trajectories and found no
+blocking defect in the aggregation comparison (58 complete helper traces,
+six explicit source-failure zeros). GPU jobs remain serialized under the owner
+lock. Quota92% at10:38 UTC; preserve10% shared reserve.

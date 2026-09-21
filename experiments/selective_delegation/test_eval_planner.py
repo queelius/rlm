@@ -33,6 +33,25 @@ CASE = {
 PLAN = {"subquestions": ["Who designed it?", "Did #1 build it?"]}
 
 
+def test_rl_checkpoint_is_named_rl_and_only_its_root_enables_adapter():
+    m = module()
+    assert m.mode_conditions("planner", "rl") == ("base", "rl")
+    assert m.mode_conditions("direct", "rl") == ("base",)
+    assert m.adapter_enabled("rl", "root")
+    assert not m.adapter_enabled("rl", "helper")
+    assert not m.adapter_enabled("rl", "final")
+    with pytest.raises(ValueError):
+        m.mode_conditions("planner", "unknown")
+
+
+def test_trained_only_readout_avoids_repeating_the_base_control():
+    m = module()
+    assert m.mode_conditions("planner", "rl", trained_only=True) == ("rl",)
+    assert m.mode_conditions("planner", "sft", trained_only=True) == ("sft",)
+    with pytest.raises(ValueError):
+        m.mode_conditions("direct", "rl", trained_only=True)
+
+
 def test_all_evaluation_prompts_exclude_host_labels_and_keep_public_evidence():
     m = module()
     root = m.planner_prompt(CASE)
@@ -297,3 +316,91 @@ def test_isolated_rejects_malformed_helper_without_answer_fallback(tmp_path):
     assert result["status"] == "invalid_helper"
     assert not result["correct"]
     assert client.roles == ["root", "helper"]
+
+
+@pytest.mark.parametrize(
+    "mode,roles,caps",
+    [("direct", ["final"], [128]), ("single_helper", ["helper", "final"], [384, 128])],
+)
+def test_baselines_use_public_inputs_base_only_paired_seeds_and_actual_trace(
+    tmp_path, mode, roles, caps
+):
+    m = module()
+    requests = []
+
+    class Client:
+        output = tmp_path
+
+        def call(self, identity, prompt, condition, role, seed, **kwargs):
+            requests.append((identity, prompt, condition, role, seed, kwargs["max_new_tokens"]))
+            assert not m.adapter_enabled(condition, role)
+            return {
+                "call_id": identity,
+                "condition": condition,
+                "available": True,
+                "text": '{"answer":"PREDICTED_HELPER"}'
+                if role == "helper"
+                else '{"answer":"GOLD_SECRET"}',
+                "usage": {"prompt_tokens": 10, "completion_tokens": 4},
+            }
+
+    row = m.collect_episode(Client(), CASE, "base", 1, mode=mode)
+    assert row["correct"] and row["mode"] == mode
+    assert mode in row["episode_id"] and row["deployed_cost"]["calls"] == len(roles)
+    assert row["plan_source"] == ("none" if mode == "direct" else "fixed_original_question")
+    assert not row["plan_valid"]  # No generated planner output, not an invalid-plan status.
+    assert [r[3] for r in requests] == roles and [r[5] for r in requests] == caps
+    seed = m.SEED + int(m.probe.runtime.digest(CASE["id"])[:6], 16) + 100
+    assert requests[-1][4] == seed + 2
+    assert all(r[2] == "base" for r in requests)
+    for _, prompt, _, _, _, _ in requests:
+        assert CASE["question"] in prompt and "PUBLIC_SOURCE" in prompt
+        assert m.probe.PHRASE_INSTRUCTION in prompt
+        for forbidden in (
+            "GOLD_SECRET",
+            "SOURCE_SECRET",
+            "REFERENCE_SECRET",
+            "STEP_SECRET",
+            "is_supporting",
+            "initial_attempt",
+        ):
+            assert forbidden not in prompt
+    if mode == "direct":
+        assert "model_plan" not in requests[0][1] and "helper_report" not in requests[0][1]
+    else:
+        assert requests[0][4] == seed + 1
+        assert requests[0][1] == m.isolated_helper_prompt(CASE, CASE["question"])
+        assert '"subquestions": ["Who built it?"]' in requests[-1][1]
+        assert "PREDICTED_HELPER" in requests[-1][1] and "call_id" not in requests[-1][1]
+    summary = m.summarize(
+        tmp_path, {"case_ids": [CASE["id"]], "repeats": 2, "mode": mode, "conditions": ["base"]}
+    )
+    assert set(summary["conditions"]) == {"base"}
+    assert summary["conditions"]["base"]["planned_episodes"] == 2
+    assert summary["conditions"]["base"]["em"] == 0.5
+    assert summary["conditions"]["base"]["invalid_plans"] == 0
+    assert "plan_lengths" not in summary["conditions"]["base"]
+    with pytest.raises(ValueError, match="base"):
+        m.collect_episode(Client(), CASE, "sft", 0, mode=mode)
+
+
+def test_single_helper_malformed_json_stops_without_final_and_retains_zero(tmp_path):
+    m = module()
+    roles = []
+
+    class Client:
+        output = tmp_path
+
+        def call(self, identity, prompt, condition, role, seed, **kwargs):
+            roles.append(role)
+            return {
+                "call_id": identity,
+                "available": True,
+                "text": "not JSON",
+                "usage": {"prompt_tokens": 10, "completion_tokens": 4},
+            }
+
+    row = m.collect_episode(Client(), CASE, "base", 0, mode="single_helper")
+    assert roles == ["helper"]
+    assert row["status"] == "invalid_helper" and not row["correct"]
+    assert row["deployed_cost"]["calls"] == 1

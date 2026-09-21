@@ -1,9 +1,9 @@
 ---
 question_id: selective-delegation-20260921
 status: exploratory
-cutoff_utc: 2026-09-21T10:05:00Z
+cutoff_utc: 2026-09-21T10:44:29Z
 model: Qwen3-4B-Instruct-2507
-training_performed: false
+training_performed: true
 ---
 
 # What the first controlled comparison tells us
@@ -107,6 +107,107 @@ Generated plans have no literal `#1` links in this panel, whereas all reference
 plans do; this execution-compatibility difference must be reported, not repaired
 silently or mistaken for a pure content-quality effect.
 
+## Completed: explicit step-by-step execution
+
+The four conditions scored 24/52 (model plan, bundled), 28/52 (reference plan,
+bundled), 24/52 (model plan, isolated), and 26/52 (reference plan, isolated).
+These are 26 training questions with two repeats. Two reference-isolated helper
+responses failed the JSON contract; they remain failures in the denominator.
+The job produced 518 actual calls, not the520-call maximum: those two failed
+episodes did not reach their final call.
+
+There is no overall advantage for isolated execution in this panel. The car
+manufacturer example nevertheless reveals a useful failure mode: both isolated
+reference helpers found the right manufacturer and closing date (1954), but
+the final model returned the earlier mistaken production year (1932).
+This motivates removing the provisional answer or the whole original checkpoint
+from otherwise identical final prompts. This follow-up reuses actual helper
+outputs; it does not invent improved reports or alter the evidence.
+
+## Completed: question-plan supervised training
+
+The planner completed48 optimizer updates on256 training examples, with frozen
+base-model helpers reserved for evaluation. Its input is the original question
+and public document-title index; its target is a list of linked subquestions,
+not an answer. Training used a fresh rank8 LoRA (16,515,072 trainable parameters),
+AdamW at1e-4, and three passes over the examples. Optimizer work took297.2 seconds;
+this is not the duration of the full research session or evaluation campaign.
+
+The token-weighted training loss fell from2.250 in the first epoch to0.663 and
+0.468 in the next two. This establishes fitting to the training examples, **not
+better answers or generalization**. Update48 is the fixed primary checkpoint.
+The completed comparison used base and trained planners on32 validation questions,
+two seeds, identical isolated execution, and unchanged base helpers/final model.
+Isolated execution was chosen to make the dependency contract explicit, not
+because it won the preceding comparison. The new planner has no provisional
+answer, so it must not be compared naively with the old checkpoint architecture.
+
+## Completed: supervised planner validation
+
+The unchanged planner answered16/64 attempts correctly (25.0%); the supervised
+planner answered19/64 (29.7%). The paired improvement is4.7 percentage points,
+with a parent-bootstrap interval of−4.7 to+15.6 points. This is a small, uncertain
+gain, not established better reasoning. The trained planner eliminated five
+invalid root plans, but helper-format failures persisted (11 base,12 trained).
+Of six improved attempts, four previously failed the protocol; of three harmed
+attempts, two newly failed the protocol. All520 model calls returned.
+
+The trained condition used585,179 tokens versus660,077 for the unchanged
+planner, partly because it usually produced shorter plans. This is not a
+compute-matched comparison. See `analysis-planner-sft-001.json/.md` in the external
+study root for receipts, paired intervals, and failure accounting.
+
+Subsequently completed simple controls on these same32 questions scored17/64
+for one direct answer (26.6%) and14/64 for an original-question helper followed
+by a final answer (21.9%). The direct system used2,996 tokens per attempt versus
+9,143 for the supervised planner. We therefore do not yet have convincing evidence
+that the learned decomposition system earns its extra computation. These controls
+share the evidence and final sampling contract but have different prompts and
+call budgets; the original-question helper is not a learned decomposition.
+
+## Completed: removing the earlier answer did not solve the final-step problem
+
+We made412 new final calls using the execution probe's saved helper outputs.
+Removing only the earlier answer, or removing the whole initial attempt, did not
+improve any arm's aggregate exact-match count. The manufacturer example still
+returned1932 despite a helper reporting1954. Thus the motivating example does
+**not** establish that the earlier answer caused the mistake. The final model
+may instead misunderstand the question or disregard useful helper evidence.
+
+This distinction matters: the final model also rescued wrong last-helper answers
+in23 episodes across the model/reference isolated conditions, while overturning
+a correct last-helper answer in only two. Simply trusting the last helper is
+not an evidence-supported default. These are descriptive conditional counts,
+not a causal intervention on the final model.
+
+## Completed training; evaluation pending: learn plans from answer rewards
+
+An actual on-policy RL run updated only the planner adapter, starting from
+the supervised checkpoint. Each update samples four new plans for each of16
+fixed training questions, executes them with frozen helpers, and rewards exact
+final answers. The maximum is four updates; the final committed update will be
+evaluated without selecting it by validation performance. All four updates
+changed the adapter weights, with nonzero gradients and measured
+before/after likelihood changes. This proves that optimization ran, not that it
+improves held-out answers.
+
+The run completed256 fresh trajectories and1,053 model calls in17.1 minutes,
+with no generation failures or unknown token usage. Training rewards were
+37/64,36/64,40/64,37/64 across the four batches: no monotonic improvement, and
+these changing sampled trajectories are not a fixed evaluation set.
+
+The other32 validation questions are reserved for a matched SFT-versus-RL
+readout. Additional frozen readouts cover64 four-hop MuSiQue questions and32
+HotpotQA explorer-sample questions. The latter is a small diagnostic, not the
+canonical HotpotQA development benchmark. Simple direct-answer controls are
+included so a more elaborate system does not win merely by lacking a baseline.
+
+A separate frozen-trace experiment asks whether showing the final model all
+documents hides the consequences of good and bad plans. It compares new finals
+with documents against new finals with only the question, plan, and actual
+helper answers. Higher reward variation alone would not establish better credit
+assignment; answer quality and repeat noise must be examined together.
+
 ## What changed our next experiment
 
 Some final strings contain the right fact inside a long explanation and fail
@@ -147,5 +248,11 @@ the current finding is too provisional and technical to replace its main story.
 
 Further completed artifacts: `analysis-validation-001.json` and `.md`, raw
 `validation-span-001`; `plan-probe-001/SUMMARY.json` and its immutable calls and
-episodes. The live execution comparison is `execution-probe-001` with sealed
-`source-004`. No new optimizer has run as of this cutoff.
+episodes. The completed execution comparison is `execution-probe-001` with sealed
+`source-004`. Planner training: `planner-sft-001`, committed checkpoints every
+eight updates through `checkpoint-0048`; sealed trainer/evaluator: `source-005`.
+The completed earlier-answer replay is `checkpoint-replay-001` from `source-006`:
+412 actual new finals after the two source helper failures. The SFT validation
+report is `analysis-planner-sft-001.json/.md`. Actual RL training is
+`rl-planner-001`, source007, checkpoints0001..0004. Its held-out readouts and
+aggregation/transfer queue have not yet established an RL benefit at this cutoff.

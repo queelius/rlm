@@ -14,10 +14,18 @@ For the current evidence and direction, read [FINDINGS.md](FINDINGS.md) first.
 The initial action-choice screen found little reliable advantage from choosing
 among fixed helper strategies. Follow-ups now separate three possible problems:
 writing the wrong subquestions, failing to execute them, and ignoring useful
-helper answers because of an earlier wrong answer. This is an adaptive study,
+helper answers. Removing an earlier wrong answer did not help, so that proposed
+explanation is not confirmed. This is an adaptive study,
 not a claim that the original action-router plan succeeded.
 
-## What is controlled
+Question-plan SFT and four fresh-rollout RL updates are now complete. The initial
+SFT validation gain is small and uncertain; RL held-out evaluation is pending.
+See [RL-PLAN.md](RL-PLAN.md), [EXECUTION-FINDINGS.md](EXECUTION-FINDINGS.md), and
+[AGGREGATION-PLAN.md](AGGREGATION-PLAN.md) for the distinct questions being tested.
+The broader [HOTPOT-DIAGNOSTIC.md](HOTPOT-DIAGNOSTIC.md) readout is a small official
+explorer sample, not a canonical benchmark result.
+
+## What was controlled in the initial screen
 
 Each question produces one initial attempt. Four alternatives start from that
 same attempt. Every final answerer retains all original documents. Three seeds
@@ -47,8 +55,11 @@ External study root:
 - `plan-probe-001`: completed model-versus-reference question diagnostic.
 - `execution-probe-001`: bundled-versus-step-by-step execution diagnostic.
 - `planner-sft-inputs-001`: 256 question-list training targets, with token audit.
-- `planner-sft-001`: destination for the accepted 48-update planner training run;
-  inspect its actual checkpoint and terminal receipts before claiming completion.
+- `planner-sft-001`: completed48-update supervised training; fixed checkpoint0048.
+- `planner-eval-isolated-001`: completed matched base/SFT validation on32 parents.
+- `rl-planner-001`: completed four-update root-only RL,256 fresh trajectories.
+- `held-sft-001` and `held-rl-001`: queued readouts on the other32 validation parents.
+- `aggregation-probe-001`: queued frozen-trace final-evidence comparison.
 
 `train_planner.py` trains only question-list generation. `eval_planner.py`
 compares base and trained planners under the same title-index-only observation,
@@ -81,5 +92,5 @@ Focused tests run with the existing inference environment:
 
 Do not describe an accuracy increase from revised answer formatting as an
 improvement from delegation or reinforcement learning. Actual training, if
-justified by these diagnostics, must be reported separately with its own held-out
+performed, must be reported separately with its own held-out
 evaluation, training curve and costs.
