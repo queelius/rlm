@@ -26,6 +26,8 @@ See [RL-PLAN.md](RL-PLAN.md), [EXECUTION-FINDINGS.md](EXECUTION-FINDINGS.md), an
 [AGGREGATION-PLAN.md](AGGREGATION-PLAN.md) for the distinct questions being tested.
 The broader [HOTPOT-DIAGNOSTIC.md](HOTPOT-DIAGNOSTIC.md) readout is a small official
 explorer sample, not a canonical benchmark result.
+The completed first [longer-question transfer comparison](TRANSFER-FINDINGS.md)
+finds no supervised answer improvement, despite more compact, parseable plans.
 
 The [aggregation result](AGGREGATION-FINDINGS.md) supports retaining full-source
 final answers. [Executor failure analysis](EXECUTOR-BOTTLENECKS.md) motivates

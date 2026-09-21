@@ -131,3 +131,32 @@ uncertain, rerunning the same plans with fresh helper seeds is the next targeted
 comparison (about256 helper/final calls on16 parents, one A100). Promote repeated
 reward estimation only if it improves ranking reliability enough to justify
 those calls; otherwise spend the budget on more distinct training questions.
+
+## Structured planning and revision: September 21, 11:22 UTC
+
+[DecomposeR](https://arxiv.org/html/2605.30824v1) already separates planner and
+answerer adapters, trains them in stages, represents plans as dependency graphs,
+and lets search observations inform a revised plan. Its planner reward combines
+coverage, search, and structural signals; this is not the same objective as our
+terminal exact-answer reward. Accordingly, separate-role training, graph plans,
+and feedback-conditioned plan revision are not novelty claims for us.
+
+Our narrower diagnostic is whether apparent planner gains survive a fixed,
+more reliable execution interface. The in-progress four-hop readout also reveals
+forward/self references in otherwise parseable supervised plans. If this persists
+in the completed report, a later comparison could test one-shot plans against
+incremental next-question decisions under matched information and declared costs.
+That would test an extrapolation failure, not introduce plan revision itself.
+Do not add structural reward simply because it is easy to score: producing more
+valid steps need not improve answers. Finish the frozen helper comparison first.
+
+[HiPER](https://arxiv.org/html/2602.16165v1) separately models subgoal selection,
+continuation/switching, and execution. Its learned critics estimate advantages
+at two time scales; the experiments concern interactive ALFWorld and WebShop,
+not our fixed-document question lists. This is relevant prior art for deciding
+when to revise a subgoal, but importing a critic framework is not the next
+small comparison. Its reported learning curves also span many more updates
+than our four-step probe. Our weak result cannot distinguish an inadequate
+training dose from a fundamental limit of terminal-reward planner learning.
+If the helper comparison exposes usable answer variation, a predeclared
+larger-data/dose test is warranted before rejecting that learning approach.
