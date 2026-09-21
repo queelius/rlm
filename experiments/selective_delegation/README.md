@@ -83,7 +83,9 @@ The completed [repeated-execution diagnostic](FROZEN-EXECUTION-FINDINGS.md) find
 executions instead of one adds only one correct held-seed answer out of64.
 The [matched Hotpot direct control](HOTPOT-DIRECT-CONTROL.md) scores31/64 with
 the helper adapter versus36/64 with base weights; multi-call trained helpers
-score40/64. Paired architecture analysis and new-data replication are needed.
+score40/64. The [paired architecture analysis](HOTPOT-MATCHED-ARCHITECTURE.md)
+finds the advantage over base direct uncertain, at3.50times its token cost.
+New-data replication is being prepared.
 One [bounded RL continuation](RL-CONTINUATION-DRAFT.md) is running, preserving
 the optimizer and selecting checkpoint24 before its development readout.
 The [latest prior-art check](LITERATURE-UPDATE-1515.md) narrows what would be novel

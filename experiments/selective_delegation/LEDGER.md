@@ -222,3 +222,27 @@ next-question andsource018plan-only screens accepted/serialized afterward.
 Explicit RL continuation16→24 is CPU-ready (16focused tests plus launcher3tests
 passed on main), not GPU-accepted. Choose from results, not blind dose expansion.
 Quota75%15:08, preserve10%; no live source edited or checkpoints committed to Git.
+
+15:40 UTC: RootRL continuation is collecting update21; checkpoint20 committed.
+Eight additional updates17–24 restore checkpoint16 Adam and RNG, unchanged
+helper36/basefinal. The fixed24 readout follows under supervisor2126; CPUwatch18861
+will compare16versus24. No outcome-based checkpoint selection.
+
+Frozen execution gives13/64variableplans but reward repetition selection47vs46/64;
+do not triple rollout cost without a stronger signal. Feedback screen6/30both.
+Plan-only SFT56/RL53 versus executed53/56 uses about a third of tokens; effects
+and interaction uncertain. Hotpot multi-call40/base direct36/adapted direct31of64
+needs fresh replication, not a superiority claim. Full multi-call cost includes
+saved roots:273calls/358290tokens versus64/102271direct.
+
+Accepted source021 Hotpot128 frozen natural-hash panel, two repeats, planner48+
+helper36 versus base direct, official Hotpot scores, at most2816calls/twohours.
+Supervisor16674 waits authenticated RL24 readout release. Four launcher and three
+preparation fixtures passed. ALFWorld text engine CPU-ready; bounded policy-screen
+collector preparation underway, no ALF GPU job accepted. Native admissible lists
+leak executable affordances beyond feedback; both prospective policies receive
+identical lists and must be labeled affordance-assisted. Quota72%15:39, reserve10%.
+
+Editorial decision: the September11 advisor deck is a historical meeting cutoff.
+Keep these exploratory controls in the linked findings until fresh replication
+changes the main story; do not silently merge mixed-date results into that deck.
