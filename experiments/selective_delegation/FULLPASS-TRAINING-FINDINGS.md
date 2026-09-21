@@ -23,6 +23,12 @@ RL gain. Exact valid-plan list diversity was present in every
 batch but is syntactic, not semantic diversity. Consecutive parent blocks change
 task composition, so reward by update is explicitly **not** a learning curve.
 
+A [separate structural check](PLAN-STRUCTURE-FINDINGS.md) finds multiple valid
+step/dependency graphs in111/256groups. Among73groups with both correct and
+incorrect fully scored answers,38have multiple graphs and35the same graph.
+The candidates therefore are not uniformly structurally identical, but neither
+graph diversity nor different wording establishes useful semantic alternatives.
+
 Receipts record 9,847,733 prompt and 57,060 completion tokens. Summed returned
 call latency was 4,718.35 s; it must not be equated with GPU kernel time. The
 344.84 s difference from wall time includes optimization, checkpoint saving,
