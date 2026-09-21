@@ -1,5 +1,25 @@
 # Reading the research results
 
+## September21: planning, execution, and actual RL
+
+The [current selective-delegation findings](../experiments/selective_delegation/FINDINGS.md)
+separate a working training procedure from an answer-quality improvement.
+Question-plan SFT completed48 updates, followed by four fresh-rollout RL updates.
+On32 separately held validation questions, RL answered19/64 attempts correctly
+versus18/64 for SFT; all three wins involved recovery from helper-format failures.
+This is not convincing evidence of better reasoning. A frozen-trace comparison
+also found that removing original documents from the final model hurt rather
+than helped. Harder-question and second-dataset readouts are running; helper-only
+training and a simple format-reminder control are the accepted next comparison.
+
+Start with the experiment [reading guide](../experiments/selective_delegation/README.md),
+[training audit](../experiments/selective_delegation/RL-TRAINING-FINDINGS.md), and
+[next component comparison](../experiments/selective_delegation/HELPER-TRAINING-DRAFT.md).
+These are controlled question-list experiments, not yet learned Python recursion.
+The earlier evidence below remains historical context, not the current run queue.
+
+## Earlier completed research
+
 The [broader-data RL result](research-checkpoints/2026-09-12-broader-rl-learning-signal.md)
 now repeats across two training seeds: 437 and 436 correct out of 512 after
 eight RL updates, versus 422 before training and 427 after supervised training.

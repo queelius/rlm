@@ -33,6 +33,13 @@ the next [helper-only training comparison](HELPER-TRAINING-DRAFT.md). A
 [search-headroom diagnostic](SEARCH-HEADROOM.md) records why simply adding
 tree search is not yet the first priority.
 
+[NEXT-COMPONENT-RL.md](NEXT-COMPONENT-RL.md) describes the conditional next
+training comparison, not an already accepted run. If helper training offers no
+useful signal, [COMPOSITION-DIRECTION.md](COMPOSITION-DIRECTION.md) and the
+[local asset inventory](COMPOSITION-ASSETS.md) describe a possible alternative.
+Existing fixed-decomposition successes must not be relabeled as newly learned
+recursive composition.
+
 ## What was controlled in the initial screen
 
 Each question produces one initial attempt. Four alternatives start from that
