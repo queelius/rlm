@@ -34,6 +34,15 @@ Inspect whether responses obey the contract, whether feedback changes questions,
 and whether changes improve actual downstream answers. Full-source final rescue
 can mask question quality; report helper responses and final overrides too.
 
+There is a second important boundary: these questions often allow an entire
+dependency chain to be written beforehand using placeholders. The benchmark
+does not require an answer-dependent branch merely because several facts must
+be combined. This screen asks whether feedback improves execution of our current
+planner, not whether online planning is universally necessary. A null on this
+family does not rule out its value on tasks where an observed answer determines
+which different subproblem must be solved next. Such a task would be a separate
+future comparison, not a reason to relabel or expand this frozen screen.
+
 ## Matched policy pilot, conditional on a useful screen
 
 Use the same deterministic 16 exposed four-hop parents, two new repeats, and

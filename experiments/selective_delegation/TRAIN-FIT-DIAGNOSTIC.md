@@ -1,6 +1,7 @@
 # Frozen-policy TRAIN fit diagnostic
 
-Conditional CPU preparation only, not an accepted or launched GPU job. Does the
+Accepted September 21 at 14:20 UTC, queued after the direct-adapter control;
+collection had not started at acceptance. Does the
 last committed full-pass RL root improve terminal reward on its original training
 panel, under the identical execution contract? This separates observable reward
 fit from the question of held-development transfer; neither result alone identifies
@@ -50,3 +51,12 @@ more plausible follow-up than assuming no learning. If neither improves despite
 likelihood movement, weak terminal-reward learning remains an explanation before
 invoking tree search. The single common-seed diagnostic cannot distinguish these
 mechanisms conclusively; compare with the frozen-plan execution-noise readout.
+
+The accepted receipt is `R/RL-DIAGNOSTICS-DECISION-001.json`; sealed implementation
+is `R/source-016`. Supervisor `R/launch_rl_diagnostics.py` runs this readout,
+then the independent frozen-execution diagnostic, with CPU analyses between or
+alongside owners. Actual report target is `R/analysis-rl-trainfit-001.json`.
+The selected checkpoint is the completed full-pass checkpoint 0016, not a
+checkpoint selected for its development score. The fresh-panel result motivating
+this diagnostic is 56/128 versus SFT's 53/128, with a paired component interval
+of −1.67 to +6.25 percentage points: promising changes, but no established gain.

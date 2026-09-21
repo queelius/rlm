@@ -124,7 +124,8 @@ source: `audit_hotpot_dose.py`. Immutable paired audit and source/receipt hashes
 `analysis-hotpot-dose-001.json/.md` in the external study root. Original official
 reports remain at `analysis-sft-epoch1-hotpot-001/REPORT.json` and
 `analysis-transfer-hotpot-001/REPORT.json`.
-# New type audit — September21
+
+## New type audit — September21
 
 The [official-type reanalysis](HOTPOT-TYPES-FINDINGS.md) separates23bridge and
 9comparison parents without selecting new cases. On comparison questions, the

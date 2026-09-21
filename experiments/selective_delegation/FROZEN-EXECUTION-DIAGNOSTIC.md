@@ -1,7 +1,7 @@
 # Frozen execution-noise diagnostic
 
-CPU-prepared native collector; main alone seals and launches it. No GPU run has
-been launched by this preparation. The question is whether a fixed plan receives
+Accepted September 21 at 14:20 UTC, queued after the direct-adapter and TRAIN-fit
+readouts; collection had not started at acceptance. The question is whether a fixed plan receives
 unstable downstream EM reward, making single-execution RL credit noisy.
 
 It binds all 64 saved plans from `rl-fullpass-001/batch-0001`: 16 TRAIN parents
@@ -55,6 +55,12 @@ Reports are immutable JSON with a readable Markdown sibling. Focused CPU tests
 cover native PEFT enable state observed during forward passes, actual prediction
 binding, final trace shape, held-seed leakage, missing values, deterministic ties,
 receipt ordering, and reward-variability arithmetic.
+
+Acceptance is recorded in `R/RL-DIAGNOSTICS-DECISION-001.json`, binding sealed
+`R/source-016` and the authenticated serial supervisor `R/launch_rl_diagnostics.py`.
+The actual report target is `R/analysis-frozen-execution-001.json`. The helper and
+final policies are frozen throughout; no additional optimizer update is hidden
+in this diagnostic.
 
 ## A reward change that would not change this update
 

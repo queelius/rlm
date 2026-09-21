@@ -311,9 +311,11 @@ def compare(planner_report, direct_report, *, draws=20000, seed=SEED):
 
 
 def markdown(report):
-    token_ratio = report["contrasts"]["direct_base_minus_planner_sft"]["right_over_left_token_ratio"]
+    token_ratio = report["contrasts"]["direct_base_minus_planner_sft"][
+        "right_over_left_token_ratio"
+    ]
     lines = [
-        "# Four-hop MuSiQue: end-to-end policy comparison",
+        "# MuSiQue: end-to-end policy comparison",
         "",
         "Different prompts and execution architectures are compared explicitly; this is "
         "not a causal decomposition ablation.",
