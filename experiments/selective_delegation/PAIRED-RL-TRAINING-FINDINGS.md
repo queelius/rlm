@@ -3,7 +3,8 @@
 RL037 completed cleanly on 2026-09-21 at19:54:15 UTC: eight sampled blocks and
 eight optimizer updates, with no skipped all-zero block. The fixed endpoint is
 `sufficiency-rl-001/boundaries/sample-0008/checkpoint-0008`.
-Extra-SFT038 is still running; no held039/046 result is inferred here.
+Extra-SFT038 completed cleanly at20:12:16 UTC with eight matched updates.
+The combined sealed training audit passed; no held039/046 result is inferred here.
 
 This finite TRAIN competence/objective diagnostic is not a novel abstention method
 or a generalization result. **Each block contains different questions: the reward
@@ -90,16 +91,31 @@ including training/replay/checkpoint overhead). Native token totals are not lowe
 bounds. Teacher-forced SFT training cost is a separate category; matched examples
 and optimizer steps do not imply matched tokens, information or FLOPs.
 
-## Pending decision
+## Matched extra-SFT control completed
+
+Both runs start from the identical joint32 adapter with a fresh optimizer and
+LR2e−5. The control used the exact eight admitted RL blocks and eight updates:
+1,024 teacher-forced responses,12,580 masked gold target tokens, and1,074.04s
+owner wall time (17.90min). Its gradient norms range0.47982–0.88813 and recorded
+adapter deltas L2 range0.03100–0.08075. The source/checkpoint audit verifies the
+actual matched schedule, warmstart and final committed step8; no endpoint was
+substituted. All eight saved control adapter deltas were independently recomputed
+on CPU and match the receipts. Zero native generation calls for SFT means teacher forcing, not zero
+model compute. Relative to RL's4,165 nonzero-advantage emitted tokens, the control
+receives many more supervised target tokens; this is not an information/FLOP match.
+
+## Pending held decision
 
 The narrower question now is whether these eight actual updates improve the fixed
 held paired objective relative to joint32 and matched additional SFT. Continuing
 to raise TRAIN dose, changing reward or claiming better calibration is not
-justified by this changing-batch readout alone. Complete038 and predeclared039/046
+justified by this changing-batch readout alone. Predeclared039/046
 readouts are needed to distinguish extra supervised training from paired RL and to
 separate supported-answer accuracy from merely more abstention.
 
 Evidence under R (September21 selective-delegation run store):
+`analysis-sufficiency-rl-training-001.json/.md` is the completed combined audit
+(JSON SHA256 `7864b69eac4fab5b0c1e2c589303487f3859ce8bef71c39475496e4e359138b8`).
 `analysis-sufficiency-rl-only-001.json/.md` (sealed analyzer002, all native receipts,
 source hashes and boundaries); `analysis-sufficiency-rl-errors-001.json` with
 `analysis-sufficiency-rl-error-source-001.py`; and
