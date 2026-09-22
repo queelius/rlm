@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T13:13:00Z
+evidence_cutoff_utc: 2026-09-22T13:36:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -75,8 +75,8 @@ in these samples. This is a readiness finding, not an RL improvement.
 
 The failures concern quantities, ingredients and stopping before the goal is
 met; none are malformed action JSON in that TRAIN check. A bounded two-update
-RL pilot is now running to test
-whether learning from final success improves this execution. Its control uses
+RL pilot was launched to test
+whether learning from final success improves this execution. Its planned control uses
 the same starting model and training tasks, with extra supervised training
 matched to actual updates and approximately matched output-token counts.
 This does not match all computation or information. See the
@@ -90,11 +90,18 @@ become more likely; our preidentified mistake-and-correction example instead
 moves in the useful direction. These are observations on the same saved
 contexts, not fresh success rates. The
 [first-update note](TEXTCRAFT-TERMINAL-FIRST-UPDATE.md) separates those claims.
-The second training batch is running under the original accepted plan.
+The second training batch completed, but the run stopped before its second
+update: probabilities recomputed from saved trajectories exceeded the declared
+tolerance relative to the generation-time probabilities. The first checkpoint
+is preserved, but the failed endpoint is not being substituted into the planned
+RL-versus-SFT comparison. The exact failing gaps were not saved by the trainer;
+a targeted diagnostic is being prepared before choosing a repair. This is a
+numerical-method issue to investigate, not evidence that RL helps or hurts.
 
-A [same-panel base-model control](TEXTCRAFT-FRESH-BASE-CONTROL.md) is prepared
+A [same-panel base-model control](TEXTCRAFT-FRESH-BASE-CONTROL.md) is now running
 to distinguish useful new learning from merely avoiding harmful earlier
-demonstrations. It has not yet run and will not interrupt the RL/control sequence.
+demonstrations. It started after the failed RL sequence released the GPU and
+does not depend on that checkpoint. Its results are not yet available.
 
 A historical base-model comparison also helps interpret the demonstration
 gain. On 13 recorded matched attempts the revised trained model gains nine

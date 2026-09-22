@@ -1,5 +1,5 @@
 ---
-status: cpu_ready_not_gpu_accepted
+status: running
 prepared_date: 2026-09-22
 question: Does revised SFT improve over the untrained base on the same fresh goals?
 collection_cap_minutes: 120
@@ -43,8 +43,8 @@ seed and one recipe world; the overlap caveats in the
 
 Source067 is additive: the old source066 proposal and running RL/control sources
 are untouched. Main reviewed the changes and ran all three sealed focused tests
-(passed in 5.32 seconds). GPU acceptance and launch are still pending, after
-the already accepted training/control sequence.
+(passed in 5.32 seconds). At that preparation checkpoint, GPU acceptance and
+launch were pending; the subsequent launch is recorded below.
 
 R=`/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921`.
 Commands, pins and analysis arguments are in
@@ -54,3 +54,16 @@ Source manifest: `R/source-067-textcraft-fresh-base-120min/SOURCE.json`, SHA256
 `ce4ffd5243203417223d06490caf002664283bc3cb0aa86734efe4c4a62b774d`.
 Prepared output: `R/textcraft-fresh-base-002/PLAN.json`, SHA256
 `f3d451e3f271d3a52cbd600e74e9493f8192da9bcb9adc77697b531f13e5f178`.
+
+## Launch update, September 22 at 13:35 UTC
+
+The control is now running. The preceding RL job stopped at a numerical
+consistency check, so its dependent comparisons could not proceed. This
+independent comparison uses no RL checkpoint and can answer its original
+question while the numerical issue is investigated. Its first actual model
+response returned in 1.54 seconds. No base-model score is reported until the
+planned collection and native analysis finish.
+
+Accepted queue receipt: `R/INDEPENDENT-TRAINING-QUEUE-009.json`, SHA256
+`5e5a67259ba8eb7eae24b0d93ce930da2f04e6263cb677dbb80a4db7df76ad73`.
+The queue also runs the prepared analyzer after collection.
