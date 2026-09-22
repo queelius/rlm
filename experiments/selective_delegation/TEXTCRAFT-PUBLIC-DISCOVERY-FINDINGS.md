@@ -90,6 +90,33 @@ were much less dominated by repeated static-recipe queries.
   succeeded in 40 calls, while public teacher queried its target first but failed after 65 calls.
   The paired result contains a real loss, rather than an all-win narrative.
 
+## 2026-09-22 additive base044 audit
+
+No completed base-versus-public native comparator already existed. The original flat base044 run
+has 13 observed slots and three owner-cap missing slots, whereas public056 has all 16. On the 13
+known matched task/seed slots, public wins 9, loses 0, and ties 4. Across the full planned 16,
+public is fixed at 10/16; base is bounded at 1/16 to 4/16 because its three missing outcomes are
+unknown. The corresponding public-minus-base bound is **[+37.5, +56.25] points**—not an imputed
+point estimate or a new 16-parent confidence interval.
+
+The updated receipt asserts all 16 matched task/repeat/seed jobs, matching task and manifest bytes,
+model, sampling and seed rule, and PLAN-level global 96-call and 8192-output-token budgets. It also
+asserts the 8192-token context/no-truncation contract. On each of the 13 known first native calls it
+checks equal prompt/token sequence and request contract; the request-level `cap` is 256 output
+tokens, not the global call cap. Raw base episode/first-call and public first-call hashes are bound
+to their existing native-audit maps where those maps contain the path. Base has no adapter; public
+has the public-teacher adapter, which is the intended package difference. The collectors are not
+claimed byte/AST identical, so this is evidence against “only repair of privileged-teacher damage,”
+not a randomized estimate of which SFT component caused the improvement. Receipt:
+`analysis-textcraft-base044-public056-003.json` (SHA-256
+`e3bdacf83da5e767b66a99ef14565c37fa4ce74746352c0673f1231ef4674b04`).
+
+A base-only readout on the frozen fresh 16-parent panel would materially strengthen this answer if
+it uses the same prompt/runtime/seeds and completes all slots: it would estimate the package over
+base without base044's owner-cap ambiguity. It would still not isolate training targets, teacher
+order, or recursion, so it should be admitted as a focused baseline control rather than a novelty
+claim.
+
 ## Provenance and next question
 
 The primary comparator is
