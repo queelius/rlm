@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T06:22:00Z
+evidence_cutoff_utc: 2026-09-22T06:48:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -59,13 +59,18 @@ one action. No recursive helper was called at all. Its score differences therefo
 cannot demonstrate a benefit from recursion. The run reached its time cap; seven
 of 32 planned outcomes are missing or unknown. See the [trace-based analysis](TEXTCRAFT-PILOT-FINDINGS.md).
 
-The running comparison gives the same model a clearer final reminder to use the
-current inventory, return one action, and finish when the goal is met. It keeps
-the strict parser, tools and budgets unchanged. A fixed small supervised run is
-queued separately: 366 public query/craft/finish examples from 32 training tasks,
-one epoch, 23 updates. The follow-up will distinguish a prompt improvement from
-a weight improvement. These demonstrations teach basic task execution, not
-recursive planning.
+The completed reminder comparison tells the same model to use current inventory,
+return one action, and finish when the goal is met. It solves none of 16 trials.
+On the 13 trials with observed original-baseline outcomes, malformed replies
+fall from 118 to 4, but native action errors rise from 212 to 692. Three reminder
+trials reach sufficient target inventory; none chooses to finish. Better format
+does not establish better task performance. See the [qualified comparison](TEXTCRAFT-INSTRUCTION-FINDINGS.md).
+
+A separate supervised run has completed one epoch and 23 updates on 366
+query/craft/finish examples from 32 training tasks. Its evaluations are queued;
+we do not yet know whether it improves task success. They will compare original
+and reminder prompts with the fixed trained weights. These demonstrations
+teach basic task execution, not recursive planning.
 
 A [training-data audit](TEXTCRAFT-TRAINING-COVERAGE.md) sharpens that limitation:
 30 of 32 demonstrations begin with an intermediate recipe chosen by the

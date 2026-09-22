@@ -1,5 +1,13 @@
 # Research ledger — plan: experiments/selective_delegation/PLAN.md
 
+2026-09-22 06:48 UTC:049 complete0/16, independently replayed all native records.
+Matched13:0wins1loss12ties,3baselineunknown; schemaerrors118->4 butnativeerrors
+212->692. Three reminder episodes reachsufficientinventory,259furthercalls,
+nofinish. Counterfactual nativefinish is not modelsuccess.048 complete23updates
+06:46:40,182.41trainingsec/202.06ownersec.051 auto-started, firstnative
+06:46:54.46->56.75; mainverified37availablecalls06:47:35. No transportloop.
+Accepted053 then052 remainfixed. Quota41%06:43,next06:59,reserve10%.
+
 2026-09-22 06:30 UTC: deeper046 readout complete6/7/6 correctpairs/64 for
 warm/RL/extraSFT; no established joint improvement. 049 prompt-only control
 running796 real returns/0 transport errors at06:28. Independent queue accepted
