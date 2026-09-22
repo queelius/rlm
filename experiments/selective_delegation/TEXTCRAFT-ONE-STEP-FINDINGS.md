@@ -1,7 +1,7 @@
 ---
 question_id: textcraft-terminal-reward-one-step
 status: exploratory_complete
-evidence_cutoff_utc: 2026-09-22T17:04:38Z
+evidence_cutoff_utc: 2026-09-22T17:09:12Z
 claim: no_demonstrated_one_step_rl_advantage
 next_decision: repair_continuation_interface_and_complete_teacher_seed_replication
 ---

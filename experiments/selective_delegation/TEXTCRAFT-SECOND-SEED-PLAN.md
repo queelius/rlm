@@ -1,5 +1,15 @@
 # Second shared training seed: teacher-package replication
 
+## Training completed; evaluations running, September 22 at 17:12 UTC
+
+Both fixed training runs completed normally: approximately 201 seconds for the
+earlier teacher and 207 seconds for the revised teacher. Each reached its fixed
+23-update endpoint. Their paired evaluations remain unfinished, so no success
+comparison is reported yet. The first evaluation returned its first real reply
+in 2.08 seconds and had 16 returned calls with no unavailable replies at 17:12:50.
+After both evaluations and native analysis, queue 014 will run the repaired RL
+continuation automatically.
+
 ## Accepted execution, September 22 at 15:48 UTC
 
 The comparison is accepted and waiting behind the RL continuation and its

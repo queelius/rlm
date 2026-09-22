@@ -1,5 +1,32 @@
 # One additional FP16 training step, explicit continuation
 
+## Repaired attempt accepted, September 22 at 17:12 UTC
+
+Queue 014 is now waiting behind the complete second-seed queue 013. It uses the
+same scientific settings as the failed attempt. The repair restores the exact
+compatible analyzer from the earlier training source; no numerical tolerance,
+reward, learning rate, input task or checkpoint-selection rule changes.
+
+The saved-plan regression reproduced the failure; main verified the repaired
+snapshot with the actual training plan and native 32-attempt/770-call replay. Six focused
+continuation/composition tests passed in 12.03 seconds; the endpoint test passed
+in 0.09 seconds. All 75 unique proposed job pins matched. The only changed
+common training Python file is the analyzer; the only training PLAN difference
+is its source identity. The new snapshot includes the regression fixture.
+Source-level verification is not a claim that the future GPU update succeeds.
+
+The receipt is `INDEPENDENT-TRAINING-QUEUE-014.json`, SHA256
+`4c7945a6ded49fbc40f6f5756e16d27c46b200acfd975aa4e03489db036ffa27`.
+Training output is `textcraft-terminal-fp16-continuation-002`; readout is
+`textcraft-fresh-fp16-cp2-bf16-002`; final native report is
+`analysis-textcraft-fp16-cp2-minus-cp1-002.json`. Each uses the existing evidence
+root below. Five hours of waiting and five hours of execution are separately
+capped, with the allocation deadline still limiting both. Training retains its
+three-hour cap, evaluation one hour, and CPU analysis twenty minutes.
+
+The failed 001 attempt, source and dependent failures remain intact. Only a
+genuine new, finite optimizer step may produce an eligible checkpoint2.
+
 ## First attempt failed before collection, September 22 at 17:05 UTC
 
 The restored model passed the finite-loss/finite-gradient backward probe, with

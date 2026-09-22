@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T17:04:38Z
+evidence_cutoff_utc: 2026-09-22T17:12:50Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -39,16 +39,17 @@ A separate continuation tests a numerical repair before attempting one more RL
 update. It preserves the first update and optimizer state, collects new training
 attempts, and evaluates the resulting model with the original evaluation
 arithmetic. Its first attempt passed a finite-gradient check but stopped on a
-missing validation function before new rollouts; that interface is being repaired.
+missing validation function before new rollouts; a verified repair is now queued.
 A smaller numerical mismatch is encouraging but is not itself an improvement
 at solving tasks.
 
-The final prepared comparison repeats both demonstration-based training runs
+The second-seed comparison repeats both demonstration-based training runs
 with one new shared random seed. The examples, training settings and evaluation
 panel stay fixed. If the revised demonstrations win again, the original result
 is less likely to depend on a lucky training shuffle or initialization. This
 still would not isolate query order from the other differences between the two
-teaching packages, or establish transfer to another benchmark.
+teaching packages, or establish transfer to another benchmark. Both training
+runs have now completed; their paired evaluations are still running.
 
 ### Completed evidence
 
@@ -136,8 +137,9 @@ contexts, not fresh success rates. The
 The second training batch completed, but the run stopped before its second
 update: probabilities recomputed from saved trajectories exceeded the declared
 tolerance relative to the generation-time probabilities. The first checkpoint
-is preserved, but the failed endpoint is not being substituted into the planned
-RL-versus-SFT comparison. A completed diagnostic has now reconstructed all
+is preserved; an explicit amendment subsequently qualified that sole completed
+update for the separate one-step diagnostic, without relabeling the failed run.
+A completed diagnostic has now reconstructed all
 712 calls: the average absolute log-probability difference is small (0.00243),
 but the largest is 0.5, above the fixed 0.25 limit. Replaying tokens with the
 same cached computation used during generation reproduces its scores exactly
@@ -152,12 +154,15 @@ has been relaxed and no second update has been claimed. See the
 [precision probe](TEXTCRAFT-PRECISION-PROBE.md).
 
 A bounded [one-additional-update continuation](TEXTCRAFT-FP16-CONTINUATION-PLAN.md)
-is now accepted behind the running one-step comparison. It restores checkpoint1
-and its optimizer, uses fresh FP16 training attempts, and then tests checkpoint2
-using the same BF16 evaluation settings as checkpoint1. This is a planned test
-of the numerical repair and usefulness of the next update, not a completed
-training result. The [one-step comparison](TEXTCRAFT-STOPPED-STEP1-READOUT.md)
-and this continuation have automatic native analyses and separate time caps.
+passed its finite-gradient probe but failed before collecting new attempts:
+its source snapshot contained an older analysis dependency without a required
+validation function. The repair preserves the failed attempt and keeps the
+planned scientific comparison unchanged: restore checkpoint1 and its optimizer,
+collect fresh FP16 attempts, then evaluate a successfully updated checkpoint2
+with the original BF16 settings. No second RL update is claimed. The completed
+[one-step comparison](TEXTCRAFT-ONE-STEP-FINDINGS.md) shows no demonstrated gain;
+the independent teacher-seed replication is using the GPU while the repaired
+continuation waits for its scheduled turn.
 
 The [same-panel base-model control](TEXTCRAFT-FRESH-BASE-FINDINGS.md) is complete:
 the unadapted model solves **6/32**, the earlier teaching package **1/32**, and

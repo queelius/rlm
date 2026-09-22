@@ -9,8 +9,8 @@ import analyze_textcraft_endpoint_fresh as comparison
 import eval_textcraft_endpoint_fresh as reader
 
 c, read, sha = reader.c, reader.control.read, reader.c.inputs.sha
-TRAINING = c.ROOT / "textcraft-terminal-fp16-continuation-001"
-TRAIN_PLAN_SHA = "8d4e087f1f8945b799bc30771d3cb0ad16771b5107ad516f20a6a4a580aa1306"
+TRAINING = c.ROOT / "textcraft-terminal-fp16-continuation-002"
+TRAIN_PLAN_SHA = "8de589b04f52907c4565bb0e7ac6f2cb7483e55deea50d3e3652d7d151c343b4"
 CP1_OUTPUT = c.ROOT / "textcraft-fresh-stopped-rl1-001"
 AMENDMENT = c.ROOT / "TEXTCRAFT-STOPPED-STEP1-AMENDMENT-001.json"
 
