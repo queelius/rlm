@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T10:00:00Z
+evidence_cutoff_utc: 2026-09-22T10:45:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -38,8 +38,27 @@ calls,770 of them recipe queries, with no transport failures. This one fixed
 instruction package does not recover the demonstration gain; it is not a test
 of every possible prompt. The [control report](TEXTCRAFT-PROCEDURE-CONTROL-FINDINGS.md)
 records all three paired losses and the uncertainty interval.
-The current follow-up asks whether the advantage survives changed recipes.
-A fresh-task comparison is being prepared without inspecting model outcomes.
+The changed-recipe comparison is now complete. In a newly generated recipe
+world, the revised-teaching model again solves **10/16**, versus **3/16** for the
+old teaching procedure. Here the paired comparison has seven wins and no losses;
+the task-cluster interval for the improvement is **12.5 to 75 percentage points**.
+Both models receive the same new recipes through tool replies and the same
+starting supplies. This strengthens the evidence beyond the original recipe
+world, but it still uses the same eight goal names and one new world. We changed
+dependencies and starting supplies, so scores across the two worlds are not a
+controlled comparison of equally difficult tasks.
+
+The revised model uses fewer calls in the new world (547 versus700), but more
+summed model-call time (about24 versus20 minutes). Better task performance is
+therefore not an automatic speed improvement. No helpers run in either arm.
+See the [changed-world result](TEXTCRAFT-CHANGED-WORLD-FINDINGS.md).
+
+A paired comparison on16 newly selected goal names in the original world is
+now accepted and queued. Its tasks were frozen before collecting model outcomes;
+most still share intermediate recipes with training. Separately, the GPU is
+sampling four attempts on each of eight training tasks to check whether terminal
+success gives RL useful within-task reward variation. That is a readiness test,
+not an RL improvement. A small two-update pilot is being prepared conditionally.
 See the [detailed finding](TEXTCRAFT-PUBLIC-DISCOVERY-FINDINGS.md).
 
 The [remaining-failure audit](TEXTCRAFT-REMAINING-FAILURES.md) separates learning

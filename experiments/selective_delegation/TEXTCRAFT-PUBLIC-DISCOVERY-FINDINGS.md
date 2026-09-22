@@ -105,3 +105,13 @@ readout with public-only prompts, preserving the action budget and scoring.  It 
 the learned root-first, query-then-craft protocol transfers beyond this shared recipe world.  If
 that panel does not retain a directional benefit, retire the broad discovery/generalization story
 and keep the present result as an exposed competence/protocol finding.
+
+## Follow-up, September22 at10:45 UTC
+
+The [changed-recipe-world comparison](TEXTCRAFT-CHANGED-WORLD-FINDINGS.md) now
+retains the advantage: public10/16 versus privileged3/16, seven paired wins and
+no losses. It uses one new recipe world but the same eight goal names. The
+cross-world task difficulty is not controlled, and this is not an additional
+training seed. A separately frozen fresh16-goal comparison in the original
+world is accepted next. These later findings extend the evidence; they do not
+change the original panel's exposure or establish query-order-only causality.

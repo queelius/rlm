@@ -7,6 +7,16 @@ is the starting point. We can train the model to write subquestions and execute
 real reinforcement-learning updates. We have not yet established that this
 system answers new questions better than simpler, cheaper alternatives.
 
+The current crafting lead is more encouraging: showing how to discover needed
+information, rather than only an expert's chosen actions, raises success from
+3/16 to10/16 on an exposed panel. A completed comparison with newly generated
+recipes also gives3/16 versus10/16, with seven paired wins and no losses. This
+is a teaching-package result using one training seed and eight goal names, not
+proof of a recursion benefit. A new-goal comparison is queued, and training-task
+reward diversity is being measured before attempting terminal-reward RL. See
+the [current synthesis](../experiments/selective_delegation/RESEARCH-UPDATE-20260922.md)
+for controls, costs and limits on the claim.
+
 On 64 new MuSiQue questions, sampled twice, the supervised planner gets 53 of
 128 answers correct; 16 RL updates raise this to 56, while direct answering gets
 54. The paired improvement interval includes zero. Five further RL updates give
