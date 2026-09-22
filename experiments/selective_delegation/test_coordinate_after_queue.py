@@ -82,6 +82,27 @@ def test_dead_supervisor_allows_failed_preflight_but_waits_for_extant_owner(tmp_
     assert gate.ready(dead, args.previous_create_time, outputs)
 
 
+def test_explicit_long_wait_does_not_bypass_live_predecessor_or_allow_unbounded_wait(tmp_path):
+    process = psutil.Process()
+    args = fixture_args(tmp_path, process.pid, process.create_time())
+    args.receipt = tmp_path / "accepted-long-wait.json"
+    receipt = dict(
+        status="accepted",
+        maximum_seconds=300,
+        wait_seconds=28800,
+        jobs=[dict(name="bounded", argv=[sys.executable, "-c", "pass"], cap_seconds=10, pins={})],
+    )
+    args.receipt.write_text(json.dumps(receipt))
+    outputs, _ = gate.validate(args)
+    assert not gate.ready(process.pid, process.create_time(), outputs)
+    gate.main(args)
+    assert not args.output.exists()
+    for invalid in (0, 43201, True):
+        args.receipt.write_text(json.dumps(dict(receipt, wait_seconds=invalid)))
+        with pytest.raises(ValueError, match="finite capped jobs"):
+            gate.validate(args)
+
+
 def test_executes_accepted_cpu_jobs_without_nonexistent_last_owner(tmp_path, monkeypatch):
     args = fixture_args(tmp_path, 1_000_000_000, time.time() - 10)
     args.receipt = tmp_path / "accepted.json"

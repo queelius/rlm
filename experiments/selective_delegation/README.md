@@ -3,7 +3,7 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September22 research update](RESEARCH-UPDATE-20260922.md).
 
-Current checkpoint, September 22, 15:12 UTC: the new-goal comparison is complete.
+Current checkpoint, September 22, 15:49 UTC: the new-goal comparison is complete.
 Revised teaching solves **15/32**, versus **6/32 without adaptation** and **1/32
 with the earlier teaching package**. See the [base-controlled findings](TEXTCRAFT-FRESH-BASE-FINDINGS.md)
 for paired uncertainty, exposure and format-error qualifications. This is the
@@ -16,6 +16,15 @@ of the sole committed checkpoint is running; one matched supervised update,
 its evaluation and native three-arm analysis are accepted and queued. No RL
 task-performance improvement is claimed yet. A [serving test](TEXTCRAFT-BATCH-QUALIFICATION-FINDINGS.md)
 also found a 2.75× throughput gain from four concurrent fixed requests.
+
+Two further bounded comparisons are accepted for automatic execution: a
+[numerically revised RL continuation](TEXTCRAFT-FP16-CONTINUATION-PLAN.md), then
+a [second training-seed replication](TEXTCRAFT-SECOND-SEED-PLAN.md) of both teaching
+packages. They test whether RL can make another valid update and whether the
+strongest demonstration result depends on the original training randomness.
+Queued work is not a completed result. The shared account showed 13% remaining
+at 15:48 UTC; the requested 10% reserve remains in force. Local jobs do not need
+ongoing Codex generation to execute, checkpoint and produce native analyses.
 
 Historical checkpoint, September 22, 10:45 UTC: the [changed-recipe-world comparison](TEXTCRAFT-CHANGED-WORLD-FINDINGS.md)
 is complete: public-discovery teaching solves10/16 versus3/16, with seven paired

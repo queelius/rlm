@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T15:30:00Z
+evidence_cutoff_utc: 2026-09-22T15:46:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -27,6 +27,31 @@ publication_status: mechanisms_to_test_not_established_architecture_advantage
   seed would strengthen this case. It is not yet a publishable novelty claim.
 
 ## New lead: demonstrate how to discover the information needed to act
+
+### What is running next, and what will it tell us?
+
+The current evaluation measures the sole completed RL update on the same 32
+task-and-seed combinations as the earlier trained model. Next comes one extra
+supervised update, matched to the RL update's 12,074 credited output tokens,
+followed by the same evaluation. This separates a benefit from additional
+training from a benefit specific to the reward-based update. It does not match
+the training histories or total computation, and the evaluation panel has
+already been examined.
+
+A separate continuation tests a numerical repair before attempting one more RL
+update. It preserves the first update and optimizer state, collects new training
+attempts, and evaluates the resulting model with the original evaluation
+arithmetic. A smaller numerical mismatch is encouraging but is not itself an
+improvement at solving tasks.
+
+The final prepared comparison repeats both demonstration-based training runs
+with one new shared random seed. The examples, training settings and evaluation
+panel stay fixed. If the revised demonstrations win again, the original result
+is less likely to depend on a lucky training shuffle or initialization. This
+still would not isolate query order from the other differences between the two
+teaching packages, or establish transfer to another benchmark.
+
+### Completed evidence
 
 Changing the crafting demonstrations raised success from **3 to 10 out of 16
 attempts** with the original prompt. The old demonstrations often began by
