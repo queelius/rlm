@@ -12,8 +12,15 @@ information, rather than only an expert's chosen actions, raises success from
 3/16 to10/16 on an exposed panel. A completed comparison with newly generated
 recipes also gives3/16 versus10/16, with seven paired wins and no losses. This
 is a teaching-package result using one training seed and eight goal names, not
-proof of a recursion benefit. A new-goal comparison is queued, and training-task
-reward diversity is being measured before attempting terminal-reward RL. See
+proof of a recursion benefit. The completed new-goal comparison now gives
+**15/32 for revised teaching, 1/32 for the older teaching, and 6/32 without
+adaptation**. Revised versus base gains ten attempts and loses one; the
+task-cluster interval for its 28.1-point gain is 12.5 to 46.9 points. The panel
+shares a recipe world and prerequisites with training, and the base has many
+more format errors. This is promising exploratory transfer, not an isolated
+decomposition mechanism. One terminal-reward RL update is saved; a numerical
+check stopped the second. An explicit one-step evaluation and matched supervised
+control are now running/queued, with no measured RL gain yet. See
 the [current synthesis](../experiments/selective_delegation/RESEARCH-UPDATE-20260922.md)
 for controls, costs and limits on the claim.
 

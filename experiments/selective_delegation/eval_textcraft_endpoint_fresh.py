@@ -73,19 +73,36 @@ def released_terminal(output):
     return control.read(path), {str(p): c.inputs.sha(p) for p in (owners[0], path)}
 
 
-def endpoint(kind, training_output):
+def endpoint(kind, training_output, *, stopped_amendment=None):
     training_output = training_output.resolve()
     training_path = training_output / "PLAN.json"
     training = control.read(training_path)
     rl_output = training_output if kind == "rl" else Path(training["rl_output"]).resolve()
-    rl_plan, budgets, rl_pins = control.rl_dose(rl_output)
+    if stopped_amendment:
+        import textcraft_stopped_amendment as amendment
+
+        rl_plan, budgets, rl_pins = amendment.qualify(stopped_amendment, rl_output)
+    else:
+        rl_plan, budgets, rl_pins = control.rl_dose(rl_output)
     if not budgets:
         raise ValueError("zero RL updates; no duplicated warm-policy readout")
     steps = len(budgets)
     terminal, pins = released_terminal(training_output)
     adapter = Path(terminal["endpoint"]).resolve()
     state, commit = control.read(adapter / "STATE.json"), control.read(adapter / "COMMIT.json")
-    validate_endpoint(kind, terminal, state, commit, steps)
+    if stopped_amendment and kind == "rl":
+        amendment.validate_stopped(
+            terminal, control.read(rl_output / "SUMMARY.json"), state, commit
+        )
+    else:
+        validate_endpoint(kind, terminal, state, commit, steps)
+    if (
+        stopped_amendment
+        and kind == "matched_sft"
+        and training.get("stopped_run_amendment")
+        != dict(path=str(stopped_amendment.resolve()), sha256=c.inputs.sha(stopped_amendment))
+    ):
+        raise ValueError("control not bound to the exact stopped-run amendment")
     if kind == "rl":
         expected = (
             training_output
@@ -143,7 +160,7 @@ def endpoint(kind, training_output):
         raise ValueError("endpoint base/LoRA configuration differs")
     for path in (training_path, adapter / "COMMIT.json", adapter / "STATE.json"):
         pins[str(path)] = c.inputs.sha(path)
-    return dict(
+    result = dict(
         path=str(adapter),
         sha256=commit["files"]["adapter_model.safetensors"],
         commit_sha256=c.inputs.sha(adapter / "COMMIT.json"),
@@ -156,6 +173,11 @@ def endpoint(kind, training_output):
         rl_receipt_sha256=rl_pins,
         public056_warm_sha256=control.WARM_SHA,
     )
+    if stopped_amendment:
+        result["stopped_run_amendment"] = dict(
+            path=str(stopped_amendment.resolve()), sha256=c.inputs.sha(stopped_amendment)
+        )
+    return result
 
 
 def bound_plan(template, kind, binding, training_output):
@@ -203,8 +225,22 @@ def prepare(args):
     template, tasks = template_inputs()
     if args.validate_inputs_only:
         return template, tasks, None
-    binding = endpoint(args.kind, args.training_output)
+    amendment = getattr(args, "stopped_amendment", None)
+    binding = endpoint(args.kind, args.training_output, stopped_amendment=amendment)
     plan = bound_plan(template, args.kind, binding, args.training_output.resolve())
+    if amendment:
+        import textcraft_stopped_amendment
+
+        plan["stopped_run_amendment"] = binding["stopped_run_amendment"]
+        plan["endpoint_selection"] = (
+            "Explicit stopped-run one-step amendment; only committed nonzero checkpoint, "
+            "not outcome-selected; failed RL002 remains unusable as a normal endpoint."
+        )
+        condition = "fresh_" + args.kind + "_stopped_step1"
+        plan["conditions"] = [condition]
+        plan["jobs"] = [dict(job, condition=condition) for job in plan["jobs"]]
+        module = Path(textcraft_stopped_amendment.__file__)
+        plan["source_sha256"][str(module)] = c.inputs.sha(module)
     path = args.output / "PLAN.json"
     if path.exists():
         if control.read(path) != plan:
@@ -221,6 +257,7 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--prepare-only", action="store_true")
     parser.add_argument("--validate-inputs-only", action="store_true")
+    parser.add_argument("--stopped-amendment", type=Path)
     args = parser.parse_args()
     plan, tasks, binding = prepare(args)
     if args.validate_inputs_only:

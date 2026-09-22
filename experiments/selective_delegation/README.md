@@ -3,7 +3,21 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September22 research update](RESEARCH-UPDATE-20260922.md).
 
-Current checkpoint, September 22, 10:45 UTC: the [changed-recipe-world comparison](TEXTCRAFT-CHANGED-WORLD-FINDINGS.md)
+Current checkpoint, September 22, 15:12 UTC: the new-goal comparison is complete.
+Revised teaching solves **15/32**, versus **6/32 without adaptation** and **1/32
+with the earlier teaching package**. See the [base-controlled findings](TEXTCRAFT-FRESH-BASE-FINDINGS.md)
+for paired uncertainty, exposure and format-error qualifications. This is the
+strongest current lead, not proof of a recursion benefit.
+
+RL completed one update, then stopped at a numerical check before its second.
+The [precision probe](TEXTCRAFT-PRECISION-PROBE.md) identifies a promising way to
+reduce the mismatch. An [explicit stopped-run evaluation](TEXTCRAFT-STOPPED-STEP1-READOUT.md)
+of the sole committed checkpoint is running; one matched supervised update,
+its evaluation and native three-arm analysis are accepted and queued. No RL
+task-performance improvement is claimed yet. A [serving test](TEXTCRAFT-BATCH-QUALIFICATION-FINDINGS.md)
+also found a 2.75× throughput gain from four concurrent fixed requests.
+
+Historical checkpoint, September 22, 10:45 UTC: the [changed-recipe-world comparison](TEXTCRAFT-CHANGED-WORLD-FINDINGS.md)
 is complete: public-discovery teaching solves10/16 versus3/16, with seven paired
 wins and no losses. This is one new recipe world with the same eight exposed
 goal names, not a fresh-goal test or evidence across many worlds. It uses fewer

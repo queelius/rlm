@@ -252,7 +252,13 @@ def run(args):
         raise ValueError("prospective row order/token inventory changed")
     if not args.rl_output or not args.output or not 0 < args.hours <= 0.5:
         raise ValueError("RL output, new control output and at most30minutes required")
-    rl_plan, budgets, pins = rl_dose(args.rl_output.resolve())
+    amendment = getattr(args, "stopped_amendment", None)
+    if amendment:
+        import textcraft_stopped_amendment
+
+        rl_plan, budgets, pins = textcraft_stopped_amendment.qualify(amendment, args.rl_output)
+    else:
+        rl_plan, budgets, pins = rl_dose(args.rl_output.resolve())
     owners = list(args.rl_output.glob("OWNER-*.json"))
     if owners and actual["frozen_utc_epoch"] >= min(read(x)["started"] for x in owners):
         raise ValueError("teacher ordering must be frozen before RL training")
@@ -292,6 +298,13 @@ def run(args):
         caveat="Update/target-token matched with whole-row overshoot, not matched "
         "states, information, prompt compute or FLOPs; SFT T1 vs RL T0.5.",
     )
+    if amendment:
+        plan["stopped_run_amendment"] = dict(
+            path=str(amendment.resolve()), sha256=p.campaign.sha(amendment)
+        )
+        module = Path(textcraft_stopped_amendment.__file__)
+        plan["source_sha256"][str(module)] = p.campaign.sha(module)
+        plan["caveat"] += " Explicit stopped-RL002 checkpoint1 control, not completed two-step RL."
     if (output / "PLAN.json").exists():
         if read(output / "PLAN.json") != plan:
             raise ValueError("prepared immutable control PLAN differs")
@@ -452,4 +465,5 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path)
     parser.add_argument("--hours", type=float, default=0.5)
     parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument("--stopped-amendment", type=Path)
     run(parser.parse_args())

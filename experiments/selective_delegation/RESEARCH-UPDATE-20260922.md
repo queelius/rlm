@@ -1,11 +1,30 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T15:04:00Z
+evidence_cutoff_utc: 2026-09-22T15:12:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
 
 # September 22: separate learning to answer from learning when to act
+
+## At a glance
+
+- **The strongest lead is how we teach information gathering.** Demonstrations
+  that discover needed ingredients through the same tools available to the
+  student beat the earlier demonstrations on the original tasks, changed recipes
+  and newly selected goals. On the new-goal panel, revised training solves 15/32,
+  versus 6/32 without adaptation and 1/32 with the earlier demonstrations.
+- **This is not yet evidence that recursion helps.** These comparisons use no
+  helper agents. Longer plans remain difficult, and format improvements account
+  for part of the difference from the unadapted model.
+- **The current RL experiment has one completed update, not a demonstrated
+  improvement.** A numerical mismatch stopped the second update. A focused
+  precision test reduced that mismatch; a separate, explicitly labeled evaluation
+  of the one completed update is now testing whether its weight changes help.
+- **The next contribution to test is a mechanism, not just a higher score:**
+  whether showing how to discover subproblems helps more than showing an expert's
+  preselected sequence. A tighter demonstration comparison and another training
+  seed would strengthen this case. It is not yet a publishable novelty claim.
 
 ## New lead: demonstrate how to discover the information needed to act
 

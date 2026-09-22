@@ -7,6 +7,16 @@ import analyze_textcraft_profiles as profiles
 import eval_textcraft_endpoint_fresh as reader
 
 
+def binding_from_plan(plan, kind):
+    amendment = plan.get("stopped_run_amendment")
+    path = None
+    if amendment:
+        path = Path(amendment["path"])
+        if reader.c.inputs.sha(path) != amendment["sha256"]:
+            raise ValueError("saved stopped-run amendment changed")
+    return reader.endpoint(kind, Path(plan["training_output"]), stopped_amendment=path)
+
+
 def match_slots(plans):
     reference = plans[0]
 
@@ -45,9 +55,7 @@ def analyze(warm, rl, sft):
     if c.inputs.sha(warm / "PLAN.json") != reader.TEMPLATE_SHA:
         raise ValueError("exact accepted007 public056 baseline required")
     for plan, kind in zip(plans[1:], ("rl", "matched_sft"), strict=True):
-        if plan.get("endpoint_kind") != kind or plan["adapter"] != reader.endpoint(
-            kind, Path(plan["training_output"])
-        ):
+        if plan.get("endpoint_kind") != kind or plan["adapter"] != binding_from_plan(plan, kind):
             raise ValueError("saved final endpoint identity changed")
     match_slots(plans)
     if (
@@ -56,6 +64,9 @@ def analyze(warm, rl, sft):
         or plans[1]["adapter"]["rl_receipt_sha256"] != plans[2]["adapter"]["rl_receipt_sha256"]
     ):
         raise ValueError("RL and extra-SFT dose/ancestry mismatch")
+    stopped = plans[1].get("stopped_run_amendment")
+    if stopped != plans[2].get("stopped_run_amendment"):
+        raise ValueError("both comparison arms must share the stopped-run amendment")
     tokenizer = AutoTokenizer.from_pretrained(
         plans[0]["model"], local_files_only=True, trust_remote_code=False
     )
@@ -71,7 +82,10 @@ def analyze(warm, rl, sft):
         arm.pop("paired", None)
         arm.pop("depth_strata", None)
     return dict(
-        schema="textcraft-fresh16-terminal-training-comparison-v1",
+        schema="textcraft-fresh16-stopped-step1-comparison-v1"
+        if stopped
+        else "textcraft-fresh16-terminal-training-comparison-v1",
+        stopped_run_amendment=stopped,
         arms=arms,
         comparisons={
             name: profiles.compare(plans[0]["jobs"], rows[a], rows[b])
@@ -90,7 +104,12 @@ def analyze(warm, rl, sft):
             units="Root task with both seeds; shared recipes not independent",
             unknown="Never imputed zero; full effect/CI unavailable if any missing",
         ),
-        caveat="Fixed terminal policies, no checkpoint selection. Existing fresh007 panel "
+        caveat=(
+            "Explicit stopped-RL002 one-step amendment; failed original remains unusable. "
+            if stopped
+            else "Fixed terminal policies, no checkpoint selection. "
+        )
+        + "Existing fresh007 panel "
         "reused; not newly untouched. Token/update matching is not FLOP, history, "
         "information or objective matching.",
         source_sha256={
