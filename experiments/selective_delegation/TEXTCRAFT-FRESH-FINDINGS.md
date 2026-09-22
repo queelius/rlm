@@ -79,6 +79,12 @@ model-call time. The higher raw error count partly reflects attempting much
 more crafting; the rejected fraction also rises, from 119/259 to 550/797.
 Neither quantity establishes the cause of the success improvement.
 
+The [trace audit](TEXTCRAFT-FRESH-BEHAVIOR-FINDINGS.md) shows a more specific
+change: the first recipe query targets the goal in 32/32 revised-model attempts,
+versus 5/32 before. Queries for nonexistent item names fall from 586 to 3. The
+model has learned a much more reliable discovery start; that alone does not
+solve the later ingredient and inventory problems.
+
 All 64 attempts have verified outcomes and zero transport failures. The earlier
 model finishes 27 attempts, reaches the call limit three times and the context
 limit twice. The revised model finishes 29 and reaches the context limit three

@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 import analyze_textcraft_fresh as teachers
@@ -9,6 +10,36 @@ import analyze_textcraft_profiles as profiles
 import eval_textcraft_fresh_base as reader
 
 audit = profiles.audit
+
+
+def actual_time_limits(output):
+    calls = [audit.read(path) for path in (output / "calls").glob("*.json")]
+    effective = []
+    potential_time_stops = 0
+    for call in calls:
+        limit = call.get("effective_max_time")
+        if call["available"]:
+            audit.require(
+                isinstance(limit, (int, float)) and math.isfinite(limit) and 0 < limit <= 90,
+                "actual native per-call time cap changed",
+            )
+        if limit is not None:
+            effective.append(limit)
+        if (
+            call["available"]
+            and call["finish_reason"] == "length_or_time"
+            and len(call["output_token_ids"]) < call["request"]["cap"]
+        ):
+            potential_time_stops += 1
+    return dict(
+        recorded_calls=len(calls),
+        calls_with_effective_limit=len(effective),
+        minimum_effective_seconds=min(effective) if effective else None,
+        deadline_reduced_limits=sum(t < 90 for t in effective),
+        potential_time_limited_non_eos_calls=potential_time_stops,
+        note="Nominal90seconds/request unchanged. Actual deadline-reduced limits and "
+        "non-EOS short outputs retained, not silently treated as identical realized time.",
+    )
 
 
 def validate_base(base, teacher):
@@ -32,7 +63,6 @@ def validate_base(base, teacher):
         "max_global_output_tokens",
         "max_new_tokens",
         "input_plus_output_limit",
-        "budget_seconds",
         "truncation",
         "profile",
     ):
@@ -42,6 +72,14 @@ def validate_base(base, teacher):
         return [{k: v for k, v in j.items() if k != "condition"} for j in jobs]
 
     audit.require(normalize(base["jobs"]) == normalize(teacher["jobs"]), "unmatched fresh slots")
+    if base["budget_seconds"] != teacher["budget_seconds"]:
+        audit.require(
+            base["budget_seconds"] == 7200
+            and teacher["budget_seconds"] == 3600
+            and base.get("collection_wall_cap_contract") == reader.COLLECTION_CONTRACT
+            and reader.c.inputs.sha(reader.TEACHER_REPORT) == reader.TEACHER_REPORT_SHA,
+            "undeclared or invalid unequal collection wall caps",
+        )
 
 
 def analyze(base, privileged, public):
@@ -60,6 +98,7 @@ def analyze(base, privileged, public):
         reader.c.BASE, local_files_only=True, trust_remote_code=False
     )
     reports = [audit.analyze(p, tokenizer, expected_task_count=16) for p in outputs]
+    realized_limits = [actual_time_limits(p) for p in outputs]
     rows = [
         {
             (r["task_id"], r["repeat"]): r
@@ -73,6 +112,12 @@ def analyze(base, privileged, public):
     return dict(
         schema="textcraft-fresh16-base-teachers-comparison-v1",
         arms=reports,
+        collection_wall_caps=dict(
+            seconds_by_arm=[p["budget_seconds"] for p in plans],
+            prospective_declaration=plans[0].get("collection_wall_cap_contract"),
+            completed_teacher_report_sha256=reader.TEACHER_REPORT_SHA,
+        ),
+        actual_native_time_limits=realized_limits,
         comparisons={
             name: profiles.compare(plans[0]["jobs"], rows[0], rows[index])
             for index, name in ((1, "privileged_minus_base"), (2, "public_minus_base"))
@@ -83,7 +128,10 @@ def analyze(base, privileged, public):
         "are not independent units. Known-pair wins/losses descriptive if any unknown.",
         caveat="Checkpoint comparison on fixed fresh roots, not causal teacher-order isolation. "
         "No-adapter base,048 privilegedSFT and056 publicSFT use identical per-episode contracts. "
-        "One-hour caps may censor arms differently; all unknowns and native costs preserved.",
+        "Declared collection wall caps may differ, not per-episode reasoning limits. "
+        "All32 observed per arm permits matched primary accuracy; any missing/unavailable "
+        "base outcome stays unknown with full-panel bounds and no complete-panel CI. "
+        "Native service costs, effective time limits and actual failures remain audited.",
         source_sha256={
             str(Path(m.__file__).resolve()): reader.c.inputs.sha(Path(m.__file__))
             for m in (reader, teachers, profiles, audit)

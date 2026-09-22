@@ -1,8 +1,39 @@
 import argparse
+import copy
 import importlib.util
 import json
 
 import pytest
+
+
+def test_extended_collection_cap_is_declared_but_scientific_caps_still_match(tmp_path):
+    import analyze_textcraft_fresh_base as analysis
+    import eval_textcraft_fresh_base as reader
+
+    plan, _ = reader.prepare(argparse.Namespace(output=tmp_path, hours=2, prepare_only=True))
+    teacher = json.loads(reader.TEMPLATE.read_text())
+    assert plan["budget_seconds"] == 7200 and teacher["budget_seconds"] == 3600
+    assert plan["collection_wall_cap_contract"]["per_episode_reasoning_budget_changed"] is False
+    analysis.validate_base(plan, teacher)
+    for field in (
+        "max_global_calls",
+        "max_global_output_tokens",
+        "max_new_tokens",
+        "input_plus_output_limit",
+    ):
+        changed = copy.deepcopy(plan)
+        changed[field] += 1
+        with pytest.raises(ValueError, match="contract"):
+            analysis.validate_base(changed, teacher)
+    changed = copy.deepcopy(plan)
+    changed.pop("collection_wall_cap_contract")
+    with pytest.raises(ValueError, match="collection"):
+        analysis.validate_base(changed, teacher)
+    rows = {("one", 0): dict(observed=False, native_score=None)}
+    other = {("one", 0): dict(observed=True, native_score=1)}
+    result = analysis.profiles.compare([dict(task_id="one", repeat=0)], rows, other)
+    assert result["unknown_pairs"] == 1 and result["wins"] == result["losses"] == 0
+    assert result["ci95"] is None and result["complete_panel_difference"] is None
 
 
 def test_base_plan_matches_frozen_fresh_slots_and_removes_all_adapter_metadata(tmp_path):

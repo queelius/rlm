@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T12:54:00Z
+evidence_cutoff_utc: 2026-09-22T13:13:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -81,6 +81,20 @@ the same starting model and training tasks, with extra supervised training
 matched to actual updates and approximately matched output-token counts.
 This does not match all computation or information. See the
 [readiness result and training plan](TEXTCRAFT-TERMINAL-RL-READINESS.md).
+
+The first actual RL update is now checkpointed. It changes saved-action
+probabilities, with no measured task-performance gain yet. A follow-up check
+finds that repeated lookups usually become less likely while first lookups of
+the goal become slightly more likely. Some failed crafting commands also
+become more likely; our preidentified mistake-and-correction example instead
+moves in the useful direction. These are observations on the same saved
+contexts, not fresh success rates. The
+[first-update note](TEXTCRAFT-TERMINAL-FIRST-UPDATE.md) separates those claims.
+The second training batch is running under the original accepted plan.
+
+A [same-panel base-model control](TEXTCRAFT-FRESH-BASE-CONTROL.md) is prepared
+to distinguish useful new learning from merely avoiding harmful earlier
+demonstrations. It has not yet run and will not interrupt the RL/control sequence.
 
 A historical base-model comparison also helps interpret the demonstration
 gain. On 13 recorded matched attempts the revised trained model gains nine
