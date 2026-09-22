@@ -78,6 +78,49 @@ def test_pairing_mean_preserves_marginal_edge_cases_and_rejects_unknown_estimato
         run.response_advantages([all_zero], "not-an-estimator")
 
 
+def test_additive_reward_has_literal_diagonal_rloo_and_can_mix_when_product_is_flat():
+    import rl_sufficiency as run
+
+    literal = [
+        {"positive_success": 0, "negative_success": 0, "reward": 0},
+        {"positive_success": 1, "negative_success": 0, "reward": 0},
+        {"positive_success": 0, "negative_success": 1, "reward": 0},
+        {"positive_success": 1, "negative_success": 1, "reward": 1},
+    ]
+    assert [run.training_reward(pair, "additive") for pair in literal] == [0, 0.5, 0.5, 1]
+    assert run.response_advantages([literal]) == run.response_advantages(
+        [literal], "diagonal", "product"
+    )
+    advantages = run.response_advantages([literal], "diagonal", "additive")[0]
+    assert [value for pair in advantages for value in pair] == pytest.approx(
+        [-2 / 3, -2 / 3, 0, 0, 0, 0, 2 / 3, 2 / 3]
+    )
+    flat_product = [
+        {"positive_success": 1, "negative_success": 0, "reward": 0},
+        {"positive_success": 0, "negative_success": 0, "reward": 0},
+        {"positive_success": 0, "negative_success": 1, "reward": 0},
+        {"positive_success": 0, "negative_success": 0, "reward": 0},
+    ]
+    assert run.response_advantages([flat_product], "diagonal", "product") == [[(0, 0)] * 4]
+    assert any(
+        value
+        for pair in run.response_advantages([flat_product], "diagonal", "additive")[0]
+        for value in pair
+    )
+
+
+def test_additive_uniform_rewards_skip_adam_and_pairing_mean_combination_is_rejected():
+    import rl_sufficiency as run
+
+    uniform = [{"positive_success": 1, "negative_success": 0, "reward": 0, "records": []}] * 4
+    assert run.response_advantages([uniform], "diagonal", "additive") == [[(0, 0)] * 4]
+    assert run.optimize_rl(None, None, [uniform], time.time() + 90, "diagonal", "additive") == {
+        "optimizer_called": False
+    }
+    with pytest.raises(ValueError, match="pairing_mean requires product"):
+        run.response_advantages([uniform], "pairing_mean", "additive")
+
+
 def test_pairing_mean_nonzero_credit_advances_step_when_diagonal_rewards_are_zero():
     import rl_sufficiency as run
 

@@ -1,8 +1,8 @@
 # Reading the research results
 
-## September 21: what survived stronger comparisons
+## September 22: what survived stronger comparisons
 
-The [current research update](../experiments/selective_delegation/RESEARCH-UPDATE-20260921.md)
+The [current research update](../experiments/selective_delegation/RESEARCH-UPDATE-20260922.md)
 is the starting point. We can train the model to write subquestions and execute
 real reinforcement-learning updates. We have not yet established that this
 system answers new questions better than simpler, cheaper alternatives.
@@ -29,7 +29,8 @@ readout now gives18 correct pairs out of64, versus10 before continuation;
 matched additional supervised training gives19. Both improve on this small
 panel, but there is no established RL advantage over more supervised training.
 See [the completed held comparison](../experiments/selective_delegation/PAIRED-RL-HELDOUT-FINDINGS.md).
-The deeper-question readout is running. The
+The [deeper-question readout](../experiments/selective_delegation/PAIRED-RL-COMPOSITIONAL-FINDINGS.md)
+is complete:6/7/6 for warm/RL/extraSFT, with no clear joint improvement. The
 [training audit](../experiments/selective_delegation/PAIRED-RL-TRAINING-FINDINGS.md)
 shows sparse rewards and several distinct answer failures. In the small household-task screen, a manager and a single agent that
 briefly explains its next action both solve six of16 attempts, compared with one

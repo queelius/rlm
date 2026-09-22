@@ -114,13 +114,16 @@ def test_prompt_identical_and_host_secrets_excluded():
     assert "SECRET" not in m.baseline.prompt(case)
 
 
-def test_three_named_adapters_route_native_cpu_calls_and_stay_frozen(tmp_path):
+@pytest.mark.parametrize("extra", [(), ("additive_rl_terminal",)])
+def test_named_adapters_route_native_cpu_calls_and_stay_frozen(tmp_path, extra):
     import time
 
     import eval_sufficiency_heldout as m
     import torch
     from peft import LoraConfig, get_peft_model
     from transformers import Qwen3Config, Qwen3ForCausalLM
+
+    conditions = (*m.CONDITIONS, *extra)
 
     config = LoraConfig(r=2, lora_alpha=4, target_modules=["q_proj"], task_type="CAUSAL_LM")
     model = get_peft_model(
@@ -136,9 +139,9 @@ def test_three_named_adapters_route_native_cpu_calls_and_stay_frozen(tmp_path):
             )
         ),
         config,
-        adapter_name=m.CONDITIONS[0],
+        adapter_name=conditions[0],
     )
-    for condition in m.CONDITIONS[1:]:
+    for condition in conditions[1:]:
         model.add_adapter(condition, config)
     model.eval()
     seen = []
@@ -156,7 +159,7 @@ def test_three_named_adapters_route_native_cpu_calls_and_stay_frozen(tmp_path):
         def decode(self, ids, **kwargs):
             return '{"answerable":false,"answer":""}'
 
-    for condition in m.CONDITIONS:
+    for condition in conditions:
         m.activate(model, condition)
         seen.clear()
         identity = {"files": {"adapter_model.safetensors": condition}}

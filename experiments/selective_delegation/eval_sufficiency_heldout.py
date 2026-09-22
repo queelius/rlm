@@ -172,6 +172,55 @@ def validate_panel(cases_path, manifest, profile=None):
     return expected
 
 
+class AdditiveDoseMismatch(ValueError):
+    """Authenticated terminal is not the fixed eight-update comparison dose."""
+
+
+def validate_additive_control(product, additive):
+    rp, ap = product["training_plan"], additive["training_plan"]
+    if (
+        rp.get("reward_objective", "product") != "product"
+        or rp.get("estimator", "diagonal") != "diagonal"
+        or ap.get("reward_objective") != "additive"
+        or ap.get("estimator") != "diagonal"
+    ):
+        raise ValueError("explicit product versus additive diagonal objectives required")
+    common = (
+        "mode",
+        "cases_sha256",
+        "input_manifest_sha256",
+        "parent_blocks",
+        "model",
+        "warmstart",
+        "base_manifest_sha256",
+        "official_metric_sha256",
+        "seed",
+        "learning_rate",
+        "fresh_optimizer",
+        "weight_decay",
+        "gradient_clip",
+        "microbatch",
+        "candidate_pairs_per_parent",
+        "pair_denominator",
+        "max_sampled_blocks",
+        "max_calls",
+        "max_consecutive_zero_blocks",
+        "budget_seconds",
+        "sampling_temperature",
+        "sampling_top_p",
+        "sampling_top_k",
+        "max_new_tokens",
+        "max_context",
+        "environment_lock_sha256",
+    )
+    if any(rp[key] != ap[key] for key in common):
+        raise ValueError("additive control common training contract differs")
+    if (product["step"], product["sample_cursor"]) != (8, 8):
+        raise ValueError("fixed product endpoint requires eight committed updates/blocks")
+    if (additive["step"], additive["sample_cursor"]) != (8, 8):
+        raise AdditiveDoseMismatch("additive endpoint dose mismatch; no checkpoint substitution")
+
+
 def prepare(args, *, profile=None):
     warm = adapter_runtime.adapter_identity(args.warm_adapter.resolve(), "joint")
     rl = endpoint_identity(args.rl_output.resolve(), "rl", warm)
@@ -196,6 +245,30 @@ def prepare(args, *, profile=None):
         or (sft["step"], sft["sample_cursor"]) != (rl["step"], rl["sample_cursor"])
     ):
         raise ValueError("matched control differs from actual RL update inventory")
+    identities = dict(zip(CONDITIONS, (warm, rl, sft), strict=True))
+    additive_output = getattr(args, "additive_rl_output", None)
+    if additive_output is not None:
+        if profile is None:
+            raise ValueError("additive readout requires explicit frozen panel profile")
+        additive = endpoint_identity(additive_output.resolve(), "rl", warm)
+        try:
+            validate_additive_control(rl, additive)
+        except AdditiveDoseMismatch as exc:
+            save_plan(
+                args.output / "SKIPPED.json",
+                {
+                    "reason": str(exc),
+                    "endpoint": additive,
+                    "required_steps": 8,
+                    "required_sample_cursor": 8,
+                    "actual_additive_steps": additive["step"],
+                    "actual_additive_sample_cursor": additive["sample_cursor"],
+                    "chain_resolved": True,
+                    "scientific_readout": False,
+                },
+            )
+            return None, None, None
+        identities["additive_rl_terminal"] = additive
     base = native.evaluation.planner.BASE
     if any(
         p["model"] != str(base)
@@ -204,7 +277,7 @@ def prepare(args, *, profile=None):
     ):
         raise ValueError("training base differs from readout base")
     if not 0 < args.hours <= 1:
-        raise ValueError("at most one hour for384 calls")
+        raise ValueError("at most one hour for fixed readout")
     cases_path = args.cases.resolve()
     manifest = read(cases_path.with_name("MANIFEST.json"))
     cases_sha = validate_panel(cases_path, manifest, profile)
@@ -221,16 +294,15 @@ def prepare(args, *, profile=None):
     lengths = {c["id"]: len(stub.ids(baseline.prompt(c))) for c in cases}
     if lengths != manifest["prompt_token_counts"] or max(lengths.values()) + 128 > 8192:
         raise ValueError("native tokenization changed; no truncation")
-    identities = dict(zip(CONDITIONS, (warm, rl, sft), strict=True))
     plan = {
         "schema": "paired-sufficiency-held32-terminal-v1",
         "cases": str(cases_path),
         "cases_sha256": cases_sha,
         "manifest_sha256": sha(cases_path.with_name("MANIFEST.json")),
-        "conditions": list(CONDITIONS),
+        "conditions": list(identities),
         "adapters": identities,
         "jobs": jobs(cases),
-        "planned_calls": 384,
+        "planned_calls": 128 * len(identities),
         "planned_calls_per_condition": 128,
         "seeds": list(baseline.SEEDS),
         "prompt_instruction": baseline.INSTRUCTION,
@@ -258,8 +330,16 @@ def prepare(args, *, profile=None):
     if profile is not None:
         plan["panel_profile"] = profile
         plan["schema"] = profile["readout_schema"]
+    if additive_output is not None:
+        plan["control_binding"] = {
+            "matched_sft_control_for": "rl_terminal",
+            "rl_terminal_reward": "product",
+            "additive_rl_terminal_reward": "additive",
+            "equal_actual_steps_and_sample_cursors": True,
+            "dose_caveat": "Not matched information, nonzero-credit tokens, or FLOPs",
+        }
     save_plan(args.output / "PLAN.json", plan)
-    for condition in CONDITIONS:
+    for condition in plan["conditions"]:
         save_plan(
             args.output / condition / "PLAN.json",
             {
@@ -273,9 +353,9 @@ def prepare(args, *, profile=None):
 
 
 def summaries(output, plan, cases):
-    groups = {c: baseline.summarize(output / c, plan, cases) for c in CONDITIONS}
+    groups = {c: baseline.summarize(output / c, plan, cases) for c in plan["conditions"]}
     return {
-        "planned_calls": 384,
+        "planned_calls": plan["planned_calls"],
         "conditions": groups,
         "physical_cost": {
             k: sum(g["physical_cost"][k] for g in groups.values())
@@ -289,8 +369,16 @@ def run(args, *, profile=None):
     args.output = args.output.resolve()
     plan, cases, tokenizer = prepare(args, profile=profile)
     if plan is None or args.prepare_only:
-        print(json.dumps({"model_loaded": False, "planned_calls": 0 if plan is None else 384}))
+        print(
+            json.dumps(
+                {
+                    "model_loaded": False,
+                    "planned_calls": 0 if plan is None else plan["planned_calls"],
+                }
+            )
+        )
         return
+    conditions = plan["conditions"]
     if list(args.output.glob("OWNER-*.json")):
         raise ValueError("existing owner; no implicit retry")
     import psutil
@@ -340,11 +428,11 @@ def run(args, *, profile=None):
         )
         model = PeftModel.from_pretrained(
             model,
-            plan["adapters"][CONDITIONS[0]]["path"],
-            adapter_name=CONDITIONS[0],
+            plan["adapters"][conditions[0]]["path"],
+            adapter_name=conditions[0],
             is_trainable=False,
         )
-        for c in CONDITIONS[1:]:
+        for c in conditions[1:]:
             model.load_adapter(plan["adapters"][c]["path"], adapter_name=c, is_trainable=False)
         model.eval()
         model.gradient_checkpointing_disable()
@@ -364,11 +452,11 @@ def run(args, *, profile=None):
             c: adapter_runtime.AdapterClient(
                 model, tokenizer, args.output / c, deadline, plan["adapters"][c]
             )
-            for c in CONDITIONS
+            for c in conditions
         }
         lookup = {c["id"]: c for c in cases}
         for job in plan["jobs"]:
-            for condition in CONDITIONS:
+            for condition in conditions:
                 if stopped or time.time() >= deadline - 5 or (args.output / "STOP").exists():
                     stopped = True
                     break

@@ -1,12 +1,13 @@
 # Learning when another reasoning step is worthwhile
 
 For a short plain-language account of the latest findings and decisions, start
-with [the September21 research update](RESEARCH-UPDATE-20260921.md).
+with [the September22 research update](RESEARCH-UPDATE-20260922.md).
 
 Current checkpoint, September 22, 06:06 UTC: [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
 improves the fixed warm start from 10 to 18 correct pairs out of64 with RL,
 but extra supervised training reaches19. This is useful learning, not an
-established RL-specific advantage. The deeper-question comparison is running.
+established RL-specific advantage. The [deeper-question comparison](PAIRED-RL-COMPOSITIONAL-FINDINGS.md)
+is now complete:6/7/6 for warm/RL/extraSFT, with no clear paired improvement.
 [Household action SFT](ALFWORLD-ACTION-SFT-FINDINGS.md) did not improve the exposed twelve-game panel: both flat
 and manager-worker policies score2/24 after training versus4/24 before it.
 The [crafting pilot](TEXTCRAFT-PILOT-FINDINGS.md) reached its one-hour cap with26/32 episode records; no helper
@@ -64,7 +65,7 @@ The [TextCraft qualification](TEXTCRAFT-CPU-READINESS.md) has passed CPU gold
 replay, and its [bounded model comparison](TEXTCRAFT-PILOT-PLAN.md) ended at its cap.
 A [separately declared deeper-question readout](SUFFICIENCY-COMPOSITIONAL-PANEL.md)
 will test the fixed RL/SFT endpoints on new composed questions, with prior-study
-component exposure disclosed. That readout is running. The actual queue and owners
+component exposure disclosed. That readout is complete. The actual queue and owners
 remain in the external research store, not this narrative summary.
 [Recent primary work](LITERATURE-UPDATE-1625.md)
 narrows the novelty of generic answerability training and adaptive evidence trees.

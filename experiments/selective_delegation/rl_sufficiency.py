@@ -51,15 +51,43 @@ def marginal_credit(positive, negative):
     ]
 
 
-def response_advantages(groups, estimator="diagonal"):
+def training_reward(pair, reward_objective="product"):
+    if reward_objective == "product":
+        return pair["reward"]
+    if reward_objective == "additive":
+        return (pair["positive_success"] + pair["negative_success"]) / 2
+    raise ValueError("unknown reward objective")
+
+
+def leave_one_out(rewards):
+    if len(rewards) != 4:
+        raise ValueError("four rewards per parent required")
+    return [value - (sum(rewards) - value) / 3 for value in rewards]
+
+
+def response_advantages(groups, estimator="diagonal", reward_objective="product"):
     if estimator not in ("diagonal", "pairing_mean"):
         raise ValueError("unknown estimator")
+    if reward_objective not in ("product", "additive"):
+        raise ValueError("unknown reward objective")
+    if estimator == "pairing_mean" and reward_objective != "product":
+        raise ValueError("pairing_mean requires product reward")
     result = []
     for group in groups:
         if len(group) != 4:
             raise ValueError("four paired candidates per parent required")
         if estimator == "diagonal":
-            result.append([(value, value) for value in rl.rloo([pair["reward"] for pair in group])])
+            rewards = [training_reward(pair, reward_objective) for pair in group]
+            result.append(
+                [
+                    (value, value)
+                    for value in (
+                        rl.rloo(rewards)
+                        if reward_objective == "product"
+                        else leave_one_out(rewards)
+                    )
+                ]
+            )
         else:
             result.append(
                 marginal_credit(
@@ -252,7 +280,17 @@ class NativeClient:
         return row
 
 
-def collect(model, tokenizer, directory, deadline, cases, parents, cursor, adapter):
+def collect(
+    model,
+    tokenizer,
+    directory,
+    deadline,
+    cases,
+    parents,
+    cursor,
+    adapter,
+    reward_objective="product",
+):
     client = NativeClient(model, tokenizer, directory, deadline, adapter)
     pairs, groups, rewards = paired_cases(cases, parents), [], []
     for index, parent in enumerate(parents):
@@ -285,6 +323,7 @@ def collect(model, tokenizer, directory, deadline, cases, parents, cursor, adapt
                 "predictions": predictions,
                 "call_ids": [r["call_id"] for r in records],
             }
+            item["training_reward"] = training_reward(item, reward_objective)
             probe.runtime.save(directory / "pairs" / f"p{index:02d}-k{candidate}.json", item)
             group.append({**item, "records": records})
             values.append(reward)
@@ -293,10 +332,12 @@ def collect(model, tokenizer, directory, deadline, cases, parents, cursor, adapt
     return groups, rewards
 
 
-def optimize_rl(model, optimizer, groups, deadline, estimator="diagonal"):
+def optimize_rl(
+    model, optimizer, groups, deadline, estimator="diagonal", reward_objective="product"
+):
     import torch
 
-    credits = response_advantages(groups, estimator)
+    credits = response_advantages(groups, estimator, reward_objective)
     if not any(value for group in credits for pair in group for value in pair):
         return {"optimizer_called": False}
     parameters = rl.planner_parameters(model)
@@ -460,10 +501,17 @@ def prepare(args):
         args.adapter.resolve(),
     )
     estimator = getattr(args, "estimator", "diagonal")
+    reward_objective = getattr(args, "reward_objective", "product")
     if estimator not in ("diagonal", "pairing_mean"):
         raise ValueError("unknown estimator")
+    if reward_objective not in ("product", "additive"):
+        raise ValueError("unknown reward objective")
     if args.mode != "rl" and estimator != "diagonal":
         raise ValueError("pairing_mean applies only to RL")
+    if args.mode != "rl" and reward_objective != "product":
+        raise ValueError("non-product reward applies only to RL")
+    if estimator == "pairing_mean" and reward_objective != "product":
+        raise ValueError("pairing_mean requires product reward")
     cap = 0.75 if args.mode == "rl" else 0.5
     if not 0 < args.hours <= cap:
         raise ValueError("fixed45minute RL/30minute SFT cumulative cap")
@@ -496,6 +544,7 @@ def prepare(args):
         "schema": "paired-sufficiency-finite-training-v1",
         "mode": args.mode,
         "estimator": estimator,
+        "reward_objective": reward_objective,
         "cases": str(cases_path),
         "cases_sha256": manifest["cases_sha256"],
         "input_manifest_sha256": probe.campaign.sha(manifest_path),
@@ -528,9 +577,13 @@ def prepare(args):
         "max_new_tokens": 128,
         "max_context": 8192,
         "objective": (
-            "official paired EM diagonal RLOO, both response token-logp sums /64"
+            "official paired EM product reward diagonal RLOO, both response token-logp sums /64"
+            if estimator == "diagonal" and reward_objective == "product"
+            else "official paired marginal-success additive reward diagonal RLOO, "
+            "both response token-logp sums /64"
             if estimator == "diagonal"
-            else "official paired EM pairing-mean RLOO expectation, response coefficients /64"
+            else "official paired EM product reward pairing-mean RLOO expectation, "
+            "response coefficients /64"
         )
         if args.mode == "rl"
         else "paired gold JSON+EOS masked SFT, target-token mean; "
@@ -746,8 +799,10 @@ def run(args):
                         "optimizer_step": state["step"],
                         "sample_cursor": state["sample_cursor"],
                     },
+                    plan["reward_objective"],
                 )
-                credits = response_advantages(groups, plan["estimator"])
+                training_rewards = [[pair["training_reward"] for pair in group] for group in groups]
+                credits = response_advantages(groups, plan["estimator"], plan["reward_objective"])
                 next_state = advance(state, credits)
                 diagnostics = {
                     "rewards": rewards,
@@ -757,10 +812,15 @@ def run(args):
                         len({p["reward"] for p in g if p["all_valid"]}) == 2 for g in groups
                     ),
                     "estimator": plan["estimator"],
+                    "reward_objective": plan["reward_objective"],
+                    "training_rewards": training_rewards,
                     "effective_groups": next_state["effective_groups"],
                     "response_advantages": credits,
                     "reward_success_count_histogram": dict(
                         Counter(sum(group) for group in rewards)
+                    ),
+                    "training_reward_sum_histogram": dict(
+                        Counter(sum(group) for group in training_rewards)
                     ),
                     "absolute_advantage_mass": sum(
                         abs(value) for group in rewards for value in rl.rloo(group)
@@ -781,7 +841,9 @@ def run(args):
                     "updated": next_state["step"] > state["step"],
                 }
                 probe.runtime.save(directory / "ROLLOUT.json", diagnostics)
-                statistics = optimize_rl(model, optimizer, groups, deadline, plan["estimator"])
+                statistics = optimize_rl(
+                    model, optimizer, groups, deadline, plan["estimator"], plan["reward_objective"]
+                )
             else:
                 source_state = control[cursor]["state"]
                 next_state = {**source_state, "plan_sha256": state["plan_sha256"]}
@@ -825,6 +887,7 @@ def run(args):
             {
                 "mode": args.mode,
                 "estimator": plan["estimator"],
+                "reward_objective": plan["reward_objective"],
                 "max_planned_calls": plan["max_calls"],
                 "committed_sampled_blocks": state["sample_cursor"],
                 "actual_optimizer_steps": state["step"],
@@ -873,6 +936,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=("rl", "sft_control"), required=True)
     parser.add_argument("--estimator", choices=("diagonal", "pairing_mean"), default="diagonal")
+    parser.add_argument("--reward-objective", choices=("product", "additive"), default="product")
     parser.add_argument("--prepared", type=Path, required=True)
     parser.add_argument("--adapter", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)

@@ -78,10 +78,16 @@ def audit_call(call, spec, plan, plan_sha, tokenizer):
     require(
         req["model"] == plan["model"]
         and req["model_manifest_sha256"] == plan["model_manifest_sha256"]
-        and req["adapter_enabled"] is False
-        and req["adapter_sha256"] is None,
+        and req["adapter_enabled"] == bool(plan.get("adapter"))
+        and req["adapter_sha256"] == (plan["adapter"]["sha256"] if plan.get("adapter") else None),
         "frozen base model identity mismatch",
     )
+    if plan.get("adapter"):
+        require(
+            req.get("adapter_path") == plan["adapter"]["path"]
+            and req.get("adapter_commit_sha256") == plan["adapter"]["commit_sha256"],
+            "adapter checkpoint receipt mismatch",
+        )
     require(
         req["context_limit"] == 8192
         and req["truncation"] is False
@@ -103,7 +109,7 @@ def audit_call(call, spec, plan, plan_sha, tokenizer):
             call[k] == spec[k]
             for k in ("call_id", "role", "node_id", "parent_node_id", "depth", "episode_id")
         )
-        and call["condition"] == spec["policy"],
+        and call["condition"] == spec.get("condition", spec["policy"]),
         "call role/tree identity mismatch",
     )
     ids = tokenizer.apply_chat_template(
@@ -138,6 +144,20 @@ def audit_call(call, spec, plan, plan_sha, tokenizer):
 
 
 def audit_episode(task, job, row, calls, nodes, plan, plan_sha, tokenizer, world):
+    profile = job.get("prompt_profile", plan.get("profile", "original"))
+
+    def public_prompt(frame, history, context, goal):
+        prompt = bridge.public_prompt(frame, history, context=context, goal=goal)
+        if profile == "instruction_control":
+            require(
+                plan["instruction_reminder"] == collector.INSTRUCTION_REMINDER,
+                "unqualified instruction reminder",
+            )
+            prompt += plan["instruction_reminder"]
+        else:
+            require(profile == "original", "unknown prompt profile")
+        return prompt
+
     require(all(row[k] == v for k, v in job.items()), "episode planned identity mismatch")
     require(
         set(nodes) == set(row["node_ids"]) and len(nodes) == row["node_count"],
@@ -179,7 +199,7 @@ def audit_episode(task, job, row, calls, nodes, plan, plan_sha, tokenizer, world
             require(not frame.finished, "model call after node finish")
             index, cap = budget.calls, budget.reserve()
             require(cid == f"{job['episode_id']}-c{index:03d}", "global call order mismatch")
-            prompt = bridge.public_prompt(frame, history, context=context, goal=goal)
+            prompt = public_prompt(frame, history, context, goal)
             spec = dict(
                 call_id=cid,
                 prompt=prompt,
@@ -196,6 +216,8 @@ def audit_episode(task, job, row, calls, nodes, plan, plan_sha, tokenizer, world
                 + int(hashlib.sha256(task["id"].encode()).hexdigest()[:8], 16)
                 + 1000 * index,
             )
+            if "condition" in job:
+                spec.update(condition=job["condition"], prompt_profile=profile)
             call = calls[cid]
             audit_call(call, spec, plan, plan_sha, tokenizer)
             used.append(cid)
@@ -259,7 +281,7 @@ def audit_episode(task, job, row, calls, nodes, plan, plan_sha, tokenizer, world
                 [
                     dict(
                         role="user",
-                        content=bridge.public_prompt(frame, history, context=context, goal=goal),
+                        content=public_prompt(frame, history, context, goal),
                     )
                 ],
                 tokenize=True,
@@ -340,7 +362,7 @@ def audit_episode(task, job, row, calls, nodes, plan, plan_sha, tokenizer, world
     )
 
 
-def analyze(output, tokenizer, draws=20000):
+def analyze(output, tokenizer, draws=20000, expected_collector_sha256=None):
     import psutil
 
     plan = read(output / "PLAN.json")
@@ -366,6 +388,7 @@ def analyze(output, tokenizer, draws=20000):
             owners[0],
             terminal_path,
             Path(__file__),
+            Path(collector.__file__),
             Path(bridge.__file__),
         )
     }
@@ -378,7 +401,12 @@ def analyze(output, tokenizer, draws=20000):
         "analyzer bridge not identical to collector bridge",
     )
     require(
-        collector.inputs.sha(Path(collector.__file__)) in plan["source_sha256"].values(),
+        (expected_collector_sha256 or collector.inputs.sha(Path(collector.__file__)))
+        in {
+            digest
+            for path, digest in plan["source_sha256"].items()
+            if Path(path).name == "eval_textcraft.py"
+        },
         "analyzer collector helpers differ from sealed source",
     )
     prepared = Path(plan["prepared"])
@@ -397,8 +425,10 @@ def analyze(output, tokenizer, draws=20000):
         for v in (json.loads(line) for line in (prepared / "tasks.jsonl").read_text().splitlines())
     }
     require(
-        len(tasks) == 8 and len(plan["jobs"]) == 32 and plan["planned_per_policy"] == 16,
-        "fixed eight-parent32 inventory required",
+        len(tasks) == 8
+        and len(plan["jobs"]) in (16, 32)
+        and plan["planned_episodes"] == len(plan["jobs"]),
+        "fixed eight-parent profile inventory required",
     )
     rows, calls, node_files, starts = {}, {}, {}, {}
     for folder, target in (
@@ -447,6 +477,8 @@ def analyze(output, tokenizer, draws=20000):
             + int(hashlib.sha256(job["task_id"].encode()).hexdigest()[:8], 16)
             + 1000 * index,
         )
+        if "condition" in job:
+            spec.update(condition=job["condition"], prompt_profile=job["prompt_profile"])
         audit_call(call, spec, plan, plan_sha, tokenizer)
     world, audits, used = bridge.load_world(), {}, set()
     for job in plan["jobs"]:
@@ -461,8 +493,8 @@ def analyze(output, tokenizer, draws=20000):
             tasks[job["task_id"]], job, row, calls, nodes, plan, plan_sha, tokenizer, world
         )
     groups = {}
-    for policy in ("flat", "recursive"):
-        selected = [r for r in rows.values() if r["policy"] == policy]
+    for policy in sorted({j.get("condition", j["policy"]) for j in plan["jobs"]}):
+        selected = [r for r in rows.values() if r.get("condition", r["policy"]) == policy]
         known = [r for r in selected if r["observed"]]
         successes = sum(r["native_score"] for r in known)
         children = [audits[r["episode_id"]] for r in known]

@@ -1,6 +1,29 @@
 import pytest
 
 
+def test_actual046_profile_authenticates_metric_without_legacy_manifest_field():
+    import copy
+    import json
+    from pathlib import Path
+
+    import analyze_sufficiency_rl as analysis
+
+    root = Path("/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921")
+    plan = json.loads((root / "sufficiency-compositional-readout-001/PLAN.json").read_text())
+    manifest = json.loads((root / "sufficiency-compositional-inputs-001/MANIFEST.json").read_text())
+    assert "official_metric_sha256" not in manifest
+    mapping = analysis.held_metric_sources(plan, manifest, analysis.Audit())
+    assert mapping == plan["panel_profile"]["metric_sha256"]
+    altered = copy.deepcopy(plan)
+    altered["panel_profile"]["metric_sha256"].pop(next(iter(mapping)))
+    with pytest.raises(ValueError, match="profile"):
+        analysis.held_metric_sources(altered, manifest, analysis.Audit())
+    assert (
+        analysis.held_metric_sources({}, {"official_metric_sha256": mapping}, analysis.Audit())
+        == mapping
+    )
+
+
 @pytest.mark.parametrize("component_count", [20, 30])
 def test_frozen_panel_partition_accepts_exact20_or30_and_rejects_overlap(component_count):
     import analyze_sufficiency_rl as analysis

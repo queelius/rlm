@@ -16,17 +16,23 @@ canonical = held.canonical
 SEED = 2026092205
 
 
-def select(pairs):
+def select(pairs, *, seed=SEED, quotas=None):
+    quotas = {3: 16, 4: 16} if quotas is None else quotas
+    if sum(quotas.values()) != 32 or any(
+        hop not in (2, 3, 4) or type(count) is not int or count <= 0
+        for hop, count in quotas.items()
+    ):
+        raise ValueError("exactly32 parents with positive two/three/four-hop quotas required")
     selected = []
-    for hop in (3, 4):
+    for hop, count in sorted(quotas.items()):
         candidates = [
             p for p, rows in pairs.items() if len(rows[0]["question_decomposition"]) == hop
         ]
-        if len(candidates) < 16:
+        if len(candidates) < count:
             raise ValueError("insufficient eligible parents; no replacement rule")
         selected.extend(
-            sorted(candidates, key=lambda p: hashlib.sha256(f"{SEED}:{p}".encode()).hexdigest())[
-                :16
+            sorted(candidates, key=lambda p: hashlib.sha256(f"{seed}:{p}".encode()).hexdigest())[
+                :count
             ]
         )
     return selected
@@ -36,7 +42,8 @@ def excluded(parent, normalized_question, parents, questions):
     return parent in parents or normalized_question in questions
 
 
-def prepare(root, output):
+def prepare(root, output, *, seed=SEED, quotas=None):
+    quotas = {3: 16, 4: 16} if quotas is None else quotas
     if output.exists():
         raise FileExistsError("immutable panel already exists")
     known = {k: set() for k in ("parents", "questions", "components")}
@@ -96,7 +103,7 @@ def prepare(root, output):
             counts.update(why)
         else:
             eligible[parent] = rows
-    selected = select(eligible)
+    selected = select(eligible, seed=seed, quotas=quotas)
     cases, overlap = [], {}
     for parent in selected:
         atoms = held.features(eligible[parent])[2]
@@ -150,9 +157,10 @@ def prepare(root, output):
             stream.write(json.dumps(case, ensure_ascii=False, sort_keys=True) + "\n")
     manifest = {
         "schema": "musique-compositional-paired-sufficiency-v1",
-        "selection_seed": SEED,
-        "selection_rule": "First16 SHA256('2026092205:'+officialDEVparent) within each of "
-        "3-hop and 4-hop; no atomic/document/label/outcome filtering",
+        "selection_seed": seed,
+        "selection_quotas": quotas,
+        "selection_rule": f"First quota-count SHA256('{seed}:'+officialDEVparent) "
+        f"within each hop stratum {quotas}; no atomic/document/label/outcome filtering",
         "parent_count": 32,
         "variant_count": 64,
         "parents": selected,
@@ -195,7 +203,11 @@ def prepare(root, output):
         },
         "preparer_sha256": panel.sha256(Path(__file__)),
         "model_manifest_sha256": panel.sha256(model / "local-research-manifest.json"),
-        "status": "CPU frozen; conditional046 readout not GPU accepted",
+        "official_metric_sha256": {
+            str(path): panel.sha256(path)
+            for path in sorted((held.baseline.panel.OFFICIAL / "metrics").glob("*.py"))
+        },
+        "status": "CPU frozen; subsequent readout requires separate GPU acceptance",
         "limitations": "Deliberately balanced depth panel, not natural DEV. Prior study DEV "
         "atomic overlap and TRAIN document overlap are not unseen facts. "
         "Zero official TRAIN atomic overlap does not imply no document reuse. "
@@ -221,5 +233,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=canonical.ROOT)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--reward-control", action="store_true")
     args = parser.parse_args()
-    print(json.dumps(prepare(args.root.resolve(), args.output.resolve())))
+    options = {"seed": 2026092209, "quotas": {2: 16, 3: 8, 4: 8}} if args.reward_control else {}
+    print(json.dumps(prepare(args.root.resolve(), args.output.resolve(), **options)))

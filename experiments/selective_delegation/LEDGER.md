@@ -1,5 +1,15 @@
 # Research ledger — plan: experiments/selective_delegation/PLAN.md
 
+2026-09-22 06:30 UTC: deeper046 readout complete6/7/6 correctpairs/64 for
+warm/RL/extraSFT; no established joint improvement. 049 prompt-only control
+running796 real returns/0 transport errors at06:28. Independent queue accepted
+048 one-epoch public-action SFT23 then051 additive reward RL8; neither selected
+using partial049 outcomes. Fresh050 panel frozen before new updates. Source054
+queue distinguishes resource release from scientific success; three focused
+tests and independent review passed. 053/052 readouts sealed and CPU-qualified,
+awaiting final acceptance. Quota42%, reserve10%. Research update links actual
+evidence, limitations and decision rationale; no generic architecture novelty.
+
 2026-09-22 06:06 UTC resumption: quota45% at06:00, reserve10%. GPU idle at06:00
 with no model process. 041b completed33updates and042b48episodes; trainedflat2/24
 andtrainedmanager2/24 vsbase4/24 each. 044 hit3600s cap at22:00Sep21 with26/32

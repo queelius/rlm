@@ -295,7 +295,7 @@ def training_report(output, audit, tokenizer):
     }
 
 
-def frozen_clusters(cases, manifest, planned_calls):
+def frozen_clusters(cases, manifest, planned_calls, *, expected_calls=384):
     clusters = manifest["component_clusters"]
     parents = Counter(c["parent_id"] for c in cases)
     flattened = [parent for cluster in clusters for parent in cluster]
@@ -303,22 +303,54 @@ def frozen_clusters(cases, manifest, planned_calls):
         len(cases) != 64
         or len(parents) != 32
         or set(parents.values()) != {2}
-        or planned_calls != 384
+        or planned_calls != expected_calls
         or not all(clusters)
         or len(flattened) != len(set(flattened))
         or set(flattened) != set(parents)
     ):
-        raise ValueError("frozen held32/384call component partition differs")
+        raise ValueError("frozen held32 component partition/call inventory differs")
     return clusters
 
 
-def held_report(output, cases_path, audit, tokenizer, draws=20000):
+def held_metric_sources(plan, manifest, audit):
+    if "official_metric_sha256" in manifest:
+        mapping = manifest["official_metric_sha256"]
+    else:
+        profile = plan["panel_profile"]
+        roots = {Path(p).parent for p in plan["source_sha256"]}
+        if len(roots) != 1:
+            raise ValueError("held profile source root differs")
+        root = roots.pop()
+        frozen = audit.read(root / "COMPOSITIONAL-PROFILE.json", profile["profile_sha256"])
+        audit.hash(root / "eval_sufficiency_compositional.py", profile["entrypoint_sha256"])
+        if (
+            frozen
+            != {
+                k: v for k, v in profile.items() if k not in ("profile_sha256", "entrypoint_sha256")
+            }
+            or frozen["cases_sha256"] != plan["cases_sha256"]
+            or frozen["manifest_sha256"] != plan["manifest_sha256"]
+            or frozen["readout_schema"] != plan["schema"]
+            or frozen["component_cluster_count"] != len(manifest["component_clusters"])
+        ):
+            raise ValueError("held frozen profile differs")
+        mapping = frozen["metric_sha256"]
+    actual = {
+        str(p): hashlib.sha256(p.read_bytes()).hexdigest()
+        for p in (paired.baseline.panel.OFFICIAL / "metrics").glob("*.py")
+    }
+    if mapping != actual:
+        raise ValueError("held metric identity differs from actual official grader")
+    return mapping
+
+
+def held_report(output, cases_path, audit, tokenizer, draws=20000, *, expected_calls=384):
     output = output.resolve()
     audit.terminal(output)
     plan = audit.read(output / "PLAN.json")
     manifest = audit.read(cases_path.with_name("MANIFEST.json"), plan["manifest_sha256"])
     cases = audit.cases(cases_path, plan["cases_sha256"])
-    for mapping in (plan["source_sha256"], manifest["official_metric_sha256"]):
+    for mapping in (plan["source_sha256"], held_metric_sources(plan, manifest, audit)):
         for path, digest in mapping.items():
             audit.hash(path, digest)
     expected_jobs = [
@@ -338,7 +370,9 @@ def held_report(output, cases_path, audit, tokenizer, draws=20000):
         or plan["prompt_instruction"] != paired.baseline.INSTRUCTION
     ):
         raise ValueError("held model/public instruction differs")
-    clusters = frozen_clusters(cases, manifest, plan["planned_calls"])
+    clusters = frozen_clusters(
+        cases, manifest, plan["planned_calls"], expected_calls=expected_calls
+    )
     lookup, groups, all_rows = {c["id"]: c for c in cases}, {}, {}
     for condition in plan["conditions"]:
         subplan = audit.read(output / condition / "PLAN.json")

@@ -27,6 +27,24 @@ INPUT_SHA = "79ac9326c209e3df3d31cf3a479fec264506fb15e19445f06370a1c3d5baf405"
 SEEDS = (2026092204, 2026092205)
 STOP = False
 save = inputs.save
+INSTRUCTION_REMINDER = (
+    "\nChoose exactly ONE next action: return ONE JSON object, then stop. "
+    "Use current_inventory, not previous action text, to decide what is still missing. "
+    "can_craft means a recipe exists, not that its ingredients are present. "
+    "For EVERY item in target_items, compare current_inventory[item] minus "
+    "inventory_at_task_start[item] with target_items[item] (absent inventory items count as0). "
+    "If every difference is at least the requested amount, return "
+    '{"action":"finish","message":"done"} now. Otherwise choose one useful action.'
+)
+
+
+def render_prompt(frame, history, context="", goal=None, profile="original"):
+    if profile not in ("original", "instruction_control"):
+        raise ValueError("unknown TextCraft prompt profile")
+    if profile == "instruction_control" and frame.max_depth != 0:
+        raise ValueError("instruction control is flat only")
+    prompt = bridge.public_prompt(frame, history, context=context, goal=goal)
+    return prompt + (INSTRUCTION_REMINDER if profile == "instruction_control" else "")
 
 
 def cost(calls):
@@ -43,9 +61,20 @@ def cost(calls):
 
 
 class NativeClient:
-    def __init__(self, model, tokenizer, output, deadline, model_manifest_sha, plan_sha):
-        if hasattr(model, "peft_config") or any(p.requires_grad for p in model.parameters()):
-            raise ValueError("frozen base model only; no adapters or optimizer")
+    def __init__(
+        self, model, tokenizer, output, deadline, model_manifest_sha, plan_sha, adapter=None
+    ):
+        if any(p.requires_grad for p in model.parameters()):
+            raise ValueError("all inference parameters must be frozen")
+        if adapter is None and hasattr(model, "peft_config"):
+            raise ValueError("base-only client cannot carry an adapter")
+        if adapter is not None and (
+            not hasattr(model, "peft_config")
+            or model.active_adapters != ["textcraft_action"]
+            or any(getattr(m, "disable_adapters", False) is True for m in model.modules())
+        ):
+            raise ValueError("explicit active textcraft_action adapter required")
+        self.adapter = adapter
         self.model, self.tokenizer, self.output = model, tokenizer, Path(output)
         self.deadline, self.model_manifest_sha, self.plan_sha = (
             deadline,
@@ -73,8 +102,8 @@ class NativeClient:
             "input_token_ids": ids,
             "model": str(BASE),
             "model_manifest_sha256": self.model_manifest_sha,
-            "adapter_enabled": False,
-            "adapter_sha256": None,
+            "adapter_enabled": self.adapter is not None,
+            "adapter_sha256": self.adapter["sha256"] if self.adapter else None,
             "context_limit": 8192,
             "truncation": False,
             "sampling": {
@@ -88,12 +117,17 @@ class NativeClient:
                 "max_time": 90.0,
             },
         }
+        if self.adapter:
+            request.update(
+                adapter_path=self.adapter["path"],
+                adapter_commit_sha256=self.adapter["commit_sha256"],
+            )
         row = {
             "call_id": spec["call_id"],
             "request": request,
             "request_digest": probe.runtime.digest(request),
             "plan_sha256": self.plan_sha,
-            "condition": spec["policy"],
+            "condition": spec.get("condition", spec["policy"]),
             "role": spec["role"],
             "node_id": spec["node_id"],
             "parent_node_id": spec["parent_node_id"],
@@ -174,7 +208,8 @@ class NativeClient:
         return row
 
 
-def episode(task, job, client, world, output, deadline, budget=None):
+def episode(task, job, client, world, output, deadline, budget=None, profile="original"):
+    profile = job.get("prompt_profile", profile)
     budget = budget or bridge.Budget()
     root = bridge.Frame(
         world,
@@ -208,7 +243,7 @@ def episode(task, job, client, world, output, deadline, budget=None):
                         else "global_token_cap"
                     )
                     break
-                prompt = bridge.public_prompt(frame, history, context=context, goal=goal)
+                prompt = render_prompt(frame, history, context=context, goal=goal, profile=profile)
                 if len(client.ids(prompt)) + cap > 8192:
                     status = "context_cap"
                     break
@@ -230,6 +265,9 @@ def episode(task, job, client, world, output, deadline, budget=None):
                     + int(hashlib.sha256(task["id"].encode()).hexdigest()[:8], 16)
                     + 1000 * index,
                 }
+                if "condition" in job:
+                    spec["condition"] = job["condition"]
+                    spec["prompt_profile"] = profile
                 call_ids.append(identity)
                 local_calls.append(identity)
                 call = client.call(spec)
@@ -327,8 +365,13 @@ def episode(task, job, client, world, output, deadline, budget=None):
     return record
 
 
-def prepare(prepared, output, hours):
+def prepare(prepared, output, hours, profile="original", persist=True):
     prepared, output = prepared.resolve(), output.resolve()
+    if profile not in ("original", "instruction_control"):
+        raise ValueError("unknown TextCraft profile")
+    if profile == "instruction_control" and hours > 0.75:
+        raise ValueError("instruction control capped at45minutes")
+    policies = ("flat",) if profile == "instruction_control" else ("flat", "recursive")
     if not 0 < hours <= 1 or inputs.sha(prepared / "MANIFEST.json") != INPUT_SHA:
         raise ValueError("one-hour cap and exact043manifest required")
     manifest = json.loads((prepared / "MANIFEST.json").read_text())
@@ -363,7 +406,7 @@ def prepare(prepared, output, hours):
         }
         for i, task in enumerate(tasks)
         for repeat, seed in enumerate(SEEDS)
-        for policy in ("flat", "recursive")
+        for policy in policies
     ]
     plan = {
         "schema": "textcraft-native-recursion-screen-v1",
@@ -371,7 +414,7 @@ def prepare(prepared, output, hours):
         "manifest_sha256": INPUT_SHA,
         "tasks_sha256": inputs.sha(prepared / "tasks.jsonl"),
         "jobs": jobs,
-        "planned_episodes": 32,
+        "planned_episodes": len(jobs),
         "planned_per_policy": 16,
         "parent_tasks": 8,
         "seeds": list(SEEDS),
@@ -384,9 +427,9 @@ def prepare(prepared, output, hours):
         "max_new_tokens": 256,
         "input_plus_output_limit": 8192,
         "truncation": False,
-        "max_agent_depth": {"flat": 0, "recursive": 2},
+        "max_agent_depth": {p: 0 if p == "flat" else 2 for p in policies},
         "root_depth": 0,
-        "max_native_calls": 3072,
+        "max_native_calls": 96 * len(jobs),
         "budget_seconds": hours * 3600,
         "optimizer": None,
         "seed_rule": "repeat_seed + int(sha256(task_id)[:8],16) +1000*global_call_index",
@@ -415,6 +458,48 @@ def prepare(prepared, output, hours):
         "not RAO reproduction; "
         "eight tasks, two seeds are not independent parents.",
     }
+    if profile == "instruction_control":
+        from transformers import AutoTokenizer
+
+        tokenizer = AutoTokenizer.from_pretrained(
+            BASE, local_files_only=True, trust_remote_code=False
+        )
+        initial_lengths = [
+            len(
+                tokenizer.apply_chat_template(
+                    [
+                        {
+                            "role": "user",
+                            "content": bridge.initial_prompt(task, "flat") + INSTRUCTION_REMINDER,
+                        }
+                    ],
+                    tokenize=True,
+                    return_dict=False,
+                    add_generation_prompt=True,
+                    enable_thinking=False,
+                )
+            )
+            for task in tasks
+        ]
+        if max(initial_lengths) + 256 > 8192:
+            raise ValueError("instruction-control initial context exceeds8192")
+        plan.update(
+            schema="textcraft-native-instruction-control-v1",
+            profile=profile,
+            instruction_reminder=INSTRUCTION_REMINDER,
+            prompt_difference="Original flat public prompt plus fixed trailing reminder only; "
+            "same full history, parser, inventory, native tools and sampling. "
+            "Post-hoc qualification; original three missing flat outcomes remain unknown.",
+            baseline_output=str(ROOT / "textcraft-pilot-001"),
+            baseline_plan_sha256=inputs.sha(ROOT / "textcraft-pilot-001/PLAN.json"),
+            baseline_analysis_sha256=inputs.sha(ROOT / "analysis-textcraft-pilot-001.json"),
+            initial_token_audit={
+                "prompt_tokens": initial_lengths,
+                "max_prompt_plus_cap": max(initial_lengths) + 256,
+            },
+        )
+    if not persist:
+        return plan, tasks
     if (output / "PLAN.json").exists():
         if json.loads((output / "PLAN.json").read_text()) != plan:
             raise ValueError("immutable PLAN changed")
@@ -429,8 +514,8 @@ def summarize(output, plan):
     if set(rows) - {j["episode_id"] for j in plan["jobs"]}:
         raise ValueError("unplanned episode")
     groups = {}
-    for policy in ("flat", "recursive"):
-        selected = [r for r in rows.values() if r["policy"] == policy]
+    for policy in sorted({j.get("condition", j["policy"]) for j in plan["jobs"]}):
+        selected = [r for r in rows.values() if r.get("condition", r["policy"]) == policy]
         groups[policy] = {
             "planned": 16,
             "recorded": len(selected),
@@ -443,10 +528,10 @@ def summarize(output, plan):
             "physical_cost": cost([c for c in calls if c["condition"] == policy]),
         }
     return {
-        "planned_episodes": 32,
+        "planned_episodes": len(plan["jobs"]),
         "recorded_episodes": len(rows),
         "groups": groups,
-        "all_slots_recorded": len(rows) == 32,
+        "all_slots_recorded": len(rows) == len(plan["jobs"]),
         "physical_cost": cost(calls),
         "unresolved_starts": sorted(
             p.stem
@@ -456,13 +541,14 @@ def summarize(output, plan):
     }
 
 
-def run(args):
+def run(args, prepared_run=None, adapter=None):
     global STOP
     STOP = False
     output = args.output.resolve()
-    plan, tasks = prepare(args.prepared, output, args.hours)
+    profile = getattr(args, "profile", "original")
+    plan, tasks = prepared_run or prepare(args.prepared, output, args.hours, profile=profile)
     if args.prepare_only:
-        print(json.dumps({"planned_episodes": 32, "GPU_loaded": False}))
+        print(json.dumps({"planned_episodes": len(plan["jobs"]), "GPU_loaded": False}))
         return
     if list(output.glob("OWNER-*.json")) or any(
         (output / d).exists() for d in ("calls", "episodes", "nodes")
@@ -513,6 +599,12 @@ def run(args):
             attn_implementation="sdpa",
             device_map={"": "cuda:0"},
         )
+        if adapter:
+            from peft import PeftModel
+
+            model = PeftModel.from_pretrained(
+                model, adapter["path"], adapter_name="textcraft_action", is_trainable=False
+            )
         model.eval()
         model.gradient_checkpointing_disable()
         model.config.use_cache = True
@@ -522,7 +614,7 @@ def run(args):
             output / "LOAD.json",
             {
                 "model": str(BASE),
-                "adapter": None,
+                "adapter": adapter,
                 "optimizer_created": False,
                 "trainable_parameters": sum(
                     p.numel() for p in model.parameters() if p.requires_grad
@@ -538,13 +630,16 @@ def run(args):
             deadline,
             plan["model_manifest_sha256"],
             inputs.sha(output / "PLAN.json"),
+            adapter=adapter,
         )
         world, lookup = bridge.load_world(), {t["id"]: t for t in tasks}
         for i, job in enumerate(plan["jobs"]):
             if STOP or time.time() >= deadline - 5 or (output / "STOP").exists():
                 STOP = True
                 break
-            record = episode(lookup[job["task_id"]], job, client, world, output, deadline)
+            record = episode(
+                lookup[job["task_id"]], job, client, world, output, deadline, profile=profile
+            )
             if not record["observed"]:
                 raise RuntimeError(record["failure"])
             if (i + 1) % 4 == 0:
@@ -577,4 +672,7 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--hours", type=float, default=1.0)
     parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument(
+        "--profile", choices=("original", "instruction_control"), default="original"
+    )
     run(parser.parse_args())
