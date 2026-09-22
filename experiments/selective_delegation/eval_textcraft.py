@@ -548,7 +548,7 @@ def summarize(output, plan):
     }
 
 
-def run(args, prepared_run=None, adapter=None):
+def run(args, prepared_run=None, adapter=None, world=None):
     global STOP
     STOP = False
     output = args.output.resolve()
@@ -639,7 +639,8 @@ def run(args, prepared_run=None, adapter=None):
             inputs.sha(output / "PLAN.json"),
             adapter=adapter,
         )
-        world, lookup = bridge.load_world(), {t["id"]: t for t in tasks}
+        world = bridge.load_world() if world is None else world
+        lookup = {t["id"]: t for t in tasks}
         for i, job in enumerate(plan["jobs"]):
             if STOP or time.time() >= deadline - 5 or (output / "STOP").exists():
                 STOP = True

@@ -1,11 +1,36 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T08:54:00Z
+evidence_cutoff_utc: 2026-09-22T09:35:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
 
 # September 22: separate learning to answer from learning when to act
+
+## New lead: demonstrate how to discover the information needed to act
+
+Changing the crafting demonstrations raised success from **3 to 10 out of 16
+attempts** with the original prompt. The old demonstrations often began by
+querying an intermediate ingredient selected using the teacher's hidden plan.
+The new demonstrations start from the visible goal and show how recipe replies
+reveal the ingredients to investigate next. Both training runs use the same
+32 tasks, 366 action examples and 23 updates; the histories and token counts differ.
+
+The comparison gains eight previously failed attempts and loses one previously
+successful attempt. Its task-cluster uncertainty interval is wide: approximately
+6 to 81 percentage points for the net improvement of 44 points. These are eight
+previously examined tasks sampled twice, not 16 independent tasks, and only one
+training seed. With the separate reminder prompt, success rises from 2 to 10
+out of 16. All outcomes were replayed against the environment's unchanged rules.
+
+This is evidence for the revised **teaching procedure as a package**, not proof
+that query order alone caused the gain or that recursion helped. No helpers ran.
+The immediate follow-ups ask whether a short procedural instruction can rescue
+the old trained model, and whether the advantage survives changed recipes.
+A fresh-task comparison is being prepared without inspecting model outcomes.
+See the [detailed finding](TEXTCRAFT-PUBLIC-DISCOVERY-FINDINGS.md).
+
+## Earlier findings and the motivation for that comparison
 
 The latest evidence suggests two different problems. Training can make the model
 less reluctant to answer, without reliably teaching it when the evidence is
@@ -136,18 +161,20 @@ A CPU-only [public-discovery teacher](PUBLIC-DISCOVERY-READINESS.md) now complet
 all 32 training tasks by querying the goal recipe and discovering prerequisites
 from actual replies. It produces the same number of action examples naturally,
 but longer input histories. The observed discovery failures now motivate an
-accepted follow-up training comparison using these demonstrations, with the same
-model, training tasks, 23 updates and fixed final-checkpoint rule. This is not
-yet a trained-model improvement; the changed teacher histories are not perfectly
-token-matched. The original-prompt comparison is primary, not whichever prompt wins.
+follow-up training comparison using these demonstrations, with the same
+model, training tasks, 23 updates and fixed final-checkpoint rule. That comparison
+is now complete, with the improvement reported above. The changed teacher
+histories are not perfectly token-matched. The original-prompt comparison was
+primary, not whichever prompt won.
 
 The all-query audit makes the distinction concrete: 135 of the original 167
 recipe queries ask about an identifier absent from the preceding public input.
 The revised demonstrations have zero such queries. Arbitrary queries are legal;
 the problem is not an invalid target or leaked model input. The revised teacher
 shows how to discover each needed name, whereas the original often supplies
-the name without demonstrating how to find it. Whether this distinction improves
-learned behavior remains an experimental question.
+the name without demonstrating how to find it. The revised teaching package now
+improves the small exposed panel; isolating the mechanism and testing transfer
+remain experimental questions.
 
 On the household-task benchmark, the completed action-training run did not help:
 both flat and manager/worker policies solve 2 of 24 attempts after training versus

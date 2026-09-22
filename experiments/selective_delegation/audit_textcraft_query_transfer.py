@@ -31,6 +31,36 @@ CONFIGS = (
         "instruction_control",
     ),
 )
+TEACHER_CONFIGS = (
+    (
+        "privileged_original",
+        "textcraft-trained-readout-001",
+        "analysis-textcraft-trained-readout-001.json",
+        "original",
+    ),
+    (
+        "privileged_reminder",
+        "textcraft-trained-readout-001",
+        "analysis-textcraft-trained-readout-001.json",
+        "instruction_control",
+    ),
+    (
+        "public_original",
+        "textcraft-public-discovery-readout-001",
+        "analysis-textcraft-public-teacher-001.json",
+        "original",
+    ),
+    (
+        "public_reminder",
+        "textcraft-public-discovery-readout-001",
+        "analysis-textcraft-public-teacher-001.json",
+        "instruction_control",
+    ),
+)
+TEACHER_PAIRS = (
+    ("privileged_original", "public_original"),
+    ("privileged_reminder", "public_reminder"),
+)
 BOOLS = ("first_physical_action_root_query", "first_valid_query_root", "ever_root_query")
 COUNTS = (
     "calls",
@@ -52,6 +82,10 @@ ROW_KEYS = (
     "nonexistent_query_calls",
     "repeated_nonexistent_mentions",
 )
+TEACHER_EXTRA_COUNTS = (
+    "repeat_returned_static_recipe_calls",
+    "repeat_returned_static_recipe_mentions",
+)
 
 
 def sha(path):
@@ -62,10 +96,27 @@ def read(path):
     return json.loads(path.read_text())
 
 
-def summarize(rows):
+def known_static_repeats(queries, history):
+    """Count only queries whose item recipe appeared in strictly earlier public feedback."""
+    known = set()
+    repeated_calls, repeated_mentions = 0, 0
+    for query in queries:
+        for prior in history[: query["index"]]:
+            feedback = prior.get("feedback")
+            if isinstance(feedback, list):
+                known.update(item["item"] for item in feedback if item.get("recipes"))
+        repeats = set(query["items"]).intersection(known)
+        repeated_calls += bool(repeats)
+        repeated_mentions += len(repeats)
+    return repeated_calls, repeated_mentions
+
+
+def summarize(rows, extra_counts=()):
     observed = [row for row in rows if row["observed"]]
     result = dict(planned=len(rows), observed=len(observed), unknown=len(rows) - len(observed))
-    result.update({key: sum(row[key] for row in observed) for key in (*BOOLS, *COUNTS)})
+    result.update(
+        {key: sum(row[key] for row in observed) for key in (*BOOLS, *COUNTS, *extra_counts)}
+    )
     result.update(
         never_root_query_observed=sum(not row["ever_root_query"] for row in observed),
         episodes_with_nonexistent_query=sum(row["nonexistent_query_calls"] > 0 for row in observed),
@@ -78,11 +129,11 @@ def summarize(rows):
     return result
 
 
-def analyze(root):
+def analyze(root, configs=CONFIGS, matched_pairs=None, known_recipe_diagnostic=False):
     if sha(Path(bridge.__file__)) != BRIDGE_SHA:
         raise ValueError("strict parser must match source052")
     rows, inventory, provenance = {}, [], {}
-    for label, directory, report_name, profile in CONFIGS:
+    for label, directory, report_name, profile in configs:
         directory, report_path = root / directory, root / report_name
         report, plan = read(report_path), read(directory / "PLAN.json")
         provenance[str(report_path)] = sha(report_path)
@@ -159,30 +210,37 @@ def analyze(root):
                 )
             names = [item for query in queries for item in query["nonexistent"]]
             counter = Counter(names)
-            out.append(
-                {
-                    **row,
-                    "observed": True,
-                    "calls": len(calls),
-                    "invalid_schema": invalid,
-                    "valid_query_calls": len(queries),
-                    "first_physical_action_root_query": bool(
-                        queries and queries[0]["index"] == 0 and queries[0]["root"]
-                    ),
-                    "first_valid_query_root": bool(queries and queries[0]["root"]),
-                    "ever_root_query": any(query["root"] for query in queries),
-                    "root_query_calls": sum(query["root"] for query in queries),
-                    "nonexistent_query_calls": sum(bool(query["nonexistent"]) for query in queries),
-                    "nonexistent_item_mentions": len(names),
-                    "repeated_nonexistent_mentions": sum(count - 1 for count in counter.values()),
-                }
-            )
+            row = {
+                **row,
+                "observed": True,
+                "calls": len(calls),
+                "invalid_schema": invalid,
+                "valid_query_calls": len(queries),
+                "first_physical_action_root_query": bool(
+                    queries and queries[0]["index"] == 0 and queries[0]["root"]
+                ),
+                "first_valid_query_root": bool(queries and queries[0]["root"]),
+                "ever_root_query": any(query["root"] for query in queries),
+                "root_query_calls": sum(query["root"] for query in queries),
+                "nonexistent_query_calls": sum(bool(query["nonexistent"]) for query in queries),
+                "nonexistent_item_mentions": len(names),
+                "repeated_nonexistent_mentions": sum(count - 1 for count in counter.values()),
+            }
+            if known_recipe_diagnostic:
+                repeated_calls, repeated_mentions = known_static_repeats(
+                    queries, node["public_history"]
+                )
+                row["repeat_returned_static_recipe_calls"] = repeated_calls
+                row["repeat_returned_static_recipe_mentions"] = repeated_mentions
+            out.append(row)
         rows[label] = out
     matched = {}
-    for left_name, right_name in (
-        ("base_original", "trained_original"),
-        ("base_reminder", "trained_reminder"),
-    ):
+    if matched_pairs is None:
+        matched_pairs = (
+            ("base_original", "trained_original"),
+            ("base_reminder", "trained_reminder"),
+        )
+    for left_name, right_name in matched_pairs:
         left = {(row["task_id"], row["repeat"]): row for row in rows[left_name]}
         right = {(row["task_id"], row["repeat"]): row for row in rows[right_name]}
         assert set(left) == set(right)
@@ -192,8 +250,14 @@ def analyze(root):
             "planned_pairs": 16,
             "observed_pairs": len(keys),
             "unknown_pairs": 16 - len(keys),
-            "base": summarize([left[key] for key in keys]),
-            "trained": summarize([right[key] for key in keys]),
+            "base": summarize(
+                [left[key] for key in keys],
+                TEACHER_EXTRA_COUNTS if known_recipe_diagnostic else (),
+            ),
+            "trained": summarize(
+                [right[key] for key in keys],
+                TEACHER_EXTRA_COUNTS if known_recipe_diagnostic else (),
+            ),
             "boolean_transitions": {
                 field: {
                     "base_yes_trained_no": sum(
@@ -207,12 +271,27 @@ def analyze(root):
             },
             "unknown_slots": [dict(task_id=k[0], repeat=k[1]) for k in left if k not in keys],
         }
+        if configs == TEACHER_CONFIGS:
+            matched[right_name + "_vs_" + left_name]["semantic_mapping"] = {
+                "base": "privileged teacher",
+                "trained": "public-information teacher",
+            }
     return {
         "schema": "textcraft-query-transfer-reproducible-audit-v1",
-        "groups": {name: summarize(group) for name, group in rows.items()},
+        "groups": {
+            name: summarize(group, TEACHER_EXTRA_COUNTS if known_recipe_diagnostic else ())
+            for name, group in rows.items()
+        },
         "matched_comparisons": matched,
         "episode_rows": {
-            name: [{k: row[k] for k in ROW_KEYS if k in row} for row in group]
+            name: [
+                {
+                    k: row[k]
+                    for k in (*ROW_KEYS, *(TEACHER_EXTRA_COUNTS if known_recipe_diagnostic else ()))
+                    if k in row
+                }
+                for row in group
+            ]
             for name, group in rows.items()
         },
         "native_inventory_sha256": hashlib.sha256(
@@ -236,10 +315,18 @@ if __name__ == "__main__":
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--verify-against", type=Path)
     parser.add_argument("--report", type=Path)
+    parser.add_argument("--comparison", choices=("transfer", "teacher"), default="transfer")
     args = parser.parse_args()
     if args.report and args.report.exists():
         raise ValueError("immutable report exists")
-    result = analyze(args.root)
+    configs = TEACHER_CONFIGS if args.comparison == "teacher" else CONFIGS
+    pairs = TEACHER_PAIRS if args.comparison == "teacher" else None
+    result = analyze(
+        args.root,
+        configs,
+        pairs,
+        known_recipe_diagnostic=args.comparison == "teacher",
+    )
     if args.verify_against:
         old = read(args.verify_against)
         for key in ("groups", "matched_comparisons", "episode_rows", "native_inventory_sha256"):

@@ -3,7 +3,14 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September22 research update](RESEARCH-UPDATE-20260922.md).
 
-Current checkpoint, September 22, 08:54 UTC: [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
+Current checkpoint, September 22, 09:35 UTC: the [public-discovery teaching
+comparison](TEXTCRAFT-PUBLIC-DISCOVERY-FINDINGS.md) raises crafting success from
+3/16 to10/16 with the original prompt (eight exposed tasks, two samples each).
+Same training tasks,366 action examples and23 updates, but different histories
+and token dose. This is a promising teaching-package result, not isolated
+query-order causality or recursion evidence. A procedural-prompt control is
+running, followed by two fixed adapters on changed recipes. Separately,
+[paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
 improves the fixed warm start from 10 to 18 correct pairs out of64 with RL,
 but extra supervised training reaches19. This is useful learning, not an
 established RL-specific advantage. The [deeper-question comparison](PAIRED-RL-COMPOSITIONAL-FINDINGS.md)
@@ -15,7 +22,7 @@ completed 23 updates; its [evaluation is complete](TEXTCRAFT-ACTION-SFT-FINDINGS
 original-base comparisons. No failed trained episode reaches the public goal;
 discovery loops and premature finishes remain despite valid JSON.
 On the 13 matched original-prompt trials, asking for the goal's recipe first
-falls from 13/13 before training to 2/13 afterward. The next teacher comparison
+falls from 13/13 before training to 2/13 afterward. The teacher comparison
 therefore tests whether demonstrations of public information gathering preserve
 that behavior while teaching the actions.
 The [completed reward control](PAIRED-REWARD-CONTROL-FINDINGS.md) gives
@@ -25,7 +32,7 @@ the original joint reward. Neither establishes an advantage over extra SFT.
 The [training audit](PAIRED-ADDITIVE-TRAINING-FINDINGS.md) verifies actual updates;
 the [public-discovery prototype](PUBLIC-DISCOVERY-READINESS.md) prepares a
 different way of teaching prerequisite discovery. Its matched training/readout
-are now running, not yet a new model-quality result. The [same-product credit
+are now complete, with the improvement summarized above. The [same-product credit
 control](PAIRED-PAIRING-MEAN-FINDINGS.md) is complete: averaging over response
 pairings scores6/64 versus10/64 for the original RL rule, with four losses and
 no wins on the exposed panel. More active training groups did not improve answers;

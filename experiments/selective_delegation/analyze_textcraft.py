@@ -368,7 +368,7 @@ def audit_episode(task, job, row, calls, nodes, plan, plan_sha, tokenizer, world
     )
 
 
-def analyze(output, tokenizer, draws=20000, expected_collector_sha256=None):
+def analyze(output, tokenizer, draws=20000, expected_collector_sha256=None, world=None):
     import psutil
 
     plan = read(output / "PLAN.json")
@@ -486,7 +486,8 @@ def analyze(output, tokenizer, draws=20000, expected_collector_sha256=None):
         if "condition" in job:
             spec.update(condition=job["condition"], prompt_profile=job["prompt_profile"])
         audit_call(call, spec, plan, plan_sha, tokenizer)
-    world, audits, used = bridge.load_world(), {}, set()
+    world = bridge.load_world() if world is None else world
+    audits, used = {}, set()
     for job in plan["jobs"]:
         eid = job["episode_id"]
         if eid not in rows:

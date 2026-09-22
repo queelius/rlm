@@ -1,5 +1,16 @@
 # Research ledger — plan: experiments/selective_delegation/PLAN.md
 
+2026-09-22 09:37 UTC:057 completed32native-auditedepisodes/871returnedcalls.
+Publicteacher10/16original vs3/16oldteacher,8wins1loss; secondary10vs2.
+Queryaudit002 rootfirst16vs3/nonexistent0vs344 original. Same366rows/23updates,
+differenthistories/tokenmix,8exposedparents/oneTRAINseed. Teachingpackage signal,
+not ordercausality or recursion. Queue005 accepted061promptcontrol then062twoarm
+changedworld43; PID101655/exec82082 active, first061realresponse checked.
+Main062sealedfixture1pass5.52s and scopedRuffpass;057behaviorsealed3pass earlier.
+Fresh16outcome-blindCPUproposalpreparation accepted, noGPUacceptance.
+Editorialdecision: update livingresearchreport; preserve historicalSep11deckcutoff.
+Quota31%09:33,10%reserve. Newfindings/sourceGitcheckpoint pending.
+
 2026-09-22 08:54 UTC:058/059complete. Product pairing-mean credits50TRAINgroups
 versus42original, but312responses versus336;79/512productsuccesspairs versus78.
 All8updates independentlyverified,1022valid/2protocol-invalidreturns. Evaluation
