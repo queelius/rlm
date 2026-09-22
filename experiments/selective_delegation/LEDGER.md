@@ -1,5 +1,24 @@
 # Research ledger — plan: experiments/selective_delegation/PLAN.md
 
+2026-09-22 08:40 UTC: Crafting SFT readout052 complete, 32 episodes/1884 returned
+calls with no transport failures. Original3/16, reminder2/16; original matched
+comparison1win0loss3unknown, reminder2wins0loss. No failed trained trajectory
+ever reaches the public inventory goal, so positive-goal stopping alone rescues
+none. Query-transfer audit finds matched original root-first actions13/13->2/13,
+and reminder16/16->3/16, despite zero trained JSON-schema errors. Nonexistent
+query calls rise from0 in both baselines to344/522 and593/1078 after SFT.
+This supports an information-gathering regression, not yet teacher-order causality.
+
+Public-discovery SFT056->readout057 accepted under queue004 after058->059.
+Coordinator74306/exec59521 waits authenticated queue003 completion and all extant
+owners' release; no edits to active seals. The RL estimator control has committed
+six updates. Its first update used identical samples and initial weights but
+credited4groups versus2; update cosine.709433, not held-quality evidence.
+Main reviewed final TRAIN audit003 and coordinator060;3 focused tests and scoped
+Ruff passed. Failed analysis prototypes001/002 remain external and unmodified.
+Quota34%08:40; reserve10%. Historical September11 deck remains at its meeting
+cutoff; current findings and plain-language research update carry the new evidence.
+
 2026-09-22 08:07 UTC:058productpairing_meanRL8 ->059twoarm256callreadout accepted
 underindependentqueue003A,PID62417/exec55708, waiting052resource release. Same
 reward/TRAIN/warm/seed/Adam as037; fieldcomparisonactualPLANSmatches. Main9sealed

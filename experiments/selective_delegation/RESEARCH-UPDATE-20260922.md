@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T08:04:00Z
+evidence_cutoff_utc: 2026-09-22T08:41:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -10,8 +10,9 @@ publication_status: mechanisms_to_test_not_established_architecture_advantage
 The latest evidence suggests two different problems. Training can make the model
 less reluctant to answer, without reliably teaching it when the evidence is
 enough. In an interactive task, the model can make real progress and then fail
-to recognize that it should stop. Neither problem is solved merely by allowing
-more helper calls.
+to recognize that it should stop. After action training, its main failures instead
+involve guessed recipe names, wrong intermediate products and stopping too early.
+Neither problem is solved merely by allowing more helper calls.
 
 ## Training helped on easier questions, but the joint gain did not clearly transfer
 
@@ -68,6 +69,11 @@ calculation alone cannot answer that question. It is a known estimator idea,
 not a new reward or a claimed new algorithm; its readout reuses an exposed
 development panel and is explicitly exploratory.
 
+That run is now active. Its first update uses exactly the same 128 sampled
+responses and initial weights as the original RL run, but assigns nonzero credit
+to four question groups rather than two. This verifies that the intervention
+changes learning from the same samples. It does not yet show better answers.
+
 ## Interactive failures reveal a concrete harness question
 
 In the crafting environment, a model must query recipes, make ingredients, and
@@ -88,11 +94,32 @@ fall from 118 to 4, but native action errors rise from 212 to 692. Three reminde
 trials reach sufficient target inventory; none chooses to finish. Better format
 does not establish better task performance. See the [qualified comparison](TEXTCRAFT-INSTRUCTION-FINDINGS.md).
 
-A separate supervised run has completed one epoch and 23 updates on 366
-query/craft/finish examples from 32 training tasks. Its evaluations are running;
-we do not yet know whether it improves task success. They will compare original
-and reminder prompts with the fixed trained weights. These demonstrations
-teach basic task execution, not recursive planning.
+A separate supervised run completed one epoch and 23 updates on 366
+query/craft/finish examples from 32 training tasks. Its completed evaluation
+solves 3/16 attempts with the original prompt and 2/16 with the reminder. Against
+the original baseline, there is one observed win, no loss and three unknown
+comparisons. Against the complete reminder baseline, there are two wins and no
+losses; the estimated gain is 12.5 percentage points, with an eight-task bootstrap
+interval from zero to 31.25. These are modest, uncertain gains, not general planning.
+
+The failures now tell a different story. All trained replies satisfy the JSON
+schema, but none of the 27 failed attempts ever achieves the public item goal.
+The original-prompt model finishes unsuccessfully 11 times; the reminder model
+often loops through recipe queries instead. A rule that finishes once enough
+items exist would therefore rescue none of these trained failures. In one
+trace, the model uses all available ore making the wrong intermediate, then
+discovers the actual goal recipe too late. See the [complete paired analysis
+and concrete examples](TEXTCRAFT-ACTION-SFT-FINDINGS.md).
+
+A comparison of the saved actions reveals a sharper result: training improved
+formatting while damaging information gathering. On the 13 original-prompt
+trials where both models have recorded outcomes, the base model begins by asking
+for the goal's recipe in all 13; the trained model does so in only two. With the
+reminder, that falls from 16 of 16 to three of 16. The base model makes no queries
+for nonexistent items; after training, 344 of 522 original-prompt queries and
+593 of 1,078 reminder queries ask about nonexistent items. These are repeated
+actions, not independent examples. This links the regression to the trained
+adapter, but does not yet prove which feature of the demonstrations caused it.
 
 A [training-data audit](TEXTCRAFT-TRAINING-COVERAGE.md) sharpens that limitation:
 30 of 32 demonstrations begin with an intermediate recipe chosen by the
@@ -106,9 +133,11 @@ not by itself proof of general decomposition or unfamiliar-world transfer.
 A CPU-only [public-discovery teacher](PUBLIC-DISCOVERY-READINESS.md) now completes
 all 32 training tasks by querying the goal recipe and discovering prerequisites
 from actual replies. It produces the same number of action examples naturally,
-but longer input histories. This makes a follow-up teaching comparison feasible;
-it is not yet a trained-model improvement. We will use the current crafting
-evaluation to decide whether that comparison addresses an observed weakness.
+but longer input histories. The observed discovery failures now motivate an
+accepted follow-up training comparison using these demonstrations, with the same
+model, training tasks, 23 updates and fixed final-checkpoint rule. This is not
+yet a trained-model improvement; the changed teacher histories are not perfectly
+token-matched. The original-prompt comparison is primary, not whichever prompt wins.
 
 The all-query audit makes the distinction concrete: 135 of the original 167
 recipe queries ask about an identifier absent from the preceding public input.

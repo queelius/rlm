@@ -3,21 +3,31 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September22 research update](RESEARCH-UPDATE-20260922.md).
 
-Current checkpoint, September 22, 07:32 UTC: [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
+Current checkpoint, September 22, 08:41 UTC: [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
 improves the fixed warm start from 10 to 18 correct pairs out of64 with RL,
 but extra supervised training reaches19. This is useful learning, not an
 established RL-specific advantage. The [deeper-question comparison](PAIRED-RL-COMPOSITIONAL-FINDINGS.md)
 is now complete:6/7/6 for warm/RL/extraSFT, with no clear paired improvement.
 The [crafting reminder control](TEXTCRAFT-INSTRUCTION-FINDINGS.md) greatly
 reduces format errors but solves none of 16 attempts. Public-action SFT has
-completed 23 updates; its evaluation is running, not yet a learning-gain result.
+completed 23 updates; its [evaluation is complete](TEXTCRAFT-ACTION-SFT-FINDINGS.md):
+3/16 original and2/16 reminder successes, with uncertain gains and three missing
+original-base comparisons. No failed trained episode reaches the public goal;
+discovery loops and premature finishes remain despite valid JSON.
+On the 13 matched original-prompt trials, asking for the goal's recipe first
+falls from 13/13 before training to 2/13 afterward. The next teacher comparison
+therefore tests whether demonstrations of public information gathering preserve
+that behavior while teaching the actions.
 The [completed reward control](PAIRED-REWARD-CONTROL-FINDINGS.md) gives
 6/10/10/4 correct pairs out of64 for warm/product-RL/extra-SFT/additive-RL.
 Rewarding each side separately increases mistaken refusals and loses against
 the original joint reward. Neither establishes an advantage over extra SFT.
 The [training audit](PAIRED-ADDITIVE-TRAINING-FINDINGS.md) verifies actual updates;
 the [public-discovery prototype](PUBLIC-DISCOVERY-READINESS.md) prepares a
-different way of teaching prerequisite discovery, not a new model result.
+different way of teaching prerequisite discovery. Its matched training/readout
+are now accepted, not yet a new model result. A [same-product credit control](PAIRING-MEAN-RL-DECISION.md)
+is actively training; its first update uses identical original samples but credits
+four groups instead of two. No held performance result exists yet.
 [Household action SFT](ALFWORLD-ACTION-SFT-FINDINGS.md) did not improve the exposed twelve-game panel: both flat
 and manager-worker policies score2/24 after training versus4/24 before it.
 The [crafting pilot](TEXTCRAFT-PILOT-FINDINGS.md) reached its one-hour cap with26/32 episode records; no helper
