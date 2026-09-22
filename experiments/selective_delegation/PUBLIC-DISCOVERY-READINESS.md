@@ -20,6 +20,26 @@ The teacher aggregates demand over queried recipe edges, credits current stock o
 
 ## Artifacts and reproduction
 
+A separate all-query visibility audit sharpens the first-action comparison.
+For each row, it parses only the saved prompt's final public JSON frame and
+recursively collects dictionary keys and complete string values, including the
+entire nested history. Exact-string comparison finds **135/167 source047 query
+targets absent from that prior frame, across 30 tasks**, versus **0/167** for
+source055. All 366 rows per procedure and identical 32-task inventories were
+checked. For example, source047 train.988 step0 queries `c9_i1_19`; train.2040
+steps0 and2 query `o0_i1_10` and `o1_i1` before those identifiers occur as a frame
+string/key. Arbitrary item queries are allowed: this is teacher-supplied
+identifier choice, not an illegal action, an input leak, or proof the model
+cannot know the name. The audit does not substring-match prose or read current
+target/feedback into prior visibility. Reproduction source is
+`audit_textcraft_query_visibility.py`; immutable receipt is
+`R/analysis-textcraft-query-visibility-001.json`, with per-query prompt hashes
+and input/source hashes. No sealed source055 or prototype artifact changed.
+The additive `analysis-textcraft-query-visibility-002.json` also searches the
+whole prior prompt, including free-text feedback, with escaped item names and
+`[A-Za-z0-9_]` identifier boundaries. It obtains the same 135 versus zero absent
+query names. Both producing sources and receipt001 remain preserved externally.
+
 Research-store root `R` is `/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921`.
 
 - Exact source/import snapshot: `R/source-055-textcraft-public-discovery/`; `SOURCE.json` SHA256 `80bf7cc468d029cbab97307146ae67c5c5c220bbfe6e725eb0566a35fbfafb59`.

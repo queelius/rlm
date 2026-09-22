@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T07:32:00Z
+evidence_cutoff_utc: 2026-09-22T07:48:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -101,6 +101,14 @@ from actual replies. It produces the same number of action examples naturally,
 but longer input histories. This makes a follow-up teaching comparison feasible;
 it is not yet a trained-model improvement. We will use the current crafting
 evaluation to decide whether that comparison addresses an observed weakness.
+
+The all-query audit makes the distinction concrete: 135 of the original 167
+recipe queries ask about an identifier absent from the preceding public input.
+The revised demonstrations have zero such queries. Arbitrary queries are legal;
+the problem is not an invalid target or leaked model input. The revised teacher
+shows how to discover each needed name, whereas the original often supplies
+the name without demonstrating how to find it. Whether this distinction improves
+learned behavior remains an experimental question.
 
 On the household-task benchmark, the completed action-training run did not help:
 both flat and manager/worker policies solve 2 of 24 attempts after training versus

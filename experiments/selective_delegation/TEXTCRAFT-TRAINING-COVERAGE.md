@@ -37,6 +37,19 @@ The prior inventory-aware audit further distinguishes declared recipe tier from 
 
 ## What the supervision does—and does not—teach
 
+An additive exact-identifier audit covers every query, not only the first query:
+135/167 source047 query targets (30/32 tasks) do not occur as a dictionary key
+or complete string value anywhere in that row's prior public JSON frame,
+including nested history. Source055's public-discovery prototype has 0/167
+such absent targets on the identical task set. This identifies teacher-supplied
+query names, not illegal queries or input leakage; arbitrary identifiers remain
+valid query actions, and the audit is not a model-knowledge test. The immutable
+`analysis-textcraft-query-visibility-001.json` records every query, prompt hash,
+row-source hash and exact matching method; see `PUBLIC-DISCOVERY-READINESS.md`.
+An additive receipt002 broadens matching to identifier-bounded occurrences
+anywhere in the entire prior prompt, including free-text feedback; it confirms
+the same 135 versus zero counts without overwriting receipt001.
+
 There are 366 strict JSON-plus-EOS action rows: 167 recipe queries, 167 crafts and 32 explicit finishes. Of 8,821 supervised tokens, 2,620 belong to queries, 5,881 to crafts and 320 to finishes. Craft rows therefore dominate target tokens; calling this “only format training” would be inaccurate. The targets also supervise product choice, ingredient dictionaries, batch quantities, ordering and stopping. Prompt/history tokens are masked from the loss.
 
 Each craft is preceded by a public query for that product and its native recipe reply. Histories contain only successful teacher actions; no invalid JSON, rejected craft, error recovery, exploration failure or repetition loop is demonstrated. All 32 selected tasks succeed, so there was no replacement or realized success-filter attrition. Finish is supervised once per task, immediately after the gold sequence.
