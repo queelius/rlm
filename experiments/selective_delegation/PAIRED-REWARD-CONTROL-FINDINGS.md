@@ -1,5 +1,11 @@
 # Paired reward-control readout
 
+Subsequent decision,08:04UTC: the recommendation below to defer an estimator
+experiment was reconsidered. A small [same-product pairing-mean control](PAIRING-MEAN-RL-DECISION.md)
+is now accepted because the raw-gradient identity does not establish its effect
+after clipping and Adam. This does not reverse the negative additive result,
+assume an RL-over-SFT advantage, or establish novelty. The findings below are unchanged.
+
 The predeclared primary comparison disfavors the additive reward. On the fixed
 32-parent paired MuSiQue panel (positive and missing-evidence variants, two
 seeds), product-RL reached 10/64 joint-EM pairs (15.6%) and additive-RL 4/64

@@ -44,7 +44,12 @@ def validate_dose(plan, state, steps):
         raise ValueError("all23 optimizer receipts/366 consumed rows required")
 
 
-def endpoint(adapter):
+def endpoint(
+    adapter,
+    *,
+    training_plan_sha256=TRAINING_PLAN_SHA256,
+    rows_sha256="caa78390f9d4ac28e600674b26e56375203b72d8cdad1c3f9471da3fb25776a9",
+):
     import psutil
 
     adapter = adapter.resolve()
@@ -52,8 +57,8 @@ def endpoint(adapter):
         raise ValueError("fixed checkpoint0023 only")
     output = adapter.parent
     plan_path = output / "PLAN.json"
-    if collector.inputs.sha(plan_path) != TRAINING_PLAN_SHA256:
-        raise ValueError("not accepted fixed048 training PLAN")
+    if collector.inputs.sha(plan_path) != training_plan_sha256:
+        raise ValueError("not accepted fixed training PLAN")
     plan = json.loads(plan_path.read_text())
     state = json.loads((adapter / "STATE.json").read_text())
     commit = json.loads((adapter / "COMMIT.json").read_text())
@@ -91,8 +96,8 @@ def endpoint(adapter):
     ]:
         if collector.inputs.sha(p) != expected:
             raise ValueError("training public-input identity changed")
-    if plan["rows_sha256"] != "caa78390f9d4ac28e600674b26e56375203b72d8cdad1c3f9471da3fb25776a9":
-        raise ValueError("not frozen047 rows")
+    if plan["rows_sha256"] != rows_sha256:
+        raise ValueError("not frozen training rows")
     required = {"STATE.json", "adapter_config.json", "adapter_model.safetensors"}
     if commit.get("step") != 23 or not required <= set(commit["files"]):
         raise ValueError("checkpoint commit incomplete")

@@ -176,6 +176,33 @@ class AdditiveDoseMismatch(ValueError):
     """Authenticated terminal is not the fixed eight-update comparison dose."""
 
 
+PAIRING_COMMON = (
+    "mode", "cases_sha256", "input_manifest_sha256", "parent_blocks", "model", "warmstart",
+    "base_manifest_sha256", "official_metric_sha256", "seed", "learning_rate",
+    "fresh_optimizer", "weight_decay", "gradient_clip", "microbatch",
+    "candidate_pairs_per_parent", "pair_denominator", "max_sampled_blocks", "max_calls",
+    "max_consecutive_zero_blocks", "budget_seconds", "sampling_temperature", "sampling_top_p",
+    "sampling_top_k", "max_new_tokens", "max_context", "environment_lock_sha256",
+)
+
+
+def validate_pairing_mean_control(product, pairing):
+    rp, pp = product["training_plan"], pairing["training_plan"]
+    if (
+        rp.get("reward_objective", "product") != "product"
+        or pp.get("reward_objective") != "product"
+        or rp.get("estimator", "diagonal") != "diagonal"
+        or pp.get("estimator") != "pairing_mean"
+    ):
+        raise ValueError("explicit diagonal/pairing-mean product objectives required")
+    if any(rp[key] != pp[key] for key in PAIRING_COMMON):
+        raise ValueError("pairing-mean control common training contract differs")
+    if (product["step"], product["sample_cursor"]) != (8, 8) or (
+        pairing["step"], pairing["sample_cursor"]
+    ) != (8, 8):
+        raise ValueError("both controls require eight committed updates/blocks")
+
+
 def validate_additive_control(product, additive):
     rp, ap = product["training_plan"], additive["training_plan"]
     if (
@@ -235,17 +262,27 @@ def prepare(args, *, profile=None):
             },
         )
         return None, None, None
-    sft = endpoint_identity(args.sft_output.resolve(), "sft_control", warm)
-    rp, sp = rl["training_plan"], sft["training_plan"]
-    if (
-        sp["rl_plan_sha256"] != rl["training_plan_sha256"]
-        or sp["matched_rl_boundaries"] != rl["boundaries"]
-        or sp["cases_sha256"] != rp["cases_sha256"]
-        or sp["parent_blocks"] != rp["parent_blocks"]
-        or (sft["step"], sft["sample_cursor"]) != (rl["step"], rl["sample_cursor"])
-    ):
-        raise ValueError("matched control differs from actual RL update inventory")
-    identities = dict(zip(CONDITIONS, (warm, rl, sft), strict=True))
+    pairing_output = getattr(args, "pairing_mean_output", None)
+    if pairing_output is not None:
+        if profile is None:
+            raise ValueError("pairing-mean readout requires an explicit frozen panel profile")
+        pairing = endpoint_identity(pairing_output.resolve(), "rl", warm)
+        validate_pairing_mean_control(rl, pairing)
+        identities = {"rl_terminal": rl, "pairing_mean_terminal": pairing}
+        plans = (rl["training_plan"], pairing["training_plan"])
+    else:
+        sft = endpoint_identity(args.sft_output.resolve(), "sft_control", warm)
+        rp, sp = rl["training_plan"], sft["training_plan"]
+        if (
+            sp["rl_plan_sha256"] != rl["training_plan_sha256"]
+            or sp["matched_rl_boundaries"] != rl["boundaries"]
+            or sp["cases_sha256"] != rp["cases_sha256"]
+            or sp["parent_blocks"] != rp["parent_blocks"]
+            or (sft["step"], sft["sample_cursor"]) != (rl["step"], rl["sample_cursor"])
+        ):
+            raise ValueError("matched control differs from actual RL update inventory")
+        identities = dict(zip(CONDITIONS, (warm, rl, sft), strict=True))
+        plans = (rp, sp)
     additive_output = getattr(args, "additive_rl_output", None)
     if additive_output is not None:
         if profile is None:
@@ -273,11 +310,12 @@ def prepare(args, *, profile=None):
     if any(
         p["model"] != str(base)
         or p["base_manifest_sha256"] != sha(base / "local-research-manifest.json")
-        for p in (rp, sp)
+        for p in plans
     ):
         raise ValueError("training base differs from readout base")
-    if not 0 < args.hours <= 1:
-        raise ValueError("at most one hour for fixed readout")
+    max_hours = 1 if profile is None else profile.get("max_hours", 1)
+    if not 0 < args.hours <= max_hours:
+        raise ValueError("readout cap differs from frozen profile")
     cases_path = args.cases.resolve()
     manifest = read(cases_path.with_name("MANIFEST.json"))
     cases_sha = validate_panel(cases_path, manifest, profile)
@@ -330,7 +368,16 @@ def prepare(args, *, profile=None):
     if profile is not None:
         plan["panel_profile"] = profile
         plan["schema"] = profile["readout_schema"]
-    if additive_output is not None:
+    if pairing_output is not None:
+        plan["control_binding"] = {
+            "rl_terminal_reward": "product",
+            "pairing_mean_terminal_reward": "product",
+            "rl_terminal_estimator": "diagonal",
+            "pairing_mean_terminal_estimator": "pairing_mean",
+            "equal_actual_steps_and_sample_cursors": True,
+            "dose_caveat": "Not matched information, nonzero-credit tokens, or FLOPs",
+        }
+    elif additive_output is not None:
         plan["control_binding"] = {
             "matched_sft_control_for": "rl_terminal",
             "rl_terminal_reward": "product",

@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T07:48:00Z
+evidence_cutoff_utc: 2026-09-22T08:04:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -59,6 +59,14 @@ offline projection of 98 active groups from the 54 actually observed under the
 new policy. It also verifies that identical first samples produced materially
 different parameter-update directions. See the [objective control](PAIRED-ADDITIVE-RL-PLAN.md)
 for the prospectively fixed comparison.
+
+One bounded [credit-assignment control](PAIRING-MEAN-RL-DECISION.md) is queued:
+keep the original joint reward, but average over the arbitrary ways of pairing
+the sampled positive and negative responses. This asks whether less noisy
+credit actually improves the trained policy after the optimizer acts. The CPU
+calculation alone cannot answer that question. It is a known estimator idea,
+not a new reward or a claimed new algorithm; its readout reuses an exposed
+development panel and is explicitly exploratory.
 
 ## Interactive failures reveal a concrete harness question
 

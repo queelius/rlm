@@ -1,5 +1,13 @@
 # Research ledger — plan: experiments/selective_delegation/PLAN.md
 
+2026-09-22 08:07 UTC:058productpairing_meanRL8 ->059twoarm256callreadout accepted
+underindependentqueue003A,PID62417/exec55708, waiting052resource release. Same
+reward/TRAIN/warm/seed/Adam as037; fieldcomparisonactualPLANSmatches. Main9sealed
+reader/analyzertests5.32spass. No requires052scientificsuccess.059usesexposed050,
+notfreshconfirmation. CPUwatcher63848exists; fullimportpinschecked. Mainreviewed
+056/057publicteachertraining/readout,6+6tests and3nativeanalysisfixturespass;
+theyremainCPUready/notGPUacceptedbefore052decision. Quota36%07:59,next08:14.
+
 2026-09-22 07:32 UTC:053 completed512validheldcalls, jointwarm/product/SFT/additive
 6/10/10/4 of64. Primaryadditive-product−9.375pp componentCI[-18.9655,-1.7241],
 6loss0win. Newrewardincreasespositiveabstention52vs40 whileloweringnegative
