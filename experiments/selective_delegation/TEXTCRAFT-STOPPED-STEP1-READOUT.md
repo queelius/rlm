@@ -1,5 +1,14 @@
 # Explicit stopped-run one-step diagnostic
 
+## Completed result, September 22 at 17:04 UTC
+
+All three arms have 32 observed, natively verified outcomes: starting model
+15/32, one RL update 15/32, matched supervised update 17/32. All paired 95%
+intervals include zero. See the [findings and limitations](TEXTCRAFT-ONE-STEP-FINDINGS.md)
+and [compact machine-readable report](textcraft-one-step-results.json).
+The original failed RL run remains failed; this is only the explicitly amended
+one-update diagnostic specified below.
+
 ## Accepted execution, September 22 at 15:12 UTC
 
 The RL checkpoint readout is running with a one-hour cap and unchanged 32

@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T15:46:00Z
+evidence_cutoff_utc: 2026-09-22T17:04:38Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -17,10 +17,10 @@ publication_status: mechanisms_to_test_not_established_architecture_advantage
 - **This is not yet evidence that recursion helps.** These comparisons use no
   helper agents. Longer plans remain difficult, and format improvements account
   for part of the difference from the unadapted model.
-- **The current RL experiment has one completed update, not a demonstrated
-  improvement.** A numerical mismatch stopped the second update. A focused
-  precision test reduced that mismatch; a separate, explicitly labeled evaluation
-  of the one completed update is now testing whether its weight changes help.
+- **The completed one-update comparison shows no RL advantage.** The starting
+  model and RL each solve 15/32; a matched supervised update solves 17/32.
+  All paired uncertainty intervals include zero. RL also uses more calls and
+  makes more rejected actions. See the [full comparison](TEXTCRAFT-ONE-STEP-FINDINGS.md).
 - **The next contribution to test is a mechanism, not just a higher score:**
   whether showing how to discover subproblems helps more than showing an expert's
   preselected sequence. A tighter demonstration comparison and another training
@@ -30,19 +30,18 @@ publication_status: mechanisms_to_test_not_established_architecture_advantage
 
 ### What is running next, and what will it tell us?
 
-The current evaluation measures the sole completed RL update on the same 32
-task-and-seed combinations as the earlier trained model. Next comes one extra
-supervised update, matched to the RL update's 12,074 credited output tokens,
-followed by the same evaluation. This separates a benefit from additional
-training from a benefit specific to the reward-based update. It does not match
-the training histories or total computation, and the evaluation panel has
-already been examined.
+The completed evaluation compares the sole committed RL update with one extra
+supervised update, matched to its 12,074 credited output tokens. It finds no
+demonstrated benefit specific to RL. The updates have different histories and
+total computation, and the evaluation panel has already been examined.
 
 A separate continuation tests a numerical repair before attempting one more RL
 update. It preserves the first update and optimizer state, collects new training
 attempts, and evaluates the resulting model with the original evaluation
-arithmetic. A smaller numerical mismatch is encouraging but is not itself an
-improvement at solving tasks.
+arithmetic. Its first attempt passed a finite-gradient check but stopped on a
+missing validation function before new rollouts; that interface is being repaired.
+A smaller numerical mismatch is encouraging but is not itself an improvement
+at solving tasks.
 
 The final prepared comparison repeats both demonstration-based training runs
 with one new shared random seed. The examples, training settings and evaluation

@@ -82,7 +82,18 @@ preparation is running; never mistake a delivered message for active work.
 
 ## Codex usage reserve for advisor slides
 
-**September 13 consolidation override (current):** The user now explicitly asks
+**September 22 usage override (current):** The user explicitly lowered the shared
+account reserve to **5%**, authorized continued research above that boundary, and
+asked to minimize token usage. This supersedes the earlier 10% reserve. Prefer
+bounded local scripts for long-running experiments and analysis; they may continue
+after Codex generation stops. Check the supported account endpoint before large
+new work and periodically while active; wind down with headroom before 5% because
+the allowance is shared and reporting can lag. Do not assume a reset. Preserve
+checkpoints, machine-readable results and a clear handoff. Old monitor action
+labels are not the current policy. Avoid narration, redundant checks and agent
+fan-out that do not materially change a research decision.
+
+**September 13 consolidation override (historical):** The user explicitly asked
 to preserve 10% of the shared account allowance. At 14% remaining, use only
 about 4% for consolidating findings and small targeted experiments. This
 supersedes the September 12 permission to spend the reserve. Avoid new research

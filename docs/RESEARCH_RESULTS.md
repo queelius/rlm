@@ -19,8 +19,9 @@ task-cluster interval for its 28.1-point gain is 12.5 to 46.9 points. The panel
 shares a recipe world and prerequisites with training, and the base has many
 more format errors. This is promising exploratory transfer, not an isolated
 decomposition mechanism. One terminal-reward RL update is saved; a numerical
-check stopped the second. An explicit one-step evaluation and matched supervised
-control are now running/queued, with no measured RL gain yet. See
+check stopped the second. The completed [one-step comparison](../experiments/selective_delegation/TEXTCRAFT-ONE-STEP-FINDINGS.md)
+gives 15/32 before continuation, 15/32 after RL and 17/32 after a matched
+supervised update. Paired intervals include zero; no RL advantage is established. See
 the [current synthesis](../experiments/selective_delegation/RESEARCH-UPDATE-20260922.md)
 for controls, costs and limits on the claim.
 

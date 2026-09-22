@@ -1,5 +1,17 @@
 # One additional FP16 training step, explicit continuation
 
+## First attempt failed before collection, September 22 at 17:05 UTC
+
+The restored model passed the finite-loss/finite-gradient backward probe, with
+no optimizer update during that probe. The run then failed after 9.55 seconds:
+the sealed readiness helper calls `analyze_textcraft.validate_runtime_tasks`,
+but that function is absent from the analyzer copied into its source snapshot.
+There were no new rollouts or optimizer steps. The copied starting checkpoint
+is not a new training result, and the dependent evaluation correctly rejected it.
+The failure record is preserved. Repair must exercise the actual saved-plan
+readiness interface before a new, separately recorded attempt. Queue 013 has
+already advanced to independent teacher-seed training; no need to hold the GPU.
+
 ## Accepted queue, September 22 at 15:30 UTC
 
 Training and its fixed BF16 evaluation are now accepted as queue012. They wait

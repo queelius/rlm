@@ -3,7 +3,7 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September22 research update](RESEARCH-UPDATE-20260922.md).
 
-Current checkpoint, September 22, 15:49 UTC: the new-goal comparison is complete.
+Current checkpoint, September 22, 17:08 UTC: the new-goal comparison is complete.
 Revised teaching solves **15/32**, versus **6/32 without adaptation** and **1/32
 with the earlier teaching package**. See the [base-controlled findings](TEXTCRAFT-FRESH-BASE-FINDINGS.md)
 for paired uncertainty, exposure and format-error qualifications. This is the
@@ -11,20 +11,21 @@ strongest current lead, not proof of a recursion benefit.
 
 RL completed one update, then stopped at a numerical check before its second.
 The [precision probe](TEXTCRAFT-PRECISION-PROBE.md) identifies a promising way to
-reduce the mismatch. An [explicit stopped-run evaluation](TEXTCRAFT-STOPPED-STEP1-READOUT.md)
-of the sole committed checkpoint is running; one matched supervised update,
-its evaluation and native three-arm analysis are accepted and queued. No RL
-task-performance improvement is claimed yet. A [serving test](TEXTCRAFT-BATCH-QUALIFICATION-FINDINGS.md)
+reduce the mismatch. The [completed one-update comparison](TEXTCRAFT-ONE-STEP-FINDINGS.md)
+gives **15/32 before continuation, 15/32 after RL, and 17/32 after matched
+supervised training**. All paired intervals include zero. No RL advantage is
+established. A [serving test](TEXTCRAFT-BATCH-QUALIFICATION-FINDINGS.md)
 also found a 2.75× throughput gain from four concurrent fixed requests.
 
-Two further bounded comparisons are accepted for automatic execution: a
-[numerically revised RL continuation](TEXTCRAFT-FP16-CONTINUATION-PLAN.md), then
-a [second training-seed replication](TEXTCRAFT-SECOND-SEED-PLAN.md) of both teaching
-packages. They test whether RL can make another valid update and whether the
-strongest demonstration result depends on the original training randomness.
-Queued work is not a completed result. The shared account showed 13% remaining
-at 15:48 UTC; the requested 10% reserve remains in force. Local jobs do not need
-ongoing Codex generation to execute, checkpoint and produce native analyses.
+The [numerically revised RL continuation](TEXTCRAFT-FP16-CONTINUATION-PLAN.md)
+passed its finite-gradient probe but stopped on a missing validation function
+before collecting new attempts. Its failed record is preserved while the
+interface is repaired. The independent [second training-seed replication](TEXTCRAFT-SECOND-SEED-PLAN.md)
+is now training on the GPU. It tests whether the demonstration result depends
+on the original training randomness. At 17:06 UTC the shared account showed
+13% remaining; the user has lowered the reserve to **5%** and requested minimal
+token use. Local jobs execute, checkpoint and produce native analyses without
+ongoing Codex generation.
 
 Historical checkpoint, September 22, 10:45 UTC: the [changed-recipe-world comparison](TEXTCRAFT-CHANGED-WORLD-FINDINGS.md)
 is complete: public-discovery teaching solves10/16 versus3/16, with seven paired

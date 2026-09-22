@@ -1,0 +1,249 @@
+{
+  "schema": "textcraft-one-step-summary-v1",
+  "status": "exploratory_complete",
+  "source_report": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-stopped-step1-001.json",
+  "source_report_sha256": "dfe3c3db7d64be4accd5c5b70479ba78b1fb52d639e324a06832bf3143c20ad9",
+  "method": {
+    "parent_count": 16,
+    "repeats": 2,
+    "planned_per_arm": 32,
+    "bootstrap_draws": 20000,
+    "bootstrap_seed": 2026092206,
+    "units": "Root task with both seeds; shared recipes not independent",
+    "unknown": "Never imputed zero; full effect/CI unavailable if any missing"
+  },
+  "caveat": "Explicit stopped-RL002 one-step amendment; failed original remains unusable. Existing fresh007 panel reused; not newly untouched. Token/update matching is not FLOP, history, information or objective matching.",
+  "arms": [
+    {
+      "groups": {
+        "fresh_public": {
+          "planned": 32,
+          "recorded": 32,
+          "observed": 32,
+          "missing": 0,
+          "unavailable": 0,
+          "observed_failures": 17,
+          "won": 15,
+          "success_rate_bounds": [
+            0.46875,
+            0.46875
+          ],
+          "statuses": {
+            "finished": 29,
+            "context_cap": 3
+          },
+          "invalids": {
+            "native_action_error": 550,
+            "invalid_schema": 2
+          },
+          "actions": {
+            "get_info": 378,
+            "craft": 797,
+            "finish": 29
+          },
+          "child_nodes": 0,
+          "child_successes": 0,
+          "failed_roots_with_successful_child": 0,
+          "root_calls_after_quantity_met": 15,
+          "cost": {
+            "calls": 1206,
+            "prompt_tokens": 3915875,
+            "completion_tokens": 37486,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 3109.4684505462646
+          },
+          "role_cost": {
+            "root": {
+              "calls": 1206,
+              "prompt_tokens": 3915875,
+              "completion_tokens": 37486,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 3109.4684505462646
+            },
+            "child": {
+              "calls": 0,
+              "prompt_tokens": 0,
+              "completion_tokens": 0,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 0
+            }
+          }
+        }
+      },
+      "unresolved_starts": [],
+      "calls_without_episode": [],
+      "owner_wall_seconds": 3138.237339735031
+    },
+    {
+      "groups": {
+        "fresh_rl_stopped_step1": {
+          "planned": 32,
+          "recorded": 32,
+          "observed": 32,
+          "missing": 0,
+          "unavailable": 0,
+          "observed_failures": 17,
+          "won": 15,
+          "success_rate_bounds": [
+            0.46875,
+            0.46875
+          ],
+          "statuses": {
+            "finished": 25,
+            "global_call_cap": 1,
+            "context_cap": 6
+          },
+          "invalids": {
+            "native_action_error": 711,
+            "invalid_schema": 26
+          },
+          "actions": {
+            "get_info": 333,
+            "craft": 934,
+            "finish": 25
+          },
+          "child_nodes": 0,
+          "child_successes": 0,
+          "failed_roots_with_successful_child": 0,
+          "root_calls_after_quantity_met": 15,
+          "cost": {
+            "calls": 1318,
+            "prompt_tokens": 4544848,
+            "completion_tokens": 42901,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 3547.3392000198364
+          },
+          "role_cost": {
+            "root": {
+              "calls": 1318,
+              "prompt_tokens": 4544848,
+              "completion_tokens": 42901,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 3547.3392000198364
+            },
+            "child": {
+              "calls": 0,
+              "prompt_tokens": 0,
+              "completion_tokens": 0,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 0
+            }
+          }
+        }
+      },
+      "unresolved_starts": [],
+      "calls_without_episode": [],
+      "owner_wall_seconds": 3579.958283662796
+    },
+    {
+      "groups": {
+        "fresh_matched_sft_stopped_step1": {
+          "planned": 32,
+          "recorded": 32,
+          "observed": 32,
+          "missing": 0,
+          "unavailable": 0,
+          "observed_failures": 15,
+          "won": 17,
+          "success_rate_bounds": [
+            0.53125,
+            0.53125
+          ],
+          "statuses": {
+            "finished": 28,
+            "context_cap": 4
+          },
+          "invalids": {
+            "native_action_error": 563,
+            "invalid_schema": 1
+          },
+          "actions": {
+            "get_info": 296,
+            "craft": 830,
+            "finish": 28
+          },
+          "child_nodes": 0,
+          "child_successes": 0,
+          "failed_roots_with_successful_child": 0,
+          "root_calls_after_quantity_met": 21,
+          "cost": {
+            "calls": 1155,
+            "prompt_tokens": 3658663,
+            "completion_tokens": 37203,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 3091.727075099945
+          },
+          "role_cost": {
+            "root": {
+              "calls": 1155,
+              "prompt_tokens": 3658663,
+              "completion_tokens": 37203,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 3091.727075099945
+            },
+            "child": {
+              "calls": 0,
+              "prompt_tokens": 0,
+              "completion_tokens": 0,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 0
+            }
+          }
+        }
+      },
+      "unresolved_starts": [],
+      "calls_without_episode": [],
+      "owner_wall_seconds": 3119.5712049007416
+    }
+  ],
+  "comparisons": {
+    "rl_minus_warm": {
+      "planned_pairs": 32,
+      "known_pairs": 32,
+      "unknown_pairs": 0,
+      "wins": 2,
+      "losses": 2,
+      "ties": 28,
+      "complete_panel_difference": 0,
+      "ci95": [
+        -0.125,
+        0.125
+      ]
+    },
+    "sft_minus_warm": {
+      "planned_pairs": 32,
+      "known_pairs": 32,
+      "unknown_pairs": 0,
+      "wins": 4,
+      "losses": 2,
+      "ties": 26,
+      "complete_panel_difference": 0.0625,
+      "ci95": [
+        -0.0625,
+        0.1875
+      ]
+    },
+    "rl_minus_sft": {
+      "planned_pairs": 32,
+      "known_pairs": 32,
+      "unknown_pairs": 0,
+      "wins": 1,
+      "losses": 3,
+      "ties": 28,
+      "complete_panel_difference": -0.0625,
+      "ci95": [
+        -0.1875,
+        0.0625
+      ]
+    }
+  }
+}
