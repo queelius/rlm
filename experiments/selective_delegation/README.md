@@ -3,16 +3,26 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September22 research update](RESEARCH-UPDATE-20260922.md).
 
-Current checkpoint, September 22, 06:06 UTC: [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
+Current checkpoint, September 22, 07:32 UTC: [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
 improves the fixed warm start from 10 to 18 correct pairs out of64 with RL,
 but extra supervised training reaches19. This is useful learning, not an
 established RL-specific advantage. The [deeper-question comparison](PAIRED-RL-COMPOSITIONAL-FINDINGS.md)
 is now complete:6/7/6 for warm/RL/extraSFT, with no clear paired improvement.
+The [crafting reminder control](TEXTCRAFT-INSTRUCTION-FINDINGS.md) greatly
+reduces format errors but solves none of 16 attempts. Public-action SFT has
+completed 23 updates; its evaluation is running, not yet a learning-gain result.
+The [completed reward control](PAIRED-REWARD-CONTROL-FINDINGS.md) gives
+6/10/10/4 correct pairs out of64 for warm/product-RL/extra-SFT/additive-RL.
+Rewarding each side separately increases mistaken refusals and loses against
+the original joint reward. Neither establishes an advantage over extra SFT.
+The [training audit](PAIRED-ADDITIVE-TRAINING-FINDINGS.md) verifies actual updates;
+the [public-discovery prototype](PUBLIC-DISCOVERY-READINESS.md) prepares a
+different way of teaching prerequisite discovery, not a new model result.
 [Household action SFT](ALFWORLD-ACTION-SFT-FINDINGS.md) did not improve the exposed twelve-game panel: both flat
 and manager-worker policies score2/24 after training versus4/24 before it.
 The [crafting pilot](TEXTCRAFT-PILOT-FINDINGS.md) reached its one-hour cap with26/32 episode records; no helper
 was ever called. Its extra work often continued after enough items were present.
-The immediate follow-up tests a clearer one-action-and-finish instruction.
+That pilot's clearer-instruction follow-up is now complete and did not help success.
 The GPU was idle after the capped pilot blocked an unrelated successor; the
 independent successor was restarted without changing its scientific comparison.
 

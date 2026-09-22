@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T06:48:00Z
+evidence_cutoff_utc: 2026-09-22T07:32:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -38,13 +38,27 @@ exploratory comparisons using one training seed. Full uncertainty estimates,
 costs and examples are in the [first held comparison](PAIRED-RL-HELDOUT-FINDINGS.md)
 and [deeper comparison](PAIRED-RL-COMPOSITIONAL-FINDINGS.md).
 
-The next accepted RL run changes one thing: instead of rewarding a candidate
-only when both sides are correct, it rewards each side's success equally.
-Saved samples suggest this would provide a learning signal on 98 of 128 training
-questions rather than 42. However, 46 of the 56 newly active questions contain no
-correct supported answer among their samples. More feedback could mainly teach
-refusal, not better reasoning. A new 32-question panel was frozen before any new
-updates to test this possibility. See the [objective control](PAIRED-ADDITIVE-RL-PLAN.md).
+The reward-control experiment is now complete. Instead of rewarding a candidate
+only when both sides are correct, the new run rewards each side's success equally.
+On a separately frozen mixed-depth panel, the starting model gets 6 correct pairs
+out of 64, the original RL model gets 10, additional supervised training gets 10,
+and the new RL model gets 4. The new reward loses six pairs and gains none against
+the original RL model. Its estimated difference is −9.4 percentage points, with
+a paired component-cluster bootstrap interval of −19.0 to −1.7 points.
+
+This is not simply a failed software run: all eight updates and all 512 evaluation
+responses were verified. The new model answers fewer unsupported questions
+(2 versus 8), but refuses more supported questions (52 versus 40). Thus more
+frequent reward does not automatically teach the desired balance. This remains
+one training seed and a small exploratory panel, not a general verdict on RL.
+The original RL model still does not outperform additional supervised training.
+See the [completed comparison](PAIRED-REWARD-CONTROL-FINDINGS.md).
+
+The [training audit](PAIRED-ADDITIVE-TRAINING-FINDINGS.md) distinguishes an earlier
+offline projection of 98 active groups from the 54 actually observed under the
+new policy. It also verifies that identical first samples produced materially
+different parameter-update directions. See the [objective control](PAIRED-ADDITIVE-RL-PLAN.md)
+for the prospectively fixed comparison.
 
 ## Interactive failures reveal a concrete harness question
 
@@ -67,7 +81,7 @@ trials reach sufficient target inventory; none chooses to finish. Better format
 does not establish better task performance. See the [qualified comparison](TEXTCRAFT-INSTRUCTION-FINDINGS.md).
 
 A separate supervised run has completed one epoch and 23 updates on 366
-query/craft/finish examples from 32 training tasks. Its evaluations are queued;
+query/craft/finish examples from 32 training tasks. Its evaluations are running;
 we do not yet know whether it improves task success. They will compare original
 and reminder prompts with the fixed trained weights. These demonstrations
 teach basic task execution, not recursive planning.
@@ -80,6 +94,13 @@ a complete procedure for discovering the prerequisites. None of the eight
 evaluation goals appears as a training recipe, although 21 of their 47 required
 recipes do. Better performance would therefore be useful evidence of learning,
 not by itself proof of general decomposition or unfamiliar-world transfer.
+
+A CPU-only [public-discovery teacher](PUBLIC-DISCOVERY-READINESS.md) now completes
+all 32 training tasks by querying the goal recipe and discovering prerequisites
+from actual replies. It produces the same number of action examples naturally,
+but longer input histories. This makes a follow-up teaching comparison feasible;
+it is not yet a trained-model improvement. We will use the current crafting
+evaluation to decide whether that comparison addresses an observed weakness.
 
 On the household-task benchmark, the completed action-training run did not help:
 both flat and manager/worker policies solve 2 of 24 attempts after training versus

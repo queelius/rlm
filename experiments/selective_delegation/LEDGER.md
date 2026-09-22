@@ -1,5 +1,14 @@
 # Research ledger — plan: experiments/selective_delegation/PLAN.md
 
+2026-09-22 07:32 UTC:053 completed512validheldcalls, jointwarm/product/SFT/additive
+6/10/10/4 of64. Primaryadditive-product−9.375pp componentCI[-18.9655,-1.7241],
+6loss0win. Newrewardincreasespositiveabstention52vs40 whileloweringnegative
+overanswer2vs8. Retireunchangedadditive, no uniqueRLoverSFTadvantage.052trained
+crafting running219native0errorat07:30.055CPUpublicteacher32/32success366rows,
+same23prospectiveupdates butdifferenthistorytokens; notstudentlearningevidence.
+056thintrainingwrapperCPUpreparationaccepted; noGPUtrainingacceptance before052.
+Quota38%07:29next07:44,reserve10%; verifiedsource/docscheckpointforthcoming.
+
 2026-09-22 06:48 UTC:049 complete0/16, independently replayed all native records.
 Matched13:0wins1loss12ties,3baselineunknown; schemaerrors118->4 butnativeerrors
 212->692. Three reminder episodes reachsufficientinventory,259furthercalls,
