@@ -214,6 +214,10 @@ def binding(checkpoint):
 
 
 def prepare(args):
+    if getattr(args, "fp16_continuation_amendment", None):
+        import textcraft_fp16_continuation
+
+        return textcraft_fp16_continuation.prepare(args)
     if args.root.resolve() != c.ROOT or not 0 < args.hours <= 3:
         raise ValueError("fixed campaign and at most3hours required")
     source = args.root / "textcraft-train-readiness-001"
@@ -374,11 +378,21 @@ def run(args):
     if list(output.glob("OWNER-*.json")) or (output / "ADMISSION.json").exists():
         raise ValueError("no implicit retry/resume of prior attempt")
     source = Path(plan["first_batch"]["output"])
-    admission = readiness.analyze(source)  # Requires actual source terminal/dead owner.
+    continuation = "restore_checkpoint" in plan
+    if continuation:
+        import textcraft_fp16_continuation as fp16
+
+        admission = dict(
+            explicit_continuation=True,
+            ancestor=plan["restore_checkpoint"],
+            no_historical_batch_training_reuse=True,
+        )
+    else:
+        admission = readiness.analyze(source)  # Requires actual source terminal/dead owner.
     c.save(output / "ADMISSION.json", admission)
-    if any(g["observed"] != 4 for g in admission["groups"].values()):
+    if not continuation and any(g["observed"] != 4 for g in admission["groups"].values()):
         raise ValueError("incomplete063 cannot become training zeros")
-    if not admission["classification_counts"].get("mixed", 0):
+    if not continuation and not admission["classification_counts"].get("mixed", 0):
         c.save(
             output / "CONDITIONAL-SKIP.json",
             dict(
@@ -418,6 +432,15 @@ def run(args):
     state = dict(
         step=0, sample_cursor=0, zero_streak=0, plan_sha256=c.inputs.sha(output / "PLAN.json")
     )
+    if continuation:
+        state = {
+            **plan["restore_state"],
+            "plan_sha256": c.inputs.sha(output / "PLAN.json"),
+            "ancestor_commit_sha256": plan["ancestor_receipt_sha256"][
+                str(Path(plan["restore_checkpoint"]) / "COMMIT.json")
+            ],
+        }
+        actual_steps = 1
 
     def stop(*_):
         global STOP
@@ -440,26 +463,40 @@ def run(args):
             c.BASE,
             local_files_only=True,
             trust_remote_code=False,
-            dtype=torch.bfloat16,
+            dtype=torch.float16 if continuation else torch.bfloat16,
             attn_implementation="sdpa",
             device_map={"": "cuda:0"},
         )
         model = PeftModel.from_pretrained(
             base,
-            plan["warm"]["path"],
+            plan["restore_checkpoint"] if continuation else plan["warm"]["path"],
             adapter_name="textcraft_action",
             is_trainable=True,
             autocast_adapter_dtype=True,
         )
         parameters = set_mode(model, training=True)
-        optimizer = torch.optim.AdamW(parameters, lr=2e-5, weight_decay=0)
+        optimizer = (
+            fp16.restore_optimizer_rng(parameters, Path(plan["restore_checkpoint"]))
+            if continuation
+            else torch.optim.AdamW(parameters, lr=2e-5, weight_decay=0)
+        )
+        if continuation:
+            fp16.pre_rollout_probe(model, parameters, plan, output)
         endpoint = save_boundary(model, optimizer, output, state)
         set_mode(model, training=False)
         c.save(
             output / "LOAD.json",
             dict(
                 warm=plan["warm"],
-                fresh_adam=True,
+                fresh_adam=not continuation,
+                restored_optimizer_rng=continuation,
+                restored_checkpoint=plan.get("restore_checkpoint"),
+                base_dtype=str(model.get_base_model().dtype),
+                lora_dtypes=sorted(
+                    {str(p.dtype) for n, p in model.named_parameters() if "lora_" in n}
+                ),
+                model_config=model.config.to_dict(),
+                attention_backend=model.config._attn_implementation,
                 base_frozen=True,
                 trainable_during_collection=sum(
                     p.numel() for p in model.parameters() if p.requires_grad
@@ -471,7 +508,7 @@ def run(args):
         original_plan = audit.read(source / "PLAN.json")
         tasks = {t["id"]: t for t in readiness.runtime_tasks(original_plan)}
         world = c.bridge.load_world()
-        while not finished(state):
+        while not finished(state) and state["sample_cursor"] < plan["maximum_sampled_batches"]:
             guard(deadline, 300)
             sample = state["sample_cursor"] + 1
             batch_dir = output / "batches" / f"sample-{sample:04d}"
@@ -486,6 +523,10 @@ def run(args):
                     "adapter": binding(endpoint),
                     "source_sha256": plan["source_sha256"],
                 }
+                if continuation:
+                    batch_plan["numeric_precision"] = dict(
+                        base="float16", lora="float32", explicit_continuation=True
+                    )
                 c.save(data_dir / "PLAN.json", batch_plan)
                 client = ScoredClient(
                     model,
@@ -553,7 +594,7 @@ def run(args):
                 if not replay["available"] or replay["output_token_ids"] != old["output_token_ids"]:
                     raise ValueError("same056 native generation failed exact first-call replay")
                 del client
-            before, differences = {}, []
+            before, differences, captured = {}, [], {}
             with torch.no_grad():
                 for cid, call in calls.items():
                     guard(deadline, 180)
@@ -563,25 +604,32 @@ def run(args):
                         capture_path = output / "qualification/generation-logps" / (cid + ".json")
                     if capture_path.exists():
                         scores = audit.read(capture_path)["logps"]
+                        captured[cid] = scores
                         differences.extend(
                             abs(a - b) for a, b in zip(scores, before[cid], strict=True)
                         )
-            if (
-                not differences
-                or max(differences) > 0.25
-                or sum(differences) / len(differences) > 0.025
-            ):
-                raise ValueError("generation/replay discrepancy exceeded declared tolerance")
-            c.save(
-                batch_dir / "BEFORE_LOGPS.json",
-                dict(
-                    logps=before,
-                    provenance="Recomputed under unchanged sampled weights; "
-                    "063 historical generation scores absent",
-                    generation_replay_max_abs=max(differences),
-                    generation_replay_mean_abs=sum(differences) / len(differences),
-                ),
-            )
+            if continuation:
+                fp16.record_before(batch_dir, before, captured)
+            else:
+                c.save(
+                    batch_dir / "BEFORE_LOGPS.json",
+                    dict(
+                        logps=before,
+                        provenance="Recomputed under unchanged sampled weights; "
+                        "063 historical generation scores absent",
+                        generation_replay_max_abs=max(differences) if differences else None,
+                        generation_replay_mean_abs=sum(differences) / len(differences)
+                        if differences
+                        else None,
+                    ),
+                )
+                if (
+                    not differences
+                    or not all(math.isfinite(x) for x in differences)
+                    or max(differences) > 0.25
+                    or sum(differences) / len(differences) > 0.025
+                ):
+                    raise ValueError("generation/replay discrepancy exceeded declared tolerance")
             set_mode(model, training=True)
             optimizer.zero_grad(set_to_none=True)
             longest = max(
@@ -693,10 +741,13 @@ def run(args):
             dict(
                 complete=complete,
                 actual_optimizer_steps=actual_steps,
+                new_optimizer_steps=actual_steps - (1 if continuation else 0),
+                cumulative_optimizer_steps=actual_steps,
+                new_sampled_batches=state["sample_cursor"] - (1 if continuation else 0),
                 committed_optimizer_steps=state["step"],
                 committed_sampled_batches=state["sample_cursor"],
                 new_physical_cost=c.cost([audit.read(p) for p in physical_paths]),
-                reused063_cost=admission["native_audit"]["physical_cost"],
+                reused063_cost=None if continuation else admission["native_audit"]["physical_cost"],
                 reused063_is_not_new_compute=True,
                 failure=failure,
             ),
@@ -710,10 +761,16 @@ def run(args):
                 ended=time.time(),
                 elapsed_seconds=time.time() - started,
                 actual_optimizer_steps=actual_steps,
+                new_optimizer_steps=actual_steps - (1 if continuation else 0),
+                cumulative_optimizer_steps=actual_steps,
+                new_sampled_batches=state["sample_cursor"] - (1 if continuation else 0),
                 committed_optimizer_steps=state["step"],
                 committed_sampled_batches=state["sample_cursor"],
                 endpoint=str(endpoint) if endpoint else None,
-                endpoint_usable=complete and failure is None,
+                endpoint_usable=complete
+                and failure is None
+                and (not continuation or state["step"] == 2),
+                target_additional_update_achieved=not continuation or state["step"] == 2,
                 deadline=deadline,
             ),
         )
@@ -727,4 +784,5 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--hours", type=float, default=3)
     parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument("--fp16-continuation-amendment", type=Path)
     run(parser.parse_args())

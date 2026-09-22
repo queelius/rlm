@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T15:12:00Z
+evidence_cutoff_utc: 2026-09-22T15:30:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -126,6 +126,14 @@ on the same 47 diagnostic calls, with finite values throughout. This is promisin
 for a repair, but not yet a training-stability or task-success result. No tolerance
 has been relaxed and no second update has been claimed. See the
 [precision probe](TEXTCRAFT-PRECISION-PROBE.md).
+
+A bounded [one-additional-update continuation](TEXTCRAFT-FP16-CONTINUATION-PLAN.md)
+is now accepted behind the running one-step comparison. It restores checkpoint1
+and its optimizer, uses fresh FP16 training attempts, and then tests checkpoint2
+using the same BF16 evaluation settings as checkpoint1. This is a planned test
+of the numerical repair and usefulness of the next update, not a completed
+training result. The [one-step comparison](TEXTCRAFT-STOPPED-STEP1-READOUT.md)
+and this continuation have automatic native analyses and separate time caps.
 
 The [same-panel base-model control](TEXTCRAFT-FRESH-BASE-FINDINGS.md) is complete:
 the unadapted model solves **6/32**, the earlier teaching package **1/32**, and
