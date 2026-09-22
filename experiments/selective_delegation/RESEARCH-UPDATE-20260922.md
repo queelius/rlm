@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T09:35:00Z
+evidence_cutoff_utc: 2026-09-22T10:00:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -16,6 +16,13 @@ The new demonstrations start from the visible goal and show how recipe replies
 reveal the ingredients to investigate next. Both training runs use the same
 32 tasks, 366 action examples and 23 updates; the histories and token counts differ.
 
+For a simplified illustration, suppose the task is “make a desk.” The old teacher
+may begin by asking how to make a plank because it already knows the desk recipe.
+The new teacher first asks for the desk recipe, learns that planks and legs are
+needed, and then investigates those items. The student sees how the next subproblem
+was found, not just which subproblem an informed expert chose. This illustration
+uses familiar names; the actual benchmark uses generated item identifiers.
+
 The comparison gains eight previously failed attempts and loses one previously
 successful attempt. Its task-cluster uncertainty interval is wide: approximately
 6 to 81 percentage points for the net improvement of 44 points. These are eight
@@ -25,10 +32,25 @@ out of 16. All outcomes were replayed against the environment's unchanged rules.
 
 This is evidence for the revised **teaching procedure as a package**, not proof
 that query order alone caused the gain or that recursion helped. No helpers ran.
-The immediate follow-ups ask whether a short procedural instruction can rescue
-the old trained model, and whether the advantage survives changed recipes.
+The short procedural-instruction control is now complete: the old trained model
+solves **0/16**, versus3/16 without those added instructions. It uses850 model
+calls,770 of them recipe queries, with no transport failures. This one fixed
+instruction package does not recover the demonstration gain; it is not a test
+of every possible prompt. The [control report](TEXTCRAFT-PROCEDURE-CONTROL-FINDINGS.md)
+records all three paired losses and the uncertainty interval.
+The current follow-up asks whether the advantage survives changed recipes.
 A fresh-task comparison is being prepared without inspecting model outcomes.
 See the [detailed finding](TEXTCRAFT-PUBLIC-DISCOVERY-FINDINGS.md).
+
+The [remaining-failure audit](TEXTCRAFT-REMAINING-FAILURES.md) separates learning
+what to investigate from using the discovered recipes correctly. Several failed
+attempts already have the relevant recipe but use the wrong quantities or act
+before making prerequisites. The environment also labels recipe existence as
+`can_craft`; that field does not check current inventory. A plain-language
+clarification is therefore a cheaper prospective control than adding a planner.
+The [imitation-gap literature review](LITERATURE-IMITATION-GAP-20260922.md) explains
+why the broad teacher-information mismatch is prior art and what stronger
+transfer evidence would be needed for a research contribution.
 
 ## Earlier findings and the motivation for that comparison
 

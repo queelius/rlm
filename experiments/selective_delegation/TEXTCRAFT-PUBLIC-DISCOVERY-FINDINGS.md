@@ -30,6 +30,25 @@ SFT datasets have the same 366-row dose and 23 updates, but their teacher histor
 their token distributions differ.  The eight parents share one recipe world and the two seeds per
 parent are correlated.  The original prompt is primary; the reminder is secondary.
 
+Both training PLAN files fix seed2026092208 and the same optimizer, learning
+rate, batch sizes, LoRA settings and package versions. Their step-zero adapter
+files are byte-identical (SHA256
+`6c1543bbf6a235890f3bb9f73f545c9b845cb8d93ee45a8bca11850aeaf2897a`).
+Thus this is not a comparison between different random initial adapters.
+It still needs another training seed before claiming stability across training.
+
+A target-multiset audit further narrows the dose difference.  All 32 tasks have identical
+step-zero prompt strings.  Canonical parsed actions, raw target strings, and unmasked label-token
+tuples all agree for `get_info` and `finish` on all 32 tasks and for crafts on 31.  The sole
+difference is `textcraft_synth.train.1029`: privileged rows teach
+`raw_t8:6 -> output_count:12`, public-teacher rows teach `raw_t8:4 -> output_count:8` for
+`t4_i1`.  Thus the supervised target multisets are near-identical at both raw-string and target-
+token levels.  This is still not order-only causality or identical loss conditioning: row/action
+order and later prompt histories differ.  The audit also reads both actual checkpoint-zero adapter
+files and verifies their bytes against their COMMIT hashes before comparing them.  Receipt:
+`analysis-textcraft-target-multiset-004.json` (SHA-256
+`2ec8717a2eb769a1ef42b2471e8acfde7e6c7573ca9bc349a80cc92c7094c84c`).
+
 ## Work and behavior
 
 For the original prompt, public-teacher execution used 370 native calls, 835,133 prompt tokens,
@@ -48,9 +67,11 @@ The sealed behavior audit adds a plausible behavioral correlate, while remaining
 | Repeated nonexistent-item mentions | 264 | 0 |
 | Queries of a recipe already returned in earlier public feedback | 70 | 11 |
 
-The last row is not simply waste: recipe feasibility can change with inventory, and the current
-inventory was public at every turn.  It nevertheless shows that the public-teacher trajectories
-were much less dominated by stale static-recipe queries.
+The last row counts repeated static facts, not automatically wasted actions: a query also returns
+the current quantity of that item, although the full inventory was already public at every turn.
+Importantly, the upstream `can_craft` field means that a recipe exists, **not** that current
+inventory can execute it. It is not a dynamic feasibility signal. The public-teacher trajectories
+were much less dominated by repeated static-recipe queries.
 
 ## Completed examples
 

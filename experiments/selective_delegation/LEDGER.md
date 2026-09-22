@@ -1,5 +1,20 @@
 # Research ledger — plan: experiments/selective_delegation/PLAN.md
 
+2026-09-22 10:00 UTC:061proceduralpromptcontrol complete0/16 vsold048original3/16,
+0wins3loss13ties;CI[-37.5,-6.25]pp,850nativecalls0transport,1431.72ownerseconds.
+Report020c12fcb69ec57aa1a2889cad69182bc78acc90b64611af00daeb546bf400b3.
+No claimthatallpromptsfail. 062changedworldprivilegednowactive, firstreturned
+2.20s afterrequest andwatcherchecked7.87s afterrequest. Queue006accepted063TRAIN
+8x4rewarddiversityprobe;064gate117795/exec69958waitswhole005release.
+Receiptcd73d0c92b9bc4764c743479e3a896e0789009e6aeb2106aad7b431a5a3799c6.
+Main fresh16wrapper6sealedtests8.07spass; readinesscollector3sealed5.37spass,
+readinessaudit2sealed5.75spass; freshpreparer3sealed5.56spass. ScopedRuffpass.
+No newGPUacceptanceforfresh16 yet: frozenCPUproposalready, chooseafter062evidence.
+Nativecan_craftonlyrecipeexistence identified; clarificationproposalnotruntimefix.
+Targetmultiset004 provesrawstrings/unmaskedlabels nearidentical31/32crafttasks,
+allqueries/finish32/32; actualcp0weightsbyteidentical. Differenthistories/orderremain.
+Quota29%10:00:43,next10:15,reserve10. LastGit56ceb00, newcheckpointpending.
+
 2026-09-22 09:37 UTC:057 completed32native-auditedepisodes/871returnedcalls.
 Publicteacher10/16original vs3/16oldteacher,8wins1loss; secondary10vs2.
 Queryaudit002 rootfirst16vs3/nonexistent0vs344 original. Same366rows/23updates,

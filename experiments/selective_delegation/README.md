@@ -3,13 +3,15 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September22 research update](RESEARCH-UPDATE-20260922.md).
 
-Current checkpoint, September 22, 09:35 UTC: the [public-discovery teaching
+Current checkpoint, September 22, 10:00 UTC: the [public-discovery teaching
 comparison](TEXTCRAFT-PUBLIC-DISCOVERY-FINDINGS.md) raises crafting success from
 3/16 to10/16 with the original prompt (eight exposed tasks, two samples each).
 Same training tasks,366 action examples and23 updates, but different histories
 and token dose. This is a promising teaching-package result, not isolated
-query-order causality or recursion evidence. A procedural-prompt control is
-running, followed by two fixed adapters on changed recipes. Separately,
+query-order causality or recursion evidence. The [procedural-prompt control](TEXTCRAFT-PROCEDURE-CONTROL-FINDINGS.md)
+is complete:0/16 versus3/16 without its instructions, with850returnedcalls and
+no transportfailures. This particular prompt does not recover the teaching gain.
+Two fixed adapters on changed recipes are running next. Separately,
 [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
 improves the fixed warm start from 10 to 18 correct pairs out of64 with RL,
 but extra supervised training reaches19. This is useful learning, not an

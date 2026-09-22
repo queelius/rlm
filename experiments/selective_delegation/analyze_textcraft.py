@@ -368,7 +368,25 @@ def audit_episode(task, job, row, calls, nodes, plan, plan_sha, tokenizer, world
     )
 
 
-def analyze(output, tokenizer, draws=20000, expected_collector_sha256=None, world=None):
+def validate_inventory(tasks, plan, expected_task_count=8):
+    require(
+        len(tasks) == expected_task_count
+        and len(plan["jobs"]) in (expected_task_count * 2, expected_task_count * 4)
+        and plan["planned_episodes"] == len(plan["jobs"])
+        and {j["task_id"] for j in plan["jobs"]} == set(tasks)
+        and len({j["episode_id"] for j in plan["jobs"]}) == len(plan["jobs"]),
+        "fixed explicitly qualified parent inventory required",
+    )
+
+
+def analyze(
+    output,
+    tokenizer,
+    draws=20000,
+    expected_collector_sha256=None,
+    world=None,
+    expected_task_count=8,
+):
     import psutil
 
     plan = read(output / "PLAN.json")
@@ -430,12 +448,7 @@ def analyze(output, tokenizer, draws=20000, expected_collector_sha256=None, worl
         v["id"]: v
         for v in (json.loads(line) for line in (prepared / "tasks.jsonl").read_text().splitlines())
     }
-    require(
-        len(tasks) == 8
-        and len(plan["jobs"]) in (16, 32)
-        and plan["planned_episodes"] == len(plan["jobs"]),
-        "fixed eight-parent profile inventory required",
-    )
+    validate_inventory(tasks, plan, expected_task_count)
     rows, calls, node_files, starts = {}, {}, {}, {}
     for folder, target in (
         ("episodes", rows),
@@ -501,19 +514,20 @@ def analyze(output, tokenizer, draws=20000, expected_collector_sha256=None, worl
         )
     groups = {}
     for policy in sorted({j.get("condition", j["policy"]) for j in plan["jobs"]}):
+        planned = sum(j.get("condition", j["policy"]) == policy for j in plan["jobs"])
         selected = [r for r in rows.values() if r.get("condition", r["policy"]) == policy]
         known = [r for r in selected if r["observed"]]
         successes = sum(r["native_score"] for r in known)
         children = [audits[r["episode_id"]] for r in known]
         groups[policy] = dict(
-            planned=16,
+            planned=planned,
             recorded=len(selected),
             observed=len(known),
-            missing=16 - len(selected),
+            missing=planned - len(selected),
             unavailable=len(selected) - len(known),
             observed_failures=len(known) - successes,
             won=successes,
-            success_rate_bounds=[successes / 16, (successes + 16 - len(known)) / 16],
+            success_rate_bounds=[successes / planned, (successes + planned - len(known)) / planned],
             statuses=dict(Counter(r["status"] for r in selected)),
             invalids=dict(sum((Counter(r["errors"]) for r in selected), Counter())),
             actions=dict(sum((Counter(a["actions"]) for a in children), Counter())),
@@ -545,8 +559,8 @@ def analyze(output, tokenizer, draws=20000, expected_collector_sha256=None, worl
         }
     return dict(
         method=dict(
-            parent_count=8,
-            repeats=2,
+            parent_count=len(tasks),
+            repeats=len({j["repeat"] for j in plan["jobs"]}),
             bootstrap_draws=draws,
             bootstrap_seed=SEED,
             bootstrap_unit="Task parent; retain both seeds. "

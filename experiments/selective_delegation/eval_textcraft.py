@@ -522,12 +522,13 @@ def summarize(output, plan):
         raise ValueError("unplanned episode")
     groups = {}
     for policy in sorted({j.get("condition", j["policy"]) for j in plan["jobs"]}):
+        planned = sum(j.get("condition", j["policy"]) == policy for j in plan["jobs"])
         selected = [r for r in rows.values() if r.get("condition", r["policy"]) == policy]
         groups[policy] = {
-            "planned": 16,
+            "planned": planned,
             "recorded": len(selected),
             "observed": sum(r["observed"] for r in selected),
-            "missing_or_unknown": 16 - sum(r["observed"] for r in selected),
+            "missing_or_unknown": planned - sum(r["observed"] for r in selected),
             "won": sum(r["observed"] and r["native_score"] == 1 for r in selected),
             "status_counts": dict(Counter(r["status"] for r in selected)),
             "max_depth_counts": dict(Counter(r["max_depth_reached"] for r in selected)),
