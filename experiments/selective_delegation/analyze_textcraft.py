@@ -379,6 +379,16 @@ def validate_inventory(tasks, plan, expected_task_count=8):
     )
 
 
+def validate_runtime_tasks(prepared_tasks, runtime_tasks):
+    """Permit reconstructed insertion order only, never different task contents."""
+    restored = {task["id"]: task for task in runtime_tasks}
+    require(
+        len(restored) == len(runtime_tasks) and restored == prepared_tasks,
+        "runtime task values differ from frozen prepared inventory",
+    )
+    return restored
+
+
 def analyze(
     output,
     tokenizer,
@@ -386,6 +396,7 @@ def analyze(
     expected_collector_sha256=None,
     world=None,
     expected_task_count=8,
+    runtime_tasks=None,
 ):
     import psutil
 
@@ -448,6 +459,8 @@ def analyze(
         v["id"]: v
         for v in (json.loads(line) for line in (prepared / "tasks.jsonl").read_text().splitlines())
     }
+    if runtime_tasks is not None:
+        tasks = validate_runtime_tasks(tasks, runtime_tasks)
     validate_inventory(tasks, plan, expected_task_count)
     rows, calls, node_files, starts = {}, {}, {}, {}
     for folder, target in (

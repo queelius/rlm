@@ -59,13 +59,38 @@ def group_readiness(jobs, rows, calls, audits):
     return groups
 
 
+def runtime_tasks(plan):
+    """Restore063's original055 dictionary order, checking all frozen task values."""
+    c = reader.c
+    source = c.ROOT / reader.SOURCE_TASKS
+    audit.require(
+        c.inputs.sha(source) == reader.SOURCE_TASKS_SHA
+        and c.inputs.sha(source.parent / "MANIFEST.json") == reader.SOURCE_MANIFEST_SHA,
+        "original runtime task source changed",
+    )
+    prepared = Path(plan["prepared"])
+    audit.require(
+        c.inputs.sha(prepared / "tasks.jsonl") == plan["tasks_sha256"]
+        and c.inputs.sha(prepared / "MANIFEST.json") == plan["manifest_sha256"],
+        "frozen prepared tasks changed",
+    )
+    rows = reader.select_tasks(list(map(json.loads, source.read_text().splitlines())))
+    frozen = list(map(json.loads, (prepared / "tasks.jsonl").read_text().splitlines()))
+    audit.require(
+        [t["id"] for t in rows] == [t["id"] for t in frozen],
+        "runtime task order differs from prepared inventory",
+    )
+    audit.validate_runtime_tasks({t["id"]: t for t in frozen}, rows)
+    return rows
+
+
 def analyze(output):
     from transformers import AutoTokenizer
 
     c = reader.c
     audit.require(c.inputs.sha(output / "PLAN.json") == PLAN_SHA, "fixed063 PLAN required")
     plan = audit.read(output / "PLAN.json")
-    tasks = list(map(json.loads, (Path(plan["prepared"]) / "tasks.jsonl").read_text().splitlines()))
+    tasks = runtime_tasks(plan)
     audit.require(
         plan["jobs"] == reader.jobs(tasks) and len(tasks) == 8,
         "all8TRAIN groups/four fixed samples required",
@@ -79,7 +104,14 @@ def analyze(output):
     tokenizer = AutoTokenizer.from_pretrained(
         c.BASE, local_files_only=True, trust_remote_code=False
     )
-    native = audit.analyze(output, tokenizer, draws=1, expected_collector_sha256=COLLECTOR_SHA)
+    native = audit.analyze(
+        output, tokenizer, draws=1, expected_collector_sha256=COLLECTOR_SHA, runtime_tasks=tasks
+    )
+    for path in (
+        c.ROOT / reader.SOURCE_TASKS,
+        (c.ROOT / reader.SOURCE_TASKS).parent / "MANIFEST.json",
+    ):
+        native["sha256"][str(path)] = c.inputs.sha(path)
     rows = {p.stem: audit.read(p) for p in (output / "episodes").glob("*.json")}
     calls = [audit.read(p) for p in (output / "calls").glob("*.json")]
     groups = group_readiness(plan["jobs"], rows, calls, native["audits"])
@@ -95,6 +127,13 @@ def analyze(output):
         classification_counts=dict(Counter(g["classification"] for g in groups.values())),
         native_audit=native,
         adapter=plan["adapter"],
+        runtime_task_order=dict(
+            source=str(c.ROOT / reader.SOURCE_TASKS),
+            source_sha256=reader.SOURCE_TASKS_SHA,
+            validation="Exact frozen task-ID/order/value equality; original "
+            "dictionary insertion order restored for exact native prompts. "
+            "No prompt normalization or relaxed digest/token matching.",
+        ),
         source_sha256={str(Path(__file__).resolve()): c.inputs.sha(Path(__file__))},
         method="Eight exact SFT TRAIN tasks, four correlated samples each; no bootstrap or "
         "held-out inference. All planned groups retained. Incomplete means any missing/unavailable "

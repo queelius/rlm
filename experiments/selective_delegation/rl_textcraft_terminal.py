@@ -251,6 +251,12 @@ def prepare(args):
         tasks_prepared=original["prepared"],
         tasks_sha256=original["tasks_sha256"],
         manifest_sha256=original["manifest_sha256"],
+        runtime_task_order=dict(
+            source=str(c.ROOT / readiness.reader.SOURCE_TASKS),
+            sha256=readiness.reader.SOURCE_TASKS_SHA,
+            rule="Recover original063 dictionary order from hash-bound055 source; "
+            "assert exact semantic equality with prepared tasks; preserve for every batch",
+        ),
         model=original["model"],
         model_manifest_sha256=original["model_manifest_sha256"],
         planned_tasks=8,
@@ -462,14 +468,9 @@ def run(args):
                 cuda=torch.version.cuda,
             ),
         )
-        tasks = {
-            t["id"]: t
-            for t in map(
-                json.loads, (Path(plan["tasks_prepared"]) / "tasks.jsonl").read_text().splitlines()
-            )
-        }
-        world = c.bridge.load_world()
         original_plan = audit.read(source / "PLAN.json")
+        tasks = {t["id"]: t for t in readiness.runtime_tasks(original_plan)}
+        world = c.bridge.load_world()
         while not finished(state):
             guard(deadline, 300)
             sample = state["sample_cursor"] + 1

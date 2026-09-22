@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T10:45:00Z
+evidence_cutoff_utc: 2026-09-22T11:23:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -53,12 +53,29 @@ summed model-call time (about24 versus20 minutes). Better task performance is
 therefore not an automatic speed improvement. No helpers run in either arm.
 See the [changed-world result](TEXTCRAFT-CHANGED-WORLD-FINDINGS.md).
 
-A paired comparison on16 newly selected goal names in the original world is
-now accepted and queued. Its tasks were frozen before collecting model outcomes;
-most still share intermediate recipes with training. Separately, the GPU is
-sampling four attempts on each of eight training tasks to check whether terminal
-success gives RL useful within-task reward variation. That is a readiness test,
-not an RL improvement. A small two-update pilot is being prepared conditionally.
+A paired comparison on 16 newly selected goal names in the original world is
+now running. Its tasks were frozen before collecting model outcomes;
+most still share intermediate recipes with training. Separately, a completed
+training-task check succeeds in **25 of 32 attempts**. Three of its eight tasks
+have both successes and failures across four samples, giving RL a usable
+within-task learning signal. Four tasks always succeed and one always fails
+in these samples. This is a readiness finding, not an RL improvement.
+
+The failures concern quantities, ingredients and stopping before the goal is
+met; none are malformed action JSON. A bounded two-update RL pilot will test
+whether learning from final success improves this execution. Its control uses
+the same starting model and training tasks, with extra supervised training
+matched to actual updates and approximately matched output-token counts.
+This does not match all computation or information. See the
+[readiness result and training plan](TEXTCRAFT-TERMINAL-RL-READINESS.md).
+
+A historical base-model comparison also helps interpret the demonstration
+gain. On 13 recorded matched attempts the revised trained model gains nine
+successes and loses none. Three base outcomes are missing; even allowing all
+three to be successes leaves a full-panel improvement between 37.5 and 56.25
+percentage points. That range is a missing-data bound, not a confidence interval.
+It argues against the gain being only a repair of the earlier training recipe,
+but it still uses the already examined tasks.
 See the [detailed finding](TEXTCRAFT-PUBLIC-DISCOVERY-FINDINGS.md).
 
 The [remaining-failure audit](TEXTCRAFT-REMAINING-FAILURES.md) separates learning

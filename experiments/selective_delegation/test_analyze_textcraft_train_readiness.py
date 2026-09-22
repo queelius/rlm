@@ -1,6 +1,49 @@
 import importlib.util
 import json
 
+import pytest
+
+
+def test_actual063_replay_restores_source_order_without_weakening_prompt_match():
+    import analyze_textcraft_train_readiness as a
+    from transformers import AutoTokenizer
+
+    output = a.reader.c.ROOT / "textcraft-train-readiness-001"
+    plan = a.audit.read(output / "PLAN.json")
+    assert hasattr(a, "runtime_tasks")
+    tasks = a.runtime_tasks(plan)
+    task = tasks[0]
+    prepared = json.loads(
+        (__import__("pathlib").Path(plan["prepared"]) / "tasks.jsonl").read_text().splitlines()[0]
+    )
+    assert task == prepared
+    assert list(task["misc"]["initial_inventory"]) == ["raw_o7", "raw_o3", "m0_ore"]
+    assert list(prepared["misc"]["initial_inventory"]) == ["m0_ore", "raw_o3", "raw_o7"]
+    job = plan["jobs"][0]
+    row = a.audit.read(output / "episodes" / (job["episode_id"] + ".json"))
+    calls = {cid: a.audit.read(output / "calls" / (cid + ".json")) for cid in row["call_ids"]}
+    nodes = {
+        nid: a.audit.read(output / "nodes" / (job["episode_id"] + "-" + nid + ".json"))
+        for nid in row["node_ids"]
+    }
+    args = (
+        job,
+        row,
+        calls,
+        nodes,
+        plan,
+        a.reader.c.inputs.sha(output / "PLAN.json"),
+        AutoTokenizer.from_pretrained(a.reader.c.BASE, local_files_only=True),
+        a.reader.c.bridge.load_world(),
+    )
+    with pytest.raises(ValueError, match="native public request mismatch"):
+        a.audit.audit_episode(prepared, *args)
+    native = a.audit.audit_episode(task, *args)
+    assert native["replayed"] and native["native_score"] == row["native_score"]
+    task["misc"]["initial_inventory"]["raw_o7"] += 1
+    with pytest.raises(ValueError, match="runtime task values"):
+        a.audit.validate_runtime_tasks({prepared["id"]: prepared}, [task])
+
 
 def test_readiness_keeps_incomplete_unknown_and_counts_mixed_despite_action_errors():
     assert importlib.util.find_spec("analyze_textcraft_train_readiness") is not None
