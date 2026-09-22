@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T11:41:00Z
+evidence_cutoff_utc: 2026-09-22T12:24:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -56,6 +56,10 @@ See the [changed-world result](TEXTCRAFT-CHANGED-WORLD-FINDINGS.md).
 A paired comparison on 16 newly selected goal names in the original world is
 now running. Its tasks were frozen before collecting model outcomes;
 most still share intermediate recipes with training. Separately, a completed
+input audit shows that three of the new goal items were already demonstrated
+as intermediate products; the other 13 identifiers are absent from both SFT
+datasets' prompts and targets. The full frozen panel remains the primary test;
+see the [fresh-goal scope audit](TEXTCRAFT-FRESH-SCOPE.md). A completed
 training-task check succeeds in **25 of 32 attempts**. Three of its eight tasks
 have both successes and failures across four samples, giving RL a usable
 within-task learning signal. Four tasks always succeed and one always fails

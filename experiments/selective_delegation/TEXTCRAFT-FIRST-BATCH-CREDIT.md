@@ -7,6 +7,44 @@ claim_strength: objective_census_not_measured_learning
 
 # First063 batch: terminal credit also lands on failed actions
 
+## A concrete example in plain language
+
+One successful attempt contains this sequence. To make it readable, the table
+renames the two intermediate items **A** and **B** and omits unrelated steps;
+the quantities and outcomes are from the saved experiment.
+
+| Selected event | What happened |
+|---|---|
+| The model asks for the final item's recipe. | The reply says that one item needs two A and two B. |
+| The model requests one item using three A and three B. | The environment rejects the request because the quantities are wrong. |
+| The model immediately retries using two A and two B. | The environment successfully makes one item. |
+| The model continues and finishes. | It ultimately has three final items, meeting the goal of at least two. |
+
+For this attempt, **both the rejected command and the corrected command get
+the same positive weight in the training objective**. The attempt succeeded,
+while one of the other three attempts on this task failed; the resulting weight
+is +1/3 for every emitted action token in this attempt. The objective does not
+separately label the first command as a mistake and the second as its correction.
+That is not a proof that the failed command becomes more likely after training:
+the combined gradient from all examples determines the actual update.
+
+This also illustrates the [recipe-binding idea](TEXTCRAFT-PUBLIC-RECIPE-BINDING-IDEA.md):
+the correct recipe was already public, and the model retained the right item
+and output quantity. Filling the ingredient quantities from that known recipe
+could avoid this particular rejected command. It would not decide which item
+to make, how many are needed for the whole task, or whether to delegate.
+
+Trace: TRAIN task1680, episode `t03-r0-flat`, consecutive calls `c009` and `c010`.
+The original final item is `c3_i3_13`; A is `c6_i2` and B is `c1_i1_11`.
+Under `R/textcraft-train-readiness-001`, node
+`nodes/t03-r0-flat-n0.json` has SHA256
+`6f9aeaf9262b8a1c13c33711f536710c1668312341897f16ab0afd4eabad09fc`;
+episode `episodes/t03-r0-flat.json` has SHA256
+`e23bd9108534434343b7f7faae296ec04dc118251034ca0698d4e9fe847c1122`.
+This is an illustrative recorded recovery, not a new estimate of its frequency.
+
+## Full-batch counts and limitations
+
 CPU census of all32 completed TRAIN episodes/8 tasks/770 calls/24,009 emitted
 tokens. Native successes25/32; four all-success groups, one all-failure group,
 three mixed groups with3/4 successes each. Existing native audit002 and every
