@@ -9,6 +9,17 @@ below proposed. No deeper-panel outcome was used to select its questions.
 The sealed source051 proposal remains unchanged; this is the working decision
 history, not a retroactive alteration of the original plan.
 
+The terminal-only training audit is also ready at
+`R/analysis-source-sufficiency-additive-training-001/` (five sealed CPU tests
+passed on main). It independently reconstructs native marginal and paired
+rewards, credited tokens and loss, actual Adam steps and saved adapter movement.
+It preserves partial/missing samples as unknown. This audit is not a claim of
+held performance. Run with the training Python after a terminal exists, using
+`PYTHONPATH=R/analysis-source-sufficiency-rl-003:R/source-051-sufficiency-additive-rl:R/source-053-sufficiency-reward-control-readout`,
+`analyze_sufficiency_additive_training.py --output R/sufficiency-additive-rl-001
+--report R/analysis-sufficiency-additive-training-001.json`; expand each `R`
+to the absolute store path below. All reports are write-once.
+
 CPU proposal, 2026-09-22; no GPU acceptance or new panel selection. Existing
 039 readout gives warm joint-SFT32 / product-RL8 / matched extra-SFT8 paired
 EM 10/18/19 of64. RL has no established advantage over extra SFT. Await the

@@ -67,6 +67,15 @@ one epoch, 23 updates. The follow-up will distinguish a prompt improvement from
 a weight improvement. These demonstrations teach basic task execution, not
 recursive planning.
 
+A [training-data audit](TEXTCRAFT-TRAINING-COVERAGE.md) sharpens that limitation:
+30 of 32 demonstrations begin with an intermediate recipe chosen by the
+teacher's hidden plan, before the model has seen how that ingredient connects
+to the goal. These are legitimate supervised targets, but they do not teach
+a complete procedure for discovering the prerequisites. None of the eight
+evaluation goals appears as a training recipe, although 21 of their 47 required
+recipes do. Better performance would therefore be useful evidence of learning,
+not by itself proof of general decomposition or unfamiliar-world transfer.
+
 On the household-task benchmark, the completed action-training run did not help:
 both flat and manager/worker policies solve 2 of 24 attempts after training versus
 4 of 24 before it. We are not extending that recipe without a new explanation.

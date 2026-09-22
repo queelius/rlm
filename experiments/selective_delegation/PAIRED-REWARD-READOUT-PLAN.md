@@ -1,5 +1,9 @@
 # Four-arm reward-control readout implementation plan
 
+**Accepted September 22, 06:34 UTC:** main queued this reader after051 in
+`R/INDEPENDENT-TRAINING-QUEUE-002.json`, followed by the independent trained
+crafting readout. Fixed endpoints, panel and budgets are unchanged.
+
 CPU preparation only; main owns acceptance, sealing and launch. This follows the
 approved053 design, not a new experiment. The writing-plans and focused TDD
 workflow will be executed inline in the existing isolated worktree.
