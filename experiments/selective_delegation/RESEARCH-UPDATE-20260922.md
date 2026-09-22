@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T12:24:00Z
+evidence_cutoff_utc: 2026-09-22T12:54:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -53,20 +53,29 @@ summed model-call time (about24 versus20 minutes). Better task performance is
 therefore not an automatic speed improvement. No helpers run in either arm.
 See the [changed-world result](TEXTCRAFT-CHANGED-WORLD-FINDINGS.md).
 
-A paired comparison on 16 newly selected goal names in the original world is
-now running. Its tasks were frozen before collecting model outcomes;
-most still share intermediate recipes with training. Separately, a completed
-input audit shows that three of the new goal items were already demonstrated
-as intermediate products; the other 13 identifiers are absent from both SFT
-datasets' prompts and targets. The full frozen panel remains the primary test;
-see the [fresh-goal scope audit](TEXTCRAFT-FRESH-SCOPE.md). A completed
+A completed comparison on 16 newly selected goal names now shows **1/32 versus
+15/32 successes**, with 14 paired gains and no losses. Its task-cluster interval
+for the gain is **25 to 62.5 percentage points**. The tasks were frozen before
+collecting outcomes, and all 64 attempts were verified against the environment.
+The improvement remains on the 13 goal items absent from both SFT datasets'
+prompts and targets: **1/26 versus 11/26**. The other three had appeared as
+training intermediates; that additional breakdown does not replace the full
+frozen panel. Most goals still share some intermediate recipes with training.
+
+This is a stronger transfer result, but execution remains unreliable on longer
+plans: the revised model solves only **3/16 attempts in the four-level group**.
+It queries less and attempts more crafting, including many rejected commands.
+It takes about 22% more summed model-call time despite 10% fewer calls, so this
+is not a speed gain. See the [new-goal findings](TEXTCRAFT-FRESH-FINDINGS.md) and
+[scope audit](TEXTCRAFT-FRESH-SCOPE.md). Separately, a completed
 training-task check succeeds in **25 of 32 attempts**. Three of its eight tasks
 have both successes and failures across four samples, giving RL a usable
 within-task learning signal. Four tasks always succeed and one always fails
 in these samples. This is a readiness finding, not an RL improvement.
 
 The failures concern quantities, ingredients and stopping before the goal is
-met; none are malformed action JSON. A bounded two-update RL pilot will test
+met; none are malformed action JSON in that TRAIN check. A bounded two-update
+RL pilot is now running to test
 whether learning from final success improves this execution. Its control uses
 the same starting model and training tasks, with extra supervised training
 matched to actual updates and approximately matched output-token counts.

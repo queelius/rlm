@@ -1,6 +1,6 @@
 ---
-status: accepted_waiting_for_fresh_comparison
-updated_utc: 2026-09-22T11:27:00Z
+status: running_first_update
+updated_utc: 2026-09-22T12:57:00Z
 question: Can terminal success improve a model already taught public information gathering?
 depends_on: complete_textcraft_train_readiness_001
 maximum_optimizer_updates: 2
@@ -9,10 +9,19 @@ maximum_optimizer_updates: 2
 # TextCraft terminal-reward RL readiness
 
 The corrected pilot and its controls were accepted at 11:26 UTC, after the
-complete TRAIN audit and exact replay through the trainer. Queue008 waits for
-the running fresh-goal comparison to release the GPU. No RL optimizer has run
-yet. The earlier preparation notes below remain historical context; the dated
-readiness result and acceptance section give the current source and run pointers.
+complete TRAIN audit and exact replay through the trainer. Queue008 started
+`textcraft-terminal-rl-002` at 12:51 UTC after the fresh-goal comparison released
+the GPU. Its first real response returned in 2.03 seconds. Saved pre-update
+likelihoods and the longest-call backward qualification are complete; the
+qualification recorded 10.9 GiB peak allocated memory and no base-model gradients.
+The first training gradient pass is in progress, with no committed optimizer
+update yet. These are execution checks, not evidence of RL improvement.
+
+The [fresh-goal comparison](TEXTCRAFT-FRESH-FINDINGS.md) completed at 1/32 versus
+15/32 for the earlier and revised demonstrations; the RL job remains the
+previously accepted objective, tasks and caps. The earlier preparation notes
+below remain historical context; the dated readiness result and acceptance
+section give the current source and run pointers.
 
 ## Recommendation
 
