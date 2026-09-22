@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T11:23:00Z
+evidence_cutoff_utc: 2026-09-22T11:41:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -76,6 +76,17 @@ three to be successes leaves a full-panel improvement between 37.5 and 56.25
 percentage points. That range is a missing-data bound, not a confidence interval.
 It argues against the gain being only a repair of the earlier training recipe,
 but it still uses the already examined tasks.
+
+Two CPU checks now sharpen the follow-up questions. In the first RL batch,
+about **55% of positively credited output tokens belong to failed crafts** inside
+episodes that eventually succeed. This describes the coarseness of episode-level
+credit; it does not show that the policy gradient is wrong or predict its update.
+Separately, using only previously returned recipes, 112 of 313 rejected crafts
+would have executable arguments at their actual saved inventory. That is a local
+counterfactual check, not 112 rescued tasks or a measured success improvement.
+See the [credit census](TEXTCRAFT-FIRST-BATCH-CREDIT.md),
+[public recipe-binding proposal](TEXTCRAFT-PUBLIC-RECIPE-BINDING-IDEA.md), and
+[relevant recent research](LITERATURE-CREDIT-AND-STATE-20260922.md).
 See the [detailed finding](TEXTCRAFT-PUBLIC-DISCOVERY-FINDINGS.md).
 
 The [remaining-failure audit](TEXTCRAFT-REMAINING-FAILURES.md) separates learning
