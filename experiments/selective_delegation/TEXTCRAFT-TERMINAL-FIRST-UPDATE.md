@@ -1,5 +1,5 @@
 ---
-status: completed_first_update_diagnostic_training_continues
+status: completed_first_update_diagnostic_parent_run_later_failed
 evidence_date: 2026-09-22
 question: Did the first RL update change the policy, and which saved actions changed likelihood?
 claim_strength: fixed_prefix_likelihood_movement_not_task_improvement
@@ -12,6 +12,12 @@ advantage-weighted likelihood objective. It did not simply increase every
 positively credited action. Some failed crafts became more likely, but the
 preidentified wrong-quantity example became **less** likely while its subsequent
 correct craft became more likely. There is no held-out RL result here.
+
+**Later status:** the parent run stopped before its second update because a
+generation-versus-replay probability check exceeded its declared tolerance.
+The saved first-update measurements below remain diagnostic observations,
+not a usable final endpoint or a completed RL-versus-SFT comparison. See the
+[numerical follow-up](LITERATURE-NUMERICAL-REPLAY-20260922.md).
 
 This check asks: given exactly the same saved context, how likely is the same
 recorded command before and after training? It does not yet ask the updated

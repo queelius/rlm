@@ -1,6 +1,6 @@
 ---
-status: first_update_committed_second_batch_running
-updated_utc: 2026-09-22T13:13:00Z
+status: stopped_before_second_update_numerical_replay_check
+updated_utc: 2026-09-22T13:41:00Z
 question: Can terminal success improve a model already taught public information gathering?
 depends_on: complete_textcraft_train_readiness_001
 maximum_optimizer_updates: 2
@@ -14,13 +14,18 @@ complete TRAIN audit and exact replay through the trainer. Queue008 started
 the GPU. Its first real response returned in 2.03 seconds. Saved pre-update
 likelihoods and the longest-call backward qualification are complete; the
 qualification recorded 10.9 GiB peak allocated memory and no base-model gradients.
-The first optimizer update is now committed and checkpointed, and the second
-batch is collecting fresh trajectories. Before/after likelihoods establish
+The first optimizer update is committed and checkpointed. The second
+batch completed, but a numerical replay check stopped the run before its
+second update. Before/after likelihoods from the first update establish
 actual policy movement, not a held-out task improvement. See the
-[first-update diagnostic](TEXTCRAFT-TERMINAL-FIRST-UPDATE.md).
+[first-update diagnostic](TEXTCRAFT-TERMINAL-FIRST-UPDATE.md). The failed
+endpoint is not usable under the accepted plan, and the dependent SFT/control
+readouts did not proceed. The exact failing gaps were not saved; a
+[targeted numerical diagnostic](LITERATURE-NUMERICAL-REPLAY-20260922.md)
+is being prepared before any repair or tolerance decision.
 
 The [fresh-goal comparison](TEXTCRAFT-FRESH-FINDINGS.md) completed at 1/32 versus
-15/32 for the earlier and revised demonstrations; the RL job remains the
+15/32 for the earlier and revised demonstrations; the RL job used the
 previously accepted objective, tasks and caps. The earlier preparation notes
 below remain historical context; the dated readiness result and acceptance
 section give the current source and run pointers.
