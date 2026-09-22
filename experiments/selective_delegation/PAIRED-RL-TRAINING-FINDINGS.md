@@ -4,7 +4,8 @@ RL037 completed cleanly on 2026-09-21 at19:54:15 UTC: eight sampled blocks and
 eight optimizer updates, with no skipped all-zero block. The fixed endpoint is
 `sufficiency-rl-001/boundaries/sample-0008/checkpoint-0008`.
 Extra-SFT038 completed cleanly at20:12:16 UTC with eight matched updates.
-The combined sealed training audit passed; no held039/046 result is inferred here.
+The combined sealed training audit passed. This document describes TRAIN evidence;
+completed039 results are separate in `PAIRED-RL-HELDOUT-FINDINGS.md`;046 remains pending.
 
 This finite TRAIN competence/objective diagnostic is not a novel abstention method
 or a generalization result. **Each block contains different questions: the reward
@@ -104,14 +105,15 @@ on CPU and match the receipts. Zero native generation calls for SFT means teache
 model compute. Relative to RL's4,165 nonzero-advantage emitted tokens, the control
 receives many more supervised target tokens; this is not an information/FLOP match.
 
-## Pending held decision
+## Held decision boundary
 
-The narrower question now is whether these eight actual updates improve the fixed
-held paired objective relative to joint32 and matched additional SFT. Continuing
+The held question is whether these eight actual updates improve the fixed paired
+objective relative to joint32 and matched additional SFT. Continuing
 to raise TRAIN dose, changing reward or claiming better calibration is not
-justified by this changing-batch readout alone. Predeclared039/046
-readouts are needed to distinguish extra supervised training from paired RL and to
-separate supported-answer accuracy from merely more abstention.
+justified by this changing-batch readout alone. Completed039 finds both continuations
+improve paired score but no established RL advantage over extra SFT; see the separate
+held findings for intervals and the supported-answer/overanswer tradeoff. Predeclared046
+remains the deeper-combination check, without retuning these endpoints.
 
 Evidence under R (September21 selective-delegation run store):
 `analysis-sufficiency-rl-training-001.json/.md` is the completed combined audit

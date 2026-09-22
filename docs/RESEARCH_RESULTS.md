@@ -24,11 +24,14 @@ information or enable actions, rather than merely rewrite a fully visible input.
 The evidence-sufficiency experiments reveal a repeatable answer/refusal tradeoff:
 training only on answerable examples increases answering, while including negative
 examples increases refusals, including mistaken refusals. Paired-reward RL has
-completed eight real updates without service failures; its extra-SFT control
-and fixed new-question readouts are not yet complete. The
+completed eight real updates without service failures. The first fixed held
+readout now gives18 correct pairs out of64, versus10 before continuation;
+matched additional supervised training gives19. Both improve on this small
+panel, but there is no established RL advantage over more supervised training.
+See [the completed held comparison](../experiments/selective_delegation/PAIRED-RL-HELDOUT-FINDINGS.md).
+The deeper-question readout is running. The
 [training audit](../experiments/selective_delegation/PAIRED-RL-TRAINING-FINDINGS.md)
-shows sparse rewards and several distinct answer failures, not a demonstrated
-generalization gain. In the small household-task screen, a manager and a single agent that
+shows sparse rewards and several distinct answer failures. In the small household-task screen, a manager and a single agent that
 briefly explains its next action both solve six of16 attempts, compared with one
 for action-only prompting. On the completed new-task comparison, manager and
 action-only policies each solve four of24 attempts, while local reasoning solves

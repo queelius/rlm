@@ -1,5 +1,27 @@
 # Research ledger — plan: experiments/selective_delegation/PLAN.md
 
+2026-09-22 06:06 UTC resumption: quota45% at06:00, reserve10%. GPU idle at06:00
+with no model process. 041b completed33updates and042b48episodes; trainedflat2/24
+andtrainedmanager2/24 vsbase4/24 each. 044 hit3600s cap at22:00Sep21 with26/32
+records, nochildcalls,1239native returns. Original046 launcher required044complete
+and neverran. Approximately8h of idle time is lost opportunity, not useful compute.
+
+Ruling: remove only that unrelated scheduling prerequisite via additive external
+SUFFICIENCY-COMPOSITIONAL-SCHEDULING-AMENDMENT-002.md. Validated all original046
+decision hashes, then directly launched unchanged accepted reader/inputs/endpoints/
+seeds/cap under its existing GPU lock. Supervisor79393. Firstnative06:02:39.5
+returned06:02:42.2; inspected23actual replies06:03:09, zero servicefailures.
+No scientific dependency on crafting, no results-based checkpoint/panel selection.
+
+Main uses parallel CPU agents for independent046 analysis,044/042 failure analysis,
+and conditional048 oneepoch craftingSFT preparation. Brainstorming classification:
+bounded research follow-ups, continuing explicit autonomous authorization. 049
+instruction-only crafting control prioritized before048 training: preserve strict
+parser/budgets/fullhistory, clarify oneJSON/currentinventory/explicitfinish. No new
+GPU job accepted until exact source and public-prompt fixture reviewed. Additive
+versus paired-product reward proposed as next informative RL control, CPUcoverage
+analysis first. Jev remains a recorded question only, not a pivot/dependency.
+
 2026-09-21 09:18 UTC: User approved autonomous overnight research. Existing GPU
 allocation5879 has one idle A10040GB MIG, approximately66.7h left. Quota99% remaining
 at09:15UTC. Both completed broad campaign and earlier follow-up12 are reviewed;

@@ -3,7 +3,19 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September21 research update](RESEARCH-UPDATE-20260921.md).
 
-Current operations, September 21, 20:04 UTC: the
+Current checkpoint, September 22, 06:06 UTC: [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
+improves the fixed warm start from 10 to 18 correct pairs out of64 with RL,
+but extra supervised training reaches19. This is useful learning, not an
+established RL-specific advantage. The deeper-question comparison is running.
+[Household action SFT](ALFWORLD-ACTION-SFT-FINDINGS.md) did not improve the exposed twelve-game panel: both flat
+and manager-worker policies score2/24 after training versus4/24 before it.
+The [crafting pilot](TEXTCRAFT-PILOT-FINDINGS.md) reached its one-hour cap with26/32 episode records; no helper
+was ever called. Its extra work often continued after enough items were present.
+The immediate follow-up tests a clearer one-action-and-finish instruction.
+The GPU was idle after the capped pilot blocked an unrelated successor; the
+independent successor was restarted without changing its scientific comparison.
+
+Earlier completed findings: the
 [fresh128-question Hotpot replication](HOTPOT-FRESH-FINDINGS.md) is complete:
 151/256 planner versus152/256 direct, with 3.44 times the tokens and unresolved
 differences. The completed [three-answer voting control](HOTPOT-VOTE-FINDINGS.md)
@@ -41,17 +53,18 @@ complete. The [sampling control](QAMPARI-SAMPLING-FINDINGS.md) did not rescue
 many-answer reading, so we are retiring further fan-out tuning for now.
 Paired-reward RL completed eight actual updates without service failures;
 [the training diagnostic](PAIRED-RL-TRAINING-FINDINGS.md) separates sparse rewards,
-wrong answers and mistaken refusals. Matched extra SFT is running; frozen held
-readouts and public-action SFT remain accepted in sequence. Training movement
-is not yet evidence of better answers on new questions.
+wrong answers and mistaken refusals. Matched extra SFT and the first held
+readout are complete: [both continuations improve the warm start](PAIRED-RL-HELDOUT-FINDINGS.md),
+without an established difference between them. Public-action SFT and its
+household-task readout are also complete; training did not improve this panel.
 The [bounded semantic audit](SUFFICIENCY-SEMANTIC-AUDIT.md) illustrates why a
 literal answer mention is not necessarily sufficient evidence, and why the
 official negative labels are not infallible.
 The [TextCraft qualification](TEXTCRAFT-CPU-READINESS.md) has passed CPU gold
-replay, and its [bounded model comparison](TEXTCRAFT-PILOT-PLAN.md) is now queued.
+replay, and its [bounded model comparison](TEXTCRAFT-PILOT-PLAN.md) ended at its cap.
 A [separately declared deeper-question readout](SUFFICIENCY-COMPOSITIONAL-PANEL.md)
 will test the fixed RL/SFT endpoints on new composed questions, with prior-study
-component exposure disclosed. Neither has model results yet. The actual queue and owners
+component exposure disclosed. That readout is running. The actual queue and owners
 remain in the external research store, not this narrative summary.
 [Recent primary work](LITERATURE-UPDATE-1625.md)
 narrows the novelty of generic answerability training and adaptive evidence trees.
@@ -60,6 +73,16 @@ to existing planner-training and evidence-integration research.
 
 Prospective questions, not completed findings: [recursion versus subtask practice](TEXTCRAFT-TRAINING-CONTROLS.md),
 and [terminal-reward action learning](ALFWORLD-TERMINAL-RL-DRAFT.md).
+Conditional transfer controls ask whether action training learns
+[command meaning rather than list position](ALFWORLD-ACTION-ORDER-CONTROL.md),
+and whether crafting skills survive
+[changed recipes rather than just new goals in the same world](TEXTCRAFT-CHANGED-WORLD-FEASIBILITY.md).
+Two CPU calculations concern training credit:
+[averaging over arbitrary answer pairings](PAIRED-REWARD-PAIRING-VARIANCE.md), and
+[rarely called helpers losing their comparison group](OPTIONAL-NODE-CREDIT-QUESTION.md).
+These calculations are not GPU performance improvements or established novelty.
+[Fast learned decision models](JEV-ROUTING-QUESTION.md) are a prospective comparison,
+not a Jev dependency or a change to the accepted research direction.
 The [context-boundary feasibility check](CONTEXT-SUFFICIENCY-FEASIBILITY.md)
 retired one proposed crafting comparison: its concrete example was a parent
 quantity error, not a demonstrated missing constraint for the child.
