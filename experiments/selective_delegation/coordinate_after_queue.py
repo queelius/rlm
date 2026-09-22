@@ -36,7 +36,11 @@ def validate(args):
         or not previous.get("jobs")
     ):
         raise ValueError("pinned previous accepted queue/invocation identity differs")
-    outputs = [Path(job["output"]) for job in previous["jobs"]]
+    # CPU analysis jobs need not own scientific output/GPU resources. ready() still
+    # waits for the authenticated whole supervisor, including those CPU jobs.
+    outputs = [Path(job["output"]) for job in previous["jobs"] if job.get("output")]
+    if not outputs:
+        raise ValueError("predecessor must declare at least one scientific output")
     if args.receipt:
         receipt = json.loads(args.receipt.read_text())
         jobs = receipt.get("jobs")

@@ -52,6 +52,23 @@ def test_live_supervisor_blocks_without_owners_and_reused_pid_is_not_old_process
     assert not args.output.exists()
 
 
+def test_mixed_gpu_cpu_predecessor_checks_owned_outputs_but_waits_whole_supervisor(tmp_path):
+    process = psutil.Process()
+    args = fixture_args(tmp_path, process.pid, process.create_time())
+    previous = json.loads(args.previous_receipt.read_text())
+    previous["jobs"].append(dict(name="cpu-analysis", argv=[sys.executable, "analyze.py"]))
+    args.previous_receipt.write_text(json.dumps(previous))
+    args.previous_receipt_sha256 = gate.sha(args.previous_receipt)
+    invocation = json.loads(args.previous_invocation.read_text())
+    invocation["receipt_sha256"] = args.previous_receipt_sha256
+    args.previous_invocation.write_text(json.dumps(invocation))
+    args.previous_invocation_sha256 = gate.sha(args.previous_invocation)
+    outputs, _ = gate.validate(args)
+    assert outputs == [tmp_path / "science"]
+    assert not gate.ready(process.pid, process.create_time(), outputs)
+    assert gate.ready(process.pid, process.create_time() - 100, outputs)
+
+
 def test_dead_supervisor_allows_failed_preflight_but_waits_for_extant_owner(tmp_path):
     dead = 1_000_000_000
     assert not psutil.pid_exists(dead)
