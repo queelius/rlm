@@ -3,7 +3,7 @@
 For a short plain-language account of the latest findings and decisions, start
 with [the September22 research update](RESEARCH-UPDATE-20260922.md).
 
-Current checkpoint, September 22, 08:41 UTC: [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
+Current checkpoint, September 22, 08:54 UTC: [paired-answer training](PAIRED-RL-HELDOUT-FINDINGS.md)
 improves the fixed warm start from 10 to 18 correct pairs out of64 with RL,
 but extra supervised training reaches19. This is useful learning, not an
 established RL-specific advantage. The [deeper-question comparison](PAIRED-RL-COMPOSITIONAL-FINDINGS.md)
@@ -25,9 +25,11 @@ the original joint reward. Neither establishes an advantage over extra SFT.
 The [training audit](PAIRED-ADDITIVE-TRAINING-FINDINGS.md) verifies actual updates;
 the [public-discovery prototype](PUBLIC-DISCOVERY-READINESS.md) prepares a
 different way of teaching prerequisite discovery. Its matched training/readout
-are now accepted, not yet a new model result. A [same-product credit control](PAIRING-MEAN-RL-DECISION.md)
-is actively training; its first update uses identical original samples but credits
-four groups instead of two. No held performance result exists yet.
+are now running, not yet a new model-quality result. The [same-product credit
+control](PAIRED-PAIRING-MEAN-FINDINGS.md) is complete: averaging over response
+pairings scores6/64 versus10/64 for the original RL rule, with four losses and
+no wins on the exposed panel. More active training groups did not improve answers;
+we are retiring that variant rather than extending it unchanged.
 [Household action SFT](ALFWORLD-ACTION-SFT-FINDINGS.md) did not improve the exposed twelve-game panel: both flat
 and manager-worker policies score2/24 after training versus4/24 before it.
 The [crafting pilot](TEXTCRAFT-PILOT-FINDINGS.md) reached its one-hour cap with26/32 episode records; no helper

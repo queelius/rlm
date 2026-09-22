@@ -154,6 +154,12 @@ def audit_episode(task, job, row, calls, nodes, plan, plan_sha, tokenizer, world
                 "unqualified instruction reminder",
             )
             prompt += plan["instruction_reminder"]
+        elif profile == "procedure_control":
+            require(
+                plan["procedural_instruction"] == collector.PROCEDURAL_INSTRUCTION,
+                "unqualified procedure instruction",
+            )
+            prompt += plan["procedural_instruction"]
         else:
             require(profile == "original", "unknown prompt profile")
         return prompt

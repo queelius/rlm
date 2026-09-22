@@ -1,11 +1,43 @@
 ---
-status: literature_informed_proposal
+status: literature_informed_accepted_comparison
 retrieved_utc: 2026-09-22
 related_question: public_information_prerequisite_discovery
-gpu_experiment_accepted: false
+gpu_experiment_accepted: true
 ---
 
 # Teach a procedure the student can actually follow
+
+## September 22 follow-up after the crafting evaluation
+
+The original proposal below preceded the completed action-training evaluation.
+That evaluation now finds an information-gathering regression: on 13 matched
+trials, querying the goal recipe first falls from 13 cases to two. The revised
+public-discovery teacher comparison is accepted as source056/057. See the
+[completed findings](TEXTCRAFT-ACTION-SFT-FINDINGS.md) and
+[conditional follow-ups](TEXTCRAFT-PUBLIC-DISCOVERY-TRANSFER.md).
+
+An additional relevant primary source is **The Context Gathering Decision
+Process**, arXiv:2605.07042v1. It separates persistent facts/open questions from
+the action history and tests a programmatic stopping rule based on repeated
+queries and low observation novelty. Its experiments use GPT-4o-mini on three
+retrieval/QA domains; a freeform state often works better than structured JSON.
+This is direct prior art for proposed state-memory and stagnation controls, not
+evidence that either will fix our crafting agent.
+[Primary method and evaluation, §§5–6](https://arxiv.org/html/2605.07042v1)
+
+Our inference is narrower. Current inventory is already visible in our harness.
+A summary of queried recipes would reorganize known evidence, whereas calculating
+all remaining ingredient requirements would perform part of the planning itself.
+Those are different interventions. Likewise, ending an unproductive search is not
+the same as completing a physical crafting goal: none of the failed trained
+episodes has enough target inventory. We should measure success and saved work
+separately, rather than label shorter failures an accuracy improvement.
+
+This literature update does not change the running comparisons or accept another
+GPU job. The source was inspected online on September 22; no implementation was
+downloaded or reproduced.
+
+## Original proposal and its motivation
 
 The [training coverage audit](TEXTCRAFT-TRAINING-COVERAGE.md) found that most
 teacher trajectories begin with a prerequisite chosen from a hidden plan.

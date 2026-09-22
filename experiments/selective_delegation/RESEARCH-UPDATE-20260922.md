@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T08:41:00Z
+evidence_cutoff_utc: 2026-09-22T08:54:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -61,18 +61,20 @@ new policy. It also verifies that identical first samples produced materially
 different parameter-update directions. See the [objective control](PAIRED-ADDITIVE-RL-PLAN.md)
 for the prospectively fixed comparison.
 
-One bounded [credit-assignment control](PAIRING-MEAN-RL-DECISION.md) is queued:
-keep the original joint reward, but average over the arbitrary ways of pairing
-the sampled positive and negative responses. This asks whether less noisy
-credit actually improves the trained policy after the optimizer acts. The CPU
-calculation alone cannot answer that question. It is a known estimator idea,
-not a new reward or a claimed new algorithm; its readout reuses an exposed
-development panel and is explicitly exploratory.
+The [credit-assignment control](PAIRED-PAIRING-MEAN-FINDINGS.md) is also complete.
+It keeps the original joint reward but averages over ways of pairing the sampled
+responses. The first update uses identical samples and starting weights, so we
+can verify that it changes learning from the same information. Across training,
+more question groups receive nonzero credit, but fewer individual responses do.
 
-That run is now active. Its first update uses exactly the same 128 sampled
-responses and initial weights as the original RL run, but assigns nonzero credit
-to four question groups rather than two. This verifies that the intervention
-changes learning from the same samples. It does not yet show better answers.
+That change does not help the evaluation: the new model scores 6 correct pairs
+out of 64 versus 10 for the original RL model, with four losses and no wins.
+It again refuses more supported questions. The estimated difference is −6.25
+percentage points, with a component-cluster interval of −12.90 to −1.47 points.
+This is one training seed on an already exposed panel, not a general test of
+variance reduction. We are retiring this variant rather than extending it
+without a new hypothesis. Neither reward frequency nor additional credited
+groups has proved sufficient to improve this task.
 
 ## Interactive failures reveal a concrete harness question
 

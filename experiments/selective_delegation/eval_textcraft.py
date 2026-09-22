@@ -36,14 +36,21 @@ INSTRUCTION_REMINDER = (
     "If every difference is at least the requested amount, return "
     '{"action":"finish","message":"done"} now. Otherwise choose one useful action.'
 )
+PROCEDURAL_INSTRUCTION = (
+    "\nFirst query each requested target's recipe. Discover needed ingredients from returned "
+    "recipes before crafting. Use current inventory and returned batch sizes; do not repeatedly "
+    "query an item whose recipe is already known. Finish only after the net target is met."
+)
 
 
 def render_prompt(frame, history, context="", goal=None, profile="original"):
-    if profile not in ("original", "instruction_control"):
+    if profile not in ("original", "instruction_control", "procedure_control"):
         raise ValueError("unknown TextCraft prompt profile")
-    if profile == "instruction_control" and frame.max_depth != 0:
+    if profile != "original" and frame.max_depth != 0:
         raise ValueError("instruction control is flat only")
     prompt = bridge.public_prompt(frame, history, context=context, goal=goal)
+    if profile == "procedure_control":
+        return prompt + PROCEDURAL_INSTRUCTION
     return prompt + (INSTRUCTION_REMINDER if profile == "instruction_control" else "")
 
 

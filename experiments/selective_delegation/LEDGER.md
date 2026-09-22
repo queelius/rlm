@@ -1,5 +1,18 @@
 # Research ledger — plan: experiments/selective_delegation/PLAN.md
 
+2026-09-22 08:54 UTC:058/059complete. Product pairing-mean credits50TRAINgroups
+versus42original, but312responses versus336;79/512productsuccesspairs versus78.
+All8updates independentlyverified,1022valid/2protocol-invalidreturns. Evaluation
+has256validcalls:6/64jointEM versus10/64original,4loss0win, component interval
+[-12.90,-1.47]pp. Original128calls exactlyreplayprevious053prediction/requestfields.
+TRAIN auditSHA b8bcce773e7fe183e6b515b48dac79e50b3d3422554add79ba7c2be1eba8393c;
+readoutSHA dca61e6320de54639b4dc83af800bad54cdb943ef520cbd07b75193b98ba7df8.
+Retirethisvariant, notRLoverall. WatcherincorrectTRAIN-field gatepreserved;
+sealedmanualanalysispassedwithoutGPUrerun. 056publicteacherSFT nowrunning,
+firstcommittedupdateverified;057followsautomatically. CPUpreparationofonecheap
+proceduralpromptbaselineaccepted; no nextGPUacceptanceuntil057evidence.
+Quota33%08:52;Git1381e6f pushedresearchbranch, findingscheckpointpending.
+
 2026-09-22 08:40 UTC: Crafting SFT readout052 complete, 32 episodes/1884 returned
 calls with no transport failures. Original3/16, reminder2/16; original matched
 comparison1win0loss3unknown, reminder2wins0loss. No failed trained trajectory
