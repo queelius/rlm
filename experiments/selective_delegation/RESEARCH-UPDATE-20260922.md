@@ -1,6 +1,6 @@
 ---
 status: exploratory
-evidence_cutoff_utc: 2026-09-22T13:36:00Z
+evidence_cutoff_utc: 2026-09-22T15:04:00Z
 question: What prevents useful learning and reliable use of additional computation?
 publication_status: mechanisms_to_test_not_established_architecture_advantage
 ---
@@ -94,14 +94,38 @@ The second training batch completed, but the run stopped before its second
 update: probabilities recomputed from saved trajectories exceeded the declared
 tolerance relative to the generation-time probabilities. The first checkpoint
 is preserved, but the failed endpoint is not being substituted into the planned
-RL-versus-SFT comparison. The exact failing gaps were not saved by the trainer;
-a targeted diagnostic is being prepared before choosing a repair. This is a
-numerical-method issue to investigate, not evidence that RL helps or hurts.
+RL-versus-SFT comparison. A completed diagnostic has now reconstructed all
+712 calls: the average absolute log-probability difference is small (0.00243),
+but the largest is 0.5, above the fixed 0.25 limit. Replaying tokens with the
+same cached computation used during generation reproduces its scores exactly
+on all 47 diagnostic calls. This points to numerical differences between
+cached generation and parallel training calculations, rather than an observed
+change of weights or temperature. The worst discrepancy concerns a quantity
+in a crafting action, so it cannot simply be dismissed as irrelevant formatting.
+The completed FP16 numerical probe reduces the largest gap from 0.50 to 0.044
+on the same 47 diagnostic calls, with finite values throughout. This is promising
+for a repair, but not yet a training-stability or task-success result. No tolerance
+has been relaxed and no second update has been claimed. See the
+[precision probe](TEXTCRAFT-PRECISION-PROBE.md).
 
-A [same-panel base-model control](TEXTCRAFT-FRESH-BASE-CONTROL.md) is now running
-to distinguish useful new learning from merely avoiding harmful earlier
-demonstrations. It started after the failed RL sequence released the GPU and
-does not depend on that checkpoint. Its results are not yet available.
+The [same-panel base-model control](TEXTCRAFT-FRESH-BASE-FINDINGS.md) is complete:
+the unadapted model solves **6/32**, the earlier teaching package **1/32**, and
+the revised teaching package **15/32**. Revised training gains ten attempts and
+loses one versus the base, an improvement of 28.1 percentage points with a
+task-cluster 95% interval of **12.5 to 46.9 points**. All 96 attempts were verified.
+This strengthens the case for useful learning, not merely avoiding poor earlier
+demonstrations. However, the base makes many more output-format errors and hits
+the context limit more often; this comparison does not isolate decomposition
+skill. It was also planned after seeing the teacher comparison, so remains
+exploratory. Excluding the three training-intermediate goal names, the additional
+breakdown is base **3/26** versus revised **11/26**, not a separate fresh test.
+
+A separate serving qualification completed 64 measured requests with no invalid
+actions: four concurrent requests took 14.02 seconds versus 38.59 seconds serially,
+a **2.75× throughput gain**. This supports a future batched-rollout pilot only.
+It is not a task-success improvement or proof that the serving and training
+backends produce equivalent policies. See the
+[serving qualification](TEXTCRAFT-BATCH-QUALIFICATION-FINDINGS.md).
 
 A historical base-model comparison also helps interpret the demonstration
 gain. On 13 recorded matched attempts the revised trained model gains nine

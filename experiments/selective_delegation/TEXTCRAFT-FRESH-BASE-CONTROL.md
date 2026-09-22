@@ -1,5 +1,5 @@
 ---
-status: running
+status: completed
 prepared_date: 2026-09-22
 question: Does revised SFT improve over the untrained base on the same fresh goals?
 collection_cap_minutes: 120
@@ -7,6 +7,12 @@ per_episode_limits_changed: false
 ---
 
 # Next control: compare with the base model on the same new goals
+
+**Completion update, September 22 at 14:45 UTC:** all 32 base attempts completed
+and all 96 three-arm outcomes were verified. Base/old/revised training solve
+6/32, 1/32 and 15/32. Revised versus base has ten paired gains and one loss.
+See the [completed findings and limitations](TEXTCRAFT-FRESH-BASE-FINDINGS.md).
+The prospective rationale and launch record below are preserved as history.
 
 The revised demonstrations outperform the earlier demonstrations on the fresh
 panel, 15/32 versus 1/32. We still need to know whether they improve over the
