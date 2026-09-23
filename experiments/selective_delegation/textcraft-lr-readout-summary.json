@@ -1,0 +1,423 @@
+{
+  "source_report": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-lr-replay-001.json",
+  "source_report_sha256": "3cfc82f1f18c774c05c1420740a7ce4182e1fa2d5a7d9a732416a79d16b60f10",
+  "arms": [
+    {
+      "groups": {
+        "fresh_fp16_continuation_cp2_terminal": {
+          "planned": 32,
+          "recorded": 32,
+          "observed": 32,
+          "missing": 0,
+          "unavailable": 0,
+          "observed_failures": 16,
+          "won": 16,
+          "success_rate_bounds": [
+            0.5,
+            0.5
+          ],
+          "statuses": {
+            "finished": 28,
+            "context_cap": 4
+          },
+          "invalids": {
+            "native_action_error": 578,
+            "invalid_schema": 10
+          },
+          "actions": {
+            "get_info": 289,
+            "craft": 841,
+            "finish": 28
+          },
+          "child_nodes": 0,
+          "child_successes": 0,
+          "failed_roots_with_successful_child": 0,
+          "root_calls_after_quantity_met": 16,
+          "cost": {
+            "calls": 1168,
+            "prompt_tokens": 3735546,
+            "completion_tokens": 38519,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 3155.375428915024
+          },
+          "role_cost": {
+            "root": {
+              "calls": 1168,
+              "prompt_tokens": 3735546,
+              "completion_tokens": 38519,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 3155.375428915024
+            },
+            "child": {
+              "calls": 0,
+              "prompt_tokens": 0,
+              "completion_tokens": 0,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 0
+            }
+          }
+        }
+      },
+      "owner_wall_seconds": 3183.751893043518,
+      "terminal": {
+        "failure": null,
+        "stopped": false,
+        "ended": 1790107613.8153536,
+        "elapsed_seconds": 3183.751893043518,
+        "deadline": 1790108030.0629892
+      },
+      "unresolved_starts": [],
+      "calls_without_episode": []
+    },
+    {
+      "groups": {
+        "fresh_lr1e4_same_batch_terminal": {
+          "planned": 32,
+          "recorded": 32,
+          "observed": 32,
+          "missing": 0,
+          "unavailable": 0,
+          "observed_failures": 17,
+          "won": 15,
+          "success_rate_bounds": [
+            0.46875,
+            0.46875
+          ],
+          "statuses": {
+            "finished": 25,
+            "context_cap": 7
+          },
+          "invalids": {
+            "native_action_error": 689
+          },
+          "actions": {
+            "get_info": 248,
+            "craft": 957,
+            "finish": 25
+          },
+          "child_nodes": 0,
+          "child_successes": 0,
+          "failed_roots_with_successful_child": 0,
+          "root_calls_after_quantity_met": 15,
+          "cost": {
+            "calls": 1230,
+            "prompt_tokens": 4091340,
+            "completion_tokens": 42752,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 3457.8090336322784
+          },
+          "role_cost": {
+            "root": {
+              "calls": 1230,
+              "prompt_tokens": 4091340,
+              "completion_tokens": 42752,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 3457.8090336322784
+            },
+            "child": {
+              "calls": 0,
+              "prompt_tokens": 0,
+              "completion_tokens": 0,
+              "failed_calls": 0,
+              "unknown_completion_tokens_calls": 0,
+              "native_service_seconds": 0
+            }
+          }
+        }
+      },
+      "owner_wall_seconds": 3488.082410097122,
+      "terminal": {
+        "failure": null,
+        "stopped": false,
+        "ended": 1790155127.9154623,
+        "elapsed_seconds": 3488.082410097122,
+        "deadline": 1790155239.8325403
+      },
+      "unresolved_starts": [],
+      "calls_without_episode": []
+    }
+  ],
+  "comparison": {
+    "planned_pairs": 32,
+    "known_pairs": 32,
+    "unknown_pairs": 0,
+    "wins": 2,
+    "losses": 3,
+    "ties": 27,
+    "complete_panel_difference": -0.03125,
+    "ci95": [
+      -0.1875,
+      0.125
+    ],
+    "rows": [
+      {
+        "task_id": "textcraft_synth.val.151",
+        "repeat": 0,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.151",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.234",
+        "repeat": 0,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.234",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.583",
+        "repeat": 0,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.583",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.24",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.24",
+        "repeat": 1,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.589",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.589",
+        "repeat": 1,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.462",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.462",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 0,
+        "delta": -1
+      },
+      {
+        "task_id": "textcraft_synth.val.111",
+        "repeat": 0,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.111",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.581",
+        "repeat": 0,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.581",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.285",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.285",
+        "repeat": 1,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.188",
+        "repeat": 0,
+        "known": true,
+        "left": 1,
+        "right": 0,
+        "delta": -1
+      },
+      {
+        "task_id": "textcraft_synth.val.188",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 0,
+        "delta": -1
+      },
+      {
+        "task_id": "textcraft_synth.val.175",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 1,
+        "delta": 1
+      },
+      {
+        "task_id": "textcraft_synth.val.175",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.531",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.531",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.101",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.101",
+        "repeat": 1,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.382",
+        "repeat": 0,
+        "known": true,
+        "left": 1,
+        "right": 1,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.382",
+        "repeat": 1,
+        "known": true,
+        "left": 0,
+        "right": 1,
+        "delta": 1
+      },
+      {
+        "task_id": "textcraft_synth.val.139",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.139",
+        "repeat": 1,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.118",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      },
+      {
+        "task_id": "textcraft_synth.val.118",
+        "repeat": 1,
+        "known": true,
+        "left": 0,
+        "right": 0,
+        "delta": 0
+      }
+    ]
+  },
+  "parents": 16,
+  "repeats": 2,
+  "caveat": "Adaptive exploratory update-size comparison on an exposed fixed panel; not fresh replication or an RL-versus-SFT causal estimate.",
+  "plans": {
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-fp16-cp2-bf16-002": "06fcea9e0d1f8fb71f580668fa352cac61143487f6f6017f4bec28fc5434bfff",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-lr1e4-replay-001": "7bd3145a14c334f2e45c06b198e8c38d4cbcbc6a132855c9df7eb1db1471f080"
+  }
+}

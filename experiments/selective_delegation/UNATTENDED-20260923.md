@@ -1,7 +1,7 @@
 ---
 date: 2026-09-23
 status: accepted-running-and-queued
-updated_utc: "09:08"
+updated_utc: "09:23"
 allocation: 5879
 ---
 
@@ -14,25 +14,33 @@ an autonomous agent that invents new scientific questions after each result.
 Artifact root (`R` below):
 `/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921`.
 
-The larger RL update has completed training (23.7 minutes); its fixed-panel
-evaluation is still running. The [credit-assignment analysis](RL-CREDIT-ASSIGNMENT-20260923.md)
+The larger RL update completed training (23.7 minutes) and evaluation: **15/32**
+versus **16/32** for the smaller update, all outcomes known. The
+[credit-assignment analysis](RL-CREDIT-ASSIGNMENT-20260923.md)
 records measured parameter and token-probability changes, and the
 [repeated-state audit](TEXTCRAFT-REPEATED-STATE-CREDIT-FEASIBILITY.md) assesses a
 possible follow-up without spending GPU time. A positive-only credit comparison
-is prepared but **not accepted or launched**: decide after the complete signed
-update evaluation. The accepted chain below is unchanged.
+is now **accepted and waiting** in queue019, after the running queue016 memory
+factorial. Queue019 then retains every job from017 and018. Only the waiting
+017/018 supervisors were stopped, with exact identities checked and recorded in
+`R/REPRIORITIZE-017-018-TO-019.json`; do not relaunch them.
 
 | Order | Question | Accepted receipt under R |
 |---|---|---|
 | Completed | Does the teaching result repeat in changed recipes with the second training seed? Yes: 1/16 versus 9/16; see the dated analysis. | `TEXTCRAFT-WORLD43-SEED2291-QUEUE-002.json` |
-| 015, running | Does a five-times-larger RL update help on the identical saved batch? | `INDEPENDENT-TRAINING-QUEUE-015-AMENDED.json` |
-| 016 | Does a public recipe notebook help, separately from shortening history? | `INDEPENDENT-TRAINING-QUEUE-016.json` |
-| 017 | Does the teaching result survive a quantity control and three more recipe worlds? Does the notebook effect repeat across actors? | `INDEPENDENT-TRAINING-QUEUE-017-AMENDED.json` |
-| 018 | Does the teaching comparison remain consistent in three further prospectively fixed recipe worlds? | `INDEPENDENT-TRAINING-QUEUE-018.json` |
+| 015, completed | A larger update did not establish improvement: 15/32 versus16/32. | `INDEPENDENT-TRAINING-QUEUE-015-AMENDED.json` |
+| 016, running | Does a public recipe notebook help, separately from shortening history? | `INDEPENDENT-TRAINING-QUEUE-016.json` |
+| 019, waiting | Does omitting negative terminal credit help? Then run the retained quantity controls, actor-memory replications and changed-world comparisons. | `INDEPENDENT-TRAINING-QUEUE-019.json` |
 
 Never launch the original unamended 015 or 017 receipts. Their replacements were
 accepted before execution. Earlier proposal documents intentionally retain their
 pre-acceptance status; the receipts above establish what is actually queued.
+The descriptions of017/018 below document retained jobs, not live supervisors.
+New gate019: PID566177, creation1790155303.47, session78032; receipt SHA
+`79907103988639046ce23d526f8d38fc791f54461c942ae342218914debf7bc6`.
+Invocation SHA `dc4a5b399aca97a1ee2140898845e303e4d8ae411d798ec03cb73821076b7cec`.
+It contains63 jobs and respects the lease minus600 seconds. These are caps,
+not a guarantee that the whole sequence will fit.
 
 Queue 016 contains the complete four-condition notebook comparison for the
 first public-discovery model. Queue 017 orders: corrected-original teaching at

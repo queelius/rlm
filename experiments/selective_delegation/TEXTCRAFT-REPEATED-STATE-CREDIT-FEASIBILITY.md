@@ -19,6 +19,10 @@ batch, not evidence about general repeated-state credit.
 The 32 completed episodes contain 909 available calls. Both exact token identity
 and the conservative public-state summary yield 808 unique states and 44 repeated
 cross-episode groups (145 calls). There are no within-episode repeated-state groups.
+This does **not** mean the agent never loops: full history and remaining budget
+change after repeated actions. A separate saved-history audit finds 71 consecutive
+identical rejected-action/error repetitions in positively credited attempts and
+89 in negatively credited attempts; see the linked credit-assignment analysis.
 Of the 44 cross-episode groups, 23 have terminal-reward variation and 16 have
 different decoded actions somewhere in the group. Thus saved data can support a
 strictly observational anchor diagnostic, but it cannot establish a causal step

@@ -2,15 +2,34 @@
 date: 2026-09-23
 status: exploratory-follow-up
 question: Does terminal credit penalize useful actions inside failed attempts?
-evidence_cutoff_utc: "08:58"
+evidence_cutoff_utc: "09:23"
 ---
 
 # A larger update works numerically. Does it teach the right behavior?
 
 The five-times-larger learning-rate run finished one new optimizer update in
 23.7 minutes. It reused the exact saved training attempts and starting checkpoint;
-no new model rollouts were collected for training. Its task evaluation is still
-running at this cutoff. We have not inspected its partial success scores.
+no new model rollouts were collected for training. Its task evaluation is now
+complete; partial success scores were not used to change the plan.
+
+## Completed evaluation: a larger update did not establish improvement
+
+The smaller update solved **16/32** attempts; the larger update solved **15/32**.
+All 32 pairs are known: two improvements, three regressions and 27 ties. The
+task-cluster bootstrap interval for the difference is −18.75 to +12.5 percentage
+points. This small exposed panel does not establish a reliable difference.
+
+The larger update used 1,230 calls versus 1,168, produced 689 rejected actions
+versus 578, and hit the context limit in seven attempts versus four. Its owner
+ran 58.1 minutes versus 53.1 minutes. Both completed normally with no transport
+failures or missing results. Costs are descriptive, not replicated timing effects.
+See the [compact readout and full-report hash](textcraft-lr-readout-summary.json).
+
+Decision: do not increase the learning rate again just because the saved-batch
+objective improves. The positive-only comparison is now accepted after the
+unchanged memory factorial, under queue019. It tests a different explanation
+for weak RL progress, not an established diagnosis. Earlier queues017/018 were
+waiting with no scientific jobs started; their jobs are retained after it.
 
 ## What the completed training tells us
 
@@ -34,7 +53,8 @@ strongly. But averaged over positively credited tokens, it also reduces the
 probability of sequences that succeeded. Shared parameters couple these changes;
 the training objective does not promise to improve every successful sequence.
 These selected-token measurements are **not** KL divergence, task accuracy or
-evidence of generalization. The completed evaluation must settle usefulness.
+evidence of generalization. The completed evaluation above shows why a better
+saved-batch objective alone is insufficient.
 
 The eight training tasks have success counts `[2, 2, 2, 3, 3, 4, 4, 4]` out of
 four attempts each. Thus reward variation is present in five task groups. Twelve
@@ -47,6 +67,14 @@ Native replay adds an important qualification: the positively credited attempts
 contain 177 environment-rejected actions among 399 calls. Negative attempts
 contain 110 information requests, 303 crafting requests and six finish requests
 (plus one malformed call); their audits record 240 environment-action errors.
+Of the 177 positive-credit errors, 79 report insufficient inventory. Seventy-one
+are immediate repetitions of the preceding identical action and identical error;
+failed attempts contain 89 such repetitions. For example, an agent repeatedly
+tries a recipe needing eight units while the environment keeps reporting that
+only six are available, before eventually producing the missing units. This is
+a repeated-action loop, not an identical full prompt: history and budget change.
+The [error-description receipt](textcraft-credit-error-description.json) pins the
+saved public histories and checks error totals against the native audits.
 An information request is not automatically useful, and an eventual success does
 not make all earlier actions good. This is why simply reinforcing entire winning
 attempts may retain substantial waste.
@@ -70,7 +98,7 @@ This tests whether negative whole-attempt credit is helpful in this setup.
 It is deliberately a different, biased objective—not an unbiased policy-gradient
 estimator, an equal-token-dose experiment, or a matched supervised-training
 control. A positive result would motivate more precise action credit, not prove
-that all negative updates are bad. The proposal remains unlaunched at this cutoff.
+that all negative updates are bad. It is accepted and waiting, not training yet.
 In particular, it retains those 177 rejected actions from successful attempts.
 
 ## How this connects to the RLM design
@@ -114,6 +142,10 @@ on-policy for the new interface.
   that separate teaching content, memory and recipe changes.
 
 These are method-level connections from the primary papers, not replications of
-their reported gains. The GPU queue continues unchanged while these follow-ups
-are prepared on CPUs. Change priority only after complete results, preserve
-superseded plans, and never edit a live experiment's sealed source.
+their reported gains. Priority changed only after the complete result; the live
+memory experiment and all sealed sources remain unchanged. The
+[decision map](DECISION-MAP-20260923.md) records prospective interpretation rules.
+
+Advisor-deck decision: keep these details in supporting research notes for now.
+The main message remains that teaching is promising but meaningful TextCraft RL
+improvement is not established. Do not add a positive RL headline to the slides.

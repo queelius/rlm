@@ -7,6 +7,22 @@ questions: [learnable-demonstrations, rl-update-size, public-recipe-memory, reci
 
 # The teaching result repeats; RL has not yet earned a strong claim
 
+## Addendum, 09:23 UTC: larger updates did not solve the RL problem
+
+The five-times-larger update solves15/32 versus16/32 with the smaller update:
+two paired improvements, three regressions, all outcomes known. The difference
+interval is−18.75 to+12.5 percentage points. It uses more calls and produces
+more rejected actions. Thus improving the saved training objective is not enough.
+
+The next accepted diagnostic removes negative whole-attempt credit while keeping
+the same saved batch and starting checkpoint. Even this is imperfect: winning
+training attempts contain177 rejected actions, including71 immediate identical
+action/error repetitions. See the [credit analysis](RL-CREDIT-ASSIGNMENT-20260923.md)
+for measured changes, evidence and limits, and the
+[decision map](DECISION-MAP-20260923.md) for how results change the plan.
+The public-memory factorial is running first, unchanged. Queue019 retains all
+previously queued quantity and changed-world controls after the credit diagnostic.
+
 ## Addendum, 07:58 UTC: the changed-recipe replication also repeats
 
 The second training seed now completes the changed-world comparison:
