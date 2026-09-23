@@ -1,7 +1,17 @@
 # Learning when another reasoning step is worthwhile
 
 For a short plain-language account of the latest findings and decisions, start
-with [the September22 research update](RESEARCH-UPDATE-20260922.md).
+with [the September23 research update](RESEARCH-UPDATE-20260923.md).
+
+September 23 update: the second training seed repeats the teaching advantage
+(3/32 versus 10/32). A second RL update gives 16/32 versus 15/32 at the prior
+checkpoint—too small to establish an RL benefit. Changed-recipe replication is
+running; stronger-update, teaching-confound and recipe-memory controls are being
+queued. The update above distinguishes completed findings from pending work.
+The checkpoints below are historical.
+
+For the accepted unattended queue, expected artifacts and decisions to make
+from its results, see [the September 23 handoff](UNATTENDED-20260923.md).
 
 Current checkpoint, September 22, 17:13 UTC: the new-goal comparison is complete.
 Revised teaching solves **15/32**, versus **6/32 without adaptation** and **1/32

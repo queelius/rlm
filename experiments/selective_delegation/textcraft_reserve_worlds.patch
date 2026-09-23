@@ -1,0 +1,54 @@
+--- a/textcraft_multiworld.py
++++ b/textcraft_multiworld.py
+@@ -1,4 +1,4 @@
+-"""Frozen worlds44–46, two teacher packages and two fixed training seeds."""
++"""Frozen reserve worlds47–49, two teacher packages and two fixed training seeds."""
+ 
+ import argparse
+ import copy
+@@ -12,8 +12,8 @@
+ c = seed.c
+ TEMPLATE = c.ROOT / "textcraft-world43-privileged-001/PLAN.json"
+ TEMPLATE_SHA = "f2dbd40dc6ecc588e406d88e85b12d8aeef5d1d7c48aa82198c0003d94fdf00a"
+-PREPARED = c.ROOT / "textcraft-multiworld-inputs-001"
+-MANIFEST_SHA = "03082cf977c95d482b385943297dbe7128de24f19f49453d1f61e3297a45bd13"
++PREPARED = c.ROOT / "textcraft-reserve-inputs-001"
++MANIFEST_SHA = "03a35df4669e1ba5a6edd7b6a16c424a232f95a994a17e51b5726827581ade5d"
+ TRAINING_SEEDS = {"original": 2026092208, "2291": 2026092291}
+ 
+ 
+@@ -53,7 +53,7 @@
+ 
+ def build(world_seed, training_seed, teacher):
+     if world_seed not in panel.WORLD_SEEDS:
+-        raise ValueError("only frozen worlds44/45/46")
++        raise ValueError("only frozen reserve worlds47/48/49")
+     if (
+         c.inputs.sha(TEMPLATE) != TEMPLATE_SHA
+         or c.inputs.sha(PREPARED / "MANIFEST.json") != MANIFEST_SHA
+--- a/prepare_textcraft_multiworld.py
++++ b/prepare_textcraft_multiworld.py
+@@ -1,4 +1,4 @@
+-"""Outcome-blind world44/45/46 extension using the reviewed world43 constructor."""
++"""Outcome-blind reserve worlds47/48/49 using the reviewed world43 constructor."""
+ 
+ import argparse
+ import json
+@@ -7,7 +7,7 @@
+ 
+ import prepare_textcraft_world43 as prior
+ 
+-WORLD_SEEDS = (44, 45, 46)
++WORLD_SEEDS = (47, 48, 49)
+ 
+ 
+ def world(seed):
+@@ -31,7 +31,7 @@
+     prior.inputs.save(output / "SELECTION.json", dict(
+         world_seeds=WORLD_SEEDS, task_ids=[t["id"] for t in tasks],
+         original_tasks_sha256=prior.TASK_SHA, model_outcomes_used=False,
+-        rule="All original eight roots in each of44/45/46; no replacement/filter",
++        rule="All original eight roots in each of47/48/49; no replacement/filter",
+         frozen_before_native_replay=True))
+     tokenizer = AutoTokenizer.from_pretrained(prior.BASE, local_files_only=True, trust_remote_code=False)
+     manifests = []

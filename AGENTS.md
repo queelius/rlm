@@ -82,7 +82,17 @@ preparation is running; never mistake a delivered message for active work.
 
 ## Codex usage reserve for advisor slides
 
-**September 22 usage override (current):** The user explicitly lowered the shared
+**September 23 usage override (current):** The user explicitly authorizes using
+the remaining allowance for research and reports a banked reset is available.
+This supersedes the 5% reserve below. Remain token-efficient: reuse local scripts,
+avoid redundant narration/reviews, and prepare meaningful follow-on coverage for
+the remaining GPU allocation. A banked reset is not an observed account reset;
+check the live quota and save a handoff before exhaustion. Do not end unattended
+work with only a short queue while implying it covers the allocation. Record
+estimated useful execution coverage separately from upper runtime caps; have
+independent jobs available when a branch fails, never meaningless filler.
+
+**September 22 usage override (historical):** The user explicitly lowered the shared
 account reserve to **5%**, authorized continued research above that boundary, and
 asked to minimize token usage. This supersedes the earlier 10% reserve. Prefer
 bounded local scripts for long-running experiments and analysis; they may continue

@@ -1,0 +1,22 @@
+--- a/analyze_textcraft.py
++++ b/analyze_textcraft.py
+@@ -401,7 +401,18 @@
+     for path, digest in plan["source_sha256"].items():
+         require(collector.inputs.sha(Path(path)) == digest, "sealed source changed: " + path)
+         hashes[path] = digest
+-    require(str(Path(owner["source"]).resolve()) in plan["source_sha256"], "owner source unbound")
++    owner_source = Path(owner["source"]).resolve()
++    copied_collector = collector.ROOT / "source-textcraft-world43-seed2291-001/eval_textcraft.py"
++    require(
++        str(owner_source) in plan["source_sha256"]
++        or (owner_source == copied_collector
++            and collector.inputs.sha(owner_source)
++            == "1f712775e8f9ced8f500cda6b5c7eabfe0fd02ea9a31f85910e781f5363e580a"
++            and plan["template_sha256"]
++            == "f2dbd40dc6ecc588e406d88e85b12d8aeef5d1d7c48aa82198c0003d94fdf00a"),
++        "owner source not bound to exact source062 byte-identical copy",
++    )
++    hashes[str(owner_source)] = collector.inputs.sha(owner_source)
+     require(
+         collector.inputs.sha(Path(bridge.__file__)) in plan["source_sha256"].values(),
+         "analyzer bridge not identical to collector bridge",

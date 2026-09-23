@@ -51,7 +51,7 @@ def validate(args):
             or type(receipt.get("maximum_seconds")) is not int
             or receipt["maximum_seconds"] <= 0
             or type(receipt.get("wait_seconds", 14400)) is not int
-            or not 0 < receipt.get("wait_seconds", 14400) <= 43200
+            or not 0 < receipt.get("wait_seconds", 14400) <= 86400
             or any(
                 type(j.get("cap_seconds")) is not int
                 or j["cap_seconds"] <= 0
