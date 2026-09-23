@@ -1,7 +1,7 @@
 ---
 date: 2026-09-23
 status: accepted-running-and-queued
-updated_utc: "07:58"
+updated_utc: "09:08"
 allocation: 5879
 ---
 
@@ -13,6 +13,14 @@ an autonomous agent that invents new scientific questions after each result.
 
 Artifact root (`R` below):
 `/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921`.
+
+The larger RL update has completed training (23.7 minutes); its fixed-panel
+evaluation is still running. The [credit-assignment analysis](RL-CREDIT-ASSIGNMENT-20260923.md)
+records measured parameter and token-probability changes, and the
+[repeated-state audit](TEXTCRAFT-REPEATED-STATE-CREDIT-FEASIBILITY.md) assesses a
+possible follow-up without spending GPU time. A positive-only credit comparison
+is prepared but **not accepted or launched**: decide after the complete signed
+update evaluation. The accepted chain below is unchanged.
 
 | Order | Question | Accepted receipt under R |
 |---|---|---|

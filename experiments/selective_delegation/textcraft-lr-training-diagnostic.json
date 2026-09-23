@@ -1,0 +1,112 @@
+{
+  "schema": "textcraft-update-size-training-diagnostic-v1",
+  "arms": {
+    "textcraft-terminal-fp16-continuation-002": {
+      "update": {
+        "optimizer_called": true,
+        "nonzero_action_calls": 819,
+        "objective": -7.3747081684087075,
+        "gradient_norm": 39.26100158691406,
+        "adapter_l2_delta": 0.05899396011673238,
+        "train_eval_replay_max_abs": 0,
+        "train_eval_replay_mean_abs": 0,
+        "train_eval_replay_token_count": 26933
+      },
+      "credits": {
+        "positive": {
+          "episodes": 12,
+          "calls": 399,
+          "tokens": 12927,
+          "logp_change_sum": 5.19065265044874,
+          "mean_token_logp_change": 0.0004015357507889487
+        },
+        "negative": {
+          "episodes": 8,
+          "calls": 420,
+          "tokens": 14006,
+          "logp_change_sum": -22.814239077196106,
+          "mean_token_logp_change": -0.0016288904096241686
+        },
+        "zero": {
+          "episodes": 12,
+          "calls": 0,
+          "tokens": 0,
+          "logp_change_sum": 0,
+          "mean_token_logp_change": null
+        }
+      },
+      "objective_before": -7.374708066928299,
+      "objective_after": -8.009737861328334,
+      "group_success_counts": [
+        2,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        4
+      ]
+    },
+    "textcraft-lr1e4-replay-001": {
+      "update": {
+        "optimizer_called": true,
+        "nonzero_action_calls": 819,
+        "objective": -7.3747081684087075,
+        "gradient_norm": 39.31270217895508,
+        "adapter_l2_delta": 0.29497143577673496,
+        "train_eval_replay_max_abs": 0,
+        "train_eval_replay_mean_abs": 0,
+        "train_eval_replay_token_count": 26933
+      },
+      "credits": {
+        "positive": {
+          "episodes": 12,
+          "calls": 399,
+          "tokens": 12927,
+          "logp_change_sum": -20.192703397090746,
+          "mean_token_logp_change": -0.0015620564243127367
+        },
+        "negative": {
+          "episodes": 8,
+          "calls": 420,
+          "tokens": 14006,
+          "logp_change_sum": -182.75962748567767,
+          "mean_token_logp_change": -0.013048666820339687
+        },
+        "zero": {
+          "episodes": 12,
+          "calls": 0,
+          "tokens": 0,
+          "logp_change_sum": 0,
+          "mean_token_logp_change": null
+        }
+      },
+      "objective_before": -7.374708066928299,
+      "objective_after": -11.32667840261923,
+      "group_success_counts": [
+        2,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        4
+      ]
+    }
+  },
+  "source_sha256": {
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-terminal-fp16-continuation-002/batches/sample-0002/BATCH.json": "22e678ddca06940f76a9acbdcccbe47432dd9e4a2acb8328185923ab500133ab",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-terminal-fp16-continuation-002/batches/sample-0002/BEFORE_LOGPS.json": "37756f32cd30835723028149528c80b0d3f263ebc784f660dc102c7699cb9486",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-terminal-fp16-continuation-002/batches/sample-0002/AFTER_LOGPS.json": "bc180bfd323f95e2c684fe6796f1094af4f9a13d13d356f6b42cf373eb997d5c",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-terminal-fp16-continuation-002/boundaries/sample-0002/checkpoint-0002/STATE.json": "6f234ca7e9ba811ec30c3266f99631b5f998ff1e78d8923e729a3d3c6cb85171",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-lr1e4-replay-001/batches/sample-0002/BATCH.json": "c244b0b0e6c26f8f663202dad9ed7cb078ebc2ae28db75537078fbaa513f4a70",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-lr1e4-replay-001/batches/sample-0002/BEFORE_LOGPS.json": "37756f32cd30835723028149528c80b0d3f263ebc784f660dc102c7699cb9486",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-lr1e4-replay-001/batches/sample-0002/AFTER_LOGPS.json": "68e215aa8d8f6be576301ca4684c0de39bd61a93829005549e6cf5fb9c7bf2e9",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-lr1e4-replay-001/boundaries/sample-0002/checkpoint-0002/STATE.json": "cd39296b1e2a261ea0eabd8f1bd4d076655f439cf9feea5fc1d428e4f6068c0d"
+  },
+  "before_max_abs_between_runs": 0,
+  "adapter_change_ratio": 5.000027717974346,
+  "caveat": "Training-batch selected-action log probabilities, not KL or task success. No partial evaluation scores were inspected."
+}
