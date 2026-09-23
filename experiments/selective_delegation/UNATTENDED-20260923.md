@@ -1,7 +1,7 @@
 ---
 date: 2026-09-23
 status: accepted-running-and-queued
-updated_utc: "07:55"
+updated_utc: "07:58"
 allocation: 5879
 ---
 
@@ -16,8 +16,8 @@ Artifact root (`R` below):
 
 | Order | Question | Accepted receipt under R |
 |---|---|---|
-| Running | Does the teaching result repeat in changed recipes with the second training seed? | `TEXTCRAFT-WORLD43-SEED2291-QUEUE-002.json` |
-| 015 | Does a five-times-larger RL update help on the identical saved batch? | `INDEPENDENT-TRAINING-QUEUE-015-AMENDED.json` |
+| Completed | Does the teaching result repeat in changed recipes with the second training seed? Yes: 1/16 versus 9/16; see the dated analysis. | `TEXTCRAFT-WORLD43-SEED2291-QUEUE-002.json` |
+| 015, running | Does a five-times-larger RL update help on the identical saved batch? | `INDEPENDENT-TRAINING-QUEUE-015-AMENDED.json` |
 | 016 | Does a public recipe notebook help, separately from shortening history? | `INDEPENDENT-TRAINING-QUEUE-016.json` |
 | 017 | Does the teaching result survive a quantity control and three more recipe worlds? Does the notebook effect repeat across actors? | `INDEPENDENT-TRAINING-QUEUE-017-AMENDED.json` |
 | 018 | Does the teaching comparison remain consistent in three further prospectively fixed recipe worlds? | `INDEPENDENT-TRAINING-QUEUE-018.json` |

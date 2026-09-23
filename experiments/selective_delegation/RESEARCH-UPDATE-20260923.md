@@ -7,6 +7,27 @@ questions: [learnable-demonstrations, rl-update-size, public-recipe-memory, reci
 
 # The teaching result repeats; RL has not yet earned a strong claim
 
+## Addendum, 07:58 UTC: the changed-recipe replication also repeats
+
+The second training seed now completes the changed-world comparison:
+**original teaching 1/16; public-discovery teaching 9/16**. There are eight paired
+wins, no losses and eight ties. The difference is +50 percentage points, with an
+eight-goal cluster-bootstrap interval of [25, 75] points. All 32 outcomes are
+recorded and natively checked. The public model reaches its context limit on one
+attempt; that is a recorded task failure, not a missing outcome.
+
+The first training seed had given 3/16 versus 10/16 in this same world. Thus the
+direction repeats across training randomness in both the original and changed
+recipe worlds. The worlds and goals are still exposed, and the teaching-quantity
+confound remains. The better second-seed model uses **more**, not fewer, resources:
+433 versus 372 calls, and 895 versus 654 seconds elapsed. We should not claim a
+consistent efficiency improvement alongside the success improvement.
+
+Evidence: `analysis-textcraft-world43-seed2291-001.json`, SHA256
+`33ee458e07d43a67675f462351afbed3e9804d963635bb83c0d9f8eac52ed590`.
+The GPU handed off to the accepted learning-rate experiment after this native
+analysis completed. The remainder below preserves its original 07:40 cutoff.
+
 The strongest lead remains **how we teach the model to find information before
 acting**. Repeating training with different randomness preserves the direction
 of the result. An additional RL update completed, but its improvement is only

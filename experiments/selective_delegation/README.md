@@ -4,10 +4,11 @@ For a short plain-language account of the latest findings and decisions, start
 with [the September23 research update](RESEARCH-UPDATE-20260923.md).
 
 September 23 update: the second training seed repeats the teaching advantage
-(3/32 versus 10/32). A second RL update gives 16/32 versus 15/32 at the prior
-checkpoint—too small to establish an RL benefit. Changed-recipe replication is
-running; stronger-update, teaching-confound and recipe-memory controls are being
-queued. The update above distinguishes completed findings from pending work.
+(3/32 versus 10/32), including changed recipes (1/16 versus 9/16). A second RL
+update gives 16/32 versus 15/32 at the prior checkpoint—too small to establish an
+RL benefit. The stronger-update test is running; teaching-confound, recipe-memory
+and further-world controls are queued. The update above distinguishes completed
+findings from pending work.
 The checkpoints below are historical.
 
 For the accepted unattended queue, expected artifacts and decisions to make
