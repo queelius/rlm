@@ -1,0 +1,94 @@
+{
+  "schema": "textcraft-public-recipe-translation-opportunity-v1",
+  "source_native_report": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-lr-replay-001.json",
+  "source_native_report_sha256": "3cfc82f1f18c774c05c1420740a7ce4182e1fa2d5a7d9a732416a79d16b60f10",
+  "arms": {
+    "textcraft-fresh-fp16-cp2-bf16-002": {
+      "counts": {
+        "rejected_craft_actions": 578,
+        "inventory_shortage_even_with_correct_arguments": 310,
+        "one_step_argument_translation_opportunity": 252,
+        "incompatible_output_count": 16
+      },
+      "one_example": {
+        "one_step_argument_translation_opportunity": {
+          "call_id": "t08-r0-flat-original-c008",
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "raw_a4": 4,
+              "raw_a0": 2
+            },
+            "target_item": "a0_i1",
+            "output_count": 8
+          },
+          "public_recipe": {
+            "ingredients": {
+              "raw_a4": 2
+            },
+            "result_count": 4
+          },
+          "current_inventory": {
+            "raw_a6": 12,
+            "raw_a1": 9,
+            "raw_a4": 39,
+            "raw_a3": 16,
+            "raw_a0": 26,
+            "raw_a9": 5,
+            "c8_ore": 2
+          },
+          "corrected_ingredients": {
+            "raw_a4": 4
+          },
+          "original_feedback": "Error: All 1 recipe(s) failed for a0_i1. Errors:\nRecipe 1: Extra ingredients not required: raw_a0"
+        }
+      }
+    },
+    "textcraft-fresh-lr1e4-replay-001": {
+      "counts": {
+        "rejected_craft_actions": 689,
+        "inventory_shortage_even_with_correct_arguments": 546,
+        "one_step_argument_translation_opportunity": 64,
+        "incompatible_output_count": 5,
+        "target_not_observed": 68,
+        "observed_no_recipe": 6
+      },
+      "one_example": {
+        "one_step_argument_translation_opportunity": {
+          "call_id": "t08-r0-flat-original-c006",
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "raw_a4": 2,
+              "raw_a3": 1
+            },
+            "target_item": "a2_i1_12",
+            "output_count": 3
+          },
+          "public_recipe": {
+            "ingredients": {
+              "raw_a3": 1
+            },
+            "result_count": 3
+          },
+          "current_inventory": {
+            "raw_a6": 12,
+            "raw_a1": 9,
+            "raw_a4": 39,
+            "raw_a3": 16,
+            "raw_a0": 26,
+            "raw_a9": 5,
+            "c8_ore": 2
+          },
+          "corrected_ingredients": {
+            "raw_a3": 1
+          },
+          "original_feedback": "Error: All 1 recipe(s) failed for a2_i1_12. Errors:\nRecipe 1: Extra ingredients not required: raw_a4"
+        }
+      }
+    }
+  },
+  "caveat": "One-step saved-state feasibility, not counterfactual task success. Only previously observed single concrete recipes; chosen target and output_count unchanged. Later saved actions cannot be replayed as though the state had not changed.",
+  "inspected_file_count": 1236,
+  "inspected_path_hash_mapping_sha256": "54b3a913ba7c85ac488e54256183a19a32a8511080c50ee929629836e2d7cf32"
+}

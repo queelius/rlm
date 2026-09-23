@@ -1,0 +1,280 @@
+{
+  "schema": "textcraft-lr-changed-outcomes-posthoc-v1",
+  "source_report": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-lr-replay-001.json",
+  "source_sha256": "3cfc82f1f18c774c05c1420740a7ce4182e1fa2d5a7d9a732416a79d16b60f10",
+  "selection": "All five pairs with changed success in completed larger-LR versus smaller-LR comparison. Post-hoc descriptive analysis, not independent evidence or causal mediation.",
+  "pairs": [
+    {
+      "pair": {
+        "task_id": "textcraft_synth.val.462",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 0,
+        "delta": -1
+      },
+      "arms": [
+        {
+          "arm": "textcraft-fresh-fp16-cp2-bf16-002",
+          "episode_id": "t05-r1-flat-original",
+          "calls": 30,
+          "info_calls": 7,
+          "requested_item_count": 7,
+          "distinct_requested_items": 7,
+          "rejected_actions": 10,
+          "status": "finished",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for o6_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: o1_i2_11: need 2, have 0",
+              2
+            ],
+            [
+              "Error: All 1 recipe(s) failed for o1_i2_11. Errors:\nRecipe 1: Wrong amount of o0_i1_10. Need 4, provided 6",
+              1
+            ]
+          ]
+        },
+        {
+          "arm": "textcraft-fresh-lr1e4-replay-001",
+          "episode_id": "t05-r1-flat-original",
+          "calls": 60,
+          "info_calls": 7,
+          "requested_item_count": 7,
+          "distinct_requested_items": 7,
+          "rejected_actions": 38,
+          "status": "finished",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for o2_i2. Errors:\nRecipe 1: Insufficient ingredients in inventory: o0_i1_10: need 2, have 1",
+              21
+            ],
+            [
+              "Error: All 1 recipe(s) failed for o0_i1_10. Errors:\nRecipe 1: Extra ingredients not required: raw_o3",
+              8
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pair": {
+        "task_id": "textcraft_synth.val.188",
+        "repeat": 0,
+        "known": true,
+        "left": 1,
+        "right": 0,
+        "delta": -1
+      },
+      "arms": [
+        {
+          "arm": "textcraft-fresh-fp16-cp2-bf16-002",
+          "episode_id": "t09-r0-flat-original",
+          "calls": 22,
+          "info_calls": 9,
+          "requested_item_count": 11,
+          "distinct_requested_items": 10,
+          "rejected_actions": 2,
+          "status": "finished",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for c2_i4_12. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i3_23: need 1, have 0",
+              1
+            ],
+            [
+              "Error: All 1 recipe(s) failed for c2_i2_12. Errors:\nRecipe 1: Insufficient ingredients in inventory: c4_i1_14: need 2, have 0",
+              1
+            ]
+          ]
+        },
+        {
+          "arm": "textcraft-fresh-lr1e4-replay-001",
+          "episode_id": "t09-r0-flat-original",
+          "calls": 61,
+          "info_calls": 14,
+          "requested_item_count": 14,
+          "distinct_requested_items": 11,
+          "rejected_actions": 37,
+          "status": "finished",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for c6_i2_16. Errors:\nRecipe 1: Insufficient ingredients in inventory: c5_ore: need 2, have 1",
+              17
+            ],
+            [
+              "Error: All 1 recipe(s) failed for c5_i3_15. Errors:\nRecipe 1: Missing required ingredient c6_i2_16",
+              9
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pair": {
+        "task_id": "textcraft_synth.val.188",
+        "repeat": 1,
+        "known": true,
+        "left": 1,
+        "right": 0,
+        "delta": -1
+      },
+      "arms": [
+        {
+          "arm": "textcraft-fresh-fp16-cp2-bf16-002",
+          "episode_id": "t09-r1-flat-original",
+          "calls": 26,
+          "info_calls": 11,
+          "requested_item_count": 11,
+          "distinct_requested_items": 11,
+          "rejected_actions": 4,
+          "status": "finished",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for c2_i4_12. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i3_23: need 1, have 0",
+              1
+            ],
+            [
+              "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i1_13: need 2, have 0, c2_i2_12: need 1, have 0",
+              1
+            ]
+          ]
+        },
+        {
+          "arm": "textcraft-fresh-lr1e4-replay-001",
+          "episode_id": "t09-r1-flat-original",
+          "calls": 78,
+          "info_calls": 8,
+          "requested_item_count": 8,
+          "distinct_requested_items": 7,
+          "rejected_actions": 63,
+          "status": "finished",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Missing required ingredient c0_i1",
+              53
+            ],
+            [
+              "Error: No recipe found for c1_ore",
+              6
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pair": {
+        "task_id": "textcraft_synth.val.175",
+        "repeat": 0,
+        "known": true,
+        "left": 0,
+        "right": 1,
+        "delta": 1
+      },
+      "arms": [
+        {
+          "arm": "textcraft-fresh-fp16-cp2-bf16-002",
+          "episode_id": "t10-r0-flat-original",
+          "calls": 84,
+          "info_calls": 15,
+          "requested_item_count": 15,
+          "distinct_requested_items": 10,
+          "rejected_actions": 68,
+          "status": "context_cap",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for o1_i1_21. Errors:\nRecipe 1: Extra ingredients not required: raw_o3",
+              31
+            ],
+            [
+              "Error: All 1 recipe(s) failed for o9_i1_19. Errors:\nRecipe 1: Wrong amount of raw_o5. Need 1, provided 2",
+              10
+            ]
+          ]
+        },
+        {
+          "arm": "textcraft-fresh-lr1e4-replay-001",
+          "episode_id": "t10-r0-flat-original",
+          "calls": 29,
+          "info_calls": 10,
+          "requested_item_count": 10,
+          "distinct_requested_items": 10,
+          "rejected_actions": 8,
+          "status": "finished",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for o6_i1. Errors:\nRecipe 1: Wrong amount of raw_o9. Need 2, provided 4",
+              1
+            ],
+            [
+              "Error: All 1 recipe(s) failed for o6_i1. Errors:\nRecipe 1: Target count 2 is not divisible by recipe result count 4",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "pair": {
+        "task_id": "textcraft_synth.val.382",
+        "repeat": 1,
+        "known": true,
+        "left": 0,
+        "right": 1,
+        "delta": 1
+      },
+      "arms": [
+        {
+          "arm": "textcraft-fresh-fp16-cp2-bf16-002",
+          "episode_id": "t13-r1-flat-original",
+          "calls": 75,
+          "info_calls": 9,
+          "requested_item_count": 9,
+          "distinct_requested_items": 9,
+          "rejected_actions": 59,
+          "status": "finished",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for m0_i1. Errors:\nRecipe 1: Extra ingredients not required: m3_ore",
+              35
+            ],
+            [
+              "Error: All 1 recipe(s) failed for m3_i1_13. Errors:\nRecipe 1: Extra ingredients not required: m3_ore",
+              11
+            ]
+          ]
+        },
+        {
+          "arm": "textcraft-fresh-lr1e4-replay-001",
+          "episode_id": "t13-r1-flat-original",
+          "calls": 67,
+          "info_calls": 10,
+          "requested_item_count": 10,
+          "distinct_requested_items": 10,
+          "rejected_actions": 45,
+          "status": "finished",
+          "top_two_errors": [
+            [
+              "Error: All 1 recipe(s) failed for m4_i3_14. Errors:\nRecipe 1: Insufficient ingredients in inventory: m6_i1: need 2, have 0",
+              40
+            ],
+            [
+              "Error: All 1 recipe(s) failed for m0_i2_20. Errors:\nRecipe 1: Insufficient ingredients in inventory: m0_i1: need 1, have 0",
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "node_sha256": {
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-fp16-cp2-bf16-002/nodes/t05-r1-flat-original-n0.json": "e49d3dde40bc1ea05bc8382e28f44095750be24afde0e4d57601e3c3fecd47fe",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-lr1e4-replay-001/nodes/t05-r1-flat-original-n0.json": "afe3b9308339f2aaf6861642d32bc05a675eecf97b14845a13e7a52e5b9ee800",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-fp16-cp2-bf16-002/nodes/t09-r0-flat-original-n0.json": "710b54703488f3d0992a4c6539ad14702f8c66bc2cb614eb29f3ecc884609517",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-lr1e4-replay-001/nodes/t09-r0-flat-original-n0.json": "2d32b9e6445260ceb696b9910e0ca2374a7b6e4e7144dc4786e4ed50cbef6f4c",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-fp16-cp2-bf16-002/nodes/t09-r1-flat-original-n0.json": "842a5730307999495782a069609065bf2ee484ad178cedf710e6e380350c8d41",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-lr1e4-replay-001/nodes/t09-r1-flat-original-n0.json": "8b917904283f1d54328de37be0f69c4af9afaa2a455e1a885562035175b7497e",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-fp16-cp2-bf16-002/nodes/t10-r0-flat-original-n0.json": "d23e380d0d47f6bc8e87f7019aaf3658f8bab4c21f2a72cdef9943da9d35bf72",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-lr1e4-replay-001/nodes/t10-r0-flat-original-n0.json": "e85cde62baef22dcc522f7aca35922f168950e286a669e47fcc56f1388903e36",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-fp16-cp2-bf16-002/nodes/t13-r1-flat-original-n0.json": "20ed53c4bc6dbc543b5434e43ea8e113e865bd53ed31884e0c381d4accbe11b4",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-lr1e4-replay-001/nodes/t13-r1-flat-original-n0.json": "69497827ac6fff4ac8836d615cfc7cef9010ec1a05ab145bdb3574d396c02b13"
+  }
+}

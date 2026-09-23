@@ -69,3 +69,65 @@ levels of evidence. Keep them separate.
 These are adaptive exploratory rules, not preregistered hypotheses or promises
 that every branch will run. Local bounded jobs continue without Codex tokens;
 scientific reprioritization requires reviewing their completed reports.
+
+## Later evidence, 09:30 UTC: distinguish planning from tool-argument copying
+
+The completed RL evaluation now motivates another bounded harness question.
+All 578 rejected crafting actions under the smaller update already had their
+target recipe in prior public history;615 of 689 under the larger update did too.
+See the [credit analysis](RL-CREDIT-ASSIGNMENT-20260923.md). This addition is
+post-result planning; the earlier sections above were written prospectively.
+
+Candidate: compare model-written ingredient arguments with a public-recipe
+executor that translates the model's chosen observed recipe and quantity into
+exact tool arguments. First estimate how many recorded errors are ingredient
+translation errors versus genuine inventory shortages or incompatible quantities.
+If most would survive that translation, do not spend a full GPU run on it yet.
+If many are addressable, prepare a matched pilot after the current diagnostics.
+No hidden-recipe access, automatic goal planning, or silent retry is permitted.
+This is a mechanism control and possible RLM-interface improvement, not a novelty
+claim for the general idea of structured tool calls.
+
+At 09:35, native one-step checks support 252 potential argument repairs under the
+smaller update but only 64 under the larger update. Inventory shortages survive
+the repair at 310 and 546 positions respectively. Repeated errors are not independent
+cases, and repaired steps are not repaired tasks. Therefore target an eventual
+pilot at the smaller-update actor first, with the same public recipe information
+available in both arms; do not assume an equally useful effect on the larger one.
+Keep this as a CPU-prepared research question until the current memory/credit
+comparisons establish the most informative use of remaining GPU time.
+
+If a public-recipe interface helps, the next RL question is whether learning gets
+easier when the model is trained to choose an information request, recipe and
+quantity, rather than reproduce all low-level arguments. This directly probes
+whether we are training the wrong part of the behavior. It needs matched starting
+models, demonstrations and compute accounting; a simpler interface alone is not
+a novel RL algorithm. Use an explicit tool contract, not silent correction of
+the existing action stream.
+
+For decomposition, inventory shortages motivate a separate future question:
+should a parent reserve shared resources before delegating subgoals? Two locally
+reasonable helper plans may compete for the same ingredients. Test that only
+after controlling basic recipe execution, and compare under the same total budget.
+This is an unimplemented hypothesis, not a finding from the present flat actors.
+
+### Prior-art check, September 23
+
+[TAPE](https://arxiv.org/html/2602.19633v1) already separates planning mistakes
+from deviations during execution. It constructs a graph from proposed plans,
+uses a solver to choose a path, constrains action generation, and replans when
+observations disagree. Our inference: the general planning/execution separation
+is not a novelty claim. A narrower candidate is how an interface restricted to
+discovered facts changes RL learning and the benefit of decomposition. Our error
+categories also do not identify TAPE's internal planning-versus-sampling causes.
+
+[RunAgent](https://arxiv.org/abs/2605.00798) interprets natural-language plans
+with control constructs, step constraints, and choices among reasoning, tools
+and code. Its abstract also describes selective history retention. This reinforces
+the need for matched controls around the notebook and execution interface;
+these general architectural ingredients already exist. Abstract-level screening,
+not a replication or a detailed comparison of implementations.
+
+No paper performance numbers are imported into our results. A short search is
+not an exhaustive novelty assessment. No new repository was executed or dataset
+added during this check; the GPU experiment continued independently.

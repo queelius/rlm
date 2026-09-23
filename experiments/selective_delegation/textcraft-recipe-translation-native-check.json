@@ -1,0 +1,112 @@
+{
+  "schema": "textcraft-public-recipe-translation-opportunity-v1",
+  "source_native_report": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-lr-replay-001.json",
+  "source_native_report_sha256": "3cfc82f1f18c774c05c1420740a7ce4182e1fa2d5a7d9a732416a79d16b60f10",
+  "arms": {
+    "textcraft-fresh-fp16-cp2-bf16-002": {
+      "counts": {
+        "rejected_craft_actions": 578,
+        "inventory_shortage_even_with_correct_arguments": 310,
+        "one_step_argument_translation_opportunity": 252,
+        "incompatible_output_count": 16
+      },
+      "one_example": {
+        "one_step_argument_translation_opportunity": {
+          "call_id": "t08-r0-flat-original-c008",
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "raw_a4": 4,
+              "raw_a0": 2
+            },
+            "target_item": "a0_i1",
+            "output_count": 8
+          },
+          "public_recipe": {
+            "ingredients": {
+              "raw_a4": 2
+            },
+            "result_count": 4
+          },
+          "current_inventory": {
+            "raw_a6": 12,
+            "raw_a1": 9,
+            "raw_a4": 39,
+            "raw_a3": 16,
+            "raw_a0": 26,
+            "raw_a9": 5,
+            "c8_ore": 2
+          },
+          "corrected_ingredients": {
+            "raw_a4": 4
+          },
+          "original_feedback": "Error: All 1 recipe(s) failed for a0_i1. Errors:\nRecipe 1: Extra ingredients not required: raw_a0"
+        }
+      }
+    },
+    "textcraft-fresh-lr1e4-replay-001": {
+      "counts": {
+        "rejected_craft_actions": 689,
+        "inventory_shortage_even_with_correct_arguments": 546,
+        "one_step_argument_translation_opportunity": 64,
+        "incompatible_output_count": 5,
+        "target_not_observed": 68,
+        "observed_no_recipe": 6
+      },
+      "one_example": {
+        "one_step_argument_translation_opportunity": {
+          "call_id": "t08-r0-flat-original-c006",
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "raw_a4": 2,
+              "raw_a3": 1
+            },
+            "target_item": "a2_i1_12",
+            "output_count": 3
+          },
+          "public_recipe": {
+            "ingredients": {
+              "raw_a3": 1
+            },
+            "result_count": 3
+          },
+          "current_inventory": {
+            "raw_a6": 12,
+            "raw_a1": 9,
+            "raw_a4": 39,
+            "raw_a3": 16,
+            "raw_a0": 26,
+            "raw_a9": 5,
+            "c8_ore": 2
+          },
+          "corrected_ingredients": {
+            "raw_a3": 1
+          },
+          "original_feedback": "Error: All 1 recipe(s) failed for a2_i1_12. Errors:\nRecipe 1: Extra ingredients not required: raw_a4"
+        }
+      }
+    }
+  },
+  "caveat": "One-step saved-state feasibility, not counterfactual task success. Only previously observed single concrete recipes; chosen target and output_count unchanged. Later saved actions cannot be replayed as though the state had not changed.",
+  "inspected_file_count": 1236,
+  "inspected_path_hash_mapping_sha256": "54b3a913ba7c85ac488e54256183a19a32a8511080c50ee929629836e2d7cf32",
+  "native_one_step_checks": 1172,
+  "trusted_native_source": {
+    "commit": "d9c5857d3a0a056ebc9b047241a2a0c9515aafbe",
+    "source_sha256": {
+      "/project/alex_phd/research-cache/repos/platoon-rao-d9c5857d3a0a056ebc9b047241a2a0c9515aafbe/plugins/textcraft/platoon/textcraft/env.py": "c58ffad58e535d91def7291db148fd8f6433a8b3a915642f634a5b75d6d587d0",
+      "/project/alex_phd/research-cache/repos/platoon-rao-d9c5857d3a0a056ebc9b047241a2a0c9515aafbe/plugins/textcraft/platoon/textcraft/synth_recipe_generator.py": "1c33e0a6f61759eb3a8eb33b35f0b88361155525f5f575885b53acbd011efb0e",
+      "/project/alex_phd/research-cache/repos/platoon-rao-d9c5857d3a0a056ebc9b047241a2a0c9515aafbe/LICENSE": "e7107f1e1b3a0c65cbbae6c496d9e71b570025bdddebb3d402a6080dd916bcba"
+    },
+    "license": "MIT",
+    "method_ast_sha256": {
+      "craft": "8447a1186523acd1e932df5e00e666d6a502e474b264963bc1cc5347e52f40dd",
+      "get_info": "e02390d80abecfa2b3c6af79dcabc123b933102628f6d5006be69610776c6a24",
+      "view_inventory": "4ec2b713f9f03f5611770d796235fb043e99a3f01c565fbddfd2a82537773e47",
+      "evaluate": "aa081be90f16614e3f6b94ca61d3f813bbc1e538a51fec5da40242338b10a6e4"
+    },
+    "model_code_execution": false,
+    "lifecycle": "exact selected official method bodies, not full Platoon/IPython lifecycle"
+  }
+}

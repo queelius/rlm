@@ -2,7 +2,7 @@
 date: 2026-09-23
 status: exploratory-follow-up
 question: Does terminal credit penalize useful actions inside failed attempts?
-evidence_cutoff_utc: "09:23"
+evidence_cutoff_utc: "09:35"
 ---
 
 # A larger update works numerically. Does it teach the right behavior?
@@ -85,6 +85,97 @@ Its external copy is `R/analysis-textcraft-lr-training-diagnostic-001.json`, whe
 R is the artifact root in [the unattended handoff](UNATTENDED-20260923.md).
 The post-update objective is reconstructed from the saved action-token
 log probabilities, original leave-one-out advantages and denominator 32.
+
+### What happened to information requests?
+
+A descriptive breakdown of the same saved tokens finds that information requests
+became less likely even inside positively credited attempts: mean token
+log-probability change was −0.00326 for the smaller update and −0.02115 for the
+larger one, across 89 requests. In negatively credited attempts, the corresponding
+changes were −0.00687 and −0.04281 across 110 requests. By contrast, crafting tokens
+inside positively credited attempts increased on average under both updates.
+
+This is consistent with—but does not establish—an information-gathering problem.
+The larger-update evaluation made 248 information requests and 957 crafting
+requests, compared with 289 and 841 for the smaller update. Those counts depend on
+the trajectories reached and their lengths; they are not a causal explanation.
+Nor does an information request automatically acquire something useful.
+
+The [action-probability breakdown](textcraft-credit-action-probabilities.json)
+pins the saved histories and probabilities. Notably, the larger update slightly
+*decreased* the average likelihood of rejected actions inside successful attempts,
+rather than simply increasing every bad action. Shared-parameter effects and
+different action types matter. These are token-weighted training-batch summaries,
+not KL, an independent test set, or a learned value-of-information measurement.
+
+The [five changed-outcome trace pairs](textcraft-lr-changed-outcomes.json) further
+qualify the explanation. One regression increases information calls from 9 to 14
+and queried items from 10 to 11, but rejected actions rise from 2 to 37. Another
+keeps seven information calls and seven distinct queried items, while rejected
+actions rise from 10 to 38. The remaining regression reduces information calls
+from 11 to 8 and distinct items from 11 to 7. Both improved attempts make fewer
+rejected actions, though one still makes 45. These are all outcome-changing pairs,
+selected after evaluation—not independent confirmation.
+
+Thus "make more information requests" is not a sufficient explanation or remedy.
+Acquiring facts, retaining them, supplying the right recipe and managing quantities
+are distinct capabilities. This strengthens the reason to keep the independent
+notebook/history comparison ahead of further speculative RL changes.
+
+### Most rejected actions had access to the recipe already
+
+The [public-history audit](textcraft-recipe-before-errors.json) finds that all 578
+rejected crafting actions in the smaller-update evaluation follow a public reply
+containing that target's recipe. The larger update has 615 such errors out of 689;
+68 have no earlier target reply and six follow a reply with no recipe. All 177
+positive-credit and 240 negative-credit training errors also follow an observed
+recipe. "Observed" means present in the prior full public history—not that the
+model attended to it, understood the quantities, or had sufficient ingredients.
+
+This narrows the question: acquisition alone cannot explain most rejected actions.
+A future controlled harness change could let the model select a previously
+discovered recipe and quantity, while code constructs the exact ingredient
+arguments. Such a comparison would separate choosing a plan from translating it
+into tool calls. It must use only previously returned public facts, preserve
+inventory and budgets, and report any action-space change. Multiple recipes,
+incompatible output counts and insufficient inventory must remain explicit; do
+not silently choose a better plan or read hidden recipes. This remains a proposal,
+not an accepted GPU experiment or a demonstrated novel method.
+
+The [native one-step check](textcraft-recipe-translation-native-check.json) narrows
+that proposal further. Keep the chosen target and requested output count fixed,
+use only its previously observed single concrete recipe, and replace only the
+ingredient arguments. Check the original and corrected action from separate copies
+of the recorded inventory using the pinned native environment.
+
+| Reason an observed action failed | Smaller update | Larger update |
+|---|---:|---:|
+| Correct arguments would execute from that saved inventory. | 252 | 64 |
+| Correct arguments would still lack ingredients. | 310 | 546 |
+| Requested output count is incompatible with the recipe yield. | 16 | 5 |
+| No target recipe had previously been returned. | 0 | 74 |
+| Total rejected crafting actions | 578 | 689 |
+
+The last category includes six larger-update actions for which a public reply
+explicitly had no recipe, and 68 with no earlier target reply. The 1172 eligible
+single-step checks exactly reproduce original rejection and the predicted
+corrected-action outcome. The remaining 95 actions are excluded from that repair
+check because the quantity or public recipe prerequisite is absent.
+
+These are correlated trajectory positions, including repeated errors—not 316
+independent examples, repaired episodes, or extra successes. After changing one
+action, future states and model decisions would change. Only a new rollout can
+measure task benefit. The larger update appears to encounter a different mixture
+of failures: argument translation alone has much less room to help its saved
+trajectories. Do not infer a causal shift in internal competence from these counts.
+
+For a simplified illustration, suppose a known recipe turns two logs into four
+boards. The agent wants eight boards and has enough logs, but sends four logs
+**and two unnecessary stones** to the tool. Translating the known recipe into
+arguments fixes that action without changing its goal. By contrast, if the agent
+has only one log, correct arguments still fail: it needs a different sequence of
+actions first. These renamed examples illustrate the distinction; they are not
+literal benchmark items or additional experiments.
 
 ## The next small comparison
 
