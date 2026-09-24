@@ -1,6 +1,6 @@
 ---
 date: 2026-09-24
-evidence_cutoff_utc: "16:15"
+evidence_cutoff_utc: "16:25"
 status: exploratory
 question: Does the teaching advantage survive both quantity correction and changed recipes?
 ---
@@ -21,10 +21,12 @@ bootstrap interval from−12.5 to+43.75 points. This small panel does not establ
 a clear advantage. The correction closes half of the observed gap in this
 setting; it is not a general decomposition of the teaching effect.
 
-The second training seed's uncorrected comparison is1/16 versus8/16. Its corrected
-checkpoint already exists; queue023 now evaluates that checkpoint on the same
-world and reuses the completed public comparator. No new training or duplicate
-public rollout is needed. Do not examine interim successes to select the endpoint.
+The second training seed's uncorrected comparison is1/16 versus8/16. Queue023
+has now completed the corrected control: again1/16 versus8/16, seven paired wins,
+zero losses, all16 pairs known. Its difference is43.75 points, with task-group
+bootstrap interval12.5 to75 points. No new training or duplicate public rollout
+was needed. The first repeat's narrow uncertain effect is not the whole result;
+report both repeats and their shared-task dependence.
 
 ## What might explain the difference?
 
@@ -41,9 +43,10 @@ the comparison as looking up recipes versus not looking them up.
 
 ## Decision
 
-1. Finish the second-seed corrected control.
-2. Inspect all four discordant paired attempts, with exact native trace pointers.
-3. Pilot automatic ingredient-argument binding from recipes already observed.
+1. Second-seed corrected control: complete, public advantage7/16.
+2. All four first-seed discordant pairs: inspected with native trace pointers in
+   [the trace report](WORLD47-CONTRASTS-20260924.md).
+3. Queue024 now pilots automatic ingredient-argument binding from recipes already observed.
    Keep model-selected targets and quantities unchanged. This tests execution
    assistance, not learned planning, a new action schema or recursive decomposition.
 
@@ -57,6 +60,7 @@ Root: `/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-2026
 - `analysis-textcraft-world47-quantity-corrected-seed2208-004.json`
 - `analysis-textcraft-world47-seed2026092208-001.json`
 - `analysis-textcraft-world47-seed2026092291-001.json`
+- `analysis-textcraft-world47-quantity-corrected-seed2291-001.json`
 
 Corrected collection had a1800-second cap versus2700 for public; both finished
 all episodes before the total cap. Per-episode limits are matched. These are

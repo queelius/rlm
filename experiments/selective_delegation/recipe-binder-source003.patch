@@ -1,0 +1,372 @@
+--- a/eval_textcraft.py
++++ b/eval_textcraft.py
+@@ -17,6 +17,7 @@
+ import prepare_textcraft as inputs
+ import probe
+ import textcraft_bridge as bridge
++import textcraft_recipe_binder as recipe_binder
+ 
+ ROOT = Path("/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921")
+ BASE = Path(
+@@ -234,7 +235,7 @@
+         nonlocal next_node
+         node_id = f"n{next_node}"
+         next_node += 1
+-        history, local_calls = [], []
++        history, local_calls, execution_assists = [], [], []
+         status, error = "unfinished", None
+         begin = time.time()
+         try:
+@@ -294,6 +295,18 @@
+                     )
+                     continue
+                 try:
++                    requested_action = action
++                    action, binding_reason = recipe_binder.bind_observed_recipe_arguments(
++                        requested_action, history
++                    )
++                    execution_assists.append(
++                        {
++                            "call_id": identity,
++                            "requested_action": requested_action,
++                            "executed_action": action,
++                            "binding_reason": binding_reason,
++                        }
++                    )
+                     response = frame.apply(action)
+                 except ValueError as exc:
+                     errors["rejected_action"] += 1
+@@ -337,6 +350,7 @@
+                 "native_details": native_details,
+                 "call_ids": local_calls,
+                 "public_history": history,
++                "execution_assists": execution_assists,
+                 "started": begin,
+                 "ended": time.time(),
+             }
+--- a/analyze_textcraft.py
++++ b/analyze_textcraft.py
+@@ -9,6 +9,7 @@
+ from statistics import mean
+ 
+ import eval_textcraft as collector
++import textcraft_recipe_binder as recipe_binder
+ 
+ bridge = collector.bridge
+ SEED = 2026092206
+@@ -17,6 +18,19 @@
+ def require(ok, message):
+     if not ok:
+         raise ValueError(message)
++
++
++def verify_execution_assist(stored, call_id, requested_action, executed_action, binding_reason):
++    require(
++        stored
++        == {
++            "call_id": call_id,
++            "requested_action": requested_action,
++            "executed_action": executed_action,
++            "binding_reason": binding_reason,
++        },
++        "requested/executed action binding mismatch",
++    )
+ 
+ 
+ def read(path):
+@@ -200,7 +214,7 @@
+             and saved["initial_inventory"] == frame.initial_inventory,
+             "node parent/depth/initial inventory mismatch",
+         )
+-        history = []
++        history, assists = [], iter(saved["execution_assists"])
+         for cid in saved["call_ids"]:
+             require(not frame.finished, "model call after node finish")
+             index, cap = budget.calls, budget.reserve()
+@@ -236,7 +250,7 @@
+             ):
+                 quantity_met_calls += 1
+             try:
+-                action = bridge.parse_action(call["text"])
++                requested_action = bridge.parse_action(call["text"])
+             except ValueError as exc:
+                 errors["invalid_schema"] += 1
+                 history.append(
+@@ -246,6 +260,10 @@
+                     )
+                 )
+                 continue
++            action, binding_reason = recipe_binder.bind_observed_recipe_arguments(
++                requested_action, history
++            )
++            verify_execution_assist(next(assists), cid, requested_action, action, binding_reason)
+             actions[action["action"]] += 1
+             try:
+                 response = frame.apply(action)
+@@ -267,6 +285,7 @@
+                 if isinstance(response, str) and response.startswith("Error:"):
+                     errors["native_action_error"] += 1
+             history.append(dict(action=action, feedback=feedback))
++        require(next(assists, None) is None, "extra stored execution assist")
+         score, details = frame.score()
+         require(
+             saved["final_inventory"] == frame.inventory
+--- a/textcraft_multiworld.py
++++ b/textcraft_multiworld.py
+@@ -71,14 +71,16 @@
+         raise ValueError("native-qualified world inventory changed")
+     bound = binding(training_seed, teacher)
+     plan = copy.deepcopy(json.loads(TEMPLATE.read_text()))
+-    for module in (c, c.bridge, c.inputs):
++    # This new experiment deliberately changes only collector execution after parsing.
++    # Keep bridge/input bytes fixed; bind the changed collector below in its own PLAN.
++    for module in (c.bridge, c.inputs):
+         expected = [
+             digest
+             for path, digest in plan["source_sha256"].items()
+             if Path(path).name == Path(module.__file__).name
+         ]
+         if expected != [c.inputs.sha(Path(module.__file__))]:
+-            raise ValueError("native runtime must remain byte-identical to source062")
++            raise ValueError("bridge/input runtime must remain byte-identical to source062")
+     tasks = list(map(json.loads, (prepared / "tasks.jsonl").read_text().splitlines()))
+     reference = list(
+         map(json.loads, (c.ROOT / "textcraft-inputs-001/tasks.jsonl").read_text().splitlines())
+@@ -89,7 +91,7 @@
+         raise ValueError("all original goals/quantities required")
+     condition = f"world{world_seed}_seed{training_seed}_{teacher}"
+     plan.update(
+-        schema="textcraft-multiworld-fixed-teacher-v1",
++        schema="textcraft-world47-public-recipe-binding-v1",
+         teacher=teacher,
+         training_seed=TRAINING_SEEDS[training_seed],
+         training_seed_label=training_seed,
+@@ -109,11 +111,10 @@
+                 a["qualification"]["initial_prompt_tokens"] for a in manifest["audits"]
+             ]
+         },
+-        prompt_difference="Exact original flat interface; frozen recipe assignment/inventory "
+-        "changes across worlds, fixed teacher checkpoint changes across paired arms.",
+-        caveat="Eight exposed roots/two correlated evaluation seeds; worlds share names and "
+-        "generator. Teacher-package comparison, not query-order causality; train.1029 quantity "
+-        "confound retained. Missing/unknown outcomes are not failures.",
++        prompt_difference="Exact original flat prompt/schema/sampling; post-parse automatic "
++        "ingredient binding from previously returned public single recipes only.",
++        caveat="Automatic execution assist, not a learned strategy or planner. Eight exposed "
++        "world47 roots/two correlated seeds; missing outcomes remain unknown.",
+     )
+     plan["jobs"] = [dict(j, condition=condition) for j in plan["jobs"]]
+     for module in (
+--- /dev/null
++++ b/textcraft_recipe_binder.py
+@@ -0,0 +1,34 @@
++"""Public-observation craft argument binding; never chooses targets or quantities."""
++
++import copy
++
++
++def bind_observed_recipe_arguments(action: dict, history: list[dict]) -> tuple[dict, str]:
++    if action.get("action") != "craft":
++        return action, "not_craft"
++    recipes = None
++    for row in history:
++        queried = row.get("action", {})
++        feedback = row.get("feedback")
++        if queried.get("action") != "get_info" or not isinstance(feedback, list):
++            continue
++        for info in feedback:
++            if isinstance(info, dict) and info.get("item") == action.get("target_item"):
++                recipes = info.get("recipes")
++    if not isinstance(recipes, list) or len(recipes) != 1:
++        return action, "recipe_not_observed"
++    recipe = recipes[0]
++    output = action.get("output_count")
++    count = recipe.get("result_count")
++    ingredients = recipe.get("ingredients")
++    if not isinstance(output, int) or not isinstance(count, int) or output % count:
++        return action, "quantity_not_divisible"
++    valid_ingredients = isinstance(ingredients, dict) and all(
++        isinstance(value, int) for value in ingredients.values()
++    )
++    if not valid_ingredients:
++        return action, "recipe_not_bindable"
++    bound = copy.deepcopy(action)
++    batches = output // count
++    bound["ingredients"] = {item: amount * batches for item, amount in ingredients.items()}
++    return bound, "bound_observed_single_recipe"
+--- /dev/null
++++ b/run_recipe_binder_world47.py
+@@ -0,0 +1,39 @@
++"""Fixed public endpoint, world47, automatic observed-recipe argument binding."""
++
++import argparse
++import json
++
++import textcraft_multiworld as multi
++
++OUTPUT = multi.c.ROOT / "textcraft-world47-public-recipe-binder-003"
++
++
++def prepare():
++    plan, tasks, binding = multi.build(47, "original", "public")
++    plan.update(
++        budget_seconds=1800,
++        execution_assist="For craft only, preserve model target_item/output_count and replace "
++        "ingredients only from one prior public get_info recipe if divisible; otherwise unchanged.",
++    )
++    path = OUTPUT / "PLAN.json"
++    if path.exists() and json.loads(path.read_text()) != plan:
++        raise ValueError("immutable binder pilot PLAN differs")
++    if not path.exists():
++        multi.c.save(path, plan)
++    return plan, tasks, binding
++
++
++def run(prepare_only: bool):
++    plan, tasks, binding = prepare()
++    multi.c.run(
++        argparse.Namespace(output=OUTPUT, prepare_only=prepare_only),
++        prepared_run=(plan, tasks),
++        adapter=binding,
++        world=None if prepare_only else multi.checked_world(plan),
++    )
++
++
++if __name__ == "__main__":
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--prepare-only", action="store_true")
++    run(parser.parse_args().prepare_only)
+--- /dev/null
++++ b/analyze_recipe_binder_world47.py
+@@ -0,0 +1,59 @@
++"""Native audit for the changed-collector recipe-binder pilot."""
++
++import hashlib
++import json
++
++import analyze_textcraft_profiles as profiles
++import textcraft_multiworld as multi
++
++OUTPUT = multi.c.ROOT / "textcraft-world47-public-recipe-binder-003"
++REPORT = multi.c.ROOT / "analysis-textcraft-world47-public-recipe-binder-003.json"
++BASELINE = multi.c.ROOT / "textcraft-world47-seed2026092208-public-001"
++BASELINE_AUDIT = multi.c.ROOT / "analysis-textcraft-world47-seed2026092208-001.json"
++
++
++def sha(path):
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def run():
++    if REPORT.exists() or REPORT.with_suffix(".md").exists():
++        raise FileExistsError("immutable binder analysis exists")
++    plan, _, _ = multi.build(47, "original", "public")
++    saved = json.loads((OUTPUT / "PLAN.json").read_text())
++    if saved != {**plan, "budget_seconds": 1800, "execution_assist": saved["execution_assist"]}:
++        raise ValueError("saved changed-collector PLAN differs")
++    from transformers import AutoTokenizer
++
++    tokenizer = AutoTokenizer.from_pretrained(plan["model"], local_files_only=True)
++    result = profiles.audit.analyze(OUTPUT, tokenizer, world=multi.checked_world(plan))
++    result.pop("paired", None)
++    result.pop("depth_strata", None)
++    result["execution_assist"] = saved["execution_assist"]
++    pilot_rows = {
++        (row["task_id"], row["repeat"]): row
++        for row in (json.loads(path.read_text()) for path in (OUTPUT / "episodes").glob("*.json"))
++    }
++    baseline_rows = {
++        (row["task_id"], row["repeat"]): row
++        for row in (json.loads(path.read_text()) for path in (BASELINE / "episodes").glob("*.json"))
++    }
++    completed = json.loads(BASELINE_AUDIT.read_text())
++    baseline = completed["arms"][1]
++    for path in [BASELINE / "PLAN.json", *(BASELINE / "episodes").glob("*.json")]:
++        if baseline["sha256"].get(str(path)) != sha(path):
++            raise ValueError("authenticated unchanged-public audit receipt differs")
++    result["binder_minus_unchanged_public"] = profiles.compare(
++        saved["jobs"], baseline_rows, pilot_rows
++    )
++    result["unchanged_public_groups"] = baseline["groups"]
++    result["unchanged_public_audit_sha256"] = sha(BASELINE_AUDIT)
++    result["caveat"] = saved["caveat"]
++    multi.c.save(REPORT, result)
++    REPORT.with_suffix(".md").write_text(
++        "# World47 public recipe-binding pilot\n\n" + result["caveat"] + "\n"
++    )
++
++
++if __name__ == "__main__":
++    run()
+--- /dev/null
++++ b/test_recipe_binder_replay.py
+@@ -0,0 +1,69 @@
++import json
++
++import analyze_textcraft as audit
++import pytest
++import textcraft_multiworld as multi
++import textcraft_recipe_binder as binder
++
++
++def test_checked_world47_recipe_binding_replays_and_rejects_tampered_receipt():
++    plan, tasks, _ = multi.build(47, "original", "public")
++    task, world = tasks[0], multi.checked_world(plan)
++    bridge = multi.c.bridge
++    collector_frame = bridge.Frame(
++        world,
++        dict(task["misc"]["initial_inventory"]),
++        task["misc"]["target_items"],
++        bridge.Budget(),
++        0,
++    )
++    target = next(iter(task["misc"]["target_items"]))
++    info_action = {"action": "get_info", "items": [target]}
++    info = collector_frame.apply(info_action)
++    history = [{"action": info_action, "feedback": info}]
++    recipe = info[0]["recipes"][0]
++    ingredient, amount = next(iter(recipe["ingredients"].items()))
++    requested = {
++        "action": "craft",
++        "target_item": target,
++        "output_count": recipe["result_count"],
++        "ingredients": {ingredient: amount + 1},
++    }
++    executed, reason = binder.bind_observed_recipe_arguments(requested, history)
++    feedback = collector_frame.apply(executed)
++    collector_history = history + [{"action": executed, "feedback": feedback}]
++
++    # Replay raw model JSON in an independent native frame.  The model-visible history
++    # contains only the executed action and real native feedback.
++    replay_frame = bridge.Frame(
++        world,
++        dict(task["misc"]["initial_inventory"]),
++        task["misc"]["target_items"],
++        bridge.Budget(),
++        0,
++    )
++    replay_info = replay_frame.apply(info_action)
++    replay_history = [{"action": info_action, "feedback": replay_info}]
++    parsed_requested = bridge.parse_action(json.dumps(requested))
++    replay_executed, replay_reason = binder.bind_observed_recipe_arguments(
++        parsed_requested, replay_history
++    )
++    replay_feedback = replay_frame.apply(replay_executed)
++    replay_history.append({"action": replay_executed, "feedback": replay_feedback})
++    assert replay_executed == executed
++    assert replay_reason == reason
++    assert replay_feedback == feedback
++    assert replay_history == collector_history
++    prompt1 = bridge.public_prompt(collector_frame, collector_history, goal=task["goal"])
++    prompt2 = bridge.public_prompt(replay_frame, replay_history, goal=task["goal"])
++    assert prompt1 == prompt2
++    receipt = {
++        "call_id": "c",
++        "requested_action": requested,
++        "executed_action": executed,
++        "binding_reason": reason,
++    }
++    audit.verify_execution_assist(receipt, "c", requested, executed, reason)
++    receipt["executed_action"] = requested
++    with pytest.raises(ValueError, match="binding mismatch"):
++        audit.verify_execution_assist(receipt, "c", requested, executed, reason)

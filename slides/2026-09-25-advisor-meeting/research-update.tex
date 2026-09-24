@@ -86,24 +86,24 @@ We trained each kind of model twice and tested them on the same tasks.
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{A harder check narrowed the advantage.}
-We changed the recipes and starting supplies, then tested the first training repeat. All 16 attempts per model have a result.
+\frametitle{On changed recipes, discovery still led.}
+We changed the recipes and starting supplies, then tested both training repeats. Each number is successes out of 16 attempts.
 \vspace{1mm}
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lc}
+\begin{tabular}{lcc}
 \toprule
-Training examples & Successful attempts\\
+Training examples & First repeat & Second repeat\\
 \midrule
-Teacher knows the recipes & 2/16\\
-Same teacher, with the quantity mistake fixed & 4/16\\
-Teacher discovers the recipes & 6/16\\
+Teacher knows the recipes & 2 & 1\\
+Same teacher, with the quantity mistake fixed & 4 & 1\\
+Teacher discovers the recipes & 6 & 8\\
 \bottomrule
 \end{tabular}
 \end{center}
 \vspace{2mm}
-Fixing the examples closed half the gap in this setting.
-\aside{Discovery still led, but this small comparison does not establish a clear advantage over corrected examples. We are checking the second training repeat. All tests remain within one kind of game.}
+The lead was small in one repeat and large in the other.
+\aside{All outcomes are known. The first repeat is too uncertain to establish a clear advantage over corrected examples; the second gives stronger evidence. These are still small tests within one kind of game.}
 \end{frame}
 
 \begin{frame}[t]

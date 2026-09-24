@@ -61,8 +61,13 @@ Slide4 now shows world47, with eight goals and two attempts each. Original
 teaching solved2/16, corrected teaching4/16 and discovery teaching6/16. Every
 outcome is known. Against corrected teaching, discovery wins three attempts
 and loses one. The difference interval is minus12.5 to plus43.75 percentage
-points, which includes zero. We cannot confidently conclude that it is better
-in this setting. The second training repeat is being evaluated separately.
+points, which includes zero. This first repeat alone is inconclusive.
+
+The second training repeat is now complete: original teaching1/16, corrected
+teaching1/16, discovery8/16. There are seven paired improvements and no regressions
+against corrected teaching. The difference interval is12.5 to75 percentage points.
+Both repeats favor discovery numerically, but the size of the advantage varies.
+These are the same eight task goals, not two independent test datasets.
 
 This does not contradict slide3: recipe changes can alter which lessons help.
 Earlier worlds44–46 favored discovery under both training seeds, but their

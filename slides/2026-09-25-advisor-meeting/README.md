@@ -1,7 +1,7 @@
 # Teaching a model to find what it needs
 
 Five-slide, plain-language advisor discussion for September25. Evidence cutoff:
-September24, 16:15 UTC. This is an exploratory result, not a finished paper.
+September24, 16:25 UTC. This is an exploratory result, not a finished paper.
 
 Open `research-update.pdf`. Source is `research-update.tex`; no Python or external
 figure files are needed to compile it. Run `make` with latexmk, or `make tectonic`.
@@ -21,13 +21,14 @@ The notes are supplementary: the PDF contains the essential claim and limitation
 The teaching advantage repeats under two training seeds after correcting the
 known quantity error. Its direction also repeats in three changed task worlds,
 although those changed-world comparisons use the uncorrected teacher. The new
-world47 control narrows the advantage: corrected teaching solves4/16 versus6/16
-for discovery teaching, with uncertainty that includes no difference. That is
+world47 control shows4/16 versus6/16 in the first repeat and1/16 versus8/16 in
+the second. The first difference is uncertain; the second is clearer. That is
 worth a preliminary discussion, not enough to isolate the cause or claim
 general-purpose planning. We do not claim recursion helped.
 
-The second training repeat of this control is running. Update slide4 and its
-notes together once its complete native audit is available; never show a partial
+Both training repeats of this control are now complete. The next pilot tests
+automatic ingredient binding from already observed recipes. Update slide5 and
+its notes together once its native audit is available; never show a partial
 score as a final result. Preserve this cutoff and the historical deck separately.
 
 ## Evidence
