@@ -1,5 +1,10 @@
 # Learning when another reasoning step is worthwhile
 
+Latest: [September24 overnight findings](RESEARCH-UPDATE-20260924.md). The teaching
+advantage survives the quantity correction and repeats in more recipe worlds;
+the notebook effect does not consistently help. Positive-only RL evaluation needs
+an interrupted-run audit and four-slot coverage recovery before interpretation.
+
 For a short plain-language account of the latest findings and decisions, start
 with [the September23 research update](RESEARCH-UPDATE-20260923.md).
 

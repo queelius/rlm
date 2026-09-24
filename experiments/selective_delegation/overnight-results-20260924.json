@@ -1,0 +1,897 @@
+{
+  "analysis-textcraft-memory-public1-factorial-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-memory-public1-factorial-001.json",
+    "sha256": "67377346bf5d136bbfdae5877970311c4a92dadcfcab5cb4a4eca6e17546826a",
+    "caveat": "Exposed fixed16 roots in one shared recipe world. Four new matched2hour arms per actor; historical1hour baseline supplemental only. Missing outcomes remain unknown. Ledger changes tokens/context and recent4 removes observations; not free computation.",
+    "arms": {
+      "history_full": {
+        "planned": 32,
+        "observed": 32,
+        "won": 15,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 27,
+          "context_cap": 5
+        },
+        "invalids": {
+          "native_action_error": 574,
+          "invalid_schema": 1
+        },
+        "cost": {
+          "calls": 1234,
+          "prompt_tokens": 4019038,
+          "completion_tokens": 38959,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 3213.7967495918274
+        }
+      },
+      "ledger_full": {
+        "planned": 32,
+        "observed": 32,
+        "won": 14,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 21,
+          "context_cap": 11
+        },
+        "invalids": {
+          "native_action_error": 759,
+          "invalid_schema": 18
+        },
+        "cost": {
+          "calls": 1316,
+          "prompt_tokens": 5107136,
+          "completion_tokens": 45089,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 3748.637573480606
+        }
+      },
+      "ledger_recent4": {
+        "planned": 32,
+        "observed": 32,
+        "won": 14,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 14,
+          "global_call_cap": 18
+        },
+        "invalids": {
+          "native_action_error": 702,
+          "invalid_schema": 4
+        },
+        "cost": {
+          "calls": 1971,
+          "prompt_tokens": 3276825,
+          "completion_tokens": 53731,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 4157.584408998489
+        }
+      },
+      "recent4": {
+        "planned": 32,
+        "observed": 32,
+        "won": 10,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 10,
+          "global_call_cap": 22
+        },
+        "invalids": {
+          "native_action_error": 144,
+          "invalid_schema": 5
+        },
+        "cost": {
+          "calls": 2311,
+          "prompt_tokens": 2101200,
+          "completion_tokens": 43264,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 3219.18771648407
+        }
+      }
+    },
+    "effects": {
+      "ledger_full_minus_history_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 1,
+        "losses": 2,
+        "ties": 29,
+        "complete_panel_difference": -0.03125,
+        "ci95": [
+          -0.1875,
+          0.09375
+        ]
+      },
+      "ledger_recent4_minus_history_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 2,
+        "losses": 3,
+        "ties": 27,
+        "complete_panel_difference": -0.03125,
+        "ci95": [
+          -0.21875,
+          0.125
+        ]
+      },
+      "recent4_minus_history_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 0,
+        "losses": 5,
+        "ties": 27,
+        "complete_panel_difference": -0.15625,
+        "ci95": [
+          -0.34375,
+          0
+        ]
+      },
+      "ledger_recent4_minus_ledger_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 2,
+        "losses": 2,
+        "ties": 28,
+        "complete_panel_difference": 0,
+        "ci95": [
+          -0.125,
+          0.125
+        ]
+      },
+      "recent4_minus_ledger_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 0,
+        "losses": 4,
+        "ties": 28,
+        "complete_panel_difference": -0.125,
+        "ci95": [
+          -0.28125,
+          0
+        ]
+      },
+      "recent4_minus_ledger_recent4": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 0,
+        "losses": 4,
+        "ties": 28,
+        "complete_panel_difference": -0.125,
+        "ci95": [
+          -0.25,
+          -0.03125
+        ]
+      }
+    },
+    "interaction": {
+      "planned_pairs": 32,
+      "known_pairs": 32,
+      "unknown_pairs": 0,
+      "wins": 6,
+      "losses": 1,
+      "ties": 25,
+      "complete_panel_difference": 0.15625,
+      "ci95": [
+        0,
+        0.34375
+      ]
+    }
+  },
+  "analysis-textcraft-memory-public2291-factorial-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-memory-public2291-factorial-001.json",
+    "sha256": "f536876d21173cc8bd19f1db3bb997af102056dd9405e34668bc4a2876df7f30",
+    "caveat": "Exposed fixed16 roots in one shared recipe world. Four new matched2hour arms per actor; historical1hour baseline supplemental only. Missing outcomes remain unknown. Ledger changes tokens/context and recent4 removes observations; not free computation.",
+    "arms": {
+      "history_full": {
+        "planned": 32,
+        "observed": 32,
+        "won": 15,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 32
+        },
+        "invalids": {
+          "native_action_error": 270
+        },
+        "cost": {
+          "calls": 982,
+          "prompt_tokens": 2502670,
+          "completion_tokens": 26486,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 2126.7055571079254
+        }
+      },
+      "ledger_full": {
+        "planned": 32,
+        "observed": 32,
+        "won": 6,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 31,
+          "context_cap": 1
+        },
+        "invalids": {
+          "native_action_error": 314
+        },
+        "cost": {
+          "calls": 942,
+          "prompt_tokens": 2896460,
+          "completion_tokens": 25025,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 2082.3838272094727
+        }
+      },
+      "ledger_recent4": {
+        "planned": 32,
+        "observed": 32,
+        "won": 8,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 14,
+          "global_call_cap": 18
+        },
+        "invalids": {
+          "native_action_error": 352,
+          "invalid_schema": 2
+        },
+        "cost": {
+          "calls": 2017,
+          "prompt_tokens": 3415208,
+          "completion_tokens": 42694,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 3335.806070804596
+        }
+      },
+      "recent4": {
+        "planned": 32,
+        "observed": 32,
+        "won": 10,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 11,
+          "global_call_cap": 21
+        },
+        "invalids": {
+          "native_action_error": 37,
+          "invalid_schema": 6,
+          "rejected_action": 1
+        },
+        "cost": {
+          "calls": 2232,
+          "prompt_tokens": 2035289,
+          "completion_tokens": 38512,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 2878.138984680176
+        }
+      }
+    },
+    "effects": {
+      "ledger_full_minus_history_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 0,
+        "losses": 9,
+        "ties": 23,
+        "complete_panel_difference": -0.28125,
+        "ci95": [
+          -0.4375,
+          -0.125
+        ]
+      },
+      "ledger_recent4_minus_history_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 1,
+        "losses": 8,
+        "ties": 23,
+        "complete_panel_difference": -0.21875,
+        "ci95": [
+          -0.40625,
+          -0.0625
+        ]
+      },
+      "recent4_minus_history_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 1,
+        "losses": 6,
+        "ties": 25,
+        "complete_panel_difference": -0.15625,
+        "ci95": [
+          -0.34375,
+          0
+        ]
+      },
+      "ledger_recent4_minus_ledger_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 2,
+        "losses": 0,
+        "ties": 30,
+        "complete_panel_difference": 0.0625,
+        "ci95": [
+          0,
+          0.15625
+        ]
+      },
+      "recent4_minus_ledger_full": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 4,
+        "losses": 0,
+        "ties": 28,
+        "complete_panel_difference": 0.125,
+        "ci95": [
+          0.03125,
+          0.25
+        ]
+      },
+      "recent4_minus_ledger_recent4": {
+        "planned_pairs": 32,
+        "known_pairs": 32,
+        "unknown_pairs": 0,
+        "wins": 2,
+        "losses": 0,
+        "ties": 30,
+        "complete_panel_difference": 0.0625,
+        "ci95": [
+          0,
+          0.15625
+        ]
+      }
+    },
+    "interaction": {
+      "planned_pairs": 32,
+      "known_pairs": 32,
+      "unknown_pairs": 0,
+      "wins": 7,
+      "losses": 0,
+      "ties": 25,
+      "complete_panel_difference": 0.21875,
+      "ci95": [
+        0.09375,
+        0.375
+      ]
+    }
+  },
+  "analysis-textcraft-quantity-matched-seed2026092208-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-quantity-matched-seed2026092208-001.json",
+    "sha256": "f161dd4cb844048bb4d91ea2cfc475a57dd4688fadda8ff18b9cceba0a0f0c35",
+    "caveat": "Corrects one quantity mismatch through complete native trajectory replay, not package history/order/token dose. Existing fresh32 is exposed exploratory readout.",
+    "arms": [
+      {
+        "planned": 32,
+        "observed": 32,
+        "won": 15,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "context_cap": 3,
+          "finished": 29
+        },
+        "invalids": {
+          "invalid_schema": 2,
+          "native_action_error": 550
+        },
+        "cost": {
+          "calls": 1206,
+          "completion_tokens": 37486,
+          "failed_calls": 0,
+          "native_service_seconds": 3109.4684505462646,
+          "prompt_tokens": 3915875,
+          "unknown_completion_tokens_calls": 0
+        }
+      },
+      {
+        "planned": 32,
+        "observed": 32,
+        "won": 5,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "context_cap": 2,
+          "finished": 30
+        },
+        "invalids": {
+          "native_action_error": 121,
+          "rejected_action": 1
+        },
+        "cost": {
+          "calls": 1003,
+          "completion_tokens": 21355,
+          "failed_calls": 0,
+          "native_service_seconds": 1762.2493917942047,
+          "prompt_tokens": 2553227,
+          "unknown_completion_tokens_calls": 0
+        }
+      }
+    ],
+    "effect": {
+      "ci95": [
+        0.15625,
+        0.5
+      ],
+      "complete_panel_difference": 0.3125,
+      "known_pairs": 32,
+      "losses": 1,
+      "planned_pairs": 32,
+      "ties": 20,
+      "unknown_pairs": 0,
+      "wins": 11
+    }
+  },
+  "analysis-textcraft-quantity-matched-seed2026092291-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-quantity-matched-seed2026092291-001.json",
+    "sha256": "8762a653600a130db34de7815c49d7b3941b974a1d526ec0c14c5a5263774758",
+    "caveat": "Corrects one quantity mismatch through complete native trajectory replay, not package history/order/token dose. Existing fresh32 is exposed exploratory readout.",
+    "arms": [
+      {
+        "planned": 32,
+        "observed": 32,
+        "won": 10,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 32
+        },
+        "invalids": {
+          "native_action_error": 194
+        },
+        "cost": {
+          "calls": 777,
+          "completion_tokens": 20084,
+          "failed_calls": 0,
+          "native_service_seconds": 1613.65886759758,
+          "prompt_tokens": 1564315,
+          "unknown_completion_tokens_calls": 0
+        }
+      },
+      {
+        "planned": 32,
+        "observed": 32,
+        "won": 3,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 31,
+          "global_call_cap": 1
+        },
+        "invalids": {
+          "invalid_schema": 4,
+          "native_action_error": 117,
+          "rejected_action": 4
+        },
+        "cost": {
+          "calls": 957,
+          "completion_tokens": 20044,
+          "failed_calls": 0,
+          "native_service_seconds": 1637.1243410110474,
+          "prompt_tokens": 2222330,
+          "unknown_completion_tokens_calls": 0
+        }
+      }
+    ],
+    "effect": {
+      "ci95": [
+        0.09375,
+        0.375
+      ],
+      "complete_panel_difference": 0.21875,
+      "known_pairs": 32,
+      "losses": 0,
+      "planned_pairs": 32,
+      "ties": 25,
+      "unknown_pairs": 0,
+      "wins": 7
+    }
+  },
+  "analysis-textcraft-world44-seed2026092208-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-world44-seed2026092208-001.json",
+    "sha256": "3736c3b18bd27d56814f740c449cb3656e1338304f37c301b3fb418bcc957755",
+    "caveat": "Eight exposed roots/two correlated evaluation seeds; worlds share names and generator. Teacher-package comparison, not query-order causality; train.1029 quantity confound retained. Missing/unknown outcomes are not failures.",
+    "arms": [
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 4,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 15,
+          "global_call_cap": 1
+        },
+        "invalids": {
+          "native_action_error": 48
+        },
+        "cost": {
+          "calls": 381,
+          "prompt_tokens": 872541,
+          "completion_tokens": 8192,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 658.3997747898102
+        }
+      },
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 7,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 15,
+          "context_cap": 1
+        },
+        "invalids": {
+          "native_action_error": 288,
+          "invalid_schema": 2
+        },
+        "cost": {
+          "calls": 599,
+          "prompt_tokens": 1783775,
+          "completion_tokens": 18200,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 1471.1083278656006
+        }
+      }
+    ],
+    "effect": {
+      "planned_pairs": 16,
+      "known_pairs": 16,
+      "unknown_pairs": 0,
+      "wins": 3,
+      "losses": 0,
+      "ties": 13,
+      "complete_panel_difference": 0.1875,
+      "ci95": [
+        0.0625,
+        0.375
+      ]
+    }
+  },
+  "analysis-textcraft-world44-seed2026092291-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-world44-seed2026092291-001.json",
+    "sha256": "96e88b6987e196e2179a0134736123ead68f3d3628ce6b5598081f32abd0f472",
+    "caveat": "Eight exposed roots/two correlated evaluation seeds; worlds share names and generator. Teacher-package comparison, not query-order causality; train.1029 quantity confound retained. Missing/unknown outcomes are not failures.",
+    "arms": [
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 3,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 16
+        },
+        "invalids": {
+          "native_action_error": 50,
+          "rejected_action": 1
+        },
+        "cost": {
+          "calls": 374,
+          "prompt_tokens": 666473,
+          "completion_tokens": 7724,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 604.6059105396271
+        }
+      },
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 6,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 16
+        },
+        "invalids": {
+          "native_action_error": 94
+        },
+        "cost": {
+          "calls": 409,
+          "prompt_tokens": 809695,
+          "completion_tokens": 10564,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 832.3375706672668
+        }
+      }
+    ],
+    "effect": {
+      "planned_pairs": 16,
+      "known_pairs": 16,
+      "unknown_pairs": 0,
+      "wins": 3,
+      "losses": 0,
+      "ties": 13,
+      "complete_panel_difference": 0.1875,
+      "ci95": [
+        0.0625,
+        0.375
+      ]
+    }
+  },
+  "analysis-textcraft-world45-seed2026092208-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-world45-seed2026092208-001.json",
+    "sha256": "08050d4d010d08201ac9db4edd012b32353c6b1a78bf9746e6a7322e1831ff9f",
+    "caveat": "Eight exposed roots/two correlated evaluation seeds; worlds share names and generator. Teacher-package comparison, not query-order causality; train.1029 quantity confound retained. Missing/unknown outcomes are not failures.",
+    "arms": [
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 1,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 15,
+          "global_call_cap": 1
+        },
+        "invalids": {
+          "native_action_error": 63,
+          "invalid_schema": 7
+        },
+        "cost": {
+          "calls": 662,
+          "prompt_tokens": 1871617,
+          "completion_tokens": 14413,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 1203.8725638389587
+        }
+      },
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 8,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 14,
+          "context_cap": 2
+        },
+        "invalids": {
+          "native_action_error": 255
+        },
+        "cost": {
+          "calls": 495,
+          "prompt_tokens": 1327281,
+          "completion_tokens": 15228,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 1214.8157975673676
+        }
+      }
+    ],
+    "effect": {
+      "planned_pairs": 16,
+      "known_pairs": 16,
+      "unknown_pairs": 0,
+      "wins": 7,
+      "losses": 0,
+      "ties": 9,
+      "complete_panel_difference": 0.4375,
+      "ci95": [
+        0.1875,
+        0.6875
+      ]
+    }
+  },
+  "analysis-textcraft-world45-seed2026092291-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-world45-seed2026092291-001.json",
+    "sha256": "9bfb3ef9720e28d7f41a17ec2dd56f9b1b8f3d2411e1137aaf68338940e125d6",
+    "caveat": "Eight exposed roots/two correlated evaluation seeds; worlds share names and generator. Teacher-package comparison, not query-order causality; train.1029 quantity confound retained. Missing/unknown outcomes are not failures.",
+    "arms": [
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 1,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 16
+        },
+        "invalids": {
+          "native_action_error": 45
+        },
+        "cost": {
+          "calls": 396,
+          "prompt_tokens": 909808,
+          "completion_tokens": 7785,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 642.9136233329773
+        }
+      },
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 8,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 16
+        },
+        "invalids": {
+          "native_action_error": 83
+        },
+        "cost": {
+          "calls": 409,
+          "prompt_tokens": 924069,
+          "completion_tokens": 9566,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 772.429929971695
+        }
+      }
+    ],
+    "effect": {
+      "planned_pairs": 16,
+      "known_pairs": 16,
+      "unknown_pairs": 0,
+      "wins": 7,
+      "losses": 0,
+      "ties": 9,
+      "complete_panel_difference": 0.4375,
+      "ci95": [
+        0.1875,
+        0.6875
+      ]
+    }
+  },
+  "analysis-textcraft-world46-seed2026092208-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-world46-seed2026092208-001.json",
+    "sha256": "239e69ebb9c31ce6984e015930e2e9a5f76a21c75a22cd11d395749f6ddfc43e",
+    "caveat": "Eight exposed roots/two correlated evaluation seeds; worlds share names and generator. Teacher-package comparison, not query-order causality; train.1029 quantity confound retained. Missing/unknown outcomes are not failures.",
+    "arms": [
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 3,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 14,
+          "global_call_cap": 2
+        },
+        "invalids": {
+          "native_action_error": 32
+        },
+        "cost": {
+          "calls": 503,
+          "prompt_tokens": 1294367,
+          "completion_tokens": 9839,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 827.4182806015015
+        }
+      },
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 8,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 13,
+          "context_cap": 3
+        },
+        "invalids": {
+          "native_action_error": 263
+        },
+        "cost": {
+          "calls": 561,
+          "prompt_tokens": 1788863,
+          "completion_tokens": 16630,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 1369.369164466858
+        }
+      }
+    ],
+    "effect": {
+      "planned_pairs": 16,
+      "known_pairs": 16,
+      "unknown_pairs": 0,
+      "wins": 6,
+      "losses": 1,
+      "ties": 9,
+      "complete_panel_difference": 0.3125,
+      "ci95": [
+        0,
+        0.625
+      ]
+    }
+  },
+  "analysis-textcraft-world46-seed2026092291-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-world46-seed2026092291-001.json",
+    "sha256": "b7c84dcc776025890e4e553c26dbf8cf73b35d1b6cdd1b05a4c2d053f4ec57fd",
+    "caveat": "Eight exposed roots/two correlated evaluation seeds; worlds share names and generator. Teacher-package comparison, not query-order causality; train.1029 quantity confound retained. Missing/unknown outcomes are not failures.",
+    "arms": [
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 1,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 16
+        },
+        "invalids": {
+          "native_action_error": 61,
+          "rejected_action": 1
+        },
+        "cost": {
+          "calls": 494,
+          "prompt_tokens": 1131779,
+          "completion_tokens": 10089,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 823.7309205532074
+        }
+      },
+      {
+        "planned": 16,
+        "observed": 16,
+        "won": 10,
+        "missing": 0,
+        "unavailable": 0,
+        "statuses": {
+          "finished": 16
+        },
+        "invalids": {
+          "native_action_error": 59
+        },
+        "cost": {
+          "calls": 311,
+          "prompt_tokens": 529371,
+          "completion_tokens": 8299,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 639.414226770401
+        }
+      }
+    ],
+    "effect": {
+      "planned_pairs": 16,
+      "known_pairs": 16,
+      "unknown_pairs": 0,
+      "wins": 9,
+      "losses": 0,
+      "ties": 7,
+      "complete_panel_difference": 0.5625,
+      "ci95": [
+        0.3125,
+        0.8125
+      ]
+    }
+  }
+}
