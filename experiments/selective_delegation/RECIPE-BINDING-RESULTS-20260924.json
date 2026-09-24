@@ -1,0 +1,787 @@
+{
+  "analysis-textcraft-world47-public-recipe-binder-003.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-world47-public-recipe-binder-003.json",
+    "sha256": "bd617b47ae8873c781789bd1a81d80a1ac89a3c838a01f9a72cce1c7a4d1907b",
+    "groups": {
+      "world47_seedoriginal_public": {
+        "planned": 16,
+        "recorded": 16,
+        "observed": 16,
+        "missing": 0,
+        "unavailable": 0,
+        "observed_failures": 4.0,
+        "won": 12.0,
+        "success_rate_bounds": [
+          0.75,
+          0.75
+        ],
+        "statuses": {
+          "finished": 16
+        },
+        "invalids": {
+          "native_action_error": 123,
+          "invalid_schema": 3
+        },
+        "actions": {
+          "get_info": 159,
+          "craft": 291,
+          "finish": 16
+        },
+        "child_nodes": 0,
+        "child_successes": 0,
+        "failed_roots_with_successful_child": 0,
+        "root_calls_after_quantity_met": 13,
+        "cost": {
+          "calls": 469,
+          "prompt_tokens": 1181065,
+          "completion_tokens": 13767,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 1111.84028673172
+        },
+        "role_cost": {
+          "root": {
+            "calls": 469,
+            "prompt_tokens": 1181065,
+            "completion_tokens": 13767,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 1111.84028673172
+          },
+          "child": {
+            "calls": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 0
+          }
+        }
+      }
+    },
+    "baseline_groups": {
+      "world47_seedoriginal_public": {
+        "planned": 16,
+        "recorded": 16,
+        "observed": 16,
+        "missing": 0,
+        "unavailable": 0,
+        "observed_failures": 10.0,
+        "won": 6.0,
+        "success_rate_bounds": [
+          0.375,
+          0.375
+        ],
+        "statuses": {
+          "finished": 15,
+          "context_cap": 1
+        },
+        "invalids": {
+          "native_action_error": 312,
+          "invalid_schema": 1
+        },
+        "actions": {
+          "get_info": 198,
+          "craft": 407,
+          "finish": 15
+        },
+        "child_nodes": 0,
+        "child_successes": 0,
+        "failed_roots_with_successful_child": 0,
+        "root_calls_after_quantity_met": 7,
+        "cost": {
+          "calls": 621,
+          "prompt_tokens": 1915672,
+          "completion_tokens": 19039,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 1562.1702551841736
+        },
+        "role_cost": {
+          "root": {
+            "calls": 621,
+            "prompt_tokens": 1915672,
+            "completion_tokens": 19039,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 1562.1702551841736
+          },
+          "child": {
+            "calls": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 0
+          }
+        }
+      }
+    },
+    "effect": {
+      "planned_pairs": 16,
+      "known_pairs": 16,
+      "unknown_pairs": 0,
+      "wins": 6,
+      "losses": 0,
+      "ties": 10,
+      "complete_panel_difference": 0.375,
+      "ci95": [
+        0.125,
+        0.75
+      ],
+      "rows": [
+        {
+          "task_id": "textcraft_synth.val.325",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.325",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.629",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.629",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.47",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.47",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.19",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.19",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.567",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.567",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.435",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.435",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.207",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.207",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.352",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.352",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        }
+      ]
+    }
+  },
+  "analysis-textcraft-world47-seed2026092291-public-recipe-binder-followup-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-world47-seed2026092291-public-recipe-binder-followup-001.json",
+    "sha256": "56d98abb634e5f034d8c486b628b2815053b8704aa6a7ffae93226d409db453d",
+    "groups": {
+      "world47_seed2291_public_recipe_binder": {
+        "planned": 16,
+        "recorded": 16,
+        "observed": 16,
+        "missing": 0,
+        "unavailable": 0,
+        "observed_failures": 6.0,
+        "won": 10.0,
+        "success_rate_bounds": [
+          0.625,
+          0.625
+        ],
+        "statuses": {
+          "finished": 15,
+          "context_cap": 1
+        },
+        "invalids": {
+          "native_action_error": 60,
+          "invalid_schema": 3
+        },
+        "actions": {
+          "get_info": 181,
+          "craft": 193,
+          "finish": 15
+        },
+        "child_nodes": 0,
+        "child_successes": 0,
+        "failed_roots_with_successful_child": 0,
+        "root_calls_after_quantity_met": 12,
+        "cost": {
+          "calls": 392,
+          "prompt_tokens": 869339,
+          "completion_tokens": 10599,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 841.5440380573273
+        },
+        "role_cost": {
+          "root": {
+            "calls": 392,
+            "prompt_tokens": 869339,
+            "completion_tokens": 10599,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 841.5440380573273
+          },
+          "child": {
+            "calls": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 0
+          }
+        }
+      }
+    },
+    "baseline_groups": {
+      "world47_seed2291_public": {
+        "planned": 16,
+        "recorded": 16,
+        "observed": 16,
+        "missing": 0,
+        "unavailable": 0,
+        "observed_failures": 8.0,
+        "won": 8.0,
+        "success_rate_bounds": [
+          0.5,
+          0.5
+        ],
+        "statuses": {
+          "finished": 16
+        },
+        "invalids": {
+          "native_action_error": 84,
+          "invalid_schema": 1
+        },
+        "actions": {
+          "get_info": 219,
+          "craft": 192,
+          "finish": 16
+        },
+        "child_nodes": 0,
+        "child_successes": 0,
+        "failed_roots_with_successful_child": 0,
+        "root_calls_after_quantity_met": 10,
+        "cost": {
+          "calls": 428,
+          "prompt_tokens": 1043426,
+          "completion_tokens": 10081,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 832.4318630695343
+        },
+        "role_cost": {
+          "root": {
+            "calls": 428,
+            "prompt_tokens": 1043426,
+            "completion_tokens": 10081,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 832.4318630695343
+          },
+          "child": {
+            "calls": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 0
+          }
+        }
+      }
+    },
+    "effect": {
+      "planned_pairs": 16,
+      "known_pairs": 16,
+      "unknown_pairs": 0,
+      "wins": 2,
+      "losses": 0,
+      "ties": 14,
+      "complete_panel_difference": 0.125,
+      "ci95": [
+        0.0,
+        0.375
+      ],
+      "rows": [
+        {
+          "task_id": "textcraft_synth.val.325",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.325",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.629",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.629",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.47",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.47",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.19",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.19",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.567",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.567",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.435",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.435",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.207",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.207",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.352",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.352",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        }
+      ]
+    }
+  },
+  "analysis-textcraft-world48-seed2026092208-public-recipe-binder-followup-001.json": {
+    "source": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-world48-seed2026092208-public-recipe-binder-followup-001.json",
+    "sha256": "f947a317a923d3869e0d0e2de490d820d96994a2b5361b85edcaf26a9b4af456",
+    "groups": {
+      "world48_seedoriginal_public_recipe_binder": {
+        "planned": 16,
+        "recorded": 16,
+        "observed": 16,
+        "missing": 0,
+        "unavailable": 0,
+        "observed_failures": 2.0,
+        "won": 14.0,
+        "success_rate_bounds": [
+          0.875,
+          0.875
+        ],
+        "statuses": {
+          "finished": 16
+        },
+        "invalids": {
+          "native_action_error": 73
+        },
+        "actions": {
+          "get_info": 114,
+          "craft": 177,
+          "finish": 16
+        },
+        "child_nodes": 0,
+        "child_successes": 0,
+        "failed_roots_with_successful_child": 0,
+        "root_calls_after_quantity_met": 14,
+        "cost": {
+          "calls": 307,
+          "prompt_tokens": 538248,
+          "completion_tokens": 8671,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 664.9105944633484
+        },
+        "role_cost": {
+          "root": {
+            "calls": 307,
+            "prompt_tokens": 538248,
+            "completion_tokens": 8671,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 664.9105944633484
+          },
+          "child": {
+            "calls": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 0
+          }
+        }
+      }
+    },
+    "baseline_groups": {
+      "world48_seedoriginal_public": {
+        "planned": 16,
+        "recorded": 16,
+        "observed": 16,
+        "missing": 0,
+        "unavailable": 0,
+        "observed_failures": 7.0,
+        "won": 9.0,
+        "success_rate_bounds": [
+          0.5625,
+          0.5625
+        ],
+        "statuses": {
+          "finished": 14,
+          "context_cap": 2
+        },
+        "invalids": {
+          "native_action_error": 201,
+          "invalid_schema": 15
+        },
+        "actions": {
+          "get_info": 153,
+          "craft": 287,
+          "finish": 14
+        },
+        "child_nodes": 0,
+        "child_successes": 0,
+        "failed_roots_with_successful_child": 0,
+        "root_calls_after_quantity_met": 9,
+        "cost": {
+          "calls": 469,
+          "prompt_tokens": 1390646,
+          "completion_tokens": 16115,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 1292.2841968536377
+        },
+        "role_cost": {
+          "root": {
+            "calls": 469,
+            "prompt_tokens": 1390646,
+            "completion_tokens": 16115,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 1292.2841968536377
+          },
+          "child": {
+            "calls": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "failed_calls": 0,
+            "unknown_completion_tokens_calls": 0,
+            "native_service_seconds": 0
+          }
+        }
+      }
+    },
+    "effect": {
+      "planned_pairs": 16,
+      "known_pairs": 16,
+      "unknown_pairs": 0,
+      "wins": 5,
+      "losses": 0,
+      "ties": 11,
+      "complete_panel_difference": 0.3125,
+      "ci95": [
+        0.0625,
+        0.5625
+      ],
+      "rows": [
+        {
+          "task_id": "textcraft_synth.val.325",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.325",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.629",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.629",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.47",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.47",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.19",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.19",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.567",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.567",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.435",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 0.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.435",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.207",
+          "repeat": 0,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.207",
+          "repeat": 1,
+          "known": true,
+          "left": 0.0,
+          "right": 1.0,
+          "delta": 1.0
+        },
+        {
+          "task_id": "textcraft_synth.val.352",
+          "repeat": 0,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        },
+        {
+          "task_id": "textcraft_synth.val.352",
+          "repeat": 1,
+          "known": true,
+          "left": 1.0,
+          "right": 1.0,
+          "delta": 0.0
+        }
+      ]
+    }
+  }
+}

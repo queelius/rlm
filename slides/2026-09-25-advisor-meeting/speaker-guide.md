@@ -79,23 +79,40 @@ calls and made312 invalid actions. Yet discovery finished more tasks. This is
 a clue to investigate routes and persistence, not proof that mistakes help.
 Each arm finished before its overall time cap, though those caps differed.
 
-## Slide5: What change to the RLM are we proposing?
+## Slide5: What change to the tools helped?
 
-Today the model chooses a crafting action and writes its detailed tool arguments.
-The proposed interface separates those responsibilities. The model chooses the
+The model chooses a crafting action and writes its detailed tool arguments.
+The tested interface separates those responsibilities. The model chooses the
 item and amount; code uses a recipe the model already looked up to fill in the
 ingredients correctly. It does not secretly look up recipes or solve the plan.
 
-This might remove copying mistakes, but it cannot fix a bad choice of item or
+This removes some copying mistakes, but it cannot fix a bad choice of item or
 missing supplies. Earlier one-step audits found both types of problem. Repairing
-one action is not proof that an entire task would succeed. The next experiment
-should compare end-to-end success using fixed tasks, seeds and model weights.
+one action is not proof that an entire task would succeed. We therefore compared
+end-to-end success using fixed tasks, seeds and model weights.
 
-**A concrete failure behind this proposal:** In one changed-world attempt, the
+The completed comparisons are6 to12 successes,8 to10, and9 to14, all out of16.
+Their paired improvements/regressions are6/0,2/0 and5/0. The three task-group
+difference intervals are12.5–75,0–37.5 and6.25–56.25 percentage points. The smaller
+second-model effect is uncertain. All outcomes are known, but these are related
+tasks in one synthetic game, not48 independent test problems.
+
+No further model training took place. The code did not invent ingredients,
+choose subgoals, access hidden recipes or give the model a successful solution.
+It used a recipe already present in the public interaction history. After a
+changed command, subsequent game states and model responses can differ; the
+result measures that entire intervention, not just the immediate repaired step.
+
+Calls fell in all three comparisons:621 to469,428 to392 and469 to307. Inference
+time fell substantially in the first and third, but rose slightly in the second.
+Do not say that every comparison was faster. A fourth comparison is running.
+See the [complete result note](../../experiments/selective_delegation/RECIPE-BINDING-RESULTS-20260924.md).
+
+**A concrete failure behind this experiment:** In one changed-world attempt, the
 discovery-trained model read the correct recipe but repeatedly added an extra
-ingredient. The game kept rejecting that command. Automatic argument binding
-could test whether this specific execution problem matters for overall success.
-It would not give the model any new recipe knowledge.
+ingredient. The game kept rejecting that command. The automatic argument-binding
+experiment tests whether these execution mistakes matter for overall success.
+It does not give the model any new recipe knowledge.
 
 **A different failure it would not directly fix:** In another attempt, the
 corrected-teacher model successfully made both parts, then stopped without

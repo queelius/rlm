@@ -1,7 +1,7 @@
 # Teaching a model to find what it needs
 
 Five-slide, plain-language advisor discussion for September25. Evidence cutoff:
-September24, 16:25 UTC. This is an exploratory result, not a finished paper.
+September24, 17:55 UTC. This is an exploratory result, not a finished paper.
 
 Open `research-update.pdf`. Source is `research-update.tex`; no Python or external
 figure files are needed to compile it. Run `make` with latexmk, or `make tectonic`.
@@ -26,10 +26,11 @@ the second. The first difference is uncertain; the second is clearer. That is
 worth a preliminary discussion, not enough to isolate the cause or claim
 general-purpose planning. We do not claim recursion helped.
 
-Both training repeats of this control are now complete. The next pilot tests
-automatic ingredient binding from already observed recipes. Update slide5 and
-its notes together once its native audit is available; never show a partial
-score as a final result. Preserve this cutoff and the historical deck separately.
+Both training repeats of this control are complete. Three completed tool-change
+comparisons now appear on slide5:6 to12,8 to10 and9 to14 successes out of16.
+The fourth comparison, on the second trained model in the other recipe setting,
+is running. Update the slide and notes together when its full audit is available.
+Never show a partial score as a final result.
 
 ## Evidence
 
@@ -37,6 +38,7 @@ score as a final result. Preserve this cutoff and the historical deck separately
 - [Teaching and memory findings](../../experiments/selective_delegation/RESEARCH-UPDATE-20260924.md).
 - [Completed RL and memory update](../../experiments/selective_delegation/MORNING-UPDATE-20260924.md).
 - [Completed changed-world control](../../experiments/selective_delegation/WORLD47-CONTROL-20260924.md).
+- [Recipe-execution results and limitations](../../experiments/selective_delegation/RECIPE-BINDING-RESULTS-20260924.md).
 - [Mechanism ideas and limitations](../../experiments/selective_delegation/RL-CREDIT-ASSIGNMENT-20260923.md).
 
 Slide4 now shows world47, not the earlier A/B/C table. The bar chart on slide3

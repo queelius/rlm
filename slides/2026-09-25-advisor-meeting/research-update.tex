@@ -19,7 +19,7 @@
 \begin{document}
 
 \begin{frame}[t]
-\frametitle{Can we teach a model how to find what it needs?}
+\frametitle{How can a model finish a multi-step task?}
 A recursive language model (RLM) can use tools and ask helper models to solve parts of a task.
 \begin{block}{For this study, we returned to a basic skill.}
 Can a small model look up missing information and use it to finish a task?
@@ -35,7 +35,7 @@ Can a small model look up missing information and use it to finish a task?
 
 \begin{frame}[t]
 \frametitle{We compared two kinds of worked examples.}
-We trained copies of the same model to imitate the next action in an example. This is \textbf{supervised fine-tuning}.
+A program generated two kinds of worked examples. We trained copies of the same model to imitate their actions. This is \textbf{supervised fine-tuning}.
 \vspace{3mm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.48\textwidth}
@@ -107,17 +107,25 @@ The lead was small in one repeat and large in the other.
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Next: separate choosing a step from carrying it out.}
-\begin{block}{A small change to the model's tools}
-The model chooses what to make. Code translates a recipe it has already looked up into the exact tool command.
-\end{block}
-\textbf{Example:} The model says ``make two sticks.'' Code fills in the ingredient amounts from the known recipe.
-\vspace{3mm}
-
-We can compare this with making the model fill in every command detail itself. Does it finish more tasks, including tasks with changed recipes?
-\vspace{3mm}
-
-\textbf{Discussion:} Is this a useful step toward teaching models to plan and divide larger tasks?
-\aside{Proposed, not yet a result. Simply changing the reward-based training rule did not improve success: both tested versions solved 15/32 attempts.}
+\frametitle{Letting code fill in recipe details helped.}
+The model still chooses the item and amount. Code fills in ingredients from a recipe the model already looked up.\par
+\vspace{2mm}
+We used the discovery-trained models, with \textbf{no extra training}.\par
+\vspace{1mm}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcc}
+\toprule
+ & Model writes & Code fills\\
+Test & the ingredients & the ingredients\\
+\midrule
+Slide 4 setting, first trained model & 6/16 & \textbf{12/16}\\
+Slide 4 setting, second trained model & 8/16 & \textbf{10/16}\\
+Another recipe setting, first model & 9/16 & \textbf{14/16}\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Question:} Which decisions need a model, and which details should code handle?
+\aside{Numbers are successful attempts. All outcomes are known. This is a small, preliminary test within one game; it does not demonstrate better recursive planning.}
 \end{frame}
 \end{document}
