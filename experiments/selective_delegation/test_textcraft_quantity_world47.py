@@ -21,8 +21,11 @@ def test_analyze_unpacks_plan_and_reports_public_minus_corrected(monkeypatch, tm
         )
         plans[arm] = plan
     monkeypatch.setattr(subject, "output", lambda arm: tmp_path / arm)
+    monkeypatch.setattr(subject, "PUBLIC_OUTPUT", tmp_path / "public")
     multi = SimpleNamespace(checked_world=lambda plan: "world")
-    monkeypatch.setattr(subject, "build", lambda arm: (multi, plans[arm], [], {}))
+    monkeypatch.setattr(
+        subject, "build", lambda arm: (multi, plans["quantity_corrected_original"], [], {})
+    )
     compared = {}
 
     class Audit:

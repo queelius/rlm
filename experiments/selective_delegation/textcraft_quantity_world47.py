@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path("/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921")
 SOURCE = ROOT / "source-textcraft-reserve-readout-001"
 WORLD, TRAINING_SEED = 47, 2026092208
-ARMS = ("quantity_corrected_original", "public")
+ARMS = ("quantity_corrected_original",)
 CORRECTED = ROOT / "textcraft-quantity-matched-seed2026092208-001"
 ROWS_SHA = "24ea72cb1242f2e0d819d8fb115737864de03fb750e064f145f9ec48a245e6d6"
 
@@ -20,7 +20,10 @@ def sha(path: Path) -> str:
 
 
 def output(arm: str) -> Path:
-    return ROOT / f"textcraft-world47-quantity-corrected-seed2208-{arm}-003"
+    return ROOT / f"textcraft-world47-quantity-corrected-seed2208-{arm}-004"
+
+
+PUBLIC_OUTPUT = ROOT / "textcraft-world47-seed2026092208-public-001"
 
 
 def strip_conditions(jobs: list[dict]) -> list[dict]:
@@ -44,8 +47,8 @@ def build(arm: str):
     sys.path.insert(0, str(SOURCE))
     import textcraft_multiworld as multi
 
-    public_plan, tasks, public_binding = multi.build(WORLD, "original", "public")
-    binding = public_binding if arm == "public" else corrected_binding(multi.original)
+    public_plan, tasks, _ = multi.build(WORLD, "original", "public")
+    binding = corrected_binding(multi.original)
     plan = copy.deepcopy(public_plan)
     condition = f"world47_quantity_corrected_seed2208_{arm}"
     plan.update(
@@ -78,20 +81,19 @@ def analyze(report: Path) -> None:
     plans, rows, arms = [], [], []
     multi, _, _, _ = build("quantity_corrected_original")
     world = None
-    for arm in ARMS:
-        _, expected, _, _ = build(arm)
-        actual = json.loads((output(arm) / "PLAN.json").read_text())
-        if actual != expected:
-            raise ValueError("saved PLAN differs from prepared quantity-world47 contract")
-        plans.append(actual)
-        world = multi.checked_world(actual)
+    _, expected, _, _ = build("quantity_corrected_original")
+    corrected = json.loads((output("quantity_corrected_original") / "PLAN.json").read_text())
+    if corrected != expected:
+        raise ValueError("saved corrected PLAN differs from sealed source contract")
+    public = json.loads((PUBLIC_OUTPUT / "PLAN.json").read_text())
+    plans = [corrected, public]
+    world = multi.checked_world(public)
     if strip_conditions(plans[0]["jobs"]) != strip_conditions(plans[1]["jobs"]):
         raise ValueError("paired world47 slots differ")
     from transformers import AutoTokenizer
 
     tokenizer = AutoTokenizer.from_pretrained(plans[0]["model"], local_files_only=True)
-    for arm in ARMS:
-        directory = output(arm)
+    for directory in (output("quantity_corrected_original"), PUBLIC_OUTPUT):
         summary = profiles.audit.analyze(directory, tokenizer, world=world)
         summary.pop("paired", None)
         summary.pop("depth_strata", None)
@@ -115,7 +117,8 @@ def analyze(report: Path) -> None:
         ),
         "method": {"parents": 8, "repeats": 2, "planned_per_arm": 16},
         "source_sha256": sha(Path(__file__).resolve()),
-        "caveat": plans[0]["caveat"],
+        "caveat": plans[0]["caveat"] + " Public reuse has a 2700-second total cap versus "
+        "corrected arm's 1800-second cap; only complete paired slots are directly comparable.",
     }
     report.write_text(json.dumps(result, sort_keys=True, indent=2) + "\n")
     report.with_suffix(".md").write_text(
