@@ -1,0 +1,37 @@
+{
+  "pdfpcFormat": 2,
+  "disableMarkdown": true,
+  "noteFontSize": 16,
+  "pages": [
+    {
+      "idx": 0,
+      "label": "1",
+      "overlay": 0,
+      "note": "This is a building block for our RLM\nresearch, not a demonstration that\nrecursion helps.\n\nThe game provides an objective check: did\nthe agent obtain the requested items? The\npickaxe is a simplified example, not a\nquoted test case.\n\nWe study one model using tools before\nadding helper calls."
+    },
+    {
+      "idx": 1,
+      "label": "2",
+      "overlay": 0,
+      "note": "The model is Qwen3-4B-Instruct-2507. We\nfine-tune small adapters, not all weights.\n\nBoth teaching packages use 32 training\ntasks and 366 steps, with the same update\ncount. The teacher routes differ in\nobservations, actions and text length.\n\nThis comparison does not isolate looking\nthings up as the sole cause."
+    },
+    {
+      "idx": 2,
+      "label": "3",
+      "overlay": 0,
+      "note": "All 64 paired outcomes are known. Each\ntraining repeat has 16 evaluation tasks\nwith two attempts each.\n\nThe advantage is about 31 and 22\npercentage points. Task-group uncertainty\nintervals exclude zero in both repeats.\n\nWe fixed a quantity mistake in the\noriginal examples before this comparison.\nThe evaluation tasks were already exposed\nto our research process."
+    },
+    {
+      "idx": 3,
+      "label": "4",
+      "overlay": 0,
+      "note": "A, B and C are recipe worlds44,45,46. Each\nhas eight goals with two attempts per\ngoal.\n\nAll 96 pairs are known. This is variation\nwithin one game generator, not transfer to\na new domain.\n\nThese original teachers were not quantity-\ncorrected. Do not combine this finding\nwith slide3 as though both controls were\ntested together."
+    },
+    {
+      "idx": 4,
+      "label": "5",
+      "overlay": 0,
+      "note": "This tool change is proposed, not\nmeasured. Code would use only recipes the\nmodel already requested, never hidden\nanswers.\n\nPositive-only reward training tied signed\ncredit at15/32, with three paired wins and\nthree losses. Extra evaluation time was\nneeded to finish four cases.\n\nA recipe notebook also had mixed effects;\nadding memory alone is not a reliable\nimprovement."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "slides": [
+    {
+      "title": "Can we teach a model how to find what it needs?",
+      "notes": "This is a building block for our RLM research, not a demonstration that recursion helps.\n\nThe game provides an objective check: did the agent obtain the requested items? The pickaxe is a simplified example, not a quoted test case.\n\nWe study one model using tools before adding helper calls."
+    },
+    {
+      "title": "We compared two kinds of worked examples.",
+      "notes": "The model is Qwen3-4B-Instruct-2507. We fine-tune small adapters, not all weights.\n\nBoth teaching packages use 32 training tasks and 366 steps, with the same update count. The teacher routes differ in observations, actions and text length.\n\nThis comparison does not isolate looking things up as the sole cause."
+    },
+    {
+      "title": "Examples that discover the route worked better.",
+      "notes": "All 64 paired outcomes are known. Each training repeat has 16 evaluation tasks with two attempts each.\n\nThe advantage is about 31 and 22 percentage points. Task-group uncertainty intervals exclude zero in both repeats.\n\nWe fixed a quantity mistake in the original examples before this comparison. The evaluation tasks were already exposed to our research process."
+    },
+    {
+      "title": "The advantage also appeared when recipes changed.",
+      "notes": "A, B and C are recipe worlds44,45,46. Each has eight goals with two attempts per goal.\n\nAll 96 pairs are known. This is variation within one game generator, not transfer to a new domain.\n\nThese original teachers were not quantity-corrected. Do not combine this finding with slide3 as though both controls were tested together."
+    },
+    {
+      "title": "Next: separate choosing a step from carrying it out.",
+      "notes": "This tool change is proposed, not measured. Code would use only recipes the model already requested, never hidden answers.\n\nPositive-only reward training tied signed credit at15/32, with three paired wins and three losses. Extra evaluation time was needed to finish four cases.\n\nA recipe notebook also had mixed effects; adding memory alone is not a reliable improvement."
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+\documentclass[aspectratio=169,12pt]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,booktabs,tikz}
+\definecolor{Ink}{HTML}{17324D}
+\definecolor{Teal}{HTML}{007F7B}
+\definecolor{Gray}{HTML}{697887}
+\definecolor{Soft}{HTML}{EEF3F6}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=Teal}
+\setbeamercolor{block title}{fg=white,bg=Teal}
+\setbeamercolor{block body}{fg=Ink,bg=Soft}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=9mm,text margin right=9mm}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Preliminary findings | Alex Towell\hfill\insertframenumber/5\hspace{9mm}\vspace{3mm}}
+\newcommand{\aside}[1]{\vfill{\footnotesize\color{Gray}#1\par}}
+\hypersetup{pdftitle={Teaching a model to find what it needs},pdfauthor={Alex Towell}}
+\begin{document}
+
+\begin{frame}[t]
+\frametitle{Can we teach a model how to find what it needs?}
+A recursive language model (RLM) can use tools and ask helper models to solve parts of a task.
+\begin{block}{For this study, we returned to a basic skill.}
+Can a small model look up missing information and use it to finish a task?
+\end{block}
+\textbf{Example: Make a wooden pickaxe in a crafting game.}
+\begin{enumerate}
+\item The model asks which ingredients it needs.
+\item It makes the parts and then the pickaxe.
+\item The game checks whether the pickaxe actually exists.
+\end{enumerate}
+\aside{Simplified illustration of TextCraft, our test environment. These experiments use one model with tools, not recursive helper calls.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{We compared two kinds of worked examples.}
+We trained copies of the same model to imitate the next action in an example. This is \textbf{supervised fine-tuning}.
+\vspace{3mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\begin{block}{The teacher already knows the recipes.}
+It chooses the route using that knowledge, then shows the steps.
+\medskip
+
+``Look up planks. Make planks. Continue along the planned route.''
+\end{block}
+\end{column}
+\begin{column}{.48\textwidth}
+\begin{block}{The teacher discovers the recipes.}
+It chooses the route by looking up which parts are needed.
+\medskip
+
+``Look up the pickaxe. Discover its parts. Look up their recipes.''
+\end{block}
+\end{column}
+\end{columns}
+\vspace{2mm}
+Both show recipe lookups. They differ in how the route is chosen.
+\aside{Simplified examples, not literal training records. Both use the same 32 training tasks and 366 demonstrated steps. Their histories and amount of text differ.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Examples that discover the route worked better.}
+We trained each kind of model twice and tested them on the same tasks.
+\vspace{3mm}
+\begin{center}
+\begin{tikzpicture}[x=.235cm,y=.64cm,font=\normalsize]
+\node[anchor=east] at (-.5,3.35) {First training repeat};
+\node[anchor=east] at (-.5,.75) {Second training repeat};
+\fill[Gray] (0,3.4) rectangle (5,4);
+\fill[Teal] (0,2.6) rectangle (15,3.2);
+\fill[Gray] (0,.8) rectangle (3,1.4);
+\fill[Teal] (0,0) rectangle (10,.6);
+\node[anchor=west] at (5.3,3.7) {5};
+\node[anchor=west] at (15.3,2.9) {15};
+\node[anchor=west] at (3.3,1.1) {3};
+\node[anchor=west] at (10.3,.3) {10};
+\draw[Gray] (0,-.3)--(32,-.3);
+\foreach \n in {0,8,16,24,32} {\draw[Gray] (\n,-.3)--(\n,-.45);\node[below,font=\small] at (\n,-.45) {\n};}
+\node[below] at (16,-1) {Successful attempts out of 32};
+\end{tikzpicture}
+\end{center}
+{\small\color{Gray}\rule{4mm}{2mm} Teacher knows recipes\quad\color{Teal}\rule{4mm}{2mm} Teacher discovers recipes}
+\aside{Sixteen evaluation tasks, two attempts each. The original examples were corrected for a known quantity error. This correction did not remove the advantage.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{The advantage also appeared when recipes changed.}
+We kept the goals but changed the recipes and starting supplies. Each cell below shows successful attempts out of 16.
+\vspace{1mm}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcc}
+\toprule
+ & \multicolumn{2}{c}{Knows recipes $\longrightarrow$ Discovers recipes}\\
+Changed task setting & First training repeat & Second training repeat\\
+\midrule
+A & $4\longrightarrow\mathbf{7}$ & $3\longrightarrow\mathbf{6}$\\
+B & $1\longrightarrow\mathbf{8}$ & $1\longrightarrow\mathbf{8}$\\
+C & $3\longrightarrow\mathbf{8}$ & $1\longrightarrow\mathbf{10}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{2mm}
+The direction repeats, but this is still one kind of game.
+\aside{Important limit: these comparisons use the original examples before the quantity correction. Testing corrected examples with changed recipes is the next control.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Next: separate choosing a step from carrying it out.}
+\begin{block}{A small change to the model's tools}
+The model chooses what to make. Code translates a recipe it has already looked up into the exact tool command.
+\end{block}
+\textbf{Example:} The model says ``make two sticks.'' Code fills in the ingredient amounts from the known recipe.
+\vspace{3mm}
+
+We can compare this with making the model fill in every command detail itself. Does it finish more tasks, including tasks with changed recipes?
+\vspace{3mm}
+
+\textbf{Discussion:} Is this a useful step toward teaching models to plan and divide larger tasks?
+\aside{Proposed, not yet a result. Simply changing the reward-based training rule did not improve success: both tested versions solved 15/32 attempts.}
+\end{frame}
+\end{document}
