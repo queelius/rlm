@@ -19,10 +19,10 @@
 \begin{document}
 
 \begin{frame}[t]
-\frametitle{How can a model finish a multi-step task?}
+\frametitle{Can a model learn to find what it needs?}
 A recursive language model (RLM) can use tools and ask helper models to solve parts of a task.
 \begin{block}{For this study, we returned to a basic skill.}
-Can a small model look up missing information and use it to finish a task?
+Can better examples and better tools help a small model finish a multi-step task?
 \end{block}
 \textbf{Example: Make a wooden pickaxe in a crafting game.}
 \begin{enumerate}
@@ -34,35 +34,32 @@ Can a small model look up missing information and use it to finish a task?
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{We compared two kinds of worked examples.}
-A program generated two kinds of worked examples. We trained copies of the same model to imitate their actions. This is \textbf{supervised fine-tuning}.
-\vspace{3mm}
+\frametitle{We taught the model by showing what to do next.}
+We trained copies of the same model to imitate worked examples. This is \textbf{supervised fine-tuning (SFT)}.
+\vspace{2mm}
+
+\textbf{Example:} Given ``Make a pickaxe'' and the actions so far, learn to ask for the pickaxe recipe next.
+\vspace{2mm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.48\textwidth}
-\begin{block}{The teacher already knows the recipes.}
-It chooses the route using that knowledge, then shows the steps.
-\medskip
-
-``Look up planks. Make planks. Continue along the planned route.''
+\begin{block}{The teacher knows recipes.}
+A program plans the steps using recipes it already knows, then shows lookups and actions.
 \end{block}
 \end{column}
 \begin{column}{.48\textwidth}
-\begin{block}{The teacher discovers the recipes.}
-It chooses the route by looking up which parts are needed.
-\medskip
-
-``Look up the pickaxe. Discover its parts. Look up their recipes.''
+\begin{block}{The teacher discovers recipes.}
+A program looks up the goal's recipe, discovers the needed parts, then looks up their recipes.
 \end{block}
 \end{column}
 \end{columns}
 \vspace{2mm}
-Both show recipe lookups. They differ in how the route is chosen.
-\aside{Simplified examples, not literal training records. Both use the same 32 training tasks and 366 demonstrated steps. Their histories and amount of text differ.}
+Both show lookups. Only the second uses them to decide the route.
+\aside{Simplified example. Both sets cover the same 32 training tasks and number of steps, but differ in text and action order.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Examples that discover the route worked better.}
-We trained each kind of model twice and tested them on the same tasks.
+\frametitle{Learning from discovery led to more finished tasks.}
+We repeated training twice. Each time, we tested both models on the same 16 tasks, with two attempts per task.
 \vspace{3mm}
 \begin{center}
 \begin{tikzpicture}[x=.235cm,y=.64cm,font=\normalsize]
@@ -82,50 +79,51 @@ We trained each kind of model twice and tested them on the same tasks.
 \end{tikzpicture}
 \end{center}
 {\small\color{Gray}\rule{4mm}{2mm} Teacher knows recipes\quad\color{Teal}\rule{4mm}{2mm} Teacher discovers recipes}
-\aside{Sixteen evaluation tasks, two attempts each. The original examples were corrected for a known quantity error. This correction did not remove the advantage.}
+\aside{All outcomes are known. We corrected an ingredient-quantity error in the first teacher's examples before this comparison. These are exploratory tests, not a final untouched test set.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{On changed recipes, discovery still led.}
-We changed the recipes and starting supplies, then tested both training repeats. Each number is successes out of 16 attempts.
+\frametitle{The advantage remained when recipes changed.}
+Could the models cope when making the same items required different ingredients? We changed the recipes and starting supplies, without retraining.
 \vspace{1mm}
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lcc}
 \toprule
-Training examples & First repeat & Second repeat\\
+Successful attempts (out of 16) & First repeat & Second repeat\\
 \midrule
-Teacher knows the recipes & 2 & 1\\
-Same teacher, with the quantity mistake fixed & 4 & 1\\
-Teacher discovers the recipes & 6 & 8\\
+Teacher knows the recipes & 4 & 1\\
+Teacher discovers the recipes & \textbf{6} & \textbf{8}\\
 \bottomrule
 \end{tabular}
 \end{center}
 \vspace{2mm}
-The lead was small in one repeat and large in the other.
-\aside{All outcomes are known. The first repeat is too uncertain to establish a clear advantage over corrected examples; the second gives stronger evidence. These are still small tests within one kind of game.}
+The lead was small in one repeat and large in the other.\par
+\medskip
+This is encouraging, but it is still \textbf{one kind of game}.
+\aside{Eight goals, two attempts each; all outcomes are known. The quantity error is corrected here too. The smaller difference is too uncertain to establish a clear advantage on its own.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Letting code fill in recipe details helped.}
-The model still chooses the item and amount. Code fills in ingredients from a recipe the model already looked up.\par
+\frametitle{Let the model choose the step; let code fill the details.}
+The model chooses what to make and how much. Code fills in the ingredients using a recipe the model already looked up.\par
 \vspace{2mm}
-We used the discovery-trained models, with \textbf{no extra training}.\par
+We changed the tool, with \textbf{no extra model training}.\par
 \vspace{1mm}
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lcc}
 \toprule
- & Model writes & Code fills\\
-Test & the ingredients & the ingredients\\
+Successful attempts & Model fills & Code fills\\
+(out of 16) & ingredients & ingredients\\
 \midrule
-Slide 4 setting, first trained model & 6/16 & \textbf{12/16}\\
-Slide 4 setting, second trained model & 8/16 & \textbf{10/16}\\
-Another recipe setting, first model & 9/16 & \textbf{14/16}\\
+Slide 4 recipes, first model & 6 & \textbf{12}\\
+Slide 4 recipes, second model & 8 & \textbf{10}\\
+Different recipes, first model & 9 & \textbf{14}\\
 \bottomrule
 \end{tabular}
 \end{center}
-\textbf{Question:} Which decisions need a model, and which details should code handle?
-\aside{Numbers are successful attempts. All outcomes are known. This is a small, preliminary test within one game; it does not demonstrate better recursive planning.}
+\textbf{Next question:} Can this division of work help on other tasks?
+\aside{Both models learned from discovery examples. These are small, related tests in one game; the smallest gain remains uncertain. We have not shown better recursive planning.}
 \end{frame}
 \end{document}

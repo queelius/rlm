@@ -1,23 +1,23 @@
 {
   "slides": [
     {
-      "title": "How can a model finish a multi-step task?",
+      "title": "Can a model learn to find what it needs?",
       "notes": "This is a building block for our RLM research, not a demonstration that recursion helps.\n\nThe game provides an objective check: did the agent obtain the requested items? The pickaxe is a simplified example, not a quoted test case.\n\nWe study one model using tools before adding helper calls."
     },
     {
-      "title": "We compared two kinds of worked examples.",
+      "title": "We taught the model by showing what to do next.",
       "notes": "The model is Qwen3-4B-Instruct-2507. We fine-tune small adapters, not all weights.\n\nBoth teaching packages use 32 training tasks and 366 steps, with the same update count. The teacher routes differ in observations, actions and text length.\n\nThis comparison does not isolate looking things up as the sole cause."
     },
     {
-      "title": "Examples that discover the route worked better.",
+      "title": "Learning from discovery led to more finished tasks.",
       "notes": "All 64 paired outcomes are known. Each training repeat has 16 evaluation tasks with two attempts each.\n\nThe advantage is about 31 and 22 percentage points. Task-group uncertainty intervals exclude zero in both repeats.\n\nWe fixed a quantity mistake in the original examples before this comparison. The evaluation tasks were already exposed to our research process."
     },
     {
-      "title": "On changed recipes, discovery still led.",
+      "title": "The advantage remained when recipes changed.",
       "notes": "World47 has eight goals with two attempts each. First repeat: corrected4, discovery6; three paired wins and one loss. Second: corrected1, discovery8; seven wins, no losses.\n\nDifference intervals: minus12.5 to plus43.75 points; plus12.5 to plus75 points.\n\nDo not select the stronger repeat or pool these as independent tasks. All outcomes are known."
     },
     {
-      "title": "Letting code fill in recipe details helped.",
+      "title": "Let the model choose the step; let code fill the details.",
       "notes": "The weights did not change. Code uses only an already observed recipe and preserves the chosen item and amount. It replaces ingredient arguments, not the plan.\n\nPaired wins: six, two, five; losses: zero in all three tests. The smaller second-model effect remains uncertain.\n\nSame game generator and shared goals; not broad transfer. The fourth model-by-setting check is running."
     }
   ]

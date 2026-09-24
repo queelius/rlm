@@ -56,6 +56,10 @@ and base weights. They are not independent datasets.
 
 ## Slide4: What does changing the world mean?
 
+The slide shows only the corrected teacher versus the discovery teacher, as on
+slide3. The older, uncorrected numbers below are background for questions, not
+an extra comparison the audience needs to follow.
+
 We keep the goal identities but change recipe assignments and starting supplies.
 Slide4 now shows world47, with eight goals and two attempts each. Original
 teaching solved2/16, corrected teaching4/16 and discovery teaching6/16. Every

@@ -41,7 +41,9 @@ Never show a partial score as a final result.
 - [Recipe-execution results and limitations](../../experiments/selective_delegation/RECIPE-BINDING-RESULTS-20260924.md).
 - [Mechanism ideas and limitations](../../experiments/selective_delegation/RL-CREDIT-ASSIGNMENT-20260923.md).
 
-Slide4 now shows world47, not the earlier A/B/C table. The bar chart on slide3
+Slide4 shows only corrected teaching versus discovery in world47, keeping the
+same comparison as slide3. Older, uncorrected results remain in the speaker guide.
+Slide2 includes a simplified situation-to-next-action SFT example. The bar chart on slide3
 uses corrected-original/public counts5/15 and3/10; its
 horizontal scale runs from0 to32. There are exactly five pages, with no backup slides.
 
