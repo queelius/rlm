@@ -57,14 +57,22 @@ and base weights. They are not independent datasets.
 ## Slide4: What does changing the world mean?
 
 We keep the goal identities but change recipe assignments and starting supplies.
-There are eight goals with two attempts each in each of three worlds. Both
-training seeds favor discovery demonstrations in all three worlds.
+Slide4 now shows world47, with eight goals and two attempts each. Original
+teaching solved2/16, corrected teaching4/16 and discovery teaching6/16. Every
+outcome is known. Against corrected teaching, discovery wins three attempts
+and loses one. The difference interval is minus12.5 to plus43.75 percentage
+points, which includes zero. We cannot confidently conclude that it is better
+in this setting. The second training repeat is being evaluated separately.
 
-The limitation is important: these comparisons used the uncorrected original
-teacher. Slide3 controls the quantity mistake; slide4 changes the world. Until
-the new control finishes, we have not shown both protections in one experiment.
-All worlds also share one synthetic generator. Success on a new dataset or
-different kind of environment remains untested by these comparisons.
+This does not contradict slide3: recipe changes can alter which lessons help.
+Earlier worlds44–46 favored discovery under both training seeds, but their
+comparisons used the uncorrected original teacher. All worlds share one
+synthetic generator. A different domain is still an important future test.
+
+The corrected model used491 calls and made43 invalid actions; discovery used621
+calls and made312 invalid actions. Yet discovery finished more tasks. This is
+a clue to investigate routes and persistence, not proof that mistakes help.
+Each arm finished before its overall time cap, though those caps differed.
 
 ## Slide5: What change to the RLM are we proposing?
 
@@ -77,6 +85,20 @@ This might remove copying mistakes, but it cannot fix a bad choice of item or
 missing supplies. Earlier one-step audits found both types of problem. Repairing
 one action is not proof that an entire task would succeed. The next experiment
 should compare end-to-end success using fixed tasks, seeds and model weights.
+
+**A concrete failure behind this proposal:** In one changed-world attempt, the
+discovery-trained model read the correct recipe but repeatedly added an extra
+ingredient. The game kept rejecting that command. Automatic argument binding
+could test whether this specific execution problem matters for overall success.
+It would not give the model any new recipe knowledge.
+
+**A different failure it would not directly fix:** In another attempt, the
+corrected-teacher model successfully made both parts, then stopped without
+assembling the final item. Its local actions were valid, but the job was not done.
+It succeeded on the other attempt at that same task, so this is not proof of an
+inability. See the [complete contrasting traces](../../experiments/selective_delegation/WORLD47-CONTRASTS-20260924.md)
+for all four outcome differences, including the counterexample where discovery
+failed and corrected teaching succeeded.
 
 **Why not just do more reinforcement learning?** We are still interested in it.
 But a larger update did not improve this task, and positive-only versus signed

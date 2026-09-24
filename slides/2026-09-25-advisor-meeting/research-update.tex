@@ -86,25 +86,24 @@ We trained each kind of model twice and tested them on the same tasks.
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{The advantage also appeared when recipes changed.}
-We kept the goals but changed the recipes and starting supplies. Each cell below shows successful attempts out of 16.
+\frametitle{A harder check narrowed the advantage.}
+We changed the recipes and starting supplies, then tested the first training repeat. All 16 attempts per model have a result.
 \vspace{1mm}
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lcc}
+\begin{tabular}{lc}
 \toprule
- & \multicolumn{2}{c}{Knows recipes $\longrightarrow$ Discovers recipes}\\
-Changed task setting & First training repeat & Second training repeat\\
+Training examples & Successful attempts\\
 \midrule
-A & $4\longrightarrow\mathbf{7}$ & $3\longrightarrow\mathbf{6}$\\
-B & $1\longrightarrow\mathbf{8}$ & $1\longrightarrow\mathbf{8}$\\
-C & $3\longrightarrow\mathbf{8}$ & $1\longrightarrow\mathbf{10}$\\
+Teacher knows the recipes & 2/16\\
+Same teacher, with the quantity mistake fixed & 4/16\\
+Teacher discovers the recipes & 6/16\\
 \bottomrule
 \end{tabular}
 \end{center}
 \vspace{2mm}
-The direction repeats, but this is still one kind of game.
-\aside{Important limit: these comparisons use the original examples before the quantity correction. Testing corrected examples with changed recipes is the next control.}
+Fixing the examples closed half the gap in this setting.
+\aside{Discovery still led, but this small comparison does not establish a clear advantage over corrected examples. We are checking the second training repeat. All tests remain within one kind of game.}
 \end{frame}
 
 \begin{frame}[t]
