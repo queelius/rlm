@@ -1,0 +1,20 @@
+{
+  "slides": [
+    {
+      "title": "How can a model solve an unfamiliar task?",
+      "notes": "About one minute. The goal is reliable multi-step work, not just plausible text.\n\nThe crafting game gives a clear success check. The pickaxe is a simplified illustration.\n\nRLMs allow helper calls, but the recent crafting tests isolate one model using tools. Do not claim a demonstrated benefit from recursion."
+    },
+    {
+      "title": "We tried learning from success and failure.",
+      "notes": "RL is not a total failure. Answer-or-refuse tests improved from 10 to 18 successful pairs out of 64, but extra supervised training reached 19.\n\nPlanner training changed 53 to 56 correct out of 128; the gain was uncertain.\n\nSuccessful crafting attempts contained rejected actions. This motivates better credit, but does not prove the cause."
+    },
+    {
+      "title": "Two recent findings suggest a useful division of work.",
+      "notes": "Teaching: 5 versus 15, then 3 versus 10 successes out of 32 in two training repeats. Both teachers demonstrate lookups.\n\nCode assistance: 6 to 12, 8 to 10, 9 to 14, and 9 to 13, each out of 16.\n\nCode uses already observed recipes, not hidden answers. Same game and related goals; no broad transfer claim."
+    },
+    {
+      "title": "Can better tools make learning easier?",
+      "notes": "The queued comparison crosses teaching method with code assistance on additional goals and recipe settings. It uses existing trained models.\n\nLater RL and recursive-helper studies are proposals, not results.\n\nInvite suggestions for another task with dependent steps and an objective success check. The candidate contribution is when this division of work helps."
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 # Teaching a model to find what it needs
 
+For the brief, informal conversation with Fujinoki, use the
+[new four-slide discussion deck](../2026-09-25-fujinoki/README.md).
+This five-slide version is preserved as the more detailed numerical presentation.
+
 Five-slide, plain-language advisor discussion for September25. Evidence cutoff:
 September24, 18:30 UTC. This is an exploratory result, not a finished paper.
 
