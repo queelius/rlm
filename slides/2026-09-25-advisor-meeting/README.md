@@ -1,7 +1,7 @@
 # Teaching a model to find what it needs
 
 Five-slide, plain-language advisor discussion for September25. Evidence cutoff:
-September24, 17:55 UTC. This is an exploratory result, not a finished paper.
+September24, 18:30 UTC. This is an exploratory result, not a finished paper.
 
 Open `research-update.pdf`. Source is `research-update.tex`; no Python or external
 figure files are needed to compile it. Run `make` with latexmk, or `make tectonic`.
@@ -26,11 +26,10 @@ the second. The first difference is uncertain; the second is clearer. That is
 worth a preliminary discussion, not enough to isolate the cause or claim
 general-purpose planning. We do not claim recursion helped.
 
-Both training repeats of this control are complete. Three completed tool-change
-comparisons now appear on slide5:6 to12,8 to10 and9 to14 successes out of16.
-The fourth comparison, on the second trained model in the other recipe setting,
-is running. Update the slide and notes together when its full audit is available.
-Never show a partial score as a final result.
+Both training repeats of this control are complete. Four completed tool-change
+comparisons appear on slide4:6 to12,8 to10,9 to14 and9 to13 successes out of16.
+The fourth comparison completes both models in both recipe settings; see the
+[new result receipt](fourth-tool-result.md). Never show partial scores as final results.
 
 ## Evidence
 
@@ -41,11 +40,18 @@ Never show a partial score as a final result.
 - [Recipe-execution results and limitations](../../experiments/selective_delegation/RECIPE-BINDING-RESULTS-20260924.md).
 - [Mechanism ideas and limitations](../../experiments/selective_delegation/RL-CREDIT-ASSIGNMENT-20260923.md).
 
-Slide4 shows only corrected teaching versus discovery in world47, keeping the
-same comparison as slide3. Older, uncorrected results remain in the speaker guide.
-Slide2 includes a simplified situation-to-next-action SFT example. The bar chart on slide3
-uses corrected-original/public counts5/15 and3/10; its
-horizontal scale runs from0 to32. There are exactly five pages, with no backup slides.
+## Five-slide story
+
+1. Why divide the work between a language model and its tools? Why use a game?
+2. What does a training example look like, and how do the two teachers differ?
+3. Did the training examples change success, including when recipes changed?
+4. Did letting code handle ingredients help without extra training?
+5. What have we learned, what is still unproven, and what should we test next?
+
+Slide3 retains the bar chart (5/15 and3/10, scale0–32) and summarizes the changed
+recipes comparison. Slide4 includes the complete four-cell tool comparison.
+Slide5 gives the takeaway and invites discussion, rather than ending with a table.
+There are exactly five pages, with no backup slides.
 
 Compiled with the previously verified Tectonic0.17.0 installation; all five
 pages were rendered and visually inspected. An initial slide4 overflow was fixed.

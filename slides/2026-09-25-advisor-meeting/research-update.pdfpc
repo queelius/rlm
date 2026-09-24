@@ -7,31 +7,31 @@
       "idx": 0,
       "label": "1",
       "overlay": 0,
-      "note": "This is a building block for our RLM\nresearch, not a demonstration that\nrecursion helps.\n\nThe game provides an objective check: did\nthe agent obtain the requested items? The\npickaxe is a simplified example, not a\nquoted test case.\n\nWe study one model using tools before\nadding helper calls."
+      "note": "RLM means recursive language model. It can\ndelegate parts to helper models and use\ncode.\n\nHere we isolate a simpler building block:\none model choosing actions and using\ntools. The game checks actual items, not\npersuasive text.\n\nWe test training examples and the division\nof work between model and code."
     },
     {
       "idx": 1,
       "label": "2",
       "overlay": 0,
-      "note": "The model is Qwen3-4B-Instruct-2507. We\nfine-tune small adapters, not all weights.\n\nBoth teaching packages use 32 training\ntasks and 366 steps, with the same update\ncount. The teacher routes differ in\nobservations, actions and text length.\n\nThis comparison does not isolate looking\nthings up as the sole cause."
+      "note": "We fine-tune Qwen3-4B using small LoRA\nadapters. A training row pairs the task,\ninventory and history with the next\naction.\n\nBoth teachers are programs; both show\nlookups. One uses known recipes to choose\nits route; the other discovers the route\nthrough lookups.\n\nSame 32 tasks and 366 steps, but different\nhistories and text lengths."
     },
     {
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "All 64 paired outcomes are known. Each\ntraining repeat has 16 evaluation tasks\nwith two attempts each.\n\nThe advantage is about 31 and 22\npercentage points. Task-group uncertainty\nintervals exclude zero in both repeats.\n\nWe fixed a quantity mistake in the\noriginal examples before this comparison.\nThe evaluation tasks were already exposed\nto our research process."
+      "note": "Each repeat means training both methods\nagain with a different random seed. Each\nmodel makes 32 test attempts.\n\nThe chart shows 5 versus 15 and 3 versus\n10. Task-group uncertainty intervals favor\ndiscovery in both repeats.\n\nChanged recipes: 4 versus 6 and 1 versus\n8, out of 16. The smaller difference\nremains uncertain."
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "World47 has eight goals with two attempts\neach. First repeat: corrected4,\ndiscovery6; three paired wins and one\nloss. Second: corrected1, discovery8;\nseven wins, no losses.\n\nDifference intervals: minus12.5 to\nplus43.75 points; plus12.5 to plus75\npoints.\n\nDo not select the stronger repeat or pool\nthese as independent tasks. All outcomes\nare known."
+      "note": "Code uses a recipe already in the public\nhistory. It preserves the chosen item and\namount; it does not pick subgoals or\nreveal hidden recipes.\n\nFour comparisons: 6 to 12, 8 to 10, 9 to\n14, 9 to 13. Paired wins: 6/2/5/4; no\nlosses.\n\nShared goals and generator, not 64\nindependent tasks. The smallest gain\nremains uncertain."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "The weights did not change. Code uses only\nan already observed recipe and preserves\nthe chosen item and amount. It replaces\ningredient arguments, not the plan.\n\nPaired wins: six, two, five; losses: zero\nin all three tests. The smaller second-\nmodel effect remains uncertain.\n\nSame game generator and shared goals; not\nbroad transfer. The fourth model-by-\nsetting check is running."
+      "note": "We have two promising effects, not a\ngeneral solution to planning. Teaching\npackages differ in several ways; the\nmechanism is not isolated.\n\nThe queued test compares both teachers\nwith and without code assistance on\nadditional goals and recipe settings.\n\nA second domain and later helper-call\ntests would strengthen the research."
     }
   ]
 }

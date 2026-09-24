@@ -19,50 +19,47 @@
 \begin{document}
 
 \begin{frame}[t]
-\frametitle{Can a model learn to find what it needs?}
-A recursive language model (RLM) can use tools and ask helper models to solve parts of a task.
-\begin{block}{For this study, we returned to a basic skill.}
-Can better examples and better tools help a small model finish a multi-step task?
+\frametitle{How should a model and its tools share the work?}
+Our long-term aim is to solve unfamiliar tasks by breaking them into smaller steps. A recursive language model (RLM) uses code and can ask other models for help.
+\begin{block}{Before adding helpers, we test two basic questions.}
+What examples teach a model to find the information it needs?\par
+Which details should code handle instead of the model?
 \end{block}
-\textbf{Example: Make a wooden pickaxe in a crafting game.}
-\begin{enumerate}
-\item The model asks which ingredients it needs.
-\item It makes the parts and then the pickaxe.
-\item The game checks whether the pickaxe actually exists.
-\end{enumerate}
-\aside{Simplified illustration of TextCraft, our test environment. These experiments use one model with tools, not recursive helper calls.}
+\textbf{Our test: a crafting game.} To make a pickaxe, the model must look up recipes, make the parts, and assemble the item.
+\medskip
+
+The game checks whether the requested item was actually made, not whether the answer sounds convincing.
+\aside{Pickaxe example simplified. We use TextCraft and one small model with tools. These experiments do not yet test recursive helper calls.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{We taught the model by showing what to do next.}
-We trained copies of the same model to imitate worked examples. This is \textbf{supervised fine-tuning (SFT)}.
-\vspace{2mm}
-
-\textbf{Example:} Given ``Make a pickaxe'' and the actions so far, learn to ask for the pickaxe recipe next.
-\vspace{2mm}
+\frametitle{Can examples teach a model how to choose its steps?}
+We train copies of the same model to imitate the next action in a worked example. This is \textbf{supervised fine-tuning (SFT)}.
+\begin{block}{One simplified training example}
+\textbf{Situation:} ``Make a pickaxe. Its recipe is not known yet.''\par
+\textbf{Action to learn:} ``Ask the game for the pickaxe recipe.''
+\end{block}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.48\textwidth}
 \begin{block}{The teacher knows recipes.}
-A program plans the steps using recipes it already knows, then shows lookups and actions.
+It uses known recipes to plan the steps, then demonstrates lookups and actions.
 \end{block}
 \end{column}
 \begin{column}{.48\textwidth}
 \begin{block}{The teacher discovers recipes.}
-A program looks up the goal's recipe, discovers the needed parts, then looks up their recipes.
+It looks up the goal's recipe, then its parts' recipes, to find the steps.
 \end{block}
 \end{column}
 \end{columns}
-\vspace{2mm}
-Both show lookups. Only the second uses them to decide the route.
-\aside{Simplified example. Both sets cover the same 32 training tasks and number of steps, but differ in text and action order.}
+\aside{Both teachers are programs; both demonstrate lookups on the same 32 training tasks. They differ in how the route is found, action order, and text.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Learning from discovery led to more finished tasks.}
-We repeated training twice. Each time, we tested both models on the same 16 tasks, with two attempts per task.
-\vspace{3mm}
+\frametitle{The discovery examples led to more finished tasks.}
+Each model made \textbf{32 attempts}: two on each of 16 evaluation tasks. We repeated training twice. Higher bars mean more successes.
+\vspace{1mm}
 \begin{center}
-\begin{tikzpicture}[x=.235cm,y=.64cm,font=\normalsize]
+\begin{tikzpicture}[x=.235cm,y=.46cm,font=\normalsize]
 \node[anchor=east] at (-.5,3.35) {First training repeat};
 \node[anchor=east] at (-.5,.75) {Second training repeat};
 \fill[Gray] (0,3.4) rectangle (5,4);
@@ -75,55 +72,54 @@ We repeated training twice. Each time, we tested both models on the same 16 task
 \node[anchor=west] at (10.3,.3) {10};
 \draw[Gray] (0,-.3)--(32,-.3);
 \foreach \n in {0,8,16,24,32} {\draw[Gray] (\n,-.3)--(\n,-.45);\node[below,font=\small] at (\n,-.45) {\n};}
-\node[below] at (16,-1) {Successful attempts out of 32};
 \end{tikzpicture}
 \end{center}
 {\small\color{Gray}\rule{4mm}{2mm} Teacher knows recipes\quad\color{Teal}\rule{4mm}{2mm} Teacher discovers recipes}
-\aside{All outcomes are known. We corrected an ingredient-quantity error in the first teacher's examples before this comparison. These are exploratory tests, not a final untouched test set.}
-\end{frame}
-
-\begin{frame}[t]
-\frametitle{The advantage remained when recipes changed.}
-Could the models cope when making the same items required different ingredients? We changed the recipes and starting supplies, without retraining.
-\vspace{1mm}
-\begin{center}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lcc}
-\toprule
-Successful attempts (out of 16) & First repeat & Second repeat\\
-\midrule
-Teacher knows the recipes & 4 & 1\\
-Teacher discovers the recipes & \textbf{6} & \textbf{8}\\
-\bottomrule
-\end{tabular}
-\end{center}
-\vspace{2mm}
-The lead was small in one repeat and large in the other.\par
 \medskip
-This is encouraging, but it is still \textbf{one kind of game}.
-\aside{Eight goals, two attempts each; all outcomes are known. The quantity error is corrected here too. The smaller difference is too uncertain to establish a clear advantage on its own.}
+
+With changed recipes, discovery also led: \textbf{6 vs.\ 4} and \textbf{8 vs.\ 1} successes out of 16. The smaller lead is uncertain.
+\aside{The first teacher's quantity error is corrected. These tests helped us develop the approach; a separate final test is still needed.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Let the model choose the step; let code fill the details.}
-The model chooses what to make and how much. Code fills in the ingredients using a recipe the model already looked up.\par
-\vspace{2mm}
-We changed the tool, with \textbf{no extra model training}.\par
+\frametitle{Code can handle details without choosing the plan.}
+A model can read the right recipe but still send the wrong ingredients. We changed the tool, with \textbf{no extra training}:
+\medskip
+
+\textbf{The model chooses} what to make and how much.\par
+\textbf{Code fills in} ingredients from a recipe already looked up.
 \vspace{1mm}
 \begin{center}
-\renewcommand{\arraystretch}{1.2}
+\renewcommand{\arraystretch}{1.05}
 \begin{tabular}{lcc}
 \toprule
 Successful attempts & Model fills & Code fills\\
 (out of 16) & ingredients & ingredients\\
 \midrule
-Slide 4 recipes, first model & 6 & \textbf{12}\\
-Slide 4 recipes, second model & 8 & \textbf{10}\\
-Different recipes, first model & 9 & \textbf{14}\\
+Recipe set A, first trained model & 6 & \textbf{12}\\
+Recipe set A, second trained model & 8 & \textbf{10}\\
+Recipe set B, first trained model & 9 & \textbf{14}\\
+Recipe set B, second trained model & 9 & \textbf{13}\\
 \bottomrule
 \end{tabular}
 \end{center}
-\textbf{Next question:} Can this division of work help on other tasks?
-\aside{Both models learned from discovery examples. These are small, related tests in one game; the smallest gain remains uncertain. We have not shown better recursive planning.}
+\aside{A and B change the recipes and supplies for the same eight goals. Both models learned from discovery. The smallest gain is uncertain; all outcomes are known.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{The promising direction is learning and tools together.}
+\begin{block}{What we learned in these small tests}
+Examples that discover the steps worked better than examples from a teacher that already knew them.\par
+\medskip
+Letting code handle recipe details helped without changing the model's training.
+\end{block}
+\textbf{What we have not shown:} that this works beyond crafting, or that adding recursive helpers improves planning.
+\medskip
+
+\textbf{Next test:} On new goals, does code help both kinds of trained model? Does the discovery advantage remain?
+\medskip
+
+\textbf{For discussion:} What other multi-step task would make this a convincing result?
+\aside{The broader comparison is queued. It is future evidence, not a result claimed here.}
 \end{frame}
 \end{document}

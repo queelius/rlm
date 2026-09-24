@@ -1,6 +1,11 @@
 # Plain-language explanations and likely questions
 
-## Slide1: What are we trying to teach?
+## Slide1: Why study how a model and its tools share the work?
+
+Our larger goal is a system that handles unfamiliar problems by finding useful
+steps, gathering missing information, and delegating when appropriate. Choosing
+a sensible step and executing it correctly are different problems: a good plan
+can still fail because a tool command is wrong. We isolate those basics here.
 
 We want a model to find missing information, choose useful steps and finish a
 task. A crafting game makes success easy to check: the requested items either
@@ -54,14 +59,13 @@ retrained. The advantage remained. The panel has been examined during our resear
 it is not a final untouched test set. Also, the two training repeats share tasks
 and base weights. They are not independent datasets.
 
-## Slide4: What does changing the world mean?
+### Slide3 follow-up: What does changing the world mean?
 
-The slide shows only the corrected teacher versus the discovery teacher, as on
-slide3. The older, uncorrected numbers below are background for questions, not
-an extra comparison the audience needs to follow.
+The sentence below the chart compares corrected teaching with discovery.
+The older, uncorrected numbers below are background for questions.
 
 We keep the goal identities but change recipe assignments and starting supplies.
-Slide4 now shows world47, with eight goals and two attempts each. Original
+The sentence reports world47, with eight goals and two attempts each. Original
 teaching solved2/16, corrected teaching4/16 and discovery teaching6/16. Every
 outcome is known. Against corrected teaching, discovery wins three attempts
 and loses one. The difference interval is minus12.5 to plus43.75 percentage
@@ -83,7 +87,7 @@ calls and made312 invalid actions. Yet discovery finished more tasks. This is
 a clue to investigate routes and persistence, not proof that mistakes help.
 Each arm finished before its overall time cap, though those caps differed.
 
-## Slide5: What change to the tools helped?
+## Slide4: What change to the tools helped?
 
 The model chooses a crafting action and writes its detailed tool arguments.
 The tested interface separates those responsibilities. The model chooses the
@@ -95,11 +99,11 @@ missing supplies. Earlier one-step audits found both types of problem. Repairing
 one action is not proof that an entire task would succeed. We therefore compared
 end-to-end success using fixed tasks, seeds and model weights.
 
-The completed comparisons are6 to12 successes,8 to10, and9 to14, all out of16.
-Their paired improvements/regressions are6/0,2/0 and5/0. The three task-group
-difference intervals are12.5–75,0–37.5 and6.25–56.25 percentage points. The smaller
+The completed comparisons are6 to12 successes,8 to10,9 to14, and9 to13, all out of16.
+Their paired improvements/regressions are6/0,2/0,5/0 and4/0. The task-group
+difference intervals are12.5–75,0–37.5,6.25–56.25 and6.25–50 percentage points. The smaller
 second-model effect is uncertain. All outcomes are known, but these are related
-tasks in one synthetic game, not48 independent test problems.
+tasks in one synthetic game, not64 independent test problems.
 
 No further model training took place. The code did not invent ingredients,
 choose subgoals, access hidden recipes or give the model a successful solution.
@@ -109,7 +113,8 @@ result measures that entire intervention, not just the immediate repaired step.
 
 Calls fell in all three comparisons:621 to469,428 to392 and469 to307. Inference
 time fell substantially in the first and third, but rose slightly in the second.
-Do not say that every comparison was faster. A fourth comparison is running.
+Do not say that every comparison was faster. The fourth comparison is complete;
+its calls fell from364 to307. See [the fourth-result receipt](fourth-tool-result.md).
 See the [complete result note](../../experiments/selective_delegation/RECIPE-BINDING-RESULTS-20260924.md).
 
 **A concrete failure behind this experiment:** In one changed-world attempt, the
@@ -145,3 +150,21 @@ teach usable information-gathering behavior, or about when separating planning
 from exact tool execution helps. Both need broader tests and a careful prior-art
 comparison. Learnable demonstrations and planning/execution separation already
 have prior work; neither general idea should be claimed as new.
+
+## Slide5: What should the audience take away?
+
+We are studying the division of work, not just trying to maximize a game score.
+Worked examples change what the model learns; recipe assistance changes how its
+chosen action is executed. Both helped here. We should study their interaction,
+rather than assume either a better model or a better tool is sufficient alone.
+
+The queued comparison uses both teaching methods, each with and without code
+assistance, on additional goal groups and recipe settings. It is future evidence.
+If the discovery advantage shrinks after execution errors are reduced, some of
+the earlier advantage may have been execution reliability. If it persists, route
+selection and information gathering remain plausible explanations, not proven ones.
+
+Ask colleagues for another multi-step task with an objective success check.
+A result outside crafting would be more persuasive than many variations of the
+same game. Recursive helper calls remain a future question, not a demonstrated
+benefit of these experiments.

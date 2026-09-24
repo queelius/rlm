@@ -1,24 +1,24 @@
 {
   "slides": [
     {
-      "title": "Can a model learn to find what it needs?",
-      "notes": "This is a building block for our RLM research, not a demonstration that recursion helps.\n\nThe game provides an objective check: did the agent obtain the requested items? The pickaxe is a simplified example, not a quoted test case.\n\nWe study one model using tools before adding helper calls."
+      "title": "How should a model and its tools share the work?",
+      "notes": "RLM means recursive language model. It can delegate parts to helper models and use code.\n\nHere we isolate a simpler building block: one model choosing actions and using tools. The game checks actual items, not persuasive text.\n\nWe test training examples and the division of work between model and code."
     },
     {
-      "title": "We taught the model by showing what to do next.",
-      "notes": "The model is Qwen3-4B-Instruct-2507. We fine-tune small adapters, not all weights.\n\nBoth teaching packages use 32 training tasks and 366 steps, with the same update count. The teacher routes differ in observations, actions and text length.\n\nThis comparison does not isolate looking things up as the sole cause."
+      "title": "Can examples teach a model how to choose its steps?",
+      "notes": "We fine-tune Qwen3-4B using small LoRA adapters. A training row pairs the task, inventory and history with the next action.\n\nBoth teachers are programs; both show lookups. One uses known recipes to choose its route; the other discovers the route through lookups.\n\nSame 32 tasks and 366 steps, but different histories and text lengths."
     },
     {
-      "title": "Learning from discovery led to more finished tasks.",
-      "notes": "All 64 paired outcomes are known. Each training repeat has 16 evaluation tasks with two attempts each.\n\nThe advantage is about 31 and 22 percentage points. Task-group uncertainty intervals exclude zero in both repeats.\n\nWe fixed a quantity mistake in the original examples before this comparison. The evaluation tasks were already exposed to our research process."
+      "title": "The discovery examples led to more finished tasks.",
+      "notes": "Each repeat means training both methods again with a different random seed. Each model makes 32 test attempts.\n\nThe chart shows 5 versus 15 and 3 versus 10. Task-group uncertainty intervals favor discovery in both repeats.\n\nChanged recipes: 4 versus 6 and 1 versus 8, out of 16. The smaller difference remains uncertain."
     },
     {
-      "title": "The advantage remained when recipes changed.",
-      "notes": "World47 has eight goals with two attempts each. First repeat: corrected4, discovery6; three paired wins and one loss. Second: corrected1, discovery8; seven wins, no losses.\n\nDifference intervals: minus12.5 to plus43.75 points; plus12.5 to plus75 points.\n\nDo not select the stronger repeat or pool these as independent tasks. All outcomes are known."
+      "title": "Code can handle details without choosing the plan.",
+      "notes": "Code uses a recipe already in the public history. It preserves the chosen item and amount; it does not pick subgoals or reveal hidden recipes.\n\nFour comparisons: 6 to 12, 8 to 10, 9 to 14, 9 to 13. Paired wins: 6/2/5/4; no losses.\n\nShared goals and generator, not 64 independent tasks. The smallest gain remains uncertain."
     },
     {
-      "title": "Let the model choose the step; let code fill the details.",
-      "notes": "The weights did not change. Code uses only an already observed recipe and preserves the chosen item and amount. It replaces ingredient arguments, not the plan.\n\nPaired wins: six, two, five; losses: zero in all three tests. The smaller second-model effect remains uncertain.\n\nSame game generator and shared goals; not broad transfer. The fourth model-by-setting check is running."
+      "title": "The promising direction is learning and tools together.",
+      "notes": "We have two promising effects, not a general solution to planning. Teaching packages differ in several ways; the mechanism is not isolated.\n\nThe queued test compares both teachers with and without code assistance on additional goals and recipe settings.\n\nA second domain and later helper-call tests would strengthen the research."
     }
   ]
 }
