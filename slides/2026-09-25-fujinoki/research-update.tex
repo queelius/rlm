@@ -13,7 +13,7 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=9mm,text margin right=9mm}
 \setbeamerfont{frametitle}{size=\Large,series=\bfseries}
-\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Preliminary research | Alex Towell\hfill\insertframenumber/4\hspace{9mm}\vspace{3mm}}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Preliminary research | Alex Towell\hfill\insertframenumber/5\hspace{9mm}\vspace{3mm}}
 \newcommand{\aside}[1]{\vfill{\footnotesize\color{Gray}#1\par}}
 \hypersetup{pdftitle={Learning to choose steps and use tools},pdfauthor={Alex Towell}}
 \begin{document}
@@ -46,41 +46,69 @@ In \textbf{reinforcement learning (RL)}, the model tries answers or actions, rec
 \begin{block}{We saw some gains, but not reliable progress in planning.}
 Some models answered or selected information better. The gains often weakened on new examples, or did not clearly beat more learning from worked examples.
 \end{block}
-\textbf{One possible difficulty:} A model can make wrong parts, recover, and finish the pickaxe. A reward for finishing does not identify which earlier actions helped.
-\medskip
-
-\textbf{Open question:} How can we reward useful decisions along the way?
-\aside{The pickaxe story illustrates why final success may not identify helpful steps. It is not a proven explanation of all our RL results.}
+\begin{block}{Why is rewarding a finished task tricky?}
+The model asks for a recipe, makes a wrong part, corrects it, and finishes the pickaxe. A reward for finishing does not say which earlier steps helped.
+\end{block}
+\textbf{Next RL question:} How can feedback teach useful steps, not just reward the final result?
+\aside{This illustrates one possible challenge. It has not been proven to explain all our RL results.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Two recent findings suggest a useful division of work.}
-\begin{block}{Teach the model how to find the steps.}
-We trained models to imitate worked examples. Examples from a program that discovered recipes worked better than examples from one that already knew them.
+\frametitle{Can examples teach the model how to find the steps?}
+We trained the model to imitate actions from worked examples. The goal is to make a pickaxe.
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\begin{block}{Teacher knows the recipes}
+It plans the parts first, then demonstrates recipe lookups and crafting.
 \end{block}
-Both programs showed recipe lookups; they differed in how they found the sequence of actions.
-\begin{block}{Let code handle exact details.}
-The model still chose what to make. When code filled in ingredients from an already-read recipe, more tasks succeeded---without extra model training.
+\end{column}
+\begin{column}{.48\textwidth}
+\begin{block}{Teacher discovers the recipes}
+It looks up the pickaxe, finds its parts, then chooses the steps.
 \end{block}
-\textbf{Choosing a useful step and executing it correctly are different problems.}
-\aside{Preliminary results in one crafting game. The teaching examples differ in several ways, so the reason for their advantage is not yet isolated.}
+\end{column}
+\end{columns}
+Both examples show lookups. Only the second uses their answers to choose the route.
+\medskip
+
+Successes out of 32 attempts: \textbf{discovery examples: 15, then 10;} \textbf{known-recipe examples: 5, then 3.}
+\aside{Simplified examples; both training packages differ in other ways. Two training repeats in the same game, not independent datasets.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Can better tools make learning easier?}
-Our working idea is to let code handle exact details so that learning can focus on choosing useful steps.
+\frametitle{Who should supply the exact ingredients?}
+The model chooses the next step and amount:\quad ``Make one pickaxe.''
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\normalsize,align=center},box/.style={fill=Soft,text width=3.5cm,minimum height=1.45cm,inner sep=5pt}]
+\node[box] (a) at (0,0) {Model chooses what to make.};
+\node[box] (b) at (4.4,0) {Code fills ingredients from a recipe already looked up.};
+\node[box] (c) at (8.8,0) {Game checks whether it worked.};
+\draw[->,thick,Teal] (a)--(b);
+\draw[->,thick,Teal] (b)--(c);
+\end{tikzpicture}
+\end{center}
+\textbf{Example:} The model asks to make one pickaxe. Code supplies the ingredient list from the recipe the model already found.
 \medskip
 
-\textbf{Next, test the idea on new problems.} Does code help both kinds of trained model? Does the advantage from discovery examples remain?
+No extra model training. On the first test of additional goals, success was \textbf{7 of 16 without code} and \textbf{10 of 16 with code}.
+\aside{This changes how the command is carried out, not the model's choice of goal. Early result in the same game; broad transfer is not established.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{What are we testing now, and what comes next?}
+\textbf{Running now:} On new crafting goals and recipes, compare both teaching methods with and without code assistance.
 \medskip
 
-\textbf{Then return to RL.} Does this clearer division of work make it easier to learn from success and failure?
+\textbf{This tests two questions:} Does code help on new goals? Does the discovery advantage remain when code fills in the ingredients?
 \medskip
 
-\textbf{Longer term:} Learn when to ask a helper and when to break a task into smaller parts again.
+\textbf{Proposed RL follow-up:} Test reward learning with and without code assistance. We have not fixed the design yet.
+\medskip
+
+\textbf{Longer term:} Learn when to ask a helper, or break a difficult part into smaller steps.
 \begin{block}{For discussion}
-What other multi-step task would make this a useful and convincing result?
+What other multi-step task would make this useful?
 \end{block}
-\aside{Broader tests are queued; improved RL and learned helper use remain open questions.}
+\aside{The broader crafting comparison is underway. RL and learned helper use are future research, not current results.}
 \end{frame}
 \end{document}

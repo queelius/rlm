@@ -6,15 +6,19 @@
     },
     {
       "title": "We tried learning from success and failure.",
-      "notes": "RL is not a total failure. Answer-or-refuse tests improved from 10 to 18 successful pairs out of 64, but extra supervised training reached 19.\n\nPlanner training changed 53 to 56 correct out of 128; the gain was uncertain.\n\nSuccessful crafting attempts contained rejected actions. This motivates better credit, but does not prove the cause."
+      "notes": "RL is not a total failure. Some runs improved answer delivery or selection; the effect often weakened on new examples or did not beat extra example-based training.\n\nIn crafting, a rewarded run can contain rejected actions. The final success does not identify the useful steps. This is a plausible problem, not a diagnosis proven across all experiments."
     },
     {
-      "title": "Two recent findings suggest a useful division of work.",
-      "notes": "Teaching: 5 versus 15, then 3 versus 10 successes out of 32 in two training repeats. Both teachers demonstrate lookups.\n\nCode assistance: 6 to 12, 8 to 10, 9 to 14, and 9 to 13, each out of 16.\n\nCode uses already observed recipes, not hidden answers. Same game and related goals; no broad transfer claim."
+      "title": "Can examples teach the model how to find the steps?",
+      "notes": "The teacher already knows the recipe chain and plans before making the demonstration. The discovery teacher asks the game for the recipe and uses its answers to choose the route. Both show lookups.\n\nSuccesses out of32 attempts: first repeat,5 vs15; second repeat,3 vs10. Each repeat tests16 goal settings twice.\n\nSmall, related tasks in one game. Training examples also differ in order and text."
     },
     {
-      "title": "Can better tools make learning easier?",
-      "notes": "The queued comparison crosses teaching method with code assistance on additional goals and recipe settings. It uses existing trained models.\n\nLater RL and recursive-helper studies are proposals, not results.\n\nInvite suggestions for another task with dependent steps and an objective success check. The candidate contribution is when this division of work helps."
+      "title": "Who should supply the exact ingredients?",
+      "notes": "In the code-assisted setup, the model still chooses the item and amount. Code replaces the ingredient list using a recipe already looked up. It does not plan or reveal a hidden recipe.\n\nOn the first additional goal panel, success rose from7/16 to10/16. All16 pairs are known:3 improvements,0 regressions,13 ties. Calls fell571 to460.\n\nThis is one new group in the same game, not another domain. No model training occurred for this comparison."
+    },
+    {
+      "title": "What are we testing now, and what comes next?",
+      "notes": "Running now: both teaching methods, with and without code assistance, on new goal groups and recipe settings. These are evaluations of existing models, not new RL training.\n\nIf the teaching gap shrinks, execution reliability may explain part of it. If it persists, route choice remains a possible explanation.\n\nProposed next RL experiment: compare reward learning with and without assistance. The design is not fixed. Later, study when the model should delegate or break a task down again."
     }
   ]
 }

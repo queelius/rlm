@@ -13,19 +13,25 @@
       "idx": 1,
       "label": "2",
       "overlay": 0,
-      "note": "RL is not a total failure. Answer-or-\nrefuse tests improved from 10 to 18\nsuccessful pairs out of 64, but extra\nsupervised training reached 19.\n\nPlanner training changed 53 to 56 correct\nout of 128; the gain was uncertain.\n\nSuccessful crafting attempts contained\nrejected actions. This motivates better\ncredit, but does not prove the cause."
+      "note": "RL is not a total failure. Some runs\nimproved answer delivery or selection; the\neffect often weakened on new examples or\ndid not beat extra example-based training.\n\nIn crafting, a rewarded run can contain\nrejected actions. The final success does\nnot identify the useful steps. This is a\nplausible problem, not a diagnosis proven\nacross all experiments."
     },
     {
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "Teaching: 5 versus 15, then 3 versus 10\nsuccesses out of 32 in two training\nrepeats. Both teachers demonstrate\nlookups.\n\nCode assistance: 6 to 12, 8 to 10, 9 to\n14, and 9 to 13, each out of 16.\n\nCode uses already observed recipes, not\nhidden answers. Same game and related\ngoals; no broad transfer claim."
+      "note": "The teacher already knows the recipe chain\nand plans before making the demonstration.\nThe discovery teacher asks the game for\nthe recipe and uses its answers to choose\nthe route. Both show lookups.\n\nSuccesses out of32 attempts: first\nrepeat,5 vs15; second repeat,3 vs10. Each\nrepeat tests16 goal settings twice.\n\nSmall, related tasks in one game. Training\nexamples also differ in order and text."
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "The queued comparison crosses teaching\nmethod with code assistance on additional\ngoals and recipe settings. It uses\nexisting trained models.\n\nLater RL and recursive-helper studies are\nproposals, not results.\n\nInvite suggestions for another task with\ndependent steps and an objective success\ncheck. The candidate contribution is when\nthis division of work helps."
+      "note": "In the code-assisted setup, the model\nstill chooses the item and amount. Code\nreplaces the ingredient list using a\nrecipe already looked up. It does not plan\nor reveal a hidden recipe.\n\nOn the first additional goal panel,\nsuccess rose from7/16 to10/16. All16 pairs\nare known:3 improvements,0 regressions,13\nties. Calls fell571 to460.\n\nThis is one new group in the same game,\nnot another domain. No model training\noccurred for this comparison."
+    },
+    {
+      "idx": 4,
+      "label": "5",
+      "overlay": 0,
+      "note": "Running now: both teaching methods, with\nand without code assistance, on new goal\ngroups and recipe settings. These are\nevaluations of existing models, not new RL\ntraining.\n\nIf the teaching gap shrinks, execution\nreliability may explain part of it. If it\npersists, route choice remains a possible\nexplanation.\n\nProposed next RL experiment: compare\nreward learning with and without\nassistance. The design is not fixed.\nLater, study when the model should\ndelegate or break a task down again."
     }
   ]
 }

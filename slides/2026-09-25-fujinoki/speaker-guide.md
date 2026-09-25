@@ -98,7 +98,7 @@ is evidence about WHEN this division of work helps, how it interacts with
 training examples, and whether it makes useful decisions easier to learn.
 Novelty still needs a careful comparison with prior work.
 
-The queued study crosses both teaching methods with and without ingredient
+The running study crosses both teaching methods with and without ingredient
 assistance on additional goals and recipe settings. It evaluates existing
 checkpoints; it is not new RL training. Later we can test whether the improved
 interface changes how well RL learns. Learned helper use and deeper decomposition
@@ -107,3 +107,30 @@ remain future research directions.
 Ask: “What other task would make this convincing?” A useful candidate has
 dependent steps, information the model must discover, and a checkable outcome.
 Keep this as an invitation to discuss, not a claim that transfer has been shown.
+
+### New result at the September24, 20:29UTC cutoff
+
+The first completed comparison on an additional group of eight goals gave
+7/16 successes without ingredient assistance and10/16 with it: three gains,
+no losses, and no missing outcomes. Model calls fell from571 to460. This is
+one discovery-trained model, in one recipe setting, not the completed broader
+study. See [the evidence receipt](new-goal-result.md).
+
+### What exactly are we testing now?
+
+The current evaluation separates four conditions: known-recipe teaching without
+assistance; known-recipe teaching with assistance; discovery teaching without
+assistance; discovery teaching with assistance. It uses the same goals for
+comparisons and repeats across training randomness and recipe settings.
+
+If assistance reduces the teaching-method difference, execution reliability may
+explain part of the earlier gap. If the difference remains, choosing useful steps
+or gathering information remain plausible explanations. Neither outcome alone
+proves a mechanism.
+
+The proposed next RL comparison would start from matched trained models and
+compare reward-based learning with and without execution assistance. Measure the
+improvement over each model's own pre-RL baseline, not just final scores: better
+scores from the tool alone would not show better learning. Keep successful tasks,
+training cost, and a supervised-learning control visible. Exact run design has
+not yet been fixed or launched. Learned helper use is a later question.
