@@ -1,0 +1,87 @@
+# Publication decisions: repair teaching histories, then test interface learning
+
+September 28, 2026. Decision memo, not a novelty certification. Evidence cutoff: completed
+panels 00–05; queued/prepared interventions below are not completed results.
+
+## Strongest defensible current claim
+
+**Identical supervised answer content can accompany very different tool-agent transfer,
+and deterministic execution assistance helps—but does not close—the gap.**
+The [six-panel study](finding_textcraft_breadth_20260928.md) finds discovery versus
+quantity-corrected known-recipe success of 323/768 versus 39/768 without assistance, and 381 versus 48
+with observed-recipe ingredient binding. The raw teacher gap is 36.98 percentage points
+(task-cluster 95% interval 32.94–40.89); binding adds 7.55 points for discovery (5.08–10.16).
+Both teachers contain identical per-task action/string/label-token multisets: 8,820 target
+tokens. Publicly available names support 167/167 discovery queries but only 32/167 known-teacher
+queries. That is a compelling conditioning-history hypothesis, not isolated causation.
+
+There are 48 task identities, four related recipe worlds and two fitted seeds—not 768 independent
+problems. The current evidence does not establish teacher-order repair, learned interface
+co-adaptation, recursion or an RL improvement. Post-cutoff panel 06 remains separate.
+
+## Narrow opportunity and prior-art boundary
+
+The [methods review](TEACHER-OBSERVABILITY-METHODS-REVIEW-20260928.md) already identifies close
+precedents: Student-Informed Teacher Training, Guided Policy Optimization and Privileged
+Information Distillation address teacher–student information mismatch; Causal Confusion already
+varies observation conditioning while retaining demonstrations. Do not sell “privileged teachers
+can fail” or “same labels, different observations” as discoveries.
+
+Action grounding is also established: [Huang et al., §§3.2–3.3](https://proceedings.mlr.press/v162/huang22a/huang22a.pdf)
+translate outputs into admissible actions and condition subsequent generation on them.
+[Xue et al., §§2–3](https://arxiv.org/html/2406.01026v2) study symbol/content supervision and
+loss weighting. Neither ingredient binding nor index-versus-command sensitivity is a new general
+principle. [ALFWorld](https://arxiv.org/abs/2010.03768) already separates abstract language
+policies from embodied actuation; our flat experiments cannot establish a hierarchical-RL contribution.
+Additional primary reading here was limited to those Huang/Xue method sections and the ALFWorld
+abstract; the earlier privileged-imitation assessment comes from the linked methods review.
+
+The candidate contribution is **an executable offline trace repair with unusually strong
+training controls**: reorder existing queries, retain original craft order, regenerate native
+histories, then restore original action-index row order. Every optimizer minibatch retains its
+target-token sequence and normalization—not its gradients, input tokens or FLOPs.
+Stable and random legal schedules test dependence on one ordering.
+
+Practical value would be recovering useful demonstrations without collecting additional answer
+labels. Applicability is restricted: the gold action list is privileged; needed queries must
+already exist; reordered queries must replay safely. Visibility does not make every decision
+inferable. This is neither an online public planner nor a remedy for missing exploration actions.
+The reviewed methods do not establish priority for this exact control, and missing citations
+do not establish novelty. Until transfer succeeds, position it as a reproducible intervention
+and diagnostic—not a general new learning algorithm.
+
+## What the queued/prepared contrasts can falsify
+
+| Contrast | Decision it can change; what it cannot establish |
+|---|---|
+| [Teaching-order repair](teaching_order_20260928/README.md) | Stable/random visible schedules versus matched known-teacher training test whether changed histories improve native completion with optimizer targets fixed. Grounding without completion refutes the proposed practical repair at this recipe; one successful schedule supports only schedule-specific utility. Prompt length/recency remain coupled. |
+| [Dose and fit](teaching_dose_20260928/README.md) | Predetermined total 46/69-update endpoints test whether the gap survives additional fitting. Known-teacher catch-up revises the story toward learning efficiency, not necessarily unusable supervision. Lower teacher-forced NLL without rollout gains weakens simple undertraining; neither result alone identifies an internal mechanism. |
+| [Phi](phi_transfer_20260928/README.md) | A missing/reversed original-teacher gap limits family-independent package claims. Replication supports two-family association, **not repair transfer**, because these jobs do not train repaired Phi demonstrations. Tokenization, LoRA capacity and compute differ across families. |
+| [Compact RL](rl_compact_20260928/README.md) | Compare each interface's post-update minus unchanged-weight success, then their gain difference. A better compact endpoint without a larger own-interface gain is not better RL. Constant-reward/skipped updates are uninformative, not negative learning evidence. Legality rules, warm actors and token doses differ. |
+| [ALFWorld representation](alfworld_representation_20260928/READINESS.md) | Command-versus-index SFT gain, each relative to its own base-interface control, tests representation-dependent learning on newly selected valid_unseen games. A command-base benefit alone is inference assistance. Longer targets change token exposure and token-mean example weights; a positive interaction does not isolate symbol binding. |
+
+These controls could support complementary teaching-history and interface-learning results.
+They do not yet justify one causal story explaining both.
+
+## At most three next experiments, conditional on results
+
+1. **Matched-presentation replication, if repair improves completion.** Compare known,
+   stable-repaired and discovery-reindexed-to-known-target-order training on a frozen unread
+   panel and second training seed. Discovery prompts stay unchanged. This tests reproducibility
+   while separating its historical target-presentation advantage from conditioning histories.
+2. **Repair transfer, only if that result survives dose controls.** Apply the same stable,
+   target-preserving repair to Phi; retain fixed endpoints and prospectively selected inputs.
+   This directly tests the method claim that the queued original-teacher Phi comparison cannot.
+3. **Learning-interaction replication, only after positive compact-RL or ALFWorld interaction.**
+   Replicate the relevant own-interface learning gains on fresh diagnostic goals. Match native
+   legality where possible and report success against actual token/GPU budgets, not merely update
+   count. Without a reproducible learning interaction, keep execution assistance as a separate result.
+
+**Early abandonment:** if neither repair beats its matched known-teacher baseline in either
+fixed world despite learning visible queries, stop expanding this repair recipe.
+That is a resource-allocation rule, not proof of a universal null. Likewise, fewer errors or
+shorter outputs without improved goal completion cannot promote an interface-learning claim.
+
+Publication recommendation: prioritize a tightly controlled teaching-history case study with
+audited data transformation and replication. Add co-adaptation only if its own evidence matures;
+do not broaden the title into a general RLM or hierarchical-RL method to cover queued work.

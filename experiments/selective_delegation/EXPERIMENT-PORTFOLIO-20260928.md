@@ -47,7 +47,7 @@ privileged teachers, recursive RL and action/argument separation.
 | Does the simpler action format make reward learning easier? | One compact-interface RL cycle on the same fresh optimization/diagnostic groups, with its own unchanged-weight control. | Four scientific stages accepted with a deferred real SFT checkpoint binding. | Compare learning gains within each interface; raw post-training scores mix model and tool effects. |
 | Does the teaching result extend beyond one model? | Train Phi-4-mini on the same two teaching packages, then compare original and assisted actions in two recipe worlds. | Two fixed-endpoint trainings, two tiny base-reference cells and eight trained readouts accepted. | Replication supports two-family transfer of the original comparison, not transfer of the new teaching repair. |
 | Does explicit quantity bookkeeping help deeper tasks? | Same public fact table with versus without computed remaining-demand columns; matched state-conditional prompt length. | Two eight-attempt readouts accepted, following the completed failure audit. | Better root completion, not merely fewer repeated errors; replicate on new tasks if promising. |
-| Does an action's representation change what SFT learns in another environment? | In ALFWorld, teach action indices versus exact available command text, using the same demonstrations and public action lists. | CPU qualification/design. | Compare each trained actor with its own base-interface control; no automatic repair or hierarchy claim. |
+| Does an action's representation change what SFT learns in another environment? | In ALFWorld, teach action indices versus exact available command text, using the same demonstrations and public action lists. | One new command training and four paired readouts accepted; the existing index-trained checkpoint is reused. | Compare each trained actor with its own base-interface control; unequal target-token doses limit interpretation. |
 
 The fresh group A/B study is still within TextCraft. Group B is an unused official
 TRAIN subset held out from the new optimizer, not an untouched benchmark test.
@@ -128,3 +128,30 @@ At 11:56, the original-action RL collection completed: all 32 native outcomes
 were observed, including 24 successes, with 790 model responses and no transport
 failures. The assisted collection started automatically and is returning real
 responses. These are samples for training, not a measured RL improvement.
+
+## Current execution order, 12:09 UTC
+
+The [scheduling review](SCHEDULING-REVIEW-20260928.md) found that independent
+comparisons would otherwise wait roughly 18–32 hours behind repeated RL cycles.
+Four authenticated idle supervisors were superseded, without interrupting any
+scientific owner or changing any inherited experiment command, output, cap or
+original input pin. Their original receipts remain available.
+
+The active paired collection, crossed RL readouts, teaching-order controls and
+interface/dose work keep their order. Then the new
+`information-first-tail-20260928-001` runs:
+
+1. Three short helper-uptake screens.
+2. Public quantity-table and Phi comparisons.
+3. The ALFWorld representation-learning pilot.
+4. The unchanged fresh-goal RL cycles, reward diagnostics and compact RL.
+
+The tail preserves 84 inherited descriptors and adds six ALFWorld descriptors:
+90 jobs, including 65 scientific output paths and 25 audits/comparisons. Across
+the current campaign, 100 distinct scientific output stages are accepted, many
+conditional. Do not double-count references in superseded receipts. About four
+to seven useful hours of distinct comparisons now precede repeated fresh RL;
+these are forecasts, not completed work or guaranteed durations.
+
+Read the [publication decision memo](PUBLICATION-DECISIONS-20260928.md) for claim
+boundaries and the experiments that would promote or retire each explanation.

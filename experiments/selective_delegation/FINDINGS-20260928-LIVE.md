@@ -1,6 +1,6 @@
 ---
 date: 2026-09-28
-cutoff_utc: "2026-09-28T11:56:00Z"
+cutoff_utc: "2026-09-28T12:09:00Z"
 status: exploratory
 hardware: one_A100_40GB
 primary_question: "Which decisions should the model learn, and which details should the harness calculate?"
@@ -85,6 +85,19 @@ The original-action collection completed all 32 attempts, with 24 successes,
 errors and one malformed action along the way; these are not hidden by successful
 final outcomes. The unchanged model generated this batch on familiar TRAIN goals.
 It is a training input, not a before/after improvement or a transfer result.
+
+Four of the eight tasks have both successful and unsuccessful attempts. Their
+16 trajectories supply nonzero training credit. All four initial samples per
+task choose the same recipe lookup, but later identical observations sometimes
+produce different choices. So a fixed first step is not evidence that the model
+never explores. See the [completed signal analysis](rl_signal_20260928/RAW-RESULT.md)
+for exact-prefix comparisons and token-level accounting.
+
+About 44% of valid crafting-command tokens lie wholly inside the ingredient
+field. This measures output cost, not harmful gradients. A separate proposed
+test would remove loss on ingredient values only when execution code actually
+overwrites them. That is a deliberately biased learning intervention, not a
+correction to the standard full-trajectory policy-gradient objective.
 
 The GPU is now collecting the matched execution-assisted batch. The accepted
 study checks actual probability/weight changes and evaluates each trained model
