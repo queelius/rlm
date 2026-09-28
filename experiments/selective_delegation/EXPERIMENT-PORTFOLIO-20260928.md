@@ -10,6 +10,9 @@ evidence: finding_textcraft_breadth_20260928.json
 
 # Several informative comparisons, one evolving research program
 
+Latest queue amendment: [16:01 UTC follow-up admission](FOLLOWUP-ADMISSION-20260928.md).
+The two new evidence-driven studies are accepted, not yet completed.
+
 The user requests many experiments across different ideas. Breadth means testing
 different explanations and capabilities, not repeatedly measuring the same small
 effect. GPU jobs run sequentially on one card; data preparation, native replay,
@@ -32,6 +35,23 @@ principle or a successful learned recursive policy. Prior work already studies
 privileged teachers, recursive RL and action/argument separation.
 
 ## Current comparisons
+
+**September 28, 15:58 UTC evidence update.** The first teaching-order pilot and
+six-cell RL evaluation are complete. Stable/random query-order repairs produce
+14/32 and 12/32 successes versus the original teacher's 1/32, with the same
+supervised minibatch targets. One raw-interface RL update improves 9/16 to 13/16
+on familiar goals; assisted RL improves its own 14/16 baseline to 16/16.
+These are small, dependent exploratory panels, not broad generalization.
+Compact actions reduce output tokens by about 39%, with mixed success changes.
+Read the [current findings](FINDINGS-20260928-LIVE.md) and
+[RL behavior/cost analysis](rl_outcomes_20260928/README.md).
+
+Both fixed-dose training continuations have also finished; their task readouts
+are running. The following table records each comparison's **original acceptance
+status**, not its live execution status. Two additional prepared studies respond
+to the positive signals: [teaching replication](teaching_replication_20260928/README.md)
+and [fixed-RL-checkpoint transfer](rl_transfer_20260928/README.md). They do not
+replace the independent quantity, helper, second-model or ALFWorld comparisons.
 
 | Question | Small comparison | Status at acceptance | What changes the next decision? |
 |---|---|---|---|

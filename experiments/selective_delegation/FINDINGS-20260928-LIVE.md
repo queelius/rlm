@@ -1,6 +1,6 @@
 ---
 date: 2026-09-28
-cutoff_utc: "2026-09-28T12:52:00Z"
+cutoff_utc: "2026-09-28T16:01:00Z"
 status: exploratory
 hardware: one_A100_40GB
 primary_question: "Which decisions should the model learn, and which details should the harness calculate?"
@@ -18,10 +18,41 @@ multisets. Their order and the information available before each answer differ.
 This is a promising mechanism to investigate, not a new general law. Prior work
 already describes failures caused by teaching with information the learner lacks.
 Our next question is narrower: **can we repair the order of demonstrations while
-keeping their supervised answers fixed?** Two new training orders, longer-training
-controls, and a second model family are being prepared or queued to challenge that
-explanation. See the [full study](finding_textcraft_breadth_20260928.md) and
+keeping their supervised answers fixed?** Two new training orders have now
+improved the weaker package in the first pilot. Longer-training controls and a
+second model family still challenge the explanation. See the
+[full study](finding_textcraft_breadth_20260928.md) and
 [primary-paper comparison](TEACHER-OBSERVABILITY-METHODS-REVIEW-20260928.md).
+
+## Reordering the weaker examples recovers much of the teaching gap
+
+The completed pilot changes when recipe information appears before a supervised
+answer. Both repairs put item names into view before querying them. They retain
+the same 32 training tasks, 366 examples, 8,820 supervised answer tokens and
+23 optimizer updates. Even each minibatch's target-token sequence is preserved;
+the conditioning histories change. These are offline repairs of teaching
+examples, not a newly learned online planner.
+
+| Teaching examples | Original recipe world | Changed recipe world |
+|---|---:|---:|
+| Original known-recipe order | 0/16 | 1/16 |
+| Repaired order, stable choice of visible query | 6/16 | 8/16 |
+| Repaired order, randomized choice of visible query | 6/16 | 6/16 |
+| Existing discovery-based teacher | 7/16 | 7/16 |
+
+The stable repair adds 13 successes across the two worlds, with no paired losses;
+the alternative adds 11, also with no losses. The stable repair matches the
+discovery teacher's total, not superiority over it. These are eight goal roots
+repeated across worlds and sampling seeds, with only one fitted seed per method.
+The pilot supports studying what information an example gives the learner before
+its next answer. It does not isolate a unique causal mechanism or establish
+general transfer. A second fit seed and another goal panel are now accepted
+in the follow-on queue; no replication results are available yet.
+
+Evidence: the fixed-controls snapshot at 15:11 UTC,
+`R/controls-readout-20260928-001/watch/snapshot-6d3cd53eb3b0b5f1.json`,
+with native audit and PLAN hashes for every cell. The automatic reader uses
+explicit behavioral baselines, not the scheduling template as a substitute.
 
 ## Two additional groups give modest support for execution assistance
 
@@ -78,7 +109,35 @@ screening cap. Its real saved-request CPU replay passes, including child actions
 and charged errors. It has not yet run on the GPU. Reusing this task is explicitly
 exploratory, not a new held-out confirmation.
 
-## Two RL updates work numerically; task gains remain unmeasured
+## The first RL comparison now shows a small, task-specific improvement
+
+All six predeclared familiar-goal evaluation cells are complete. Each cell uses
+the same eight training goals and two new rollout seeds. Read down a column to
+compare model learning while keeping the execution interface fixed.
+
+| Model weights | Original actions | Code fills known ingredients |
+|---|---:|---:|
+| No reward update | 9/16 | 14/16 |
+| One RL update with original actions | 13/16 | 15/16 |
+| One RL update with ingredient assistance | 12/16 | 16/16 |
+
+The original-action update produces four paired wins and no losses using the
+original interface. The assisted update produces two wins and no losses against
+its own assisted baseline. This is evidence of improved observed task success,
+not just numerical weight movement. It remains a small exploratory result on
+familiar goals, with one update/batch per arm. There is no new-goal or new-domain
+RL improvement established yet, nor a matched additional-SFT comparison here.
+
+The gains are not free: model calls rise from 326 to 340 for the original-action
+comparison and from 277 to 303 for the assisted one. Assisted-format schema errors
+rise from 17 to 53, concentrated in one crafting episode; strict
+duplicate-key rejection is retained. Terminal success alone does not measure
+efficient or consistently well-formed behavior. New-goal transfer of these exact
+checkpoints is now accepted alongside the existing fresh-goal RL study.
+
+Evidence: `R/crossed-rl-analysis-20260928-001/{CROSSED.json,FINDINGS.md}`.
+All 96 evaluation outcomes are known; there are no transport failures. The
+underlying sample collection and numerical checks are recorded below.
 
 The original-action collection completed all 32 attempts, with 24 successes,
 790 model responses and no transport failures. There were 348 native execution
@@ -110,8 +169,8 @@ The first original-action optimizer completed in 940.6 seconds and committed
 adapter, optimizer and random state. Its training/evaluation likelihood replay
 agrees exactly. Average sampled-token log probabilities moved by +0.00148 on
 positive-credit trajectories and −0.00192 on negative-credit trajectories. The
-adapter changed measurably. This is a working numerical update, **not yet evidence
-of better task success**. Its fixed before/after evaluations have not completed.
+adapter changed measurably. Numerical movement alone would not establish better
+task success; the completed paired task evaluations above provide that evidence.
 
 The matched assisted optimizer also completed, in 340.7 seconds. Its original-token
 training/evaluation replay agrees exactly, and sampled-token log probabilities
@@ -119,17 +178,31 @@ moved by +0.00220 on positive-credit trajectories and −0.00659 on negative-cre
 trajectories. It committed its own independently warm-started adapter and optimizer.
 Neither update's numerical progress establishes better task performance.
 
-The unchanged-model original-action evaluation completed with 9/16 successes,
-326 calls and no missing outcomes or transport errors. These are the predeclared
-new rollout seeds, not the four collection seeds. The trained-model evaluation
-is now returning real actions. The accepted study evaluates each trained
-model through both interfaces. Later studies use new
+The task evaluations use predeclared new rollout seeds, not the four collection
+seeds. Each trained model is evaluated through both interfaces. Later studies use new
 optimization tasks, separate diagnostic tasks, an extra-supervised-update control,
 a changed reward, and a shorter action format.
 
 Do not call queued updates completed, or call an interface improvement learned
 improvement. A convincing result needs better task success relative to that
 interface's unchanged-weight baseline, with failed and unavailable attempts kept.
+
+## Shorter actions save output tokens, but do not clearly improve success
+
+The compact actor emits an item and quantity, leaving known ingredient arguments
+to code. Its completed pilot uses roughly 39% fewer generated tokens in each
+world than the full-action assisted actor. Success changes from 10/16 to 8/16 in
+the original world and from 9/16 to 10/16 in the changed-recipe world. Model calls
+increase slightly. This is promising output-efficiency evidence, not a reliable
+success improvement.
+
+The contrast changes both the supervised output format and the execution
+contract: compact calls require an observed recipe, whereas full assistance can
+fall back to the original arguments. It is not a pure token-removal experiment.
+The accepted compact-RL study will compare learning with this interface against
+its own unchanged-weight baseline. Evidence is in the two
+`R/textcraft-compact-p00-w{42,50}-20260928-001/COMPACT-AUDIT.json` files and their
+paired full-action native audits.
 
 ## What “new problems” means here
 

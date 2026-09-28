@@ -1,9 +1,47 @@
 # Publication decisions: repair teaching histories, then test interface learning
 
-September 28, 2026. Decision memo, not a novelty certification. Evidence cutoff: completed
-panels 00–05; queued/prepared interventions below are not completed results.
+September 28, 2026. Decision memo, not a novelty certification. The original assessment below
+uses completed panels 00–05. This amendment adds completed intervention results through 15:50 UTC;
+prepared follow-ups are not completed results.
 
-## Strongest defensible current claim
+## 15:50 UTC amendment: two positive signals warrant targeted replication
+
+**Changing the teaching history improved completion while retaining the supervised answers.**
+On the first eight validation goals, two recipe worlds and two rollout seeds, the original
+known-recipe teacher produced 1/32 successful attempts. Stable visible-query ordering produced
+14/32, and randomized visible-query ordering produced 12/32. The discovery reference also
+produced 14/32. These are repeated measurements of eight goals, not 32 independent problems.
+Both repairs retain all 23 optimizer minibatches' target-token sequences and normalization;
+their input histories, input-token counts and gradients differ. This supports practical repair
+at this setting, not superiority to discovery or an isolated explanation for the benefit.
+
+The next prepared comparison repeats both repairs at a second training seed and evaluates the
+existing repaired models on eight additional goals. It does **not** include the
+discovery-reindexed presentation control proposed below; that mechanism question remains open.
+The GPU is currently testing longer training for the original teachers. If longer training
+closes the gap, the claim becomes faster learning rather than an unusable teaching strategy.
+
+**One RL update improved completion on familiar goals.** With ordinary execution, the
+raw-trained model improved from 9/16 to 13/16 attempts: four paired wins and no losses.
+With ingredient-binding assistance, the binder-trained model improved from 14/16 to 16/16.
+These eight goals were used in RL training; only rollout seeds were held out. Calls and output
+tokens increased, and schema errors persisted. This is a promising learning signal, not yet
+transfer or greater efficiency. A prepared four-cell evaluation tests these fixed checkpoints
+on the already frozen diagnostic goals; the separate fresh-goal RL campaign tests new learning.
+
+**Shorter actions reduced output tokens, but did not reliably improve success.** Compact actions
+used about 39% fewer generated tokens in each world; success was 8 versus 10 and 10 versus 9
+out of 16, with slightly more calls. Their legality rules and SFT target-token dose also differ.
+Keep this as an interface-efficiency observation, not an RL result.
+
+Finally, all 48 scripted continuations in the counterfactual-label diagnostic completed the
+task, despite conflicting privileged next-query labels. Label ambiguity alone is therefore
+not evidence that those choices cause failure. The actual ordering intervention is the more
+useful signal to pursue. See [the live findings](FINDINGS-20260928-LIVE.md),
+[the RL outcome analysis](rl_outcomes_20260928/README.md), and
+[the counterfactual diagnostic](teacher_counterfactual_20260928/README.md).
+
+## Strongest claim at the original six-panel cutoff
 
 **Identical supervised answer content can accompany very different tool-agent transfer,
 and deterministic execution assistance helps—but does not close—the gap.**
@@ -16,7 +54,7 @@ tokens. Publicly available names support 167/167 discovery queries but only 32/1
 queries. That is a compelling conditioning-history hypothesis, not isolated causation.
 
 There are 48 task identities, four related recipe worlds and two fitted seeds—not 768 independent
-problems. The current evidence does not establish teacher-order repair, learned interface
+problems. At that cutoff, the evidence did not establish teacher-order repair, learned interface
 co-adaptation, recursion or an RL improvement. Post-cutoff panel 06 remains separate.
 
 ## Narrow opportunity and prior-art boundary
