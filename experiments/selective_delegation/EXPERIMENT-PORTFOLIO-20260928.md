@@ -45,8 +45,8 @@ privileged teachers, recursive RL and action/argument separation.
 | Can more informative feedback help RL? | Reuse the first fresh batch for one independent update with a small error penalty, while keeping native success unchanged. | Two one-step trainings and two fixed diagnostic readouts accepted. | Success must improve or be preserved; merely learning to stop early and make fewer errors is not success. |
 | When should a task be divided? | First check actual helper uptake with the existing globally budgeted interface; then compare fixed and public-information-based delegation. | First three screens stopped on an imposed query-order constraint before helpers; separate relaxed-order screens accepted. | The first screen is not evidence against recursion. Establish actual use before interpreting an efficacy grid. |
 | Does the simpler action format make reward learning easier? | One compact-interface RL cycle on the same fresh optimization/diagnostic groups, with its own unchanged-weight control. | Four scientific stages accepted with a deferred real SFT checkpoint binding. | Compare learning gains within each interface; raw post-training scores mix model and tool effects. |
-| Does the teaching result extend beyond one model? | Qualify another public3–4B model family for the same paired teacher study. | CPU model/template qualification, not yet a GPU run. | Stop on genuine incompatibility; choose a fixed endpoint and preserve all outcomes. |
-| Does explicit quantity bookkeeping help deeper tasks? | Same public fact table with versus without computed remaining-demand columns; matched state-conditional prompt length. | CPU preparation, following a complete failure audit. | Better root completion, not merely fewer repeated errors; replicate on new tasks if promising. |
+| Does the teaching result extend beyond one model? | Train Phi-4-mini on the same two teaching packages, then compare original and assisted actions in two recipe worlds. | Two fixed-endpoint trainings, two tiny base-reference cells and eight trained readouts accepted. | Replication supports two-family transfer of the original comparison, not transfer of the new teaching repair. |
+| Does explicit quantity bookkeeping help deeper tasks? | Same public fact table with versus without computed remaining-demand columns; matched state-conditional prompt length. | Two eight-attempt readouts accepted, following the completed failure audit. | Better root completion, not merely fewer repeated errors; replicate on new tasks if promising. |
 | Does an action's representation change what SFT learns in another environment? | In ALFWorld, teach action indices versus exact available command text, using the same demonstrations and public action lists. | CPU qualification/design. | Compare each trained actor with its own base-interface control; no automatic repair or hierarchy claim. |
 
 The fresh group A/B study is still within TextCraft. Group B is an unused official
@@ -114,3 +114,17 @@ the first original-action RL collection, not the queued training yet.
 
 Read [today's running findings](FINDINGS-20260928-LIVE.md) for the completed
 panel06 pairs, remaining-failure analysis and the unsuccessful first screen.
+
+At 11:49, `transfer-queue-20260928-001` was accepted after the compact/delegation
+queue. Its two quantity-table readouts and twelve Phi stages bring the total to
+95 unique scientific output stages. Expected useful work is approximately three
+to five hours; the sum of individual limits is not a runtime prediction. The
+table comparison has four previously exposed goals, not sixteen independent
+problems. Phi has eight goal identities; its four base-model attempts are only
+a small descriptive reference. All training-dependent readouts require actual,
+successfully committed checkpoints.
+
+At 11:56, the original-action RL collection completed: all 32 native outcomes
+were observed, including 24 successes, with 790 model responses and no transport
+failures. The assisted collection started automatically and is returning real
+responses. These are samples for training, not a measured RL improvement.

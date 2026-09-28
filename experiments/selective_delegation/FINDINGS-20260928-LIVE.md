@@ -1,6 +1,6 @@
 ---
 date: 2026-09-28
-cutoff_utc: "2026-09-28T11:31:00Z"
+cutoff_utc: "2026-09-28T11:56:00Z"
 status: exploratory
 hardware: one_A100_40GB
 primary_question: "Which decisions should the model learn, and which details should the harness calculate?"
@@ -78,11 +78,17 @@ screening cap. Its real saved-request CPU replay passes, including child actions
 and charged errors. It has not yet run on the GPU. Reusing this task is explicitly
 exploratory, not a new held-out confirmation.
 
-## Reinforcement learning is running, but has no new result yet
+## The first RL collection is complete; learning gains remain unmeasured
 
-The GPU is collecting32 attempts for the first current RL arm. The accepted study
-compares original and assisted actions, checks actual probability/weight changes,
-and evaluates each trained model through both interfaces. Later studies use new
+The original-action collection completed all 32 attempts, with 24 successes,
+790 model responses and no transport failures. There were 348 native execution
+errors and one malformed action along the way; these are not hidden by successful
+final outcomes. The unchanged model generated this batch on familiar TRAIN goals.
+It is a training input, not a before/after improvement or a transfer result.
+
+The GPU is now collecting the matched execution-assisted batch. The accepted
+study checks actual probability/weight changes and evaluates each trained model
+through both interfaces. Later studies use new
 optimization tasks, separate diagnostic tasks, an extra-supervised-update control,
 a changed reward, and a shorter action format.
 
