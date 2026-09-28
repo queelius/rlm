@@ -1,0 +1,1217 @@
+{
+  "advisor_decision": "Update the breadth/generalization evidence: large teacher-package difference, matched supervised target dose but sharply different query observability, smaller binding gain, and severe depth5 limitation. Parent owns deck integration.",
+  "analysis_date": "2026-09-28",
+  "arms": {
+    "discovery/binder": {
+      "actions": {
+        "craft": 12696,
+        "finish": 736,
+        "get_info": 8764
+      },
+      "attempts": 768,
+      "behavior": {
+        "craft_error_extra_ingredient": 38,
+        "craft_error_insufficient_inventory": 5132,
+        "craft_error_missing_ingredient": 205,
+        "craft_error_no_recipe": 37,
+        "craft_error_other": 240,
+        "craft_error_wrong_amount": 38,
+        "episodes_with_query": 768,
+        "ever_root_query": 768,
+        "first_action_root_query": 765,
+        "first_query_all_names_visible": 768,
+        "first_query_any_name_unseen": 0,
+        "first_query_structured_vs_text_disagreement": 0,
+        "nonexistent_item_mentions": 97
+      },
+      "calls": 22342,
+      "calls_per_attempt": 29.091145833333332,
+      "calls_per_success_aggregate": 58.64041994750656,
+      "errors": {
+        "invalid_schema": 146,
+        "native_action_error": 5690
+      },
+      "failure_with_no_recorded_errors": 51,
+      "native_cost": {
+        "calls": 22342,
+        "completion_tokens": 652224,
+        "failed_calls": 0,
+        "native_service_seconds": 52657.45511364937,
+        "prompt_tokens": 59830332,
+        "unknown_completion_tokens_calls": 0
+      },
+      "owner_wall_seconds": 53357.30178189278,
+      "statuses": {
+        "context_cap": 32,
+        "finished": 736
+      },
+      "success_rate": 0.49609375,
+      "successes": 381,
+      "task_clusters": 48
+    },
+    "discovery/raw": {
+      "actions": {
+        "craft": 14827,
+        "finish": 719,
+        "get_info": 9067
+      },
+      "attempts": 768,
+      "behavior": {
+        "craft_error_extra_ingredient": 3153,
+        "craft_error_insufficient_inventory": 3155,
+        "craft_error_missing_ingredient": 2157,
+        "craft_error_no_recipe": 18,
+        "craft_error_other": 283,
+        "craft_error_wrong_amount": 643,
+        "episodes_with_query": 768,
+        "ever_root_query": 768,
+        "first_action_root_query": 765,
+        "first_query_all_names_visible": 768,
+        "first_query_any_name_unseen": 0,
+        "first_query_structured_vs_text_disagreement": 0,
+        "nonexistent_item_mentions": 104
+      },
+      "calls": 24759,
+      "calls_per_attempt": 32.23828125,
+      "calls_per_success_aggregate": 76.6532507739938,
+      "errors": {
+        "invalid_schema": 146,
+        "native_action_error": 9409
+      },
+      "failure_with_no_recorded_errors": 38,
+      "native_cost": {
+        "calls": 24759,
+        "completion_tokens": 731371,
+        "failed_calls": 0,
+        "native_service_seconds": 59402.41684985161,
+        "prompt_tokens": 71077219,
+        "unknown_completion_tokens_calls": 0
+      },
+      "owner_wall_seconds": 60156.803379535675,
+      "statuses": {
+        "context_cap": 49,
+        "finished": 719
+      },
+      "success_rate": 0.4205729166666667,
+      "successes": 323,
+      "task_clusters": 48
+    },
+    "known_recipe_corrected/binder": {
+      "actions": {
+        "craft": 6044,
+        "delegate": 43,
+        "finish": 734,
+        "get_info": 18468,
+        "view_inventory": 11
+      },
+      "attempts": 768,
+      "behavior": {
+        "craft_error_extra_ingredient": 1,
+        "craft_error_insufficient_inventory": 2367,
+        "craft_error_missing_ingredient": 68,
+        "craft_error_no_recipe": 132,
+        "craft_error_other": 110,
+        "craft_error_wrong_amount": 8,
+        "episodes_with_query": 762,
+        "ever_root_query": 244,
+        "first_action_root_query": 113,
+        "first_query_all_names_visible": 113,
+        "first_query_any_name_unseen": 649,
+        "first_query_structured_vs_text_disagreement": 4,
+        "nonexistent_item_mentions": 10549
+      },
+      "calls": 25430,
+      "calls_per_attempt": 33.111979166666664,
+      "calls_per_success_aggregate": 529.7916666666666,
+      "errors": {
+        "invalid_schema": 130,
+        "native_action_error": 2686,
+        "rejected_action": 43
+      },
+      "failure_with_no_recorded_errors": 76,
+      "native_cost": {
+        "calls": 25430,
+        "completion_tokens": 544888,
+        "failed_calls": 0,
+        "native_service_seconds": 44875.39309620857,
+        "prompt_tokens": 62279629,
+        "unknown_completion_tokens_calls": 0
+      },
+      "owner_wall_seconds": 45609.46938252449,
+      "statuses": {
+        "context_cap": 10,
+        "finished": 734,
+        "global_call_cap": 24
+      },
+      "success_rate": 0.0625,
+      "successes": 48,
+      "task_clusters": 48
+    },
+    "known_recipe_corrected/raw": {
+      "actions": {
+        "craft": 6034,
+        "delegate": 44,
+        "finish": 736,
+        "get_info": 18246,
+        "view_inventory": 9
+      },
+      "attempts": 768,
+      "behavior": {
+        "craft_error_extra_ingredient": 6,
+        "craft_error_insufficient_inventory": 2091,
+        "craft_error_missing_ingredient": 300,
+        "craft_error_no_recipe": 132,
+        "craft_error_other": 131,
+        "craft_error_wrong_amount": 248,
+        "episodes_with_query": 762,
+        "ever_root_query": 232,
+        "first_action_root_query": 113,
+        "first_query_all_names_visible": 113,
+        "first_query_any_name_unseen": 649,
+        "first_query_structured_vs_text_disagreement": 4,
+        "nonexistent_item_mentions": 10552
+      },
+      "calls": 25203,
+      "calls_per_attempt": 32.81640625,
+      "calls_per_success_aggregate": 646.2307692307693,
+      "errors": {
+        "invalid_schema": 134,
+        "native_action_error": 2908,
+        "rejected_action": 44
+      },
+      "failure_with_no_recorded_errors": 73,
+      "native_cost": {
+        "calls": 25203,
+        "completion_tokens": 538763,
+        "failed_calls": 0,
+        "native_service_seconds": 44323.201020002365,
+        "prompt_tokens": 61096538,
+        "unknown_completion_tokens_calls": 0
+      },
+      "owner_wall_seconds": 45050.65134143829,
+      "statuses": {
+        "context_cap": 7,
+        "finished": 736,
+        "global_call_cap": 25
+      },
+      "success_rate": 0.05078125,
+      "successes": 39,
+      "task_clusters": 48
+    }
+  },
+  "campaign": "TEXTCRAFT-BREADTH-CAMPAIGN-002",
+  "conditional": {
+    "declared_depth": {
+      "2": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 192,
+            "calls": 1338,
+            "success_rate": 0.9427083333333334,
+            "successes": 181,
+            "task_clusters": 12
+          },
+          "discovery/raw": {
+            "attempts": 192,
+            "calls": 1504,
+            "success_rate": 0.921875,
+            "successes": 177,
+            "task_clusters": 12
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 192,
+            "calls": 5105,
+            "success_rate": 0.16145833333333334,
+            "successes": 31,
+            "task_clusters": 12
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 192,
+            "calls": 5229,
+            "success_rate": 0.13020833333333334,
+            "successes": 25,
+            "task_clusters": 12
+          }
+        },
+        "discovery_binding_delta": 0.020833333333333332,
+        "known_recipe_binding_delta": 0.03125
+      },
+      "3": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 192,
+            "calls": 3080,
+            "success_rate": 0.6458333333333334,
+            "successes": 124,
+            "task_clusters": 12
+          },
+          "discovery/raw": {
+            "attempts": 192,
+            "calls": 3796,
+            "success_rate": 0.5625,
+            "successes": 108,
+            "task_clusters": 12
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 192,
+            "calls": 5002,
+            "success_rate": 0.057291666666666664,
+            "successes": 11,
+            "task_clusters": 12
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 192,
+            "calls": 4905,
+            "success_rate": 0.0625,
+            "successes": 12,
+            "task_clusters": 12
+          }
+        },
+        "discovery_binding_delta": 0.08333333333333333,
+        "known_recipe_binding_delta": -0.005208333333333333
+      },
+      "4": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 96,
+            "calls": 2787,
+            "success_rate": 0.40625,
+            "successes": 39,
+            "task_clusters": 6
+          },
+          "discovery/raw": {
+            "attempts": 96,
+            "calls": 3430,
+            "success_rate": 0.28125,
+            "successes": 27,
+            "task_clusters": 6
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 96,
+            "calls": 3575,
+            "success_rate": 0.052083333333333336,
+            "successes": 5,
+            "task_clusters": 6
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 96,
+            "calls": 3523,
+            "success_rate": 0.020833333333333332,
+            "successes": 2,
+            "task_clusters": 6
+          }
+        },
+        "discovery_binding_delta": 0.125,
+        "known_recipe_binding_delta": 0.03125
+      },
+      "5": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 288,
+            "calls": 15137,
+            "success_rate": 0.1284722222222222,
+            "successes": 37,
+            "task_clusters": 18
+          },
+          "discovery/raw": {
+            "attempts": 288,
+            "calls": 16029,
+            "success_rate": 0.03819444444444445,
+            "successes": 11,
+            "task_clusters": 18
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 288,
+            "calls": 11748,
+            "success_rate": 0.003472222222222222,
+            "successes": 1,
+            "task_clusters": 18
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 288,
+            "calls": 11546,
+            "success_rate": 0.0,
+            "successes": 0,
+            "task_clusters": 18
+          }
+        },
+        "discovery_binding_delta": 0.09027777777777778,
+        "known_recipe_binding_delta": 0.003472222222222222
+      }
+    },
+    "dependency_chain": {
+      "1": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 20,
+            "calls": 168,
+            "success_rate": 1.0,
+            "successes": 20,
+            "task_clusters": 4
+          },
+          "discovery/raw": {
+            "attempts": 20,
+            "calls": 168,
+            "success_rate": 1.0,
+            "successes": 20,
+            "task_clusters": 4
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 20,
+            "calls": 394,
+            "success_rate": 0.3,
+            "successes": 6,
+            "task_clusters": 4
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 20,
+            "calls": 396,
+            "success_rate": 0.3,
+            "successes": 6,
+            "task_clusters": 4
+          }
+        },
+        "discovery_binding_delta": 0,
+        "known_recipe_binding_delta": 0
+      },
+      "2": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 208,
+            "calls": 1554,
+            "success_rate": 0.9182692307692307,
+            "successes": 191,
+            "task_clusters": 18
+          },
+          "discovery/raw": {
+            "attempts": 208,
+            "calls": 1814,
+            "success_rate": 0.8798076923076923,
+            "successes": 183,
+            "task_clusters": 18
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 208,
+            "calls": 5623,
+            "success_rate": 0.1201923076923077,
+            "successes": 25,
+            "task_clusters": 18
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 208,
+            "calls": 5741,
+            "success_rate": 0.09615384615384616,
+            "successes": 20,
+            "task_clusters": 18
+          }
+        },
+        "discovery_binding_delta": 0.038461538461538464,
+        "known_recipe_binding_delta": 0.02403846153846154
+      },
+      "3": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 172,
+            "calls": 2977,
+            "success_rate": 0.622093023255814,
+            "successes": 107,
+            "task_clusters": 16
+          },
+          "discovery/raw": {
+            "attempts": 172,
+            "calls": 3648,
+            "success_rate": 0.5465116279069767,
+            "successes": 94,
+            "task_clusters": 16
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 172,
+            "calls": 4663,
+            "success_rate": 0.06395348837209303,
+            "successes": 11,
+            "task_clusters": 16
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 172,
+            "calls": 4562,
+            "success_rate": 0.06395348837209303,
+            "successes": 11,
+            "task_clusters": 16
+          }
+        },
+        "discovery_binding_delta": 0.0755813953488372,
+        "known_recipe_binding_delta": 0
+      },
+      "4": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 148,
+            "calls": 5276,
+            "success_rate": 0.31756756756756754,
+            "successes": 47,
+            "task_clusters": 20
+          },
+          "discovery/raw": {
+            "attempts": 148,
+            "calls": 6289,
+            "success_rate": 0.1554054054054054,
+            "successes": 23,
+            "task_clusters": 20
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 148,
+            "calls": 5537,
+            "success_rate": 0.033783783783783786,
+            "successes": 5,
+            "task_clusters": 20
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 148,
+            "calls": 5440,
+            "success_rate": 0.013513513513513514,
+            "successes": 2,
+            "task_clusters": 20
+          }
+        },
+        "discovery_binding_delta": 0.16216216216216217,
+        "known_recipe_binding_delta": 0.02027027027027027
+      },
+      "5": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 220,
+            "calls": 12367,
+            "success_rate": 0.07272727272727272,
+            "successes": 16,
+            "task_clusters": 18
+          },
+          "discovery/raw": {
+            "attempts": 220,
+            "calls": 12840,
+            "success_rate": 0.013636363636363636,
+            "successes": 3,
+            "task_clusters": 18
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 220,
+            "calls": 9213,
+            "success_rate": 0.004545454545454545,
+            "successes": 1,
+            "task_clusters": 18
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 220,
+            "calls": 9064,
+            "success_rate": 0.0,
+            "successes": 0,
+            "task_clusters": 18
+          }
+        },
+        "discovery_binding_delta": 0.05909090909090909,
+        "known_recipe_binding_delta": 0.004545454545454545
+      }
+    },
+    "panel": {
+      "0": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 128,
+            "calls": 3620,
+            "success_rate": 0.5,
+            "successes": 64,
+            "task_clusters": 8
+          },
+          "discovery/raw": {
+            "attempts": 128,
+            "calls": 3976,
+            "success_rate": 0.4296875,
+            "successes": 55,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 128,
+            "calls": 4374,
+            "success_rate": 0.03125,
+            "successes": 4,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 128,
+            "calls": 4392,
+            "success_rate": 0.03125,
+            "successes": 4,
+            "task_clusters": 8
+          }
+        },
+        "discovery_binding_delta": 0.0703125,
+        "known_recipe_binding_delta": 0
+      },
+      "1": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 128,
+            "calls": 3733,
+            "success_rate": 0.4765625,
+            "successes": 61,
+            "task_clusters": 8
+          },
+          "discovery/raw": {
+            "attempts": 128,
+            "calls": 4400,
+            "success_rate": 0.4140625,
+            "successes": 53,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 128,
+            "calls": 4580,
+            "success_rate": 0.1484375,
+            "successes": 19,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 128,
+            "calls": 4569,
+            "success_rate": 0.1171875,
+            "successes": 15,
+            "task_clusters": 8
+          }
+        },
+        "discovery_binding_delta": 0.0625,
+        "known_recipe_binding_delta": 0.03125
+      },
+      "2": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 128,
+            "calls": 3684,
+            "success_rate": 0.515625,
+            "successes": 66,
+            "task_clusters": 8
+          },
+          "discovery/raw": {
+            "attempts": 128,
+            "calls": 4206,
+            "success_rate": 0.4453125,
+            "successes": 57,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 128,
+            "calls": 4065,
+            "success_rate": 0.046875,
+            "successes": 6,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 128,
+            "calls": 4172,
+            "success_rate": 0.0390625,
+            "successes": 5,
+            "task_clusters": 8
+          }
+        },
+        "discovery_binding_delta": 0.0703125,
+        "known_recipe_binding_delta": 0.0078125
+      },
+      "3": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 128,
+            "calls": 3589,
+            "success_rate": 0.5546875,
+            "successes": 71,
+            "task_clusters": 8
+          },
+          "discovery/raw": {
+            "attempts": 128,
+            "calls": 3908,
+            "success_rate": 0.5,
+            "successes": 64,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 128,
+            "calls": 4187,
+            "success_rate": 0.046875,
+            "successes": 6,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 128,
+            "calls": 4010,
+            "success_rate": 0.03125,
+            "successes": 4,
+            "task_clusters": 8
+          }
+        },
+        "discovery_binding_delta": 0.0546875,
+        "known_recipe_binding_delta": 0.015625
+      },
+      "4": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 128,
+            "calls": 3691,
+            "success_rate": 0.40625,
+            "successes": 52,
+            "task_clusters": 8
+          },
+          "discovery/raw": {
+            "attempts": 128,
+            "calls": 3892,
+            "success_rate": 0.375,
+            "successes": 48,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 128,
+            "calls": 4420,
+            "success_rate": 0.046875,
+            "successes": 6,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 128,
+            "calls": 4187,
+            "success_rate": 0.03125,
+            "successes": 4,
+            "task_clusters": 8
+          }
+        },
+        "discovery_binding_delta": 0.03125,
+        "known_recipe_binding_delta": 0.015625
+      },
+      "5": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 128,
+            "calls": 4025,
+            "success_rate": 0.5234375,
+            "successes": 67,
+            "task_clusters": 8
+          },
+          "discovery/raw": {
+            "attempts": 128,
+            "calls": 4377,
+            "success_rate": 0.359375,
+            "successes": 46,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 128,
+            "calls": 3804,
+            "success_rate": 0.0546875,
+            "successes": 7,
+            "task_clusters": 8
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 128,
+            "calls": 3873,
+            "success_rate": 0.0546875,
+            "successes": 7,
+            "task_clusters": 8
+          }
+        },
+        "discovery_binding_delta": 0.1640625,
+        "known_recipe_binding_delta": 0
+      }
+    },
+    "training_seed": {
+      "2026092208": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 384,
+            "calls": 12243,
+            "success_rate": 0.5546875,
+            "successes": 213,
+            "task_clusters": 48
+          },
+          "discovery/raw": {
+            "attempts": 384,
+            "calls": 14456,
+            "success_rate": 0.4609375,
+            "successes": 177,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 384,
+            "calls": 13585,
+            "success_rate": 0.08333333333333333,
+            "successes": 32,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 384,
+            "calls": 13305,
+            "success_rate": 0.059895833333333336,
+            "successes": 23,
+            "task_clusters": 48
+          }
+        },
+        "discovery_binding_delta": 0.09375,
+        "known_recipe_binding_delta": 0.0234375
+      },
+      "2026092291": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 384,
+            "calls": 10099,
+            "success_rate": 0.4375,
+            "successes": 168,
+            "task_clusters": 48
+          },
+          "discovery/raw": {
+            "attempts": 384,
+            "calls": 10303,
+            "success_rate": 0.3802083333333333,
+            "successes": 146,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 384,
+            "calls": 11845,
+            "success_rate": 0.041666666666666664,
+            "successes": 16,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 384,
+            "calls": 11898,
+            "success_rate": 0.041666666666666664,
+            "successes": 16,
+            "task_clusters": 48
+          }
+        },
+        "discovery_binding_delta": 0.057291666666666664,
+        "known_recipe_binding_delta": 0
+      }
+    },
+    "world": {
+      "42": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 192,
+            "calls": 5259,
+            "success_rate": 0.5260416666666666,
+            "successes": 101,
+            "task_clusters": 48
+          },
+          "discovery/raw": {
+            "attempts": 192,
+            "calls": 5714,
+            "success_rate": 0.4947916666666667,
+            "successes": 95,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 192,
+            "calls": 6125,
+            "success_rate": 0.036458333333333336,
+            "successes": 7,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 192,
+            "calls": 6093,
+            "success_rate": 0.057291666666666664,
+            "successes": 11,
+            "task_clusters": 48
+          }
+        },
+        "discovery_binding_delta": 0.03125,
+        "known_recipe_binding_delta": -0.020833333333333332
+      },
+      "50": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 192,
+            "calls": 5733,
+            "success_rate": 0.4583333333333333,
+            "successes": 88,
+            "task_clusters": 48
+          },
+          "discovery/raw": {
+            "attempts": 192,
+            "calls": 6428,
+            "success_rate": 0.3541666666666667,
+            "successes": 68,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 192,
+            "calls": 6777,
+            "success_rate": 0.06770833333333333,
+            "successes": 13,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 192,
+            "calls": 6803,
+            "success_rate": 0.041666666666666664,
+            "successes": 8,
+            "task_clusters": 48
+          }
+        },
+        "discovery_binding_delta": 0.10416666666666667,
+        "known_recipe_binding_delta": 0.026041666666666668
+      },
+      "51": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 192,
+            "calls": 5704,
+            "success_rate": 0.5364583333333334,
+            "successes": 103,
+            "task_clusters": 48
+          },
+          "discovery/raw": {
+            "attempts": 192,
+            "calls": 6525,
+            "success_rate": 0.40625,
+            "successes": 78,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 192,
+            "calls": 6731,
+            "success_rate": 0.07291666666666667,
+            "successes": 14,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 192,
+            "calls": 6654,
+            "success_rate": 0.052083333333333336,
+            "successes": 10,
+            "task_clusters": 48
+          }
+        },
+        "discovery_binding_delta": 0.13020833333333334,
+        "known_recipe_binding_delta": 0.020833333333333332
+      },
+      "52": {
+        "arms": {
+          "discovery/binder": {
+            "attempts": 192,
+            "calls": 5646,
+            "success_rate": 0.4635416666666667,
+            "successes": 89,
+            "task_clusters": 48
+          },
+          "discovery/raw": {
+            "attempts": 192,
+            "calls": 6092,
+            "success_rate": 0.4270833333333333,
+            "successes": 82,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/binder": {
+            "attempts": 192,
+            "calls": 5797,
+            "success_rate": 0.07291666666666667,
+            "successes": 14,
+            "task_clusters": 48
+          },
+          "known_recipe_corrected/raw": {
+            "attempts": 192,
+            "calls": 5653,
+            "success_rate": 0.052083333333333336,
+            "successes": 10,
+            "task_clusters": 48
+          }
+        },
+        "discovery_binding_delta": 0.036458333333333336,
+        "known_recipe_binding_delta": 0.020833333333333332
+      }
+    }
+  },
+  "contrasts": {
+    "binder_by_teacher_interaction": {
+      "calls_difference_ci95": [
+        -4.365885416666667,
+        -2.4466145833333335
+      ],
+      "calls_difference_per_attempt": -3.4427083333333335,
+      "ci95": [
+        0.03515625,
+        0.09244791666666667
+      ],
+      "difference": 0.06380208333333333,
+      "native_errors_difference_ci95": [
+        -5.348958333333333,
+        -3.7604166666666665
+      ],
+      "native_errors_difference_per_attempt": -4.553385416666667,
+      "negative_pairs": 26,
+      "negative_task_clusters": 3,
+      "paired_attempts": 768,
+      "positive_pairs": 77,
+      "positive_task_clusters": 26,
+      "task_clusters": 48,
+      "tied_pairs": 665,
+      "unstratified_task_ci95": [
+        0.032552083333333336,
+        0.09505208333333333
+      ]
+    },
+    "discovery_binder_minus_raw": {
+      "calls_difference_ci95": [
+        -4.05078125,
+        -2.234375
+      ],
+      "calls_difference_per_attempt": -3.1471354166666665,
+      "ci95": [
+        0.05078125,
+        0.1015625
+      ],
+      "difference": 0.07552083333333333,
+      "native_errors_difference_ci95": [
+        -5.657552083333333,
+        -4.040364583333333
+      ],
+      "native_errors_difference_per_attempt": -4.842447916666667,
+      "negative_pairs": 16,
+      "negative_task_clusters": 2,
+      "paired_attempts": 768,
+      "positive_pairs": 74,
+      "positive_task_clusters": 26,
+      "task_clusters": 48,
+      "tied_pairs": 678,
+      "unstratified_task_ci95": [
+        0.049479166666666664,
+        0.10286458333333333
+      ]
+    },
+    "discovery_minus_known_recipe_binder": {
+      "calls_difference_ci95": [
+        -7.14453125,
+        -1.02734375
+      ],
+      "calls_difference_per_attempt": -4.020833333333333,
+      "ci95": [
+        0.38671875,
+        0.4791666666666667
+      ],
+      "difference": 0.43359375,
+      "native_errors_difference_ci95": [
+        3.2434895833333335,
+        4.571614583333333
+      ],
+      "native_errors_difference_per_attempt": 3.9114583333333335,
+      "negative_pairs": 8,
+      "negative_task_clusters": 1,
+      "paired_attempts": 768,
+      "positive_pairs": 341,
+      "positive_task_clusters": 40,
+      "task_clusters": 48,
+      "tied_pairs": 419,
+      "unstratified_task_ci95": [
+        0.34375,
+        0.5247395833333334
+      ]
+    },
+    "discovery_minus_known_recipe_raw": {
+      "calls_difference_ci95": [
+        -3.57421875,
+        2.2955729166666665
+      ],
+      "calls_difference_per_attempt": -0.578125,
+      "ci95": [
+        0.3294270833333333,
+        0.4088541666666667
+      ],
+      "difference": 0.3697916666666667,
+      "native_errors_difference_ci95": [
+        7.524739583333333,
+        9.381510416666666
+      ],
+      "native_errors_difference_per_attempt": 8.46484375,
+      "negative_pairs": 8,
+      "negative_task_clusters": 0,
+      "paired_attempts": 768,
+      "positive_pairs": 292,
+      "positive_task_clusters": 36,
+      "task_clusters": 48,
+      "tied_pairs": 468,
+      "unstratified_task_ci95": [
+        0.27734375,
+        0.4661458333333333
+      ]
+    },
+    "known_recipe_corrected_binder_minus_raw": {
+      "calls_difference_ci95": [
+        -0.39453125,
+        0.9869791666666666
+      ],
+      "calls_difference_per_attempt": 0.2955729166666667,
+      "ci95": [
+        -0.0026041666666666665,
+        0.028645833333333332
+      ],
+      "difference": 0.01171875,
+      "native_errors_difference_ci95": [
+        -0.4231770833333333,
+        -0.16145833333333334
+      ],
+      "native_errors_difference_per_attempt": -0.2890625,
+      "negative_pairs": 6,
+      "negative_task_clusters": 5,
+      "paired_attempts": 768,
+      "positive_pairs": 15,
+      "positive_task_clusters": 9,
+      "task_clusters": 48,
+      "tied_pairs": 747,
+      "unstratified_task_ci95": [
+        -0.00390625,
+        0.028645833333333332
+      ]
+    }
+  },
+  "cutoff": {
+    "attempts": 3072,
+    "attempts_per_arm": 768,
+    "excluded": "All panel06/panel07 outcomes excluded, completed or partial.",
+    "native_audits_present_and_small_receipts_verified": 192,
+    "native_qualified_task_worlds": 192,
+    "panels": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "runs": 192,
+    "task_identities": 48,
+    "task_worlds": 192,
+    "training_seeds": [
+      2026092208,
+      2026092291
+    ],
+    "worlds": [
+      42,
+      50,
+      51,
+      52
+    ]
+  },
+  "evidence": {
+    "analysis_script_sha256": "0948767bfac76e84e91a3e05d1a144e023dba036c8f111f29f88c72672c62da8",
+    "details": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-textcraft-breadth-20260928/details.json",
+    "details_sha256": "01afe4d30895c81df96f7553064aea00eb3ad5225dc99b74cd848848bb2fda39",
+    "root": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921",
+    "verified_small_receipt_count": 9651
+  },
+  "historical_controls": {
+    "dose_inventory": "Read-only scan of current top-level textcraft*/PLAN.json found the completed original/discovery/corrected endpoints at one epoch, 23 updates; no matched multi-epoch teacher-package readout was identified. This search is bounded to the active store, not proof of absence from all historical stores.",
+    "one_step_extra_sft": "Already tested from discovery checkpoint: 17/32 versus 15/32 baseline; one RL update also 15/32. SFT and RL matched one update and 12,074 credited/target tokens on eight training tasks. Inconclusive on 16 evaluation goals.",
+    "references_sha256": {
+      "analysis-textcraft-fresh-behavior-002.json": "00e9dfa25150602ed8ca188b68e111ebbdc321fc98519428b9c1b2d0deae9986",
+      "analysis-textcraft-procedure-behavior-002.json": "d932efa3d26a103c71f2b264d1b2b234e2ec5ec30208d32aa1f06389065852a1",
+      "analysis-textcraft-procedure-control-001.json": "020c12fcb69ec57aa1a2889cad69182bc78acc90b64611af00daeb546bf400b3",
+      "analysis-textcraft-stopped-step1-001.json": "dfe3c3db7d64be4accd5c5b70479ba78b1fb52d639e324a06832bf3143c20ad9",
+      "analysis-textcraft-target-multiset-004.json": "2ec8717a2eb769a1ef42b2471e8acfde7e6c7573ca9bc349a80cc92c7094c84c",
+      "textcraft-public-discovery-sft-001/TEACHER-CONTRACT.json": "d9c0b3afb48a41b79ce7840a2e804e8c0f2f3e56a47fdec48ad419ce735a85c0",
+      "textcraft-quantity-matched-inputs-004/MANIFEST.json": "25ed7f91209365533d1d93222d76ea55b0b777c84461d1a7e3ddbf3563d89c48"
+    },
+    "root_first_procedure_prompt": "Already tested on the original uncorrected known-recipe adapter: 0/16 successes versus 3/16 default, despite root-first actions rising from 3/16 to 10/16; repeated static-recipe queries rose from 70 to 418. A new minimal prompt on the corrected adapter would be a changed replication."
+  },
+  "limitations": [
+    "Known_recipe_corrected is the quantity-corrected known-recipe teacher, not a corrected discovery model.",
+    "Both teacher packages have 32 tasks, 366 rows and 23 updates; query order, histories, prompt-token exposure and trajectory package differ. Target-token dose is identical after the known-recipe quantity correction.",
+    "Forty-eight task identities, not 768 independent examples; worlds, repeated evaluation seeds, training seeds, names and generator induce dependence.",
+    "World42 is the source recipe world; worlds50\u201352 share generator/item grammar and change recipes plus sufficient inventory. New-to-inventory goal roots are not an unbounded historical exposure guarantee.",
+    "Declared task depth can exceed realized dependency-chain depth. Four depth strata are deliberately reweighted; rates are not an official benchmark average.",
+    "The first six complete panels are an explicit analysis cutoff; panels06\u201307 are excluded regardless of availability/outcome. The larger campaign is incomplete.",
+    "Binding modifies ingredients only from a previously observed single recipe when output quantity is divisible; it does not choose targets, quantities, decomposition or stopping.",
+    "All arms are flat action SFT; these data do not establish recursive delegation, RLVR gains, other-model transfer or equality of inference token cost.",
+    "Native audits are reused; this synthesis verifies PLAN/episode, node histories, first-query calls and frozen input hashes, not a full new replay or weight rehash.",
+    "Query visibility and failure categories are descriptive correlates, not isolated causal mechanisms; repeated nonexistent-name mentions are not independent errors."
+  ],
+  "mapping": [
+    {
+      "adapter": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-discovery-sft-001/checkpoint-0023",
+      "adapter_sha256_from_native_audit": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+      "rows": 366,
+      "seed": 2026092208,
+      "tasks": 32,
+      "teacher": "discovery",
+      "training_plan_sha256": "5a34080562a39dc92dee2a813078e730b883fb60944dad96b613598c31f9624c",
+      "training_rows_sha256": "dd152038a7f7da337c6cffe89a5a83a016d405cb251f4e26d3c3ec0d8f1da30a",
+      "updates": 23
+    },
+    {
+      "adapter": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-quantity-matched-seed2026092208-001/checkpoint-0023",
+      "adapter_sha256_from_native_audit": "c29ca971fb839eda116483d1652338444d895d2fab40a314004c3ee0b94650d8",
+      "rows": 366,
+      "seed": 2026092208,
+      "tasks": 32,
+      "teacher": "known_recipe_corrected",
+      "training_plan_sha256": "368b0b3df7367129a78760010dbaf9664f780b41e123cf8902e077453a6cbb60",
+      "training_rows_sha256": "24ea72cb1242f2e0d819d8fb115737864de03fb750e064f145f9ec48a245e6d6",
+      "updates": 23
+    },
+    {
+      "adapter": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teacher-seed2291-public-001/checkpoint-0023",
+      "adapter_sha256_from_native_audit": "16b8bc0dd1c1ba62ac4384b675f2b1591d82c93ac75693c4cddd24da8094a130",
+      "rows": 366,
+      "seed": 2026092291,
+      "tasks": 32,
+      "teacher": "discovery",
+      "training_plan_sha256": "9f45bbac155045a6e27f7f594751584d41cf8c2b8e3b284c5d1c694eff0976fc",
+      "training_rows_sha256": "dd152038a7f7da337c6cffe89a5a83a016d405cb251f4e26d3c3ec0d8f1da30a",
+      "updates": 23
+    },
+    {
+      "adapter": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-quantity-matched-seed2026092291-001/checkpoint-0023",
+      "adapter_sha256_from_native_audit": "2561850c0abbcfc797015f0bc57f69bda004af2780869f66236678513460937b",
+      "rows": 366,
+      "seed": 2026092291,
+      "tasks": 32,
+      "teacher": "known_recipe_corrected",
+      "training_plan_sha256": "338aa4ff402e64704a50cee04983bbf16c2f01405b250e4d23d3daea3529e9fd",
+      "training_rows_sha256": "24ea72cb1242f2e0d819d8fb115737864de03fb750e064f145f9ec48a245e6d6",
+      "updates": 23
+    }
+  ],
+  "next_decisions": [
+    "Highest priority: repair known-recipe teacher query observability while preserving crafting order and action/target multiset, then compare fixed trained endpoints against both existing packages. Audit every query name against public state. This tests whether unobserved-name supervision drives the transfer failure.",
+    "Separate order from optimization: compare predetermined one/two/three-epoch endpoints of the same frozen teacher packages with matched updates and seeds. The existing one-step discovery SFT control does not answer known-teacher undertraining. Keep all checkpoints in the report; do not choose a best VAL result.",
+    "Check teacher-forced fit by action type and query visibility on frozen TRAIN/VAL rows: successful fit to hidden-name labels with poor rollout transfer supports a supervision/state-distribution problem; poor fit leaves undertraining open.",
+    "Retain discovery plus binding for depth4\u20135 feasibility/quantity interventions. Binding removes ingredient-selection errors but does not ensure enough inventory. Compare bounded quantity planning/decomposition on paired goals before broad RLVR.",
+    "Do not repeat the completed multi-sentence root-first prompt control as if new. A minimal root-first-only instruction on corrected weights and new goals is a changed replication, lower priority than repairing training-time observability."
+  ],
+  "schema": "textcraft-breadth-fixed-cutoff-synthesis-v1",
+  "teacher_visibility_and_dose": {
+    "canonical_action_multiset_differences": [],
+    "discovery": {
+      "first_queries": 32,
+      "first_query_all_names_visible": 32,
+      "prompt_tokens": 438065,
+      "query_rows": 167,
+      "query_rows_all_names_visible": 167,
+      "query_structured_vs_text_disagreement": 0,
+      "target_tokens": 8820
+    },
+    "known_recipe_corrected": {
+      "first_queries": 32,
+      "first_query_all_names_visible": 2,
+      "prompt_tokens": 414682,
+      "query_rows": 167,
+      "query_rows_all_names_visible": 32,
+      "query_structured_vs_text_disagreement": 0,
+      "target_tokens": 8820
+    },
+    "same_initial_prompts": 32,
+    "same_target_string_multisets": 32,
+    "unmasked_label_tokens_multiset_differences": []
+  },
+  "uncertainty": {
+    "draws": 20000,
+    "primary": "Percentile bootstrap task identities within declared-depth strata; retain all four worlds, two training seeds and two repeats together.",
+    "scope": "Conditional on the task selection procedure, four shared worlds and two fitted seeds; no world/seed population CI, no iid attempt CI, no multiplicity correction.",
+    "seed": 20260928,
+    "sensitivity": "Unstratified task-identity bootstrap, same fixed worlds/seeds/repeats."
+  }
+}

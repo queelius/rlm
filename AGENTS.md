@@ -82,7 +82,17 @@ preparation is running; never mistake a delivered message for active work.
 
 ## Codex usage reserve for advisor slides
 
-**September 23 usage override (current):** The user explicitly authorizes using
+**September 28 resumption (current):** The user reports a full allowance and
+requests autonomous research through their return tomorrow. The live main quota
+read at 10:01 UTC confirmed 99% remaining. Continue useful GPU work, analyze
+completed results, and prepare follow-ups; do not apply old meeting-specific
+pause thresholds as the current policy. Remain efficient, monitor the shared
+allowance periodically, and preserve resumable jobs and a readable findings log.
+The user explicitly encourages parallel agents for primary-literature research,
+new experiment ideas, and analysis. No additional approval is needed for scoped
+research decisions already covered by the standing permissions above.
+
+**September 23 usage override (historical):** The user explicitly authorizes using
 the remaining allowance for research and reports a banked reset is available.
 This supersedes the 5% reserve below. Remain token-efficient: reuse local scripts,
 avoid redundant narration/reviews, and prepare meaningful follow-on coverage for
