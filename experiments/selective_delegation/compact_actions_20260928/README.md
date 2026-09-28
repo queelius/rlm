@@ -70,6 +70,12 @@ Initial prompt+cap is at most828 tokens in world42 (world50 is independently che
 Existing binder readouts took19.1 and25.7min: expect roughly20–30min per compact
 readout, not a promised speedup. Baseline replication is supported with `--mode binder`.
 
+September28 integration note: the optional `--mode binder --audit` branch currently
+passes `expected_task_count` to a sealed older auditor that does not accept it.
+Do not use that optional audit command until a separate adapter is provided. The
+accepted **compact** runtime/audit and the existing independently audited binder
+baselines are unaffected. No live/pinned source was changed for this unused branch.
+
 Primary endpoints: paired native task success, generated tokens, prompt tokens,
 native calls and service time. Report errors/caps and unavailable episodes separately.
 The compact source change is not only token deletion: full binder falls through to

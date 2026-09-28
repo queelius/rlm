@@ -42,8 +42,12 @@ privileged teachers, recursive RL and action/argument separation.
 | Does teaching information in a usable order explain the gap? | Reorder the known-recipe demonstrations so names are visible before they are queried. Preserve task/action multiset and minibatch answer targets. | Two trainings and four paired-world readouts accepted. | Improvement over matched known-recipe training supports a conditioning-history mechanism; a second legal order tests dependence on one ordering. |
 | Is the weaker teacher merely undertrained? | Fixed additional training doses for both teaching methods, without selecting the best evaluation checkpoint. | Both continuations and all eight fixed checkpoint/world readouts accepted. | If longer training closes the gap, revise the teaching-mechanism claim. |
 | Do unnecessary action fields impair learning? | Ask for item and quantity only; code supplies known ingredients. Compare with the current assisted full-action format. | Matched-epoch compact SFT and two paired-world readouts accepted. | Compare success and output costs first. Compact also rejects unobserved recipes, so this is not pure token removal. |
-| Can more informative feedback help RL? | Reuse the first fresh batch for one independent update with a small error penalty, while keeping native success unchanged. | Separate CPU implementation in progress. | Success must improve or be preserved; merely learning to stop early and make fewer errors is not success. |
-| When should a task be divided? | First check actual helper uptake with the existing globally budgeted interface; then compare fixed and public-information-based delegation. | Tiny CPU-prepared admission comparison next. | Earlier actors never delegated. Establish actual use before interpreting a flat-versus-recursive efficacy grid. |
+| Can more informative feedback help RL? | Reuse the first fresh batch for one independent update with a small error penalty, while keeping native success unchanged. | Two one-step trainings and two fixed diagnostic readouts accepted. | Success must improve or be preserved; merely learning to stop early and make fewer errors is not success. |
+| When should a task be divided? | First check actual helper uptake with the existing globally budgeted interface; then compare fixed and public-information-based delegation. | First three screens stopped on an imposed query-order constraint before helpers; separate relaxed-order screens accepted. | The first screen is not evidence against recursion. Establish actual use before interpreting an efficacy grid. |
+| Does the simpler action format make reward learning easier? | One compact-interface RL cycle on the same fresh optimization/diagnostic groups, with its own unchanged-weight control. | Four scientific stages accepted with a deferred real SFT checkpoint binding. | Compare learning gains within each interface; raw post-training scores mix model and tool effects. |
+| Does the teaching result extend beyond one model? | Qualify another public3–4B model family for the same paired teacher study. | CPU model/template qualification, not yet a GPU run. | Stop on genuine incompatibility; choose a fixed endpoint and preserve all outcomes. |
+| Does explicit quantity bookkeeping help deeper tasks? | Same public fact table with versus without computed remaining-demand columns; matched state-conditional prompt length. | CPU preparation, following a complete failure audit. | Better root completion, not merely fewer repeated errors; replicate on new tasks if promising. |
+| Does an action's representation change what SFT learns in another environment? | In ALFWorld, teach action indices versus exact available command text, using the same demonstrations and public action lists. | CPU qualification/design. | Compare each trained actor with its own base-interface control; no automatic repair or hierarchy claim. |
 
 The fresh group A/B study is still within TextCraft. Group B is an unused official
 TRAIN subset held out from the new optimizer, not an untouched benchmark test.
@@ -84,3 +88,29 @@ coverage is roughly a day if the learning arms remain viable, not a guarantee
 that the entire three-day allocation is filled. A token-free response/completion
 journal runs at `health-watch-20260928-001/`; its alerts are observations, not an
 automatic scientific decision maker. Review results at each completed boundary.
+
+At11:17 the reward-cost and six fixed training-fit measurements are also accepted.
+The tiny delegation probe was promoted ahead of the original paired RL collections:
+`rl-collect-with-delegation-20260928-001/` supersedes only the idle
+`rl-collect-queue-20260928-001/` supervisor. No scientific owner was interrupted,
+and the original RL commands, caps and downstream paths are unchanged. Inspect
+`SUPERSEDED.json` before counting queues; duplicate references are not extra runs.
+There are now74 unique accepted scientific output stages, many conditional.
+
+A CPU-only crossed-results observer will write
+`crossed-rl-analysis-20260928-001/FINDINGS.md` when the familiar-goal RL comparison
+settles. It distinguishes changing weights from changing tools and preserves
+unavailable endpoints. The main source/findings checkpoint is Git`3bbd182` on the
+research branch; full model artifacts remain external.
+
+At11:36, `compact-delegation-queue-20260928-001` is accepted behind the reward
+diagnostics queue. Its seven scientific stages bring the unique accepted total
+to81, not81 research questions. The new helper screen is a narrow repair with
+unchanged32-response/15-minute caps; the four compact-RL stages compare learning
+against the compact actor's own baseline. Independent review and actual saved
+request/native replay passed. Estimated additional useful work2–4hours plus a
+short screen; deadlines still respect the allocation. The active GPU is doing
+the first original-action RL collection, not the queued training yet.
+
+Read [today's running findings](FINDINGS-20260928-LIVE.md) for the completed
+panel06 pairs, remaining-failure analysis and the unsuccessful first screen.

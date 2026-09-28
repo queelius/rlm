@@ -1,0 +1,692 @@
+{
+  "binder_by_depth": {
+    "binder_d4": {
+      "counts": {
+        "calls": 2787,
+        "consecutive_repeat_insufficient_same_action_and_stock": 147,
+        "craft_calls": 1624,
+        "crafts_above_public_remaining_batch_demand": 133,
+        "crafts_losing_public_graph_completion_feasibility": 1,
+        "finish_calls": 96,
+        "get_info_calls": 1053,
+        "insufficient_stock_crafts": 590,
+        "insufficient_with_public_completion_feasible": 348,
+        "insufficient_with_ready_prerequisite": 503,
+        "insufficient_with_recipe_closure": 361,
+        "invalid_schema_calls": 14,
+        "queried_items": 1054,
+        "query_calls_with_no_new_static_recipe": 133,
+        "redundant_query_calls_after_closure": 112,
+        "repeat_insufficient_same_action_and_stock": 195,
+        "requeried_unchanged_recipe_items": 133,
+        "shortage_after_cross_branch_consumption_without_replenishment": 47,
+        "successful_crafts": 977,
+        "successful_shared_ingredient_consumptions": 372
+      },
+      "episode_seconds_mean": 65.82896625250578,
+      "episodes": 96,
+      "flags": {
+        "any_above_public_batch_demand": 39,
+        "any_cross_branch_shortage": 9,
+        "any_insufficient": 85,
+        "any_public_feasibility_loss": 1,
+        "failed": 57,
+        "failed_explicit_finish": 57,
+        "failed_with_complete_recipe_closure": 42,
+        "failed_with_cross_branch_shortage": 9,
+        "failed_with_goal_completing_craft_ready": 5,
+        "failed_with_public_completion_feasible": 40,
+        "failed_with_public_feasibility_loss": 1,
+        "failed_with_ready_prerequisite": 47,
+        "repeated_insufficient": 40,
+        "repeated_query": 45
+      },
+      "max_identical_insufficient_run": 22,
+      "median_identical_insufficient_run": 1,
+      "statuses": {
+        "finished": 96
+      },
+      "successes": 39.0,
+      "task_identities": 6
+    },
+    "binder_d5": {
+      "counts": {
+        "calls": 15137,
+        "consecutive_repeat_insufficient_same_action_and_stock": 1145,
+        "craft_calls": 8882,
+        "crafts_above_public_remaining_batch_demand": 248,
+        "crafts_losing_public_graph_completion_feasibility": 3,
+        "finish_calls": 256,
+        "get_info_calls": 5867,
+        "insufficient_stock_crafts": 4051,
+        "insufficient_with_public_completion_feasible": 1120,
+        "insufficient_with_ready_prerequisite": 3695,
+        "insufficient_with_recipe_closure": 1130,
+        "invalid_schema_calls": 132,
+        "queried_items": 5883,
+        "query_calls_with_no_new_static_recipe": 1056,
+        "redundant_query_calls_after_closure": 391,
+        "repeat_insufficient_same_action_and_stock": 1477,
+        "requeried_unchanged_recipe_items": 1056,
+        "shortage_after_cross_branch_consumption_without_replenishment": 308,
+        "successful_crafts": 4395,
+        "successful_shared_ingredient_consumptions": 2606
+      },
+      "episode_seconds_mean": 132.53141069412231,
+      "episodes": 288,
+      "flags": {
+        "any_above_public_batch_demand": 72,
+        "any_cross_branch_shortage": 66,
+        "any_insufficient": 266,
+        "any_public_feasibility_loss": 3,
+        "context_cap": 32,
+        "failed": 251,
+        "failed_explicit_finish": 219,
+        "failed_with_complete_recipe_closure": 110,
+        "failed_with_cross_branch_shortage": 63,
+        "failed_with_goal_completing_craft_ready": 8,
+        "failed_with_public_completion_feasible": 107,
+        "failed_with_public_feasibility_loss": 3,
+        "failed_with_ready_prerequisite": 230,
+        "repeated_insufficient": 207,
+        "repeated_query": 215
+      },
+      "max_identical_insufficient_run": 23,
+      "median_identical_insufficient_run": 2,
+      "statuses": {
+        "context_cap": 32,
+        "finished": 256
+      },
+      "successes": 37.0,
+      "task_identities": 18
+    }
+  },
+  "binder_failure_closure_feasibility": {
+    "closure_False_feasible_False": 155,
+    "closure_False_feasible_True": 1,
+    "closure_True_feasible_False": 6,
+    "closure_True_feasible_True": 146
+  },
+  "binder_failure_repeated_errors": 222,
+  "binder_failure_repeated_queries": 225,
+  "context_cap_diagnostics": {
+    "causal_interpretation": "Correlation only; not proof that loops caused context caps",
+    "context_limit": 8192,
+    "episodes": 32,
+    "per_episode_call_cap": 96,
+    "per_episode_output_token_cap": 8192,
+    "repeated_stock_error_episodes": 31
+  },
+  "definitions": {
+    "cross_branch": "A later native-reported item shortage follows consumption by a different already-known parent, with no intervening production of that item. A temporal witness, not proof the earlier craft was destructive.",
+    "feasibility_loss": "Successful craft changes public-graph completion feasibility from true to false with the SAME observed recipes. This does not prove an oracle-world irrecoverable state if recipes remain unobserved.",
+    "overproduction": "Successful output exceeds minimum batch-rounded outstanding demand in the current public DAG, restricted to complete static closure. Not necessarily harmful because excess resources may remain.",
+    "prerequisite": "A goal-reachable item with positive remaining derived demand and enough current stock for one observed-recipe batch. Root is counted separately.",
+    "public_feasibility": "Counterfactual arithmetic on only unique observed recipes: sum shared-child demand before rounding batches, subtract current stock once. All unresolved leaf deficits must be zero. No next action is selected.",
+    "recipe_closure": "Root dependency recipes publicly returned, recursively to names in initial inventory or explicitly identified public base items. Static closure is distinct from whether enough stock exists or the model understood the graph.",
+    "repeated_stock_error": "Same canonical executed craft fields excluding note and same complete inventory after an earlier insufficient-stock failure; history, recipe knowledge and remaining budget may differ. Not identical policy state."
+  },
+  "examples": [
+    {
+      "calls": [
+        {
+          "action": {
+            "action": "get_info",
+            "items": [
+              "c8_i3_18"
+            ]
+          },
+          "call_id": "t04-r1-flat-original-c001",
+          "feedback": [
+            {
+              "can_craft": true,
+              "crafting_depth": 3,
+              "in_inventory": 0,
+              "is_base": false,
+              "item": "c8_i3_18",
+              "recipes": [
+                {
+                  "ingredients": {
+                    "c0_i1_20": 2,
+                    "c3_i2_13": 2,
+                    "c4_i2_24": 2
+                  },
+                  "result_count": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "action": {
+            "action": "get_info",
+            "items": [
+              "c0_i1_20"
+            ]
+          },
+          "call_id": "t04-r1-flat-original-c005",
+          "feedback": [
+            {
+              "can_craft": true,
+              "crafting_depth": 1,
+              "in_inventory": 0,
+              "is_base": false,
+              "item": "c0_i1_20",
+              "recipes": [
+                {
+                  "ingredients": {
+                    "c2_ore": 1
+                  },
+                  "result_count": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "c0_i1_20": 2,
+              "c3_i2_13": 2,
+              "c4_i2_24": 2
+            },
+            "output_count": 1,
+            "target_item": "c8_i3_18"
+          },
+          "call_id": "t04-r1-flat-original-c040",
+          "feedback": "Error: All 1 recipe(s) failed for c8_i3_18. Errors:\nRecipe 1: Insufficient ingredients in inventory: c0_i1_20: need 2, have 1"
+        },
+        {
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "c0_i1_20": 2,
+              "c3_i2_13": 2,
+              "c4_i2_24": 2
+            },
+            "output_count": 1,
+            "target_item": "c8_i3_18"
+          },
+          "call_id": "t04-r1-flat-original-c041",
+          "feedback": "Error: All 1 recipe(s) failed for c8_i3_18. Errors:\nRecipe 1: Insufficient ingredients in inventory: c0_i1_20: need 2, have 1"
+        },
+        {
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "c0_i1_20": 2,
+              "c3_i2_13": 2,
+              "c4_i2_24": 2
+            },
+            "output_count": 1,
+            "target_item": "c8_i3_18"
+          },
+          "call_id": "t04-r1-flat-original-c042",
+          "feedback": "Error: All 1 recipe(s) failed for c8_i3_18. Errors:\nRecipe 1: Insufficient ingredients in inventory: c0_i1_20: need 2, have 1"
+        },
+        {
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "c0_i1_20": 2,
+              "c3_i2_13": 2,
+              "c4_i2_24": 2
+            },
+            "output_count": 1,
+            "target_item": "c8_i3_18"
+          },
+          "call_id": "t04-r1-flat-original-c043",
+          "feedback": "Error: All 1 recipe(s) failed for c8_i3_18. Errors:\nRecipe 1: Insufficient ingredients in inventory: c0_i1_20: need 2, have 1"
+        },
+        {
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "c0_i1_20": 2,
+              "c3_i2_13": 2,
+              "c4_i2_24": 2
+            },
+            "output_count": 1,
+            "target_item": "c8_i3_18"
+          },
+          "call_id": "t04-r1-flat-original-c044",
+          "feedback": "Error: All 1 recipe(s) failed for c8_i3_18. Errors:\nRecipe 1: Insufficient ingredients in inventory: c0_i1_20: need 2, have 1"
+        },
+        {
+          "action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "call_id": "t04-r1-flat-original-c045",
+          "feedback": "Finished."
+        }
+      ],
+      "final_relevant_inventory": {
+        "c0_i1_20": 1,
+        "c2_ore": 3
+      },
+      "node_path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-p00-w42-soriginal-binder-001/nodes/t04-r1-flat-original-n0.json",
+      "node_sha256": "1eb1060befcd514e22078d8a44d4acbe5f5654c958320816a6d8a770a7298913",
+      "selection": "Illustration from fixed primary slice; selected after counting outcomes",
+      "targets": {
+        "c4_i4_14": 1
+      },
+      "task_id": "textcraft_synth.val.628"
+    },
+    {
+      "calls": [
+        {
+          "action": {
+            "action": "get_info",
+            "items": [
+              "o0_i5_20"
+            ]
+          },
+          "call_id": "t05-r1-flat-original-c000",
+          "feedback": [
+            {
+              "can_craft": true,
+              "crafting_depth": 5,
+              "in_inventory": 0,
+              "is_base": false,
+              "item": "o0_i5_20",
+              "recipes": [
+                {
+                  "ingredients": {
+                    "o8_i4": 1,
+                    "o9_i3_19": 1
+                  },
+                  "result_count": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "o0_i2": 1,
+              "o1_i2_11": 2
+            },
+            "output_count": 2,
+            "target_item": "o8_i4"
+          },
+          "call_id": "t05-r1-flat-original-c032",
+          "feedback": "Successfully crafted 2 o8_i4(s)"
+        },
+        {
+          "action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "call_id": "t05-r1-flat-original-c033",
+          "feedback": "Finished."
+        }
+      ],
+      "final_relevant_inventory": {
+        "o0_i5_20": 0,
+        "o8_i4": 2,
+        "o9_i3_19": 1
+      },
+      "node_path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-p00-w42-soriginal-binder-001/nodes/t05-r1-flat-original-n0.json",
+      "node_sha256": "3ead374eb9d1ac4459d35f855977ea4d6737f7ce54b690366bf13fec918616bc",
+      "selection": "Illustration from fixed primary slice; selected after counting outcomes",
+      "targets": {
+        "o0_i5_20": 1
+      },
+      "task_id": "textcraft_synth.val.599"
+    },
+    {
+      "calls": [
+        {
+          "action": {
+            "action": "get_info",
+            "items": [
+              "a1_i4"
+            ]
+          },
+          "call_id": "t06-r0-flat-original-c003",
+          "feedback": [
+            {
+              "can_craft": true,
+              "crafting_depth": 4,
+              "in_inventory": 0,
+              "is_base": false,
+              "item": "a1_i4",
+              "recipes": [
+                {
+                  "ingredients": {
+                    "a3_i2": 2,
+                    "a5_i2": 1,
+                    "a8_i2": 1
+                  },
+                  "result_count": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "a1_i3": 1,
+              "a1_i4": 1,
+              "a4_i2": 1
+            },
+            "output_count": 1,
+            "target_item": "a4_i5_14"
+          },
+          "call_id": "t06-r0-flat-original-c048",
+          "feedback": "Error: All 1 recipe(s) failed for a4_i5_14. Errors:\nRecipe 1: Insufficient ingredients in inventory: a1_i4: need 1, have 0"
+        },
+        {
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "a1_i3": 2,
+              "a1_i4": 2,
+              "a4_i2": 2
+            },
+            "output_count": 2,
+            "target_item": "a4_i5_14"
+          },
+          "call_id": "t06-r0-flat-original-c049",
+          "feedback": "Error: All 1 recipe(s) failed for a4_i5_14. Errors:\nRecipe 1: Insufficient ingredients in inventory: a1_i4: need 2, have 0"
+        },
+        {
+          "action": {
+            "action": "craft",
+            "ingredients": {
+              "a1_i3": 2,
+              "a1_i4": 2,
+              "a4_i2": 2
+            },
+            "output_count": 2,
+            "target_item": "a4_i5_14"
+          },
+          "call_id": "t06-r0-flat-original-c050",
+          "feedback": "Error: All 1 recipe(s) failed for a4_i5_14. Errors:\nRecipe 1: Insufficient ingredients in inventory: a1_i4: need 2, have 0"
+        },
+        {
+          "action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "call_id": "t06-r0-flat-original-c051",
+          "feedback": "Finished."
+        }
+      ],
+      "final_relevant_inventory": {
+        "a1_i4": 0,
+        "a3_i2": 6,
+        "a5_i2": 3,
+        "a8_i2": 2
+      },
+      "node_path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-p00-w42-soriginal-binder-001/nodes/t06-r0-flat-original-n0.json",
+      "node_sha256": "c84c090eaa44d8b2d292ce2419f2b34805b2a9785800689de596e0aefd489758",
+      "selection": "Illustration from fixed primary slice; selected after counting outcomes",
+      "targets": {
+        "a4_i5_14": 2
+      },
+      "task_id": "textcraft_synth.val.401"
+    }
+  ],
+  "exploratory_task_cluster_intervals": {
+    "failure_public_completion_feasible": {
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 2026092806,
+      "denominator": 308,
+      "numerator": 147,
+      "numerator_positive_tasks": 24,
+      "percentile_95": [
+        0.3954248366013072,
+        0.5620915032679739
+      ],
+      "proportion": 0.4772727272727273,
+      "task_clusters": 24
+    },
+    "failure_ready_prerequisite": {
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 2026092806,
+      "denominator": 308,
+      "numerator": 277,
+      "numerator_positive_tasks": 24,
+      "percentile_95": [
+        0.8540145985401459,
+        0.9373040752351097
+      ],
+      "proportion": 0.8993506493506493,
+      "task_clusters": 24
+    },
+    "failure_repeated_stock_error": {
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 2026092806,
+      "denominator": 308,
+      "numerator": 222,
+      "numerator_positive_tasks": 24,
+      "percentile_95": [
+        0.676056338028169,
+        0.7628205128205128
+      ],
+      "proportion": 0.7207792207792207,
+      "task_clusters": 24
+    }
+  },
+  "limitations": "Descriptive, correlated repeated attempts on24 deep task identities; worlds and model seeds do not make independent goals. No causal effects or model-internal planning labels. Recipe inspection never uses hidden native graph.",
+  "primary": {
+    "counts": {
+      "calls": 384,
+      "consecutive_repeat_insufficient_same_action_and_stock": 36,
+      "craft_calls": 257,
+      "crafts_above_public_remaining_batch_demand": 6,
+      "finish_calls": 8,
+      "get_info_calls": 119,
+      "insufficient_stock_crafts": 125,
+      "insufficient_with_public_completion_feasible": 59,
+      "insufficient_with_ready_prerequisite": 119,
+      "insufficient_with_recipe_closure": 59,
+      "queried_items": 119,
+      "query_calls_with_no_new_static_recipe": 11,
+      "redundant_query_calls_after_closure": 4,
+      "repeat_insufficient_same_action_and_stock": 38,
+      "requeried_unchanged_recipe_items": 11,
+      "shortage_after_cross_branch_consumption_without_replenishment": 21,
+      "successful_crafts": 127,
+      "successful_shared_ingredient_consumptions": 86
+    },
+    "episode_seconds_mean": 123.97271266579628,
+    "episodes": 8,
+    "flags": {
+      "any_above_public_batch_demand": 3,
+      "any_cross_branch_shortage": 4,
+      "any_insufficient": 8,
+      "failed": 6,
+      "failed_explicit_finish": 6,
+      "failed_with_complete_recipe_closure": 6,
+      "failed_with_cross_branch_shortage": 3,
+      "failed_with_goal_completing_craft_ready": 1,
+      "failed_with_public_completion_feasible": 6,
+      "failed_with_ready_prerequisite": 5,
+      "repeated_insufficient": 7,
+      "repeated_query": 6
+    },
+    "max_identical_insufficient_run": 5,
+    "median_identical_insufficient_run": 4,
+    "statuses": {
+      "finished": 8
+    },
+    "successes": 2.0,
+    "task_identities": 4
+  },
+  "prior_memory": {
+    "first_actor_full_then_notebook": [
+      15,
+      14,
+      32
+    ],
+    "interpretation": "No reliable fact-only notebook gain. Existing pilots did not compute goal-conditioned remaining quantities, batch rounding, or shared-child demand.",
+    "rl_actor_full_then_notebook": [
+      14,
+      14,
+      32
+    ],
+    "second_actor_full_then_notebook": [
+      15,
+      6,
+      32
+    ]
+  },
+  "proposed_probe": {
+    "cap_minutes_per_arm": 45,
+    "confounds": "Host computation is deliberately added. Display, arithmetic, padding and policy adaptation are not isolated by this two-arm pilot; no pure-memory claim.",
+    "control": "Same fact table, instructions and field names; derived columns masked. Control padding matches treatment added input-token count at each current state.",
+    "estimated_gpu_minutes_total": [
+      35,
+      55
+    ],
+    "historical_16_attempt_minutes": 33.05939004421234,
+    "historical_seconds_per_attempt": 123.97271266579628,
+    "panel": "Exploratory already-exposed p00/world42, four depth4/5 task identities, two fresh fixed repeats per task per arm: 16 total attempts, no held-out claim",
+    "primary_endpoint": "Paired native root completion; all planned slots accounted for",
+    "promotion": "Completion improvement must replicate on an unread task panel and second actor seed before a general claim; do not expand solely because repeated errors fall",
+    "proposed_repeat_seeds": [
+      2026092804,
+      2026092805
+    ],
+    "secondary_endpoints": [
+      "Repeated stock-deficient crafts per attempted episode",
+      "Root-ready unsuccessful finish",
+      "Calls, actual input/output tokens, context caps, wall time, unknown outcomes"
+    ],
+    "shared": "Same frozen discovery actor, binder, full history, action schema, native semantics, budgets and paired sampling seeds; no action suggestions or automatic crafts",
+    "status": "Design only; not implemented or launched",
+    "treatment": "Alphabetically ordered public-fact table with host-computed remaining goal demand, stock deficit, batch count, and explicit unknown-recipe frontier"
+  },
+  "provenance": {
+    "analysis_artifacts": {
+      "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-inventory-bottleneck-20260928/DETAILS.json": "21ba87bf70d3cc741132f163d0fc88ef945751ea339513f59d52899686c55268",
+      "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-inventory-bottleneck-20260928/SUMMARY.json": "155828039510dbbd6413121fac83dcd6d808d08ae54f8b4e5fad8d1d668c1646"
+    },
+    "model_weights_read_or_hashed": false,
+    "native_audits": 96,
+    "native_graph_oracle_used": false,
+    "source_sha256": {
+      "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/inventory_bottleneck_20260928/analyze.py": "bc722ead9a98594068d8d7c1200724e81608cae73aa0f9131411e8457747ecaa",
+      "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/inventory_bottleneck_20260928/report.py": "6fe691d2b61e94e53d9346d797d0f8cdf12b5405b396d19a3d33f29a7ef7975b",
+      "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/inventory_bottleneck_20260928/test_public.py": "2586f5ca3ac0d24d263bd6882fd10e2db3ea647083d6932c11691820ae059890"
+    },
+    "verified_receipt_and_task_files": 1752
+  },
+  "schema": "depth45-public-inventory-finding-20260928-v1",
+  "secondary": {
+    "binder": {
+      "counts": {
+        "calls": 17924,
+        "consecutive_repeat_insufficient_same_action_and_stock": 1292,
+        "craft_calls": 10506,
+        "crafts_above_public_remaining_batch_demand": 381,
+        "crafts_losing_public_graph_completion_feasibility": 4,
+        "finish_calls": 352,
+        "get_info_calls": 6920,
+        "insufficient_stock_crafts": 4641,
+        "insufficient_with_public_completion_feasible": 1468,
+        "insufficient_with_ready_prerequisite": 4198,
+        "insufficient_with_recipe_closure": 1491,
+        "invalid_schema_calls": 146,
+        "queried_items": 6937,
+        "query_calls_with_no_new_static_recipe": 1189,
+        "redundant_query_calls_after_closure": 503,
+        "repeat_insufficient_same_action_and_stock": 1672,
+        "requeried_unchanged_recipe_items": 1189,
+        "shortage_after_cross_branch_consumption_without_replenishment": 355,
+        "successful_crafts": 5372,
+        "successful_shared_ingredient_consumptions": 2978
+      },
+      "episode_seconds_mean": 115.85579958371818,
+      "episodes": 384,
+      "flags": {
+        "any_above_public_batch_demand": 111,
+        "any_cross_branch_shortage": 75,
+        "any_insufficient": 351,
+        "any_public_feasibility_loss": 4,
+        "context_cap": 32,
+        "failed": 308,
+        "failed_explicit_finish": 276,
+        "failed_with_complete_recipe_closure": 152,
+        "failed_with_cross_branch_shortage": 72,
+        "failed_with_goal_completing_craft_ready": 13,
+        "failed_with_public_completion_feasible": 147,
+        "failed_with_public_feasibility_loss": 4,
+        "failed_with_ready_prerequisite": 277,
+        "repeated_insufficient": 247,
+        "repeated_query": 260
+      },
+      "max_identical_insufficient_run": 23,
+      "median_identical_insufficient_run": 2,
+      "statuses": {
+        "context_cap": 32,
+        "finished": 352
+      },
+      "successes": 76.0,
+      "task_identities": 24
+    },
+    "raw": {
+      "counts": {
+        "calls": 19459,
+        "consecutive_repeat_insufficient_same_action_and_stock": 794,
+        "craft_calls": 11861,
+        "crafts_above_public_remaining_batch_demand": 258,
+        "crafts_losing_public_graph_completion_feasibility": 3,
+        "finish_calls": 336,
+        "get_info_calls": 7126,
+        "insufficient_stock_crafts": 2789,
+        "insufficient_with_public_completion_feasible": 832,
+        "insufficient_with_ready_prerequisite": 2565,
+        "insufficient_with_recipe_closure": 830,
+        "invalid_schema_calls": 136,
+        "queried_items": 7129,
+        "query_calls_with_no_new_static_recipe": 1685,
+        "redundant_query_calls_after_closure": 686,
+        "repeat_insufficient_same_action_and_stock": 1121,
+        "requeried_unchanged_recipe_items": 1685,
+        "shortage_after_cross_branch_consumption_without_replenishment": 221,
+        "successful_crafts": 3870,
+        "successful_shared_ingredient_consumptions": 2099
+      },
+      "episode_seconds_mean": 126.85182572590809,
+      "episodes": 384,
+      "flags": {
+        "any_above_public_batch_demand": 83,
+        "any_cross_branch_shortage": 37,
+        "any_insufficient": 313,
+        "any_public_feasibility_loss": 3,
+        "context_cap": 48,
+        "failed": 346,
+        "failed_explicit_finish": 298,
+        "failed_with_complete_recipe_closure": 156,
+        "failed_with_cross_branch_shortage": 36,
+        "failed_with_goal_completing_craft_ready": 5,
+        "failed_with_public_completion_feasible": 152,
+        "failed_with_public_feasibility_loss": 3,
+        "failed_with_ready_prerequisite": 334,
+        "repeated_insufficient": 199,
+        "repeated_query": 274
+      },
+      "max_identical_insufficient_run": 22,
+      "median_identical_insufficient_run": 1,
+      "statuses": {
+        "context_cap": 48,
+        "finished": 336
+      },
+      "successes": 38.0,
+      "task_identities": 24
+    }
+  },
+  "selection": {
+    "primary": "Outcome-blind first panel00/world42/original training seed; all declared depth4/5 attempts, including successes.8 attempts/4 task identities.",
+    "secondary": "Secondary: every discovery depth4/5 attempt in fixed primary breadth panels00\u201305, worlds42/50/51/52, both training seeds, raw and binder. Never panels06+."
+  }
+}
