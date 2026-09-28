@@ -1,6 +1,6 @@
 ---
 date: 2026-09-28
-cutoff_utc: "2026-09-28T12:09:00Z"
+cutoff_utc: "2026-09-28T12:40:00Z"
 status: exploratory
 hardware: one_A100_40GB
 primary_question: "Which decisions should the model learn, and which details should the harness calculate?"
@@ -78,7 +78,7 @@ screening cap. Its real saved-request CPU replay passes, including child actions
 and charged errors. It has not yet run on the GPU. Reusing this task is explicitly
 exploratory, not a new held-out confirmation.
 
-## The first RL collection is complete; learning gains remain unmeasured
+## Two RL updates work numerically; task gains remain unmeasured
 
 The original-action collection completed all 32 attempts, with 24 successes,
 790 model responses and no transport failures. There were 348 native execution
@@ -99,15 +99,55 @@ test would remove loss on ingredient values only when execution code actually
 overwrites them. That is a deliberately biased learning intervention, not a
 correction to the standard full-trajectory policy-gradient objective.
 
-The GPU is now collecting the matched execution-assisted batch. The accepted
-study checks actual probability/weight changes and evaluates each trained model
-through both interfaces. Later studies use new
+The assisted batch is also complete: 28/32 successes, six paired wins and two
+losses against the original-action batch, 556 calls and 15,761 generated tokens.
+It still has three mixed-reward task groups. Execution assistance makes this
+collection cheaper and more successful, but also reduces the amount of nonzero
+training credit. The [paired batch report](rl_signal_20260928/BINDER-RESULT.md)
+keeps these exposure differences explicit.
+
+The first original-action optimizer completed in 940.6 seconds and committed
+adapter, optimizer and random state. Its training/evaluation likelihood replay
+agrees exactly. Average sampled-token log probabilities moved by +0.00148 on
+positive-credit trajectories and −0.00192 on negative-credit trajectories. The
+adapter changed measurably. This is a working numerical update, **not yet evidence
+of better task success**. Its fixed before/after evaluations have not completed.
+
+The matched assisted optimizer also completed, in 340.7 seconds. Its original-token
+training/evaluation replay agrees exactly, and sampled-token log probabilities
+moved by +0.00220 on positive-credit trajectories and −0.00659 on negative-credit
+trajectories. It committed its own independently warm-started adapter and optimizer.
+Neither update's numerical progress establishes better task performance.
+
+The unchanged-model evaluation is now running, with real returned actions and no
+transport errors at this cutoff. The accepted study evaluates each trained
+model through both interfaces. Later studies use new
 optimization tasks, separate diagnostic tasks, an extra-supervised-update control,
 a changed reward, and a shorter action format.
 
 Do not call queued updates completed, or call an interface improvement learned
 improvement. A convincing result needs better task success relative to that
 interface's unchanged-weight baseline, with failed and unavailable attempts kept.
+
+## What “new problems” means here
+
+The [generalization audit](GENERALIZATION-AUDIT-20260928.md) confirms 48 distinct
+evaluation goal roots, none used as a goal in the 32 supervised demonstrations.
+Four did appear as prerequisite products, and most original-world tasks reuse
+some familiar recipes. This is new-goal composition, not wholly unfamiliar
+vocabulary or domains.
+
+The three changed recipe worlds provide a stronger check: almost none of their
+evaluation tasks share an exact named recipe with the supervised examples. They
+still share a generator and item vocabulary. A sensitivity analysis grouping
+goals that share recipe dependencies retains the positive execution-assistance
+effect, but has only five groups and is explicitly exploratory.
+
+Two further ideas remain proposals, not results or accepted GPU jobs:
+[teacher-label ambiguity](TEACHER-AMBIGUITY-PROBE-20260928.md), which distinguishes
+unpredictable teaching labels from genuinely unsolvable tasks; and
+[error-triggered subgoals](REACTIVE-SUBGOAL-PROPOSAL-20260928.md), which would test
+a helper against giving the parent the same missing-ingredient hint.
 
 ## Artifact pointers
 

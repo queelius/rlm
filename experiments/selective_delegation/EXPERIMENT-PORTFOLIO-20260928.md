@@ -37,6 +37,7 @@ privileged teachers, recursive RL and action/argument separation.
 |---|---|---|---|
 | Does execution assistance repeat on another group? | Finish the already-started panel 06 pair, then its changed-recipe pair. | Three GPU collectors accepted. | Complete the pair; do not expand the old grid without a new question. |
 | Does assistance help RL learn? | Same starting checkpoint, tasks and seeds; original versus assisted execution during one signed reward update. | Collections and two updates accepted. | Check reward variation, actual weight/probability changes and before/after success. |
+| Is RL spending loss terms on fields that execution code replaces? | Independently warm-start one masked update on the exact assisted batch; evaluate through the unchanged assisted interface. | One training and one 16-attempt readout accepted after the existing tail. | A masked-minus-full gain needs random-mask or gradient-scale controls before a specific mechanism claim. |
 | Is improvement in the model or only the tool? | Evaluate both trained checkpoints through both execution interfaces, with unchanged-checkpoint controls. | Six GPU readouts accepted, conditional on usable endpoints. | A learned gain must exceed each interface's own baseline. |
 | Does RL improve unfamiliar goals? | Train on new group A; evaluate on disjoint new group B. Start both execution arms from the same checkpoint. | Four fresh collection/update/readout cycles per arm accepted, plus warm and additional-SFT controls. | Continue fresh updates only with informative rewards and usable numerical diagnostics; report every fixed checkpoint. |
 | Does teaching information in a usable order explain the gap? | Reorder the known-recipe demonstrations so names are visible before they are queried. Preserve task/action multiset and minibatch answer targets. | Two trainings and four paired-world readouts accepted. | Improvement over matched known-recipe training supports a conditioning-history mechanism; a second legal order tests dependence on one ordering. |
@@ -155,3 +156,25 @@ these are forecasts, not completed work or guaranteed durations.
 
 Read the [publication decision memo](PUBLICATION-DECISIONS-20260928.md) for claim
 boundaries and the experiments that would promote or retire each explanation.
+
+## Numerical updates and a targeted diagnostic, 12:43 UTC
+
+Both first RL updates completed and committed usable checkpoints. The original
+action update took 940.6 seconds; the assisted-action update took 340.7 seconds.
+Their sampled-token probabilities changed in the expected reward direction.
+Task evaluations are now running; no learned success improvement is established.
+
+`payload-mask-queue-20260928-001` adds only two scientific stages after the existing
+tail: one independent same-batch update and one paired readout. It removes direct
+loss on strictly interior ingredient-value tokens only when the public-recipe
+binder replaces that field. All original generated context, rewards and replay
+checks remain. The mask covers 27.27% of absolute advantage-weighted token mass,
+not 27.27% of a measured gradient. This is a biased loss experiment with no
+inference-token savings. It is not a correction to valid full-token RL.
+
+The campaign now has 102 distinct accepted scientific output stages, many
+conditional, not 102 questions or results. The new queue has 105 minutes of
+scientific caps; expected work is approximately 30–65 minutes. Its original
+full-token and unchanged-weight controls are reused, not rerun. See the
+[protocol](rl_payload_mask_20260928/README.md) and
+[current findings](FINDINGS-20260928-LIVE.md).
