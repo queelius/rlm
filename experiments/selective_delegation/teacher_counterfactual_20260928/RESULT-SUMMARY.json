@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "checked_saved_rows": 1315,
+  "no_additional_native_continuations": true,
+  "provenance_sha256": "0f8e3f77310b9c2b26bd91e3228498900cffc42f4c3c43574a058d0100016ed6",
+  "results_sha256": "b6186cc6a0f323ada826297105858fbcd2fdcc7631c15ec166e47d9bcc8f0eb9",
+  "analyzer_sha256": "e29ed521a67a0aa982162be785caad8abf914775f16da2af04a5a36ecf737dd6",
+  "arm_summaries": {
+    "oracle42": {
+      "native_successes": 16,
+      "episodes": 16,
+      "calls": 439,
+      "queries": 214,
+      "output_tokens": 11128,
+      "extra_calls_vs_public_histogram": {
+        "0": 11,
+        "1": 5
+      },
+      "extra_queries_vs_public": 5
+    },
+    "oracle_hybrid": {
+      "native_successes": 16,
+      "episodes": 16,
+      "calls": 442,
+      "queries": 217,
+      "output_tokens": 11164,
+      "extra_calls_vs_public_histogram": {
+        "1": 8,
+        "0": 8
+      },
+      "extra_queries_vs_public": 8
+    },
+    "public": {
+      "native_successes": 16,
+      "episodes": 16,
+      "calls": 434,
+      "queries": 209,
+      "output_tokens": 11043,
+      "extra_calls_vs_public_histogram": {
+        "0": 16
+      },
+      "extra_queries_vs_public": 0
+    }
+  },
+  "oracle_next_names_visible": 0,
+  "oracle_next_names_total": 16,
+  "max_calls": 54,
+  "max_output_tokens": 1430,
+  "max_prompt_plus_cap": 5266,
+  "validation": "Saved exact prefix/IDs, public-only decisions after forced suggestion, observed recipe quantities, inventory arithmetic, budgets and native outcome receipts; no second native replay. Scientific runner made the native calls and scores.",
+  "decision": "Deprioritize this query-label conflict as a native-failure explanation here: all48 routes succeed, with at most one extra query. No visible-name conflict witness: all16 oracle next-query item names were absent from the shared public prompt."
+}

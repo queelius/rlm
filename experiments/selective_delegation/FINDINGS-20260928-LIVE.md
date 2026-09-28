@@ -1,6 +1,6 @@
 ---
 date: 2026-09-28
-cutoff_utc: "2026-09-28T12:40:00Z"
+cutoff_utc: "2026-09-28T12:52:00Z"
 status: exploratory
 hardware: one_A100_40GB
 primary_question: "Which decisions should the model learn, and which details should the harness calculate?"
@@ -119,8 +119,10 @@ moved by +0.00220 on positive-credit trajectories and −0.00659 on negative-cre
 trajectories. It committed its own independently warm-started adapter and optimizer.
 Neither update's numerical progress establishes better task performance.
 
-The unchanged-model evaluation is now running, with real returned actions and no
-transport errors at this cutoff. The accepted study evaluates each trained
+The unchanged-model original-action evaluation completed with 9/16 successes,
+326 calls and no missing outcomes or transport errors. These are the predeclared
+new rollout seeds, not the four collection seeds. The trained-model evaluation
+is now returning real actions. The accepted study evaluates each trained
 model through both interfaces. Later studies use new
 optimization tasks, separate diagnostic tasks, an extra-supervised-update control,
 a changed reward, and a shorter action format.
@@ -143,11 +145,27 @@ still share a generator and item vocabulary. A sensitivity analysis grouping
 goals that share recipe dependencies retains the positive execution-assistance
 effect, but has only five groups and is explicitly exploratory.
 
-Two further ideas remain proposals, not results or accepted GPU jobs:
-[teacher-label ambiguity](TEACHER-AMBIGUITY-PROBE-20260928.md), which distinguishes
-unpredictable teaching labels from genuinely unsolvable tasks; and
-[error-triggered subgoals](REACTIVE-SUBGOAL-PROPOSAL-20260928.md), which would test
-a helper against giving the parent the same missing-ingredient hint.
+## Conflicting teacher suggestions do not automatically make a task hard
+
+The [CPU continuation study](teacher_counterfactual_20260928/README.md) constructs
+eight pairs with exactly the same visible prompt and input tokens, but different
+hidden recipes. An all-knowing teacher suggests a different next query in each
+world. We force either suggestion, or a public-information-based query, and then
+let the same deterministic public planner continue. All 48 continuations finish
+successfully. The alternative query costs at most one extra lookup.
+
+This is a useful limit on our explanation: inability to predict the teacher's
+exact preferred query does not imply inability to solve the task. It does not
+explain away the measured SFT gap either. The continuation is a capable scripted
+planner, stock is generously provisioned, and no model was trained or evaluated.
+None of the oracle query names was already visible; this is not a test of
+conflicting choices among visible alternatives. The diagnostic B goals remain
+excluded from optimization, and these synthetic worlds do not replace their
+fixed queued model evaluations.
+
+[Error-triggered subgoals](REACTIVE-SUBGOAL-PROPOSAL-20260928.md) remain a proposal,
+not an implemented or accepted GPU test. It would compare a helper with giving
+the parent the same missing-ingredient hint, conditional on the earlier screens.
 
 ## Artifact pointers
 

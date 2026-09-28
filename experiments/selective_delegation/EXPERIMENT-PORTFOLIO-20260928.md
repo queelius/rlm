@@ -50,8 +50,10 @@ privileged teachers, recursive RL and action/argument separation.
 | Does explicit quantity bookkeeping help deeper tasks? | Same public fact table with versus without computed remaining-demand columns; matched state-conditional prompt length. | Two eight-attempt readouts accepted, following the completed failure audit. | Better root completion, not merely fewer repeated errors; replicate on new tasks if promising. |
 | Does an action's representation change what SFT learns in another environment? | In ALFWorld, teach action indices versus exact available command text, using the same demonstrations and public action lists. | One new command training and four paired readouts accepted; the existing index-trained checkpoint is reused. | Compare each trained actor with its own base-interface control; unequal target-token doses limit interpretation. |
 
-The fresh group A/B study is still within TextCraft. Group B is an unused official
-TRAIN subset held out from the new optimizer, not an untouched benchmark test.
+The fresh group A/B study is still within TextCraft. Group B is an official
+TRAIN subset kept out of the new optimizer, not an untouched benchmark test.
+It also supplies goals for an explicitly synthetic CPU diagnostic; that is not
+training data or a replacement for the predeclared model evaluation.
 Recipe overlap and shared generator remain. A promising mechanism should next
 be tested in a second environment with the same information/decision structure.
 
