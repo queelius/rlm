@@ -69,6 +69,13 @@ September 29 or emailed September 25 decks.
 
 ## Draft revision record, September 29
 
+### Research review around 07:26 UTC
+
+Both first RL updates are committed; the first task readout is returning real
+answers without transport errors so far. Keep the audience PDF and guide
+unchanged until task comparisons finish. The [paired optimizer review](../../experiments/selective_delegation/research_review_20260929/reviews/2026-09-29-0726.md)
+distinguishes successful training execution from improved task performance.
+
 ### Research review around 07:11 UTC
 
 The first varied-goal RL update finished and saved a checkpoint. Training-batch
