@@ -1,0 +1,211 @@
+{
+  "schema": "rlm-retrospective-claims-v1",
+  "review_date": "2026-09-29",
+  "coverage": "Recovered August 24 through September 29 evidence",
+  "latest_completed_result_cutoff_utc": "2026-09-29T14:02:51.479831Z",
+  "purpose": "Queryable claim-to-evidence and follow-up map; interpretations are not established causal mechanisms.",
+  "claims": [
+    {
+      "id": "teaching-history-repair",
+      "status": "strongest_current_paper_candidate_exploratory",
+      "question": "Can better input histories make the same demonstrated actions easier to learn?",
+      "finding": "Successes change 1 to 14, 2 to 13, and 3 to 17 out of 32 at matched answers and update counts.",
+      "unit": "16 distinct goal identities; repeated fits, recipe worlds and attempt seeds.",
+      "controls": [
+        "366 identical action targets and 8,820 target tokens",
+        "23 updates; batch target-token counts and initialization matched",
+        "additional training and randomized valid query ordering"
+      ],
+      "limits": [
+        "Input length and total computation differ.",
+        "Copyability, recency and relevant information are not isolated.",
+        "Not clearly better than discovery teaching.",
+        "Specific repair pending in a second model family."
+      ],
+      "evidence": [
+        "teaching-and-execution.md",
+        "../../experiments/selective_delegation/teaching_synthesis_20260929/FINDING.json"
+      ],
+      "decision": "Prioritize accepted second-family repair; then untouched goal/world and consistent item-name controls."
+    },
+    {
+      "id": "ingredient-execution-assistance",
+      "status": "replicated_within_one_model_family_exploratory",
+      "question": "Does code that fills observed recipe arguments improve completion?",
+      "finding": "Discovery-trained actors improve 323 to 381 successes out of 768 paired attempts; 74 gains, 16 losses.",
+      "unit": "48 distinct goals, four worlds, two training seeds, two attempt seeds.",
+      "controls": [
+        "Same weights in each interface pair",
+        "No extra materials or host-chosen quantities",
+        "Fixed completed panels 00\u201305"
+      ],
+      "limits": [
+        "Code repairs execution, not demonstrated learned planning.",
+        "Some attempts are harmed.",
+        "Remaining stock/ordering problems are not resolved.",
+        "Not a new general concept of programmatic assistance."
+      ],
+      "evidence": [
+        "teaching-and-execution.md",
+        "../../experiments/selective_delegation/finding_textcraft_breadth_20260928.json"
+      ],
+      "decision": "Measure model learning separately from host execution; retain whole-goal and resource costs."
+    },
+    {
+      "id": "current-rl-transfer",
+      "status": "small_signal_not_established_transfer",
+      "question": "Do fixed RL updates improve other crafting goals?",
+      "finding": "Raw warm/RL1/RL2/extraSFT1: 4/4/5/4 of 16. Assisted warm/RL1/RL2/extraSFT1: 5/4/4/5 of16.",
+      "unit": "Eight repeatedly examined diagnostic B goals, each sampled twice; official TRAIN roots, shared recipe world.",
+      "controls": [
+        "All fixed completed endpoints reported",
+        "Real checkpoint updates and native outcomes verified",
+        "384 small receipt bindings for eight readout cells"
+      ],
+      "limits": [
+        "One added raw success on one attempt.",
+        "One-step SFT is not dose/data/compute matched to two-step RL.",
+        "B is not an untouched test and must not select training or checkpoints."
+      ],
+      "evidence": [
+        "current-rl.md",
+        "fresh-results.json"
+      ],
+      "decision": "Finish accepted bounded sequence; do not extend unchanged RL by default or choose the favorable B checkpoint."
+    },
+    {
+      "id": "training-reward-contrast",
+      "status": "observed_mechanism_of_current_estimator_not_general_rl_diagnosis",
+      "question": "Do sampled attempts provide useful within-goal reward differences?",
+      "finding": "Four training goals fail in all 64 attempts across two rounds and both interfaces; their direct relative advantage is zero. Only 21.5\u201328.6% of generated tokens receive nonzero relative credit across collections.",
+      "unit": "Eight A goals; four samples per goal per collection.",
+      "controls": [
+        "Training-side evidence, not B outcomes",
+        "Raw and assisted models differ after round one",
+        "Sampling seeds change across rounds"
+      ],
+      "limits": [
+        "Shared-parameter learning can affect zero-credit goals.",
+        "Does not prove all sparse-reward RL fails or updates are large enough.",
+        "Improved sampling experience and reward shaping are separate interventions."
+      ],
+      "evidence": [
+        "current-rl.md",
+        "fresh-results.json",
+        "literature-and-next-tests.md"
+      ],
+      "decision": "Prioritize A-only recovery demonstrations versus ordinary examples; assess full-start A completion before a fresh transfer test."
+    },
+    {
+      "id": "historical-rl-positive-results",
+      "status": "real_local_gains_limited_scope",
+      "question": "Has RL ever improved these models?",
+      "finding": "An early root pilot improved 5 to 16 of 24; news helper improved 422 to 437 or 436 of 512. Stronger controls weakened broader claims.",
+      "unit": "Six root compositions of familiar helper questions; separate fixed classification panels.",
+      "limits": [
+        "Root checkpoint selection and prior exposure.",
+        "Broader fixed root readout only 13 to 16 of 48.",
+        "Fresh news RL427/429 versus extraSFT426 of512, uncertain difference.",
+        "Improved helpers did not consistently improve whole-task roots."
+      ],
+      "evidence": [
+        "early-history.md"
+      ],
+      "decision": "Preserve positive results; claim task-local learning, not a general RL or recursive-architecture advantage."
+    },
+    {
+      "id": "fixed-local-decomposition",
+      "status": "positive_narrow_decomposition_result",
+      "question": "Can isolated local judgments improve a whole selection answer?",
+      "finding": "One helper per candidate after Python organization improved 10 to 22 of 24 complete answers.",
+      "unit": "Twelve fresh selection cases, two sampling seeds.",
+      "limits": [
+        "Programmed decomposition, not learned routing or recursion depth.",
+        "About 3.7 times input tokens.",
+        "Confidence-selected partial refinement did not reliably recover the full effect."
+      ],
+      "evidence": [
+        "early-history.md"
+      ],
+      "decision": "Reserve selective information views as a longer-term direction; require budget-matched simple baselines."
+    },
+    {
+      "id": "learned-qa-decomposition",
+      "status": "no_established_cost_justified_advantage",
+      "question": "Do learned question plans and helpers beat simpler full-context answering?",
+      "finding": "Fresh MuSiQue direct/SFT-plan/RL-plan 54/53/56 of128; Hotpot direct/planned152/151 of256. Plan-only controls often match at roughly one-third tokens.",
+      "unit": "64 MuSiQue and128 Hotpot parent questions, repeated twice.",
+      "limits": [
+        "Question-list pipeline, not arbitrary Python RLM recursion.",
+        "Final reader can use original full source directly.",
+        "Does not show decomposition never helps other tasks."
+      ],
+      "evidence": [
+        "decomposition-and-transfer.md"
+      ],
+      "decision": "Do not expand this same full-context QA setup without a task that requires useful intermediate information or action."
+    },
+    {
+      "id": "archived-arithmetic",
+      "status": "supporting_interface_signal_requires_semantic_audit",
+      "question": "Does code evaluation help when the model still chooses the arithmetic expression?",
+      "finding": "Numeric FinQA direct/code:51/108 of508 for4B,52/102 for8B; one call each and less than1% added total tokens.",
+      "unit": "508 prior-exposed numeric question IDs, with repeated source documents.",
+      "controls": [
+        "Matched numeric eligibility",
+        "Invalid expressions retained as failures",
+        "Looser post-hoc numeric tolerance retains direction"
+      ],
+      "limits": [
+        "Known units, rounding and gold execution defects.",
+        "Not official FinQA accuracy or independent-document replication.",
+        "Established program-aided arithmetic, not new method.",
+        "Semantic paired-win/loss audit not completed."
+      ],
+      "evidence": [
+        "decomposition-and-transfer.md"
+      ],
+      "decision": "Retain as recovered evidence; audit paired semantic gains before another training branch or a paper claim."
+    },
+    {
+      "id": "local-helper-vs-whole-goal",
+      "status": "local_execution_demonstrated_whole_task_benefit_unknown",
+      "question": "When does a helper help the original goal?",
+      "finding": "Native children solved some assigned subtasks; every parent in the short screen reached its cap before the full outcome was known.",
+      "unit": "Small exposed-goal feasibility screen.",
+      "limits": [
+        "Unknown parent outcomes are not ordinary terminal failures.",
+        "Planned complete-goal pilot is one goal and two attempts per arm.",
+        "Routing currently programmed, not learned."
+      ],
+      "evidence": [
+        "decomposition-and-transfer.md",
+        "../../experiments/selective_delegation/harness_synthesis_20260929/SYNTHESIS.json"
+      ],
+      "decision": "Finish existing budget-matched whole-goal pilot before deeper recursion or learned routing."
+    },
+    {
+      "id": "extra-information-not-automatic-help",
+      "status": "negative_controls_inform_design",
+      "question": "Does making more state information visible necessarily improve planning?",
+      "finding": "Recipe notebook and demand-table pilots did not rescue deeper crafting tasks; household command gains were confined to two games.",
+      "unit": "Small exploratory panels; demand-table0/8 versus0/8, not equivalence.",
+      "limits": [
+        "Tiny panels do not prove no useful design exists.",
+        "More failed-attempt efficiency is not better completion.",
+        "Flat zero bootstrap interval is degenerate."
+      ],
+      "evidence": [
+        "teaching-and-execution.md",
+        "decomposition-and-transfer.md"
+      ],
+      "decision": "Retire unchanged displays for now; test actionable recovery and complete-goal utility instead."
+    }
+  ],
+  "publication_priority": [
+    "teaching-history-repair",
+    "ingredient-execution-assistance",
+    "local-helper-vs-whole-goal"
+  ],
+  "operational_boundary": "No new external admission, owner edit, ACK, commit or push in this managed read-only external/Git session."
+}

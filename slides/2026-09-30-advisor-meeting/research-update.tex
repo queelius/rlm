@@ -1,0 +1,208 @@
+\documentclass[aspectratio=169,12pt]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,booktabs,tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\definecolor{Ink}{HTML}{17324D}
+\definecolor{Teal}{HTML}{007F7B}
+\definecolor{Gray}{HTML}{697887}
+\definecolor{Soft}{HTML}{EEF3F6}
+\definecolor{Warm}{HTML}{B55C32}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=Teal}
+\setbeamercolor{block title}{fg=white,bg=Teal}
+\setbeamercolor{block body}{fg=Ink,bg=Soft}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=9mm,text margin right=9mm}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Preliminary | Meeting: 30 Sep 2026 | Evidence: 29 Sep, 18:57 UTC\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\newcommand{\aside}[1]{\vfill{\footnotesize\color{Gray}#1\par}}
+\hypersetup{pdftitle={Teaching models to choose useful steps},pdfauthor={Alex Towell}}
+\begin{document}
+
+\begin{frame}[t]
+\frametitle{Can a model learn useful steps for an unfamiliar task?}
+A recursive language model (RLM) can use code and ask another model to handle a smaller task. A helper can, in turn, ask its own helper.
+\vspace{4mm}
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\small,
+ box/.style={draw=Teal,rounded corners,fill=Soft,text width=3.45cm,align=center,minimum height=1.35cm,inner sep=2mm}]
+\node[box] (learn) at (0,0) {Find the information\\needed for the goal.};
+\node[box] (choose) at (4.6,0) {Choose a smaller step\\or ask a helper.};
+\node[box] (check) at (9.2,0) {Use the result to\\choose what to do next.};
+\draw[->,thick,Teal] (learn)--(choose);
+\draw[->,thick,Teal] (choose)--(check);
+\end{tikzpicture}
+\end{center}
+\medskip
+\textbf{Today's focus:} Can we improve how a small model learns these steps by improving its worked examples?
+\aside{Our longer-term aim is useful task decomposition. Today's strongest evidence concerns learning tool actions, not general recursive reasoning.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{A crafting game makes the outcome easy to check.}
+In TextCraft-Synth, success means making the requested number of new items. The game checks the inventory increase when the model finishes.
+\vspace{2mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\textbf{Goal: make one lantern.}
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\small,
+ item/.style={draw=Teal,rounded corners,fill=Soft,align=center,inner sep=2mm}]
+\node[item] (lamp) at (0,0) {One lantern};
+\node[item] (frame) at (-1.45,-1.1) {One frame};
+\node[item] (stone) at (1.45,-1.1) {One glowing stone};
+\node[item] (sticks) at (-1.45,-2.2) {Two sticks};
+\draw[->,Teal,thick] (lamp)--(frame);
+\draw[->,Teal,thick] (lamp)--(stone);
+\draw[->,Teal,thick] (frame)--(sticks);
+\end{tikzpicture}
+\end{center}
+{\small Arrows mean ``needs.''}
+\end{column}
+\begin{column}{.47\textwidth}
+\textbf{Start with two sticks and one glowing stone.}
+\medskip
+
+1. Look up the lantern and frame recipes.
+\medskip
+
+2. Make the frame from the sticks.
+\medskip
+
+3. Combine the frame and stone into a lantern.
+\end{column}
+\end{columns}
+\aside{Simplified illustration. Real tests use unfamiliar names and longer chains. Scores count whole-task success, with no partial credit.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Show the relevant fact before the action.}
+Supervised fine-tuning (SFT) teaches a next action from an example's goal and observations.
+\begin{center}
+\begin{tikzpicture}[font=\small,>=Stealth]
+\node[anchor=north west,align=left,text width=5.65cm,fill=Soft,inner sep=3mm] (before) at (0,0) {\textbf{Original input}\par\vspace{1.5mm}Goal: make a lantern.\\History: no frame mentioned.};
+\node[anchor=north west,align=left,text width=5.65cm,fill=Soft,inner sep=3mm] (after) at (6.7,0) {\textbf{Repaired input}\par\vspace{1.5mm}Goal: make a lantern.\\Lookup: a lantern needs a frame.};
+\node[anchor=north west,align=left,text width=5.65cm,draw=Gray,inner sep=3mm] (a) at ([yshift=-3mm]before.south west) {\textbf{Next action to learn}\par\vspace{1.5mm}Look up the frame recipe.};
+\node[anchor=north west,align=left,text width=5.65cm,draw=Teal,inner sep=3mm] (b) at ([yshift=-3mm]after.south west) {\textbf{The same action to learn}\par\vspace{1.5mm}Look up the frame recipe.};
+\draw[->,thick,Gray] (before.south)--(a.north);
+\draw[->,thick,Teal] (after.south)--(b.north);
+\end{tikzpicture}
+\end{center}
+\vspace{-1mm}
+We rebuild the earlier lookup history. \textbf{Each example keeps the same action to learn.}
+\aside{Simplified illustration. The repair uses a known solution; input histories, their lengths and computing work change.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{The repair helped after retraining and on more goals.}
+Each bar counts successful crafting attempts out of 32. Both models learned the same actions for the same number of training updates.
+\vspace{1mm}
+\begin{center}
+\begin{tikzpicture}[x=.205cm,y=.35cm,font=\small]
+\node[anchor=east,align=right] at (-.8,5.35) {First comparison};
+\node[anchor=east,align=right] at (-.8,2.95) {Same goals,\\training repeated};
+\node[anchor=east,align=right] at (-.8,.55) {Eight more goals};
+\fill[Gray] (0,5.4) rectangle (1,5.95);
+\fill[Teal] (0,4.65) rectangle (14,5.2);
+\fill[Gray] (0,3) rectangle (2,3.55);
+\fill[Teal] (0,2.25) rectangle (13,2.8);
+\fill[Gray] (0,.6) rectangle (3,1.15);
+\fill[Teal] (0,-.15) rectangle (17,.4);
+\node[anchor=west] at (1.35,5.68) {1};
+\node[anchor=west] at (14.35,4.93) {14};
+\node[anchor=west] at (2.35,3.28) {2};
+\node[anchor=west] at (13.35,2.53) {13};
+\node[anchor=west] at (3.35,.88) {3};
+\node[anchor=west] at (17.35,.13) {17};
+\draw[Gray] (0,-.55)--(32,-.55);
+\foreach \n in {0,8,16,24,32} {\draw[Gray] (\n,-.55)--(\n,-.7);\node[below] at (\n,-.7) {\n};}
+\end{tikzpicture}
+\end{center}
+{\small\color{Gray}\rule{4mm}{2mm} Original examples\qquad\color{Teal}\rule{4mm}{2mm} Repaired examples}
+\medskip
+
+{\small Each row tests eight goals in two recipe worlds, twice each. There are \textbf{16 distinct goals in total}; the first two rows reuse the same goals.}
+\aside{Selected TextCraft-Synth panels, not the full benchmark; Qwen3-4B. More training helps the original examples too. A teacher that discovers recipes in order also performs well.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Let code write the known ingredient list.}
+After a recipe lookup, code can write the ingredients for the \textbf{model's chosen item and quantity}.
+\medskip
+
+\textbf{Example:} for ``make one lantern,'' code writes ``one frame and one glowing stone.''
+\vspace{1mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\begin{block}{Model writes the full action.}
+\centering\LARGE 42\%\par\normalsize of attempts succeeded.
+\end{block}
+\end{column}
+\begin{column}{.48\textwidth}
+\begin{block}{Code writes the ingredients.}
+\centering\LARGE 50\%\par\normalsize of attempts succeeded.
+\end{block}
+\end{column}
+\end{columns}
+\medskip
+We changed the interface, not the model's weights. Code supplies no materials.
+\aside{Selected TextCraft-Synth panels: 323/768 versus 381/768 whole-task successes. There are 48 distinct goals, four recipe worlds and repeated seeds, not 768 independent problems.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{What did we learn from reward training?}
+Reinforcement learning (RL) rewards attempts that actually finish the task.
+We started with an SFT-trained model and trained on eight crafting goals.
+\begin{center}
+\begin{tikzpicture}[x=2.35cm,y=.095cm,font=\small]
+\draw[Gray] (0,0)--(3.2,0);
+\draw[Gray] (0,0)--(0,16);
+\foreach \n in {0,8,16} {\node[anchor=east] at (-.06,\n) {\n};}
+\node[anchor=east,align=right] at (-.35,9) {Successful\\attempts\\(out of 16)};
+\draw[Teal,very thick] (0,4)--(1,4)--(2,5)--(3,4);
+\foreach \x/\n in {0/4,1/4,2/5,3/4} {\fill[Teal] (\x,\n) circle[radius=2.3pt];\node[above right=1mm] at (\x,\n) {\n/16};}
+\node[below=2mm] at (0,0) {Before RL};
+\node[below=2mm] at (1,0) {1 update};
+\node[below=2mm] at (2,0) {2 updates};
+\node[below=2mm] at (3,0) {3 updates};
+\end{tikzpicture}
+\end{center}
+{\small Every point tests the \textbf{same eight other goals twice each}. The extra success after two updates did not persist.}
+\medskip
+
+\textbf{Lesson:} A gain must survive new examples and comparison with simply continuing SFT.
+\aside{Selected TextCraft-Synth training-split goals; recipes overlap. No checkpoint was picked for its score here. Three small updates are not a verdict on RL.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Other datasets helped us ask what actually improved.}
+\textbf{MuSiQue and HotpotQA ask questions about several documents.}
+Our trained question-splitting system did not clearly beat answering directly, and used much more text.
+\medskip
+
+\textbf{AG News and DBpedia ask for a topic label.}
+Small RL gains on news weakened on fresh examples and did not clearly transfer to encyclopedia entries.
+\medskip
+
+\textbf{MRCR asks for a particular earlier reply in a conversation.}
+RL mostly improved exact reproduction of the answer, not finding the right reply.
+\aside{These are different studies, not a shared leaderboard. A higher score does not by itself show better decomposition. The reading guide explains each test and its limits.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Can the teaching repair survive stronger tests?}
+\begin{block}{Research question}
+Can rebuilding what the learner sees make existing worked examples more useful, without changing the actions we teach?
+\end{block}
+\vspace{1mm}
+\textbf{Test new problems.} Use new recipe structures, not just more attempts at familiar goals.
+\smallskip
+
+\textbf{Use stronger comparisons.} Include a teacher that discovers recipes in order, and give the original examples more training.
+\smallskip
+
+\textbf{Find the limits.} Try another model and test whether the gain is mainly easier copying of item names.
+\aside{A paper candidate, not an established general method. What evidence would make it useful beyond this game?}
+\end{frame}
+\end{document}

@@ -1,0 +1,36 @@
+{
+  "slides": [
+    {
+      "title": "Can a model learn useful steps for an unfamiliar task?",
+      "notes": "Long-term aim: useful decomposition. This talk narrows to teaching useful next steps. Most crafting tests are flat tool policies.\n\nWe have a possible teaching-data paper, not a general recursive-reasoning result."
+    },
+    {
+      "title": "A crafting game makes the outcome easy to check.",
+      "notes": "Invented lantern example. Two sticks make a frame. Frame plus glowing stone makes a lantern.\n\nSuccess requires the requested net increase in target items at finish. No partial credit. Selected TextCraft-Synth panels, not the full official benchmark."
+    },
+    {
+      "title": "Show the relevant fact before the action.",
+      "notes": "SFT teaches the next action from visible history. Repair reschedules lookups using a known solution. All 366 action labels stay fixed.\n\nHistory and length change. Easier copying may contribute; mechanism is unresolved."
+    },
+    {
+      "title": "The repair helped after retraining and on more goals.",
+      "notes": "Each row: 8 goals x 2 worlds x 2 attempts. Sixteen distinct goals overall. Same labels and updates, not equal compute.\n\nOriginal labels are quantity-corrected. Their fitted policy is weak. Longer training helps; discovery-based teaching is also strong."
+    },
+    {
+      "title": "Let code write the known ingredient list.",
+      "notes": "323/768 = 42.1%; 381/768 = 49.6%. Forty-eight goals across worlds and seeds, not 768 independent tasks. Same weights within pairs.\n\nCode writes observed ingredients only. It neither creates materials nor selects the plan."
+    },
+    {
+      "title": "What did we learn from reward training?",
+      "notes": "Same diagnostic goals: 4, 4, 5, 4 of 16. The one extra success disappeared. Extra SFT1 is 4, not matched to RL3.\n\nIn MuSiQue sufficiency, warm/RL/extra SFT give 10/18/19 of 64. Reward training is not always better than more example training."
+    },
+    {
+      "title": "Other datasets helped us ask what actually improved.",
+      "notes": "MuSiQue: direct 54, SFT 53, RL 56 of 128; later RL54. Hotpot: 152 vs151 of256, 3.44x tokens.\n\nFresh news weakens RL-specific gains. MRCR exact24 to27, but retrieval29 to29. These scores measure different abilities."
+    },
+    {
+      "title": "Can the teaching repair survive stronger tests?",
+      "notes": "Proposed, not newly launched: new recipe structures, stronger teachers, more original training, another model and name controls.\n\nPrior work already repairs/reschedules demonstrations. Ask what evidence would make this particular repair useful elsewhere."
+    }
+  ]
+}

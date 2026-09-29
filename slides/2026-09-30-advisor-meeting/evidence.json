@@ -1,0 +1,234 @@
+{
+  "schema": "advisor-deck-evidence-v2",
+  "meeting_date": "2026-09-30",
+  "main_evidence_cutoff_utc": "2026-09-29T18:57:05.251012Z",
+  "teaching_cutoff_utc": "2026-09-29T01:14:27.611452+00:00",
+  "supplementary_interface_cutoff_utc": "2026-09-29T06:47:06Z",
+  "supplementary_fresh_raw_rl_cutoff_utc": "2026-09-29T08:02:52.342172+00:00",
+  "supplementary_fresh_both_rl_cutoff_utc": "2026-09-29T08:37:19.614097+00:00",
+  "supplementary_raw_extra_sft_cutoff_utc": "2026-09-29T09:11:32.441773+00:00",
+  "main_model": "Qwen3-4B-Instruct-2507",
+  "teaching_chart": [
+    {
+      "label": "First comparison",
+      "original": 1,
+      "repaired": 14,
+      "attempts_per_condition": 32,
+      "distinct_goals_in_row": 8
+    },
+    {
+      "label": "Same goals, training repeated",
+      "original": 2,
+      "repaired": 13,
+      "attempts_per_condition": 32,
+      "distinct_goals_in_row": 8
+    },
+    {
+      "label": "Eight more goals",
+      "original": 3,
+      "repaired": 17,
+      "attempts_per_condition": 32,
+      "distinct_goals_in_row": 8
+    }
+  ],
+  "distinct_teaching_goals_total": 16,
+  "rl_table": [
+    {
+      "cell": "raw_warm",
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T01:37:41.396413+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-warm"
+    },
+    {
+      "cell": "raw_rl1",
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T08:02:43.807930+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0001"
+    },
+    {
+      "cell": "raw_rl2",
+      "successes": 5,
+      "observed": 16,
+      "completed_utc": "2026-09-29T13:26:30.795098+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0002"
+    },
+    {
+      "cell": "raw_rl3",
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T18:20:36.424121+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0003",
+      "physical_cost": {
+        "calls": 898,
+        "prompt_tokens": 3254594,
+        "completion_tokens": 27481,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 2326.039428949356
+      }
+    }
+  ],
+  "source_sha256": {
+    "experiments/selective_delegation/teaching_synthesis_20260929/FINDING.json": "03e99db6d5340b436530f7cddadbd3a23fd80a4db84db40c0111606683edcbfc",
+    "experiments/selective_delegation/rl_transfer_results_20260929/RESULTS.json": "4a0dea950b6c7739595083e489d13fbd829223802fca0d649569aa4e9d53cecc",
+    "experiments/selective_delegation/harness_synthesis_20260929/SYNTHESIS.json": "5c846e56b978d47bc9b800fdf83a765cf054710a14ed7b4041d0368d1cc0a4ea",
+    "experiments/selective_delegation/teaching_prior_art_20260929/README.md": "c55cc5a6cab264f5d81b2493fdc28fc3c40e582d362673acd8b1c0429df8fd1d",
+    "experiments/selective_delegation/fresh_reward_diagnosis_20260929/RESULTS.json": "fae1e9b6f69c9b408f528d118d39a26b884755990d966afa641d2385fa620fd2",
+    "experiments/selective_delegation/fresh_interface_signal_20260929/RESULTS.json": "6ae53415f84ec1a941c289b8504fc7ac5b595c7acd9e917f0aac5958006ff1b4",
+    "experiments/selective_delegation/fresh_rl_results_20260929/step-0001-raw.json": "e5495c0b3d147fadc0d5a543a5628647c87c9f26a8c0f6639f859f8fcb12e0fc",
+    "experiments/selective_delegation/fresh_rl_results_20260929/step-0001-binder.json": "a69f9f016a1e159b307bbc53cd4e656a78592b0c43d14c7af1467d1ab16d5da5",
+    "experiments/selective_delegation/fresh_rl_results_20260929/step-0001-sft-raw.json": "dc029a36b76cdacfe084e9bc111870255a9c338ccb9be14997624a9d82dc6335",
+    "docs/research-audit-2026-09-29/fresh-results.json": "70f1f35ab3dbd4cf40665e475a46f911828b225b6ca5e00d86ee7681afaa5472",
+    "experiments/selective_delegation/finding_textcraft_breadth_20260928.json": "498640b3f371b32192f7bf570d524f225311730a9897238d6c23acbb48ef6280",
+    "docs/research-audit-2026-09-29/current-rl.md": "a249ed4addc82edf9ba6ff477e901b056cc2c64e1b7ab071900ce6f74eb8f8a5",
+    "docs/research-audit-2026-09-29/publication-assessment.md": "efd6f5fb084f8a9587a2514bc15566ba657c8d05aac50e17831c4c4a267d4419",
+    "docs/research-audit-2026-09-29/early-history.md": "f38c1dbeb4ce1d82ce48ceb1c384f1e4017da80baa0c2da6d44427575b27289d",
+    "docs/research-audit-2026-09-29/decomposition-and-transfer.md": "37620ecde19f4c1d8eefe0dc361213be195e3bb7935fd92df97dfab577ba1b62"
+  },
+  "helper_status": "Local child success observed; every parent reached the short screen cap before whole-task outcome was known. Planned complete-goal pilot: no helper, fixed, adaptive; one exposed goal and two attempts per setting. No established whole-goal benefit.",
+  "supplementary_only": "One-step extra-SFT controls, assisted RL, prior RL gains, helper pilot and recovery preparation are in the guide. Slide7 now summarizes completed QA, news and MRCR lessons.",
+  "historical_rl_table": [
+    {
+      "label": "Model writes ingredient list",
+      "familiar_before_after": [
+        9,
+        13
+      ],
+      "different_before_after": [
+        4,
+        5
+      ],
+      "attempts_per_condition": 16,
+      "goals_per_panel": 8
+    },
+    {
+      "label": "Code fills ingredient list",
+      "familiar_before_after": [
+        14,
+        16
+      ],
+      "different_before_after": [
+        5,
+        5
+      ],
+      "attempts_per_condition": 16,
+      "goals_per_panel": 8
+    }
+  ],
+  "all_fresh_diagnostic_cells": {
+    "raw_warm": {
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T01:37:41.396413+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-warm"
+    },
+    "raw_rl1": {
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T08:02:43.807930+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0001"
+    },
+    "raw_sft1": {
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T09:11:25.927999+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/raw/readout-0001"
+    },
+    "binder_warm": {
+      "successes": 5,
+      "observed": 16,
+      "completed_utc": "2026-09-29T02:07:40.430269+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-warm"
+    },
+    "binder_rl1": {
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T08:37:12.358279+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0001"
+    },
+    "binder_sft1": {
+      "successes": 5,
+      "observed": 16,
+      "completed_utc": "2026-09-29T09:38:41.676893+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/binder/readout-0001"
+    },
+    "raw_rl2": {
+      "successes": 5,
+      "observed": 16,
+      "completed_utc": "2026-09-29T13:26:30.795098+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0002"
+    },
+    "binder_rl2": {
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T14:02:51.479831+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0002"
+    },
+    "raw_rl3": {
+      "cell": "raw_rl3",
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T18:20:36.424121+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0003",
+      "physical_cost": {
+        "calls": 898,
+        "prompt_tokens": 3254594,
+        "completion_tokens": 27481,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 2326.039428949356
+      }
+    },
+    "binder_rl3": {
+      "cell": "binder_rl3",
+      "successes": 4,
+      "observed": 16,
+      "completed_utc": "2026-09-29T18:57:05.251012+00:00",
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0003",
+      "physical_cost": {
+        "calls": 780,
+        "prompt_tokens": 2710727,
+        "completion_tokens": 25785,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 2159.453622817993
+      }
+    }
+  },
+  "rl_comparison_boundary": "All four fixed raw endpoints through RL3. Baseline is SFT-trained. Repeated diagnostic B: eight other official TRAIN goals, shared recipe world/components. No B-based training or favorable checkpoint selection. Extra SFT1 is not an equal-dose control for RL3.",
+  "ingredient_assistance": {
+    "source": "experiments/selective_delegation/finding_textcraft_breadth_20260928.json",
+    "slice": "fixed completed panels 00–05",
+    "teacher": "public_discovery",
+    "raw_successes": 323,
+    "assisted_successes": 381,
+    "attempts_per_condition": 768,
+    "distinct_goals": 48,
+    "recipe_worlds": 4,
+    "training_seeds": 2,
+    "attempt_seeds": 2,
+    "paired_gains": 74,
+    "paired_losses": 16,
+    "slide_percentages": [
+      42,
+      50
+    ],
+    "boundary": "Identical trained weights within each pair. Code writes exact ingredients only for an already observed applicable recipe; does not add materials, choose target quantities, or plan."
+  },
+  "publication_status": "Prepared for document-only publication on main via the authorized GitHub connector; local research worktree and live GPU owners unchanged.",
+  "supplementary_assisted_second_rl_cutoff_utc": "2026-09-29T14:02:51.479831Z",
+  "visible_extra_sft_control": null,
+  "later_result_editorial_decision": "RL3 loses the temporary raw gain: 4/4/5/4. Assisted sequence5/4/4/4. Replace raw table with full-range graph. Refocus final slide on prospective teaching-paper tests; keep speculative helpers in guide.",
+  "third_readout_source_sha256": {
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0003/SUMMARY.json": "8ff45c46d46a63f9ef9a492a241a9f223087c21f8553480936bef055558bbc44",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0003/TERMINAL-41b8c99c344a.json": "d4e3a301c3ad5333dc8a980e9e4f0358e79bdc2e5aafa257bf7358fe94496c2a",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0003/NATIVE-AUDIT.json": "c7acb6dcd2d33a8ae47e667055fa999f4525788b4c17c13f95e2d7e6a0ae67d5",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0003/SUMMARY.json": "eca3faf4df2735247ea3ed989ffc5c10ef64eaeb136184792c76abcaef068bf7",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0003/TERMINAL-e61539cddde8.json": "d577fc8ce369bd770ac7aaec0dba68df64342d5f95e9d77842ae25b7d4a18a2a",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0003/NATIVE-AUDIT.json": "c19e810dd2fcb2bfbb7f8e114c644befce5b0f671fd6a4a466a0b6f6e6c0cabb"
+  },
+  "crafting_success_definition": "At explicit finish, native target inventory minus starting inventory must be at least each requested target quantity. Binary whole-task completion; no partial credit.",
+  "paper_candidate": "Specific executable history repair with fixed action labels; repeated exploratory signal, not established novelty or general method."
+}

@@ -1,0 +1,2253 @@
+{
+  "schema": "rlm-retrospective-fresh-results-v1",
+  "reviewed_utc": "2026-09-29T14:06:32.236084+00:00",
+  "cells": {
+    "raw_warm": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-warm",
+      "successes": 4,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 778,
+        "prompt_tokens": 2579699,
+        "completion_tokens": 23516,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1963.4226434230804
+      },
+      "errors": {
+        "native_action_error": 348,
+        "invalid_schema": 1
+      },
+      "status_counts": {
+        "finished": 14,
+        "context_cap": 2
+      },
+      "native_outcome_costs": {
+        "0": {
+          "attempts": 12,
+          "calls": 714,
+          "output_tokens": 21809
+        },
+        "1": {
+          "attempts": 4,
+          "calls": 64,
+          "output_tokens": 1707
+        }
+      },
+      "completed_utc": "2026-09-29T01:37:41.396413+00:00",
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-discovery-sft-001/checkpoint-0023",
+        "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+        "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf"
+      },
+      "outcomes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 48,
+          "output_tokens": 1501,
+          "status": "finished",
+          "ended": 1790644006.8794484
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "status": "finished",
+          "ended": 1790644033.2537048
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 23,
+          "output_tokens": 702,
+          "status": "finished",
+          "ended": 1790644087.0113657
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 23,
+          "output_tokens": 634,
+          "status": "finished",
+          "ended": 1790644135.9137788
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "status": "finished",
+          "ended": 1790644181.0106342
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 65,
+          "output_tokens": 2268,
+          "status": "finished",
+          "ended": 1790644369.9803336
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 76,
+          "output_tokens": 2410,
+          "status": "finished",
+          "ended": 1790644576.007354
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 81,
+          "output_tokens": 2434,
+          "status": "context_cap",
+          "ended": 1790644787.7038152
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 80,
+          "output_tokens": 2301,
+          "status": "finished",
+          "ended": 1790644985.0792878
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "status": "finished",
+          "ended": 1790645008.3378618
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 82,
+          "output_tokens": 2476,
+          "status": "context_cap",
+          "ended": 1790645224.7951803
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 51,
+          "output_tokens": 1395,
+          "status": "finished",
+          "ended": 1790645340.8834205
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "status": "finished",
+          "ended": 1790645377.4408653
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 46,
+          "output_tokens": 1255,
+          "status": "finished",
+          "ended": 1790645480.2406278
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 76,
+          "output_tokens": 2333,
+          "status": "finished",
+          "ended": 1790645684.505111
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 63,
+          "output_tokens": 2100,
+          "status": "finished",
+          "ended": 1790645861.3964128
+        }
+      ]
+    },
+    "raw_rl1": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0001",
+      "successes": 4,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 825,
+        "prompt_tokens": 2839768,
+        "completion_tokens": 25919,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 2167.584885120392
+      },
+      "errors": {
+        "native_action_error": 359,
+        "invalid_schema": 3
+      },
+      "status_counts": {
+        "finished": 13,
+        "context_cap": 3
+      },
+      "native_outcome_costs": {
+        "0": {
+          "attempts": 12,
+          "calls": 761,
+          "output_tokens": 24212
+        },
+        "1": {
+          "attempts": 4,
+          "calls": 64,
+          "output_tokens": 1707
+        }
+      },
+      "completed_utc": "2026-09-29T08:02:43.807930+00:00",
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/train-0001/boundaries/sample-0001/checkpoint-0001",
+        "sha256": "a716dbc3e551fd46e65d42291324f97b1c6b38a3c1cdabd2a816d3147ffe4de8",
+        "commit_sha256": "173a04a204c58f7534b74b41705c9f7bfb303dfc4f8beceab1be7906409b1131"
+      },
+      "outcomes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 36,
+          "output_tokens": 1272,
+          "status": "finished",
+          "ended": 1790666885.2454658
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "status": "finished",
+          "ended": 1790666911.9051766
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 71,
+          "output_tokens": 2355,
+          "status": "finished",
+          "ended": 1790667110.6607378
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 24,
+          "output_tokens": 666,
+          "status": "finished",
+          "ended": 1790667161.6007938
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "status": "finished",
+          "ended": 1790667205.855579
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 51,
+          "output_tokens": 1524,
+          "status": "finished",
+          "ended": 1790667331.6927235
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 70,
+          "output_tokens": 2177,
+          "status": "finished",
+          "ended": 1790667516.043057
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 79,
+          "output_tokens": 2593,
+          "status": "context_cap",
+          "ended": 1790667737.681507
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 49,
+          "output_tokens": 1458,
+          "status": "finished",
+          "ended": 1790667856.1655126
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "status": "finished",
+          "ended": 1790667879.8090117
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 76,
+          "output_tokens": 2569,
+          "status": "finished",
+          "ended": 1790668099.0002398
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 64,
+          "output_tokens": 2256,
+          "status": "finished",
+          "ended": 1790668285.0439162
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "status": "finished",
+          "ended": 1790668320.9856007
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 75,
+          "output_tokens": 2328,
+          "status": "finished",
+          "ended": 1790668523.0078106
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 81,
+          "output_tokens": 2405,
+          "status": "context_cap",
+          "ended": 1790668734.8281362
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 85,
+          "output_tokens": 2609,
+          "status": "context_cap",
+          "ended": 1790668963.8079298
+        }
+      ]
+    },
+    "raw_sft1": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/raw/readout-0001",
+      "successes": 4,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 677,
+        "prompt_tokens": 2011040,
+        "completion_tokens": 21254,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1728.1885075569153
+      },
+      "errors": {
+        "native_action_error": 259
+      },
+      "status_counts": {
+        "finished": 14,
+        "context_cap": 2
+      },
+      "native_outcome_costs": {
+        "0": {
+          "attempts": 12,
+          "calls": 613,
+          "output_tokens": 19547
+        },
+        "1": {
+          "attempts": 4,
+          "calls": 64,
+          "output_tokens": 1707
+        }
+      },
+      "completed_utc": "2026-09-29T09:11:25.927999+00:00",
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/train-0001/boundaries/sample-0001/checkpoint-0001",
+        "sha256": "8e633c59feb91823bb4fad10e37973f6b4187889799e51fc6b3ea8ab5567eb14",
+        "commit_sha256": "baff58e7dcceef6dd825f5eba9e5a40b8eb33bd15f17c080019f32ed4ed9dbbe"
+      },
+      "outcomes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 36,
+          "output_tokens": 1272,
+          "status": "finished",
+          "ended": 1790671447.751909
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "status": "finished",
+          "ended": 1790671473.8805397
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 57,
+          "output_tokens": 1913,
+          "status": "finished",
+          "ended": 1790671629.0782466
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 23,
+          "output_tokens": 625,
+          "status": "finished",
+          "ended": 1790671676.5104427
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "status": "finished",
+          "ended": 1790671719.921646
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 51,
+          "output_tokens": 1524,
+          "status": "finished",
+          "ended": 1790671843.8830745
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 70,
+          "output_tokens": 2190,
+          "status": "finished",
+          "ended": 1790672028.992422
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 80,
+          "output_tokens": 2655,
+          "status": "context_cap",
+          "ended": 1790672257.9423525
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 40,
+          "output_tokens": 1275,
+          "status": "finished",
+          "ended": 1790672357.8673093
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "status": "finished",
+          "ended": 1790672381.1194797
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 55,
+          "output_tokens": 1901,
+          "status": "finished",
+          "ended": 1790672534.7988164
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 21,
+          "output_tokens": 558,
+          "status": "finished",
+          "ended": 1790672577.7028825
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "status": "finished",
+          "ended": 1790672613.306369
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 58,
+          "output_tokens": 1747,
+          "status": "finished",
+          "ended": 1790672758.1379275
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 78,
+          "output_tokens": 2610,
+          "status": "context_cap",
+          "ended": 1790672982.1235187
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 44,
+          "output_tokens": 1277,
+          "status": "finished",
+          "ended": 1790673085.9279993
+        }
+      ]
+    },
+    "binder_warm": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-warm",
+      "successes": 5,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 673,
+        "prompt_tokens": 2080522,
+        "completion_tokens": 21759,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1772.7922012805939
+      },
+      "errors": {
+        "native_action_error": 241,
+        "invalid_schema": 3
+      },
+      "status_counts": {
+        "finished": 15,
+        "context_cap": 1
+      },
+      "native_outcome_costs": {
+        "0": {
+          "attempts": 11,
+          "calls": 592,
+          "output_tokens": 19604
+        },
+        "1": {
+          "attempts": 5,
+          "calls": 81,
+          "output_tokens": 2155
+        }
+      },
+      "completed_utc": "2026-09-29T02:07:40.430269+00:00",
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-discovery-sft-001/checkpoint-0023",
+        "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+        "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf"
+      },
+      "outcomes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 17,
+          "output_tokens": 448,
+          "status": "finished",
+          "ended": 1790645913.390569
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "status": "finished",
+          "ended": 1790645939.6224322
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 57,
+          "output_tokens": 2133,
+          "status": "finished",
+          "ended": 1790646112.1568997
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 24,
+          "output_tokens": 694,
+          "status": "finished",
+          "ended": 1790646166.1421595
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "status": "finished",
+          "ended": 1790646210.4703236
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 67,
+          "output_tokens": 2473,
+          "status": "finished",
+          "ended": 1790646415.6614447
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 76,
+          "output_tokens": 2700,
+          "status": "finished",
+          "ended": 1790646642.6502311
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 58,
+          "output_tokens": 1691,
+          "status": "finished",
+          "ended": 1790646781.5877476
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 21,
+          "output_tokens": 573,
+          "status": "finished",
+          "ended": 1790646824.935437
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "status": "finished",
+          "ended": 1790646848.1855512
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 48,
+          "output_tokens": 1672,
+          "status": "finished",
+          "ended": 1790646980.8089476
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 30,
+          "output_tokens": 939,
+          "status": "finished",
+          "ended": 1790647052.9662166
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "status": "finished",
+          "ended": 1790647088.7128441
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 74,
+          "output_tokens": 2455,
+          "status": "context_cap",
+          "ended": 1790647297.781173
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 66,
+          "output_tokens": 2000,
+          "status": "finished",
+          "ended": 1790647465.4004126
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 71,
+          "output_tokens": 2274,
+          "status": "finished",
+          "ended": 1790647660.4302688
+        }
+      ]
+    },
+    "binder_rl1": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0001",
+      "successes": 4,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 716,
+        "prompt_tokens": 2331271,
+        "completion_tokens": 24983,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 2040.6349596977234
+      },
+      "errors": {
+        "native_action_error": 261,
+        "invalid_schema": 22
+      },
+      "status_counts": {
+        "finished": 13,
+        "context_cap": 3
+      },
+      "native_outcome_costs": {
+        "0": {
+          "attempts": 12,
+          "calls": 649,
+          "output_tokens": 23171
+        },
+        "1": {
+          "attempts": 4,
+          "calls": 67,
+          "output_tokens": 1812
+        }
+      },
+      "completed_utc": "2026-09-29T08:37:12.358279+00:00",
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/train-0001/boundaries/sample-0001/checkpoint-0001",
+        "sha256": "50bd07bffcc891e7a270dc60ab962eac562652304428a28f689fe4629838784e",
+        "commit_sha256": "28db3d3a7938b29eca18d1640d3da0e275b5d18e4e0c78aef97cf9a828a2e4ea"
+      },
+      "outcomes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 23,
+          "output_tokens": 664,
+          "status": "finished",
+          "ended": 1790669032.619613
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 16,
+          "output_tokens": 457,
+          "status": "finished",
+          "ended": 1790669066.9514058
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 57,
+          "output_tokens": 2120,
+          "status": "finished",
+          "ended": 1790669241.2776003
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 28,
+          "output_tokens": 858,
+          "status": "finished",
+          "ended": 1790669307.8898704
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "status": "finished",
+          "ended": 1790669352.5071552
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 67,
+          "output_tokens": 2473,
+          "status": "finished",
+          "ended": 1790669559.0401237
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 77,
+          "output_tokens": 2433,
+          "status": "context_cap",
+          "ended": 1790669769.4201152
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 76,
+          "output_tokens": 2534,
+          "status": "context_cap",
+          "ended": 1790669983.8332345
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 15,
+          "output_tokens": 352,
+          "status": "finished",
+          "ended": 1790670010.2473087
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "status": "finished",
+          "ended": 1790670033.3674464
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 77,
+          "output_tokens": 2818,
+          "status": "finished",
+          "ended": 1790670267.456616
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 30,
+          "output_tokens": 939,
+          "status": "finished",
+          "ended": 1790670341.715934
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "status": "finished",
+          "ended": 1790670378.2246053
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 64,
+          "output_tokens": 2002,
+          "status": "finished",
+          "ended": 1790670547.2448387
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 65,
+          "output_tokens": 2037,
+          "status": "finished",
+          "ended": 1790670719.3432758
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 70,
+          "output_tokens": 3941,
+          "status": "context_cap",
+          "ended": 1790671032.358279
+        }
+      ]
+    },
+    "binder_sft1": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/binder/readout-0001",
+      "successes": 5,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 633,
+        "prompt_tokens": 1940033,
+        "completion_tokens": 19552,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1611.305984735489
+      },
+      "errors": {
+        "native_action_error": 202,
+        "invalid_schema": 1
+      },
+      "status_counts": {
+        "finished": 16
+      },
+      "native_outcome_costs": {
+        "0": {
+          "attempts": 11,
+          "calls": 552,
+          "output_tokens": 17397
+        },
+        "1": {
+          "attempts": 5,
+          "calls": 81,
+          "output_tokens": 2155
+        }
+      },
+      "completed_utc": "2026-09-29T09:38:41.676893+00:00",
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/train-0001/boundaries/sample-0001/checkpoint-0001",
+        "sha256": "8e633c59feb91823bb4fad10e37973f6b4187889799e51fc6b3ea8ab5567eb14",
+        "commit_sha256": "baff58e7dcceef6dd825f5eba9e5a40b8eb33bd15f17c080019f32ed4ed9dbbe"
+      },
+      "outcomes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 17,
+          "output_tokens": 448,
+          "status": "finished",
+          "ended": 1790673136.9176092
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "status": "finished",
+          "ended": 1790673163.373779
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 56,
+          "output_tokens": 2085,
+          "status": "finished",
+          "ended": 1790673333.7238512
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 24,
+          "output_tokens": 694,
+          "status": "finished",
+          "ended": 1790673387.7567024
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "status": "finished",
+          "ended": 1790673431.9121172
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 56,
+          "output_tokens": 1871,
+          "status": "finished",
+          "ended": 1790673585.4691138
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 69,
+          "output_tokens": 2024,
+          "status": "finished",
+          "ended": 1790673759.1942313
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 77,
+          "output_tokens": 2467,
+          "status": "finished",
+          "ended": 1790673972.2198808
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 15,
+          "output_tokens": 352,
+          "status": "finished",
+          "ended": 1790673998.8274572
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "status": "finished",
+          "ended": 1790674022.1443958
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 27,
+          "output_tokens": 790,
+          "status": "finished",
+          "ended": 1790674083.568321
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 22,
+          "output_tokens": 594,
+          "status": "finished",
+          "ended": 1790674129.1830482
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "status": "finished",
+          "ended": 1790674165.0792215
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 70,
+          "output_tokens": 2343,
+          "status": "finished",
+          "ended": 1790674363.7510648
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 65,
+          "output_tokens": 1947,
+          "status": "finished",
+          "ended": 1790674529.9190142
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 71,
+          "output_tokens": 2230,
+          "status": "finished",
+          "ended": 1790674721.6768935
+        }
+      ]
+    },
+    "raw_rl2": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0002",
+      "successes": 5,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 783,
+        "prompt_tokens": 2504442,
+        "completion_tokens": 22874,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1911.3086206912994
+      },
+      "errors": {
+        "native_action_error": 279,
+        "invalid_schema": 1
+      },
+      "status_counts": {
+        "finished": 13,
+        "context_cap": 3
+      },
+      "native_outcome_costs": {
+        "0": {
+          "attempts": 11,
+          "calls": 662,
+          "output_tokens": 19402
+        },
+        "1": {
+          "attempts": 5,
+          "calls": 121,
+          "output_tokens": 3472
+        }
+      },
+      "completed_utc": "2026-09-29T13:26:30.795098+00:00",
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/train-0002/boundaries/sample-0002/checkpoint-0002",
+        "sha256": "224120c93d528663aa9994c91a6919f1cbfd9b7f3b7e0d4dfa8bb57043c99418",
+        "commit_sha256": "3c36832875d8a6fa280713448d0e6254b80c0fa9043ab0f1aaa046ecdf6bdeec"
+      },
+      "outcomes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 48,
+          "output_tokens": 1443,
+          "status": "finished",
+          "ended": 1790686584.8687968
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "status": "finished",
+          "ended": 1790686611.2846107
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 57,
+          "output_tokens": 1318,
+          "status": "finished",
+          "ended": 1790686724.1682324
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 24,
+          "output_tokens": 666,
+          "status": "finished",
+          "ended": 1790686775.3017843
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "status": "finished",
+          "ended": 1790686819.2868865
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 51,
+          "output_tokens": 1524,
+          "status": "finished",
+          "ended": 1790686944.9189603
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 73,
+          "output_tokens": 2166,
+          "status": "finished",
+          "ended": 1790687131.087127
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 74,
+          "output_tokens": 2342,
+          "status": "context_cap",
+          "ended": 1790687333.1253293
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 61,
+          "output_tokens": 1734,
+          "status": "finished",
+          "ended": 1790687475.8716536
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "status": "finished",
+          "ended": 1790687499.354316
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 84,
+          "output_tokens": 2669,
+          "status": "context_cap",
+          "ended": 1790687731.010864
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 57,
+          "output_tokens": 1765,
+          "status": "finished",
+          "ended": 1790687876.154362
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "status": "finished",
+          "ended": 1790687912.115548
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 47,
+          "output_tokens": 1464,
+          "status": "finished",
+          "ended": 1790688031.232219
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 80,
+          "output_tokens": 2271,
+          "status": "context_cap",
+          "ended": 1790688234.4801269
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 63,
+          "output_tokens": 1805,
+          "status": "finished",
+          "ended": 1790688390.7950978
+        }
+      ]
+    },
+    "binder_rl2": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0002",
+      "successes": 4,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 793,
+        "prompt_tokens": 2777456,
+        "completion_tokens": 25909,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 2150.7955844402313
+      },
+      "errors": {
+        "native_action_error": 314,
+        "invalid_schema": 4
+      },
+      "status_counts": {
+        "finished": 12,
+        "context_cap": 4
+      },
+      "native_outcome_costs": {
+        "0": {
+          "attempts": 12,
+          "calls": 726,
+          "output_tokens": 24097
+        },
+        "1": {
+          "attempts": 4,
+          "calls": 67,
+          "output_tokens": 1812
+        }
+      },
+      "completed_utc": "2026-09-29T14:02:51.479831+00:00",
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/train-0002/boundaries/sample-0002/checkpoint-0002",
+        "sha256": "fd89bcce22f33d10b84589b4d1edc6abfca420a886912cb63611a736b1d90dac",
+        "commit_sha256": "e5d0a2eb83cef9f810398f38276265b08d50b4c88a802651832eb36ff074b726"
+      },
+      "outcomes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 25,
+          "output_tokens": 724,
+          "status": "finished",
+          "ended": 1790688463.998696
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 16,
+          "output_tokens": 457,
+          "status": "finished",
+          "ended": 1790688498.2055433
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 57,
+          "output_tokens": 1919,
+          "status": "finished",
+          "ended": 1790688655.3140843
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 21,
+          "output_tokens": 571,
+          "status": "finished",
+          "ended": 1790688698.8584871
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "status": "finished",
+          "ended": 1790688742.5953653
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 67,
+          "output_tokens": 2473,
+          "status": "finished",
+          "ended": 1790688946.7485137
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 76,
+          "output_tokens": 2614,
+          "status": "finished",
+          "ended": 1790689166.092375
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 0,
+          "seed": 202609280900,
+          "score": 0,
+          "calls": 74,
+          "output_tokens": 2356,
+          "status": "context_cap",
+          "ended": 1790689370.317467
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 15,
+          "output_tokens": 352,
+          "status": "finished",
+          "ended": 1790689396.9299421
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "status": "finished",
+          "ended": 1790689420.2887435
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 84,
+          "output_tokens": 2929,
+          "status": "context_cap",
+          "ended": 1790689667.650871
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 75,
+          "output_tokens": 2721,
+          "status": "finished",
+          "ended": 1790689895.2316484
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "status": "finished",
+          "ended": 1790689931.7056482
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 71,
+          "output_tokens": 2241,
+          "status": "finished",
+          "ended": 1790690122.5108304
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 81,
+          "output_tokens": 2552,
+          "status": "context_cap",
+          "ended": 1790690344.12096
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "repeat": 1,
+          "seed": 202609280901,
+          "score": 0,
+          "calls": 80,
+          "output_tokens": 2645,
+          "status": "context_cap",
+          "ended": 1790690571.479831
+        }
+      ]
+    }
+  },
+  "bindings_checked": 384,
+  "comparisons": {
+    "binder_warm_to_binder_sft1": {
+      "gains": [],
+      "losses": [],
+      "ties": 16,
+      "cost_change_percent": {
+        "calls": -5.943536404160477,
+        "completion_tokens": -10.142929362562613,
+        "native_service_seconds": -9.109145247167373
+      }
+    },
+    "raw_warm_to_raw_rl2": {
+      "gains": [
+        [
+          "textcraft_synth.train.1273",
+          1,
+          202609280901
+        ]
+      ],
+      "losses": [],
+      "ties": 15,
+      "cost_change_percent": {
+        "calls": 0.6426735218509005,
+        "completion_tokens": -2.73005613199524,
+        "native_service_seconds": -2.654243746569207
+      }
+    },
+    "binder_warm_to_binder_rl2": {
+      "gains": 0,
+      "losses": 1,
+      "changed": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "repeat": 0,
+          "seed": 202609280900,
+          "before_score": 1,
+          "after_score": 0
+        }
+      ]
+    },
+    "binder_rl1_to_binder_rl2": {
+      "gains": 0,
+      "losses": 0,
+      "changed": []
+    }
+  },
+  "training_rounds": {
+    "raw_1": {
+      "complete": true,
+      "endpoint_usable": true,
+      "committed_optimizer_steps": 1,
+      "update": {
+        "objective_before": -4.523344930984821,
+        "gradient_norm": 30.019184112548828,
+        "adapter_l2_delta": 0.0808382740274905,
+        "nonzero_calls": 536,
+        "total_calls": 1831,
+        "credited_tokens": 16488,
+        "positive_tokens": 6103,
+        "negative_tokens": 10385,
+        "training_eval_max_gap": 0,
+        "training_eval_mean_gap": 0,
+        "probability_changes": {
+          "scope": "Sampled action-token changes on the training batch; not KL or task accuracy",
+          "positive": {
+            "tokens": 6103,
+            "mean_sampled_token_logp_delta": 0.001878584088020099
+          },
+          "negative": {
+            "tokens": 10385,
+            "mean_sampled_token_logp_delta": -0.002994518326963591
+          }
+        },
+        "objective_after": -5.387266093574367
+      },
+      "elapsed_seconds": 1425.9682018756866,
+      "groups": {
+        "textcraft_synth.train.132": {
+          "successes": 2,
+          "attempts": 4,
+          "calls": 136,
+          "tokens": 3885,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.1423": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 213,
+          "tokens": 5172,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.2281": {
+          "successes": 1,
+          "attempts": 4,
+          "calls": 173,
+          "tokens": 5332,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.1753": {
+          "successes": 2,
+          "attempts": 4,
+          "calls": 227,
+          "tokens": 7271,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.1921": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 233,
+          "tokens": 8703,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.1051": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 272,
+          "tokens": 8180,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.2338": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 278,
+          "tokens": 9621,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.2026": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 299,
+          "tokens": 9575,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        }
+      },
+      "successes": 5,
+      "mixed_groups": 3,
+      "physical_cost": {
+        "calls": 1831,
+        "prompt_tokens": 6157500,
+        "completion_tokens": 57739,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 4897.976036310196
+      }
+    },
+    "raw_2": {
+      "complete": true,
+      "endpoint_usable": true,
+      "committed_optimizer_steps": 2,
+      "update": {
+        "objective_before": -1.0589336804141576,
+        "gradient_norm": 28.66814613342285,
+        "adapter_l2_delta": 0.05587327490368334,
+        "nonzero_calls": 419,
+        "total_calls": 1851,
+        "credited_tokens": 12442,
+        "positive_tokens": 4594,
+        "negative_tokens": 7848,
+        "training_eval_max_gap": 0,
+        "training_eval_mean_gap": 0,
+        "probability_changes": {
+          "scope": "Sampled action-token changes on the training batch; not KL or task accuracy",
+          "positive": {
+            "tokens": 4594,
+            "mean_sampled_token_logp_delta": 0.0010165791779324586
+          },
+          "negative": {
+            "tokens": 7848,
+            "mean_sampled_token_logp_delta": -0.002215898457497091
+          }
+        },
+        "objective_after": -1.4222502376147446
+      },
+      "elapsed_seconds": 1289.6368699073792,
+      "groups": {
+        "textcraft_synth.train.132": {
+          "successes": 4,
+          "attempts": 4,
+          "calls": 111,
+          "tokens": 3433,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.1423": {
+          "successes": 2,
+          "attempts": 4,
+          "calls": 217,
+          "tokens": 6081,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.2281": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 179,
+          "tokens": 5790,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.1753": {
+          "successes": 1,
+          "attempts": 4,
+          "calls": 202,
+          "tokens": 6361,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.1921": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 225,
+          "tokens": 7048,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.1051": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 312,
+          "tokens": 9912,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.2338": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 329,
+          "tokens": 10498,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.2026": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 276,
+          "tokens": 8630,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        }
+      },
+      "successes": 7,
+      "mixed_groups": 2,
+      "physical_cost": {
+        "calls": 1851,
+        "prompt_tokens": 6204539,
+        "completion_tokens": 57753,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 4809.324237346649
+      }
+    },
+    "binder_1": {
+      "complete": true,
+      "endpoint_usable": true,
+      "committed_optimizer_steps": 1,
+      "update": {
+        "objective_before": -0.603646828353666,
+        "gradient_norm": 21.642709732055664,
+        "adapter_l2_delta": 0.08079250435133171,
+        "nonzero_calls": 394,
+        "total_calls": 1461,
+        "credited_tokens": 11896,
+        "positive_tokens": 7653,
+        "negative_tokens": 4243,
+        "training_eval_max_gap": 0,
+        "training_eval_mean_gap": 0,
+        "probability_changes": {
+          "scope": "Sampled action-token changes on the training batch; not KL or task accuracy",
+          "positive": {
+            "tokens": 7653,
+            "mean_sampled_token_logp_delta": 0.0015847658900607301
+          },
+          "negative": {
+            "tokens": 4243,
+            "mean_sampled_token_logp_delta": -0.0044547331283581884
+          }
+        },
+        "objective_after": -1.2241661328858306
+      },
+      "elapsed_seconds": 903.1425833702087,
+      "groups": {
+        "textcraft_synth.train.132": {
+          "successes": 4,
+          "attempts": 4,
+          "calls": 108,
+          "tokens": 3355,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.1423": {
+          "successes": 3,
+          "attempts": 4,
+          "calls": 83,
+          "tokens": 2307,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.2281": {
+          "successes": 2,
+          "attempts": 4,
+          "calls": 177,
+          "tokens": 5778,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.1753": {
+          "successes": 3,
+          "attempts": 4,
+          "calls": 134,
+          "tokens": 3811,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.1921": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 233,
+          "tokens": 7555,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.1051": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 216,
+          "tokens": 6158,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.2338": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 283,
+          "tokens": 11990,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        },
+        "textcraft_synth.train.2026": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 227,
+          "tokens": 6585,
+          "seeds": [
+            202609280110,
+            202609280111,
+            202609280112,
+            202609280113
+          ]
+        }
+      },
+      "successes": 12,
+      "mixed_groups": 3,
+      "physical_cost": {
+        "calls": 1461,
+        "prompt_tokens": 4293675,
+        "completion_tokens": 47539,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 3873.86368727684
+      }
+    },
+    "binder_2": {
+      "complete": true,
+      "endpoint_usable": true,
+      "committed_optimizer_steps": 2,
+      "update": {
+        "objective_before": -3.5212683774389957,
+        "gradient_norm": 30.320600509643555,
+        "adapter_l2_delta": 0.05860097163889182,
+        "nonzero_calls": 443,
+        "total_calls": 1683,
+        "credited_tokens": 13370,
+        "positive_tokens": 7545,
+        "negative_tokens": 5825,
+        "training_eval_max_gap": 0,
+        "training_eval_mean_gap": 0,
+        "probability_changes": {
+          "scope": "Sampled action-token changes on the training batch; not KL or task accuracy",
+          "positive": {
+            "tokens": 7545,
+            "mean_sampled_token_logp_delta": 0.000536743275463766
+          },
+          "negative": {
+            "tokens": 5825,
+            "mean_sampled_token_logp_delta": -0.0024387763448779757
+          }
+        },
+        "objective_after": -3.9544209881899643
+      },
+      "elapsed_seconds": 1135.1001873016357,
+      "groups": {
+        "textcraft_synth.train.132": {
+          "successes": 3,
+          "attempts": 4,
+          "calls": 130,
+          "tokens": 4088,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.1423": {
+          "successes": 1,
+          "attempts": 4,
+          "calls": 110,
+          "tokens": 2961,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.2281": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 192,
+          "tokens": 6522,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.1753": {
+          "successes": 3,
+          "attempts": 4,
+          "calls": 203,
+          "tokens": 6321,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.1921": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 226,
+          "tokens": 7347,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.1051": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 237,
+          "tokens": 7201,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.2338": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 312,
+          "tokens": 9690,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        },
+        "textcraft_synth.train.2026": {
+          "successes": 0,
+          "attempts": 4,
+          "calls": 273,
+          "tokens": 8638,
+          "seeds": [
+            202609280120,
+            202609280121,
+            202609280122,
+            202609280123
+          ]
+        }
+      },
+      "successes": 7,
+      "mixed_groups": 3,
+      "physical_cost": {
+        "calls": 1683,
+        "prompt_tokens": 5376200,
+        "completion_tokens": 52768,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 4373.7470326423645
+      }
+    }
+  },
+  "sources": {
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-warm/SUMMARY.json": "1332a78aaafd006b91d7756d0572c7034920fd613c53820b81dbf842ad7f0600",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-warm/PLAN.json": "dcc066d509f44f7a38e5d0a4c25d8fbb57d2d589e5975189e95bd44219b46ac0",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-warm/NATIVE-AUDIT.json": "637915703fa1eecee38bb0ec6bc4fd0ce5d092eeda6e3e42c2af9685be038e7e",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0001/SUMMARY.json": "e6d8c90ac12d7936da0d4be901e90e3ed7afa891022324f9f8f16aece2d8029e",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0001/PLAN.json": "42f5efd506271d7bed7197e194d019637ae626e0a4831903cc2645ff8afe2a39",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0001/NATIVE-AUDIT.json": "32ed4ccc5bc7d90a339530927defc7821b88bf391f39d1dbb570fb8c20f296bb",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/raw/readout-0001/SUMMARY.json": "29381938691fdfcc75379e169d16e2d503d05f05c83e6558a73334632ad5acd7",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/raw/readout-0001/PLAN.json": "af43c3aadde216fc0c3aa661423faf80bed2310890573a132a7d87c6502d3811",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/raw/readout-0001/NATIVE-AUDIT.json": "6626d75f440a8d15bf96017022324e0c763d8ae978b3cf12ee6623f14fc38bf9",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-warm/SUMMARY.json": "d254afbcd39f8e79c7f778e80b7084e60a75d746b21b8b75a4968004f447f7f0",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-warm/PLAN.json": "795184d89205f490a241f54aa1c48cede233f49ef4666b49a4dde19106298f74",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-warm/NATIVE-AUDIT.json": "440e555eeee5fb9100fb6f608dbccd3503ba609b509755caee356f5e9a522e62",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0001/SUMMARY.json": "475f587ee282a89baa9aa5a819b365ef47b9bf38caf171cfe0da79616f00f301",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0001/PLAN.json": "a8b980c8028092b6eb69d192e7f11f1dc638f3807d5749613aa1b8c9e31ca848",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0001/NATIVE-AUDIT.json": "56cefeb3aafa241a9091e495daeb83389813c043ecae3ae84d784ff81e47f0c1",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/binder/readout-0001/SUMMARY.json": "bb11e3443fe27d3ed9aee3084699f8e397a2423cf68970d1757a66e57cb303da",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/binder/readout-0001/PLAN.json": "24ab615935b4cdbc53133e57c184631b3f733951d8ca0b576bc7c8944c2959b5",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/sft/binder/readout-0001/NATIVE-AUDIT.json": "b1204d8d81ff305c5ac5c1c77e81af8c2da0021bbbc7aa55f3d4fd964472ec5c",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0002/SUMMARY.json": "92e5aa3d70bb055eb0ebbc82496c7b432e0a5cd0920496aa077c833c439190bd",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0002/PLAN.json": "fbc7a9f7185bd3706f0e7034bfccde16a3d79298b5873eac0a28159af9904464",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-0002/NATIVE-AUDIT.json": "bfd01430710a2bf48b9dffb70bd2b8dcb8281964990662002801db6c0176044d",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/train-0001/SUMMARY.json": "963965adb57f4df59441483e0cef51530d8c29a34f3defbcba7b6831f58ba3d5",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/collect-0001/NATIVE-AUDIT.json": "cebc89185e245d4e20bd6c45e9d81544ee820759bc750d3467916c4fa53a4caa",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/collect-0001/PLAN.json": "a3277575c8249b2d27459d9078c572a7f8375aaf2cd33918841c5b01727b8bdc",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/train-0002/SUMMARY.json": "9b0a1f27b07aea1a8b8ff3079bd19322b7e31fa3e7e9800625ed4ac19da1542c",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/collect-0002/NATIVE-AUDIT.json": "0ac98f64be802529a9bdc6fb5ef684bed23e8a26e58b56f08326422778b27a09",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/collect-0002/PLAN.json": "a2cd05b9334957c737736ba3902d27a8a53ab4cca14bc37c84197cb77dc05dbe",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/train-0001/SUMMARY.json": "1be49c1403bef40d029817554bdedef7f6b240377c248366ec7cdb75dd0afed5",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/collect-0001/NATIVE-AUDIT.json": "4a175a6d0f873ca6d2c1e7db6fb691074d25d233522a3e8f36f7f9653e747286",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/collect-0001/PLAN.json": "1bd9a57193675b34a6e9f4d8ce839981ab9a3ada879befc98873060fe672eab1",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/train-0002/SUMMARY.json": "0bb337f61fe84801f19b2d9a7867fe4336f2d120e38a5942bd41ca536a59d9cd",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/collect-0002/NATIVE-AUDIT.json": "2cf8bc9d961969478578df04c2c15aa15e39ac77ac06cb86a5127f76b59618c9",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/collect-0002/PLAN.json": "3424650fc42cb7e09c5b671ab7df8a9ea4b2f1c3af0a170a103c54db27ef1d0d",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/COMPARISON-0001.json": "a8ee1134d05ec5e4e2870582a9badcab439ebcb40aede2b56f76b4964ddf41cb",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0002/SUMMARY.json": "2a91ed0ceccf22de9815d043e8887e03c8d443150157843eda941f61b02987f4",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0002/PLAN.json": "252540faae452fcad274d0147cf30faa0a858ced0e79f90c28d4540c46c32dc3",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0002/NATIVE-AUDIT.json": "a001356e4b15b6381c3a01f2984330c30d514d8a07175c0c05ec871395a37c4d"
+  },
+  "scope": "Frozen groupB diagnostic,8 target roots x2 fixed seeds, official TRAIN/shared world. Not independent confirmation. All fixed endpoints retained; never select training from B. Extra-SFT matches one optimizer step/initial checkpoint/LR/clip, not data, token dose or FLOPs. A round-to-round changes confound checkpoint and seeds; later raw/binder collections use separately updated policies."
+}
