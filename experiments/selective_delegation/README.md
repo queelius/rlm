@@ -10,6 +10,12 @@ The [teaching synthesis](teaching_synthesis_20260929/FINDING.md),
 limits and follow-ups. Live ownership/queue state remains in the external store's
 `SESSION_CHECKPOINT.md` and `RESEARCH_QUEUE.md`, not in older dated reports.
 
+Later fixed snapshot: [new-goal starting baseline](rl_transfer_monitor_20260929/README.md)
+finishes 4/16 attempts before RL; it is not a learning improvement. Repeated
+tool errors and premature finishes identify what the pending paired comparisons
+need to improve. The [five-slide update](../../slides/2026-09-29-research-update/README.md)
+retains its earlier, explicit evidence cutoff.
+
 Historical September24: [overnight findings](RESEARCH-UPDATE-20260924.md). The teaching
 advantage survives the quantity correction and repeats in more recipe worlds;
 the notebook effect does not consistently help. Positive-only RL evaluation needs

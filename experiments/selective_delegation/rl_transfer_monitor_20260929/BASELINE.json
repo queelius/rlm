@@ -1,0 +1,731 @@
+{
+  "binder": {
+    "observed": null,
+    "planned": 16,
+    "status": "pending_native_audit",
+    "successes": null
+  },
+  "cutoff_utc": "2026-09-29T01:46:38.130385+00:00",
+  "familiar_reference": {
+    "paired_comparison": false,
+    "path": "R/textcraft-rl-assist-20260928-001/raw/readout-warm",
+    "planned": 16,
+    "same_adapter": true,
+    "successes": 9,
+    "task_ids_disjoint": true
+  },
+  "method": {
+    "depth": "Preselection public-recipe SELECTION.structural_metadata.dependency_chain; declared item tier retained separately.",
+    "loops": "Maximal consecutive public-history entries with identical canonical JSON action and identical Error: feedback; L-1 repetitions per block L>=2. No hidden recipes or stock replay.",
+    "post_goal": "Existing native auditor count; saved histories inspected for terminal finish, not new native replay.",
+    "uncertainty": "Eight roots, not16 independent problems. No inference from unpaired familiar9/16. This diagnostic has no optimization-label role."
+  },
+  "plan": {
+    "adapter": {
+      "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf",
+      "path": "R/textcraft-public-discovery-sft-001/checkpoint-0023",
+      "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f"
+    },
+    "base_dtype": "float16",
+    "input_plus_output_limit": 8192,
+    "lora_dtype": "float32",
+    "max_calls": 96,
+    "max_output_tokens": 8192,
+    "role": "TRAIN-only group B transfer diagnostic, not official VAL/HOLDOUT",
+    "rollout_seeds": [
+      202609280900,
+      202609280901
+    ],
+    "sampling": {
+      "temperature": 0.5,
+      "top_k": 0,
+      "top_p": 1
+    },
+    "split": "train",
+    "update_field": 1,
+    "update_field_is_not_RL_dose": true,
+    "world_seed": 42
+  },
+  "raw": {
+    "audited_errors": {
+      "invalid_schema": 1,
+      "native_action_error": 348
+    },
+    "by_actual_depth": {
+      "3": {
+        "attempts": 4,
+        "calls": 153,
+        "roots": 2,
+        "successes": 2
+      },
+      "4": {
+        "attempts": 6,
+        "calls": 218,
+        "roots": 3,
+        "successes": 2
+      },
+      "5": {
+        "attempts": 6,
+        "calls": 407,
+        "roots": 3,
+        "successes": 0
+      }
+    },
+    "episodes": [
+      {
+        "calls": 48,
+        "episode_id": "t00-r0-flat",
+        "finish_message": "done",
+        "longest_error_block": 6,
+        "loop_blocks": 7,
+        "native_errors": {
+          "extra_ingredient_argument": 18,
+          "insufficient_stock": 1,
+          "missing_ingredient_argument": 15
+        },
+        "output_tokens": 1501,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 15,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280900,
+        "task_id": "textcraft_synth.train.1796",
+        "termination": "finished"
+      },
+      {
+        "calls": 13,
+        "episode_id": "t01-r0-flat",
+        "finish_message": "done",
+        "longest_error_block": 0,
+        "loop_blocks": 0,
+        "native_errors": {
+          "insufficient_stock": 1
+        },
+        "output_tokens": 352,
+        "post_goal_calls": 1,
+        "repeat_error_calls": 0,
+        "schema_errors": 0,
+        "score": 1,
+        "seed": 202609280900,
+        "task_id": "textcraft_synth.train.256",
+        "termination": "finished"
+      },
+      {
+        "calls": 23,
+        "episode_id": "t02-r0-flat",
+        "finish_message": "done",
+        "longest_error_block": 2,
+        "loop_blocks": 1,
+        "native_errors": {
+          "insufficient_stock": 2,
+          "missing_ingredient_argument": 9,
+          "other_native_error": 1
+        },
+        "output_tokens": 702,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 1,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280900,
+        "task_id": "textcraft_synth.train.672",
+        "termination": "finished"
+      },
+      {
+        "calls": 23,
+        "episode_id": "t03-r0-flat",
+        "finish_message": "done",
+        "longest_error_block": 0,
+        "loop_blocks": 0,
+        "native_errors": {
+          "extra_ingredient_argument": 2,
+          "insufficient_stock": 2
+        },
+        "output_tokens": 634,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 0,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280900,
+        "task_id": "textcraft_synth.train.1273",
+        "termination": "finished"
+      },
+      {
+        "calls": 21,
+        "episode_id": "t04-r0-flat",
+        "finish_message": "done",
+        "longest_error_block": 0,
+        "loop_blocks": 0,
+        "native_errors": {
+          "insufficient_stock": 3
+        },
+        "output_tokens": 573,
+        "post_goal_calls": 1,
+        "repeat_error_calls": 0,
+        "schema_errors": 0,
+        "score": 1,
+        "seed": 202609280900,
+        "task_id": "textcraft_synth.train.1847",
+        "termination": "finished"
+      },
+      {
+        "calls": 65,
+        "episode_id": "t05-r0-flat",
+        "finish_message": "done",
+        "longest_error_block": 6,
+        "loop_blocks": 4,
+        "native_errors": {
+          "insufficient_stock": 24,
+          "other_native_error": 1
+        },
+        "output_tokens": 2268,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 9,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280900,
+        "task_id": "textcraft_synth.train.38",
+        "termination": "finished"
+      },
+      {
+        "calls": 76,
+        "episode_id": "t06-r0-flat",
+        "finish_message": "done",
+        "longest_error_block": 5,
+        "loop_blocks": 5,
+        "native_errors": {
+          "insufficient_stock": 27,
+          "missing_ingredient_argument": 5
+        },
+        "output_tokens": 2410,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 8,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280900,
+        "task_id": "textcraft_synth.train.201",
+        "termination": "finished"
+      },
+      {
+        "calls": 81,
+        "episode_id": "t07-r0-flat",
+        "finish_message": null,
+        "longest_error_block": 3,
+        "loop_blocks": 7,
+        "native_errors": {
+          "extra_ingredient_argument": 10,
+          "insufficient_stock": 18,
+          "missing_ingredient_argument": 14,
+          "other_native_error": 1
+        },
+        "output_tokens": 2434,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 8,
+        "schema_errors": 1,
+        "score": 0,
+        "seed": 202609280900,
+        "task_id": "textcraft_synth.train.964",
+        "termination": "context_cap"
+      },
+      {
+        "calls": 80,
+        "episode_id": "t00-r1-flat",
+        "finish_message": "done",
+        "longest_error_block": 3,
+        "loop_blocks": 6,
+        "native_errors": {
+          "extra_ingredient_argument": 43,
+          "insufficient_stock": 1,
+          "missing_ingredient_argument": 5,
+          "other_native_error": 1
+        },
+        "output_tokens": 2301,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 9,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280901,
+        "task_id": "textcraft_synth.train.1796",
+        "termination": "finished"
+      },
+      {
+        "calls": 12,
+        "episode_id": "t01-r1-flat",
+        "finish_message": "done",
+        "longest_error_block": 0,
+        "loop_blocks": 0,
+        "native_errors": {
+          "insufficient_stock": 1
+        },
+        "output_tokens": 312,
+        "post_goal_calls": 1,
+        "repeat_error_calls": 0,
+        "schema_errors": 0,
+        "score": 1,
+        "seed": 202609280901,
+        "task_id": "textcraft_synth.train.256",
+        "termination": "finished"
+      },
+      {
+        "calls": 82,
+        "episode_id": "t02-r1-flat",
+        "finish_message": null,
+        "longest_error_block": 6,
+        "loop_blocks": 2,
+        "native_errors": {
+          "extra_ingredient_argument": 3,
+          "insufficient_stock": 7,
+          "missing_ingredient_argument": 27
+        },
+        "output_tokens": 2476,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 9,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280901,
+        "task_id": "textcraft_synth.train.672",
+        "termination": "context_cap"
+      },
+      {
+        "calls": 51,
+        "episode_id": "t03-r1-flat",
+        "finish_message": "done",
+        "longest_error_block": 0,
+        "loop_blocks": 0,
+        "native_errors": {
+          "extra_ingredient_argument": 6,
+          "insufficient_stock": 10,
+          "missing_ingredient_argument": 2
+        },
+        "output_tokens": 1395,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 0,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280901,
+        "task_id": "textcraft_synth.train.1273",
+        "termination": "finished"
+      },
+      {
+        "calls": 18,
+        "episode_id": "t04-r1-flat",
+        "finish_message": "done",
+        "longest_error_block": 0,
+        "loop_blocks": 0,
+        "native_errors": {
+          "insufficient_stock": 1
+        },
+        "output_tokens": 470,
+        "post_goal_calls": 1,
+        "repeat_error_calls": 0,
+        "schema_errors": 0,
+        "score": 1,
+        "seed": 202609280901,
+        "task_id": "textcraft_synth.train.1847",
+        "termination": "finished"
+      },
+      {
+        "calls": 46,
+        "episode_id": "t05-r1-flat",
+        "finish_message": "done",
+        "longest_error_block": 2,
+        "loop_blocks": 2,
+        "native_errors": {
+          "extra_ingredient_argument": 7,
+          "insufficient_stock": 4,
+          "missing_ingredient_argument": 1
+        },
+        "output_tokens": 1255,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 2,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280901,
+        "task_id": "textcraft_synth.train.38",
+        "termination": "finished"
+      },
+      {
+        "calls": 76,
+        "episode_id": "t06-r1-flat",
+        "finish_message": "done",
+        "longest_error_block": 2,
+        "loop_blocks": 6,
+        "native_errors": {
+          "extra_ingredient_argument": 9,
+          "insufficient_stock": 18,
+          "missing_ingredient_argument": 1,
+          "other_native_error": 4
+        },
+        "output_tokens": 2333,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 6,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280901,
+        "task_id": "textcraft_synth.train.201",
+        "termination": "finished"
+      },
+      {
+        "calls": 63,
+        "episode_id": "t07-r1-flat",
+        "finish_message": "done",
+        "longest_error_block": 3,
+        "loop_blocks": 5,
+        "native_errors": {
+          "extra_ingredient_argument": 18,
+          "insufficient_stock": 8,
+          "missing_ingredient_argument": 5,
+          "other_native_error": 12
+        },
+        "output_tokens": 2100,
+        "post_goal_calls": 0,
+        "repeat_error_calls": 6,
+        "schema_errors": 0,
+        "score": 0,
+        "seed": 202609280901,
+        "task_id": "textcraft_synth.train.964",
+        "termination": "finished"
+      }
+    ],
+    "explicit_finish_without_goal": 10,
+    "mixed_success_roots": 0,
+    "native_error_classes": {
+      "extra_ingredient_argument": 116,
+      "insufficient_stock": 128,
+      "missing_ingredient_argument": 84,
+      "other_native_error": 20
+    },
+    "observed": 16,
+    "per_root": [
+      {
+        "actual_dependency_depth": 3,
+        "calls": 128,
+        "declared_depth": 4,
+        "native_errors": 84,
+        "planned": 2,
+        "reachable_products": 7,
+        "repeat_error_calls": 24,
+        "shared_ingredient_nodes": 1,
+        "successes": 0,
+        "target_items": {
+          "o2_i4_12": 3
+        },
+        "task_id": "textcraft_synth.train.1796",
+        "terminations": {
+          "finished": 2
+        }
+      },
+      {
+        "actual_dependency_depth": 3,
+        "calls": 25,
+        "declared_depth": 3,
+        "native_errors": 2,
+        "planned": 2,
+        "reachable_products": 5,
+        "repeat_error_calls": 0,
+        "shared_ingredient_nodes": 0,
+        "successes": 2,
+        "target_items": {
+          "a3_i3_23": 3
+        },
+        "task_id": "textcraft_synth.train.256",
+        "terminations": {
+          "finished": 2
+        }
+      },
+      {
+        "actual_dependency_depth": 4,
+        "calls": 105,
+        "declared_depth": 4,
+        "native_errors": 49,
+        "planned": 2,
+        "reachable_products": 11,
+        "repeat_error_calls": 10,
+        "shared_ingredient_nodes": 3,
+        "successes": 0,
+        "target_items": {
+          "c6_i4": 2
+        },
+        "task_id": "textcraft_synth.train.672",
+        "terminations": {
+          "context_cap": 1,
+          "finished": 1
+        }
+      },
+      {
+        "actual_dependency_depth": 4,
+        "calls": 74,
+        "declared_depth": 4,
+        "native_errors": 22,
+        "planned": 2,
+        "reachable_products": 9,
+        "repeat_error_calls": 0,
+        "shared_ingredient_nodes": 2,
+        "successes": 0,
+        "target_items": {
+          "o1_i4": 2
+        },
+        "task_id": "textcraft_synth.train.1273",
+        "terminations": {
+          "finished": 2
+        }
+      },
+      {
+        "actual_dependency_depth": 4,
+        "calls": 39,
+        "declared_depth": 5,
+        "native_errors": 4,
+        "planned": 2,
+        "reachable_products": 8,
+        "repeat_error_calls": 0,
+        "shared_ingredient_nodes": 1,
+        "successes": 2,
+        "target_items": {
+          "c0_i5": 1
+        },
+        "task_id": "textcraft_synth.train.1847",
+        "terminations": {
+          "finished": 2
+        }
+      },
+      {
+        "actual_dependency_depth": 5,
+        "calls": 111,
+        "declared_depth": 5,
+        "native_errors": 37,
+        "planned": 2,
+        "reachable_products": 17,
+        "repeat_error_calls": 11,
+        "shared_ingredient_nodes": 4,
+        "successes": 0,
+        "target_items": {
+          "c1_i5_21": 1
+        },
+        "task_id": "textcraft_synth.train.38",
+        "terminations": {
+          "finished": 2
+        }
+      },
+      {
+        "actual_dependency_depth": 5,
+        "calls": 152,
+        "declared_depth": 5,
+        "native_errors": 64,
+        "planned": 2,
+        "reachable_products": 26,
+        "repeat_error_calls": 14,
+        "shared_ingredient_nodes": 14,
+        "successes": 0,
+        "target_items": {
+          "m8_i5_18": 2
+        },
+        "task_id": "textcraft_synth.train.201",
+        "terminations": {
+          "finished": 2
+        }
+      },
+      {
+        "actual_dependency_depth": 5,
+        "calls": 144,
+        "declared_depth": 5,
+        "native_errors": 86,
+        "planned": 2,
+        "reachable_products": 21,
+        "repeat_error_calls": 14,
+        "shared_ingredient_nodes": 5,
+        "successes": 0,
+        "target_items": {
+          "a1_i5_11": 3
+        },
+        "task_id": "textcraft_synth.train.964",
+        "terminations": {
+          "context_cap": 1,
+          "finished": 1
+        }
+      }
+    ],
+    "physical_cost": {
+      "calls": 778,
+      "completion_tokens": 23516,
+      "failed_calls": 0,
+      "native_service_seconds": 1963.4226434230804,
+      "prompt_tokens": 2579699,
+      "unknown_completion_tokens_calls": 0
+    },
+    "planned": 16,
+    "post_goal_calls": 4,
+    "repeat_error_loops": {
+      "all_calls_in_repeated_blocks": 118,
+      "blocks": 45,
+      "episodes": 10,
+      "longest_block": 6,
+      "repeat_calls_by_error_class": {
+        "extra_ingredient_argument": 30,
+        "insufficient_stock": 26,
+        "missing_ingredient_argument": 17
+      },
+      "repeated_calls_after_first": 73
+    },
+    "representative_loops": [
+      {
+        "action": {
+          "action": "craft",
+          "ingredients": {
+            "raw_o2": 1,
+            "raw_o3": 1
+          },
+          "output_count": 2,
+          "target_item": "o5_i1"
+        },
+        "episode_id": "t00-r0-flat",
+        "error_class": "extra_ingredient_argument",
+        "feedback": "Error: All 1 recipe(s) failed for o5_i1. Errors:\nRecipe 1: Extra ingredients not required: raw_o3",
+        "length": 6,
+        "repeats_after_first": 5,
+        "start_public_history_index": 16
+      },
+      {
+        "action": {
+          "action": "craft",
+          "ingredients": {
+            "c0_i1_20": 2,
+            "c3_i2_13": 2,
+            "c4_i2_24": 2
+          },
+          "output_count": 1,
+          "target_item": "c8_i3_18"
+        },
+        "episode_id": "t05-r0-flat",
+        "error_class": "insufficient_stock",
+        "feedback": "Error: All 1 recipe(s) failed for c8_i3_18. Errors:\nRecipe 1: Insufficient ingredients in inventory: c0_i1_20: need 2, have 1, c4_i2_24: need 2, have 1, c3_i2_13: need 2, have 1",
+        "length": 6,
+        "repeats_after_first": 5,
+        "start_public_history_index": 57
+      },
+      {
+        "action": {
+          "action": "craft",
+          "ingredients": {
+            "c3_i1_23": 2,
+            "c8_ore": 1
+          },
+          "output_count": 2,
+          "target_item": "c7_i3_17"
+        },
+        "episode_id": "t02-r1-flat",
+        "error_class": "missing_ingredient_argument",
+        "feedback": "Error: All 1 recipe(s) failed for c7_i3_17. Errors:\nRecipe 1: Missing required ingredient c2_i2_22",
+        "length": 6,
+        "repeats_after_first": 5,
+        "start_public_history_index": 12
+      }
+    ],
+    "roots": 8,
+    "successes": 4,
+    "successful_roots": 2,
+    "terminations": {
+      "context_cap": 2,
+      "finished": 14
+    },
+    "unknown": 0
+  },
+  "schema": "fresh-b-baseline-snapshot-20260929-v1",
+  "small_receipt_sha256": {
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/NATIVE-AUDIT.json": "637915703fa1eecee38bb0ec6bc4fd0ce5d092eeda6e3e42c2af9685be038e7e",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/PLAN.json": "dcc066d509f44f7a38e5d0a4c25d8fbb57d2d589e5975189e95bd44219b46ac0",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t00-r0-flat-c000.json": "d79ab687b0c5bbdfc622006e781d8170888f1a84838ff651e0ba82cdcc205515",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t00-r1-flat-c000.json": "15e55e702570f48d0cf310d36f7a7736d444a1b16cd50b6981ba3f6f281cebb3",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t01-r0-flat-c000.json": "3350500d133b890a22049952726dc8da37b38385b6761552e94290740252a103",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t01-r1-flat-c000.json": "e91970c45e6810bba1d72d5c9a59fc36960ca04c6243c2676b091d45abaf4985",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t02-r0-flat-c000.json": "fdb290b4ac9ec69ce89853e9798c43ce92828ada64961a3e63afe74a28ff5afd",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t02-r1-flat-c000.json": "0a75f71dc37f79e15eedca567e7d20799bca2733bcaf063bc78a4fbb419a0fe3",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t03-r0-flat-c000.json": "27b447ea308910b7ca878c511e0dcf84a3352755561636c139eb2e3d22e28287",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t03-r1-flat-c000.json": "f88f4a5a7503a2182ebb52b0b0ff5893fb0b00cb4bffa6aba8e08b6390f2cecc",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t04-r0-flat-c000.json": "08cb5842f0252c8cbb1822892ea32ef0cd86024e2a6cd950c0ee922358008a19",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t04-r1-flat-c000.json": "067f74c97dd770d888ed0dafee1460685352edc2507df2031cafba6a129f060b",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t05-r0-flat-c000.json": "f8099a0476e8a5e8af4f3b4071a81477c784d4e261ca69ccc2f8e4bc645fdcee",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t05-r1-flat-c000.json": "9ea087978b4ec5a5df71a37ae4d91073267ab96d49b439d5e71d3cfc0006dce9",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t06-r0-flat-c000.json": "370156ef0cda6f33972dd6d9ef1e467435580fcfd054514de067fd1a3234a053",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t06-r1-flat-c000.json": "af59ec984a504a5a07288af5bbddaa361f1ba0c6dfcb45ba75e72c555e845b87",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t07-r0-flat-c000.json": "75ecdeeff829a50c1cd080cf24d6271dc91944839ce76f34848b542c75799cd4",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t07-r1-flat-c000.json": "c2d1d0f047333e8c1130ac1aa1bbc80d58981b1bb7ce0853d3d8cca726e77767",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t00-r0-flat.json": "dec11b3b033b26bfd038999710d144c039881cca79a83615c2affd0a2f23f7d2",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t00-r1-flat.json": "8e43f62acc7133645d4ebdd021b643b737575513deba90879b88f52103770a8d",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t01-r0-flat.json": "80b04dc0b2460d985421e9dbf910340a8fa58e034ecda0884b457b0d3426a35b",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t01-r1-flat.json": "d66b732984eb00545888d3a2ae151f2a7b6f8f4c12dc30a112fa561f10491e58",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t02-r0-flat.json": "ca9f8eba3d41755196bf1e32779b427cdc0c45fc49640e7e2f56baab5845c1df",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t02-r1-flat.json": "b13ce11b1a0a890b6f9c95ab8353465abaf0d82a135418f0704409d5dd5a350e",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t03-r0-flat.json": "bb944782a7beea5b8ae08b070a3ef523f7380dfddedd3eeaa894617788cfe037",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t03-r1-flat.json": "2ef621b11ea06fa75c1dbf5ba90b88ebada6fa4297c261181f2e672ddc5f5d8d",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t04-r0-flat.json": "dc71c9252e7c4bcbac6617861b831be6f8d20482b77840d0778bf36206cb0089",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t04-r1-flat.json": "da080e997fbf4f1dbd528814fd5bdf8d9a850f83eb446078b7a800b6478fb07b",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t05-r0-flat.json": "d0d1c5bb47ea6e4787184313f4e3db04e83e48e6d597be83e0131714c2c7ca05",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t05-r1-flat.json": "e2d5184e39d199eb8dc444045ccc03a55a0bdb563e56a8fd9bdd82fca05cf04e",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t06-r0-flat.json": "a7229f724d9ef96399f32b5d0a6bc954bca03a1686b114a981db53b19e9ed814",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t06-r1-flat.json": "2bb12dd82804cfc3e42c348f2478dd10b37f27e147ef5b60d23983d48f03e65b",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t07-r0-flat.json": "0539d70dd418a504b19596d8a4e7f8918bc4cf254afa41d0032594a85cb49df6",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t07-r1-flat.json": "b7d5a2fc510e17083d65006f35a8eba54c93349e2a5dc10c14d2682f4d16b4ef",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t00-r0-flat-n0.json": "1648a7488388b557df34729abc2b801dd8fc643d8ebf55527bfaec92a5762315",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t00-r1-flat-n0.json": "91f41f35f8205fd440bbbe293ed90ecf2cdda850dc19901e506b4bcfdee9c0bf",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t01-r0-flat-n0.json": "1bcb03214e064e1152ce761b1da80ae686625e709e05f7fe0441b16ed6dbb400",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t01-r1-flat-n0.json": "8b63eb6d4e002e71651895bb2f2889fc62ab7ab56f75e3aea13f2317ed2aaeea",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t02-r0-flat-n0.json": "ca18ff79412133cfb9e6c0ba74da69b9ea892a1198a789b2dcd217e6f74cb8a8",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t02-r1-flat-n0.json": "fea24ee8c604cad93aab4c0ac15b1ae52637e9a5a07fe15d7d216575e594e041",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t03-r0-flat-n0.json": "0a600bfa3670f77ad92ac1924befe05b59ec26f32d850d645f51ddb0fb48ed80",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t03-r1-flat-n0.json": "1bbffe593740c3409c3b1da694562754f63c70ec66ed74f15c7d0ba700a37bef",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t04-r0-flat-n0.json": "4eda0d61da0116aca899c0f0979dfbb2d94b86a69e0562e4c837a6eee016d561",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t04-r1-flat-n0.json": "eda7a1b0c054d3266a49d056fe3e5b777bc4552b07c12201a32153623fd72065",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t05-r0-flat-n0.json": "dcd6b6af1255e91be714f912479e0a3e06c4881b955f27302f74ba9f4c07713c",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t05-r1-flat-n0.json": "3dfd636cb87bccc9eb0bd73b7986a1627985ad3ed82d76213140e01ee1546aa2",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t06-r0-flat-n0.json": "e8ca1166556af4ea77bfd13aa6f2fb7aea6d89900467ef7404861171ef0cd6d0",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t06-r1-flat-n0.json": "b5720df2dccdc1ac7ea7ba617fc148df83f26038874888efa8d9f4962dfac594",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t07-r0-flat-n0.json": "d51679a01c891034ac29bb1420dcf1d6bcd5e65d59e42943097b23be7ab77176",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/nodes/t07-r1-flat-n0.json": "2f0b7ba1ba9b89f86150c33674887f670e9f8dc5f79ed7125dc716f87986b7a6",
+    "R/textcraft-fresh-train-20260928-001/SELECTION.json": "e6bab5de7abeb2860ef50b8d10ff5be7cb2381d8e085802a48265a23ffa50e12",
+    "R/textcraft-fresh-train-20260928-001/diagnostic/MANIFEST.json": "65e67e57063ee43d1c8c072988cca2081531b96aae4a47d582c2550f419c1c1a",
+    "R/textcraft-fresh-train-20260928-001/diagnostic/tasks.jsonl": "12b0381fa3bcc17aee92e8677a713f8db3ba613cad7faa8229cc63411ed6d0ff",
+    "R/textcraft-public-discovery-sft-001/checkpoint-0023/COMMIT.json": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf",
+    "R/textcraft-rl-assist-20260928-001/raw/readout-warm/NATIVE-AUDIT.json": "74d823a878d2d80568c502ac589fabcd920dc716632c117907dcb54b45feb785",
+    "R/textcraft-rl-assist-20260928-001/raw/readout-warm/PLAN.json": "fc9a4826bc083fa1143f9ce220ac96865e40916e4bac1a4378f4a4522e187546"
+  },
+  "verified": {
+    "actual_count_and_unique_jobs": true,
+    "adapter_matches_recorded_public_cp23_COMMIT": true,
+    "all_16_first_call_PLAN_hashes_match_actual_PLAN": true,
+    "all_16_native_audits_replayed": true,
+    "all_saved_episode_node_hashes_match_native_audit": true,
+    "model_weight_rehash": false,
+    "new_native_replay": false,
+    "task_manifest_hashes_match": true
+  },
+  "interpretation": {
+    "baseline": "Warm public-discovery SFT checkpoint 23 before fresh-A RL; PLAN update=1 is a bookkeeping field, not evidence of an RL update.",
+    "familiarity": "Familiar warm raw 9/16 uses the same actor but disjoint tasks; its difference from 4/16 is not paired degradation or an RL effect.",
+    "headroom": "Twelve failed attempts leave substantial aggregate headroom. Two successful roots avoid a completely zero baseline; depth 5 is locally at floor (0/6 on three roots).",
+    "selection": "Fixed eight TRAIN-only group-B roots, selected before actor outcomes; no B-derived training labels, checkpoint selection, or replacement of hard tasks.",
+    "uncertainty": "Two repeats per root are correlated and all root outcomes agree. Eight root clusters, not sixteen independent problems; this snapshot is descriptive.",
+    "transport_and_caps": "No transport failures. No attempt exhausted the 96-call or 8192-output-token cap; two reached the input-context limit.",
+    "goal_termination": "Four audited post-goal calls are ordinary terminal finish actions, not redundant post-goal crafting.",
+    "scope": "Public-history error patterns describe failures; they do not establish causes or the improvement obtainable from a specific repair. B reward variance says nothing about A training signal."
+  },
+  "next_comparisons": [
+    {
+      "priority": 1,
+      "contrast": "Warm raw versus warm binder on identical B task/seed keys",
+      "question": "Execution-interface assistance with actor fixed; not RL.",
+      "status": "binder native audit pending at snapshot"
+    },
+    {
+      "priority": 2,
+      "contrast": "Fixed familiar-RL actors crossed with raw/binder execution on B, each versus the warm actor in that execution column",
+      "question": "Transfer and actor/interface co-adaptation, keeping task and rollout seed paired.",
+      "artifact_root": "textcraft-rl-transfer-20260928-001"
+    },
+    {
+      "priority": 3,
+      "contrast": "Fresh-A RL endpoints 1–4 versus own warm B and fixed extra-SFT reference within execution interface",
+      "question": "Transfer of learning rather than familiarity or extra optimization; report every fixed endpoint, never select using B.",
+      "artifact_root": "textcraft-fresh-rl-20260928-002",
+      "caveat": "Extra SFT matches one step/LR/start, not training data, target-token dose or FLOPs; it remains a one-step reference at later RL endpoints."
+    }
+  ]
+}

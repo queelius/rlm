@@ -103,8 +103,10 @@ data, or ready for confirmation; a promising result is not automatically publish
 At each completed-run analysis, decide whether the finding changes the main
 message, an important limitation, or the next experiment. Record this editorial
 decision even when the result stays in the supporting report. Promote salient
-evidence or clearly labeled new ideas to `slides/2026-09-11-advisor-meeting/`
-without turning the presentation into a run log. Update slide, data, figure,
+evidence or clearly labeled new ideas to the current dated package linked from
+`slides/README.md`, without turning the presentation into a run log. Preserve
+already presented or emailed decks at their original cutoffs; create a separate
+dated update when the story materially changes. Update slide, data, figure,
 pdfpc notes, guide and evidence cutoff together; rebuild and visually inspect.
 The audience must be able to understand the slides without the private notes.
 
