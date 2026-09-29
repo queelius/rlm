@@ -1,0 +1,383 @@
+{
+  "schema": "textcraft-familiar-rl-fresh-B-paired-transfer-analysis-20260928-v1",
+  "cells": {
+    "warm_actor_raw_execution": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/readout-warm",
+      "plan_sha256": "dcc066d509f44f7a38e5d0a4c25d8fbb57d2d589e5975189e95bd44219b46ac0",
+      "native_audit_sha256": "637915703fa1eecee38bb0ec6bc4fd0ce5d092eeda6e3e42c2af9685be038e7e",
+      "successes": 4,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 778,
+        "prompt_tokens": 2579699,
+        "completion_tokens": 23516,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1963.4226434230804
+      },
+      "errors": {
+        "native_action_error": 348,
+        "invalid_schema": 1
+      },
+      "sampled_token_entropy_mean": 0.05761385708081971,
+      "entropy_tokens": 23516,
+      "first_response_diversity": {
+        "textcraft_synth.train.1796": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.256": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.672": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.1273": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.1847": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.38": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.201": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.964": {
+          "samples": 2,
+          "unique_first_responses": 1
+        }
+      },
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-discovery-sft-001/checkpoint-0023",
+        "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+        "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf"
+      },
+      "available": true,
+      "training_execution_mode": null,
+      "execution_mode": "raw",
+      "termination_counts": {
+        "finished": 14,
+        "context_cap": 2
+      },
+      "failed_finished_episodes": 10
+    },
+    "warm_actor_binder_execution": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-warm",
+      "plan_sha256": "795184d89205f490a241f54aa1c48cede233f49ef4666b49a4dde19106298f74",
+      "native_audit_sha256": "440e555eeee5fb9100fb6f608dbccd3503ba609b509755caee356f5e9a522e62",
+      "successes": 5,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 673,
+        "prompt_tokens": 2080522,
+        "completion_tokens": 21759,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1772.7922012805939
+      },
+      "errors": {
+        "native_action_error": 241,
+        "invalid_schema": 3
+      },
+      "sampled_token_entropy_mean": 0.03808115171103428,
+      "entropy_tokens": 21759,
+      "first_response_diversity": {
+        "textcraft_synth.train.1796": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.256": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.672": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.1273": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.1847": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.38": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.201": {
+          "samples": 2,
+          "unique_first_responses": 1
+        },
+        "textcraft_synth.train.964": {
+          "samples": 2,
+          "unique_first_responses": 1
+        }
+      },
+      "adapter": {
+        "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-discovery-sft-001/checkpoint-0023",
+        "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+        "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf"
+      },
+      "available": true,
+      "training_execution_mode": null,
+      "execution_mode": "binder",
+      "termination_counts": {
+        "finished": 15,
+        "context_cap": 1
+      },
+      "failed_finished_episodes": 10
+    },
+    "raw_actor_raw_execution": {
+      "available": false,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw",
+      "reason": "incomplete_or_absent"
+    },
+    "raw_actor_binder_execution": {
+      "available": false,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder",
+      "reason": "incomplete_or_absent"
+    },
+    "binder_actor_raw_execution": {
+      "available": false,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw",
+      "reason": "incomplete_or_absent"
+    },
+    "binder_actor_binder_execution": {
+      "available": false,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder",
+      "reason": "incomplete_or_absent"
+    }
+  },
+  "rl_minus_matching_warm": {
+    "raw_actor_raw_execution": {
+      "planned": 16,
+      "known": 0,
+      "unknown": 16,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "difference": null,
+      "task_cluster_ci95": null,
+      "task_differences": {
+        "textcraft_synth.train.1796": null,
+        "textcraft_synth.train.256": null,
+        "textcraft_synth.train.672": null,
+        "textcraft_synth.train.1273": null,
+        "textcraft_synth.train.1847": null,
+        "textcraft_synth.train.38": null,
+        "textcraft_synth.train.201": null,
+        "textcraft_synth.train.964": null
+      }
+    },
+    "raw_actor_binder_execution": {
+      "planned": 16,
+      "known": 0,
+      "unknown": 16,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "difference": null,
+      "task_cluster_ci95": null,
+      "task_differences": {
+        "textcraft_synth.train.1796": null,
+        "textcraft_synth.train.256": null,
+        "textcraft_synth.train.672": null,
+        "textcraft_synth.train.1273": null,
+        "textcraft_synth.train.1847": null,
+        "textcraft_synth.train.38": null,
+        "textcraft_synth.train.201": null,
+        "textcraft_synth.train.964": null
+      }
+    },
+    "binder_actor_raw_execution": {
+      "planned": 16,
+      "known": 0,
+      "unknown": 16,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "difference": null,
+      "task_cluster_ci95": null,
+      "task_differences": {
+        "textcraft_synth.train.1796": null,
+        "textcraft_synth.train.256": null,
+        "textcraft_synth.train.672": null,
+        "textcraft_synth.train.1273": null,
+        "textcraft_synth.train.1847": null,
+        "textcraft_synth.train.38": null,
+        "textcraft_synth.train.201": null,
+        "textcraft_synth.train.964": null
+      }
+    },
+    "binder_actor_binder_execution": {
+      "planned": 16,
+      "known": 0,
+      "unknown": 16,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "difference": null,
+      "task_cluster_ci95": null,
+      "task_differences": {
+        "textcraft_synth.train.1796": null,
+        "textcraft_synth.train.256": null,
+        "textcraft_synth.train.672": null,
+        "textcraft_synth.train.1273": null,
+        "textcraft_synth.train.1847": null,
+        "textcraft_synth.train.38": null,
+        "textcraft_synth.train.201": null,
+        "textcraft_synth.train.964": null
+      }
+    }
+  },
+  "binder_minus_raw_execution": {
+    "warm": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 1,
+      "losses": 0,
+      "ties": 15,
+      "difference": 0.0625,
+      "task_cluster_ci95": [
+        0,
+        0.1875
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": 0.5,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": 0,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    },
+    "raw": {
+      "planned": 16,
+      "known": 0,
+      "unknown": 16,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "difference": null,
+      "task_cluster_ci95": null,
+      "task_differences": {
+        "textcraft_synth.train.1796": null,
+        "textcraft_synth.train.256": null,
+        "textcraft_synth.train.672": null,
+        "textcraft_synth.train.1273": null,
+        "textcraft_synth.train.1847": null,
+        "textcraft_synth.train.38": null,
+        "textcraft_synth.train.201": null,
+        "textcraft_synth.train.964": null
+      }
+    },
+    "binder": {
+      "planned": 16,
+      "known": 0,
+      "unknown": 16,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "difference": null,
+      "task_cluster_ci95": null,
+      "task_differences": {
+        "textcraft_synth.train.1796": null,
+        "textcraft_synth.train.256": null,
+        "textcraft_synth.train.672": null,
+        "textcraft_synth.train.1273": null,
+        "textcraft_synth.train.1847": null,
+        "textcraft_synth.train.38": null,
+        "textcraft_synth.train.201": null,
+        "textcraft_synth.train.964": null
+      }
+    }
+  },
+  "binder_trained_minus_raw_trained_actor": {
+    "raw": {
+      "planned": 16,
+      "known": 0,
+      "unknown": 16,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "difference": null,
+      "task_cluster_ci95": null,
+      "task_differences": {
+        "textcraft_synth.train.1796": null,
+        "textcraft_synth.train.256": null,
+        "textcraft_synth.train.672": null,
+        "textcraft_synth.train.1273": null,
+        "textcraft_synth.train.1847": null,
+        "textcraft_synth.train.38": null,
+        "textcraft_synth.train.201": null,
+        "textcraft_synth.train.964": null
+      }
+    },
+    "binder": {
+      "planned": 16,
+      "known": 0,
+      "unknown": 16,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "difference": null,
+      "task_cluster_ci95": null,
+      "task_differences": {
+        "textcraft_synth.train.1796": null,
+        "textcraft_synth.train.256": null,
+        "textcraft_synth.train.672": null,
+        "textcraft_synth.train.1273": null,
+        "textcraft_synth.train.1847": null,
+        "textcraft_synth.train.38": null,
+        "textcraft_synth.train.201": null,
+        "textcraft_synth.train.964": null
+      }
+    }
+  },
+  "training_interface_by_execution_interaction": {
+    "planned": 16,
+    "known": 0,
+    "unknown": 16,
+    "wins": 0,
+    "losses": 0,
+    "ties": 0,
+    "difference": null,
+    "task_cluster_ci95": null,
+    "task_differences": {
+      "textcraft_synth.train.1796": null,
+      "textcraft_synth.train.256": null,
+      "textcraft_synth.train.672": null,
+      "textcraft_synth.train.1273": null,
+      "textcraft_synth.train.1847": null,
+      "textcraft_synth.train.38": null,
+      "textcraft_synth.train.201": null,
+      "textcraft_synth.train.964": null
+    }
+  },
+  "diagnostic_manifest_sha256": "65e67e57063ee43d1c8c072988cca2081531b96aae4a47d582c2550f419c1c1a",
+  "independent_native_replay": "Every available cell has complete native replay and receipt hash verification; unknown/incomplete cells produce no effect estimate.",
+  "scope": "Eight fixed official TRAIN diagnostic clusters; roots disjoint from prior SFT, familiar RL and newA. Shared recipes/world, adaptive campaign and repeated diagnostic exposure limit generalization. No checkpoint or task selected from B outcomes. Intervals are descriptive task-cluster bootstrap, not multiplicity-adjusted confirmation.",
+  "caveat": "RL actors differ in sampled training trajectories and credited-token exposure. Transfer versus warm is not evidence of extra-SFT superiority or recursive decomposition.",
+  "snapshot_provenance": {
+    "snapshot_utc": "2026-09-29 02:10:36 UTC",
+    "source_report": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/analysis-rl-transfer-20260929-001/WARM-001.json",
+    "source_report_sha256": "142d88eaefbe8591f7e3c9c2dc0515b1331c64524d0196692da0e28162dd53dd",
+    "analyzer": "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/rl_transfer_20260928/compare.py",
+    "analyzer_sha256": "f7ebc817ec1b6f6d97cf3e3afd8d1540c71cfa49b1727cead8788e3e4a01999d",
+    "method": "Unchanged frozen six-cell analyzer run on CPUs; only the two warm baselines complete. No new model calls, native replay, training, or B selection. Original report retained externally.",
+    "editorial_decision": "Keep baseline comparison in supporting evidence. It does not establish an RL improvement or change the fixed September29 slide story."
+  }
+}

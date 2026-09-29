@@ -1,0 +1,92 @@
+{
+  "schema": "bounded-primary-literature-review-v1",
+  "retrieved_date_utc": "2026-09-29",
+  "evidence_cutoff_utc": "2026-09-29T01:14:27Z",
+  "retrieval": "Browser reads of primary papers, venue pages, arXiv metadata and official A2D repository README; no asset download or code execution.",
+  "paper_asset_checksums": null,
+  "checksum_reason": "No local paper assets acquired. Venue PDFs and arXiv version metadata were inspected separately; byte identity is not asserted.",
+  "sources": [
+    {
+      "id": "a2d",
+      "title": "Robust Asymmetric Learning in POMDPs",
+      "authors": ["Andrew Warrington", "J. Wilder Lavington", "Adam Scibior", "Mark Schmidt", "Frank Wood"],
+      "venue": "ICML 2021, PMLR 139:11013-11023",
+      "arxiv_version": "2012.15566v3",
+      "first_submission_utc": "2020-12-31T11:46:51Z",
+      "version_date_utc": "2021-07-01T11:07:17Z",
+      "metadata_url": "https://arxiv.org/abs/2012.15566v3",
+      "method_text_url": "https://proceedings.mlr.press/v139/warrington21a/warrington21a.pdf",
+      "venue_url": "https://proceedings.mlr.press/v139/warrington21a.html",
+      "official_repository_readme_url": "https://github.com/plai-group/a2d",
+      "read_scope": ["3.2 implicit policy", "4 identifiability and examples", "5 objective, assumptions and Algorithm 1", "7 discussion"],
+      "not_read_or_verified": ["Full supplementary proofs", "Code implementation", "Repository commit", "Venue PDF equality to arXiv v3"],
+      "repository_deduplication": "No matching prior literature-note citation found in inspected selective_delegation Markdown/JSON.",
+      "claim_boundary": "Learner-observability-aware teacher adaptation is established; fixed-answer offline history repair is a different intervention, not proven novel by this review."
+    },
+    {
+      "id": "adaptive_information_gathering",
+      "title": "Adaptive Information Gathering via Imitation Learning",
+      "authors": ["Sanjiban Choudhury", "Ashish Kapoor", "Gireeja Ranade", "Sebastian Scherer", "Debadeepta Dey"],
+      "venue": "Robotics: Science and Systems 2017",
+      "arxiv_version": "1705.07834v1",
+      "first_submission_utc": "2017-05-22T16:28:55Z",
+      "version_date_utc": "2017-05-22T16:28:55Z",
+      "metadata_url": "https://arxiv.org/abs/1705.07834v1",
+      "method_text_url": "https://www.roboticsproceedings.org/rss13/p41.pdf",
+      "read_scope": ["II-C assumptions", "III-C-D oracle construction", "IV-A-D Algorithms 1-2, posterior interpretation and guarantees", "VI conclusion and future work"],
+      "not_read_or_verified": ["Implementation", "Independent proof verification", "Venue PDF equality to arXiv v1"],
+      "repository_deduplication": "Already cited in TEXTCRAFT-PUBLIC-DISCOVERY-TRANSFER.md; renewed method-level comparison, not a new citation.",
+      "claim_boundary": "Information-gathering supervision from privileged oracles is established; oracle information does not alone imply unusable supervision."
+    },
+    {
+      "id": "tbt_trajectory_repair",
+      "title": "Learning from Imperfect Demonstrations via Temporal Behavior Tree-Guided Trajectory Repair",
+      "authors": ["Aniruddh G. Puranic", "Sebastian Schirmer", "John S. Baras", "Calin Belta"],
+      "venue": "Preprint; arXiv reports submitted to IEEE for possible publication",
+      "arxiv_version": "2604.04225v1",
+      "first_submission_utc": "2026-04-05T18:49:45Z",
+      "version_date_utc": "2026-04-05T18:49:45Z",
+      "metadata_url": "https://arxiv.org/abs/2604.04225v1",
+      "method_text_url": "https://arxiv.org/html/2604.04225v1",
+      "read_scope": ["Abstract", "5.1 trajectory repair", "5.2 opening: potential construction", "6.2.3 limitations", "7 conclusion"],
+      "not_read_or_verified": ["Full derivations", "Implementation", "Publication acceptance"],
+      "repository_deduplication": "No matching prior literature-note citation found in inspected selective_delegation Markdown/JSON.",
+      "closeness_limit": "Offline repair precedent, not directly an observation-limited imitation mechanism.",
+      "claim_boundary": "Repair-before-policy-learning is established; this paper repairs incorrect state paths rather than preserving correct literal action answers."
+    }
+  ],
+  "previously_known_context_not_counted_as_new": [
+    {"id": "sitt", "url": "https://arxiv.org/html/2412.09149v2", "version_date": "2025-02-27", "scope_rechecked": "Sections 3-4.2, 7, A.3", "prior_review": "TEACHER-OBSERVABILITY-METHODS-REVIEW-20260928.md"},
+    {"id": "causal_confusion", "url": "https://arxiv.org/pdf/1905.11979v2", "version_date": "2019-11-04", "scope_rechecked": "Sections 3.1, 4.1-4.2, 5-6", "prior_review": "TEACHER-OBSERVABILITY-METHODS-REVIEW-20260928.md"},
+    {"id": "gpo_tigerdoor", "prior_review": "literature_decisions_20260929/README.md", "scope_this_task": "Local review only; not re-surveyed"}
+  ],
+  "local_evidence": [
+    {"path": "FINDINGS-20260929.md", "sha256": "4dd97a438654091946544271209a13a225810976678299f1ac93bd76d386516b"},
+    {"path": "teaching_synthesis_20260929/FINDING.md", "sha256": "6b0fa078873b654420c3bf4811b7fae69476a7ce99905d6d7325e260ae69182e"},
+    {"path": "TEACHER-OBSERVABILITY-METHODS-REVIEW-20260928.md", "sha256": "1adc90159a644cf3d1162a8cf33c72b24d78849dcf568b43bb4ff85b32592911"},
+    {"path": "teacher_counterfactual_20260928/README.md", "sha256": "9b0feb4005a1721e805ab0745e52f7de504833c9ed171898e0d5e0dcdeaa4432"},
+    {"path": "literature_decisions_20260929/README.md", "sha256": "e5a6901030ab3dd276bb751223317e29008f47faa83a9586477c4e9547ebfe36"},
+    {"path": "TEXTCRAFT-PUBLIC-DISCOVERY-TRANSFER.md", "sha256": "3789b3aa922e9beaf65f54fd3495c8109671a200cf06d5e9790010a9a3306ea4"}
+  ],
+  "proposed_control": {
+    "status": "conditional_design_only_not_queued",
+    "name": "Consistent item-name permutation of fixed original and stable actors",
+    "new_native_attempts": 16,
+    "reused_identity_controls": 16,
+    "fit_seed": 2026092208,
+    "checkpoint": 23,
+    "panel": "panel00 eight goals",
+    "world_seed": 42,
+    "rollout_seed": 2026092204,
+    "proposed_mapping_seed": 2026092909,
+    "max_calls_per_episode": 96,
+    "max_total_output_tokens_per_episode": 8192,
+    "max_context_tokens": 8192,
+    "max_output_tokens_per_response": 256,
+    "estimated_one_A100_minutes": [30, 60],
+    "proposed_hard_cap_minutes": 90,
+    "required_before_admission": ["Exact baseline inference-contract matching", "Public rendering/inverse decoding native replay fixture", "Frozen bijection and all actual token-length changes", "No hidden dependency-based name grouping"],
+    "inference_limit": "Rendering sensitivity only; collapse does not uniquely identify memorization or establish causal observability."
+  },
+  "scope_limits": ["No novelty-by-absence claim", "No new experiment implementation", "No GPU or queue changes", "No training on diagnostic B", "No general impossibility claim from exact-label ambiguity"]
+}

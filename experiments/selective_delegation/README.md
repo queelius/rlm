@@ -15,6 +15,13 @@ finishes 4/16 attempts before RL; it is not a learning improvement. Repeated
 tool errors and premature finishes identify what the pending paired comparisons
 need to improve. The [five-slide update](../../slides/2026-09-29-research-update/README.md)
 retains its earlier, explicit evidence cutoff.
+The [completed starting-model comparison](rl_transfer_monitor_20260929/WARM-COMPARISON.md)
+then gives 4/16 without ingredient assistance and 5/16 with it, at fewer calls.
+The four RL-transfer cells remain pending at that snapshot.
+
+The [closest-prior-work review](teaching_prior_art_20260929/README.md) narrows the
+paper candidate: adapting teaching to a learner's limited information is already
+studied. Our lead is the particular controlled repair, not that general insight.
 
 Historical September24: [overnight findings](RESEARCH-UPDATE-20260924.md). The teaching
 advantage survives the quantity correction and repeats in more recipe worlds;

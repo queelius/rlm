@@ -61,3 +61,19 @@ admit.py --phi-receipt-sha256 1e881eb1dfd38c009560197279143f5ba542250daba8a3a9d9
 `R=/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921`.
 Use the live external SESSION_CHECKPOINT/RESEARCH_QUEUE to resume, not the fixed
 status in this dated admission receipt. Weights and raw traces are not in Git.
+
+## Scheduling review at 01:58 UTC
+
+The Phi repair and complete-goal helper tests have high information value, so we
+considered placing them just after the four fixed RL-transfer readouts. The
+existing executor has no between-job stop hook: it retains its full job list in
+memory. Earlier rescheduling tools only replace idle waiters, not this active
+supervisor. No receipt edit could safely change that live list.
+
+Decision: retain the accepted order. Implementing a parent-process pause,
+insertion and crash-recovery mechanism solely for this change would add
+coordination risk. The four-cycle fresh-RL estimate is 14–24 useful hours,
+plus the transfer and other bounded comparisons; nearly 56 allocation hours
+remain. This estimate still leaves room for these follow-ups, but is not a
+guarantee. Revisit if measured durations threaten that margin. No process was
+signaled, no bridge was implemented, and no accepted descriptor changed.

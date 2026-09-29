@@ -18,6 +18,9 @@ crafting tasks, not64 independent problems or a validated general-purpose method
   established whole-task benefit; the household-game signal is narrow.
 - [Primary literature and conditional follow-ups](../experiments/selective_delegation/literature_decisions_20260929/README.md):
   known precedents, concrete comparisons, expected compute and abandonment rules.
+- [Closest teaching precedents](../experiments/selective_delegation/teaching_prior_art_20260929/README.md):
+  what earlier work already establishes, the narrower candidate contribution,
+  and a conditional test of dependence on familiar item names.
 
 These fixed-cutoff reports preserve negative and incomplete results. Active
 operations live in `/project/alex_phd/runs/rlm-research-r4/SESSION_CHECKPOINT.md`
