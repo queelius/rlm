@@ -1,0 +1,2915 @@
+{
+  "schema": "fixed-fresh-B-familiar-RL-transfer-results-20260929-v1",
+  "cutoff_utc": "2026-09-29T05:30:50.791144+00:00",
+  "source_comparison": "R/textcraft-rl-transfer-20260928-001/COMPARISON.json",
+  "cells": {
+    "warm_actor_raw_execution": {
+      "path": "R/textcraft-fresh-rl-20260928-002/raw/readout-warm",
+      "adapter": {
+        "path": "R/textcraft-public-discovery-sft-001/checkpoint-0023",
+        "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+        "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf"
+      },
+      "execution_mode": "raw",
+      "training_execution_mode": null,
+      "successes": 4,
+      "physical_cost": {
+        "calls": 778,
+        "prompt_tokens": 2579699,
+        "completion_tokens": 23516,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1963.4226434230804
+      },
+      "errors": {
+        "native_action_error": 348,
+        "invalid_schema": 1
+      },
+      "termination_counts": {
+        "finished": 14,
+        "context_cap": 2
+      },
+      "failed_finished_episodes": 10,
+      "planned": 16,
+      "observed": 16,
+      "unknown": 0,
+      "episodes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 48,
+          "output_tokens": 1501,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 34
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 23,
+          "output_tokens": 702,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 12
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 23,
+          "output_tokens": 634,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 4
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 3
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 65,
+          "output_tokens": 2268,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 25
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 76,
+          "output_tokens": 2410,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 32
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 81,
+          "output_tokens": 2434,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 43,
+            "invalid_schema": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 80,
+          "output_tokens": 2301,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 50
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 82,
+          "output_tokens": 2476,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 37
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 51,
+          "output_tokens": 1395,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 18
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 46,
+          "output_tokens": 1255,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 12
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 76,
+          "output_tokens": 2333,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 32
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 63,
+          "output_tokens": 2100,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 43
+          }
+        }
+      ]
+    },
+    "warm_actor_binder_execution": {
+      "path": "R/textcraft-fresh-rl-20260928-002/binder/readout-warm",
+      "adapter": {
+        "path": "R/textcraft-public-discovery-sft-001/checkpoint-0023",
+        "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+        "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf"
+      },
+      "execution_mode": "binder",
+      "training_execution_mode": null,
+      "successes": 5,
+      "physical_cost": {
+        "calls": 673,
+        "prompt_tokens": 2080522,
+        "completion_tokens": 21759,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1772.7922012805939
+      },
+      "errors": {
+        "native_action_error": 241,
+        "invalid_schema": 3
+      },
+      "termination_counts": {
+        "finished": 15,
+        "context_cap": 1
+      },
+      "failed_finished_episodes": 10,
+      "planned": 16,
+      "observed": 16,
+      "unknown": 0,
+      "episodes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 17,
+          "output_tokens": 448,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 2
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 57,
+          "output_tokens": 2133,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 30,
+            "invalid_schema": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 24,
+          "output_tokens": 694,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 3
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 3
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 67,
+          "output_tokens": 2473,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 33
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 76,
+          "output_tokens": 2700,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 44
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 58,
+          "output_tokens": 1691,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 18
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 21,
+          "output_tokens": 573,
+          "termination": "finished",
+          "errors": {
+            "invalid_schema": 2,
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 48,
+          "output_tokens": 1672,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 28
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 30,
+          "output_tokens": 939,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 10
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 74,
+          "output_tokens": 2455,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 26
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 66,
+          "output_tokens": 2000,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 17
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 71,
+          "output_tokens": 2274,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 23
+          }
+        }
+      ]
+    },
+    "raw_actor_raw_execution": {
+      "path": "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw",
+      "adapter": {
+        "path": "R/textcraft-rl-assist-20260928-001/raw/train-0001/boundaries/sample-0001/checkpoint-0001",
+        "sha256": "856fb4755c3a2b3297a38d6bed7d6f8e638535eba6723dc01cc0ee4a916db62e",
+        "commit_sha256": "c8e7aa658801db5f1dd53c4ff1a31aa823da8d52630b5e14693a5ae03f455a75"
+      },
+      "execution_mode": "raw",
+      "training_execution_mode": "raw",
+      "successes": 5,
+      "physical_cost": {
+        "calls": 739,
+        "prompt_tokens": 2465024,
+        "completion_tokens": 22870,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1919.3817749023438
+      },
+      "errors": {
+        "native_action_error": 308,
+        "invalid_schema": 1
+      },
+      "termination_counts": {
+        "finished": 14,
+        "context_cap": 2
+      },
+      "failed_finished_episodes": 9,
+      "planned": 16,
+      "observed": 16,
+      "unknown": 0,
+      "episodes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 42,
+          "output_tokens": 1419,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 22
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 23,
+          "output_tokens": 702,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 12
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 24,
+          "output_tokens": 675,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 5
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 3
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 44,
+          "output_tokens": 1268,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 11
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 81,
+          "output_tokens": 2635,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 38
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 75,
+          "output_tokens": 2481,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 42
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 16,
+          "output_tokens": 407,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 82,
+          "output_tokens": 2780,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 51
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 78,
+          "output_tokens": 1960,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 24,
+            "invalid_schema": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 75,
+          "output_tokens": 2430,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 33
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 70,
+          "output_tokens": 2295,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 30
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 65,
+          "output_tokens": 2111,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 33
+          }
+        }
+      ]
+    },
+    "raw_actor_binder_execution": {
+      "path": "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder",
+      "adapter": {
+        "path": "R/textcraft-rl-assist-20260928-001/raw/train-0001/boundaries/sample-0001/checkpoint-0001",
+        "sha256": "856fb4755c3a2b3297a38d6bed7d6f8e638535eba6723dc01cc0ee4a916db62e",
+        "commit_sha256": "c8e7aa658801db5f1dd53c4ff1a31aa823da8d52630b5e14693a5ae03f455a75"
+      },
+      "execution_mode": "binder",
+      "training_execution_mode": "raw",
+      "successes": 4,
+      "physical_cost": {
+        "calls": 693,
+        "prompt_tokens": 2114967,
+        "completion_tokens": 21648,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1775.6868784427643
+      },
+      "errors": {
+        "native_action_error": 237,
+        "invalid_schema": 2
+      },
+      "termination_counts": {
+        "finished": 16
+      },
+      "failed_finished_episodes": 12,
+      "planned": 16,
+      "observed": 16,
+      "unknown": 0,
+      "episodes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 41,
+          "output_tokens": 1269,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 7
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 13,
+          "output_tokens": 352,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 57,
+          "output_tokens": 2129,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 29,
+            "invalid_schema": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 28,
+          "output_tokens": 858,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 7
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 3
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 44,
+          "output_tokens": 1268,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 11
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 70,
+          "output_tokens": 2431,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 37
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 58,
+          "output_tokens": 1691,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 18
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 16,
+          "output_tokens": 407,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 62,
+          "output_tokens": 2127,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 25,
+            "invalid_schema": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 34,
+          "output_tokens": 1103,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 14
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 71,
+          "output_tokens": 2218,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 33
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 77,
+          "output_tokens": 2312,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 21
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 71,
+          "output_tokens": 2128,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 28
+          }
+        }
+      ]
+    },
+    "binder_actor_raw_execution": {
+      "path": "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw",
+      "adapter": {
+        "path": "R/textcraft-rl-assist-20260928-001/binder/train-0001/boundaries/sample-0001/checkpoint-0001",
+        "sha256": "2621e7d47aa7af51736640af22fd6846081a82f60fffdcfa8178151a6e3854ab",
+        "commit_sha256": "d6282682f345737c9a69bf4a6f8169b72e965745d9b09e9b00a92dd19e3a0d22"
+      },
+      "execution_mode": "raw",
+      "training_execution_mode": "binder",
+      "successes": 5,
+      "physical_cost": {
+        "calls": 862,
+        "prompt_tokens": 2992805,
+        "completion_tokens": 27018,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 2281.6717948913574
+      },
+      "errors": {
+        "native_action_error": 374,
+        "invalid_schema": 1
+      },
+      "termination_counts": {
+        "finished": 10,
+        "context_cap": 6
+      },
+      "failed_finished_episodes": 5,
+      "planned": 16,
+      "observed": 16,
+      "unknown": 0,
+      "episodes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 36,
+          "output_tokens": 1272,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 19
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 57,
+          "output_tokens": 1986,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 36
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 79,
+          "output_tokens": 2633,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 47
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 24,
+          "output_tokens": 666,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 2
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 3
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 37,
+          "output_tokens": 1157,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 13
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 81,
+          "output_tokens": 2523,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 34
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 74,
+          "output_tokens": 2316,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 33
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 76,
+          "output_tokens": 2242,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 35
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 62,
+          "output_tokens": 2127,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 33
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 45,
+          "output_tokens": 1448,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 18
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 82,
+          "output_tokens": 2530,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 29
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 79,
+          "output_tokens": 2353,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 26
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 79,
+          "output_tokens": 2410,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 44,
+            "invalid_schema": 1
+          }
+        }
+      ]
+    },
+    "binder_actor_binder_execution": {
+      "path": "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder",
+      "adapter": {
+        "path": "R/textcraft-rl-assist-20260928-001/binder/train-0001/boundaries/sample-0001/checkpoint-0001",
+        "sha256": "2621e7d47aa7af51736640af22fd6846081a82f60fffdcfa8178151a6e3854ab",
+        "commit_sha256": "d6282682f345737c9a69bf4a6f8169b72e965745d9b09e9b00a92dd19e3a0d22"
+      },
+      "execution_mode": "binder",
+      "training_execution_mode": "binder",
+      "successes": 5,
+      "physical_cost": {
+        "calls": 698,
+        "prompt_tokens": 2185044,
+        "completion_tokens": 21814,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1802.617683172226
+      },
+      "errors": {
+        "native_action_error": 228
+      },
+      "termination_counts": {
+        "finished": 14,
+        "context_cap": 2
+      },
+      "failed_finished_episodes": 9,
+      "planned": 16,
+      "observed": 16,
+      "unknown": 0,
+      "episodes": [
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 17,
+          "output_tokens": 448,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 2
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 17,
+          "output_tokens": 498,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 3
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 57,
+          "output_tokens": 1959,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 22
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 28,
+          "output_tokens": 858,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 7
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 1,
+          "calls": 21,
+          "output_tokens": 573,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 3
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 36,
+          "output_tokens": 1070,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 13
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 77,
+          "output_tokens": 2450,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 26
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280900,
+          "repeat": 0,
+          "native_score": 0,
+          "calls": 75,
+          "output_tokens": 2425,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 34
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1796",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 41,
+          "output_tokens": 1095,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 6
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.256",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 12,
+          "output_tokens": 312,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.672",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 65,
+          "output_tokens": 2683,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 38
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1273",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 22,
+          "output_tokens": 594,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.1847",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 1,
+          "calls": 18,
+          "output_tokens": 470,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 1
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.38",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 69,
+          "output_tokens": 2119,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 22
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.201",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 80,
+          "output_tokens": 2292,
+          "termination": "context_cap",
+          "errors": {
+            "native_action_error": 27
+          }
+        },
+        {
+          "task_id": "textcraft_synth.train.964",
+          "seed": 202609280901,
+          "repeat": 1,
+          "native_score": 0,
+          "calls": 63,
+          "output_tokens": 1968,
+          "termination": "finished",
+          "errors": {
+            "native_action_error": 22
+          }
+        }
+      ]
+    }
+  },
+  "per_root": [
+    {
+      "task_id": "textcraft_synth.train.1796",
+      "target_items": {
+        "o2_i4_12": 3
+      },
+      "actual_depth": 3,
+      "declared_tier": 4,
+      "per_cell": {
+        "warm_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 128,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "warm_actor_binder_execution": {
+          "successes": 1,
+          "planned": 2,
+          "calls": 38,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_raw_execution": {
+          "successes": 1,
+          "planned": 2,
+          "calls": 58,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 57,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 112,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_binder_execution": {
+          "successes": 1,
+          "planned": 2,
+          "calls": 58,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 0
+          }
+        }
+      },
+      "any_success_disagreement": true
+    },
+    {
+      "task_id": "textcraft_synth.train.256",
+      "target_items": {
+        "a3_i3_23": 3
+      },
+      "actual_depth": 3,
+      "declared_tier": 3,
+      "per_cell": {
+        "warm_actor_raw_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 25,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "warm_actor_binder_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 25,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "raw_actor_raw_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 25,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "raw_actor_binder_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 25,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "binder_actor_raw_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 69,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "binder_actor_binder_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 29,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        }
+      },
+      "any_success_disagreement": false
+    },
+    {
+      "task_id": "textcraft_synth.train.672",
+      "target_items": {
+        "c6_i4": 2
+      },
+      "actual_depth": 4,
+      "declared_tier": 4,
+      "per_cell": {
+        "warm_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 105,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "warm_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 105,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 105,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 119,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 141,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 122,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        }
+      },
+      "any_success_disagreement": false
+    },
+    {
+      "task_id": "textcraft_synth.train.1273",
+      "target_items": {
+        "o1_i4": 2
+      },
+      "actual_depth": 4,
+      "declared_tier": 4,
+      "per_cell": {
+        "warm_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 74,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "warm_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 54,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 102,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 62,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_raw_execution": {
+          "successes": 1,
+          "planned": 2,
+          "calls": 69,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 1
+          }
+        },
+        "binder_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 50,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        }
+      },
+      "any_success_disagreement": true
+    },
+    {
+      "task_id": "textcraft_synth.train.1847",
+      "target_items": {
+        "c0_i5": 1
+      },
+      "actual_depth": 4,
+      "declared_tier": 5,
+      "per_cell": {
+        "warm_actor_raw_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 39,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "warm_actor_binder_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 39,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "raw_actor_raw_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 39,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "raw_actor_binder_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 39,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "binder_actor_raw_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 39,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        },
+        "binder_actor_binder_execution": {
+          "successes": 2,
+          "planned": 2,
+          "calls": 39,
+          "outcomes_by_seed": {
+            "202609280900": 1,
+            "202609280901": 1
+          }
+        }
+      },
+      "any_success_disagreement": false
+    },
+    {
+      "task_id": "textcraft_synth.train.38",
+      "target_items": {
+        "c1_i5_21": 1
+      },
+      "actual_depth": 5,
+      "declared_tier": 5,
+      "per_cell": {
+        "warm_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 111,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "warm_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 141,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 119,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 115,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 119,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 105,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        }
+      },
+      "any_success_disagreement": false
+    },
+    {
+      "task_id": "textcraft_synth.train.201",
+      "target_items": {
+        "m8_i5_18": 2
+      },
+      "actual_depth": 5,
+      "declared_tier": 5,
+      "per_cell": {
+        "warm_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 152,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "warm_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 142,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 151,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 147,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 160,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 157,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        }
+      },
+      "any_success_disagreement": false
+    },
+    {
+      "task_id": "textcraft_synth.train.964",
+      "target_items": {
+        "a1_i5_11": 3
+      },
+      "actual_depth": 5,
+      "declared_tier": 5,
+      "per_cell": {
+        "warm_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 144,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "warm_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 129,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 140,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "raw_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 129,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_raw_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 153,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        },
+        "binder_actor_binder_execution": {
+          "successes": 0,
+          "planned": 2,
+          "calls": 138,
+          "outcomes_by_seed": {
+            "202609280900": 0,
+            "202609280901": 0
+          }
+        }
+      },
+      "any_success_disagreement": false
+    }
+  ],
+  "paired_contrasts": {
+    "raw_actor_raw_execution_minus_matching_warm": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 1,
+      "losses": 0,
+      "ties": 15,
+      "difference": 0.0625,
+      "task_cluster_ci95": [
+        0,
+        0.1875
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": 0.5,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": 0,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    },
+    "raw_actor_binder_execution_minus_matching_warm": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 0,
+      "losses": 1,
+      "ties": 15,
+      "difference": -0.0625,
+      "task_cluster_ci95": [
+        -0.1875,
+        0
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": -0.5,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": 0,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    },
+    "binder_actor_raw_execution_minus_matching_warm": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 1,
+      "losses": 0,
+      "ties": 15,
+      "difference": 0.0625,
+      "task_cluster_ci95": [
+        0,
+        0.1875
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": 0,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": 0.5,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    },
+    "binder_actor_binder_execution_minus_matching_warm": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 16,
+      "difference": 0,
+      "task_cluster_ci95": [
+        0,
+        0
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": 0,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": 0,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    },
+    "warm_binder_minus_raw_execution": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 1,
+      "losses": 0,
+      "ties": 15,
+      "difference": 0.0625,
+      "task_cluster_ci95": [
+        0,
+        0.1875
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": 0.5,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": 0,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    },
+    "raw_binder_minus_raw_execution": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 0,
+      "losses": 1,
+      "ties": 15,
+      "difference": -0.0625,
+      "task_cluster_ci95": [
+        -0.1875,
+        0
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": -0.5,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": 0,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    },
+    "binder_binder_minus_raw_execution": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 1,
+      "losses": 1,
+      "ties": 14,
+      "difference": 0,
+      "task_cluster_ci95": [
+        -0.1875,
+        0.1875
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": 0.5,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": -0.5,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    },
+    "binder_trained_minus_raw_trained_in_raw": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 1,
+      "losses": 1,
+      "ties": 14,
+      "difference": 0,
+      "task_cluster_ci95": [
+        -0.1875,
+        0.1875
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": -0.5,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": 0.5,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    },
+    "binder_trained_minus_raw_trained_in_binder": {
+      "planned": 16,
+      "known": 16,
+      "unknown": 0,
+      "wins": 1,
+      "losses": 0,
+      "ties": 15,
+      "difference": 0.0625,
+      "task_cluster_ci95": [
+        0,
+        0.1875
+      ],
+      "task_differences": {
+        "textcraft_synth.train.1796": 0.5,
+        "textcraft_synth.train.256": 0,
+        "textcraft_synth.train.672": 0,
+        "textcraft_synth.train.1273": 0,
+        "textcraft_synth.train.1847": 0,
+        "textcraft_synth.train.38": 0,
+        "textcraft_synth.train.201": 0,
+        "textcraft_synth.train.964": 0
+      }
+    }
+  },
+  "training_interface_by_execution_interaction": {
+    "planned": 16,
+    "known": 16,
+    "unknown": 0,
+    "wins": 1,
+    "losses": 1,
+    "ties": 14,
+    "difference": 0.0625,
+    "task_cluster_ci95": [
+      -0.1875,
+      0.375
+    ],
+    "task_differences": {
+      "textcraft_synth.train.1796": 1,
+      "textcraft_synth.train.256": 0,
+      "textcraft_synth.train.672": 0,
+      "textcraft_synth.train.1273": -0.5,
+      "textcraft_synth.train.1847": 0,
+      "textcraft_synth.train.38": 0,
+      "textcraft_synth.train.201": 0,
+      "textcraft_synth.train.964": 0
+    }
+  },
+  "cost_contrasts": {
+    "warm_binder_minus_raw": {
+      "calls": {
+        "difference": -105,
+        "relative_difference": -0.13496143958868895
+      },
+      "prompt_tokens": {
+        "difference": -499177,
+        "relative_difference": -0.1935020326014779
+      },
+      "completion_tokens": {
+        "difference": -1757,
+        "relative_difference": -0.07471508759993196
+      },
+      "native_service_seconds": {
+        "difference": -190.63044214248657,
+        "relative_difference": -0.09709088503234162
+      }
+    },
+    "raw_binder_minus_raw": {
+      "calls": {
+        "difference": -46,
+        "relative_difference": -0.06224627875507442
+      },
+      "prompt_tokens": {
+        "difference": -350057,
+        "relative_difference": -0.14200957069789177
+      },
+      "completion_tokens": {
+        "difference": -1222,
+        "relative_difference": -0.05343244425010931
+      },
+      "native_service_seconds": {
+        "difference": -143.69489645957947,
+        "relative_difference": -0.07486519791868428
+      }
+    },
+    "binder_binder_minus_raw": {
+      "calls": {
+        "difference": -164,
+        "relative_difference": -0.1902552204176334
+      },
+      "prompt_tokens": {
+        "difference": -807761,
+        "relative_difference": -0.26990097918173755
+      },
+      "completion_tokens": {
+        "difference": -5204,
+        "relative_difference": -0.19261233251906137
+      },
+      "native_service_seconds": {
+        "difference": -479.05411171913147,
+        "relative_difference": -0.20995750256094206
+      }
+    },
+    "raw_actor_raw_minus_warm": {
+      "calls": {
+        "difference": -39,
+        "relative_difference": -0.05012853470437018
+      },
+      "prompt_tokens": {
+        "difference": -114675,
+        "relative_difference": -0.04445286058567298
+      },
+      "completion_tokens": {
+        "difference": -646,
+        "relative_difference": -0.027470658275216872
+      },
+      "native_service_seconds": {
+        "difference": -44.040868520736694,
+        "relative_difference": -0.02243066141070612
+      }
+    },
+    "raw_actor_binder_minus_warm": {
+      "calls": {
+        "difference": 20,
+        "relative_difference": 0.029717682020802376
+      },
+      "prompt_tokens": {
+        "difference": 34445,
+        "relative_difference": 0.016555941249359534
+      },
+      "completion_tokens": {
+        "difference": -111,
+        "relative_difference": -0.00510133737763684
+      },
+      "native_service_seconds": {
+        "difference": 2.89467716217041,
+        "relative_difference": 0.0016328350046211912
+      }
+    },
+    "binder_actor_raw_minus_warm": {
+      "calls": {
+        "difference": 84,
+        "relative_difference": 0.10796915167095116
+      },
+      "prompt_tokens": {
+        "difference": 413106,
+        "relative_difference": 0.16013728733468516
+      },
+      "completion_tokens": {
+        "difference": 3502,
+        "relative_difference": 0.1489198843340704
+      },
+      "native_service_seconds": {
+        "difference": 318.249151468277,
+        "relative_difference": 0.1620889687374866
+      }
+    },
+    "binder_actor_binder_minus_warm": {
+      "calls": {
+        "difference": 25,
+        "relative_difference": 0.03714710252600297
+      },
+      "prompt_tokens": {
+        "difference": 104522,
+        "relative_difference": 0.05023835364394128
+      },
+      "completion_tokens": {
+        "difference": 55,
+        "relative_difference": 0.0025276896916218575
+      },
+      "native_service_seconds": {
+        "difference": 29.82548189163208,
+        "relative_difference": 0.016824014608191162
+      }
+    }
+  },
+  "familiar_reference": {
+    "source": "R/textcraft-rl-assist-20260928-001/COMPARISON-0001.json",
+    "cells": {
+      "raw_warm": {
+        "successes": 9,
+        "observed": 16,
+        "physical_cost": {
+          "calls": 326,
+          "prompt_tokens": 532828,
+          "completion_tokens": 9610,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 737.4903199672699
+        },
+        "adapter": {
+          "path": "R/textcraft-public-discovery-sft-001/checkpoint-0023",
+          "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+          "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf"
+        }
+      },
+      "raw_0001": {
+        "successes": 13,
+        "observed": 16,
+        "physical_cost": {
+          "calls": 340,
+          "prompt_tokens": 611415,
+          "completion_tokens": 10224,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 792.0556390285492
+        },
+        "adapter": {
+          "path": "R/textcraft-rl-assist-20260928-001/raw/train-0001/boundaries/sample-0001/checkpoint-0001",
+          "sha256": "856fb4755c3a2b3297a38d6bed7d6f8e638535eba6723dc01cc0ee4a916db62e",
+          "commit_sha256": "c8e7aa658801db5f1dd53c4ff1a31aa823da8d52630b5e14693a5ae03f455a75"
+        }
+      },
+      "binder_warm": {
+        "successes": 14,
+        "observed": 16,
+        "physical_cost": {
+          "calls": 277,
+          "prompt_tokens": 408096,
+          "completion_tokens": 8462,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 650.6207797527313
+        },
+        "adapter": {
+          "path": "R/textcraft-public-discovery-sft-001/checkpoint-0023",
+          "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+          "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf"
+        }
+      },
+      "binder_0001": {
+        "successes": 16,
+        "observed": 16,
+        "physical_cost": {
+          "calls": 303,
+          "prompt_tokens": 578912,
+          "completion_tokens": 10325,
+          "failed_calls": 0,
+          "unknown_completion_tokens_calls": 0,
+          "native_service_seconds": 806.7263426780701
+        },
+        "adapter": {
+          "path": "R/textcraft-rl-assist-20260928-001/binder/train-0001/boundaries/sample-0001/checkpoint-0001",
+          "sha256": "2621e7d47aa7af51736640af22fd6846081a82f60fffdcfa8178151a6e3854ab",
+          "commit_sha256": "d6282682f345737c9a69bf4a6f8169b72e965745d9b09e9b00a92dd19e3a0d22"
+        }
+      }
+    },
+    "within_interface_learning_gain": {
+      "raw": {
+        "planned": 16,
+        "known": 16,
+        "unknown": 0,
+        "wins": 4,
+        "losses": 0,
+        "ties": 12,
+        "difference": 0.25,
+        "task_cluster_ci95": [
+          0.0625,
+          0.5
+        ],
+        "task_differences": {
+          "textcraft_synth.train.2040": 0,
+          "textcraft_synth.train.1791": 0,
+          "textcraft_synth.train.2294": 0,
+          "textcraft_synth.train.1680": 0.5,
+          "textcraft_synth.train.429": 0,
+          "textcraft_synth.train.404": 0,
+          "textcraft_synth.train.465": 1,
+          "textcraft_synth.train.860": 0.5
+        }
+      },
+      "binder": {
+        "planned": 16,
+        "known": 16,
+        "unknown": 0,
+        "wins": 2,
+        "losses": 0,
+        "ties": 14,
+        "difference": 0.125,
+        "task_cluster_ci95": [
+          0,
+          0.3125
+        ],
+        "task_differences": {
+          "textcraft_synth.train.2040": 0,
+          "textcraft_synth.train.1791": 0,
+          "textcraft_synth.train.2294": 0,
+          "textcraft_synth.train.1680": 0.5,
+          "textcraft_synth.train.429": 0.5,
+          "textcraft_synth.train.404": 0,
+          "textcraft_synth.train.465": 0,
+          "textcraft_synth.train.860": 0
+        }
+      }
+    },
+    "task_ids_disjoint": true,
+    "paired_across_panels": false
+  },
+  "contract": {
+    "tasks_sha256": "12b0381fa3bcc17aee92e8677a713f8db3ba613cad7faa8229cc63411ed6d0ff",
+    "manifest_sha256": "65e67e57063ee43d1c8c072988cca2081531b96aae4a47d582c2550f419c1c1a",
+    "world_seed": 42,
+    "world_sha256": "f76ce3978c038be9624b3c7387aa30033970508c6afecb1f8f08315aa0693808",
+    "model_manifest_sha256": "19619b44b0bd30bf5debe0960e6dfd6acc5be8287c581727456aa5d17699c18f",
+    "base_dtype": "float16",
+    "lora_dtype": "float32",
+    "profile": "original",
+    "sampling": {
+      "temperature": 0.5,
+      "top_p": 1,
+      "top_k": 0
+    },
+    "max_global_calls": 96,
+    "max_global_output_tokens": 8192,
+    "max_new_tokens": 256,
+    "input_plus_output_limit": 8192,
+    "truncation": false,
+    "planned_episodes": 16
+  },
+  "verification": {
+    "complete_cells": 6,
+    "planned": 96,
+    "observed": 96,
+    "unknown": 0,
+    "native_replayed": 96,
+    "paired_actual_task_seed_keys": [
+      [
+        "textcraft_synth.train.1796",
+        202609280900
+      ],
+      [
+        "textcraft_synth.train.256",
+        202609280900
+      ],
+      [
+        "textcraft_synth.train.672",
+        202609280900
+      ],
+      [
+        "textcraft_synth.train.1273",
+        202609280900
+      ],
+      [
+        "textcraft_synth.train.1847",
+        202609280900
+      ],
+      [
+        "textcraft_synth.train.38",
+        202609280900
+      ],
+      [
+        "textcraft_synth.train.201",
+        202609280900
+      ],
+      [
+        "textcraft_synth.train.964",
+        202609280900
+      ],
+      [
+        "textcraft_synth.train.1796",
+        202609280901
+      ],
+      [
+        "textcraft_synth.train.256",
+        202609280901
+      ],
+      [
+        "textcraft_synth.train.672",
+        202609280901
+      ],
+      [
+        "textcraft_synth.train.1273",
+        202609280901
+      ],
+      [
+        "textcraft_synth.train.1847",
+        202609280901
+      ],
+      [
+        "textcraft_synth.train.38",
+        202609280901
+      ],
+      [
+        "textcraft_synth.train.201",
+        202609280901
+      ],
+      [
+        "textcraft_synth.train.964",
+        202609280901
+      ]
+    ],
+    "matched_small_native_receipts": 192,
+    "all_plan_audit_summary_counts_costs_match": true,
+    "actor_commit_and_training_lineage_match": true,
+    "all_reported_effects_recomputed": true,
+    "model_weight_rehash": false,
+    "new_native_replay": false,
+    "all_call_or_node_receipts_rehashed": false,
+    "actual_plan_execution_modes_and_state_step_verified": true
+  },
+  "small_receipt_sha256": {
+    "R/textcraft-rl-transfer-20260928-001/COMPARISON.json": "e55ae2714160741a27371610ddfe2fab8728a190ef6f8306321a0b5d5489d182",
+    "R/textcraft-rl-assist-20260928-001/COMPARISON-0001.json": "86742106473253ca4751b8dde6834ce0ad4b619f0cbf62e3296f0c08dce7d53c",
+    "E/rl_transfer_monitor_20260929/BASELINE.json": "08e581c97ac514335912a67fde549492674e6b8e4d6553f9fc76bbe7c3499189",
+    "R/textcraft-fresh-train-20260928-001/diagnostic/MANIFEST.json": "65e67e57063ee43d1c8c072988cca2081531b96aae4a47d582c2550f419c1c1a",
+    "R/textcraft-fresh-train-20260928-001/diagnostic/tasks.jsonl": "12b0381fa3bcc17aee92e8677a713f8db3ba613cad7faa8229cc63411ed6d0ff",
+    "E/rl_transfer_20260928/compare.py": "f7ebc817ec1b6f6d97cf3e3afd8d1540c71cfa49b1727cead8788e3e4a01999d",
+    "E/rl_resume_20260928/compare.py": "877162ed42c1a930811662270ff6aef7099ae50d48f27ffff05b30e0d7fed29a",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/PLAN.json": "dcc066d509f44f7a38e5d0a4c25d8fbb57d2d589e5975189e95bd44219b46ac0",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/NATIVE-AUDIT.json": "637915703fa1eecee38bb0ec6bc4fd0ce5d092eeda6e3e42c2af9685be038e7e",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/SUMMARY.json": "1332a78aaafd006b91d7756d0572c7034920fd613c53820b81dbf842ad7f0600",
+    "R/textcraft-public-discovery-sft-001/checkpoint-0023/COMMIT.json": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t00-r0-flat.json": "dec11b3b033b26bfd038999710d144c039881cca79a83615c2affd0a2f23f7d2",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t00-r0-flat-c000.json": "d79ab687b0c5bbdfc622006e781d8170888f1a84838ff651e0ba82cdcc205515",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t01-r0-flat.json": "80b04dc0b2460d985421e9dbf910340a8fa58e034ecda0884b457b0d3426a35b",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t01-r0-flat-c000.json": "3350500d133b890a22049952726dc8da37b38385b6761552e94290740252a103",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t02-r0-flat.json": "ca9f8eba3d41755196bf1e32779b427cdc0c45fc49640e7e2f56baab5845c1df",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t02-r0-flat-c000.json": "fdb290b4ac9ec69ce89853e9798c43ce92828ada64961a3e63afe74a28ff5afd",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t03-r0-flat.json": "bb944782a7beea5b8ae08b070a3ef523f7380dfddedd3eeaa894617788cfe037",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t03-r0-flat-c000.json": "27b447ea308910b7ca878c511e0dcf84a3352755561636c139eb2e3d22e28287",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t04-r0-flat.json": "dc71c9252e7c4bcbac6617861b831be6f8d20482b77840d0778bf36206cb0089",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t04-r0-flat-c000.json": "08cb5842f0252c8cbb1822892ea32ef0cd86024e2a6cd950c0ee922358008a19",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t05-r0-flat.json": "d0d1c5bb47ea6e4787184313f4e3db04e83e48e6d597be83e0131714c2c7ca05",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t05-r0-flat-c000.json": "f8099a0476e8a5e8af4f3b4071a81477c784d4e261ca69ccc2f8e4bc645fdcee",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t06-r0-flat.json": "a7229f724d9ef96399f32b5d0a6bc954bca03a1686b114a981db53b19e9ed814",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t06-r0-flat-c000.json": "370156ef0cda6f33972dd6d9ef1e467435580fcfd054514de067fd1a3234a053",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t07-r0-flat.json": "0539d70dd418a504b19596d8a4e7f8918bc4cf254afa41d0032594a85cb49df6",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t07-r0-flat-c000.json": "75ecdeeff829a50c1cd080cf24d6271dc91944839ce76f34848b542c75799cd4",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t00-r1-flat.json": "8e43f62acc7133645d4ebdd021b643b737575513deba90879b88f52103770a8d",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t00-r1-flat-c000.json": "15e55e702570f48d0cf310d36f7a7736d444a1b16cd50b6981ba3f6f281cebb3",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t01-r1-flat.json": "d66b732984eb00545888d3a2ae151f2a7b6f8f4c12dc30a112fa561f10491e58",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t01-r1-flat-c000.json": "e91970c45e6810bba1d72d5c9a59fc36960ca04c6243c2676b091d45abaf4985",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t02-r1-flat.json": "b13ce11b1a0a890b6f9c95ab8353465abaf0d82a135418f0704409d5dd5a350e",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t02-r1-flat-c000.json": "0a75f71dc37f79e15eedca567e7d20799bca2733bcaf063bc78a4fbb419a0fe3",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t03-r1-flat.json": "2ef621b11ea06fa75c1dbf5ba90b88ebada6fa4297c261181f2e672ddc5f5d8d",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t03-r1-flat-c000.json": "f88f4a5a7503a2182ebb52b0b0ff5893fb0b00cb4bffa6aba8e08b6390f2cecc",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t04-r1-flat.json": "da080e997fbf4f1dbd528814fd5bdf8d9a850f83eb446078b7a800b6478fb07b",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t04-r1-flat-c000.json": "067f74c97dd770d888ed0dafee1460685352edc2507df2031cafba6a129f060b",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t05-r1-flat.json": "e2d5184e39d199eb8dc444045ccc03a55a0bdb563e56a8fd9bdd82fca05cf04e",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t05-r1-flat-c000.json": "9ea087978b4ec5a5df71a37ae4d91073267ab96d49b439d5e71d3cfc0006dce9",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t06-r1-flat.json": "2bb12dd82804cfc3e42c348f2478dd10b37f27e147ef5b60d23983d48f03e65b",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t06-r1-flat-c000.json": "af59ec984a504a5a07288af5bbddaa361f1ba0c6dfcb45ba75e72c555e845b87",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/episodes/t07-r1-flat.json": "b7d5a2fc510e17083d65006f35a8eba54c93349e2a5dc10c14d2682f4d16b4ef",
+    "R/textcraft-fresh-rl-20260928-002/raw/readout-warm/calls/t07-r1-flat-c000.json": "c2d1d0f047333e8c1130ac1aa1bbc80d58981b1bb7ce0853d3d8cca726e77767",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/PLAN.json": "795184d89205f490a241f54aa1c48cede233f49ef4666b49a4dde19106298f74",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/NATIVE-AUDIT.json": "440e555eeee5fb9100fb6f608dbccd3503ba609b509755caee356f5e9a522e62",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/SUMMARY.json": "d254afbcd39f8e79c7f778e80b7084e60a75d746b21b8b75a4968004f447f7f0",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t00-r0-flat.json": "6f6087f705094948e1669077358ea6b671a9a4e61812f8fadd8efa0bb5e41fc4",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t00-r0-flat-c000.json": "fc987575ac6c2c7495189b37c6cc535232e77ea34777bc7faa5049fd15ce70cf",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t01-r0-flat.json": "b260753d315c1446e24c7800d058f32d6884d605e3af9a3f23950fe8294af4b0",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t01-r0-flat-c000.json": "764c1d9a4b8d55a004919cf329ca7f4a7afa29aeb8b617beadad41f90f56647d",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t02-r0-flat.json": "9b9527974789b3c6434b83e6e7d48ac518b6b4ba1a830e195567fabdd34ee2c9",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t02-r0-flat-c000.json": "0c621b758ac7fbda53ca39f38c1adbe886ea1140df3b58b15857922cbeeee7d3",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t03-r0-flat.json": "44c451ea43bc86ae85959e92fa9947496b765aa336ee42025b54332d8028fa56",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t03-r0-flat-c000.json": "5ee31679edb2bf091c414bab825178b278249814d9dbe9051d1b3779c7b702a1",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t04-r0-flat.json": "0552c6dd416d9b43bb51b53a5ee4e1037f2ecab597075ef4aa4c4b90ec32f84b",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t04-r0-flat-c000.json": "5f0be9cc4781d46c77cd5a30ef9943bcd696c244f1224e851445f1999f3aaf7c",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t05-r0-flat.json": "43e7b7c37bc98ea756b7ba2d3e166b849e21ba4f105dc4664d680afc989eb725",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t05-r0-flat-c000.json": "1b98523d322b09ba0b02da351c5970a189484ca6a5db481066f9d24a853169c5",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t06-r0-flat.json": "8d6b5efe575c89bafcd63411b637ff6a04d43ac9c32c0b4c57e0468d113b326c",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t06-r0-flat-c000.json": "bcd1679f8750dccd124f75ed1ce48d5bee46998d6da7f7b38a711be324e8057d",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t07-r0-flat.json": "498e3ba94833fb70b7c8e9b01c46d3509cda8cc31435a257eb1c210bc22850e1",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t07-r0-flat-c000.json": "0354606b1f404765b9ab86950dce5089664642363cc9f229bc9901f1965af923",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t00-r1-flat.json": "f8bbb29702247d7d15dab3241b3f57486583ed42b323774cfa8c9c329f54f87c",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t00-r1-flat-c000.json": "9039a71bff8e609a4fc5aa1377464ed80384a060a7baaba32a813577dee34c1f",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t01-r1-flat.json": "c13b9a708f1c3d7bb578fc544ac71e77b8fccf9ed4477fa8e437068b785f65f8",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t01-r1-flat-c000.json": "f76c6ab2ec14d2aee694450409971810613651cd12af308ffc28980f8224b9cb",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t02-r1-flat.json": "c697423453b6c9bb8bade8f2943be10cfc6108ebbe5973f3e424239237e0e20b",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t02-r1-flat-c000.json": "4e693dccfc53839f473476af90b92d4adf924c14aee3c2c996aed96cd4437d98",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t03-r1-flat.json": "c625b1415112ad0b739908b38903d81627f1fa9286de4841ddb756a7be9f4f6e",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t03-r1-flat-c000.json": "55f5ac3356d171112b3aa477b86ad540cb7b0778ae91997ed8a3196dca4aaceb",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t04-r1-flat.json": "39923bca188f70075c80066e593a4eccd82ac46ff5b332b699f99ae1c218f1df",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t04-r1-flat-c000.json": "d263bdc9ef41d78d9388f6b0eaeb5e6f90e51a64646b4d39fef82ca9ae704206",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t05-r1-flat.json": "8c8df0a276243d5a6c520a3b8abb985f34cc193d79c25f47bab09bbc190d81ec",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t05-r1-flat-c000.json": "2cec82839a18e1f0ac3149569cfb02bc3a6764203ddf6acafb10eef8c89402e4",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t06-r1-flat.json": "9267e3daf19fb90adb19dcd12f0d7c860c1a4feea1dd86614f4e25bbbc10cbf9",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t06-r1-flat-c000.json": "843fd284d99ca64c6c34f003b0c9b9d1ab6daaed38afddf4ecff8f987af57d49",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/episodes/t07-r1-flat.json": "6716d40959f63f98b1b03b2190b3aa176843c5f8623f034be1c294535f606f07",
+    "R/textcraft-fresh-rl-20260928-002/binder/readout-warm/calls/t07-r1-flat-c000.json": "9bc465b8b053c69b839a84c83ab3260c8ace20238d7af23b4426ab4936b25dfb",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/PLAN.json": "0186bbb26c3ad2ff5e77f7079eb45c489562da77cb8e04fe393843713f5eccbe",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/NATIVE-AUDIT.json": "c1f9363e7126f06e2d4575df8b3b4be730fe90a4cfbf4f4eb123df83ee27c2d7",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/SUMMARY.json": "1e94f9c9cc2a5107c6a0c8160bae323824f86bdec7c65ef48920739a4dd1ae1f",
+    "R/textcraft-rl-assist-20260928-001/raw/train-0001/boundaries/sample-0001/checkpoint-0001/COMMIT.json": "c8e7aa658801db5f1dd53c4ff1a31aa823da8d52630b5e14693a5ae03f455a75",
+    "R/textcraft-rl-assist-20260928-001/raw/train-0001/PLAN.json": "42e259fe4bc7dbd29404524d7f1e6a34c8d10d17f973ad5bf7a4d630b0894fbb",
+    "R/textcraft-rl-assist-20260928-001/raw/train-0001/SUMMARY.json": "2bfe6ab1e55380c17c554d38f2775206f2430b4f831347ca6be100ebeb278bc9",
+    "R/textcraft-rl-assist-20260928-001/raw/train-0001/boundaries/sample-0001/checkpoint-0001/STATE.json": "5b7404c8c8f96c4b689dc9b6943ab5534f24627d264c8af2206a5f61ef64456a",
+    "R/textcraft-rl-assist-20260928-001/raw/train-0001/boundaries/sample-0001/checkpoint-0001/adapter_config.json": "00f362aab87ec14e855f108b4709b6bff7912f263cdf8bbd2757d145db0fe7cc",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t00-r0-flat.json": "6a29f50c2e14fd589069faa1b5cbb462501f8268469a3be150e2b46b5d948c19",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t00-r0-flat-c000.json": "357817353c4053b6e94093fabd7bc321bc9239d119c7841c5c741d2d10d0150a",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t01-r0-flat.json": "7a00bdbe5238b1158d7b3c7852d586a2401b4e937886e1ff8715b9761beea32e",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t01-r0-flat-c000.json": "4941e23f0d3a19a40b374cb55627e47d4b2c4357a24e6a4db8cf18f61cb0ba96",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t02-r0-flat.json": "60cebe1b3af5e61bbda151df5a1905b50e39dbaeb737c2c7233f073fcd66341b",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t02-r0-flat-c000.json": "95e6953dc3e3386b5c3a343846ece836a29a8dc961f201e948ffb31da7f0f486",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t03-r0-flat.json": "0a0474e82e75e15897da4360ec8d6bc9bf96b33da80a9e6791cb0e4e2f5168a1",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t03-r0-flat-c000.json": "80f8d43026899067cd0e4d4cb0e88e1f625e973e564c47e9c671c0d4a29563a7",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t04-r0-flat.json": "458d021ac9deeffe6b878cb5adc9a4ed6a174d7e3bb438bf10570f0f2f1b2675",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t04-r0-flat-c000.json": "4f5014c95321e46f76cea26c571255d48c986431bc41cad6e8432a4b3622c7b5",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t05-r0-flat.json": "827e611c64746d350894fe3adf605d43dae0577bc65741c2454bcc09820192fa",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t05-r0-flat-c000.json": "8345673eb12094d362cd613763f3d94556f5e383b814bffd146cad28aeec09ae",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t06-r0-flat.json": "7d453844359607277fcbdd2128cc6e6be2e35ede031e25d0740607dc6e78114f",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t06-r0-flat-c000.json": "62bd4e70c4f08fc23e17579499b12ddb490fdc10d0d930d085c894fb7e034cb7",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t07-r0-flat.json": "a97946b392c76bdf8ecc222558e8dd488feeea320769bd3845fa4c9d494ed8e1",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t07-r0-flat-c000.json": "4128dd53f43d47fa7da0f910c88e74a7a67b87afb8117abb838dc8f71a600bc8",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t00-r1-flat.json": "714dca4cd8c4d606da11b9051093b85bad4471c7acdf35fdf51687a71372f29a",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t00-r1-flat-c000.json": "63fbe5860d73275af83a81939f3dabbb16d076f36f382c4a78fdb454aba1ba37",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t01-r1-flat.json": "082f88fb81f03880d4e01ed776e791045b8843e9f910caf3bb1b3e2fbbded44f",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t01-r1-flat-c000.json": "5e3fb3eec050a1f74fcf3f19077d765115f12befbe9c6a3193f7a4e27c320f83",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t02-r1-flat.json": "89002c18738690a1657cdb6ffbe80cdab717c06529fd45e51564e7c247f9c881",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t02-r1-flat-c000.json": "34c9c865266e8ebcfc4710d1e5dbd6803f2c68e68142afee73486ca7cf844df2",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t03-r1-flat.json": "5d7de66533d736b37b8fe3b40bbddaf2dc231b7472fb45ecbb8f3f6952b2c6db",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t03-r1-flat-c000.json": "913e4472903e4a90ca6a990556385fa4b46fa9db2aa471bf5c9398d86a51d6f1",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t04-r1-flat.json": "09b126ac831c9c44b6802b6f3a7d73f5b2cd0c48170b2f74117fdefce34b3642",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t04-r1-flat-c000.json": "c9174094095879ec65c735beea6969867f5fab1e1bca177ea5a37f882db949c4",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t05-r1-flat.json": "9b6b85904551e31222c8fce54081577d8cace312a5daadabf622a473c555b6a9",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t05-r1-flat-c000.json": "c2657d05d26abbce38c4176b9e3819eda312897957ac0c2a46d6cf1b866102a4",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t06-r1-flat.json": "7a57d3e4b1bdaecfa0dd13489b8de89d519ccac3e09e46c6480b538638957d4b",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t06-r1-flat-c000.json": "9a839fddcb1b809092e60b1ce62eec63441452a50126b8f2a09b6eee597ffea5",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/episodes/t07-r1-flat.json": "b0c5c6afabd2db4ab4cc472226585b8a1dd4256143cf34feb52f70d02748c18c",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-raw/calls/t07-r1-flat-c000.json": "529b0cb75ac15b690e96e8e6d70e0e6162075751ccf81e6e9bcbffb83873c447",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/PLAN.json": "05d37a6014a0b0bda81ccbc92179c34d4e5e3afc8b33b8b450ccb5c01dc3b95b",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/NATIVE-AUDIT.json": "13b1cfb316df99d5a677d67d4b2b500309e850c1df7cae4f7967158f2484562f",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/SUMMARY.json": "e594d343b0b573e963cc3da5c29d81d0db1a65fe1dd50e516502d07539caaf30",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t00-r0-flat.json": "ffba99a2c9cc327b61e1d10987d9f9c9131ed86810c8787d041ce6dc1c37009e",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t00-r0-flat-c000.json": "8b14ac5b54aa191a229cc43079a4edca046091bc8fa6b7c7536b2ec20b449475",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t01-r0-flat.json": "a29363b35cb9bcb0e56c51d41248f0ce86119aa30dd1cb36fc380a593d0fa5bd",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t01-r0-flat-c000.json": "822dff803be5b6bf62e4389f59e13ae3297721c85d5d9c2618504892985e03e9",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t02-r0-flat.json": "8ac44a59e31567c596f26bf8522d621418d469144c3ecb0b55d0d3a4badeab18",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t02-r0-flat-c000.json": "e7153376d6f5fc82ea406a8016ce3a833d60a007ea7343e989dd32518d8ffbd0",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t03-r0-flat.json": "b872d21e8b020da79a46c56c8fa00745bcccf5c99924ee65fdd40dd189f48804",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t03-r0-flat-c000.json": "af92854ffb0ca8e1ad6bc033839c37ffd36db128edd6ec69e2f556dbf121ce65",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t04-r0-flat.json": "7de951eb6def4e0f5ae748677ab5c4edc111a2cb76c5f5bf235eb4614ed2cba1",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t04-r0-flat-c000.json": "83d99ab0c268b7999ea8cb833862f2d61d621c15e0368e38a5727eb0b8f16ad9",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t05-r0-flat.json": "14cde01891d921d130637c307fe9c0a59452f167c2ff4156a6c5a7968990fdad",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t05-r0-flat-c000.json": "2ec1ad88cf4869d5b1c2bdd61f59e4d50c1db1489b3718dd3d7aebf1b2afe3ab",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t06-r0-flat.json": "fdb7af41ac99ace08da8f65d6c794114f2af400c1df1e4019ac9228cdf46c06c",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t06-r0-flat-c000.json": "f1097a045fc65977e37e0c18a36ba430e0c7929553ae6ffa236ec424278de9af",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t07-r0-flat.json": "0cbeaf7350731a42d8169f7a54ff4e953b94fffd19c3e3596ac757d9a5141e22",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t07-r0-flat-c000.json": "6deddbb0c00f4e28dd78782fea97ce4872e1fc7e5de89ea98be463ac40700263",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t00-r1-flat.json": "1c1eb8d43b3a947f376d73c7dbcba8267060fc98780f669b19fcbe721044e35c",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t00-r1-flat-c000.json": "f7c1153aef9ff0f15561cef58510ffbb82b59dbcf4c93048ea82661c0872e64e",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t01-r1-flat.json": "1db40c649c827dbee1c60772d7cad15a7961f7dba330117622db855af934a013",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t01-r1-flat-c000.json": "31dcfdd3828393e8dffcdb0acce46cec36b9f58a0e28dc20025b46c9b9d8c11b",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t02-r1-flat.json": "5def6db0512cf1eea1649d1c43a01b9d986b4b17133d1c128dd6945538ef7a27",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t02-r1-flat-c000.json": "bf29d9ea89dfbd188e03d899dea96f053a331e26f6f418d8dcecae00f717a690",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t03-r1-flat.json": "125d463e13cf4eb50577def0034b21dbf5b7d672cebfc0b85cb23b421acc1fb4",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t03-r1-flat-c000.json": "8dc33e79dc8f20c9b31d9f5273fa0d4094a6655cdf072015ddbad1dee69fc65d",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t04-r1-flat.json": "6eee5f04e930ca7244467472fb94a2faa0bdd08b868289bc8d8007df59ecaf70",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t04-r1-flat-c000.json": "b43653af8bbbce0bdec132832993a046e557b353f96ea03acc6b7a68808c104c",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t05-r1-flat.json": "822f641f9eec88cae0c4bcced49428ad23013093e28c40563087ef7d6d9ca300",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t05-r1-flat-c000.json": "64c9f0789d1a64f6b6697b633956d3ccf16342d0ac8e791c62c266fc2d0c3e5c",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t06-r1-flat.json": "6f2c8a19662bf9d3cfeec82f9b8930bcc457f9151de2e7a2d205d018d6653793",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t06-r1-flat-c000.json": "827aaedcdf05695deaf5d6a2ae9a510a37440d54d8c79a06c4b985fe7ce3d617",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/episodes/t07-r1-flat.json": "28544b4d449c3ef5143eb0c670c1137819cfe15104f6131c930b99c0243cd424",
+    "R/textcraft-rl-transfer-20260928-001/actor-raw/readout-binder/calls/t07-r1-flat-c000.json": "fe4890a40e5808b8577e382398c686e3c0ae8ef15ff76365a5366ac2c94953ad",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/PLAN.json": "58f6c1165214a201306794384fddc78da629d9c13d071f3588d72d20ae263b79",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/NATIVE-AUDIT.json": "17337ff4674ba86963ce294d931c24c45b5acec207afeced24406b2e6694b965",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/SUMMARY.json": "7dd33ab3c5b0423a5f6b0b01225a735c5861eacae0bc3110792f0d75334d36ce",
+    "R/textcraft-rl-assist-20260928-001/binder/train-0001/boundaries/sample-0001/checkpoint-0001/COMMIT.json": "d6282682f345737c9a69bf4a6f8169b72e965745d9b09e9b00a92dd19e3a0d22",
+    "R/textcraft-rl-assist-20260928-001/binder/train-0001/PLAN.json": "39e36dc846b30d276121c28796765658d9e88b725b88d4cb0ae44f47554987e1",
+    "R/textcraft-rl-assist-20260928-001/binder/train-0001/SUMMARY.json": "4c851c2739cce86b6b2efcfae91827cd86cf497ae5865326cf9389e435020b8f",
+    "R/textcraft-rl-assist-20260928-001/binder/train-0001/boundaries/sample-0001/checkpoint-0001/STATE.json": "84ca4747c79a9c1d462297d21b0a7eeeec74418db0a02a0ba917abb954428dde",
+    "R/textcraft-rl-assist-20260928-001/binder/train-0001/boundaries/sample-0001/checkpoint-0001/adapter_config.json": "4625a7573a1cb06566d270f92184c96f8b1a9f800b30040be91e3e779f6d9254",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t00-r0-flat.json": "81e12e624bbf6f967058fa73b61954063b9fa325d9846a587f60c22efff369e1",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t00-r0-flat-c000.json": "fc9602fe9b8822f770b2ea305ad5bfc338a6f0f4917bb835d3040768523fde60",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t01-r0-flat.json": "eae508c2e240918f18d86990d43a7176801542d8cb0d5abf584903138c2564cb",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t01-r0-flat-c000.json": "3bdce04b2a93bd53a03525b12034b06c3cc7208096010ac004f53d342bad128c",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t02-r0-flat.json": "5c68b297ac7b6aa84b8c729e40b562aab27d180ab7f705e3794547e6cac7e105",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t02-r0-flat-c000.json": "56d21b37c5ea9696354a77603e90c97aa6ab7a4f0648876085ab2b0b72917b1a",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t03-r0-flat.json": "42afd22016872c26090c9d88afa8aee932c608e1783fb12a0194d1addbbe6e60",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t03-r0-flat-c000.json": "6b923a4aff10b0a63514284a14197d38c56e5e510df96892f6f83b6f43a3f360",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t04-r0-flat.json": "3af6e07dd669c84d14d18a2faefb7cf0a50cbfcca3a0d21d8543c172cc8bc2c7",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t04-r0-flat-c000.json": "1b15643f86143ee74d37927f9ee7d1c31395c1e61a3fcee6ad3273e1bad3461f",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t05-r0-flat.json": "80431af46b8a65d414b28879114b640b723d885642ebc6cc5ad7c176cb81d6ba",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t05-r0-flat-c000.json": "f212500d8d85492b3be289195abd23a2501686e13cda2a78c802147e4abcb6e6",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t06-r0-flat.json": "d6505a28bfbe64315e40554e102f46102423731821251a4050b64e97eb35ea7c",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t06-r0-flat-c000.json": "a3ec5a80885e6c4d48384f634e730629a42c091e6254cb8e9dd4dbd18272d7fc",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t07-r0-flat.json": "296032fdbec09492c85da03ae9d81387182681c3be402aac9292cceee34e10a1",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t07-r0-flat-c000.json": "1dfae40d6a529ac9e58c978b4355b0ca04079e20724ae13b6ad968c625d6c171",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t00-r1-flat.json": "70421615ea623ed28ec8b5533672f86ee61d12b87be0cea31a35529ccb9b3b2d",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t00-r1-flat-c000.json": "ccd1efde2f135f0ea3fcee52682d1433e061bd41302026a137c6824c85f33332",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t01-r1-flat.json": "1e0e017ba857d7520494d8281d4ceafcdb5344ac37ec9eb71ad12204795a562f",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t01-r1-flat-c000.json": "eb7e1196e50b9c4025a1e97cb1bcb4ceee63dd626492bd81a72122006139614f",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t02-r1-flat.json": "5350269f17b28f1275dca6e2d0b6024f494b710e323f99b937656c3633b22dd8",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t02-r1-flat-c000.json": "6d5a95b6885922c4f8e0f086eb0950cf873aabc3b7149bcbabeeecbeb753430a",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t03-r1-flat.json": "7d9dd8f8b3520ab1d367168b73c67ab475b1dae4de0f135ca5a46c7981075b2a",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t03-r1-flat-c000.json": "2b77eedae6d4470a0885be5749aac4cc6cfa712c1b3fdd1bac211e06239b5e6d",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t04-r1-flat.json": "be330adb90a305590fadea4753b90629a921e3336a4a64e42fb74cecc74627e2",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t04-r1-flat-c000.json": "11285b8f775bf5cfce2f4512bf52eb31d0cf58433eaa6b9e030006b9db338a8e",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t05-r1-flat.json": "05d31ce183d5dd7239cf266792cf401105c84828f167935b8c389af910394333",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t05-r1-flat-c000.json": "b3aea8e6397fa75cf5aeab5c0e59cd4f1cce4a126acb8955fefc861a35eae0ce",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t06-r1-flat.json": "bf5e857d3bd81db66bf4f5141b3c060f5946f6671cbbb0bc2aea993815af9a1f",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t06-r1-flat-c000.json": "c3808c9eb43376198d989c044e2566aca652e0b01d882cdf0f1c75aefdb27032",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/episodes/t07-r1-flat.json": "cbff6d1c8ef2142ebd74d447630ba23773e7152b4b1afbb553241b32b2b513bf",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-raw/calls/t07-r1-flat-c000.json": "b630cf4f1abb73d32decc476222436c2c17554b486e68a2399017d1f07692fb3",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/PLAN.json": "95fdd754f34e2c6bf9943cb07362b8f42314e7d2d41c6c47f2a173d4b1bb4ce5",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/NATIVE-AUDIT.json": "065e380be97bb02bb52775b70513e054946d367463e1b9465088cdc894e389eb",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/SUMMARY.json": "d5616917529f0553ac0e210626ded19b62119ccebdecceae79d8554ed6ed3242",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t00-r0-flat.json": "e8ab149559ac91cdef4f05ff56842837ae3770a627fb6f20c7c575032dd6a07e",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t00-r0-flat-c000.json": "052f4e7da75f1ed37f3258e89f157bf9292da513583d0be7fad34603bef07188",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t01-r0-flat.json": "629c7688fe11e4f9dd498a30e6e7c6a801d9405ff40603e5797af2fbc3e3ae53",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t01-r0-flat-c000.json": "1d8abdd65cee6ed76365a4e2c8093a257e8fa368207415c324dbdf5021c71899",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t02-r0-flat.json": "50fcee741f2ec955c5722f29f3650d5f4290c784ecd4b020650323f5c5d644da",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t02-r0-flat-c000.json": "c25919617a45661cbdbe10ae138df21f2858d41fef1ec0870335db4257351c75",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t03-r0-flat.json": "f62c4ad994022e02adcfefcc702eac64f8cb964cde7cd472fa5b52f8c70ca496",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t03-r0-flat-c000.json": "19e0613dafadf19c6ba967a70463a09a03467637f4b7cf2ee08519e806ee034b",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t04-r0-flat.json": "30da79a0dbdbaaf797f34cecd8f68c88fd3933e0a566ca7059571a0e351b0a30",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t04-r0-flat-c000.json": "4c957f650304e3fb31d3e6ecca771b0f63ed811b1707240ce50bac193c943c98",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t05-r0-flat.json": "106a8fb891c3f20c033c56cba09153b06fb55473bd972fe26d1cdfaf02d44d22",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t05-r0-flat-c000.json": "cc4e65395c916605e87fe274e7aeb6ca91aa884bb432f0597068756871a518c5",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t06-r0-flat.json": "a7e13977f9b70372b53afc3a3b066375c987ca022bab92cfc574bfeb9bb5066e",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t06-r0-flat-c000.json": "598412bc521324f03bcb1ae9c44bd2922f99f1610aec46ca50c7c0e9f543bc06",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t07-r0-flat.json": "a314ca7bf4d5c45d0205b8080a3ca15b5cd47c08c2871d4e858412fa5914a76d",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t07-r0-flat-c000.json": "1f2a79e90d5fcf9150ca9c43d3c3ef70e387c581312e0dde84a5ce091453dde5",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t00-r1-flat.json": "cef69385a53eea3fab047bed47a0b7bef95dafa65c58cb9620ab18fb205cc7c0",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t00-r1-flat-c000.json": "1242ae87143fbb371133b77bc9b7cfaf8505dc3e382359890a12716a057b4432",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t01-r1-flat.json": "17bf183441a35b64fe3425b16664f2b7ed131ef7d4975d786653d11cbbb33d8b",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t01-r1-flat-c000.json": "324c1f09e0353670ec0cae0e90d031a619866ffa252a4c22c48f88d597ea0c9d",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t02-r1-flat.json": "ab98bc9f889c9a6cf62acec29147e48569ff9114934c851ea3984849a33a3e58",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t02-r1-flat-c000.json": "a9b0d0eb23956322320931bc54dc8a48f0635368b7f8dd4bb05032ae49a3dc3b",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t03-r1-flat.json": "d1568a9442b8ac3246dbfc661880a24f62578e4a1874ac523bdd1e5e2b008a64",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t03-r1-flat-c000.json": "6477123185aae1ff542a39a3121b7f7e6db7ab5f63352ef47e63818ce168c776",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t04-r1-flat.json": "e6f4692dd1ff039b68f02895bd25a02937b68adaaee5585874f95ffe9c7a24dd",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t04-r1-flat-c000.json": "239bab8d7f22e0d680c4f939224410ea1e51ec37190100bb7ac21be49b4b5c3e",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t05-r1-flat.json": "aea616086249f8771d9d48b38f35164b5a122adefe1c9726a9c47c05b641a32e",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t05-r1-flat-c000.json": "12057d2d446d5822c1a41b6c30a958b6635ac8c3a8e60b78acd2c4153b54b3c9",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t06-r1-flat.json": "7b1316e333e02f1b5c84d705ccf8a43dc224212a596a86457c4a18d67d879cf4",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t06-r1-flat-c000.json": "fa2b83b41011f3dc351ab6c25738999a83e9ada62dd359d3c7ddb68cc2530a52",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/episodes/t07-r1-flat.json": "17f99f90be7f84100d2bcf1dcc1a673370a58b279b57ecc22a9bf2d3392aa9e2",
+    "R/textcraft-rl-transfer-20260928-001/actor-binder/readout-binder/calls/t07-r1-flat-c000.json": "fb8f414189d4ef90b6c03ec1e1098586f34a03b71590d63e4df3007f4e86a387",
+    "R/textcraft-rl-assist-20260928-001/raw/readout-warm/PLAN.json": "fc9a4826bc083fa1143f9ce220ac96865e40916e4bac1a4378f4a4522e187546",
+    "R/textcraft-rl-assist-20260928-001/raw/readout-warm/NATIVE-AUDIT.json": "74d823a878d2d80568c502ac589fabcd920dc716632c117907dcb54b45feb785",
+    "R/textcraft-rl-assist-20260928-001/raw/readout-0001/PLAN.json": "458c9d22bf5e3d7c61bc1626fd33dbbab68517089b921718c9c78b5e0573e4d3",
+    "R/textcraft-rl-assist-20260928-001/raw/readout-0001/NATIVE-AUDIT.json": "14b46eb8b54e1742dee500930d1b7cb60266c73655644d1845cf7c828eaa9e14",
+    "R/textcraft-rl-assist-20260928-001/binder/readout-warm/PLAN.json": "1c446ca1bf1bf3838af86725912640c91f4ea78c18fa28d36a8a94cbdd9e5bf7",
+    "R/textcraft-rl-assist-20260928-001/binder/readout-warm/NATIVE-AUDIT.json": "3cedc9a6f3fbe2f52f0919e7a8e3ea805160b4fb9b4bf74fe8956d7cde4b50c3",
+    "R/textcraft-rl-assist-20260928-001/binder/readout-0001/PLAN.json": "ce26635cd5ddc1a30b7ff3979800ddd612f24d5d43dfe684897fdabc02c574b0",
+    "R/textcraft-rl-assist-20260928-001/binder/readout-0001/NATIVE-AUDIT.json": "4d9d1e9ac154fb0a236b59ee73af5507517867ebd4d6855e50cc4d934be9a140"
+  },
+  "total_physical_cost": {
+    "six_readouts": {
+      "calls": 4443,
+      "prompt_tokens": 14418061,
+      "completion_tokens": 138625,
+      "native_service_seconds": 11515.572976112366,
+      "failed_calls": 0
+    },
+    "four_new_transfer_readouts": {
+      "calls": 2992,
+      "prompt_tokens": 9757840,
+      "completion_tokens": 93350,
+      "native_service_seconds": 7779.358131408691,
+      "failed_calls": 0
+    },
+    "note": "Warm readouts are reused controls; four_new_transfer_readouts excludes them. Service seconds are summed request durations, not allocation wall time."
+  },
+  "root_concentration": {
+    "varying_roots": [
+      "textcraft_synth.train.1796",
+      "textcraft_synth.train.1273"
+    ],
+    "varying_task_seed_pairs": [
+      [
+        "textcraft_synth.train.1796",
+        202609280900
+      ],
+      [
+        "textcraft_synth.train.1273",
+        202609280901
+      ]
+    ],
+    "all_six_success_roots": [
+      "textcraft_synth.train.256",
+      "textcraft_synth.train.1847"
+    ],
+    "all_six_failure_roots": [
+      "textcraft_synth.train.672",
+      "textcraft_synth.train.38",
+      "textcraft_synth.train.201",
+      "textcraft_synth.train.964"
+    ],
+    "depth5": "0/6 in every cell on the same three roots; these repeated observations are correlated, not 36 independent depth-5 tasks.",
+    "note": "Every between-cell native-score disagreement lies on the two listed task/seed pairs; cost differences are broader and are not restricted to these roots."
+  },
+  "method": {
+    "pairing": "Native audit scores keyed by actual (task_id, seed), all sixteen keys identical in every cell. Root quantities/inventories use identical tasks.jsonl bytes; world and runtime contracts match.",
+    "native_authority": "Existing completed NATIVE-AUDIT.json and frozen COMPARISON.json, not a new scoring implementation.",
+    "small_receipts": "236 small input hashes checked/recorded, including six PLAN/audit/SUMMARY triplets, all 96 episode files, all 96 first-call receipts, committed actor JSON and familiar comparison receipts. Native audit hashes seal remaining call/node evidence without rehashing all traces or weights.",
+    "uncertainty": "Paired mean over eight root clusters. Seeded percentile bootstrap of cluster means: random.Random(20260928), 10000 samples, size 8 with replacement, sorted entries 249/9749. Includes two rollout repeats together. Conditions on one world and one realized optimizer update per training interface; excludes training-seed variation and multiplicity adjustment.",
+    "zero_interval": "The exact [0,0] bootstrap interval for the all-tie binder-trained/binder comparison is a degenerate empirical resampling result, not evidence of population equivalence or zero future benefit.",
+    "scope": "Prospectively fixed, root-disjoint official TRAIN diagnostic B, not official VAL/HOLDOUT or unseen recipe components. B was excluded from gradients but is repeatedly exposed in this adaptive campaign."
+  },
+  "decisions": [
+    {
+      "rank": 1,
+      "decision": "Complete the already fixed first fresh-A collection/update/B readouts and extra-SFT comparison; keep all predeclared checkpoints.",
+      "reason": "This probe shows limited transfer from familiar goals, not that RL cannot transfer. Fresh-A uses disjoint and difficulty-matched optimization roots; extra SFT tests whether an additional update already helps.",
+      "do_not": "Use B rewards as training labels, select a best B checkpoint, replace hard B roots, or change accepted continuation gates."
+    },
+    {
+      "rank": 2,
+      "decision": "Judge subsequent fixed endpoints by paired root gains and cost, not familiar-goal accuracy or optimizer movement.",
+      "reason": "A broad-transfer claim would need gains beyond one borderline root plus independent confirmation. Until then prioritize interpretation of accepted controls over a new grid.",
+      "extra_sft_limit": "One extra SFT step matches start/LR/arithmetic/step count, not data, targets, token dose or FLOPs; it is not a fully controlled RL-versus-SFT efficacy comparison."
+    }
+  ],
+  "slide4_recommendation": {
+    "status": "Material limitation update recommended; existing 01:14 UTC deck remains unchanged by this analysis.",
+    "proposed_title": "Reward training improved familiar goals, with little transfer so far.",
+    "proposed_table": [
+      {
+        "execution": "Model supplies ingredients",
+        "familiar": "9 → 13 /16",
+        "different_B_roots": "4 → 5 /16"
+      },
+      {
+        "execution": "Code fills observed ingredients",
+        "familiar": "14 → 16 /16",
+        "different_B_roots": "5 → 5 /16"
+      }
+    ],
+    "visible_caveat": "One update per interface; eight different TRAIN roots with two attempts each. Raw transfer gain is one attempt on one root; assisted transfer has 16 paired ties.",
+    "notes": "The two panels differ in difficulty and seeds: compare before/after within each panel, not final scores across panels. Crossed execution gives 4–5/16 throughout, and no depth-5 success. Extra-SFT and fresh-A learning remain separate pending tests at this cutoff.",
+    "integration": "Root should update audience slide, data, evidence cutoff, presenter notes and speaker guide together; do not silently rewrite the earlier cutoff."
+  },
+  "realized_training_exposure": {
+    "raw": {
+      "optimizer_steps": 1,
+      "credited_tokens": 19787,
+      "positive_tokens": 5736,
+      "negative_tokens": 14051,
+      "collection_calls": 790,
+      "collection_completion_tokens": 25212
+    },
+    "binder": {
+      "optimizer_steps": 1,
+      "credited_tokens": 8440,
+      "positive_tokens": 6110,
+      "negative_tokens": 2330,
+      "collection_calls": 556,
+      "collection_completion_tokens": 15761
+    }
+  },
+  "by_actual_depth": {
+    "warm_actor_raw_execution": {
+      "3": {
+        "roots": 2,
+        "attempts": 4,
+        "successes": 2
+      },
+      "4": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 2
+      },
+      "5": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 0
+      }
+    },
+    "warm_actor_binder_execution": {
+      "3": {
+        "roots": 2,
+        "attempts": 4,
+        "successes": 3
+      },
+      "4": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 2
+      },
+      "5": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 0
+      }
+    },
+    "raw_actor_raw_execution": {
+      "3": {
+        "roots": 2,
+        "attempts": 4,
+        "successes": 3
+      },
+      "4": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 2
+      },
+      "5": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 0
+      }
+    },
+    "raw_actor_binder_execution": {
+      "3": {
+        "roots": 2,
+        "attempts": 4,
+        "successes": 2
+      },
+      "4": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 2
+      },
+      "5": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 0
+      }
+    },
+    "binder_actor_raw_execution": {
+      "3": {
+        "roots": 2,
+        "attempts": 4,
+        "successes": 2
+      },
+      "4": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 3
+      },
+      "5": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 0
+      }
+    },
+    "binder_actor_binder_execution": {
+      "3": {
+        "roots": 2,
+        "attempts": 4,
+        "successes": 3
+      },
+      "4": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 2
+      },
+      "5": {
+        "roots": 3,
+        "attempts": 6,
+        "successes": 0
+      }
+    }
+  }
+}

@@ -1,7 +1,8 @@
 ---
 title: "Teaching usable next steps: speaker guide"
 date: 2026-09-29
-evidence_cutoff_utc: "2026-09-29T01:14:27Z"
+evidence_cutoff_utc: "2026-09-29T05:30:50Z"
+unchanged_slides_evidence_cutoff_utc: "2026-09-29T01:14:27Z"
 status: exploratory
 ---
 
@@ -10,11 +11,13 @@ status: exploratory
 “Our strongest new result is about making existing worked examples easier to
 learn from. We changed the information shown before an action, while keeping
 the actions taught to the model fixed. That helped again after retraining and
-on another group of goals. We also have a smaller reward-training result, but
-that still needs a transfer test.”
+on another group of goals. Reward training improved familiar goals, but the
+completed different-goal test shows little transfer so far.”
 
 The talk is about five minutes, with time for discussion. The short pdfpc
 notes are prompts, not a script; essential qualifications are visible in the PDF.
+Only slide 4 is advanced to the 05:30:50 UTC transfer snapshot. Teaching and
+helper/Phi statements retain their original 01:14:27 UTC cutoff, shown on those slides.
 
 ## 1. Why usable steps?
 
@@ -91,25 +94,52 @@ With observed-recipe assistance, they rose 14→16/16 (two wins, no losses).
 Code fills ingredients from an already observed recipe; the model still chooses
 the item and output quantity. It does not receive hidden recipes or stock repair.
 
-All eight evaluation goals were used in RL training; the evaluation sampling
-seeds are new. There is one realized collection/update per interface. The
-eight-goal intervals are +6.25 to +50 percentage points without assistance and
-0 to +31.25 with it, excluding training-seed uncertainty.
+The familiar column uses eight goals that were used in RL training, with new
+evaluation sampling seeds. The different-goal column uses eight fixed group-B
+goals whose target-item roots were excluded from that training. They share the
+same recipe world and may share lower-level recipes. Both columns have two
+rollout attempts per root, not two training runs. Compare before/after within a
+column; the goal difficulty and rollout seeds differ across columns.
 
-Cost rose: output tokens 9,610→10,224 (+6.4%) and 8,462→10,325 (+22.0%).
+On B, raw execution changes 4→5/16 (one paired win, fifteen ties); assisted
+execution stays 5→5/16 (sixteen ties). The only own-interface gain is TRAIN1796,
+one root and one seed. Crossing both trained actors with both interfaces gives
+4–5 successes throughout. A second root, TRAIN1273, accounts for the other
+cross-interface disagreement. All six cells, including warm controls, remain
+0/6 on the same three actual-depth5 roots.
+
+The raw B gain is +6.25 percentage points, with a descriptive eight-root
+bootstrap interval [0,+18.75]. Assisted ties produce a mechanically zero-width
+bootstrap interval, not proof of equivalence. The crossed training-interface
+interaction is +6.25 points, interval [−18.75,+37.5]. There is one realized
+collection/update per interface; uncertainty excludes training-run variation.
+
+On familiar goals, cost rose: output tokens 9,610→10,224 (+6.4%) and 8,462→10,325 (+22.0%).
 Calls rose 326→340 and 277→303; service time rose 7.4% and 24.0%.
 One long duplicate-field rejection loop accounts for much of the assisted cost,
 and remains included. Other wins involve quantity completion, recipe correction
 or longer recovery. This is not a clean demonstration of efficient planning,
 held-out transfer, or superiority to additional supervised training.
-Different-goal and extra-SFT controls were pending at the fixed cutoff.
+
+On B, own-interface raw calls fall 778→739; assisted calls rise 673→698 with
+the same successes. Applying the binder-trained actor without assistance takes
+862 calls and reaches six context caps, versus 778 calls and two caps for warm.
+Success changes do not show a reliable co-adaptation benefit. Training trajectories
+and credited-token doses differ between actors (19,787 raw versus 8,440 assisted).
+
+The narrow conclusion is limited observed transfer, not that RL cannot
+generalize. B remains an exposed official TRAIN diagnostic, not VAL/HOLDOUT.
+The already planned fresh-A training and extra-SFT controls are still pending
+at 05:30:50 UTC. Report all fixed endpoints; do not choose checkpoints or
+training labels from B. Extra SFT matches one step/start/LR/arithmetic, not
+data, target-token dose or FLOPs. No new experiment is proposed by this slide.
 
 ## 5. Why these next tests?
 
 We will use Phi-4-mini to test whether the specific history repair works in a
 second model family. Its completed original-package comparison favored discovery over known
 recipes (4/16 versus 1/16 without assistance), but there is no repaired-Phi result
-at the cutoff. Equal update counts across model families do not mean equal
+at this section's original 01:14:27 UTC cutoff. Equal update counts across model families do not mean equal
 tokens, adapter sizes or computation.
 
 The helper screens created real child calls. A fixed helper made its requested
@@ -134,6 +164,8 @@ was only 4/24 and concentrated in one scene. Neither justifies expanding a grid.
 - [Teaching synthesis and all controls](../../experiments/selective_delegation/teaching_synthesis_20260929/FINDING.md)
   and [machine-readable native-audit lineage](../../experiments/selective_delegation/teaching_synthesis_20260929/FINDING.json).
 - [Full crossed RL matrix, behavior and cost](../../experiments/selective_delegation/rl_outcomes_20260928/README.md).
+- [Completed different-goal RL transfer and costs](../../experiments/selective_delegation/rl_transfer_results_20260929/README.md)
+  and [fixed paired native-audit snapshot](../../experiments/selective_delegation/rl_transfer_results_20260929/RESULTS.json).
 - [Harness results and censored helper screens](../../experiments/selective_delegation/harness_synthesis_20260929/README.md).
 - [Portable chart data and source hashes](evidence.json).
 

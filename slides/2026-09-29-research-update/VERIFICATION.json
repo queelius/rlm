@@ -1,9 +1,17 @@
 {
-  "title": "September 29 five-slide update verification",
-  "verified_at_utc": "2026-09-29 01:48:09 UTC",
-  "evidence_cutoff_utc": "2026-09-29T01:14:27Z",
+  "title": "September 29 five-slide completed-transfer update verification",
+  "verified_at_utc": "2026-09-29T05:42:41Z",
+  "evidence_cutoff_utc": "2026-09-29T05:30:50Z",
+  "per_slide_evidence_cutoff_utc": {
+    "1": "2026-09-29T01:14:27Z",
+    "2": "2026-09-29T01:14:27Z",
+    "3": "2026-09-29T01:14:27Z",
+    "4": "2026-09-29T05:30:50Z",
+    "5": "2026-09-29T01:14:27Z"
+  },
   "pdf": "research-update.pdf",
-  "pdf_sha256": "3989c15680c7a02a5e90426c1bb8b71a751b8a70a5a5883e150d4a68cd0cc362",
+  "pdf_sha256": "6368dab540a8480c501cc2ff7671c53e58a9277736b5e6a209105d101ec6deae",
+  "supersedes_pdf_sha256": "3989c15680c7a02a5e90426c1bb8b71a751b8a70a5a5883e150d4a68cd0cc362",
   "page_checks": [
     {
       "page": 1,
@@ -13,7 +21,8 @@
       "notes_words": 39,
       "notes_lines": 7,
       "notes_max_line_characters": 42,
-      "out_of_page_text": []
+      "out_of_page_text": [],
+      "displayed_cutoff_utc": "01:14"
     },
     {
       "page": 2,
@@ -23,7 +32,8 @@
       "notes_words": 42,
       "notes_lines": 9,
       "notes_max_line_characters": 42,
-      "out_of_page_text": []
+      "out_of_page_text": [],
+      "displayed_cutoff_utc": "01:14"
     },
     {
       "page": 3,
@@ -33,17 +43,19 @@
       "notes_words": 51,
       "notes_lines": 9,
       "notes_max_line_characters": 42,
-      "out_of_page_text": []
+      "out_of_page_text": [],
+      "displayed_cutoff_utc": "01:14"
     },
     {
       "page": 4,
-      "title": "Reward training helped, but cost more.",
-      "words": 126,
+      "title": "Reward training showed little transfer.",
+      "words": 107,
       "smallest_font_pt": 7.97,
-      "notes_words": 50,
+      "notes_words": 52,
       "notes_lines": 9,
-      "notes_max_line_characters": 42,
-      "out_of_page_text": []
+      "notes_max_line_characters": 41,
+      "out_of_page_text": [],
+      "displayed_cutoff_utc": "05:30"
     },
     {
       "page": 5,
@@ -53,18 +65,22 @@
       "notes_words": 47,
       "notes_lines": 9,
       "notes_max_line_characters": 41,
-      "out_of_page_text": []
+      "out_of_page_text": [],
+      "displayed_cutoff_utc": "01:14"
     }
   ],
-  "sources_checked": 6,
+  "sources_checked": 8,
+  "all_slide4_counts_and_costs_match_frozen_results": true,
   "overfull_boxes": 0,
-  "final_pages_visually_inspected": [
-    1,
-    2,
-    3,
-    4,
-    5
+  "changed_content_pages": [
+    4
   ],
+  "changed_pages_visually_inspected": [
+    4
+  ],
+  "static_note_preview_visually_inspected": "rendered/slide-04-notes-preview.png",
+  "note_preview_font_pt": 16,
+  "note_preview_unused_height_pt": 287.12799997329716,
   "notes_all_read": true,
   "notes_layout_limit": {
     "characters_per_line": 42,
@@ -74,76 +90,184 @@
   "make_notes_check_exit_code": 0,
   "make_tectonic_exit_code": 0,
   "compiler": "Tectonic 0.17.0",
+  "compile_and_notes_python": "/project/alex_phd/envs/rlm/bin/python",
   "renderer": "PyMuPDF 1.26.4",
+  "renderer_python": "/project/alex_phd/envs/rlm-advisor-figures-20260911/bin/python",
+  "renderer_environment_note": "General rlm environment lacks fitz; reused existing figure environment without installing packages.",
   "note_formatter": "../2026-09-11-advisor-meeting/present.py make_metadata, read-only reuse",
   "prior_deck_files_unchanged": true,
   "prior_deck_files_count": 19,
   "prior_deck_hash_manifest": "PRIOR-DECKS.sha256",
-  "presenter_commands_checked": "make -n present rehearse; reused previously tested pdfpc 4.6 flags",
   "live_pdfpc_GUI_tested": false,
   "new_dependencies": false,
   "GPU_work": false,
   "existing_experiment_or_queue_changes": false,
-  "initial_build_issues_fixed": [
-    "New diagram line-break escaping",
-    "Slides 3 and 5 vertical overflow",
-    "Diagram arrows crossed node text; now connect node edges"
-  ],
-  "note": "Static PDF rendering and text/notes bounds are not a live laptop GUI check. No new scientific execution or ancestry replay.",
-  "evidence_json_unchanged": true,
-  "page_1_render_unchanged": true,
-  "prior_19_files_unchanged": true,
-  "clarity_review": {
-    "changed_pages": [
-      2,
-      3,
-      4,
-      5
-    ],
-    "changed_pages_visually_reinspected": [
-      2,
-      3,
-      4,
-      5
-    ],
-    "supersedes_pdf_sha256": "7aadf10f5f3e3932c5fdc4b0096d4e824a6cad8e4fbfe4c7a22865443ce60aa6",
-    "requested_changes": [
-      "Name and explain SFT",
-      "Use amount of training in the audience text; retain 23 steps in notes",
-      "Name and explain RL without weight-update jargon",
-      "Explain screen censoring as stopping before whole-task assessment",
-      "Compare one helper with working alone in audience text; retain both routing rules in notes",
-      "Describe the upcoming Phi test as our training of a second kind of model"
-    ],
-    "numbers_limits_and_cutoff_preserved": true,
-    "notes_regenerated_and_all_read": true
+  "scope": "Only slides/2026-09-29-research-update changed. Slides 1–3/5 scientific content and cutoff remain fixed. Root owns source commit/push and any slides index update.",
+  "layout_iteration": {
+    "first_build": "Slide 4 overfull vbox by 13.27771 pt; bottom text overlapped footer.",
+    "fix": "Shortened two body paragraphs without reducing font size.",
+    "final": "Zero overfull boxes; all text inside each page; changed slide and static 16-point notes visually inspected."
   },
-  "precision_review": {
+  "artifact_sha256": {
+    "research-update.tex": "5731f8ef93b989a2fe93b927d73f630b5264350fb3a6920bfc4d3818cbdfcc40",
+    "research-update.pdf": "6368dab540a8480c501cc2ff7671c53e58a9277736b5e6a209105d101ec6deae",
+    "research-update.pdfpc": "0990c740af8c9e801248ab60e969126a9aa7bf85ce46e8ee27e4440cae944ea7",
+    "speaker-notes.json": "8633542ddbf32392ed0a220706050f6314378092877d017af52e1200c9f7b6a2",
+    "speaker-guide.md": "b970f4234e037939dae3b22d05ea3f034d186b0de9ad896e8df1ce5b9b96abf9",
+    "evidence.json": "3f1864c656f37fb4bfbb3514e899789c7df6490646df7fe7ed9a1ca71a9d5365",
+    "README.md": "257bb3e3806e748d69077e83728ae66213f98314982ec81b57619486e8102bc8",
+    "Makefile": "ad5da4d7becba314e865d79bb116050952ec3595f2fe43f373dbc8d8d117cd31",
+    "rendered/slide-04.png": "5321f39c0c6b91ec75aa5faa87e4f31384a0e8b3ebdf210cce1063db99b32435",
+    "rendered/slide-04-notes-preview.png": "6537e3e368e8441d94042f8c10fe466919d299992356078c9d1d730107a9b410"
+  },
+  "note": "Static rendering/text bounds do not claim live laptop GUI behavior. Native scientific evidence reused; no new scientific execution.",
+  "previous_verification": {
+    "title": "September 29 five-slide update verification",
     "verified_at_utc": "2026-09-29 01:48:09 UTC",
-    "changed_pages": [
-      2,
-      3
+    "evidence_cutoff_utc": "2026-09-29T01:14:27Z",
+    "pdf": "research-update.pdf",
+    "pdf_sha256": "3989c15680c7a02a5e90426c1bb8b71a751b8a70a5a5883e150d4a68cd0cc362",
+    "page_checks": [
+      {
+        "page": 1,
+        "title": "Good examples should teach usable next steps.",
+        "words": 125,
+        "smallest_font_pt": 7.97,
+        "notes_words": 39,
+        "notes_lines": 7,
+        "notes_max_line_characters": 42,
+        "out_of_page_text": []
+      },
+      {
+        "page": 2,
+        "title": "Introduce a part before asking about it.",
+        "words": 106,
+        "smallest_font_pt": 7.97,
+        "notes_words": 42,
+        "notes_lines": 9,
+        "notes_max_line_characters": 42,
+        "out_of_page_text": []
+      },
+      {
+        "page": 3,
+        "title": "The repair helped in three small comparisons.",
+        "words": 94,
+        "smallest_font_pt": 7.97,
+        "notes_words": 51,
+        "notes_lines": 9,
+        "notes_max_line_characters": 42,
+        "out_of_page_text": []
+      },
+      {
+        "page": 4,
+        "title": "Reward training helped, but cost more.",
+        "words": 126,
+        "smallest_font_pt": 7.97,
+        "notes_words": 50,
+        "notes_lines": 9,
+        "notes_max_line_characters": 42,
+        "out_of_page_text": []
+      },
+      {
+        "page": 5,
+        "title": "Next, test transfer and the value of one helper.",
+        "words": 111,
+        "smallest_font_pt": 7.97,
+        "notes_words": 47,
+        "notes_lines": 9,
+        "notes_max_line_characters": 41,
+        "out_of_page_text": []
+      }
     ],
-    "changed_pages_visually_reinspected": [
-      2,
-      3
-    ],
-    "supersedes_pdf_sha256": "07c83932c91fa7ba8de08bf8529dd5109b1cbd8947d3b2809d1913c81ea8d863",
-    "requested_changes": [
-      "Replace amount of training with number of training steps, retaining the same taught answers"
-    ],
-    "reason": "Input-token dose and FLOP amounts differ; the matched count is training steps.",
-    "clarity_review_history_preserved": true,
-    "evidence_and_notes_unchanged": true,
-    "unchanged_page_renders": [
+    "sources_checked": 6,
+    "overfull_boxes": 0,
+    "final_pages_visually_inspected": [
       1,
+      2,
+      3,
       4,
       5
     ],
-    "source_and_prior_deck_hashes_matched": true,
-    "numbers_limits_and_cutoff_preserved": true,
-    "final_compile_overfull_boxes": 0,
-    "notes_check_exit_code": 0,
-    "layout_adjustment": "Shortened slide 3 caption after the longer wording introduced a second line; final render fits."
+    "notes_all_read": true,
+    "notes_layout_limit": {
+      "characters_per_line": 42,
+      "lines_per_slide": 14,
+      "font_pt": 16
+    },
+    "make_notes_check_exit_code": 0,
+    "make_tectonic_exit_code": 0,
+    "compiler": "Tectonic 0.17.0",
+    "renderer": "PyMuPDF 1.26.4",
+    "note_formatter": "../2026-09-11-advisor-meeting/present.py make_metadata, read-only reuse",
+    "prior_deck_files_unchanged": true,
+    "prior_deck_files_count": 19,
+    "prior_deck_hash_manifest": "PRIOR-DECKS.sha256",
+    "presenter_commands_checked": "make -n present rehearse; reused previously tested pdfpc 4.6 flags",
+    "live_pdfpc_GUI_tested": false,
+    "new_dependencies": false,
+    "GPU_work": false,
+    "existing_experiment_or_queue_changes": false,
+    "initial_build_issues_fixed": [
+      "New diagram line-break escaping",
+      "Slides 3 and 5 vertical overflow",
+      "Diagram arrows crossed node text; now connect node edges"
+    ],
+    "note": "Static PDF rendering and text/notes bounds are not a live laptop GUI check. No new scientific execution or ancestry replay.",
+    "evidence_json_unchanged": true,
+    "page_1_render_unchanged": true,
+    "prior_19_files_unchanged": true,
+    "clarity_review": {
+      "changed_pages": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "changed_pages_visually_reinspected": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "supersedes_pdf_sha256": "7aadf10f5f3e3932c5fdc4b0096d4e824a6cad8e4fbfe4c7a22865443ce60aa6",
+      "requested_changes": [
+        "Name and explain SFT",
+        "Use amount of training in the audience text; retain 23 steps in notes",
+        "Name and explain RL without weight-update jargon",
+        "Explain screen censoring as stopping before whole-task assessment",
+        "Compare one helper with working alone in audience text; retain both routing rules in notes",
+        "Describe the upcoming Phi test as our training of a second kind of model"
+      ],
+      "numbers_limits_and_cutoff_preserved": true,
+      "notes_regenerated_and_all_read": true
+    },
+    "precision_review": {
+      "verified_at_utc": "2026-09-29 01:48:09 UTC",
+      "changed_pages": [
+        2,
+        3
+      ],
+      "changed_pages_visually_reinspected": [
+        2,
+        3
+      ],
+      "supersedes_pdf_sha256": "07c83932c91fa7ba8de08bf8529dd5109b1cbd8947d3b2809d1913c81ea8d863",
+      "requested_changes": [
+        "Replace amount of training with number of training steps, retaining the same taught answers"
+      ],
+      "reason": "Input-token dose and FLOP amounts differ; the matched count is training steps.",
+      "clarity_review_history_preserved": true,
+      "evidence_and_notes_unchanged": true,
+      "unchanged_page_renders": [
+        1,
+        4,
+        5
+      ],
+      "source_and_prior_deck_hashes_matched": true,
+      "numbers_limits_and_cutoff_preserved": true,
+      "final_compile_overfull_boxes": 0,
+      "notes_check_exit_code": 0,
+      "layout_adjustment": "Shortened slide 3 caption after the longer wording introduced a second line; final render fits."
+    }
   }
 }

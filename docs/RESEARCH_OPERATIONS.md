@@ -49,6 +49,25 @@ Do not add broad test suites or change a live owner's sealed code to do this.
 7. Search current primary literature, especially arXiv and official implementations, when findings
    suggest a connection, mechanism, or alternative worth testing.
 
+### Keep the reasoning loop alive, not just the experiment process
+
+On September29 the GPU continued working but Codex had ended its turn without
+any mechanism to review subsequent results. The user had to return to request
+analysis. That is an operations failure even when the GPU is occupied.
+
+Use actual result-triggered reviews with an approximately20-minute fallback.
+Every review must record what changed, what it means, and the next decision:
+continue, replicate, probe a mechanism, alter training or the harness, or retire
+the direction. A reasonable decision can be to finish an informative accepted
+comparison; it cannot be merely to repeat that processes are alive.
+
+The [exact-session review dispatcher](../experiments/selective_delegation/research_review_20260929/README.md)
+uses the installed native `codex queue` command. It admits only one outstanding
+review and requires a model-written decision/evidence acknowledgement. Verify
+end-to-end delivery before calling it working. Keep quota/allocation bounds and
+the dependence on the local Codex client explicit. Data-only watchers remain
+useful for health receipts but are not substitutes for scientific reasoning.
+
 ## Experimental defaults
 
 - Use cheap pilots and multi-fidelity sweeps before committing to long jobs.

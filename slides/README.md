@@ -7,7 +7,8 @@ the crafting task, a concrete training-example repair, its replication, the
 limited RL result, and the next tests. Read the
 [compiled PDF](2026-09-29-research-update/research-update.pdf) or the
 [speaker guide](2026-09-29-research-update/speaker-guide.md).
-Evidence is frozen at 01:14 UTC; planned experiments are not presented as results.
+Slide4 includes the completed RL transfer result at05:30UTC; other slides retain
+their01:14UTC cutoff. Planned experiments are not presented as results.
 
 From the repository root, run
 `make -C slides/2026-09-29-research-update present` for two pdfpc windows on a

@@ -76,6 +76,18 @@ decomposition strategies, RLVR objectives, and evaluation datasets to the ranked
 Follow the durable operating loop in `docs/RESEARCH_OPERATIONS.md` and keep the live experiment
 queue in the active research store current.
 
+**September 29 monitoring correction:** A background experiment queue or status
+logger does not satisfy the user's requirement for autonomous research. Arrange
+actual Codex review on completed/failed experiment events and approximately every
+20 minutes otherwise. Each review must interpret evidence, decide whether to
+continue/revise/retire a direction, and prepare or launch useful new experiments
+when warranted. Record the reasoning, not only counters. Before yielding for
+unattended work, verify the next-turn delivery mechanism; command admission alone
+is not proof of a wakeup. The exact-session dispatcher and its acknowledgement
+protocol are documented in
+`experiments/selective_delegation/research_review_20260929/README.md`.
+Do not report a live reasoning loop while its first delivery is still unverified.
+
 For new work or repairs assigned to an existing agent, use `followup_task` so a completed
 agent is actually restarted. `send_message` alone does not wake it. Confirm that GPU-critical
 preparation is running; never mistake a delivered message for active work.

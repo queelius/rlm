@@ -12,7 +12,10 @@ crafting tasks, not64 independent problems or a validated general-purpose method
 - [Teaching evidence and paired uncertainty](../experiments/selective_delegation/teaching_synthesis_20260929/FINDING.md):
   replication, fixed longer-training controls and the limited second-model result.
 - [RL outcome matrix](../experiments/selective_delegation/rl_outcomes_20260928/README.md):
-  a small familiar-goal gain; new-goal transfer and additional-SFT controls pending.
+  a small familiar-goal gain, followed by the now-complete
+  [fresh-goal transfer comparison](../experiments/selective_delegation/rl_transfer_results_20260929/README.md):
+  matching-interface gains shrink to4→5/16 and5→5/16. Varied-goal RL training
+  and an additional-SFT control remain in progress.
 - [Harness evidence](../experiments/selective_delegation/harness_synthesis_20260929/README.md):
   remaining-work tables did not rescue the pilot; real helper uptake has not yet
   established whole-task benefit; the household-game signal is narrow.
@@ -26,6 +29,9 @@ These fixed-cutoff reports preserve negative and incomplete results. Active
 operations live in `/project/alex_phd/runs/rlm-research-r4/SESSION_CHECKPOINT.md`
 and `RESEARCH_QUEUE.md`. Source and portable summaries are in Git; GPU weights,
 raw traces and training state remain in the external research store.
+The [research-review dispatcher](../experiments/selective_delegation/research_review_20260929/README.md)
+documents the separate requirement for actual model interpretation and revised
+decisions, not merely a background GPU queue. Check its explicit delivery status.
 
 ## September 22: historical assessment
 

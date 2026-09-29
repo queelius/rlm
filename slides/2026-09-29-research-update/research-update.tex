@@ -13,7 +13,8 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=9mm,text margin right=9mm}
 \setbeamerfont{frametitle}{size=\Large,series=\bfseries}
-\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Exploratory update | 29 September 2026 | Cutoff 01:14 UTC\hfill\insertframenumber/5\hspace{9mm}\vspace{3mm}}
+\newcommand{\evidencecutoff}{\ifnum\insertframenumber=4 05:30\else 01:14\fi}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Exploratory update | 29 September 2026 | Cutoff \evidencecutoff\ UTC\hfill\insertframenumber/5\hspace{9mm}\vspace{3mm}}
 \newcommand{\aside}[1]{\vfill{\footnotesize\color{Gray}#1\par}}
 \hypersetup{pdftitle={Teaching usable next steps: research update, 29 September 2026},pdfauthor={Alex Towell}}
 \begin{document}
@@ -82,27 +83,27 @@ Successes out of 32; the taught answers and number of training steps stay fixed.
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Reward training helped, but cost more.}
-Reinforcement learning (RL) rewards task completion. We trained once from a batch of attempts, separately for each tool setting.
+\frametitle{Reward training showed little transfer.}
+Reinforcement learning (RL) rewards task completion. We trained once for each tool setting. Successes before $\to$ after, out of 16:
 \vspace{3mm}
 \begin{center}
 \renewcommand{\arraystretch}{1.25}
 \begin{tabular}{lcc}
 \toprule
-Tool setting & Successes before $\to$ after & Generated text\\
+Tool setting & Familiar goals & Different goals\\
 \midrule
-Model supplies ingredients & $9 \to 13$ out of 16 & $+6\%$\\
-Code fills known ingredients & $14 \to 16$ out of 16 & $+22\%$\\
+Model supplies ingredients & $9 \to 13$ & $4 \to 5$\\
+Code fills known ingredients & $14 \to 16$ & $5 \to 5$\\
 \bottomrule
 \end{tabular}
 \end{center}
 \medskip
 
-These are eight familiar training goals, with two new randomized attempts each. There is only one reward-training run per setting.
+Each column: eight goals, two attempts each. The different target items were not used in training, but share the same recipe world.
 \medskip
 
-Tests on different goals and against more example-based training were still pending at this cutoff.
-\aside{Code uses only recipes already looked up; it does not choose the item or quantity. Mistakes remain, and calls also increased. This is not yet efficient planning or demonstrated transfer.}
+Different goals: one extra success without assistance, none with it.
+\aside{Code uses only observed recipes. Learning on a new training-goal set and comparison with more example-based training are still pending.}
 \end{frame}
 
 \begin{frame}[t]

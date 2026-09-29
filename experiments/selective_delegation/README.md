@@ -3,7 +3,10 @@
 Latest: [September29 findings and decisions](FINDINGS-20260929.md). Changing the
 information available before the same training answers helped again with a
 second training seed and additional goals. More training partly rescues the
-original examples. RL improved familiar goals; its new-goal test is now running.
+original examples. RL improved familiar goals; the completed
+[new-goal comparison](rl_transfer_results_20260929/README.md) shows little transfer
+so far:4→5/16 without ingredient assistance and5→5/16 with it. Training on more
+varied goals and an extra-SFT control are now in progress.
 The [teaching synthesis](teaching_synthesis_20260929/FINDING.md),
 [harness synthesis](harness_synthesis_20260929/README.md) and
 [literature decisions](literature_decisions_20260929/README.md) separate evidence,
@@ -14,10 +17,13 @@ Later fixed snapshot: [new-goal starting baseline](rl_transfer_monitor_20260929/
 finishes 4/16 attempts before RL; it is not a learning improvement. Repeated
 tool errors and premature finishes identify what the pending paired comparisons
 need to improve. The [five-slide update](../../slides/2026-09-29-research-update/README.md)
-retains its earlier, explicit evidence cutoff.
+uses explicit slide-specific evidence cutoffs.
 The [completed starting-model comparison](rl_transfer_monitor_20260929/WARM-COMPARISON.md)
 then gives 4/16 without ingredient assistance and 5/16 with it, at fewer calls.
 The four RL-transfer cells remain pending at that snapshot.
+The later complete report above supersedes that pending status, not its measured
+baseline. [Periodic scientific review](research_review_20260929/README.md) is a
+separate operational obligation from keeping these experiments running.
 
 The [closest-prior-work review](teaching_prior_art_20260929/README.md) narrows the
 paper candidate: adapting teaching to a learner's limited information is already
