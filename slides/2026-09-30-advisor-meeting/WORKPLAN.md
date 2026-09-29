@@ -94,3 +94,17 @@ notes and guide at their existing evidence cutoff. The supporting
 [review](../../experiments/selective_delegation/research_review_20260929/reviews/2026-09-29-0624.md)
 records the data milestone, prior art and conditional follow-ups without adding
 another slide or presenting preparation as a result.
+
+## Automatic research review, September 29, around 06:48 UTC
+
+Both fresh training collections are now complete. With unchanged model weights,
+code assistance increases successful attempts from 5/32 to 12/32 and reduces
+calls, but both settings still have only three goals with mixed rewards. Those
+are different groups with different sampled actions and credit, not identical
+learning signals. The first new weight update is in progress, not complete.
+
+Add this distinction to the optional reading-guide explanation and pin its
+separate evidence cutoff. Keep the audience PDF and short notes unchanged until
+the fixed RL/extra-SFT readouts establish what the model learned. The existing
+slide 6 already introduces code-filled ingredients; a third numerical headline
+now would repeat that idea and risk confusing execution assistance with learning.

@@ -1,0 +1,2343 @@
+{
+  "schema": "fresh-A-same-warm-execution-interface-signal-20260929-v1",
+  "created_utc": "2026-09-29T06:56:06.128264+00:00",
+  "evidence_complete_through_utc": "2026-09-29T06:47:06.459985+00:00",
+  "status": "exploratory_same_warm_actor_collection_comparison_not_learning_gain",
+  "shared_binding": {
+    "schema": "textcraft-fresh-train-collection-20260928-v1",
+    "split": "train",
+    "phase": "collect",
+    "update": 1,
+    "dataset_group": "train",
+    "prepared": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-train-20260928-001/train",
+    "tasks_sha256": "22e65d9017711dd117ef7884b5a7e51c6152fa791c47666382dda05b7407bf76",
+    "manifest_sha256": "07c410047a740b429912df9dbb0fb9c8cea3063b1e185c51f87ca645c5ab9d90",
+    "world_seed": 42,
+    "world_sha256": "f76ce3978c038be9624b3c7387aa30033970508c6afecb1f8f08315aa0693808",
+    "model": "/project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554",
+    "model_manifest_sha256": "19619b44b0bd30bf5debe0960e6dfd6acc5be8287c581727456aa5d17699c18f",
+    "adapter": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-discovery-sft-001/checkpoint-0023",
+      "sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+      "commit_sha256": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf"
+    },
+    "base_dtype": "float16",
+    "lora_dtype": "float32",
+    "profile": "original",
+    "sampling": {
+      "temperature": 0.5,
+      "top_p": 1,
+      "top_k": 0
+    },
+    "planned_episodes": 32,
+    "max_global_calls": 96,
+    "max_global_output_tokens": 8192,
+    "max_new_tokens": 256,
+    "input_plus_output_limit": 8192,
+    "truncation": false
+  },
+  "pairing": {
+    "task_repeat_pairs": 32,
+    "distinct_roots": 8,
+    "repeats_per_root": 4,
+    "episode_seeds": [
+      202609280110,
+      202609280111,
+      202609280112,
+      202609280113
+    ],
+    "all_plan_and_episode_seeds_match": true,
+    "all_first_request_seeds_sampling_and_input_ids_match": true,
+    "identical_first_response_token_sequences": 32,
+    "per_call_seed_rule": "repeat_seed + int(sha256(task_id)[:8],16) + 1000*global_call_index",
+    "same_seed_limit": "Pairing fixes sampling schedules, not subsequent states or actions after execution histories diverge; one collection per interface."
+  },
+  "arms": {
+    "raw": {
+      "collection": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/collect-0001",
+      "planned": 32,
+      "observed": 32,
+      "unknown": 0,
+      "successes": 5,
+      "mixed_groups": 3,
+      "physical_cost": {
+        "calls": 1831,
+        "prompt_tokens": 6157500,
+        "completion_tokens": 57739,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 4897.976036310196
+      },
+      "errors": {
+        "native_action_error": 837,
+        "invalid_schema": 17
+      },
+      "native_error_types": {
+        "missing_required_ingredient": 186,
+        "wrong_ingredient_amount": 58,
+        "other_native_error": 28,
+        "insufficient_inventory": 254,
+        "extra_ingredients": 307,
+        "no_recipe": 4
+      },
+      "terminations": {
+        "finished": 28,
+        "context_cap": 4
+      },
+      "unsuccessful_explicit_finishes": 23,
+      "post_quantity_calls": 23,
+      "reward_signal_exposure": {
+        "nonzero_advantage": {
+          "roots": [
+            "textcraft_synth.train.132",
+            "textcraft_synth.train.1753",
+            "textcraft_synth.train.2281"
+          ],
+          "episodes": 12,
+          "calls": 536,
+          "output_tokens": 16488
+        },
+        "zero_all_failure": {
+          "roots": [
+            "textcraft_synth.train.1051",
+            "textcraft_synth.train.1423",
+            "textcraft_synth.train.1921",
+            "textcraft_synth.train.2026",
+            "textcraft_synth.train.2338"
+          ],
+          "episodes": 20,
+          "calls": 1295,
+          "output_tokens": 41251
+        },
+        "zero_all_success": {
+          "roots": [],
+          "episodes": 0,
+          "calls": 0,
+          "output_tokens": 0
+        },
+        "positive_advantage": {
+          "episodes": 5,
+          "calls": 194,
+          "output_tokens": 6103
+        },
+        "negative_advantage": {
+          "episodes": 7,
+          "calls": 342,
+          "output_tokens": 10385
+        }
+      }
+    },
+    "binder": {
+      "collection": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/collect-0001",
+      "planned": 32,
+      "observed": 32,
+      "unknown": 0,
+      "successes": 12,
+      "mixed_groups": 3,
+      "physical_cost": {
+        "calls": 1461,
+        "prompt_tokens": 4293675,
+        "completion_tokens": 47539,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 3873.86368727684
+      },
+      "errors": {
+        "native_action_error": 479,
+        "invalid_schema": 20
+      },
+      "native_error_types": {
+        "insufficient_inventory": 428,
+        "other_native_error": 18,
+        "missing_required_ingredient": 30,
+        "wrong_ingredient_amount": 1,
+        "extra_ingredients": 2
+      },
+      "terminations": {
+        "finished": 28,
+        "context_cap": 4
+      },
+      "unsuccessful_explicit_finishes": 16,
+      "post_quantity_calls": 44,
+      "reward_signal_exposure": {
+        "nonzero_advantage": {
+          "roots": [
+            "textcraft_synth.train.1423",
+            "textcraft_synth.train.1753",
+            "textcraft_synth.train.2281"
+          ],
+          "episodes": 12,
+          "calls": 394,
+          "output_tokens": 11896
+        },
+        "zero_all_failure": {
+          "roots": [
+            "textcraft_synth.train.1051",
+            "textcraft_synth.train.1921",
+            "textcraft_synth.train.2026",
+            "textcraft_synth.train.2338"
+          ],
+          "episodes": 16,
+          "calls": 959,
+          "output_tokens": 32288
+        },
+        "zero_all_success": {
+          "roots": [
+            "textcraft_synth.train.132"
+          ],
+          "episodes": 4,
+          "calls": 108,
+          "output_tokens": 3355
+        },
+        "positive_advantage": {
+          "episodes": 8,
+          "calls": 260,
+          "output_tokens": 7653
+        },
+        "negative_advantage": {
+          "episodes": 4,
+          "calls": 134,
+          "output_tokens": 4243
+        }
+      }
+    }
+  },
+  "root_comparison": [
+    {
+      "task_id": "textcraft_synth.train.132",
+      "targets": {
+        "t9_i3": 3
+      },
+      "raw": {
+        "successes": 2,
+        "scores_repeat_0_to_3": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0.6666666666666666,
+          -0.6666666666666666,
+          0.6666666666666666,
+          -0.6666666666666666
+        ],
+        "reward_group": "nonzero_advantage",
+        "calls": 136,
+        "output_tokens": 3885,
+        "errors": {
+          "native_action_error": 55
+        },
+        "native_error_types": {
+          "missing_required_ingredient": 10,
+          "wrong_ingredient_amount": 3,
+          "other_native_error": 3,
+          "insufficient_inventory": 36,
+          "extra_ingredients": 3
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 2,
+        "post_quantity_calls": 20
+      },
+      "binder": {
+        "successes": 4,
+        "scores_repeat_0_to_3": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_success",
+        "calls": 108,
+        "output_tokens": 3355,
+        "errors": {
+          "native_action_error": 36
+        },
+        "native_error_types": {
+          "insufficient_inventory": 32,
+          "other_native_error": 4
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 0,
+        "post_quantity_calls": 11
+      },
+      "paired_switches": {
+        "wins": 2,
+        "losses": 0,
+        "ties": 2
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.1423",
+      "targets": {
+        "o8_i3_18": 3
+      },
+      "raw": {
+        "successes": 0,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_failure",
+        "calls": 213,
+        "output_tokens": 5172,
+        "errors": {
+          "native_action_error": 93
+        },
+        "native_error_types": {
+          "insufficient_inventory": 13,
+          "extra_ingredients": 77,
+          "other_native_error": 2,
+          "wrong_ingredient_amount": 1
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 4,
+        "post_quantity_calls": 0
+      },
+      "binder": {
+        "successes": 3,
+        "scores_repeat_0_to_3": [
+          1,
+          0,
+          1,
+          1
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0.3333333333333333,
+          -1,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "reward_group": "nonzero_advantage",
+        "calls": 83,
+        "output_tokens": 2307,
+        "errors": {
+          "native_action_error": 16
+        },
+        "native_error_types": {
+          "insufficient_inventory": 16
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 1,
+        "post_quantity_calls": 28
+      },
+      "paired_switches": {
+        "wins": 3,
+        "losses": 0,
+        "ties": 1
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.2281",
+      "targets": {
+        "m0_i4": 2
+      },
+      "raw": {
+        "successes": 1,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          -0.3333333333333333,
+          -0.3333333333333333,
+          -0.3333333333333333,
+          1
+        ],
+        "reward_group": "nonzero_advantage",
+        "calls": 173,
+        "output_tokens": 5332,
+        "errors": {
+          "native_action_error": 62,
+          "invalid_schema": 1
+        },
+        "native_error_types": {
+          "insufficient_inventory": 46,
+          "wrong_ingredient_amount": 9,
+          "missing_required_ingredient": 7
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 3,
+        "post_quantity_calls": 1
+      },
+      "binder": {
+        "successes": 2,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          -0.6666666666666666,
+          -0.6666666666666666,
+          0.6666666666666666,
+          0.6666666666666666
+        ],
+        "reward_group": "nonzero_advantage",
+        "calls": 177,
+        "output_tokens": 5778,
+        "errors": {
+          "native_action_error": 54
+        },
+        "native_error_types": {
+          "insufficient_inventory": 52,
+          "other_native_error": 1,
+          "missing_required_ingredient": 1
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 2,
+        "post_quantity_calls": 2
+      },
+      "paired_switches": {
+        "wins": 1,
+        "losses": 0,
+        "ties": 3
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.1753",
+      "targets": {
+        "a3_i5": 1
+      },
+      "raw": {
+        "successes": 2,
+        "scores_repeat_0_to_3": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0.6666666666666666,
+          -0.6666666666666666,
+          -0.6666666666666666,
+          0.6666666666666666
+        ],
+        "reward_group": "nonzero_advantage",
+        "calls": 227,
+        "output_tokens": 7271,
+        "errors": {
+          "native_action_error": 108
+        },
+        "native_error_types": {
+          "wrong_ingredient_amount": 13,
+          "insufficient_inventory": 59,
+          "extra_ingredients": 19,
+          "missing_required_ingredient": 16,
+          "other_native_error": 1
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 2,
+        "post_quantity_calls": 2
+      },
+      "binder": {
+        "successes": 3,
+        "scores_repeat_0_to_3": [
+          0,
+          1,
+          1,
+          1
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          -1,
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "reward_group": "nonzero_advantage",
+        "calls": 134,
+        "output_tokens": 3811,
+        "errors": {
+          "native_action_error": 30
+        },
+        "native_error_types": {
+          "insufficient_inventory": 30
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 1,
+        "post_quantity_calls": 3
+      },
+      "paired_switches": {
+        "wins": 2,
+        "losses": 1,
+        "ties": 1
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.1921",
+      "targets": {
+        "o2_i4_22": 2
+      },
+      "raw": {
+        "successes": 0,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_failure",
+        "calls": 233,
+        "output_tokens": 8703,
+        "errors": {
+          "native_action_error": 103,
+          "invalid_schema": 9
+        },
+        "native_error_types": {
+          "missing_required_ingredient": 26,
+          "wrong_ingredient_amount": 6,
+          "extra_ingredients": 59,
+          "insufficient_inventory": 5,
+          "other_native_error": 7
+        },
+        "terminations": {
+          "finished": 3,
+          "context_cap": 1
+        },
+        "unsuccessful_explicit_finishes": 3,
+        "post_quantity_calls": 0
+      },
+      "binder": {
+        "successes": 0,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_failure",
+        "calls": 233,
+        "output_tokens": 7555,
+        "errors": {
+          "native_action_error": 104,
+          "invalid_schema": 5
+        },
+        "native_error_types": {
+          "insufficient_inventory": 91,
+          "missing_required_ingredient": 7,
+          "wrong_ingredient_amount": 1,
+          "extra_ingredients": 2,
+          "other_native_error": 3
+        },
+        "terminations": {
+          "context_cap": 1,
+          "finished": 3
+        },
+        "unsuccessful_explicit_finishes": 3,
+        "post_quantity_calls": 0
+      },
+      "paired_switches": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 4
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.1051",
+      "targets": {
+        "o6_i5_16": 1
+      },
+      "raw": {
+        "successes": 0,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_failure",
+        "calls": 272,
+        "output_tokens": 8180,
+        "errors": {
+          "native_action_error": 159
+        },
+        "native_error_types": {
+          "extra_ingredients": 61,
+          "other_native_error": 5,
+          "missing_required_ingredient": 70,
+          "wrong_ingredient_amount": 5,
+          "insufficient_inventory": 18
+        },
+        "terminations": {
+          "context_cap": 1,
+          "finished": 3
+        },
+        "unsuccessful_explicit_finishes": 3,
+        "post_quantity_calls": 0
+      },
+      "binder": {
+        "successes": 0,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_failure",
+        "calls": 216,
+        "output_tokens": 6158,
+        "errors": {
+          "native_action_error": 81
+        },
+        "native_error_types": {
+          "insufficient_inventory": 57,
+          "missing_required_ingredient": 20,
+          "other_native_error": 4
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 4,
+        "post_quantity_calls": 0
+      },
+      "paired_switches": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 4
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.2338",
+      "targets": {
+        "o8_i5": 2
+      },
+      "raw": {
+        "successes": 0,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_failure",
+        "calls": 278,
+        "output_tokens": 9621,
+        "errors": {
+          "native_action_error": 108,
+          "invalid_schema": 7
+        },
+        "native_error_types": {
+          "insufficient_inventory": 45,
+          "extra_ingredients": 29,
+          "wrong_ingredient_amount": 5,
+          "missing_required_ingredient": 21,
+          "other_native_error": 8
+        },
+        "terminations": {
+          "context_cap": 1,
+          "finished": 3
+        },
+        "unsuccessful_explicit_finishes": 3,
+        "post_quantity_calls": 0
+      },
+      "binder": {
+        "successes": 0,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_failure",
+        "calls": 283,
+        "output_tokens": 11990,
+        "errors": {
+          "native_action_error": 98,
+          "invalid_schema": 15
+        },
+        "native_error_types": {
+          "insufficient_inventory": 92,
+          "other_native_error": 4,
+          "missing_required_ingredient": 2
+        },
+        "terminations": {
+          "context_cap": 3,
+          "finished": 1
+        },
+        "unsuccessful_explicit_finishes": 1,
+        "post_quantity_calls": 0
+      },
+      "paired_switches": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 4
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.2026",
+      "targets": {
+        "m5_i5": 1
+      },
+      "raw": {
+        "successes": 0,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_failure",
+        "calls": 299,
+        "output_tokens": 9575,
+        "errors": {
+          "native_action_error": 149
+        },
+        "native_error_types": {
+          "missing_required_ingredient": 36,
+          "no_recipe": 4,
+          "wrong_ingredient_amount": 16,
+          "extra_ingredients": 59,
+          "insufficient_inventory": 32,
+          "other_native_error": 2
+        },
+        "terminations": {
+          "finished": 3,
+          "context_cap": 1
+        },
+        "unsuccessful_explicit_finishes": 3,
+        "post_quantity_calls": 0
+      },
+      "binder": {
+        "successes": 0,
+        "scores_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rloo_advantages_repeat_0_to_3": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reward_group": "zero_all_failure",
+        "calls": 227,
+        "output_tokens": 6585,
+        "errors": {
+          "native_action_error": 60
+        },
+        "native_error_types": {
+          "insufficient_inventory": 58,
+          "other_native_error": 2
+        },
+        "terminations": {
+          "finished": 4
+        },
+        "unsuccessful_explicit_finishes": 4,
+        "post_quantity_calls": 0
+      },
+      "paired_switches": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 4
+      }
+    }
+  ],
+  "paired_outcomes": [
+    {
+      "task_id": "textcraft_synth.train.132",
+      "repeat": 0,
+      "seed": 202609280110,
+      "raw_success": 1,
+      "binder_success": 1,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1423",
+      "repeat": 0,
+      "seed": 202609280110,
+      "raw_success": 0,
+      "binder_success": 1,
+      "change": 1
+    },
+    {
+      "task_id": "textcraft_synth.train.2281",
+      "repeat": 0,
+      "seed": 202609280110,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1753",
+      "repeat": 0,
+      "seed": 202609280110,
+      "raw_success": 1,
+      "binder_success": 0,
+      "change": -1
+    },
+    {
+      "task_id": "textcraft_synth.train.1921",
+      "repeat": 0,
+      "seed": 202609280110,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1051",
+      "repeat": 0,
+      "seed": 202609280110,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.2338",
+      "repeat": 0,
+      "seed": 202609280110,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.2026",
+      "repeat": 0,
+      "seed": 202609280110,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.132",
+      "repeat": 1,
+      "seed": 202609280111,
+      "raw_success": 0,
+      "binder_success": 1,
+      "change": 1
+    },
+    {
+      "task_id": "textcraft_synth.train.1423",
+      "repeat": 1,
+      "seed": 202609280111,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.2281",
+      "repeat": 1,
+      "seed": 202609280111,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1753",
+      "repeat": 1,
+      "seed": 202609280111,
+      "raw_success": 0,
+      "binder_success": 1,
+      "change": 1
+    },
+    {
+      "task_id": "textcraft_synth.train.1921",
+      "repeat": 1,
+      "seed": 202609280111,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1051",
+      "repeat": 1,
+      "seed": 202609280111,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.2338",
+      "repeat": 1,
+      "seed": 202609280111,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.2026",
+      "repeat": 1,
+      "seed": 202609280111,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.132",
+      "repeat": 2,
+      "seed": 202609280112,
+      "raw_success": 1,
+      "binder_success": 1,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1423",
+      "repeat": 2,
+      "seed": 202609280112,
+      "raw_success": 0,
+      "binder_success": 1,
+      "change": 1
+    },
+    {
+      "task_id": "textcraft_synth.train.2281",
+      "repeat": 2,
+      "seed": 202609280112,
+      "raw_success": 0,
+      "binder_success": 1,
+      "change": 1
+    },
+    {
+      "task_id": "textcraft_synth.train.1753",
+      "repeat": 2,
+      "seed": 202609280112,
+      "raw_success": 0,
+      "binder_success": 1,
+      "change": 1
+    },
+    {
+      "task_id": "textcraft_synth.train.1921",
+      "repeat": 2,
+      "seed": 202609280112,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1051",
+      "repeat": 2,
+      "seed": 202609280112,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.2338",
+      "repeat": 2,
+      "seed": 202609280112,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.2026",
+      "repeat": 2,
+      "seed": 202609280112,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.132",
+      "repeat": 3,
+      "seed": 202609280113,
+      "raw_success": 0,
+      "binder_success": 1,
+      "change": 1
+    },
+    {
+      "task_id": "textcraft_synth.train.1423",
+      "repeat": 3,
+      "seed": 202609280113,
+      "raw_success": 0,
+      "binder_success": 1,
+      "change": 1
+    },
+    {
+      "task_id": "textcraft_synth.train.2281",
+      "repeat": 3,
+      "seed": 202609280113,
+      "raw_success": 1,
+      "binder_success": 1,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1753",
+      "repeat": 3,
+      "seed": 202609280113,
+      "raw_success": 1,
+      "binder_success": 1,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1921",
+      "repeat": 3,
+      "seed": 202609280113,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.1051",
+      "repeat": 3,
+      "seed": 202609280113,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.2338",
+      "repeat": 3,
+      "seed": 202609280113,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    },
+    {
+      "task_id": "textcraft_synth.train.2026",
+      "repeat": 3,
+      "seed": 202609280113,
+      "raw_success": 0,
+      "binder_success": 0,
+      "change": 0
+    }
+  ],
+  "paired_summary": {
+    "wins": 8,
+    "losses": 1,
+    "ties": 23,
+    "both_success": 4,
+    "both_failure": 19,
+    "unknown": 0,
+    "success_difference": 7,
+    "difference_percentage_points": 21.875
+  },
+  "common_all_failure_roots": [
+    "textcraft_synth.train.1921",
+    "textcraft_synth.train.1051",
+    "textcraft_synth.train.2338",
+    "textcraft_synth.train.2026"
+  ],
+  "episodes": {
+    "raw": [
+      {
+        "episode_id": "t00-r0-flat",
+        "task_id": "textcraft_synth.train.132",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 50,
+        "global_output_tokens": 1694,
+        "errors": {
+          "native_action_error": 28
+        },
+        "post_quantity_calls": 19,
+        "rloo_advantage": 0.6666666666666666
+      },
+      {
+        "episode_id": "t01-r0-flat",
+        "task_id": "textcraft_synth.train.1423",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 71,
+        "global_output_tokens": 1735,
+        "errors": {
+          "native_action_error": 25
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t02-r0-flat",
+        "task_id": "textcraft_synth.train.2281",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 37,
+        "global_output_tokens": 1116,
+        "errors": {
+          "native_action_error": 12
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -0.3333333333333333
+      },
+      {
+        "episode_id": "t03-r0-flat",
+        "task_id": "textcraft_synth.train.1753",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 38,
+        "global_output_tokens": 1088,
+        "errors": {
+          "native_action_error": 9
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0.6666666666666666
+      },
+      {
+        "episode_id": "t04-r0-flat",
+        "task_id": "textcraft_synth.train.1921",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 23,
+        "global_output_tokens": 1240,
+        "errors": {
+          "native_action_error": 2,
+          "invalid_schema": 3
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t05-r0-flat",
+        "task_id": "textcraft_synth.train.1051",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "context_cap",
+        "global_calls": 85,
+        "global_output_tokens": 2683,
+        "errors": {
+          "native_action_error": 61
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t06-r0-flat",
+        "task_id": "textcraft_synth.train.2338",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "context_cap",
+        "global_calls": 86,
+        "global_output_tokens": 2203,
+        "errors": {
+          "native_action_error": 31
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t07-r0-flat",
+        "task_id": "textcraft_synth.train.2026",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 80,
+        "global_output_tokens": 2289,
+        "errors": {
+          "native_action_error": 34
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t00-r1-flat",
+        "task_id": "textcraft_synth.train.132",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 43,
+        "global_output_tokens": 896,
+        "errors": {
+          "native_action_error": 10
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -0.6666666666666666
+      },
+      {
+        "episode_id": "t01-r1-flat",
+        "task_id": "textcraft_synth.train.1423",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 63,
+        "global_output_tokens": 1592,
+        "errors": {
+          "native_action_error": 36
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t02-r1-flat",
+        "task_id": "textcraft_synth.train.2281",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 44,
+        "global_output_tokens": 1173,
+        "errors": {
+          "native_action_error": 11,
+          "invalid_schema": 1
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -0.3333333333333333
+      },
+      {
+        "episode_id": "t03-r1-flat",
+        "task_id": "textcraft_synth.train.1753",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 75,
+        "global_output_tokens": 2380,
+        "errors": {
+          "native_action_error": 42
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -0.6666666666666666
+      },
+      {
+        "episode_id": "t04-r1-flat",
+        "task_id": "textcraft_synth.train.1921",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 47,
+        "global_output_tokens": 2561,
+        "errors": {
+          "native_action_error": 12,
+          "invalid_schema": 5
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t05-r1-flat",
+        "task_id": "textcraft_synth.train.1051",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 72,
+        "global_output_tokens": 2176,
+        "errors": {
+          "native_action_error": 45
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t06-r1-flat",
+        "task_id": "textcraft_synth.train.2338",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 66,
+        "global_output_tokens": 1987,
+        "errors": {
+          "native_action_error": 27
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t07-r1-flat",
+        "task_id": "textcraft_synth.train.2026",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 65,
+        "global_output_tokens": 2267,
+        "errors": {
+          "native_action_error": 36
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t00-r2-flat",
+        "task_id": "textcraft_synth.train.132",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 28,
+        "global_output_tokens": 908,
+        "errors": {
+          "native_action_error": 13
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0.6666666666666666
+      },
+      {
+        "episode_id": "t01-r2-flat",
+        "task_id": "textcraft_synth.train.1423",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 40,
+        "global_output_tokens": 1060,
+        "errors": {
+          "native_action_error": 19
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t02-r2-flat",
+        "task_id": "textcraft_synth.train.2281",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 53,
+        "global_output_tokens": 1793,
+        "errors": {
+          "native_action_error": 28
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -0.3333333333333333
+      },
+      {
+        "episode_id": "t03-r2-flat",
+        "task_id": "textcraft_synth.train.1753",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 75,
+        "global_output_tokens": 2640,
+        "errors": {
+          "native_action_error": 46
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -0.6666666666666666
+      },
+      {
+        "episode_id": "t04-r2-flat",
+        "task_id": "textcraft_synth.train.1921",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "context_cap",
+        "global_calls": 86,
+        "global_output_tokens": 2351,
+        "errors": {
+          "native_action_error": 52
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t05-r2-flat",
+        "task_id": "textcraft_synth.train.1051",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 46,
+        "global_output_tokens": 1185,
+        "errors": {
+          "native_action_error": 18
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t06-r2-flat",
+        "task_id": "textcraft_synth.train.2338",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 50,
+        "global_output_tokens": 2862,
+        "errors": {
+          "native_action_error": 12,
+          "invalid_schema": 7
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t07-r2-flat",
+        "task_id": "textcraft_synth.train.2026",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 71,
+        "global_output_tokens": 2491,
+        "errors": {
+          "native_action_error": 34
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t00-r3-flat",
+        "task_id": "textcraft_synth.train.132",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 15,
+        "global_output_tokens": 387,
+        "errors": {
+          "native_action_error": 4
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -0.6666666666666666
+      },
+      {
+        "episode_id": "t01-r3-flat",
+        "task_id": "textcraft_synth.train.1423",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 39,
+        "global_output_tokens": 785,
+        "errors": {
+          "native_action_error": 13
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t02-r3-flat",
+        "task_id": "textcraft_synth.train.2281",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 39,
+        "global_output_tokens": 1250,
+        "errors": {
+          "native_action_error": 11
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 1
+      },
+      {
+        "episode_id": "t03-r3-flat",
+        "task_id": "textcraft_synth.train.1753",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 39,
+        "global_output_tokens": 1163,
+        "errors": {
+          "native_action_error": 11
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0.6666666666666666
+      },
+      {
+        "episode_id": "t04-r3-flat",
+        "task_id": "textcraft_synth.train.1921",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 77,
+        "global_output_tokens": 2551,
+        "errors": {
+          "native_action_error": 37,
+          "invalid_schema": 1
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t05-r3-flat",
+        "task_id": "textcraft_synth.train.1051",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 69,
+        "global_output_tokens": 2136,
+        "errors": {
+          "native_action_error": 35
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t06-r3-flat",
+        "task_id": "textcraft_synth.train.2338",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 76,
+        "global_output_tokens": 2569,
+        "errors": {
+          "native_action_error": 38
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t07-r3-flat",
+        "task_id": "textcraft_synth.train.2026",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "context_cap",
+        "global_calls": 83,
+        "global_output_tokens": 2528,
+        "errors": {
+          "native_action_error": 45
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      }
+    ],
+    "binder": [
+      {
+        "episode_id": "t00-r0-flat",
+        "task_id": "textcraft_synth.train.132",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 44,
+        "global_output_tokens": 1552,
+        "errors": {
+          "native_action_error": 25
+        },
+        "post_quantity_calls": 8,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t01-r0-flat",
+        "task_id": "textcraft_synth.train.1423",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 27,
+        "global_output_tokens": 836,
+        "errors": {
+          "native_action_error": 6
+        },
+        "post_quantity_calls": 13,
+        "rloo_advantage": 0.3333333333333333
+      },
+      {
+        "episode_id": "t02-r0-flat",
+        "task_id": "textcraft_synth.train.2281",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 58,
+        "global_output_tokens": 1931,
+        "errors": {
+          "native_action_error": 23
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -0.6666666666666666
+      },
+      {
+        "episode_id": "t03-r0-flat",
+        "task_id": "textcraft_synth.train.1753",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 22,
+        "global_output_tokens": 563,
+        "errors": {
+          "native_action_error": 5
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -1
+      },
+      {
+        "episode_id": "t04-r0-flat",
+        "task_id": "textcraft_synth.train.1921",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "context_cap",
+        "global_calls": 82,
+        "global_output_tokens": 2911,
+        "errors": {
+          "native_action_error": 50,
+          "invalid_schema": 5
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t05-r0-flat",
+        "task_id": "textcraft_synth.train.1051",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 71,
+        "global_output_tokens": 2194,
+        "errors": {
+          "native_action_error": 37
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t06-r0-flat",
+        "task_id": "textcraft_synth.train.2338",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "context_cap",
+        "global_calls": 82,
+        "global_output_tokens": 2498,
+        "errors": {
+          "native_action_error": 33
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t07-r0-flat",
+        "task_id": "textcraft_synth.train.2026",
+        "repeat": 0,
+        "seed": 202609280110,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 57,
+        "global_output_tokens": 1495,
+        "errors": {
+          "native_action_error": 12
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t00-r1-flat",
+        "task_id": "textcraft_synth.train.132",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 22,
+        "global_output_tokens": 543,
+        "errors": {
+          "native_action_error": 1
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t01-r1-flat",
+        "task_id": "textcraft_synth.train.1423",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 10,
+        "global_output_tokens": 238,
+        "errors": {
+          "native_action_error": 1
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -1
+      },
+      {
+        "episode_id": "t02-r1-flat",
+        "task_id": "textcraft_synth.train.2281",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 44,
+        "global_output_tokens": 1511,
+        "errors": {
+          "native_action_error": 15
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": -0.6666666666666666
+      },
+      {
+        "episode_id": "t03-r1-flat",
+        "task_id": "textcraft_synth.train.1753",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 41,
+        "global_output_tokens": 1218,
+        "errors": {
+          "native_action_error": 11
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0.3333333333333333
+      },
+      {
+        "episode_id": "t04-r1-flat",
+        "task_id": "textcraft_synth.train.1921",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 63,
+        "global_output_tokens": 2079,
+        "errors": {
+          "native_action_error": 30
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t05-r1-flat",
+        "task_id": "textcraft_synth.train.1051",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 62,
+        "global_output_tokens": 1660,
+        "errors": {
+          "native_action_error": 18
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t06-r1-flat",
+        "task_id": "textcraft_synth.train.2338",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "context_cap",
+        "global_calls": 77,
+        "global_output_tokens": 2544,
+        "errors": {
+          "native_action_error": 36
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t07-r1-flat",
+        "task_id": "textcraft_synth.train.2026",
+        "repeat": 1,
+        "seed": 202609280111,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 51,
+        "global_output_tokens": 1478,
+        "errors": {
+          "native_action_error": 11
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t00-r2-flat",
+        "task_id": "textcraft_synth.train.132",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 20,
+        "global_output_tokens": 600,
+        "errors": {
+          "native_action_error": 3
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t01-r2-flat",
+        "task_id": "textcraft_synth.train.1423",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 14,
+        "global_output_tokens": 359,
+        "errors": {
+          "native_action_error": 1
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0.3333333333333333
+      },
+      {
+        "episode_id": "t02-r2-flat",
+        "task_id": "textcraft_synth.train.2281",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 36,
+        "global_output_tokens": 1172,
+        "errors": {
+          "native_action_error": 9
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0.6666666666666666
+      },
+      {
+        "episode_id": "t03-r2-flat",
+        "task_id": "textcraft_synth.train.1753",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 34,
+        "global_output_tokens": 952,
+        "errors": {
+          "native_action_error": 6
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0.3333333333333333
+      },
+      {
+        "episode_id": "t04-r2-flat",
+        "task_id": "textcraft_synth.train.1921",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 38,
+        "global_output_tokens": 1116,
+        "errors": {
+          "native_action_error": 10
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t05-r2-flat",
+        "task_id": "textcraft_synth.train.1051",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 46,
+        "global_output_tokens": 1275,
+        "errors": {
+          "native_action_error": 16
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t06-r2-flat",
+        "task_id": "textcraft_synth.train.2338",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "context_cap",
+        "global_calls": 48,
+        "global_output_tokens": 4589,
+        "errors": {
+          "native_action_error": 9,
+          "invalid_schema": 14
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t07-r2-flat",
+        "task_id": "textcraft_synth.train.2026",
+        "repeat": 2,
+        "seed": 202609280112,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 71,
+        "global_output_tokens": 2193,
+        "errors": {
+          "native_action_error": 25
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t00-r3-flat",
+        "task_id": "textcraft_synth.train.132",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 22,
+        "global_output_tokens": 660,
+        "errors": {
+          "native_action_error": 7
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t01-r3-flat",
+        "task_id": "textcraft_synth.train.1423",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 32,
+        "global_output_tokens": 874,
+        "errors": {
+          "native_action_error": 8
+        },
+        "post_quantity_calls": 14,
+        "rloo_advantage": 0.3333333333333333
+      },
+      {
+        "episode_id": "t02-r3-flat",
+        "task_id": "textcraft_synth.train.2281",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 39,
+        "global_output_tokens": 1164,
+        "errors": {
+          "native_action_error": 7
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0.6666666666666666
+      },
+      {
+        "episode_id": "t03-r3-flat",
+        "task_id": "textcraft_synth.train.1753",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 1,
+        "status": "finished",
+        "global_calls": 37,
+        "global_output_tokens": 1078,
+        "errors": {
+          "native_action_error": 8
+        },
+        "post_quantity_calls": 1,
+        "rloo_advantage": 0.3333333333333333
+      },
+      {
+        "episode_id": "t04-r3-flat",
+        "task_id": "textcraft_synth.train.1921",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 50,
+        "global_output_tokens": 1449,
+        "errors": {
+          "native_action_error": 14
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t05-r3-flat",
+        "task_id": "textcraft_synth.train.1051",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 37,
+        "global_output_tokens": 1029,
+        "errors": {
+          "native_action_error": 10
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t06-r3-flat",
+        "task_id": "textcraft_synth.train.2338",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 76,
+        "global_output_tokens": 2359,
+        "errors": {
+          "native_action_error": 20,
+          "invalid_schema": 1
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      },
+      {
+        "episode_id": "t07-r3-flat",
+        "task_id": "textcraft_synth.train.2026",
+        "repeat": 3,
+        "seed": 202609280113,
+        "native_score": 0,
+        "status": "finished",
+        "global_calls": 48,
+        "global_output_tokens": 1419,
+        "errors": {
+          "native_action_error": 12
+        },
+        "post_quantity_calls": 0,
+        "rloo_advantage": 0
+      }
+    ]
+  },
+  "method": {
+    "native_authority": "Reuse completed native audits; cross-check SUMMARY and64 episode/root-node pairs; no native replay or model rehash.",
+    "checked_receipts": "64 episodes,64 root nodes,64 first calls; first requests bind actual PLAN, actor, sampling seed and initial prompt.",
+    "rloo": "A_i = success_i - mean(other three successes); all tokens of nonzero-advantage trajectories are credited, errors included, with fixed32 episode denominator. All-success and all-failure groups have zero direct terminal-RLOO gradient; other roots can change shared parameters.",
+    "error_taxonomy": {
+      "extra_ingredients": "Extra ingredients not required",
+      "missing_required_ingredient": "Missing required ingredient",
+      "wrong_ingredient_amount": "Wrong amount of",
+      "insufficient_inventory": "Insufficient ingredients in inventory",
+      "output_count_not_multiple": "not a multiple",
+      "no_recipe": "No recipe found"
+    },
+    "uncertainty": "Descriptive eight-root paired analysis. No p-value or interval treating32 attempts as independent; shared recipes and one collection per interface limit generalization.",
+    "signal_limit": "Equal mixed-group counts do not mean identical or equally useful gradients. Identities, signs, paths and token exposures change; these are available reward contrasts, not measured gradient quality or transfer."
+  },
+  "source_sha256": {
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-train-20260928-001/train/tasks.jsonl": "22e65d9017711dd117ef7884b5a7e51c6152fa791c47666382dda05b7407bf76",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-train-20260928-001/train/MANIFEST.json": "07c410047a740b429912df9dbb0fb9c8cea3063b1e185c51f87ca645c5ab9d90",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-discovery-sft-001/checkpoint-0023/COMMIT.json": "616bab7a57a7845cb21f7d32ffa76b8deb280bc7604459d171d5ea69648685cf",
+    "/project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554/local-research-manifest.json": "19619b44b0bd30bf5debe0960e6dfd6acc5be8287c581727456aa5d17699c18f",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/analyze_textcraft.py": "0fbf55aaa6b78e94cf6e0ecfe6ed0a48c027f31e9db5b8b903b4ffbee2d9fb97",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/rl_resume_20260928/collect.py": "f1457237edcbf7fa907c56a48069841b744a071e901f11998a86c1e031b69d3b",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/eval_textcraft.py": "ddc7d49f5749258e620fc651de1cc84d96a581e44ee958965ad4f0e03fad1223",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/rl_resume_20260928/probe_common.py": "59a6e8ade14ab34db6fe4b5e31b13bf4b591b5ec4d030832d762c28227977c8e",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/rl_fresh_20260928/fresh_common.py": "cfe8a91fab32e596a5c67c57fe1dbfbd1fa625049b7dd1b536f3aa2310012d79",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/eval_textcraft.py": "1e8156909b2c17cbed20d3add5e429daece4d602979e6e44bde628ad7296c92b",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/textcraft_bridge.py": "1553db71f5c4dd4738e50d087c0a33d99d9ea7f97a084e136e4360837f2a7d40",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/eval_textcraft_train_readiness.py": "338a31fdd954ac131278dce7bc20f3a6949e389339075e6a07435618c50df50c",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/analyze_textcraft.py": "f1e095401698432fcf630b62baba88df9852e3b0699f711553ba583a382344d1",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/unattended-breadth-20260914/runner_v2.py": "23f8cd14aab63a478d06fb22ba3bcdfb1d9c37af5f168f71427b2b2668c6cfa6",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/analyze_textcraft_train_readiness.py": "0dcc87d7d62ba967ecb254cf6e06444887943f52f0b2a0c718b23384d9c181ad",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/rl_fresh_20260928/collect.py": "21449179d38a4bb87499d87705426598c245d45dd0ac1a7d60d5357c7ab87f24",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/textcraft_trajectory_loss.py": "e724cf591c51d6f7ebc9ff53f9bddd21a9d0df50bc94b1cee51026267fc4a38e",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/textcraft_recipe_binder.py": "2729dc225da2bda00ff1d15ab5acbd87ea9d98a8aef6ebde67c02e0934546695",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/train_planner.py": "9ce66e6f2bc8774bf5f4a5ae0e4934fbad5fd04da8886cb799231b8582f562f8",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/unattended-breadth-20260914/campaign.py": "d9117b2ec84a95ea52b65bace5bb2570c7a8bf46ac91261f5376d2d67c051b31",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/probe.py": "8a73f3fab4d9c03fec8b51cc2a014b6f691915db4c972e1b1bef5a2acdae9302",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/rl_textcraft_terminal.py": "591e06b194a0b1818f897223244d53a3430f18453785d8870662d0a8714db345",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/prepare_textcraft.py": "d7f1ab9c2e924e2ae4b4897807074e4f1148347138311916f58afb18bac4dfbb",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/collect-0001/PLAN.json": "a3277575c8249b2d27459d9078c572a7f8375aaf2cd33918841c5b01727b8bdc",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/collect-0001/SUMMARY.json": "13138d342f4c32faed545a6d0d1b6237896f19c69fa1e96306ab574770612cba",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/raw/collect-0001/NATIVE-AUDIT.json": "cebc89185e245d4e20bd6c45e9d81544ee820759bc750d3467916c4fa53a4caa",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/collect-0001/PLAN.json": "1bd9a57193675b34a6e9f4d8ce839981ab9a3ada879befc98873060fe672eab1",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/collect-0001/SUMMARY.json": "49093b2c275868d55a1a2c704bc1a9c34240bf6cde04a58b6fd636256d028521",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/collect-0001/NATIVE-AUDIT.json": "4a175a6d0f873ca6d2c1e7db6fb691074d25d233522a3e8f36f7f9653e747286"
+  },
+  "checked_receipt_sha256": {
+    "raw": {
+      "episodes/t00-r0-flat.json": "3ec5da68da89bc35cb0a5b036b714bc43f0c3df10c0ed1c71564baee42aa21a4",
+      "nodes/t00-r0-flat-n0.json": "641983cb3590f6c4f941b207616a4bceb6b3efb0921fedc4f186aa1a02c57386",
+      "calls/t00-r0-flat-c000.json": "cf0b6586c4c31abfb1075f9312dabba102221946215ef881d07626a2ade21815",
+      "episodes/t01-r0-flat.json": "0f31cba5e8189f910f86cdfa1144cb9d0bed8b7551f805daffa279943998ab3f",
+      "nodes/t01-r0-flat-n0.json": "46ea5a3aa7bd4ec980aa69b9fa0a260e4d7c9584b807a194e6110359198f9be2",
+      "calls/t01-r0-flat-c000.json": "75ddd3d2e9c6cfdf58607b6e96231a0754771af0c6988b485e290ce4f6d87525",
+      "episodes/t02-r0-flat.json": "8f7521169bbe3ad563fa49c1258d6a7408bd67fc66c51b1cc556e494447587f7",
+      "nodes/t02-r0-flat-n0.json": "2eeffc0e40b18b84e66f2310f84911620f4d1753b00645d629e6cf41bd6e0bd7",
+      "calls/t02-r0-flat-c000.json": "4bbea162b80cc4dea8f8ed35ca8aace1502ed113699317fedc450f840c09b9e9",
+      "episodes/t03-r0-flat.json": "f10982ec60679eb2ead80a3b8cc1067dd927f6f3e0697f2bd3e7b3411251d615",
+      "nodes/t03-r0-flat-n0.json": "74342ad305a4952fad5d2df98016d6a8a395551ccfda74316bed8e4f04b351f5",
+      "calls/t03-r0-flat-c000.json": "f700ba798552634ac7958e35092c606107c2eefdf2c818e25d90cbec69552ee2",
+      "episodes/t04-r0-flat.json": "590a757a0f14556e1f23a16d0f03a8860f636378642bc78079f68badc7261cd6",
+      "nodes/t04-r0-flat-n0.json": "78f76d882eab6fd1a120aa222eb7da5c5ee3f41f9238369c2f5a8503f1ae9a80",
+      "calls/t04-r0-flat-c000.json": "a8e6773b3b06026dfe4e2140e6a53a9181f02f19af36a5091955af4221f05d5f",
+      "episodes/t05-r0-flat.json": "dd018430fd79f0b9c06e5437ee7e7055dab04ad803955c24e85edc479fff93ff",
+      "nodes/t05-r0-flat-n0.json": "a351f7e722c346056ae9b4e9a20441d702f12b809fbc291a9743840490305e79",
+      "calls/t05-r0-flat-c000.json": "63ec8d08c13e1607b35fc05abc46634c44a1da86cc73faf9a5b9732e53aa41d2",
+      "episodes/t06-r0-flat.json": "950efc24e757f9218299507b00a8c480eb038ab7fd89e6630527f5e1c3513698",
+      "nodes/t06-r0-flat-n0.json": "c97d28830ecf045e6da001c4da0bdd24ee42f763b4993eebabfb38390bcedcc0",
+      "calls/t06-r0-flat-c000.json": "91afd634bb294f0b8c9089c1d547dbcab95912a24095ee7685497a8d2b7eac7e",
+      "episodes/t07-r0-flat.json": "04ff6f0fba333d945788d93d60755a2c375a1a978ccdcb111a19c47c092bc8a1",
+      "nodes/t07-r0-flat-n0.json": "1966932fa3ab800523f8922ccdc82654a2a3cb284252387d038aff61b601a28e",
+      "calls/t07-r0-flat-c000.json": "f1e646109dd14f500ac078f5627ded7f7de4f8bf8ce3207e125e0bea0f62a4da",
+      "episodes/t00-r1-flat.json": "eef5327e9af74640f0df54583071b1741b75b32f9454353c89427b9f1a4d7638",
+      "nodes/t00-r1-flat-n0.json": "0c7521854e315edba28f46bce79c430b8f515f568ee8c02bc323871559aa1ec6",
+      "calls/t00-r1-flat-c000.json": "72847d1b3816a751ff2d2cf760c947ca86340369d04b620b0554c053fcd364e7",
+      "episodes/t01-r1-flat.json": "b8c23879d1a116ab6605ded01d57cd4b4b25ca20a9a8a353468e9dddbddcc7ed",
+      "nodes/t01-r1-flat-n0.json": "aeb92b15b5d485ece5751c97f79f8e6884575314d6a8bcbdda1133385ee72b16",
+      "calls/t01-r1-flat-c000.json": "6c07d0eda33bae9f2c45626e4f96eec03d14d52ec82c18908473724bd9be8591",
+      "episodes/t02-r1-flat.json": "e31a3c4d2a77a3fdc47aa3502aca885cfe4b1ef387fdde665c86444b19f88149",
+      "nodes/t02-r1-flat-n0.json": "b146bdfd1fe5b5b163bbf2cc51f71c1975d7d71cc5208e27437a2811e74f3349",
+      "calls/t02-r1-flat-c000.json": "dbd0d63a25b0c35ba04d7a21f3d7abe535d08c61eb103b7502f4a4e6fce3c320",
+      "episodes/t03-r1-flat.json": "33fc5e9a92e0d29c9bfbce150ca5a336ed89ca2514c02087ad1247cc990d3562",
+      "nodes/t03-r1-flat-n0.json": "5bdfa483764874a3c425f65093f4f24bbd14130ad1986d39def6df77b9e02458",
+      "calls/t03-r1-flat-c000.json": "1a94e02785d5ed8db4dc09fc276a9a8ee78fb27b08e9eecc7a7121cc9bb7cbc9",
+      "episodes/t04-r1-flat.json": "f9dd61a73869464e20dad63921037a283c406aa9f26320661d3e286c93072d31",
+      "nodes/t04-r1-flat-n0.json": "e1595a7e63f0a9007c33e614b1aa80f81fa2e7bab7d93cf896dc819eb8c8288a",
+      "calls/t04-r1-flat-c000.json": "ad1e2e132c598849175c929f18efbca1984f2c19a0cd2d59a7c612fd6b9b210a",
+      "episodes/t05-r1-flat.json": "5aab23ae0d6133b58a563370a222933affe63a01ef3672cf5aac80b4f3ab9e34",
+      "nodes/t05-r1-flat-n0.json": "dd7446c529c58fa049aeda8571e888bc3ed72779138ed7a0085efb6d22a555b4",
+      "calls/t05-r1-flat-c000.json": "4decd3c845aa4004c7f2638be6a836ef9f4bde5042bc9f6d9ab7573411afa891",
+      "episodes/t06-r1-flat.json": "9b3ef733bb0fd143959944bde95b96d5e530706575b70b29e6251908954cfa49",
+      "nodes/t06-r1-flat-n0.json": "422bbec3e183449ba304da3cd08848624bcf28fc32221e63e7210f618d840289",
+      "calls/t06-r1-flat-c000.json": "6b0bbb7f1ab3e7ba240318b687509796bcccb887645d923cf8a87d1f978ff982",
+      "episodes/t07-r1-flat.json": "b453833d7aa074bc88aad0e41a76912016d0d1a68ca8cc3eb6008f5d40226ef5",
+      "nodes/t07-r1-flat-n0.json": "7e9430383fd0064f222bd75ea264b66a553efa12ea65d83e83928b5e59cc8b06",
+      "calls/t07-r1-flat-c000.json": "09b668352b3757e0c5291ea1b88501d73cdcf74d45f4828a2c9b126b133e947c",
+      "episodes/t00-r2-flat.json": "7c40a3784942a7a689fd145cd3e56dc5c6b6017745aa746d2fcf582455611f1f",
+      "nodes/t00-r2-flat-n0.json": "626422eb05599b4d65fd8a2bbda4f689fc0e4be014e905e624f1d4ee6e2cedc2",
+      "calls/t00-r2-flat-c000.json": "2dc9d5d5a436b65eaf84e1592134db3cc282e33c9eea0ddb398f45d5e9552bf7",
+      "episodes/t01-r2-flat.json": "f1a94e34e707c1d8aa225575678745ebec2a998a63e415ca15153ee5c7bb6622",
+      "nodes/t01-r2-flat-n0.json": "476eab9701d1bc71deaedabc0805eafa00ef43dc2e17df65fc14ae2b4712d291",
+      "calls/t01-r2-flat-c000.json": "0be3190db24bef636f931f34f20414b57c2f16193a1e4c494b87a927b7e5685c",
+      "episodes/t02-r2-flat.json": "e59e52875210a2f29484b2a377cdb6cce16258b8cff185f2a276dfb54f6c225f",
+      "nodes/t02-r2-flat-n0.json": "a261f5cfa7f7f6839c20ea286f780bc38d1d495260d56e82dca9b04055a77085",
+      "calls/t02-r2-flat-c000.json": "054f07433fe0ea84181be6372ed7ecf6108a4bc322c7b20177c0ec24b7b11ba5",
+      "episodes/t03-r2-flat.json": "48ccddd81a6cc7af20b536610d9ed2888387c84f79d1285dae8e6f1afe442ebc",
+      "nodes/t03-r2-flat-n0.json": "b64e1be47ffc663773afb3cd7fc40f6199b846b5b8a54d00dfe960b0d20a006c",
+      "calls/t03-r2-flat-c000.json": "a6a3ec5bfc8d8ff5a6c53e8666d61e1bab9fd9521d188f23665abda57c2e6cc2",
+      "episodes/t04-r2-flat.json": "ef55fc1012e91fef5b2e87fdd2a60d36a2376607ad10e833b08ffb51c7f87e18",
+      "nodes/t04-r2-flat-n0.json": "6724acc65258eb891ca8d949a24ea10ac473d063c89f430e56b4c12ce23cd287",
+      "calls/t04-r2-flat-c000.json": "59b30c4321cc05df434a7363f0928804cce705687a6995b0722d5132579325ba",
+      "episodes/t05-r2-flat.json": "b12902c58532d545397c2be04ec962f17d29bb58472157415628d5906e2dbb57",
+      "nodes/t05-r2-flat-n0.json": "3e524645c5e8db07aa41909444451593f16026c67a07c84b1426310b6f98e7c5",
+      "calls/t05-r2-flat-c000.json": "1bd1e85bea4e8adea1f34fdd9f08d3a3f0a07049e64453d0fa2ecd27e36b3e3a",
+      "episodes/t06-r2-flat.json": "1842c51564327d7e581f8cf6b2e0ed21953c8a2ad9393132c02a47efbe5e1f2d",
+      "nodes/t06-r2-flat-n0.json": "9f69e62190057abbdf8abf9a8978aebeac69d07221fddfa76b4b8d63fba1ea47",
+      "calls/t06-r2-flat-c000.json": "cbb2a0a322aa096cb82af9eb40cdad087bef1d44248852cabe37efa53f73faf3",
+      "episodes/t07-r2-flat.json": "530045c6082baefc9719aabf962cd09da0305097a1bd4776975533447114b152",
+      "nodes/t07-r2-flat-n0.json": "84c376b329b4cefcebc24f699fcb3bde7dd2cbb2452522e3dc84521ef7e77ff4",
+      "calls/t07-r2-flat-c000.json": "0c40fc6f5d618356d53b2cbdd47b4af132248a903d4a91ecb6c2c727246123a8",
+      "episodes/t00-r3-flat.json": "aab2ceb6738e3a2e731ef2a52022a2882b77c5bdcef2f50db40dc199000a6a66",
+      "nodes/t00-r3-flat-n0.json": "afffcd851811af3413370a6904a2983ac29d90c971a35d32efa7ba1bc3ca1b9b",
+      "calls/t00-r3-flat-c000.json": "793316b12443403835c07d1547bf3d15c2ff68b556ae1016f9d365e690ddc576",
+      "episodes/t01-r3-flat.json": "d1fbadfd1651c38a78361cf871d6d1b3e41e9ca8977bccd65a7abbea1718ee1d",
+      "nodes/t01-r3-flat-n0.json": "93506920a84853b4243b2a672376d77b08617a4d8970a4cadd14c63c25c13c21",
+      "calls/t01-r3-flat-c000.json": "b54567f5d1a4def9f7bb0c06239bf58fe83fdf5523f3a3e8ffa6b39b966941a7",
+      "episodes/t02-r3-flat.json": "465626b84b8f71c71ccffb14a07356308bfd7a99e399f834b6bbc101859e25c3",
+      "nodes/t02-r3-flat-n0.json": "1bcf423d2a1a5a25fae50859637b226ec04d184508e58aa37c330f00fa2846a4",
+      "calls/t02-r3-flat-c000.json": "68776787a45b90d6c572f5c223fe2a15a0af15ec9a8d03a50a6de5ae17359071",
+      "episodes/t03-r3-flat.json": "d8a05c2004a0b2fca6a1ce7da2e7dc1300009cedfa4e31112aa68fab4dcabaae",
+      "nodes/t03-r3-flat-n0.json": "434726dcd0ceb2541052284e37c74482fb1c9b118a326a1c71be1e06e7066146",
+      "calls/t03-r3-flat-c000.json": "e6f4936d48d0b12dcef9582dd0584851b7a5a7110b2869444820e41ad7b2a12d",
+      "episodes/t04-r3-flat.json": "46b39ea8209711060aba79bf9dd9118aaa9c30c450690f111834649943aa79bc",
+      "nodes/t04-r3-flat-n0.json": "dc0372ceeb4456ec36eae7609f2a216ef64d503b1187eba7d5863a11d4ce3b7e",
+      "calls/t04-r3-flat-c000.json": "10fa95068d465d09c1d0dfec397ee21734ef82cec23894bdc1034760c537ca15",
+      "episodes/t05-r3-flat.json": "2ca829551280dfe73ccf71f2331e17c7141ce4b75f09bf57487afa5b8697a51d",
+      "nodes/t05-r3-flat-n0.json": "0cfc25858548be529063b030c93f988714ca0709c59aa5887c4a592bfd20a8fb",
+      "calls/t05-r3-flat-c000.json": "ed59dda38761d8c0b7c863ff2cbcca0a0fbb19d3a2c964e7e763c04a3b8627af",
+      "episodes/t06-r3-flat.json": "ecc55c1a421a8a0e77a021d352130bbba2f7b82e4a2c5ec3420756f7e96cd916",
+      "nodes/t06-r3-flat-n0.json": "c2561f85473592289a40164d4b506f6967fab97ebd676ce5f0e3f72262748215",
+      "calls/t06-r3-flat-c000.json": "09cf0b2c4580f0928d29b7a0a1afea6e68f79a1f07ac2b895016e1f3d87bc2f8",
+      "episodes/t07-r3-flat.json": "a8737647a6935b6756c71881dd8e99df9a89e83a5e217e402ddfd4c65e8db9c2",
+      "nodes/t07-r3-flat-n0.json": "af91c81a6d17d9a874d9044e7b6dc040d69699b5e570c39daf5e306280e686de",
+      "calls/t07-r3-flat-c000.json": "49405ea96da03b45fef7f832f4602ac45577e8dade8078d4e358cb6511d54c81"
+    },
+    "binder": {
+      "episodes/t00-r0-flat.json": "2214715e91f9de80c68910f592c0f291def30c2f434703ceec46482d8d5d7ecd",
+      "nodes/t00-r0-flat-n0.json": "a29ddf06c02525febe951a31bc092c5d4489c8368d3aec6226a1760cf2075f7a",
+      "calls/t00-r0-flat-c000.json": "d664317ed7b3becca7c554741e4c21e4d2b8e833665e5c80b19596703a0496b3",
+      "episodes/t01-r0-flat.json": "1e68e78d180ab129c8a953a37e80ac426cfb433f6dade0b3858003ddc1200057",
+      "nodes/t01-r0-flat-n0.json": "c8b90f05ecae5f3553f4fb0b92c66f3695cbcf325755860c037a8c3c5a8bf206",
+      "calls/t01-r0-flat-c000.json": "d4e4b32c97288419aadb51eac4c6e57723bd83cf6912afe857fcd848e15ee8cb",
+      "episodes/t02-r0-flat.json": "95da25318470e3cc2f39b06e88e0474b8bef1930736a067e5c1a966a1d7efa29",
+      "nodes/t02-r0-flat-n0.json": "337c81d6de83621a99001844760b0e389e0d91c2faf5e6ffc8616ac8610aaad6",
+      "calls/t02-r0-flat-c000.json": "dd6d32922ec8fde4c47bcf7882b359af6755b479bfde5436000cf72f4665bfb6",
+      "episodes/t03-r0-flat.json": "7729b76324869a6613af73159952fc4c98cd911147ff97d579b9d8994703b436",
+      "nodes/t03-r0-flat-n0.json": "3fb132ed7f4d455bae23773f1c59bed21d0c4bb41d143270c0b033d49c429458",
+      "calls/t03-r0-flat-c000.json": "8374701832f058dad5415a001485f9f5b6ff04f6ecc0f84d201992431a23810c",
+      "episodes/t04-r0-flat.json": "94a963af4ecd174b854aec5242336a3a987337b30d30349c64796067c9b77af6",
+      "nodes/t04-r0-flat-n0.json": "87e99ab975f316694cea9ceec87ed179a10e6b5646c7c507276b997e332cb985",
+      "calls/t04-r0-flat-c000.json": "375abe69ef267f4f4f81ac5ea70a4ac57de8ea86d687cdb071e39fd50f18c6ee",
+      "episodes/t05-r0-flat.json": "6a5b9631e6199d8f533c11d31cd183b67390f0dbd522c7c84fcb845a604e71f0",
+      "nodes/t05-r0-flat-n0.json": "916936760ac0fe9f306c1bb3e7f5ece7a528f265d92a664e2386b0bbab625a1d",
+      "calls/t05-r0-flat-c000.json": "3e68c6d05f9c33424e0655976de1d3161a307d0f53523ca4462f9334ba0bad34",
+      "episodes/t06-r0-flat.json": "9aa327f79b5cc58919c48e1cbb59fc9a583cb47b4223ef031ae2747dcd55e1d8",
+      "nodes/t06-r0-flat-n0.json": "f5a59f4053a75d40a9c37307070d02f6149f9519dbaf92efe0b83b6ed9f4b9d7",
+      "calls/t06-r0-flat-c000.json": "3104b002312d2f976558cc83f90c7f3c08e37d404556b6ad0fb08fcc80071135",
+      "episodes/t07-r0-flat.json": "b7d446ff685deb2c5e3325eeeb544629fd4b81769b181782bde8589ba81e98cf",
+      "nodes/t07-r0-flat-n0.json": "7fa12a9eb1f1887f612274ad72c5e7a7921d03b35fadf0f14e239c80b8ae6a43",
+      "calls/t07-r0-flat-c000.json": "2174fd22ff537143aeeb2e1c6754d531dacd6e0171a3bfd6c60e48816aa197f8",
+      "episodes/t00-r1-flat.json": "09ca1e5615897759226cc805db87ad388e6ec08a254fd071a5376f52439e10a0",
+      "nodes/t00-r1-flat-n0.json": "21b5a31ffc7420fad5a98c4e78871939a06ef77fe8acfcdeaf2c901375fd52ec",
+      "calls/t00-r1-flat-c000.json": "a8f79bf7c65c1ad701541a25e5a5bd3a0ffd51b4a2ac6918e799375bf7a76ae8",
+      "episodes/t01-r1-flat.json": "bab308efcab5ac6e6c33b91c11574b613f532ce9ad80f94cb3fbb7d30f2ce9c1",
+      "nodes/t01-r1-flat-n0.json": "9a29f72eda5cc406d9c9595e42806d3ef186fc6876f6493de35f0a5299cc5728",
+      "calls/t01-r1-flat-c000.json": "ff74699b0bc531deb1194ea480efb1320e5272c2ef69db311f0bfe336a21f170",
+      "episodes/t02-r1-flat.json": "4867f61e29d5f3adabfb46ba842acdd6a28ac78e786fc0f8570b7ec86df63d75",
+      "nodes/t02-r1-flat-n0.json": "275a53362cb2f248ffc91facc0d94e01df1e206af846c8397d10f0893f8d8917",
+      "calls/t02-r1-flat-c000.json": "db3cbe0df5819d10bf76eb4d774fcfb434926a1e95cb1181adc1334569b1573f",
+      "episodes/t03-r1-flat.json": "aea664d7ac772e68a3b241352f73a8dd30145ab369ac02bc631a18a1b7d5c91e",
+      "nodes/t03-r1-flat-n0.json": "8d26392fe24229285d4711402cfa99651bfb2763386fe669b89e34fe51cf71f4",
+      "calls/t03-r1-flat-c000.json": "8364f77fc2b5bd5d5f7be80c8a07fac4215f1c8ddcba40542d2f4ff9f9507cc7",
+      "episodes/t04-r1-flat.json": "cbb71f7647a74a7a0636425d7a19a875f612e496694cf05ba786763c872b6f48",
+      "nodes/t04-r1-flat-n0.json": "ff27303caedb7d2dbba61203d1b8eabcd56c767920a9ca4996531111ed6c9a20",
+      "calls/t04-r1-flat-c000.json": "7bf7d3e76a6258a6114355ae9f9a728e8684b7f2c4d1596f89ee718e97d093c9",
+      "episodes/t05-r1-flat.json": "fc835f6141e06c5f6efeda3cc249239d4d2e163fd1bde34c02a98eeaba0b54b2",
+      "nodes/t05-r1-flat-n0.json": "bf34680ad074656ba1decd796ca49688948dc1cb80cd250323f537aa3d64ae2c",
+      "calls/t05-r1-flat-c000.json": "cf08c957244a77897d380c75c63c57213fdc59f3751fd714e0a8cc2a8c05fcf6",
+      "episodes/t06-r1-flat.json": "13ea87355c973118c81dda8d2a6baeae1d26c3ddc96a528f86d03823d9442061",
+      "nodes/t06-r1-flat-n0.json": "f1168cad130b0ba2153110ae193f049de27d0d9dac574b953cad8c52d242c32b",
+      "calls/t06-r1-flat-c000.json": "649b9caa53bdf8c0f2a9fd052bae53d5e04a804718c6af4ef03872ecfcdcc6de",
+      "episodes/t07-r1-flat.json": "951a99396cf31de5dc5fa1787ca1976bef4f6f6cace262b0502d0cb8e6d3e9ca",
+      "nodes/t07-r1-flat-n0.json": "1f1f1f26585569984a24d9f9f1c2220d734a3b6822edfd681d38965a277e80e9",
+      "calls/t07-r1-flat-c000.json": "94d242d66887022508f1036a7e0e5094bae895e6731224d6fa41008cd1c4b14f",
+      "episodes/t00-r2-flat.json": "ee96188c2b1933bdf7d4490b981f5b7f218c429a3b2623d83d7f8f6d161d1484",
+      "nodes/t00-r2-flat-n0.json": "99521a72c8b4af8ca44b5405c790897505210ead78bd37cd1edcb77f5f6edc3e",
+      "calls/t00-r2-flat-c000.json": "099f635852ab71cf8a6adefc3679fe9f577b22e2d5358b9f1c5ad03bc3813e6c",
+      "episodes/t01-r2-flat.json": "300a884eeea8a17a60fd07490575bbc56adfb77e5c5f1b0b2598dd26a192e166",
+      "nodes/t01-r2-flat-n0.json": "fe82b9ec9c2138931bb4f26aeb59fd7f0bab8d727cdeed5df69c27c25b73f447",
+      "calls/t01-r2-flat-c000.json": "faa8f82bb71d560f6374dc21541055d3d9f4159ed1660cecd56a85aafd4782cd",
+      "episodes/t02-r2-flat.json": "ec49b97a108622262c4cbff541eb25e1c0da4373e6f8904f082b45c60b535a25",
+      "nodes/t02-r2-flat-n0.json": "8d7107e9dad9805f4032624d0f0b5c188305042e4b970b8a34d06acac6945511",
+      "calls/t02-r2-flat-c000.json": "4579a1e0821664471bcebc27fc1ed8bee1f7313bae7f8ce2c7f8f3223e21a16b",
+      "episodes/t03-r2-flat.json": "ee6f4b2fa7a032fe621f3e45877eb3e69f13f628e0d9880dad6e572ba8384c26",
+      "nodes/t03-r2-flat-n0.json": "9589a6032e5dc93f1c89f48bec6e7afbfa7eebf5d9c081c764dc7b83a9d036df",
+      "calls/t03-r2-flat-c000.json": "1b51121bcdb9597c3c9aa8f86c8d42d0e251d92e1ae3c60dbc6de4356b578e98",
+      "episodes/t04-r2-flat.json": "654b916ebd390ef3ad863fa9c83bf3e00a3a526495494e969d4428f776dde907",
+      "nodes/t04-r2-flat-n0.json": "7a0601e984138abfb913c049a08a2d0ae1eca3b248b20f8010222829adead28d",
+      "calls/t04-r2-flat-c000.json": "c44ef7841d6573898ce47eae87aa3b19c8e7553fe4d7ce5c824f5df1f956aff7",
+      "episodes/t05-r2-flat.json": "dc8709f72c3d663d0145d6577ad36ac5b6e5ba64096cbbadbcb821c4137aeaa6",
+      "nodes/t05-r2-flat-n0.json": "c82090a96f2112e1422fff1d76a0bcb5aa5ba792b524bbf7dff7c127255e4e87",
+      "calls/t05-r2-flat-c000.json": "c35eaee2fbd9b8c787d421df68527c7295d393c8a4c1a6554e844cf8791e3206",
+      "episodes/t06-r2-flat.json": "5a31fb8363e89b4ab69a03f6a074aa34e44d27583af26eaf7288ed18760f3f97",
+      "nodes/t06-r2-flat-n0.json": "d954ea553762e7f8cbc725e05345ca7132ccba22a0b97ad3c0d9fa85ce3a70a9",
+      "calls/t06-r2-flat-c000.json": "111fb39c465cd9d45782dbafd2d87b629cdb1aa1ec73584b8c90ddb2e4c81d09",
+      "episodes/t07-r2-flat.json": "d6792a83d38b72f88acfbf8f7bc0912767180529237a47432c33df65db2294c5",
+      "nodes/t07-r2-flat-n0.json": "0f3cbb821640266636414595c52916cf90a325ebea5f88dacc5c1f678eccd052",
+      "calls/t07-r2-flat-c000.json": "b6ee698a8b408a5fbda2e97d546c9dad727b7469f5ea7caf4c6e69b168952231",
+      "episodes/t00-r3-flat.json": "c8b6dbfcaf9574b0ad0f5c49e89cc9d08e643b9d7b580b92d1353d950cdb324c",
+      "nodes/t00-r3-flat-n0.json": "63af877e360246055b4eb29dedd247ddb8fbffe9ce44b7743b5a4cc78766e97c",
+      "calls/t00-r3-flat-c000.json": "a500122bdb1fca9610fd3af9e7803b7d7527ba863c4ff7285a3a1faee0077065",
+      "episodes/t01-r3-flat.json": "abea45f5ffa96958e1cb18627cb4c0f9ff8d812698e9f0bf2004f935aff20e7b",
+      "nodes/t01-r3-flat-n0.json": "664da2a89bb05f9ef6f1cb751b8f8e31a8611c92db117cdabbae593523fe5d8a",
+      "calls/t01-r3-flat-c000.json": "e29a7c478ac5723c425f066090e55ec61e51b474c7b731e4df82a267315b9e02",
+      "episodes/t02-r3-flat.json": "90e44f6e5f36a69d5c111b8b229a6c9a5052eec201f5ac361d70de73240aded1",
+      "nodes/t02-r3-flat-n0.json": "0b89e0507495484b42ea16918e1841e8115069685d497b89f236ed6bbf5fd81b",
+      "calls/t02-r3-flat-c000.json": "1fa60b37747d204be195e4e98e9c89e81b94c883d146fd1ebbc028b505d2bf23",
+      "episodes/t03-r3-flat.json": "af4013c20d5262db3041b78643ec52bf4cd7128012b95f0feb3cfc3663268fc5",
+      "nodes/t03-r3-flat-n0.json": "660209b649800b013b883f62b59b1d82d5f91773497cc754c4e045c30ac6443a",
+      "calls/t03-r3-flat-c000.json": "42d4bf25d86a777e78ee50d57bb9df8b9b46a8c31b6d26bf4682a04c20e5dc77",
+      "episodes/t04-r3-flat.json": "f16ff8fef2a3de4c602108c0f328e106f305ef80354f57f20a419ab769833104",
+      "nodes/t04-r3-flat-n0.json": "44560dd6014fef11593500763afd4e39352eacb6aff0f485798b947628e3667c",
+      "calls/t04-r3-flat-c000.json": "4a11f1396debdb3908820f6885b19d854d2cc7bd3edcd111e95e978d5c3d5cae",
+      "episodes/t05-r3-flat.json": "e89716920abf2dc779ecbaa0a7615bfad6c33d3ee5c76f4edbf14d7864558692",
+      "nodes/t05-r3-flat-n0.json": "b4bada0edcf213e849d1854cea39a9e5d01dad5468c7971edec3aa6c495606e3",
+      "calls/t05-r3-flat-c000.json": "7c79860494f957a15496d2a444d0e0f6877afcb1563d4e4d14d4fdcb77861609",
+      "episodes/t06-r3-flat.json": "273eb556f5cc07928b512f1ccd2b0a4662ed6c1d41c418bdc953c1dfcecd2326",
+      "nodes/t06-r3-flat-n0.json": "f04e69bb3930a9a5a6543e2becaabd922d34b24889ae77040318f5761328e021",
+      "calls/t06-r3-flat-c000.json": "73ba2f916d417831a11ed740ac0e051a392d6fcacdfc54d0e642c30fac16a49e",
+      "episodes/t07-r3-flat.json": "d9c9ffeaf200bface346a978ac8aacb2bbea7d4e43d9df70764f3bfc45121662",
+      "nodes/t07-r3-flat-n0.json": "db3e06c80d971a7f244ae9cede861454c7bb5934e4689aa4ff954918554d5d28",
+      "calls/t07-r3-flat-c000.json": "c9d6315310ee0caa9c5add5d8cf757b95aa1b8a32c4c09678907fdb75177fa6b"
+    }
+  },
+  "limitations": [
+    "Same example-trained warm actor, official TRAIN A goals and one shared recipe world: no learned improvement, held-out generalization or recursion result.",
+    "Binder changes executed ingredient arguments and downstream histories; this is the whole execution intervention, not an isolated action effect or evidence the model learned correct arguments.",
+    "Calls and tokens fall overall, not on every goal. Native errors fall while schema errors rise. Service time sums request durations; it is not allocation wall time or training cost.",
+    "Post-quantity calls include ordinary finishing and arise on a larger successful subset with binder;23 versus44 does not show termination worsened.",
+    "Original sampled tokens retain terminal-advantage sign, errors included; binder-rewritten arguments are environment transitions, not training targets."
+  ],
+  "advisor_recommendation": "Keep this in the reading guide/next decision until fixed RL and extra-SFT readouts complete. It reinforces execution-assistance evidence and refines the reward-signal diagnosis; it does not establish a new learning gain.",
+  "cost_change": {
+    "calls": {
+      "raw": 1831,
+      "binder": 1461,
+      "difference": -370,
+      "percent_change": -20.207536865101037
+    },
+    "prompt_tokens": {
+      "raw": 6157500,
+      "binder": 4293675,
+      "difference": -1863825,
+      "percent_change": -30.269183922046285
+    },
+    "completion_tokens": {
+      "raw": 57739,
+      "binder": 47539,
+      "difference": -10200,
+      "percent_change": -17.665702558063007
+    },
+    "native_service_seconds": {
+      "raw": 4897.976036310196,
+      "binder": 3873.86368727684,
+      "difference": -1024.1123490333557,
+      "percent_change": -20.908888517242577
+    }
+  },
+  "interpretation": [
+    "Code assistance helps the unchanged warm actor complete these A tasks with fewer aggregate calls/tokens, but the four common all-failure roots still supply no direct terminal-RLOO contrast.",
+    "Mixed groups remain3/8 while their identities, reward signs, trajectories and token exposures change. This does not establish identical or equally useful gradients.",
+    "The observed ingredient-error reduction and inventory-error increase concern the whole altered execution process. Native validation checks ingredient arguments before inventory, so error redistribution alone cannot show worsening stock reasoning."
+  ]
+}

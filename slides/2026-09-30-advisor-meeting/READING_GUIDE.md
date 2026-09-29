@@ -5,6 +5,7 @@ prepared_date: 2026-09-29
 evidence_cutoff_utc: "2026-09-29T05:30:50Z"
 teaching_and_helper_evidence_cutoff_utc: "2026-09-29T01:14:27Z"
 supplementary_reward_diagnosis_date: "2026-09-29"
+supplementary_interface_comparison_date: "2026-09-29"
 status: exploratory
 ---
 
@@ -259,6 +260,22 @@ for all eight goals using public information. That motivates a possible
 comparison of recovery examples with ordinary worked examples, after the
 already planned controls; it does not show the model can recover itself.
 
+A second collection, completed later that morning, used the **same model before
+either new reward-training update**, but let code fill the ingredient list from
+recipes already seen. It succeeded in 12 of 32 attempts, compared with 5 of 32
+without that assistance. Each setting tested the same eight goals with four
+matching sampling seeds per goal. Code assistance also reduced total model calls
+from 1,831 to 1,461. This is a small execution-interface comparison on training
+goals, not an improvement from changing the model's weights.
+
+Both settings still had only three goals with mixed successes and failures.
+Assistance made one previously mixed goal always succeed, while another previously
+all-failure goal became mixed. Four goals still failed on all four attempts in
+both settings. The useful distinction is that helping the model complete tasks
+does not automatically give this reward rule more goals to learn from directly.
+The feedback itself is not identical: the contributing goals, actions and tokens
+change. The ongoing weight updates will test what the model actually learns.
+
 # Likely advisor questions
 
 **Does the model write Python in these experiments?** The broader RLM can use
@@ -316,6 +333,8 @@ This guide uses teaching and helper evidence available by **29 September
 available by **05:30:50 UTC**. Pending means pending at those cutoffs.
 The separately labeled training-collection diagnosis is an additional
 September 29 source; its counts do not establish a training improvement.
+The later same-model interface comparison is also supplementary and is not a
+before-and-after learning result. It does not change the audience PDF's cutoff.
 If later results change the story, update the slides and guide together.
 
 - [Teaching results, controls, exact counts, and limits](../../experiments/selective_delegation/teaching_synthesis_20260929/FINDING.md).
@@ -323,4 +342,5 @@ If later results change the story, update the slides and guide together.
 - [Helper screens, shared budgets, and other harness findings](../../experiments/selective_delegation/harness_synthesis_20260929/README.md).
 - [Prior work, novelty boundary, and unresolved mechanisms](../../experiments/selective_delegation/teaching_prior_art_20260929/README.md).
 - [Supplementary training-collection reward diagnosis](../../experiments/selective_delegation/fresh_reward_diagnosis_20260929/README.md).
+- [Later same-model assistance and reward-signal comparison](../../experiments/selective_delegation/fresh_interface_signal_20260929/README.md).
 - [Previous deck's detailed speaker guide](../2026-09-29-research-update/speaker-guide.md), for historical continuity only.
