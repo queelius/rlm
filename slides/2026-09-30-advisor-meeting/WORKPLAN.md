@@ -69,6 +69,17 @@ September 29 or emailed September 25 decks.
 
 ## Draft revision record, September 29
 
+### Research review around 07:11 UTC
+
+The first varied-goal RL update finished and saved a checkpoint. Training-batch
+actions changed in the intended average direction, but task improvement is
+not measured yet. Keep the audience PDF, notes and guide unchanged; optimizer
+diagnostics are not a new task-success result. The assisted fit and fixed
+comparisons continue. The [review and receipts](../../experiments/selective_delegation/research_review_20260929/reviews/2026-09-29-0711.md)
+record the result, its limits and the decision without adding another slide.
+
+### Initial presentation edits
+
 The first compile revealed one LaTeX line-break mistake and five crowded pages.
 The syntax was corrected, then duplicate sentences and long block headings were
 shortened. The paired training-example boxes now position below their actual
