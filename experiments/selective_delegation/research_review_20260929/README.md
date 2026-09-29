@@ -23,12 +23,19 @@ session, never `--last`, a different project, or a new model instance.
 - STOP or the allocation deadline ends the observer; scientific owners remain
   independent. Failed/ambiguous queue admission cannot silently duplicate work.
 
-Live observer PID1257601 started05:39:43UTC. It is waiting on the already admitted
-probe `rlm-wake-20260929-0528`, native message
-`01a0eba2-10d2-72b0-85dd-39d842ec7733`. **At this checkpoint, actual probe delivery
-has not yet been observed.** Successful admission and a living observer are not
-proof of model execution. The next delivered turn must acknowledge the probe
-only after it actually arrives and the scientific review is performed.
+Live observer PID1257601 started05:39:43UTC. **The first same-session queued
+wakeup was delivered and reviewed at05:48UTC.** Probe
+`rlm-wake-20260929-0528`, native message
+`01a0eba2-10d2-72b0-85dd-39d842ec7733`, actually started a subsequent model turn.
+After checking the native results and GPU returns, Codex wrote its decision and
+evidence acknowledgement at05:48:42; the observer consumed it at05:48:44, clearing
+the pending request and setting `delivery_verified:true`.
+
+This verifies native queued-turn delivery plus the review/acknowledgement cycle,
+not perpetual client availability. The first observer-generated event review is
+due around05:54UTC because raw collection finished while the probe was pending.
+Its eventual arrival remains a separate live check; do not infer it from the
+first probe. The20-minute fallback applies when no earlier event is due.
 
 Ten focused tests pass, including quota bounds, coalescing, exact UUID targeting,
 incomplete JSON, ambiguous admission, pending/restart behavior, acknowledgement,

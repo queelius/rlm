@@ -51,8 +51,8 @@ GPU owners and accepted experiments are untouched.
 - [x] Run tests and scoped Ruff; expect all passing.
 - [x] Review the implementation independently; fix material findings.
 - [x] Launch with the existing native probe pending; preserve its admission ID.
-- [ ] Update operating docs and checkpoint, commit/push scoped files.
-- [ ] Yield to the queued probe; verify actual model delivery and acknowledge it.
+- [x] Update operating docs and checkpoint, commit/push scoped files.
+- [x] Yield to the queued probe; verify actual model delivery and acknowledge it.
 
 ## Decisions
 
@@ -68,3 +68,8 @@ pins deduplication. Recheck deadline/STOP after slow quota sampling; two fixture
 reproduced erroneous admission and are now fixed. Evidence-free acknowledgement
 was upgraded from minor to material because a review receipt must support the
 claimed reasoning; its missing-pointer fixture failed before the fix.
+
+Live verification: probe arrived in a subsequent model turn at05:48UTC. Native
+results and GPU returns were checked, decision/evidence ACK written05:48:42 and
+consumed05:48:44. This proves the first queued-turn roundtrip, not future
+client availability. First observer-originated event review is due~05:54UTC.
