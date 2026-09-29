@@ -32,10 +32,14 @@ evidence acknowledgement at05:48:42; the observer consumed it at05:48:44, cleari
 the pending request and setting `delivery_verified:true`.
 
 This verifies native queued-turn delivery plus the review/acknowledgement cycle,
-not perpetual client availability. The first observer-generated event review is
-due around05:54UTC because raw collection finished while the probe was pending.
-Its eventual arrival remains a separate live check; do not infer it from the
-first probe. The20-minute fallback applies when no earlier event is due.
+not perpetual client availability. The first observer-generated event request,
+`review-1790661224-a88aaa50`, was queued at 05:53:44 UTC and actually reached
+the model around 06:24 UTC, after the active presentation turn finished. Its
+[scientific review and next decisions](reviews/2026-09-29-0624.md) check live
+returns, native results, recovery-data qualification and relevant prior art.
+The 70 receipts in that initial request include already-reviewed historical
+events; they are not 70 newly completed experiments. Queueing does not interrupt
+an active turn. The 20-minute fallback applies when no earlier event is due.
 
 Ten focused tests pass, including quota bounds, coalescing, exact UUID targeting,
 incomplete JSON, ambiguous admission, pending/restart behavior, acknowledgement,

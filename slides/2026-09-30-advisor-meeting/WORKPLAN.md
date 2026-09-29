@@ -46,7 +46,8 @@ essential content.
 - [x] Scientific pass: distinguish tested results, proposed mechanisms, and
   planned work; verify denominators, comparisons, fixed evidence and limits.
 - [x] Read-aloud pass: remove sentences that require explanation to be meaningful.
-- [ ] Publish a readable draft and repeat targeted reviews as new evidence arrives.
+- [x] Publish a readable draft (`403cd90`, research branch); continue targeted
+  reviews as new evidence arrives.
 - [ ] By the conservative review deadline, freeze a ready-to-read snapshot for
   the user's 2 pm review; preserve any later findings separately until integrated.
 
@@ -83,3 +84,13 @@ completed attempts; and put a dated evidence snapshot in the audience footer.
 The guide now uses the same lantern example and explains the actual tiny helper
 pilot separately. Technical details remain optional rather than being required
 to understand a slide.
+
+## Automatic research review, September 29, around 06:24 UTC
+
+The new recovery-training examples were independently qualified on CPUs, but
+there is no new learning result. The ongoing assisted collection is unfinished;
+Phi repair and the whole-goal helper comparison remain pending. Keep the PDF,
+notes and guide at their existing evidence cutoff. The supporting
+[review](../../experiments/selective_delegation/research_review_20260929/reviews/2026-09-29-0624.md)
+records the data milestone, prior art and conditional follow-ups without adding
+another slide or presenting preparation as a result.
