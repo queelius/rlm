@@ -21,22 +21,40 @@
 \begin{document}
 
 \begin{frame}[t]
-\frametitle{Can a model learn useful steps for an unfamiliar task?}
-A recursive language model (RLM) can use code and ask another model to handle a smaller task. A helper can, in turn, ask its own helper.
-\vspace{4mm}
+\frametitle{When does breaking a problem into smaller tasks help?}
+A recursive language model (RLM) can use code and ask another model for help. Our experiments tested different parts of that idea.
+\medskip
+
+\textbf{We supplied some splits ourselves.} Our code asked a separate helper to check each candidate against the requirements.
+\medskip
+
+\textbf{We also trained the model to choose smaller questions.} It proposed a plan for answering a question using several documents.
+\medskip
+
+\textbf{In crafting, we trained the model to choose its next action.} It looked up recipes and made the needed parts.
+\aside{These are different abilities. We have not yet demonstrated a generally useful, learned tree of recursive helpers.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Can the model learn which smaller questions to ask?}
+MuSiQue contains questions that need evidence from several documents.
+\begin{block}{An example of the original question}
+In which country was the author of \textit{The Glass Orchard} born?
+\end{block}
+\vspace{1mm}
 \begin{center}
 \begin{tikzpicture}[>=Stealth,font=\small,
- box/.style={draw=Teal,rounded corners,fill=Soft,text width=3.45cm,align=center,minimum height=1.35cm,inner sep=2mm}]
-\node[box] (learn) at (0,0) {Find the information\\needed for the goal.};
-\node[box] (choose) at (4.6,0) {Choose a smaller step\\or ask a helper.};
-\node[box] (check) at (9.2,0) {Use the result to\\choose what to do next.};
-\draw[->,thick,Teal] (learn)--(choose);
-\draw[->,thick,Teal] (choose)--(check);
+ box/.style={draw=Teal,rounded corners,fill=Soft,text width=4.8cm,align=center,minimum height=1.1cm,inner sep=2mm}]
+\node[box] (first) at (0,0) {1. Who wrote \textit{The Glass Orchard}?};
+\node[box] (second) at (6.6,0) {2. In which country was that author born?};
+\draw[->,thick,Teal] (first)--node[above,font=\footnotesize] {Answer 1}(second);
 \end{tikzpicture}
 \end{center}
+We taught the model example question lists, then rewarded plans that led to correct answers.
 \medskip
-\textbf{Today's focus:} Can we improve how a small model learns these steps by improving its worked examples?
-\aside{Our longer-term aim is useful task decomposition. Today's strongest evidence concerns learning tool actions, not general recursive reasoning.}
+
+\textbf{Finding:} This system did not reliably beat answering directly, and used more text.
+\aside{Invented example. The model wrote the question list; code ran it. This was not a learned recursive tree.}
 \end{frame}
 
 \begin{frame}[t]
@@ -151,6 +169,24 @@ We changed the interface, not the model's weights. Code supplies no materials.
 \end{frame}
 
 \begin{frame}[t]
+\frametitle{We also tested letting code do the arithmetic.}
+Across five datasets, splitting documents among helpers did not consistently improve answers.
+\begin{block}{A simplified financial question}
+Revenue rose from 120 to 150. What was the percentage increase?
+\end{block}
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\small,
+ box/.style={draw=Teal,rounded corners,fill=Soft,text width=4.7cm,align=center,minimum height=1.25cm,inner sep=2mm}]
+\node[box] (model) at (0,0) {The model chooses the calculation.\\[2mm]\texttt{(150 - 120) / 120 * 100}};
+\node[box] (code) at (6.3,0) {Code carries out the calculation.\\[2mm]\textbf{25\%}};
+\draw[->,thick,Teal] (model)--(code);
+\end{tikzpicture}
+\end{center}
+Of 508 FinQA questions, \textbf{51 answers matched the recorded number without code, versus 108 with code}. Each used one model call.
+\aside{Qwen3-4B; previously examined FinQA development questions. Rounding and reference errors limit the score; not official accuracy. Invented example; no extra training.}
+\end{frame}
+
+\begin{frame}[t]
 \frametitle{What did we learn from reward training?}
 Reinforcement learning (RL) rewards attempts that actually finish the task.
 We started with an SFT-trained model and trained on eight crafting goals.
@@ -176,18 +212,18 @@ We started with an SFT-trained model and trained on eight crafting goals.
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Other datasets helped us ask what actually improved.}
-\textbf{MuSiQue and HotpotQA ask questions about several documents.}
-Our trained question-splitting system did not clearly beat answering directly, and used much more text.
+\frametitle{The broader tests changed how we interpret progress.}
+\textbf{A programmed split helped select candidates that met stated requirements.}
+Helpers checked one candidate at a time. The model did not learn to choose that split.
 \medskip
 
-\textbf{AG News and DBpedia ask for a topic label.}
-Small RL gains on news weakened on fresh examples and did not clearly transfer to encyclopedia entries.
+\textbf{News-classification gains weakened on fresh examples.}
+The AG News tests showed why repeating training is not enough: we also need new articles.
 \medskip
 
-\textbf{MRCR asks for a particular earlier reply in a conversation.}
-RL mostly improved exact reproduction of the answer, not finding the right reply.
-\aside{These are different studies, not a shared leaderboard. A higher score does not by itself show better decomposition. The reading guide explains each test and its limits.}
+\textbf{Conversation-retrieval RL mostly improved exact copying.}
+In MRCR, the model reproduced earlier replies more accurately, but did not find the right reply more often.
+\aside{These are separate studies. We now ask which ability changed, whether it helps the whole task, and whether it carries over to new problems.}
 \end{frame}
 
 \begin{frame}[t]

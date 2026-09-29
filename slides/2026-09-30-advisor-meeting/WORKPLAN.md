@@ -4,8 +4,8 @@ meeting_time_user_local: "15:30"
 review_ready_deadline_user_local: "14:00"
 timezone_status: "User did not specify; produce first draft now and use 14:00 UTC as a conservative internal cutoff."
 status: iterative_draft
-target_slides: 8
-user_latest_length_direction: "Up to eight; eight or nine allowed if clear examples genuinely need the extra space. Fewer is preferred when equally clear."
+target_slides: 10
+user_latest_length_direction: "User explicitly permits more than eight to give clear examples room; ten-slide revision adds MuSiQue and arithmetic examples."
 ---
 
 # Purpose and decisions
@@ -22,19 +22,20 @@ Keep earlier decks intact and continue GPU experiments and actual result reviews
 
 ## Story
 
-1. RLM motivation and the immediate question about choosing useful next steps.
-2. A concrete crafting goal, recipes, starting stock, and verifiable success.
-3. SFT and the fixed-answer teaching repair, in one simplified training example.
-4. Its replication, with attempts distinguished from distinct goals.
-5. A concrete change to the interface: code fills known ingredient arguments.
-6. All fixed RL checkpoints on different goals, including the lost temporary gain.
-7. Lessons from other datasets: whole-task value, fresh examples, exact delivery.
-8. A bounded teaching-paper study, strong alternatives and missing evidence.
+1. Distinguish splits chosen by code, learned question lists and learned actions.
+2. Show the MuSiQue book-author example and the limited final-task benefit.
+3. Explain the TextCraft lantern goal and native whole-task score.
+4. Show the fixed-action training-history repair.
+5. Plot its replication with explicit goals and attempt counts.
+6. Show ingredient assistance as an interface change, not learned planning.
+7. Contrast inconsistent chunking with code-executed financial arithmetic.
+8. Show all fixed RL endpoints, including the lost temporary gain.
+9. Explain lessons from programmed selection, fresh news and exact answer delivery.
+10. End with a focused teaching-paper question and missing evidence.
 
-Eight is useful because the worked example and findings have space. Remove a slide if
-it only repeats another; never add one just to reach a count. A ninth is only
-justified by a material new result or explanatory example that otherwise crowds
-essential content.
+The user approved growing beyond eight to preserve understandable examples.
+The book, lantern and revenue examples are labeled as illustrations, not recorded
+evaluation cases. No attempt is made to fit every result into the audience PDF.
 
 ## Iteration passes
 
@@ -68,6 +69,21 @@ together when needed. Current target is this September 30 package, not the older
 September 29 or emailed September 25 decks.
 
 ## Draft revision record, September 29
+
+### Concrete decomposition and arithmetic examples
+
+The user found the audit too compressed and asked what decomposition the model
+actually learned. Add a plain-language explanation to the audit, guide and Q&A.
+Expand the audience deck to ten with separate MuSiQue and arithmetic examples.
+Distinguish programmed chunks from learned question lists, and both from flat
+tool-action training. Report the important nulls and limits alongside the
+teaching result. Arithmetic is a fixed-model interface result, not new training
+or a novelty claim. Numeric evidence cutoffs remain unchanged.
+
+Re-read the edited explanations as a newcomer: define the original task,
+model choice, host-code responsibility, observed result and claim boundary.
+The publishing script explicitly stages the PDF despite the ignore rule.
+
 
 ### Publication focus and advisor questions, evening
 

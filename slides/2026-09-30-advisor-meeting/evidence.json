@@ -85,10 +85,13 @@
     "docs/research-audit-2026-09-29/current-rl.md": "a249ed4addc82edf9ba6ff477e901b056cc2c64e1b7ab071900ce6f74eb8f8a5",
     "docs/research-audit-2026-09-29/publication-assessment.md": "efd6f5fb084f8a9587a2514bc15566ba657c8d05aac50e17831c4c4a267d4419",
     "docs/research-audit-2026-09-29/early-history.md": "f38c1dbeb4ce1d82ce48ceb1c384f1e4017da80baa0c2da6d44427575b27289d",
-    "docs/research-audit-2026-09-29/decomposition-and-transfer.md": "37620ecde19f4c1d8eefe0dc361213be195e3bb7935fd92df97dfab577ba1b62"
+    "docs/research-audit-2026-09-29/decomposition-and-transfer.md": "37620ecde19f4c1d8eefe0dc361213be195e3bb7935fd92df97dfab577ba1b62",
+    "experiments/selective_delegation/prepare_plan_training.py": "4e69678987610aacbcdb07ebdf1dc93c046d4f1ab1f49df746df30cf9ad1ad7d",
+    "experiments/selective_delegation/eval_planner.py": "b1bad910cd844020695677210540cebeb79c8fd027421ab64cfea1da21ba7d09",
+    "docs/research-audit-2026-09-29/README.md": "d7f2baf6770f18fa7746469d73cd452216c3673b54b5a6c4b67160395f35219f"
   },
   "helper_status": "Local child success observed; every parent reached the short screen cap before whole-task outcome was known. Planned complete-goal pilot: no helper, fixed, adaptive; one exposed goal and two attempts per setting. No established whole-goal benefit.",
-  "supplementary_only": "One-step extra-SFT controls, assisted RL, prior RL gains, helper pilot and recovery preparation are in the guide. Slide7 now summarizes completed QA, news and MRCR lessons.",
+  "supplementary_only": "Extra-SFT and assisted-RL controls, numeric details of QA/news/MRCR, and pending helper/recovery work are in the guide. Visible slides now include concrete MuSiQue planning and fixed-model FinQA arithmetic examples.",
   "historical_rl_table": [
     {
       "label": "Model writes ingredient list",
@@ -230,5 +233,48 @@
     "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0003/NATIVE-AUDIT.json": "c19e810dd2fcb2bfbb7f8e114c644befce5b0f671fd6a4a466a0b6f6e6c0cabb"
   },
   "crafting_success_definition": "At explicit finish, native target inventory minus starting inventory must be at least each requested target quantity. Binary whole-task completion; no partial credit.",
-  "paper_candidate": "Specific executable history repair with fixed action labels; repeated exploratory signal, not established novelty or general method."
+  "paper_candidate": "Specific executable history repair with fixed action labels; repeated exploratory signal, not established novelty or general method.",
+  "slide_count": 10,
+  "editorial_revision": "Separate programmed splits, learned question lists and learned tool actions; add invented MuSiQue and financial-arithmetic examples. Not all studies used the full recursive RLM scaffold.",
+  "qa_planner_method": {
+    "training_examples": 256,
+    "input": "Original question and public document ID/title index",
+    "sft_target": "Annotated two- or three-question lists from MuSiQue TRAIN",
+    "evaluation": "Model generates its own list; code executes helpers and binds earlier answers. The principal trained planner emits its list before helper feedback.",
+    "helper_and_final_access": "Original supplied documents remain available; final correctness need not establish a useful plan.",
+    "boundary": "Constrained learned question planning, not arbitrary adaptive recursive decomposition.",
+    "source": "experiments/selective_delegation/prepare_plan_training.py"
+  },
+  "breadth_arithmetic": {
+    "dataset": "FinQA DEV numeric subset; exploratory prior-exposed",
+    "numeric_cases": 508,
+    "models": [
+      {
+        "name": "Qwen3-4B-Instruct-2507",
+        "direct": 51,
+        "arithmetic": 108,
+        "paired_wins": 71,
+        "paired_losses": 14
+      },
+      {
+        "name": "Qwen3-8B",
+        "direct": 52,
+        "arithmetic": 102,
+        "paired_wins": 68,
+        "paired_losses": 18
+      }
+    ],
+    "metric": "Valid numeric output within 1e-6 of supplied execution target; not semantically adjudicated official accuracy",
+    "intervention": "Frozen model chooses literal operands/operators; restricted host arithmetic evaluates the expression.",
+    "model_calls_per_question": 1,
+    "extra_training": false,
+    "matched_total_token_increase": "Less than 1% in each model",
+    "limitations": [
+      "Prior-exposed development examples",
+      "Shared source documents",
+      "Reference-answer defects, units and rounding issues",
+      "Not a novel arithmetic method or learned decomposition"
+    ],
+    "source": "docs/research-audit-2026-09-29/decomposition-and-transfer.md"
+  }
 }

@@ -10,6 +10,13 @@ claim_boundary: "No established general recursive-architecture or broadly transf
 
 # The short answer
 
+Reading note: the numerical retrospective below retains its 14:02 UTC snapshot.
+The [meeting guide](../../slides/2026-09-30-advisor-meeting/READING_GUIDE.md)
+includes later completed results through 18:57 UTC and concrete examples.
+In particular, the third raw crafting RL update lost the temporary gain:
+the full sequence is 4→4→5→4/16. See the dated addendum in
+[current RL results](current-rl.md).
+
 We are making research progress, but the strongest result is not yet the one
 we originally set out to obtain. We started by asking whether a small model
 could learn to use an RLM and become better at difficult problems through
@@ -37,6 +44,68 @@ The longer-term architecture question is still worth pursuing:
 Our old record-identity experiments, recent recipe binding, and remaining
 inventory failures make that question concrete. They do not yet answer it
 generally.
+
+## What did we actually teach the model to do?
+
+“Decomposition” is not one method in this research. We tried three different
+things, and they should not be described as the same achievement.
+
+### Sometimes our code supplied the split
+
+For example, code could send one candidate's information to each helper and
+combine their judgments. Other tests split a collection of documents into
+fixed groups. The helpers needed language understanding to do their jobs,
+but the model did not learn how to divide the original work. A gain here
+means that a particular programmed split helped, not that we learned a
+general way to decompose problems.
+
+### We also trained a model to propose smaller questions
+
+The MuSiQue experiments were closer to learning decomposition. Consider this
+invented example:
+
+> **Question:** In which country was the author of *The Glass Orchard* born?
+>
+> **Plan:** First ask who wrote the book. Then ask where that author was born.
+
+The model saw the original question and a list of document titles. During
+supervised training, its target answer was the dataset's annotated list of
+smaller questions. At evaluation time, it generated its own list. Helpers
+answered those questions, with code inserting an earlier answer into a later
+question when needed. RL then rewarded plans leading to correct final answers.
+
+This relied on the model's existing understanding of language, and trained
+it to use that understanding in a particular question-planning format. It
+was not just cutting documents into chunks. However, the main planner made
+its list before the helper answers arrived; it was not learning to build
+and revise an arbitrary recursive tree.
+
+The larger evaluations did not establish a reliable advantage over answering
+directly, and the planned system used more text. The final model could still
+read the original documents, so it could sometimes answer despite an unhelpful
+plan. Generating sensible-looking smaller questions is not enough: they must
+improve the final outcome.
+
+### The crafting studies taught next actions, not recursive delegation
+
+In another invented example, making a lantern requires a frame and a glowing
+stone; making the frame requires two sticks. The model must discover recipes
+and choose an order of actions that produces the parts and then the lantern.
+
+We trained on demonstrated recipe lookups and crafting actions. At evaluation
+time, the model chose its next action from the goal and observations. In the
+strongest teaching-history studies, one model performed those actions; it
+was not learning when to spawn recursive helpers.
+
+The history repair made the examples easier to follow. Before teaching “look
+up the frame recipe,” it could show “a lantern needs a frame.” That improved
+learning in the tested panels. It does not yet show that the model learned
+a general planning algorithm.
+
+**The distinction to retain:** we have evidence about useful programmed splits,
+models trained to write question plans, and models trained to choose tool
+actions. A generally useful model that chooses and revises its own recursive
+decomposition remains a research goal, not an established result.
 
 ## How to read this audit
 
@@ -270,7 +339,7 @@ and whether a helper improves the whole task enough to justify its cost.”
 
 This is a coherent preliminary story. It does not need to claim that we have
 already solved learned decomposition, invented recursive RL, or produced a
-publication-ready general method. The current eight-slide deck appropriately
+publication-ready general method. The current ten-slide deck appropriately
 centers the repair; the historical and latest controls belong in the reading
 guide unless they materially change that conclusion.
 
@@ -293,7 +362,8 @@ short second-family and whole-task controls over extending unchanged RL.
 The externally owned queue continues. This managed session can read its
 results and save this audit, but cannot write the external run store or Git
 metadata. Therefore it cannot acknowledge the pending automated review,
-reorder that queue, or publish these new documents to GitHub. The prior
+reorder that queue, or itself publish these documents to GitHub. The user has
+since published the advisor package manually with the supplied script. The prior
 automatic reasoning loop is awaiting that acknowledgement; it is not restored
 merely because GPU jobs are running. The
 [restricted handoff](../../experiments/selective_delegation/research_review_20260929/RESTRICTED_HANDOFF_20260929.md)

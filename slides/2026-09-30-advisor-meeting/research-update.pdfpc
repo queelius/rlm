@@ -7,49 +7,61 @@
       "idx": 0,
       "label": "1",
       "overlay": 0,
-      "note": "Long-term aim: useful decomposition. This\ntalk narrows to teaching useful next\nsteps. Most crafting tests are flat tool\npolicies.\n\nWe have a possible teaching-data paper,\nnot a general recursive-reasoning result."
+      "note": "Separate three things: splits chosen by\ncode, learned question lists, and learned\nnext actions.\n\nThe model can use its prior knowledge, but\nwe have not shown a general learned\nrecursive strategy. Examples on the next\ntwo slides."
     },
     {
       "idx": 1,
       "label": "2",
       "overlay": 0,
-      "note": "Invented lantern example. Two sticks make\na frame. Frame plus glowing stone makes a\nlantern.\n\nSuccess requires the requested net\nincrease in target items at finish. No\npartial credit. Selected TextCraft-Synth\npanels, not the full official benchmark."
+      "note": "We taught 256 example question lists. The\nmodel saw the original question and\ndocument titles, then proposed a list\nbefore helpers answered.\n\nThe final model could read all documents\nand sometimes answer without a useful\nplan."
     },
     {
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "SFT teaches the next action from visible\nhistory. Repair reschedules lookups using\na known solution. All 366 action labels\nstay fixed.\n\nHistory and length change. Easier copying\nmay contribute; mechanism is unresolved."
+      "note": "Invented lantern example. Two sticks make\na frame. Frame plus glowing stone makes a\nlantern.\n\nSuccess requires the requested net\nincrease in target items at finish. No\npartial credit. Selected TextCraft-Synth\npanels, not the full official benchmark."
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "Each row: 8 goals x 2 worlds x 2 attempts.\nSixteen distinct goals overall. Same\nlabels and updates, not equal compute.\n\nOriginal labels are quantity-corrected.\nTheir fitted policy is weak. Longer\ntraining helps; discovery-based teaching\nis also strong."
+      "note": "We rearranged existing recipe lookups and\nrebuilt the history. The 366 taught\nactions did not change.\n\nLonger inputs and easier copying might\nexplain part of the gain. We have not\nisolated the cause."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "323/768 = 42.1%; 381/768 = 49.6%. Forty-\neight goals across worlds and seeds, not\n768 independent tasks. Same weights within\npairs.\n\nCode writes observed ingredients only. It\nneither creates materials nor selects the\nplan."
+      "note": "Each row tests eight goals in two worlds\ntwice. There are sixteen distinct goals in\nall.\n\nWe kept actions and update counts fixed,\nnot total compute. More original training\nand discovery-based teaching are important\ncontrols."
     },
     {
       "idx": 5,
       "label": "6",
       "overlay": 0,
-      "note": "Same diagnostic goals: 4, 4, 5, 4 of 16.\nThe one extra success disappeared. Extra\nSFT1 is 4, not matched to RL3.\n\nIn MuSiQue sufficiency, warm/RL/extra SFT\ngive 10/18/19 of 64. Reward training is\nnot always better than more example\ntraining."
+      "note": "323/768 = 42.1%; 381/768 = 49.6%. Forty-\neight goals across worlds and seeds, not\n768 independent tasks. Same weights within\npairs.\n\nCode writes observed ingredients only. It\nneither creates materials nor selects the\nplan."
     },
     {
       "idx": 6,
       "label": "7",
       "overlay": 0,
-      "note": "MuSiQue: direct 54, SFT 53, RL 56 of 128;\nlater RL54. Hotpot: 152 vs151 of256, 3.44x\ntokens.\n\nFresh news weakens RL-specific gains. MRCR\nexact24 to27, but retrieval29 to29. These\nscores measure different abilities."
+      "note": "Neither model was retrained. Numeric\nmatches rose from51 to108/508 for4B, and52\nto102 for8B. Each method made one call per\nquestion.\n\nRounding, reference errors and previously\nseen examples limit the claim. This is not\na new arithmetic method."
     },
     {
       "idx": 7,
       "label": "8",
       "overlay": 0,
-      "note": "Proposed, not newly launched: new recipe\nstructures, stronger teachers, more\noriginal training, another model and name\ncontrols.\n\nPrior work already repairs/reschedules\ndemonstrations. Ask what evidence would\nmake this particular repair useful\nelsewhere."
+      "note": "The extra success after two RL updates was\nlost after the third. Extra SFT also\nscored4/16, but one SFT step is not\nmatched to three RL steps.\n\nEarlier MuSiQue answering improved with\nboth RL and extra SFT. We need fresh\nproblems and fair controls."
+    },
+    {
+      "idx": 8,
+      "label": "9",
+      "overlay": 0,
+      "note": "The candidate split was programmed. It\nhelped on twelve cases, but used more\ntext.\n\nNew news articles weakened the RL gain. In\nMRCR, retrieval stayed the same while\nexact reproduction improved. Ask which\nability actually changed."
+    },
+    {
+      "idx": 9,
+      "label": "10",
+      "overlay": 0,
+      "note": "Next: test new problems, stronger teaching\nalternatives, more training and another\nmodel. These tests are proposed, not newly\nlaunched.\n\nOthers already study demonstration repair.\nWe need to show what this particular\nrepair adds and where it fails."
     }
   ]
 }

@@ -26,7 +26,7 @@ examples or against more ordinary supervised training. The latest crafting
 sequence is **4, 4, 5, then 4 successes out of 16**. The temporary extra success
 did not persist. Three updates are not a verdict on RL.
 
-For quick preparation, read this introduction, slides 3–4 and 6–8 below, then
+For quick preparation, read this introduction, slides 2, 4–5 and 7–10 below, then
 the [advisor Q&A](ADVISOR_QA.md). The
 [paper assessment](../../docs/research-audit-2026-09-29/publication-assessment.md)
 explains the proposed comparisons and stopping decisions.
@@ -42,13 +42,72 @@ more familiar decisions.
 
 That is the long-term motivation, not a result we have established. Our immediate
 question is whether better worked examples teach useful next steps. Most current
-crafting studies are flat tool-action policies, not models writing arbitrary
-Python or learning a deep recursive tree.
+crafting studies use one model choosing successive tool actions. They do not
+train it to write arbitrary Python or build a deep tree of helpers.
+
+Some other tests used splits that our code specified, such as assigning one
+helper per candidate being checked against requirements. A successful test
+of that arrangement does not show that the model learned how to choose a split.
+The crafting work studies another ingredient: choosing the next tool action.
+Not every experiment ran the full recursive Python-based RLM system.
 
 A possible opening is: “We have been testing the ingredients needed for useful
 decomposition. The clearest lead concerns how we teach the individual steps.”
 
-## Slide 2: How does the crafting example work?
+## Slide 2: Did we teach the model how to decompose a question?
+
+Yes, in a specific, limited way. MuSiQue asks questions that require combining
+information from several documents. We trained a model to turn an original
+question into a list of smaller questions. This is different from our code
+cutting a long document into equal-sized chunks.
+
+Here is the slide's invented example:
+
+> **Original question:** In which country was the author of *The Glass Orchard* born?
+>
+> **Smaller question 1:** Who wrote *The Glass Orchard*?
+>
+> **Smaller question 2:** In which country was the person identified in answer 1 born?
+
+The first answer is needed to ask the second question precisely. If a helper
+answers “Mira Vale” to question 1, the code can turn question 2 into “In which
+country was Mira Vale born?” Both the book and person are invented examples,
+not a recorded evaluation item.
+
+**What did the training example contain?** The input was the original question
+and a list of document titles. The desired output was an annotated list of
+smaller questions from the MuSiQue training data. We used 256 examples containing
+two- or three-question reference plans. The model learned to produce such
+lists through supervised fine-tuning. Later RL rewarded generated plans that
+led to correct final answers.
+
+**What did the model choose at evaluation time?** It wrote its own smaller
+questions, using its existing language understanding and the additional
+training. It did not receive the reference decomposition. Our interface allowed
+one to eight questions and references to earlier answers.
+
+**What did the code choose?** The code provided the format and execution
+procedure. It ran helpers and substituted earlier answers into later questions.
+In the main trained-planner experiments, the model produced the question list
+before those answers arrived. It was not learning an unrestricted recursive
+tree or repeatedly deciding whether each new subproblem needed another helper.
+
+**What happened?** The complete system did not reliably beat answering the
+original question directly, and it used more text. This does not mean the
+model failed to learn question-list generation, or that decomposition can never
+help. It means that the generated plans and helper execution did not establish
+a reliable advantage on our broader evaluations.
+
+There is another important limitation: helpers and the final answering model
+could read the original documents. The final model could sometimes answer
+correctly despite an unhelpful plan. A correct final answer was therefore not
+proof that the smaller questions had done useful work.
+
+For the meeting, say: “We tried training the model to propose smaller questions,
+not just splitting documents by length. It could produce plans, but we have
+not yet shown that those plans reliably improve the final answer.”
+
+## Slide 3: How does the crafting example work?
 
 The lantern is an invented, simplified example. Start with two sticks and one
 glowing stone. A lantern recipe needs one frame and one glowing stone. A frame
@@ -62,8 +121,8 @@ Looking up a recipe reveals information; crafting changes inventory or reports
 an error. A lookup does not change the model's weights.
 
 **How is the score computed?** Each attempt contributes one success or zero.
-The native game must confirm the requested increase in the target item over
-starting inventory when the model finishes. There is no partial credit for just a component,
+The game's own checker must confirm the requested increase in the target item
+over starting inventory when the model finishes. There is no partial credit for just a component,
 issuing a valid command or describing a good plan. A started attempt that reaches
 its task budget without completion does not count as a success. A missing outcome
 is different: we report it separately, not as a measured failure. All displayed
@@ -72,7 +131,7 @@ crafting panels have their planned outcomes recorded.
 Our wrapper uses selected native rules from Platoon. These selected panels,
 limits and changed recipe worlds are not the official paper's full benchmark.
 
-## Slide 3: What exactly is SFT learning, and what did we repair?
+## Slide 4: What exactly is SFT learning, and what did we repair?
 
 Supervised fine-tuning, or SFT, trains the model to produce the next action shown
 in a worked example. A simplified pair is:
@@ -99,7 +158,7 @@ This is an offline repair of an existing solution, not a planner discovering
 a solution. An unseen-name lookup is not necessarily illegal or useless. We have
 not proved the original examples unlearnable.
 
-## Slide 4: How should I read the teaching graph?
+## Slide 5: How should I read the teaching graph?
 
 Each bar is the number of whole-task successes out of 32 attempts. Gray uses
 original examples; teal uses repaired examples. The counts are **1→14, 2→13,
@@ -130,7 +189,7 @@ to copy, changing recent context and making inputs longer all differ. The repair
 second-model test is pending. Earlier Phi results for another teaching package
 do not substitute for this particular test.
 
-## Slide 5: What does the code do?
+## Slide 6: What does the code do?
 
 The model chooses the item and quantity. When exactly one applicable recipe
 has already been observed and its batch size permits the request, code writes
@@ -141,6 +200,7 @@ In the lantern illustration, the model chooses “make one lantern.” Code uses
 the observed recipe to write “one frame and one glowing stone” into the command.
 The game still rejects it if those materials are missing.
 
+This is an execution comparison, not an additional learned decomposition method.
 The percentages are **323/768 = 42.1%** versus **381/768 = 49.6%**, rounded on the
 slide. This is 48 goals in four recipe worlds, two training seeds and repeated
 attempts. Each paired comparison uses identical model weights. There are 74
@@ -152,7 +212,65 @@ already determined by observed facts. That general design idea is not new.
 Recipe notebooks and calculated remaining-work displays did not provide a
 useful rescue in the completed controls.
 
-## Slide 6: What did we learn from RL?
+## Slide 7: What did the broader dataset campaign teach us?
+
+This campaign compared different ways to use two released models, with no
+additional training. It covered MuSiQue, FinQA, BoolQ, AG News counting and
+a length-limited subset of LongBench v2. We tried direct answering, splitting
+the input among helpers that wrote summaries, and helpers asked to preserve
+specific facts such as names, dates and quantities.
+
+**The split was programmed, not learned.** Code divided text into chunks.
+The model did not choose task-specific boundaries. In these tests, the final
+reader saw the helpers' reports instead of the full original documents.
+Information omitted by a helper could therefore be lost. This differs from
+the later MuSiQue trained-planner system, whose final reader saw the originals.
+
+**The main negative result:** splitting and summarizing did not consistently
+improve answers. Results varied by dataset and model; asking for detailed
+factual notes was not a dependable remedy. Giving four helpers instead of two
+did not provide a broad rescue. We cannot turn this into “decomposition never
+works,” because the particular splitting and reporting methods were limited.
+
+**The positive result:** FinQA financial questions benefited from code-executed
+arithmetic. Here is the slide's invented, simplified example:
+
+> A report says revenue rose from 120 to 150. What was the percentage increase?
+>
+> The model chooses: (150 − 120) / 120 × 100.
+>
+> Code computes: 25%.
+
+The model still has to understand the question, find the right numbers and
+choose the operations. Code does not supply those choices. It just executes
+the arithmetic. There are no helper agents in this condition.
+
+On the same 508 numeric questions, the smaller model produced 51 matching
+answers when calculating directly and 108 when code executed its chosen
+expression. The second model went from 52 to 102 matching answers.
+Both conditions used one model call per question, with less than 1% more
+total tokens for the arithmetic version. These are comparisons of unchanged
+models with different interfaces, not SFT/RL improvements.
+
+**What exactly was scored?** The output had to numerically match the stored
+answer within a strict tolerance. That is not the same as an independent human
+judgment of correct financial reasoning. Rounding, percentage conventions and
+some faulty reference answers affect the counts. A looser post-hoc tolerance
+preserved the direction, but did not fix all those problems. The examples were
+previously exposed development data, and many questions shared source documents.
+Do not describe this as untouched confirmation or official FinQA accuracy.
+
+**Why include it?** It gives a concrete alternative to “add more helpers.”
+Sometimes the useful division is between interpreting a problem and carrying
+out an exact calculation. This is an established idea, not a novelty claim.
+It supports testing which responsibilities belong to the model and which to code.
+
+**What would a follow-up require?** First manually audit a bounded set of gains
+and losses, including units and rounding. Then, if the contrast survives, freeze
+new examples and fair direct/arithmetic comparisons. That follow-up has not
+been completed and is not a prerequisite for the teaching-history paper.
+
+## Slide 8: What did we learn from RL?
 
 Reinforcement learning, or RL, updates the model using rewards for its own
 attempts. The crafting model starts from SFT; the game rewards actual completion.
@@ -195,7 +313,18 @@ examples create useful successful attempts on goals where all current attempts
 fail? That tests a shortage of useful experience rather than assuming a larger
 update will fix it. It is separate from the proposed teaching-history paper.
 
-## Slide 7: What did the other datasets teach us?
+## Slide 9: What did the different approaches teach us?
+
+**Programmed candidate-level splitting** improved complete selection from 10 to
+22 successes out of 24 attempts on twelve fresh cases. Our code assigned one
+helper per candidate; the model did not invent that division of work. It used
+roughly 3.7 times as many input tokens. This is a useful result about a particular
+split, not a learned general strategy.
+
+The slide's other two examples, news classification and conversation retrieval,
+show why we also ask whether a gain survives new examples and which ability
+actually improved. The fuller dataset notes below include the question-answering
+results introduced on slide 2.
 
 **MuSiQue and HotpotQA** require combining information from documents. We trained
 a model to write smaller questions, ran helpers, and asked a final model to answer.
@@ -225,7 +354,7 @@ a final-task metric and traces showing which ability changed. The
 [dataset map](ADVISOR_QA.md#which-datasets-did-we-use) separates actual training,
 transfer tests and comparisons of unchanged models with different interfaces.
 
-## Slide 8: What is the proposed paper?
+## Slide 10: What is the proposed paper?
 
 The question is: **Can an executable repair of a demonstration's history improve
 learning while keeping its taught actions fixed?** Test that narrow claim before
@@ -289,12 +418,12 @@ idle time.
 avoid errors without achieving the goal. We report completion, errors and cost
 separately.
 
-**Is there useful evidence outside the deck?** Yes. A fixed helper-per-candidate
-method improved complete selection 10→22/24 on twelve fresh cases, at roughly
-3.7 times the input tokens. Code-executed arithmetic improved strict numerical
-matches on a FinQA-derived panel, with important target and exposure limits.
-Neither is evidence that our learned general decomposition policy works.
-See the retrospective and Q&A rather than adding every result to this talk.
+**What else is in the supporting reports?** They include tests of recipe
+notebooks and calculated remaining-work displays that did not provide a useful
+rescue, as well as recovery examples that are prepared but have not trained a
+model. The reports also give the detailed controls behind the candidate-selection
+and arithmetic examples now included in the deck. We do not need every
+individual run on a slide to explain the main lessons.
 
 ## Evidence and cutoff
 

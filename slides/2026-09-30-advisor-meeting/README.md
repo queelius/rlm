@@ -7,8 +7,11 @@ The [advisor Q&A](ADVISOR_QA.md) adds the dataset map, scoring definitions,
 RL lessons and questions about the proposed paper. If time is short, read the
 guide's introduction and the Q&A's first answer before reviewing the PDF.
 
-The draft has **eight slides**, for a brief discussion of roughly 10 minutes.
-The lantern example connects the motivation, training example and tool action.
+The draft has **ten slides**, including a new full-page MuSiQue example.
+The book-author example explains learned question plans; the lantern example
+explains learned tool actions. Slide 1 distinguishes both from programmed splits.
+A financial-arithmetic example shows an alternative to adding helpers.
+The talk can take roughly 12 minutes, or the deck can be read on its own.
 The main findings are:
 
 1. Repairing what the model sees before the same demonstrated actions improved
@@ -20,8 +23,9 @@ The main findings are:
    also show why we need fresh examples and an additional-SFT control.
 
 The final slide proposes a bounded teaching-history study, not an established
-general method. Slide 7 explains lessons from MuSiQue/HotpotQA, news classification
-and conversation retrieval. The pending helper experiment is now in the guide,
+general method. Slide 2 explains the learned-planning attempt and its limits.
+Slide 9 explains lessons from programmed splitting, news classification and
+conversation retrieval. The pending helper experiment is in the guide,
 not a speculative result slide. Details,
 uncertainties, and source links are in the guide. [Evidence](evidence.json) pins
 the numbers and cutoffs; [editorial workplan](WORKPLAN.md) records deadlines,
@@ -58,7 +62,7 @@ with Tectonic. `make notes-check` checks note alignment and length.
 
 ## Current status
 
-First readable draft compiled and visually reviewed on 29 September. All eight
+The draft is compiled and visually reviewed on 29 September. All ten
 slides fit, with no overfull boxes or out-of-page text. Notes match the slides,
 use at most nine wrapped lines, and fit a 16-point static presenter preview.
 No live pdfpc GUI test was performed on the GPU cluster. See

@@ -18,6 +18,29 @@ teaching examples and testing that result against stronger alternatives.”
 This is a summary, not a script you need to memorize. The
 [reading guide](READING_GUIDE.md) explains each slide and its example.
 
+## Did the model learn to decompose problems, or did our code do it?
+
+Both kinds of experiment exist, and they need different descriptions.
+
+- **Programmed splits:** Our code divided documents into groups or assigned
+  one helper per candidate. The model did not learn that division of work.
+- **Learned question lists:** In MuSiQue, we trained the model on annotated
+  smaller questions, then used RL based on the final answer. It generated
+  its own questions at evaluation time, but usually wrote the whole list
+  before helpers answered. That was not an unrestricted recursive tree.
+- **Learned crafting actions:** We trained one model to choose recipe lookups
+  and crafting actions. The strongest history-repair result concerns learning
+  those steps, not learning to create helpers.
+
+The MuSiQue example is: “In which country was the author of *The Glass Orchard*
+born?” becomes “Who wrote the book?” and then “In which country was that author
+born?” The book is invented. This requires recognizing a useful dependency;
+it is not merely cutting a document in half. Nevertheless, our trained
+question-planning system did not reliably outperform direct answering.
+
+For the full teaching and execution example, read
+[slide 2 in the guide](READING_GUIDE.md#slide-2-did-we-teach-the-model-how-to-decompose-a-question).
+
 ## Which datasets did we use?
 
 It is important to separate three things: data used to **train** a model, data
