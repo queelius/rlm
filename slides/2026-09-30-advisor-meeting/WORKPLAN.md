@@ -69,6 +69,16 @@ September 29 or emailed September 25 decks.
 
 ## Draft revision record, September 29
 
+### Research review around 08:03 UTC
+
+The first varied-A raw RL comparison is complete:4/16before and after, identical
+successful attempts, higher calls/tokens. This reinforces the limited-transfer
+qualification rather than adding a positive headline. Add an optional guide
+paragraph and separate evidence cutoff; retain the audience PDF/notes until
+the assisted and extra-SFT controls give a compact comparison. The B roots and
+warm baseline are reused, not an independent new test set. See the
+[completed-result review](../../experiments/selective_delegation/research_review_20260929/reviews/2026-09-29-0803.md).
+
 ### Research review around 07:26 UTC
 
 Both first RL updates are committed; the first task readout is returning real
