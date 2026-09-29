@@ -1,0 +1,68 @@
+{
+  "schema": "advisor-deck-evidence-v1",
+  "meeting_date": "2026-09-30",
+  "main_evidence_cutoff_utc": "2026-09-29T05:30:50.791144+00:00",
+  "teaching_cutoff_utc": "2026-09-29T01:14:27.611452+00:00",
+  "main_model": "Qwen3-4B-Instruct-2507",
+  "teaching_chart": [
+    {
+      "label": "First comparison",
+      "original": 1,
+      "repaired": 14,
+      "attempts_per_condition": 32,
+      "distinct_goals_in_row": 8
+    },
+    {
+      "label": "Same goals, training repeated",
+      "original": 2,
+      "repaired": 13,
+      "attempts_per_condition": 32,
+      "distinct_goals_in_row": 8
+    },
+    {
+      "label": "Eight more goals",
+      "original": 3,
+      "repaired": 17,
+      "attempts_per_condition": 32,
+      "distinct_goals_in_row": 8
+    }
+  ],
+  "distinct_teaching_goals_total": 16,
+  "rl_table": [
+    {
+      "label": "Model writes ingredient list",
+      "familiar_before_after": [
+        9,
+        13
+      ],
+      "different_before_after": [
+        4,
+        5
+      ],
+      "attempts_per_condition": 16,
+      "goals_per_panel": 8
+    },
+    {
+      "label": "Code fills ingredient list",
+      "familiar_before_after": [
+        14,
+        16
+      ],
+      "different_before_after": [
+        5,
+        5
+      ],
+      "attempts_per_condition": 16,
+      "goals_per_panel": 8
+    }
+  ],
+  "source_sha256": {
+    "experiments/selective_delegation/teaching_synthesis_20260929/FINDING.json": "03e99db6d5340b436530f7cddadbd3a23fd80a4db84db40c0111606683edcbfc",
+    "experiments/selective_delegation/rl_transfer_results_20260929/RESULTS.json": "4a0dea950b6c7739595083e489d13fbd829223802fca0d649569aa4e9d53cecc",
+    "experiments/selective_delegation/harness_synthesis_20260929/SYNTHESIS.json": "5c846e56b978d47bc9b800fdf83a765cf054710a14ed7b4041d0368d1cc0a4ea",
+    "experiments/selective_delegation/teaching_prior_art_20260929/README.md": "c55cc5a6cab264f5d81b2493fdc28fc3c40e582d362673acd8b1c0429df8fd1d",
+    "experiments/selective_delegation/fresh_reward_diagnosis_20260929/RESULTS.json": "fae1e9b6f69c9b408f528d118d39a26b884755990d966afa641d2385fa620fd2"
+  },
+  "helper_status": "Planned complete-goal pilot: no helper, fixed, adaptive; one exposed goal and two attempts per setting. No established whole-goal benefit.",
+  "supplementary_only": "Fresh-A raw collection and recovery CPU feasibility are in reading guide, not presented as learned improvement."
+}

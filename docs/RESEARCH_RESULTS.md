@@ -1,5 +1,11 @@
 # Reading the research results
 
+For the next advisor discussion, start with the
+[September 30 audience slides](../slides/2026-09-30-advisor-meeting/research-update.pdf)
+and [plain-language reading guide](../slides/2026-09-30-advisor-meeting/READING_GUIDE.md).
+They emphasize the strongest recent finding and what would change the next
+research decision; the technical evidence remains linked below.
+
 ## September 29: current findings
 
 Start with the [plain-language findings and next decisions](../experiments/selective_delegation/FINDINGS-20260929.md).

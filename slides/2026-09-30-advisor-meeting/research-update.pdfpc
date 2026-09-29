@@ -1,0 +1,55 @@
+{
+  "pdfpcFormat": 2,
+  "disableMarkdown": true,
+  "noteFontSize": 16,
+  "pages": [
+    {
+      "idx": 0,
+      "label": "1",
+      "overlay": 0,
+      "note": "Long-term question: useful decomposition\nand delegation. Immediate question: teach\nactions that follow from what the learner\nhas seen.\n\nThe main result is teaching repair, not\nproof that recursion helps. See the\nreading guide for the whole story."
+    },
+    {
+      "idx": 1,
+      "label": "2",
+      "overlay": 0,
+      "note": "Toy example, not a measured task. Two\nsticks make one frame. Frame plus glowing\nstone makes one lantern. Recipes must be\nlooked up.\n\nNative inventory checks success. A fluent\nexplanation without the item is a failure.\nReal item names are unfamiliar codes."
+    },
+    {
+      "idx": 2,
+      "label": "3",
+      "overlay": 0,
+      "note": "SFT supplies the next action in a worked\nexample. RL supplies a reward for a\ncompleted attempt. Both change model\nweights.\n\nLooking up a recipe during evaluation is\nnot weight training. Our RL starts from an\nSFT-trained model."
+    },
+    {
+      "idx": 3,
+      "label": "4",
+      "overlay": 0,
+      "note": "Repair reschedules existing recipe queries\nand rebuilds histories. It uses a known\nsolution. The same 366 answer strings and\n23 updates remain.\n\nInput histories and lengths change. We\nhave not isolated why the repair helps.\nFrame and lantern are simplified labels."
+    },
+    {
+      "idx": 4,
+      "label": "5",
+      "overlay": 0,
+      "note": "Scores: 1 to 14, 2 to 13, 3 to 17, each\nout of 32. Sixteen distinct goals total,\nnot 96 independent tasks.\n\nSame answers and update count, not equal\ntotal text or compute. Extra training\npartly rescues the original examples.\nExploratory panels."
+    },
+    {
+      "idx": 5,
+      "label": "6",
+      "overlay": 0,
+      "note": "One separate update per tool setting.\nFamiliar goals were in RL training;\ndifferent target roots were not. Shared\nrecipe world.\n\nRaw transfer gains one attempt; assisted\ntransfer gains none. Do not compare final\nscores across columns. New training and\nSFT controls are pending."
+    },
+    {
+      "idx": 6,
+      "label": "7",
+      "overlay": 0,
+      "note": "RLMs already delegate. Test no helper\nversus fixed/adaptive programmed rules, on\none examined goal, twice per setting.\n\nShared calls, text and inventory. Helper\nactivity is not whole-task success. This\npilot does not show learned recursion or a\nnew architecture."
+    },
+    {
+      "idx": 7,
+      "label": "8",
+      "overlay": 0,
+      "note": "Candidate paper: controlled teaching\nrepair, not discovery of teacher-learner\nknowledge mismatch. Second-family repair\nis pending.\n\nAsk which missing evidence matters most:\nbroader transfer or explaining the effect.\nHelper benefit is a distinct research\nclaim."
+    }
+  ]
+}

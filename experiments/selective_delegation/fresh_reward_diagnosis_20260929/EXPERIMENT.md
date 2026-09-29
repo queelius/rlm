@@ -1,0 +1,33 @@
+# Conditional experiment: teach recovery where terminal RLOO has no contrast
+
+Status: CPU-feasible design, **not a launch-ready package or accepted branch**. Current A collections, four-cycle RL, original366 extra-SFT, error-cost, compact and payload-mask experiments remain unchanged. The first A updates and binder results may reduce this proposal's priority.
+
+## Question and single comparison
+
+Does a small amount of correct teaching in *actual learner-visited error histories* help more than the same number/type of correct actions taught in ordinary clean A histories? This tests missing state coverage/local recovery teaching, against merely receiving more dense supervision on A. It is not a pure intervention on reward sparsity: SFT changes the objective, labels and state distribution. A positive result supports a practical recovery-data remedy, not a proof that sparse reward alone caused failure.
+
+Both endpoints start from the same immutable public-discovery checkpoint23 used by raw collection0001 (binding in RESULTS.json), not a later favorable RL checkpoint. One arm gets recovery examples; the other gets matched ordinary from-start public-teacher examples on the **same eight official TRAIN A goals/world42**. Raw full-action interface in both. Keep the unchanged warm actor as a third readout control. No optimizer sweep, alternative LR or endpoint selection.
+
+## Prospective A-only data rule
+
+Use each task's repeat0 prefix immediately after its first native `Error:` and before the next actual saved response. This rule is independent of whether the episode eventually won. The eight selected prefixes are already recorded in RESULTS.json. Preserve the exact full public history, original root initial inventory, current stock and used call/output budget; no context reset or free recovery actions. Existing public native replies remain in the original actor prompt. Teacher decisions separately discard `crafting_depth`, `can_craft` and `in_inventory` metadata and consume only observed `is_base`/recipe ingredients/yields plus public inventories/goals. Never add hidden world data, gold plans, native scoring details or future replies to labels' conditioning information.
+
+Continue the existing public teacher from each prefix. Select four distinct suffix rows per root: first action; first unused craft; last unused craft; finish. The checked continuations permit this rule (32 rows: seven queries, 17 crafts, eight finishes). Reject an infeasible preparation rather than substitute a root or silently reset resources. Include all qualifications/failures in its receipt. The fixture's 155 total teacher suffix actions are *not* all proposed training examples.
+
+For the control, generate complete ordinary public-teacher trajectories from the original A starts with the same caps. Match each recovery row without replacement within the same task and action type, minimizing absolute target-token-length difference; tie-break by original row index. Process recovery rows in frozen A task order and chronological step order. Freeze both row sets before any model readout. This matches tasks, row counts/action types, optimizer steps and nominal LR; it does **not** equate target identities, exact token exposure, prefix length or FLOPs. Report actual token counts and per-type NLL; do not describe it as a same-label-multiset experiment.
+
+## Loss, outcomes and limits
+
+Each arm takes exactly one fresh AdamW step (`lr=2e-5`, weight decay0, gradient clip1, seed202609290201), FP16 base/FP32 LoRA. Objective: sum negative log likelihood of the full teacher target including EOS, divided by that arm's total target tokens, T=1. Prompt tokens are conditioning only. This is supervised recovery teaching, not on-policy RL, process-reward inference or reward-equivalent shaping. Commit the endpoint and optimizer state once; partial/nonfinite updates do not become efficacy results.
+
+Primary evaluation: all eight A goals from their **ordinary initial states**, raw interface, seeds202609290210/211, for warm and both fixed endpoints (16 attempts each). Unchanged world42, T0.5/top_p1/top_k0, 96 calls, 8,192 output tokens, 256 tokens/response, input-plus-output limit8,192 and original template. Report paired native successes by root/seed, calls, errors by category, unsuccessful finishes, context caps and post-quantity calls. Saved training-prefix NLL is an optimization check, not efficacy. A repeat1 first-error prefix diagnostic, fixed before fitting, can measure held-out-history teacher-action NLL without gradient updates; report unsupported/infeasible cases, not replacements.
+
+Exploratory advance criterion: recovery exceeds matched ordinary teaching by at least 3/16 native successes, includes a success on at least two of the five previously all-failure roots, and loses no more than one success on the three previously mixed roots relative to warm. These are decision thresholds, not statistical significance. If both teaching arms improve similarly, favor dense A teaching rather than claiming recovery-history specificity. If only NLL/errors improve while native success does not, do not claim a useful learning gain; increased unsuccessful finishing is a reason to retire this remedy. A null one-step result cannot exclude a data-dose or optimization problem.
+
+No B-driven selection: B is absent from construction, optimization, thresholds and this initial readout. If later promoted, evaluate **both already fixed endpoints**, not an A/B-picked checkpoint, on the unchanged B diagnostic and label its prior exposure honestly. Do not alter existing fresh-A stages using favorable B observations.
+
+## Existing helpers, missing seam, timing
+
+Reuse `prepare_textcraft_public.next_action`, `prepare_textcraft_sft.encode_row`, native `Frame/public_prompt`, the scoped one-step objective/checkpoint pattern in `rl_fresh_20260928/extra_sft.py`, and the existing raw evaluator. Do not run the old preparer CLI unchanged: it hardcodes original TRAIN32, and extra_sft currently pins the original366 teacher rows. A future additive wrapper must export the actual-prefix suffix rows, freeze matched datasets/provenance, validate first saved-prefix token encoding, preserve the original initial-inventory baseline, and provide source-pinned descriptors. Those artifacts do not exist yet.
+
+Expected useful GPU time: roughly 2.3–3h (three16-attempt readouts at about half the observed raw32 collection's81.6 service minutes, plus loading/two small fits). Prospective hard caps: 20min per fit, 90min per readout, 310min total. Preserve incomplete cells and report their missingness; no outcome-selected retries. No new GPU job or queue mutation is authorized by this memo itself.

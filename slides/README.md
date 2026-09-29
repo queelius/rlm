@@ -1,6 +1,20 @@
 # Preliminary RLM research slides
 
-## Current update: 29 September 2026
+## Current working package: 30 September advisor meeting
+
+The [eight-slide draft](2026-09-30-advisor-meeting/research-update.pdf) explains
+the crafting example, learning from examples versus rewards, the strongest
+teaching repair result, limited RL transfer, and the next helper test.
+Read the separate [learning guide](2026-09-30-advisor-meeting/READING_GUIDE.md)
+for a quick overview, concrete examples and likely advisor questions.
+
+The meeting is at 3:30 pm on September 30; the user wants a review-ready version by 2 pm.
+This first readable draft is available early and will be revised if salient
+results change the story. [Build/presenter instructions and status](2026-09-30-advisor-meeting/README.md).
+The PDF is self-contained; notes are supplementary. Prior decks below remain
+historical snapshots.
+
+## Previous update: 29 September 2026
 
 The [five-slide research update](2026-09-29-research-update/README.md) explains
 the crafting task, a concrete training-example repair, its replication, the
