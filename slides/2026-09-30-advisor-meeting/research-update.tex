@@ -95,21 +95,34 @@ In TextCraft-Synth, success means making the requested number of new items. The 
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Show the relevant fact before the action.}
-Supervised fine-tuning (SFT) teaches a next action from an example's goal and observations.
-\begin{center}
-\begin{tikzpicture}[font=\small,>=Stealth]
-\node[anchor=north west,align=left,text width=5.65cm,fill=Soft,inner sep=3mm] (before) at (0,0) {\textbf{Original input}\par\vspace{1.5mm}Goal: make a lantern.\\History: no frame mentioned.};
-\node[anchor=north west,align=left,text width=5.65cm,fill=Soft,inner sep=3mm] (after) at (6.7,0) {\textbf{Repaired input}\par\vspace{1.5mm}Goal: make a lantern.\\Lookup: a lantern needs a frame.};
-\node[anchor=north west,align=left,text width=5.65cm,draw=Gray,inner sep=3mm] (a) at ([yshift=-3mm]before.south west) {\textbf{Next action to learn}\par\vspace{1.5mm}Look up the frame recipe.};
-\node[anchor=north west,align=left,text width=5.65cm,draw=Teal,inner sep=3mm] (b) at ([yshift=-3mm]after.south west) {\textbf{The same action to learn}\par\vspace{1.5mm}Look up the frame recipe.};
-\draw[->,thick,Gray] (before.south)--(a.north);
-\draw[->,thick,Teal] (after.south)--(b.north);
-\end{tikzpicture}
-\end{center}
-\vspace{-1mm}
-We rebuild the earlier lookup history. \textbf{Each example keeps the same action to learn.}
-\aside{Simplified illustration. The repair uses a known solution; input histories, their lengths and computing work change.}
+\frametitle{Good examples show why the next step matters.}
+Supervised fine-tuning (SFT) teaches the model to copy the next action in a worked example.
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\begin{block}{Original training example}
+\small
+\textbf{The model sees:} Make a lantern. No earlier observation mentions a frame.
+\medskip
+
+\textbf{We teach:} Look up the frame recipe.
+\end{block}
+\end{column}
+\begin{column}{.48\textwidth}
+\begin{block}{Revised training example}
+\small
+\textbf{The model sees:} Make a lantern. An earlier lookup says a lantern needs a frame.
+\medskip
+
+\textbf{We teach the same action:} Look up the frame recipe.
+\end{block}
+\end{column}
+\end{columns}
+\smallskip
+We moved an existing recipe lookup earlier, then retrained on the same actions.
+\smallskip
+
+\textbf{Big idea:} A demonstration can solve the task yet omit information a learner needs.
+\aside{Simplified example. The action stays the same; the earlier observations change.}
 \end{frame}
 
 \begin{frame}[t]

@@ -133,6 +133,20 @@ limits and changed recipe worlds are not the official paper's full benchmark.
 
 ## Slide 4: What exactly is SFT learning, and what did we repair?
 
+**The big idea is that a demonstration can solve a task yet omit information
+the learner needs.** This is a question about how to teach, not just whether
+the expert's solution is correct.
+
+The example asks: why should the model ask about a frame if
+nothing it has seen mentions one? The original example teaches that action
+without first showing the recipe that makes the frame relevant. The revised
+example shows the lantern recipe before teaching the same next action.
+
+Here, "history" means earlier actions and the game's replies. We change those
+observations in the training examples and then retrain the model. We do not
+ask the model to write an explanation. The distinction is between a successful
+demonstration and a demonstration that gives the learner useful information.
+
 Supervised fine-tuning, or SFT, trains the model to produce the next action shown
 in a worked example. A simplified pair is:
 

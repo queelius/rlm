@@ -1,4 +1,30 @@
-# September 29 afternoon revision
+# Latest ten-slide revision: concrete examples and broader-dataset lessons
+
+The audience PDF now has ten slides. Added an invented MuSiQue question and
+its two smaller questions, and an invented financial calculation. The crafting
+example shows both the task and the change to its training history. Simplified
+examples are explicitly labeled and are not presented as actual model returns.
+
+- Tectonic compilation succeeded, with no overfull or underfull boxes.
+- All ten pages have their text inside the page bounds. All pages were reviewed
+  visually; the final question-plan and arithmetic pages were rechecked at full
+  resolution after wording changes. No clipping or overlap was found.
+- Slide 4 now spells out what the learner sees and the unchanged action in
+  each example, with the main teaching lesson stated on the audience slide.
+  A first expanded layout overflowed; the final two-column layout was rebuilt
+  and visually checked, with no overfull boxes or out-of-page text. Its matching
+  eight-line note fits a 16-point, 1366×768 static preview.
+- Current PDF SHA256:
+  `0e710f910be4b084eeb7e5d1f6d5798ed80a04684fc07d570e74758467ed35ca`.
+- The reading guide, dataset Q&A, evidence, and presenter notes distinguish
+  programmed splits, learned question lists, and learned crafting actions.
+- Final-page previews are in `/tmp/rlm-final-examples-pm_tq30h/`.
+  The subsequent slide 4 and notes preview is in `/tmp/rlm-slide4-clear-hf4sx5ki/`.
+- This verification is local. The managed session cannot push to GitHub.
+  Rerunning `publish-main.sh` from the user's SSH terminal publishes the scoped
+  documents and explicitly stages the compiled PDF despite the ignore rule.
+
+## September 29 afternoon revision (earlier eight-slide draft)
 
 Compiled and visually reviewed at approximately 14:04 UTC. This local revision
 has not been committed or pushed: Git metadata and the external research store

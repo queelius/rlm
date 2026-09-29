@@ -25,7 +25,8 @@ Keep earlier decks intact and continue GPU experiments and actual result reviews
 1. Distinguish splits chosen by code, learned question lists and learned actions.
 2. Show the MuSiQue book-author example and the limited final-task benefit.
 3. Explain the TextCraft lantern goal and native whole-task score.
-4. Show the fixed-action training-history repair.
+4. Show what the learner sees before the same action, and explain why a successful
+   demonstration can still omit information a learner needs.
 5. Plot its replication with explicit goals and attempt counts.
 6. Show ingredient assistance as an interface change, not learned planning.
 7. Contrast inconsistent chunking with code-executed financial arithmetic.
