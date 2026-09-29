@@ -1,6 +1,30 @@
 # Reading the research results
 
-## September 22: what survived stronger comparisons
+## September 29: current findings
+
+Start with the [plain-language findings and next decisions](../experiments/selective_delegation/FINDINGS-20260929.md).
+The most promising result is a replicated repair of worked examples: changing
+the information shown before each training answer improves task completion while
+retaining the answer strings and their training-batch grouping. Two added tests
+give30/64 versus5/64 successes across16 goal identities. These are related
+crafting tasks, not64 independent problems or a validated general-purpose method.
+
+- [Teaching evidence and paired uncertainty](../experiments/selective_delegation/teaching_synthesis_20260929/FINDING.md):
+  replication, fixed longer-training controls and the limited second-model result.
+- [RL outcome matrix](../experiments/selective_delegation/rl_outcomes_20260928/README.md):
+  a small familiar-goal gain; new-goal transfer and additional-SFT controls pending.
+- [Harness evidence](../experiments/selective_delegation/harness_synthesis_20260929/README.md):
+  remaining-work tables did not rescue the pilot; real helper uptake has not yet
+  established whole-task benefit; the household-game signal is narrow.
+- [Primary literature and conditional follow-ups](../experiments/selective_delegation/literature_decisions_20260929/README.md):
+  known precedents, concrete comparisons, expected compute and abandonment rules.
+
+These fixed-cutoff reports preserve negative and incomplete results. Active
+operations live in `/project/alex_phd/runs/rlm-research-r4/SESSION_CHECKPOINT.md`
+and `RESEARCH_QUEUE.md`. Source and portable summaries are in Git; GPU weights,
+raw traces and training state remain in the external research store.
+
+## September 22: historical assessment
 
 The [current research update](../experiments/selective_delegation/RESEARCH-UPDATE-20260922.md)
 is the starting point. We can train the model to write subquestions and execute

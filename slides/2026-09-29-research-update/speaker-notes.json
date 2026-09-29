@@ -1,0 +1,24 @@
+{
+  "slides": [
+    {
+      "title": "Good examples should teach usable next steps.",
+      "notes": "The goal is reliable smaller steps, then useful delegation. TextCraft checks the final inventory and quantities.\n\nThe new lead is repairing what the learner sees before a correct action. The results here are not a test of learned recursion."
+    },
+    {
+      "title": "Introduce a part before asking about it.",
+      "notes": "SFT means supervised fine-tuning: copy a demonstrated next action. The diagram is simplified.\n\nThe repair changes histories, not 366 answers or 23 training steps. Answer tokens are matched; input length and computation are not. It still uses a known correct action list."
+    },
+    {
+      "title": "The repair helped in three small comparisons.",
+      "notes": "All models get 23 training steps. Counts are 1 to 14, 2 to 13, and 3 to 17, out of 32. The first two rows share goals; the third adds eight.\n\nA randomized repair also helped. Neither clearly beat discovery. More training partly rescues the original teacher. These panels are exploratory."
+    },
+    {
+      "title": "Reward training helped, but cost more.",
+      "notes": "RL means reinforcement learning from task-completion rewards. Each tool setting gets one training step on its own batch, from the same starting model.\n\nThe eight goals are familiar. Success rose 9 to 13 and 14 to 16; text cost rose 6% and 22%. Transfer and extra supervised-training controls are pending."
+    },
+    {
+      "title": "Next, test transfer and the value of one helper.",
+      "notes": "We will test the repair in Phi, a second model family.\n\nA helper completed a subtask, but screening ended before whole-task assessment. Next: working alone, or one helper chosen by fixed or adaptive rules. All share 96 calls and 8,192 output tokens, with no extra child budget."
+    }
+  ]
+}

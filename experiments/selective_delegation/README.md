@@ -1,6 +1,16 @@
 # Learning when another reasoning step is worthwhile
 
-Latest: [September24 overnight findings](RESEARCH-UPDATE-20260924.md). The teaching
+Latest: [September29 findings and decisions](FINDINGS-20260929.md). Changing the
+information available before the same training answers helped again with a
+second training seed and additional goals. More training partly rescues the
+original examples. RL improved familiar goals; its new-goal test is now running.
+The [teaching synthesis](teaching_synthesis_20260929/FINDING.md),
+[harness synthesis](harness_synthesis_20260929/README.md) and
+[literature decisions](literature_decisions_20260929/README.md) separate evidence,
+limits and follow-ups. Live ownership/queue state remains in the external store's
+`SESSION_CHECKPOINT.md` and `RESEARCH_QUEUE.md`, not in older dated reports.
+
+Historical September24: [overnight findings](RESEARCH-UPDATE-20260924.md). The teaching
 advantage survives the quantity correction and repeats in more recipe worlds;
 the notebook effect does not consistently help. Positive-only RL evaluation needs
 an interrupted-run audit and four-slot coverage recovery before interpretation.

@@ -1,0 +1,700 @@
+{
+  "schema": "harness-result-synthesis-20260929-v1",
+  "created_utc": "2026-09-29T01:04:17.055084+00:00",
+  "scope": "CPU-only synthesis of frozen native results; no scientific execution or sealed-source mutation.",
+  "quantity": {
+    "primary": {
+      "bootstrap_seed": 2026092806,
+      "complete_pairs": 8,
+      "difference": 0,
+      "difference_bounds": [
+        0,
+        0
+      ],
+      "losses": 0,
+      "planned_pairs": 8,
+      "rows": [
+        {
+          "delta": 0,
+          "known": true,
+          "repeat": 0,
+          "task_id": "textcraft_synth.val.628"
+        },
+        {
+          "delta": 0,
+          "known": true,
+          "repeat": 1,
+          "task_id": "textcraft_synth.val.628"
+        },
+        {
+          "delta": 0,
+          "known": true,
+          "repeat": 0,
+          "task_id": "textcraft_synth.val.599"
+        },
+        {
+          "delta": 0,
+          "known": true,
+          "repeat": 1,
+          "task_id": "textcraft_synth.val.599"
+        },
+        {
+          "delta": 0,
+          "known": true,
+          "repeat": 0,
+          "task_id": "textcraft_synth.val.401"
+        },
+        {
+          "delta": 0,
+          "known": true,
+          "repeat": 1,
+          "task_id": "textcraft_synth.val.401"
+        },
+        {
+          "delta": 0,
+          "known": true,
+          "repeat": 0,
+          "task_id": "textcraft_synth.val.294"
+        },
+        {
+          "delta": 0,
+          "known": true,
+          "repeat": 1,
+          "task_id": "textcraft_synth.val.294"
+        }
+      ],
+      "task_cluster_95": [
+        0,
+        0
+      ],
+      "task_identities": 4,
+      "ties": 8,
+      "unknown_pairs": 0,
+      "wins": 0
+    },
+    "arms": {
+      "demand": {
+        "diagnostic_counts": {
+          "calls": 418,
+          "consecutive_repeat_insufficient_same_action_and_stock": 76,
+          "craft_calls": 304,
+          "crafts_above_public_remaining_batch_demand": 8,
+          "finish_calls": 2,
+          "get_info_calls": 112,
+          "insufficient_stock_crafts": 173,
+          "insufficient_with_public_completion_feasible": 82,
+          "insufficient_with_ready_prerequisite": 173,
+          "insufficient_with_recipe_closure": 82,
+          "queried_items": 112,
+          "query_calls_with_no_new_static_recipe": 9,
+          "redundant_query_calls_after_closure": 1,
+          "repeat_insufficient_same_action_and_stock": 106,
+          "requeried_unchanged_recipe_items": 9,
+          "shortage_after_cross_branch_consumption_without_replenishment": 12,
+          "successful_crafts": 90,
+          "successful_shared_ingredient_consumptions": 66
+        },
+        "diagnostic_episode_flags": {
+          "any_above_public_batch_demand": 3,
+          "any_cross_branch_shortage": 2,
+          "any_insufficient": 8,
+          "context_cap": 6,
+          "failed": 8,
+          "failed_explicit_finish": 2,
+          "failed_with_complete_recipe_closure": 5,
+          "failed_with_cross_branch_shortage": 2,
+          "failed_with_public_completion_feasible": 5,
+          "failed_with_ready_prerequisite": 8,
+          "repeated_insufficient": 8,
+          "repeated_query": 4
+        },
+        "observed": 8,
+        "physical_cost": {
+          "calls": 418,
+          "completion_tokens": 15686,
+          "failed_calls": 0,
+          "native_service_seconds": 1327.7050580978394,
+          "prompt_tokens": 2014038,
+          "unknown_completion_tokens_calls": 0
+        },
+        "planned": 8,
+        "success_rate_bounds": [
+          0,
+          0
+        ],
+        "successes": 0,
+        "terminal": {
+          "deadline": 1790627169.5534725,
+          "elapsed_seconds": 1357.7086863517761,
+          "ended": 1790625827.2625654,
+          "failure": null,
+          "stopped": false
+        },
+        "unresolved_starts": []
+      },
+      "masked": {
+        "diagnostic_counts": {
+          "calls": 413,
+          "consecutive_repeat_insufficient_same_action_and_stock": 70,
+          "craft_calls": 276,
+          "crafts_above_public_remaining_batch_demand": 20,
+          "finish_calls": 3,
+          "get_info_calls": 134,
+          "insufficient_stock_crafts": 168,
+          "insufficient_with_public_completion_feasible": 81,
+          "insufficient_with_ready_prerequisite": 168,
+          "insufficient_with_recipe_closure": 81,
+          "queried_items": 134,
+          "query_calls_with_no_new_static_recipe": 35,
+          "redundant_query_calls_after_closure": 28,
+          "repeat_insufficient_same_action_and_stock": 90,
+          "requeried_unchanged_recipe_items": 35,
+          "shortage_after_cross_branch_consumption_without_replenishment": 10,
+          "successful_crafts": 89,
+          "successful_shared_ingredient_consumptions": 47
+        },
+        "diagnostic_episode_flags": {
+          "any_above_public_batch_demand": 4,
+          "any_cross_branch_shortage": 2,
+          "any_insufficient": 8,
+          "context_cap": 5,
+          "failed": 8,
+          "failed_explicit_finish": 3,
+          "failed_with_complete_recipe_closure": 5,
+          "failed_with_cross_branch_shortage": 2,
+          "failed_with_public_completion_feasible": 5,
+          "failed_with_ready_prerequisite": 8,
+          "repeated_insufficient": 8,
+          "repeated_query": 7
+        },
+        "observed": 8,
+        "physical_cost": {
+          "calls": 413,
+          "completion_tokens": 13055,
+          "failed_calls": 0,
+          "native_service_seconds": 1134.0608098506927,
+          "prompt_tokens": 1932453,
+          "unknown_completion_tokens_calls": 0
+        },
+        "planned": 8,
+        "success_rate_bounds": [
+          0,
+          0
+        ],
+        "successes": 0,
+        "terminal": {
+          "deadline": 1790628556.038144,
+          "elapsed_seconds": 1163.286871433258,
+          "ended": 1790627019.3253865,
+          "failure": null,
+          "stopped": false
+        },
+        "unresolved_starts": []
+      }
+    },
+    "classification": "Valid negative completion pilot; not proof arithmetic is useless.",
+    "decision": "Do not scale the quantity-table display.",
+    "example": {
+      "task": "textcraft_synth.val.599",
+      "seed": 2026092805,
+      "zero_based_calls": [
+        32,
+        41
+      ],
+      "identical_consecutive_failed_crafts": 10,
+      "target": "o0_i2",
+      "requested_output": 3,
+      "table_stock": 3,
+      "table_remaining_demand": 1,
+      "table_stock_deficit": 0,
+      "table_new_batches": 0,
+      "failure": "raw_o9 need1 have0",
+      "root_terminal": "finished without success",
+      "interpretation": "Already-sufficient intermediate repeatedly overcrafted despite zero displayed deficit; naive missing-resource child could amplify an obsolete action."
+    }
+  },
+  "alfworld": {
+    "cells": {
+      "index-base": {
+        "observed": 24,
+        "won": 1,
+        "invalid_outputs": 0,
+        "terminations": {
+          "action_budget": 23,
+          "native_done": 1
+        },
+        "immediate_repeated_native_commands": 571,
+        "physical_cost": {
+          "calls": 1186,
+          "prompt_tokens": 1904966,
+          "completion_tokens": 10406,
+          "unknown_usage_calls": 0,
+          "failed_calls": 0,
+          "known_token_totals_are_lower_bounds": false
+        },
+        "history_trimmed_calls": 0,
+        "native_service_seconds": 503.5363082885742,
+        "invalid_output_census": {},
+        "endpoint": null
+      },
+      "index-trained": {
+        "observed": 24,
+        "won": 2,
+        "invalid_outputs": 0,
+        "terminations": {
+          "action_budget": 22,
+          "native_done": 2
+        },
+        "immediate_repeated_native_commands": 4,
+        "physical_cost": {
+          "calls": 1122,
+          "prompt_tokens": 1820527,
+          "completion_tokens": 8882,
+          "unknown_usage_calls": 0,
+          "failed_calls": 0,
+          "known_token_totals_are_lower_bounds": false
+        },
+        "history_trimmed_calls": 0,
+        "native_service_seconds": 773.1378211975098,
+        "invalid_output_census": {},
+        "endpoint": {
+          "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-action-sft-002/checkpoint-0033",
+          "adapter_sha256": "1ed064ea0947cc7ab078ebc7652f24ccb5076c0418e4f8c8268a2135f786b63b",
+          "commit_sha256": "e645ee773e8d2c7c51fd74b98f0bb0acd54a602f1711335c31a155513e4b8812",
+          "training_plan_sha256": "3f146fb6ea822acf923e45323fe06fd26da2c24ab040f3e4cca092f81d590ce7",
+          "examples_sha256": "a08d7db1b1cbd71375e26765ff101f3f612bb7993a9d5ed7e90ed5986b6e2bf3",
+          "step": 33
+        }
+      },
+      "command-base": {
+        "observed": 24,
+        "won": 0,
+        "invalid_outputs": 54,
+        "terminations": {
+          "action_budget": 13,
+          "three_consecutive_invalid": 11
+        },
+        "immediate_repeated_native_commands": 538,
+        "physical_cost": {
+          "calls": 838,
+          "prompt_tokens": 1227557,
+          "completion_tokens": 8952,
+          "unknown_usage_calls": 0,
+          "failed_calls": 0,
+          "known_token_totals_are_lower_bounds": false
+        },
+        "history_trimmed_calls": 0,
+        "native_service_seconds": 409.44481444358826,
+        "invalid_output_census": {
+          "not_in_current_admissible_list": 54
+        },
+        "endpoint": null
+      },
+      "command-trained": {
+        "observed": 24,
+        "won": 4,
+        "invalid_outputs": 73,
+        "terminations": {
+          "three_consecutive_invalid": 20,
+          "native_done": 4
+        },
+        "immediate_repeated_native_commands": 2,
+        "physical_cost": {
+          "calls": 417,
+          "prompt_tokens": 491764,
+          "completion_tokens": 4344,
+          "unknown_usage_calls": 0,
+          "failed_calls": 0,
+          "known_token_totals_are_lower_bounds": false
+        },
+        "history_trimmed_calls": 0,
+        "native_service_seconds": 343.51674008369446,
+        "invalid_output_census": {
+          "not_in_current_admissible_list": 73
+        },
+        "endpoint": {
+          "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/command-sft/checkpoint-0033",
+          "adapter_sha256": "4b4453d9c33ac10ec155ae75d74f35939e171511b55fe65e9393c30b44db2e4b",
+          "commit_sha256": "d04c4ac320ba685eb14c0dbf5f74a03549f20a26d8ee1e45b551640234b20662",
+          "training_plan_sha256": "6e0a501e4c7ed8c5e102798a2f6bfd508a7486ab4142f55ec33ea3d2f089a577",
+          "examples_sha256": "3fc50683159abc4b732bd26a503460f39096aec9ee16d72c488e1435e5cb41af",
+          "step": 33
+        }
+      }
+    },
+    "within_interface_gain": {
+      "index": {
+        "left": "index-trained",
+        "right": "index-base",
+        "planned_pairs": 24,
+        "unknown_pairs": 0,
+        "wins": 2,
+        "losses": 1,
+        "ties": 21,
+        "game_bootstrap": {
+          "estimate": 0.041666666666666664,
+          "ci95": [
+            -0.125,
+            0.25
+          ]
+        },
+        "scene_bootstrap": {
+          "estimate": 0.041666666666666664,
+          "ci95": [
+            -0.25,
+            0.14285714285714285
+          ]
+        },
+        "game_signflip": {
+          "p_two_sided": 1,
+          "sign_vectors": 4096,
+          "null": "Exchangeable cluster signs; exploratory sensitivity, not confirmation"
+        },
+        "scene_signflip": {
+          "p_two_sided": 1,
+          "sign_vectors": 16,
+          "null": "Exchangeable cluster signs; exploratory sensitivity, not confirmation"
+        }
+      },
+      "command": {
+        "left": "command-trained",
+        "right": "command-base",
+        "planned_pairs": 24,
+        "unknown_pairs": 0,
+        "wins": 4,
+        "losses": 0,
+        "ties": 20,
+        "game_bootstrap": {
+          "estimate": 0.16666666666666666,
+          "ci95": [
+            0,
+            0.4166666666666667
+          ]
+        },
+        "scene_bootstrap": {
+          "estimate": 0.16666666666666666,
+          "ci95": [
+            0,
+            0.3
+          ]
+        },
+        "game_signflip": {
+          "p_two_sided": 0.5,
+          "sign_vectors": 4096,
+          "null": "Exchangeable cluster signs; exploratory sensitivity, not confirmation"
+        },
+        "scene_signflip": {
+          "p_two_sided": 1,
+          "sign_vectors": 16,
+          "null": "Exchangeable cluster signs; exploratory sensitivity, not confirmation"
+        }
+      }
+    },
+    "interaction": {
+      "definition": "(command-trained-command-base)-(index-trained-index-base)",
+      "unknown": 0,
+      "game_bootstrap": {
+        "estimate": 0.125,
+        "ci95": [
+          0,
+          0.3333333333333333
+        ]
+      },
+      "scene_bootstrap": {
+        "estimate": 0.125,
+        "ci95": [
+          0,
+          0.2777777777777778
+        ]
+      }
+    },
+    "command_training_manifest": {
+      "schema": "alfworld-exact-command-projection-20260928-v1",
+      "examples": 524,
+      "successful_games_only": true,
+      "examples_sha256": "3fc50683159abc4b732bd26a503460f39096aec9ee16d72c488e1435e5cb41af",
+      "original_examples_sha256": "a08d7db1b1cbd71375e26765ff101f3f612bb7993a9d5ed7e90ed5986b6e2bf3",
+      "same_row_order": true,
+      "same_executed_native_commands": true,
+      "all_histories_complete": true,
+      "prompt_tokens": 712335,
+      "supervised_tokens": 5362,
+      "original_prompt_tokens": 709191,
+      "original_supervised_tokens": 4060,
+      "max_prompt_tokens": 3214,
+      "max_target_tokens": 17,
+      "source_sha256": {
+        "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep_data.py": "bc08cbf3b68c46d3fcb9175b8a07a2a5d5ed399d02fcf2ff14be3db41c5ce8c9",
+        "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep.py": "e721de1b88af6afca7c469dd37a6f14f41758af7b97c303d46680a7d314d1a0f"
+      },
+      "caveat": "Same actions/rows/updates, not equal token exposure or per-example token-mean weight."
+    },
+    "classification": "Valid exploratory representation/training-package signal, not symbol-binding isolation or hierarchy.",
+    "examples": {
+      "wins": "Command-trained games5(clean egg to microwave) and8(heated apple to fridge), both seeds, all scene10.",
+      "invalid": "game00 seed2026092813 calls009-011 repeat go to drawer3; current list permits examine drawer3 but not go to drawer3.",
+      "cost_warning": "20/24 command-trained episodes stop at three inadmissible outputs; fewer calls cannot be called efficiency dominance."
+    },
+    "decision": "Do not expand from4/24; preserve strict legality and isolate failure mechanism before any further representation run."
+  },
+  "delegation": {
+    "arms": {
+      "flat": {
+        "task_id": "textcraft_synth.val.494",
+        "calls": 32,
+        "returned": 32,
+        "failed": 0,
+        "output_tokens": 906,
+        "prompt_tokens": 65331,
+        "native_service_seconds": 72.01870346069336,
+        "child_nodes": 0,
+        "child_calls": 0,
+        "errors": {
+          "native_action_error": 6
+        },
+        "child_stock_deltas": [],
+        "root_observed": false,
+        "root_score": null,
+        "native_audit": {
+          "replayed": false,
+          "native_score": null,
+          "calls": 32,
+          "reason": "external failure; native bindings checked, full transition replay unavailable"
+        }
+      },
+      "fixed": {
+        "task_id": "textcraft_synth.val.494",
+        "calls": 32,
+        "returned": 32,
+        "failed": 0,
+        "output_tokens": 691,
+        "prompt_tokens": 46460,
+        "native_service_seconds": 53.976917028427124,
+        "child_nodes": 1,
+        "child_calls": 9,
+        "errors": {
+          "native_action_error": 2,
+          "invalid_schema": 1
+        },
+        "child_stock_deltas": [
+          {
+            "node_id": "n1",
+            "targets": {
+              "a2_i2_12": 2
+            },
+            "score": 1,
+            "stock_delta": {
+              "a2_i2_12": 2,
+              "raw_a1": -1
+            }
+          }
+        ],
+        "root_observed": false,
+        "root_score": null,
+        "native_audit": {
+          "replayed": false,
+          "native_score": null,
+          "calls": 32,
+          "reason": "external failure; native bindings checked, full transition replay unavailable"
+        }
+      },
+      "adaptive": {
+        "task_id": "textcraft_synth.val.494",
+        "calls": 32,
+        "returned": 32,
+        "failed": 0,
+        "output_tokens": 650,
+        "prompt_tokens": 43559,
+        "native_service_seconds": 50.97517466545105,
+        "child_nodes": 1,
+        "child_calls": 13,
+        "errors": {
+          "native_action_error": 1
+        },
+        "child_stock_deltas": [
+          {
+            "node_id": "n1",
+            "targets": {
+              "a8_i2_18": 4
+            },
+            "score": 0,
+            "stock_delta": {
+              "a3_i1_13": 1,
+              "a6_i1_16": 2,
+              "a8_i2_18": 2,
+              "raw_a0": -3
+            }
+          }
+        ],
+        "root_observed": false,
+        "root_score": null,
+        "native_audit": {
+          "replayed": false,
+          "native_score": null,
+          "calls": 32,
+          "reason": "external failure; native bindings checked, full transition replay unavailable"
+        }
+      }
+    },
+    "classification": "Actual helper uptake in both routed arms; planned screening cutoffs leave all roots unknown. No full-transition replay of incomplete roots.",
+    "root": "textcraft_synth.val.494",
+    "world_seed": 42,
+    "seed": 2026092806,
+    "screen_response_cap": 32,
+    "global_call_cap": 96,
+    "global_output_cap": 8192,
+    "context_cap": 8192,
+    "stock_contract": "Shared mutable native stock; child-start snapshots; no physical reservation.",
+    "decision": "Complete the same root under full shared budget before designing a new trigger or interpreting efficacy."
+  },
+  "followups": [
+    {
+      "rank": 1,
+      "name": "Complete-goal one-boundary delegation",
+      "status": "Authorized CPU preparation after synthesis; parent alone launches.",
+      "question": "Does fixed or budget/observed-depth-aware delegation improve native root completion or cost versus flat once32-response censoring is removed?",
+      "design": "Same exposed val494/world42, publiccp23+binder, flat/fixed/adaptive, two fresh paired seeds, six roots. One child max, unchanged global96calls/8192output and8192context.",
+      "baseline": "All3 arms rerun; old censored screens are not outcome controls.",
+      "audit_seam": "New private wrapper iterates BOTH jobs and invokes unchanged native audit_episode on completed roots; checks real recursive call order, public history, binder requested/executed actions, child entry/final stock, root initial scoring snapshot and global/role costs. No new host-spawn architecture.",
+      "expected_GPU_minutes": [
+        15,
+        30
+      ],
+      "conservative_GPU_minutes": [
+        45,
+        60
+      ],
+      "hard_science_minutes": 60,
+      "retire_or_revise": "No scale-up without native-complete outcomes. If flat ties more cheaply or children finish locally without root gains, revise specific handoff/quantity failure rather than add depth. Two seeds on one exposed root are a diagnostic, not robust evidence."
+    },
+    {
+      "rank": 2,
+      "name": "Conditional reactive deficit child versus identical hint",
+      "status": "Design-only; defer until complete-goal result identifies a relevant failure.",
+      "question": "At a public, goal-relevant stock-deficiency event, does local context isolation help beyond the same public arithmetic hint?",
+      "design": "At most one child for net shortage using only observed recipes, lexical candidate and shared resource commitments; hint-only control sees same facts/goal. Keep original global budget and charge all parent/child calls.",
+      "caveat": "Require outstanding root relevance and reject zero-deficit/obsolete target triggers such as val599 witness. Public-fact handoff and explicit host-spawn event need private collector/audit support; do not fabricate model delegate tokens.",
+      "smallest_comparison": "Existing eight deep exposed task-seed slots, flat/hint/hint+child only if first follow-up leaves this mechanism unresolved.",
+      "expected_GPU_minutes": [
+        45,
+        90
+      ],
+      "retire_or_revise": "Retire if no eligible triggers, hint matches completion more cheaply, or children consume needed stock without native root gains."
+    }
+  ],
+  "limitations": [
+    "Adaptive, exposed TextCraft tasks and shared recipes.",
+    "Quantity has four root clusters; degenerate0..0 bootstrap is not a population no-effect interval.",
+    "ALF12new games share only4scenes; both winning games are scene10; one fit seed and unequal target-token dose.",
+    "Delegation local scores are saved native records, not full independent replay of interrupted root traces.",
+    "No learned recursion or general no-helper conclusion."
+  ],
+  "verification": {
+    "unique_source_pins_checked": 62,
+    "source_pin_failures": 0,
+    "primary_audit_and_plan_hashes_checked": true,
+    "quantity_episode_hashes_checked": 16,
+    "alf_strict_invalid_census_checked": true,
+    "existing_native_audits_reused": true,
+    "GPU_work": false,
+    "sealed_sources_executed": false,
+    "models_or_large_ancestry_rehashed": false
+  },
+  "source_sha256": {
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/inventory_bottleneck_20260928/analyze.py": "bc722ead9a98594068d8d7c1200724e81608cae73aa0f9131411e8457747ecaa",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/inventory_bottleneck_20260928/demand_table.py": "7fd42602cc63c3080a279d34711acea3b2c5ef3c6a0ef4439e267223fc30022e",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/inventory_bottleneck_20260928/readout.py": "04749a3f15f2081f61baddd30f5676ca9b28907818455e80c62e7d66ef2bf26e",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-062-textcraft-world43/eval_textcraft.py": "1f712775e8f9ced8f500cda6b5c7eabfe0fd02ea9a31f85910e781f5363e580a",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-062-textcraft-world43/eval_textcraft_public.py": "572b93e151bd69057df0f3cb046b65b631fca6b686fb6c6c469f3a49fc31ea12",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-062-textcraft-world43/eval_textcraft_trained.py": "92d22b0f9fcff1ce09fc04df939da7dde0288394be06e60386c68b2ced06dd57",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-062-textcraft-world43/eval_textcraft_world43.py": "7100feb3b7799112d472a4961ecd83fb1d62fce6427d0b93c80f5c6556772c7f",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-062-textcraft-world43/inspect_textcraft_worlds.py": "28a67bee29cca0be17e4de02a3fefe0cd36fbb77e17d2f3e9e973e1b4f3fec3a",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-062-textcraft-world43/prepare_textcraft.py": "d7f1ab9c2e924e2ae4b4897807074e4f1148347138311916f58afb18bac4dfbb",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-062-textcraft-world43/prepare_textcraft_world43.py": "ceb99bf74140182b6865832d7f7e49ca519a198e7861926a755c17939792a89d",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-062-textcraft-world43/probe.py": "8a73f3fab4d9c03fec8b51cc2a014b6f691915db4c972e1b1bef5a2acdae9302",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-062-textcraft-world43/textcraft_bridge.py": "1553db71f5c4dd4738e50d087c0a33d99d9ea7f97a084e136e4360837f2a7d40",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-breadth-001/textcraft_breadth.py": "044b8bf6102ac6e7d571241d220e6688b57ae4fe4ad57640553a670d4a9277ac",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/analyze_textcraft.py": "f1e095401698432fcf630b62baba88df9852e3b0699f711553ba583a382344d1",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/eval_textcraft.py": "1e8156909b2c17cbed20d3add5e429daece4d602979e6e44bde628ad7296c92b",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/eval_textcraft_public.py": "572b93e151bd69057df0f3cb046b65b631fca6b686fb6c6c469f3a49fc31ea12",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/eval_textcraft_trained.py": "92d22b0f9fcff1ce09fc04df939da7dde0288394be06e60386c68b2ced06dd57",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/eval_textcraft_world43.py": "7100feb3b7799112d472a4961ecd83fb1d62fce6427d0b93c80f5c6556772c7f",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/inspect_textcraft_worlds.py": "28a67bee29cca0be17e4de02a3fefe0cd36fbb77e17d2f3e9e973e1b4f3fec3a",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/prepare_textcraft.py": "d7f1ab9c2e924e2ae4b4897807074e4f1148347138311916f58afb18bac4dfbb",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/prepare_textcraft_multiworld.py": "a8168a30cf252cad5b243d6768cb3b91e85361d8059470ac2e5920cac0b1ef85",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/prepare_textcraft_world43.py": "ceb99bf74140182b6865832d7f7e49ca519a198e7861926a755c17939792a89d",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/probe.py": "8a73f3fab4d9c03fec8b51cc2a014b6f691915db4c972e1b1bef5a2acdae9302",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/textcraft_bridge.py": "1553db71f5c4dd4738e50d087c0a33d99d9ea7f97a084e136e4360837f2a7d40",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/textcraft_multiworld.py": "669335d316c564fb9b9f200472d8990c1341ffe8b2b9b7e998829e4b2edcf65c",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/textcraft_recipe_binder.py": "2729dc225da2bda00ff1d15ab5acbd87ea9d98a8aef6ebde67c02e0934546695",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-textcraft-recipe-binder-003/textcraft_teacher_seed.py": "8bf9ea95f189f48c88cb127d58bf113edcbc2d318e3774e1769165a45e679748",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-inputs-001/MANIFEST.json": "50b3c77adb1e5e4948af2a49b96df37dc976268a665f551cf219087986e565f4",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-inputs-001/SELECTION.json": "b7d411042c422b7dddcc52276ce671f993fbb23a36827ada8ef9b7d05c495357",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/unattended-breadth-20260914/campaign.py": "d9117b2ec84a95ea52b65bace5bb2570c7a8bf46ac91261f5376d2d67c051b31",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/unattended-breadth-20260914/runner_v2.py": "23f8cd14aab63a478d06fb22ba3bcdfb1d9c37af5f168f71427b2b2668c6cfa6",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep_jobs.py": "ffd878649b8571b772f20538104f4c0a3e937fbb751ac87742b5949451fa09bf",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep_compare.py": "003134a3dbeb164668ca69413a8418cd82cf441020872ca2d478cffc96150e5c",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep_fixture.py": "48911ff9c520c5a83e13a114979b059e75cc56d067aad4efd9bebc30e1335a0a",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep_data.py": "bc08cbf3b68c46d3fcb9175b8a07a2a5d5ed399d02fcf2ff14be3db41c5ce8c9",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep_audit.py": "c7778be216e564578a6244502d48b07b33ed2a4f070d8ae96101272d1be1a560",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep_collect.py": "d8458a21690e79956388c6f7cdd9e78ff6377c3ead64f4e8b323e3157baae5f8",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep_train.py": "26fde92a500b19173a813e674411e09c64237c6c27954b0ef1d2f3d5daf736b1",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_representation_20260928/alf_rep.py": "e721de1b88af6afca7c469dd37a6f14f41758af7b97c303d46680a7d314d1a0f",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_closed_loop.py": "03890c2302c2cdf69cd29201ac628c4c78efb53b71353b20bc03ba7157bfc69c",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_probe.py": "19847c42114f0b90603398b4e52221b6d35596a4504b6f65675b6b0d2800708f",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_trained_actor.py": "f15d69ca410f9d0ef184a907b05f1cb566ed63ea9b014ba2d7db252e83decdaf",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_unseen.py": "d0572c79e39fde86eff9e231dbc23ec0dac1a30bd3265ae2a4cc8d67bebb2d5d",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/eval_planner.py": "b1bad910cd844020695677210540cebeb79c8fd027421ab64cfea1da21ba7d09",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/probe.py": "8a73f3fab4d9c03fec8b51cc2a014b6f691915db4c972e1b1bef5a2acdae9302",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/alfworld_bridge.py": "ccbf09a6bfd4bd1bcb4f227a84af4cf753b148c88b1027136ecb617b20741daf",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/source-041b-alfworld-one-epoch-sft/train_alfworld_sft.py": "df99e937422dc3a24df681e9bd541b7332aa68f5d45348e22c4d7641ae1c7ca5",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/train_planner.py": "9ce66e6f2bc8774bf5f4a5ae0e4934fbad5fd04da8886cb799231b8582f562f8",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/analyze_alfworld_screen.py": "c2b1bf8383236ce1b6a2c1fc97784f1a82ca124234042275165e7a98deb1ffe2",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/analyze_alfworld_actor.py": "ffd43b67de50eb010fccd431b5d8d228d25b27c29181d9c79b4524f22d061c28",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/analyze_alfworld_unseen.py": "bb0d52d86fd274ec94cace792df19db3244099a480c6e3cc46015851a7affda9",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/analyze_helper.py": "ca311d49970a8ef70058cdb16404ace96b909d60499d4ceab35cda8c44438a0f",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/decomposition_20260928/prepare_data.py": "923f661e03c1e0475260a62447a653c3c0f6e24ac4cf3288a69cb041934ff159",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/decomposition_20260928/run.py": "657044ebe06f794386bb798a85c63589819c75ae63116a69ded73c587fcd877b",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/decomposition_flexible_20260928/routing_flexible.py": "3389a40fd48d46ace5572b053ee4495145bcedc05829e1bc705be4aa2aebe4d1",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/eval_textcraft_public.py": "572b93e151bd69057df0f3cb046b65b631fca6b686fb6c6c469f3a49fc31ea12",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/eval_textcraft_trained.py": "92d22b0f9fcff1ce09fc04df939da7dde0288394be06e60386c68b2ced06dd57",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/prepare_textcraft.py": "d7f1ab9c2e924e2ae4b4897807074e4f1148347138311916f58afb18bac4dfbb",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/textcraft_bridge.py": "1553db71f5c4dd4738e50d087c0a33d99d9ea7f97a084e136e4360837f2a7d40",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/textcraft_recipe_binder.py": "2729dc225da2bda00ff1d15ab5acbd87ea9d98a8aef6ebde67c02e0934546695",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/decomposition_flexible_20260928/run_flexible.py": "9d03304051e329049485d253efb7c08ce0c934b62857afac5c3d3e90431f496c",
+    "/project/alex_phd/repos/rlm/.worktrees/selective-delegation-20260921/experiments/selective_delegation/decomposition_20260928/routing.py": "9f99f0b6065dcc7ce6c790d702c5ac06109f09105c1273d389ca5541179c777a"
+  },
+  "evidence_sha256": {
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-demand-20260928-001/PAIRED.json": "0811b08ab3fafbfd2bfd023fb497d0c133e2d5ed0c236f3f1fa9c3b9ca3754c8",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/COMPARISON.json": "16e160bc2b2d8cef82a7b82ef92a44eeaf1d2079574818fa05bbfb27eeb3a742",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-demand-20260928-001/demand/PLAN.json": "dc01db54dacf5eee2f58331ee00dcea2cf1d2d4276e4c82493e201215bfb58c6",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-demand-20260928-001/demand/NATIVE-AUDIT.json": "c0355061028904f6c4ba5056f96a95e41c7f8b45aaec177d5cbd9e63835dab77",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-demand-20260928-001/masked/PLAN.json": "d28fde32106b7f37ca264a7a677f33ff3cfaa5e8f3f1165757a05a399e25935c",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-demand-20260928-001/masked/NATIVE-AUDIT.json": "f1d338c5b4084b349ccc0034ea69e093c466c9146f1e1f2760e276fe8797c9f3",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/index-base/PLAN.json": "35487fa07cdb833b941a8bc57d937a45099ac9b9802374911a78be67f8b68d35",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/index-base/NATIVE-AUDIT.json": "1be877fb3ee0a0efcb893313cbd0859830380ebe687327f1b7c3a7afa741443c",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/index-trained/PLAN.json": "166170ab304e0985914933b906e49a87cff10e54f35e86ef8230fe4d2a36fd21",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/index-trained/NATIVE-AUDIT.json": "0a681bca6bca3d079c688b9c137b270ac46985e063a091be74153ecc36e3f24e",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/command-base/PLAN.json": "70505fa56999d7236bf1d95a6d0cf56bff210444d1ec0dfad5391e642b2e7a2d",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/command-base/NATIVE-AUDIT.json": "e0c27eaedbd1c5df037487201e73dad4f9eb7a65e9f9136cdf7c02a158a42f89",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/command-trained/PLAN.json": "9767790ac3e6afb4f082be534fd88beb61f927b574714644abb961ba39a5a876",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/command-trained/NATIVE-AUDIT.json": "2fc5ddf1e2ddea3abbe6bed07220ab8d5c490b3566d95a3977a7d03a9b7c2ca6",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-flat-20260928-001/PLAN.json": "3ac0fe28474b68c580d2cb3ecca6fdb26ac0b07044a1d8c758a2e148600490fc",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-flat-20260928-001/ADMISSION-AUDIT.json": "003a74fcf0c8f0e7dc85045e714682d01c0dfe05dfeb08d40d788ce797a53a5f",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-flat-20260928-001/ADMISSION-STOP.json": "abb9e499a5fa5cbd8b7b470322440f392dd0c2fcd61859ae6c180fc89200a05f",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-fixed-20260928-001/PLAN.json": "cfa62697971f6e6441efbe3068f66a2ec1f0d8c82bc166ac57eec5c6658e03f7",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-fixed-20260928-001/ADMISSION-AUDIT.json": "d8eb4e77f23225b31816197fb569cea7764549724c02795d41b9caaad3a028f8",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-fixed-20260928-001/ADMISSION-STOP.json": "abb9e499a5fa5cbd8b7b470322440f392dd0c2fcd61859ae6c180fc89200a05f",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-adaptive-20260928-001/PLAN.json": "0cdde09044415e0b058aca936d969388e189ec6ecf36643a3e06023fa103dcca",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-adaptive-20260928-001/ADMISSION-AUDIT.json": "2f86863a785d4278fa7f4cc582ff45bf25e4748f28a504c7abd00bc30a394df3",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-adaptive-20260928-001/ADMISSION-STOP.json": "abb9e499a5fa5cbd8b7b470322440f392dd0c2fcd61859ae6c180fc89200a05f",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-demand-20260928-001/demand/calls/t05-r1-flat-original-c032.json": "8e7e3420f1d23cb08a63c135387bc9b3182d3408ac5f2b74a7d13608e4a15e09",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-demand-20260928-001/demand/nodes/t05-r1-flat-original-n0.json": "411c563b97d2adfbcbfb4bb234430f7ec2916097749d87e36fd4ff78252a8d7b",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/command-trained/calls/game-00-seed-2026092813-flat-call-009-flat.json": "a57abb83efd9f337ffb5f16962844706da89a7abd68f48d39175881e12e3ff11",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/command-trained/episodes/game-05-seed-2026092813-flat.json": "cdcf7bd95e312d25dadd5a9300847ba07fa27563786ae6f803080ae83b60aeb7",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/alfworld-representation-20260928-001/command-trained/observations/game-05-seed-2026092813-flat-019.json": "90800255ee4ecb30c2e6ffbec9676359228937b47204b8168cd916af24db95eb",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-fixed-20260928-001/nodes/decomp-val494-fixed-r0-n1.json": "ace77cd17579d1cbb6ae409beb6caff971b92f76a95139cf695465e0f0a196eb",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-decomp-flexible-adaptive-20260928-001/nodes/decomp-val494-adaptive-r0-n1.json": "9cbee8dbed188c0371ae59c0dbfd94fbeb3a0278b66a7e34d576e76c42d28c49"
+  }
+}
+

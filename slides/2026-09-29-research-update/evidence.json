@@ -1,0 +1,56 @@
+{
+  "title": "Teaching usable next steps",
+  "date": "2026-09-29",
+  "display_cutoff_utc": "2026-09-29T01:14:00Z",
+  "source_snapshot_cutoff_utc": "2026-09-29T01:14:27Z",
+  "status": "exploratory",
+  "source_scope": "Existing native-audited findings; no new model execution or native replay for this deck.",
+  "teaching_chart": {
+    "outcome": "Native completed task attempts",
+    "teacher_before": "Quantity-corrected known-recipe demonstrations",
+    "teacher_after": "Stable-visible history repair of the same demonstrations",
+    "interface": "raw",
+    "cohorts": [
+      {"label": "Initial pilot", "fit_seed": 2026092208, "panel": 0, "original": 1, "repaired": 14, "discovery_reference": 14, "random_repair": 12, "attempts": 32, "root_goals": 8},
+      {"label": "Training repeated", "fit_seed": 2026092291, "panel": 0, "original": 2, "repaired": 13, "discovery_reference": 13, "random_repair": 12, "attempts": 32, "root_goals": 8},
+      {"label": "Eight more goals", "fit_seed": 2026092208, "panel": 1, "original": 3, "repaired": 17, "discovery_reference": 15, "random_repair": 15, "attempts": 32, "root_goals": 8}
+    ],
+    "world_seeds": [42, 50],
+    "rollout_seeds": [2026092204, 2026092205],
+    "unique_root_goals_across_chart": 16,
+    "training": {
+      "sft_tasks": 32,
+      "answer_rows": 366,
+      "updates": 23,
+      "answer_tokens_including_eos": 8820,
+      "matched": ["Recorded initial adapter weights", "Literal answer strings", "Known-teacher training row order", "All minibatch target-token denominators", "Original crafting order"],
+      "changed": ["Public interaction histories", "Recipe-query schedule", "Input token dose", "Training computation"]
+    },
+    "original_teacher_dose_pilot": {"updates": [23, 46, 69], "successes_out_of_32": [1, 8, 8]},
+    "limits": ["Exposed exploratory evaluation panels", "Shared lower-level recipes", "First two cohorts reuse the same roots", "Not 96 independent problems", "No established superiority to discovery teacher", "Tested optimization budgets only"]
+  },
+  "rl_chart": {
+    "root_goals": 8,
+    "attempts_per_cell": 16,
+    "updates_per_actor": 1,
+    "same_warm_actor": true,
+    "separately_trained_actor_per_interface": true,
+    "rows": [
+      {"interface": "raw", "before": 9, "after": 13, "calls_before": 326, "calls_after": 340, "output_tokens_before": 9610, "output_tokens_after": 10224, "display_output_change_percent": 6},
+      {"interface": "observed_recipe_binder", "before": 14, "after": 16, "calls_before": 277, "calls_after": 303, "output_tokens_before": 8462, "output_tokens_after": 10325, "display_output_change_percent": 22}
+    ],
+    "limits": ["Familiar goals used in RL training", "Two new sampling seeds, not two RL training seeds", "One collection/update per interface", "Calls and output tokens rise", "Different-goal transfer and extra-SFT controls pending at cutoff"]
+  },
+  "next_questions": [
+    {"question": "Does stable-visible repair transfer to Phi-4-mini?", "status_at_cutoff": "No repaired Phi actor result; original teacher-package comparisons only"},
+    {"question": "Does one helper improve original-root completion under the same global budget?", "status_at_cutoff": "Real helper uptake in screens; all root outcomes censored at 32 responses and unknown", "planned_arms": ["flat", "fixed", "adaptive"], "shared_budget": {"calls": 96, "output_tokens": 8192, "context_tokens": 8192, "children_max": 1}}
+  ],
+  "sources": [
+    {"path": "../../experiments/selective_delegation/FINDINGS-20260929.md", "sha256": "4dd97a438654091946544271209a13a225810976678299f1ac93bd76d386516b"},
+    {"path": "../../experiments/selective_delegation/teaching_synthesis_20260929/FINDING.md", "sha256": "6b0fa078873b654420c3bf4811b7fae69476a7ce99905d6d7325e260ae69182e"},
+    {"path": "../../experiments/selective_delegation/teaching_synthesis_20260929/FINDING.json", "sha256": "03e99db6d5340b436530f7cddadbd3a23fd80a4db84db40c0111606683edcbfc"},
+    {"path": "../../experiments/selective_delegation/rl_outcomes_20260928/README.md", "sha256": "165e0943f7f973bcdd171ac524a08306022561047603478fcca9f431df1f58db"},
+    {"path": "../../experiments/selective_delegation/harness_synthesis_20260929/README.md", "sha256": "63de36541dfd92560ad468294375fdbbc619cf1c4104ae711eaa1c2ca0eff95b"},
+    {"path": "../../experiments/selective_delegation/harness_synthesis_20260929/SYNTHESIS.json", "sha256": "5c846e56b978d47bc9b800fdf83a765cf054710a14ed7b4041d0368d1cc0a4ea"}
+  ]
+}

@@ -1,6 +1,24 @@
 # Preliminary RLM research slides
 
-## Current update: 11 September 2026
+## Current update: 29 September 2026
+
+The [five-slide research update](2026-09-29-research-update/README.md) explains
+the crafting task, a concrete training-example repair, its replication, the
+limited RL result, and the next tests. Read the
+[compiled PDF](2026-09-29-research-update/research-update.pdf) or the
+[speaker guide](2026-09-29-research-update/speaker-guide.md).
+Evidence is frozen at 01:14 UTC; planned experiments are not presented as results.
+
+From the repository root, run
+`make -C slides/2026-09-29-research-update present` for two pdfpc windows on a
+one-screen laptop, or replace `present` with `rehearse` for private practice.
+From inside that deck's directory, run `make present` instead. Build with
+`make -C slides/2026-09-29-research-update` if a TeX installation is available.
+
+Earlier decks, including the September 25 emailed presentations, are preserved
+at their original evidence cutoffs.
+
+## Historical update: 11 September 2026
 
 The new [advisor discussion package](2026-09-11-advisor-meeting/README.md)
 contains a compiled Beamer deck with eight main slides for a ten-minute discussion
