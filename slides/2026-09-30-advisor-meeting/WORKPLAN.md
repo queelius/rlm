@@ -69,6 +69,15 @@ September 29 or emailed September 25 decks.
 
 ## Draft revision record, September 29
 
+### Research review around 08:38 UTC
+
+Both first varied-A RL readouts are complete:raw4/16→4/16 and assisted5/16→4/16,
+with higher costs in each. Update the optional guide and cutoff to include both
+fixed endpoints, not just the raw null result. Keep the audience PDF/notes
+unchanged until the extra-SFT control gives the intended compact comparison;
+neither new RL result adds a positive headline. A separate CPU trace review
+checks the rise in assisted format errors without using B to change training.
+
 ### Research review around 08:03 UTC
 
 The first varied-A raw RL comparison is complete:4/16before and after, identical

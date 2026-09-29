@@ -1,0 +1,357 @@
+{
+  "schema": "fresh-rl-fixed-diagnostic-result-v1",
+  "review_id": "review-1790671076-b6da88d8",
+  "evidence_cutoff_utc": "2026-09-29T08:37:19.614097+00:00",
+  "update": 1,
+  "execution": "binder",
+  "diagnostic_goals": 8,
+  "attempts_per_goal": 2,
+  "cells": {
+    "warm": {
+      "successes": 5,
+      "attempts": 16,
+      "physical_cost": {
+        "calls": 673,
+        "prompt_tokens": 2080522,
+        "completion_tokens": 21759,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1772.7922012805939
+      },
+      "errors": {
+        "native_action_error": 241,
+        "invalid_schema": 3
+      },
+      "episode_statuses": {
+        "finished": 15,
+        "context_cap": 1
+      },
+      "adapter": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-discovery-sft-001/checkpoint-0023"
+    },
+    "rl": {
+      "successes": 4,
+      "attempts": 16,
+      "physical_cost": {
+        "calls": 716,
+        "prompt_tokens": 2331271,
+        "completion_tokens": 24983,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 2040.6349596977234
+      },
+      "errors": {
+        "native_action_error": 261,
+        "invalid_schema": 22
+      },
+      "episode_statuses": {
+        "finished": 13,
+        "context_cap": 3
+      },
+      "adapter": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/train-0001/boundaries/sample-0001/checkpoint-0001"
+    }
+  },
+  "paired": {
+    "gains": 0,
+    "losses": 1,
+    "both_success": 4,
+    "both_failure": 11
+  },
+  "cost_change_percent": {
+    "calls": 6.389301634472511,
+    "completion_tokens": 14.816857392343397,
+    "prompt_tokens": 12.052215742010898,
+    "native_service_seconds": 15.108525309602028
+  },
+  "paired_outcomes": [
+    {
+      "task_id": "textcraft_synth.train.1273",
+      "repeat": 0,
+      "seed": 202609280900,
+      "warm": {
+        "score": 0,
+        "calls": 24,
+        "output_tokens": 694,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 28,
+        "output_tokens": 858,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.1273",
+      "repeat": 1,
+      "seed": 202609280901,
+      "warm": {
+        "score": 0,
+        "calls": 30,
+        "output_tokens": 939,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 30,
+        "output_tokens": 939,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.1796",
+      "repeat": 0,
+      "seed": 202609280900,
+      "warm": {
+        "score": 1,
+        "calls": 17,
+        "output_tokens": 448,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 23,
+        "output_tokens": 664,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.1796",
+      "repeat": 1,
+      "seed": 202609280901,
+      "warm": {
+        "score": 0,
+        "calls": 21,
+        "output_tokens": 573,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 15,
+        "output_tokens": 352,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.1847",
+      "repeat": 0,
+      "seed": 202609280900,
+      "warm": {
+        "score": 1,
+        "calls": 21,
+        "output_tokens": 573,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 1,
+        "calls": 21,
+        "output_tokens": 573,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.1847",
+      "repeat": 1,
+      "seed": 202609280901,
+      "warm": {
+        "score": 1,
+        "calls": 18,
+        "output_tokens": 470,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 1,
+        "calls": 18,
+        "output_tokens": 470,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.201",
+      "repeat": 0,
+      "seed": 202609280900,
+      "warm": {
+        "score": 0,
+        "calls": 76,
+        "output_tokens": 2700,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 77,
+        "output_tokens": 2433,
+        "status": "context_cap"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.201",
+      "repeat": 1,
+      "seed": 202609280901,
+      "warm": {
+        "score": 0,
+        "calls": 66,
+        "output_tokens": 2000,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 65,
+        "output_tokens": 2037,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.256",
+      "repeat": 0,
+      "seed": 202609280900,
+      "warm": {
+        "score": 1,
+        "calls": 13,
+        "output_tokens": 352,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 1,
+        "calls": 16,
+        "output_tokens": 457,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.256",
+      "repeat": 1,
+      "seed": 202609280901,
+      "warm": {
+        "score": 1,
+        "calls": 12,
+        "output_tokens": 312,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 1,
+        "calls": 12,
+        "output_tokens": 312,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.38",
+      "repeat": 0,
+      "seed": 202609280900,
+      "warm": {
+        "score": 0,
+        "calls": 67,
+        "output_tokens": 2473,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 67,
+        "output_tokens": 2473,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.38",
+      "repeat": 1,
+      "seed": 202609280901,
+      "warm": {
+        "score": 0,
+        "calls": 74,
+        "output_tokens": 2455,
+        "status": "context_cap"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 64,
+        "output_tokens": 2002,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.672",
+      "repeat": 0,
+      "seed": 202609280900,
+      "warm": {
+        "score": 0,
+        "calls": 57,
+        "output_tokens": 2133,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 57,
+        "output_tokens": 2120,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.672",
+      "repeat": 1,
+      "seed": 202609280901,
+      "warm": {
+        "score": 0,
+        "calls": 48,
+        "output_tokens": 1672,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 77,
+        "output_tokens": 2818,
+        "status": "finished"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.964",
+      "repeat": 0,
+      "seed": 202609280900,
+      "warm": {
+        "score": 0,
+        "calls": 58,
+        "output_tokens": 1691,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 76,
+        "output_tokens": 2534,
+        "status": "context_cap"
+      }
+    },
+    {
+      "task_id": "textcraft_synth.train.964",
+      "repeat": 1,
+      "seed": 202609280901,
+      "warm": {
+        "score": 0,
+        "calls": 71,
+        "output_tokens": 2274,
+        "status": "finished"
+      },
+      "rl_step1": {
+        "score": 0,
+        "calls": 70,
+        "output_tokens": 3941,
+        "status": "context_cap"
+      }
+    }
+  ],
+  "verified_small_receipt_bindings": 96,
+  "source_sha256": {
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-warm/PLAN.json": "795184d89205f490a241f54aa1c48cede233f49ef4666b49a4dde19106298f74",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-warm/NATIVE-AUDIT.json": "440e555eeee5fb9100fb6f608dbccd3503ba609b509755caee356f5e9a522e62",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-warm/SUMMARY.json": "d254afbcd39f8e79c7f778e80b7084e60a75d746b21b8b75a4968004f447f7f0",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0001/PLAN.json": "a8b980c8028092b6eb69d192e7f11f1dc638f3807d5749613aa1b8c9e31ca848",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0001/NATIVE-AUDIT.json": "56cefeb3aafa241a9091e495daeb83389813c043ecae3ae84d784ff81e47f0c1",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-fresh-rl-20260928-002/binder/readout-0001/SUMMARY.json": "475f587ee282a89baa9aa5a819b365ef47b9bf38caf171cfe0da79616f00f301",
+    "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/information-first-tail-20260928-002/queue/fresh-binder-rl-readout-0001.json": "a9fc5ee8bde279856e44f380933c305aa6a3259cea2c05fa97a763eada639f32"
+  },
+  "limits": [
+    "One realized optimizer update, not a completed learning curve.",
+    "Eight official TRAIN diagnostic B roots, disjoint from A target roots and old SFT roots, but same recipe world.",
+    "Same B roots/seeds and reused warm baseline as earlier familiar-RL transfer report; not independent new evaluation evidence.",
+    "One lost attempt does not establish general harm from RL or assistance.",
+    "Extra-SFT task controls pending at this cutoff.",
+    "All fixed endpoints must be reported; B outcomes must not determine training or checkpoint choice."
+  ]
+}

@@ -1,6 +1,64 @@
 # Varied-goal RL: fixed diagnostic results
 
-## First raw-interface update
+## Both first-update task comparisons
+
+Evidence cutoff: **September 29, 08:37:19 UTC**. Both RL task comparisons are
+complete. The extra-SFT comparison remains pending. Neither first update
+improved success on this fixed different-goal panel.
+
+| Execution setting | Success before → after | Paired gains / losses | Calls before → after | Output tokens before → after |
+| --- | ---: | ---: | ---: | ---: |
+| Model writes ingredient arguments | 4 → 4 / 16 | 0 / 0 | 778 → 825 | 23,516 → 25,919 |
+| Code fills observed ingredient arguments | 5 → 4 / 16 | 0 / 1 | 673 → 716 | 21,759 → 24,983 |
+
+The assisted result adds 32 checked before/after outcomes, of which sixteen
+are the reused warm baseline, not new runs. Its calls rise 6.4% and output
+tokens 14.8%; summed service time rises 15.1%. The only lost success is
+TRAIN1796, seed 202609280900: 17 calls and 448 tokens before training versus
+23 calls and 664 tokens afterward. It explicitly finishes without the requested goal.
+The other fifteen paired task scores are unchanged. Both updated models now
+solve exactly the four attempts on TRAIN256 and TRAIN1847.
+
+For the assisted model, native action errors rise from 241 to 261, invalid
+action schemas from 3 to 22, and context-limit stops from 1 to 3. Transport failures and unknown task
+outcomes remain zero. Error totals alone do not explain the lost success.
+A separate CPU review checked the actual rejected returns and native histories:
+
+- TRAIN964, repeat 1, accounts for 21 new invalid actions, versus zero before.
+  Fifteen are EOS-terminated objects with duplicate ingredient keys; six are
+  repetitive, unterminated objects reaching the 256-token response cap. They
+  consume 2,511 of that attempt's 3,941 output tokens. It fails in both conditions,
+  now at the context limit. This is not the lost successful attempt.
+- One extra-bracket error on TRAIN672, repeat 0, remains unchanged. Two duplicate-
+  key errors on TRAIN1796, repeat 1, disappear, giving the net increase from 3 to 22.
+- The sole lost success, TRAIN1796, repeat 0, has **zero schema errors in either
+  condition**. The updated model crafts two of the three requested items and
+  explicitly finishes. Warm crafts four and finishes successfully. Quantity
+  completion/termination, not a formatting rejection, explains this failure.
+
+The pinned strict parser reproduces all 25 rejections across both readouts; each
+has a distinct saved call, with no observed accounting/parser discrepancy.
+An independent check verified the lost attempt's target/final inventory and final
+actions, plus representative duplicate-key and 256-token capped returns. The
+formatting concentration plausibly adds cost and context pressure, but cannot
+be credited with the lost success. No training change follows from this B-only
+diagnosis. Details and exact paths are in the
+[research review](../research_review_20260929/reviews/2026-09-29-0838.md).
+
+This is a narrow result from one realized update per interface. It does not
+establish general harm from RL or assistance. Both training likelihood updates
+were real, but neither supplied a task-success benefit on this panel. The
+same exposed B roots/seeds and shared recipe world limit both comparisons.
+Keep all prospectively fixed endpoints and pending controls; no B-driven tuning
+or checkpoint selection. The four-step sequence is not complete.
+
+[step-0001-binder.json](step-0001-binder.json) preserves its paired outcomes,
+costs, endpoint identity and source hashes. The same 96 small receipt/contract
+checks used for the raw report were performed. The advisor guide receives this
+later result; the audience PDF still waits for the extra-SFT control before a
+possible compact update to its RL comparison.
+
+## Earlier raw-only snapshot, 08:02 UTC
 
 Evidence cutoff: **September 29, 08:02:52 UTC**. Both cells are complete and
 natively checked. The model received one RL update on eight A training goals,

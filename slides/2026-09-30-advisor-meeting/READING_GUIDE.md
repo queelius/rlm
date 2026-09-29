@@ -276,18 +276,25 @@ does not automatically give this reward rule more goals to learn from directly.
 The feedback itself is not identical: the contributing goals, actions and tokens
 change. The new weight updates test what the model actually learns.
 
-## Optional later result: did the first new RL update help on different goals?
+## Optional later result: did reward training on new goals help?
 
-In the first completed follow-up, the unassisted model solved **4 of 16
-attempts both before and after one reward-training update**. It solved exactly
-the same four attempts, while using more model calls overall. The update changed
-the model, but did not improve successful task completion in this small test.
+Neither setting improved after its first new reward-training update. The
+unassisted model still solved the same **4 of 16 attempts**. With code filling
+the ingredient list, success fell from **5 to 4 of 16**: one previously
+successful attempt failed, and the other outcomes stayed the same. Both models
+used more calls overall. Training changed the models, but did not help them
+finish more tasks in this small comparison.
+
+A concrete example explains the lost success: the updated model made only
+two of the three requested items and then said it was finished. Extra formatting
+errors occurred in a different attempt that already failed before training.
+We should not confuse those two problems or blame the lost success on formatting.
 
 Training used eight new goals. Testing used the same eight different diagnostic
 goals, two attempts each, as the earlier transfer comparison. This is not a new
-independent test set or proof that reward training cannot work. The assisted
-model and extra-example-training controls are still pending at this result's
-September 29, **08:02:52 UTC** cutoff. The existing fixed comparisons continue;
+independent test set or proof that reward training cannot work. The extra-
+example-training control and further numbered updates are still pending at
+this result's September 29, **08:37:19 UTC** cutoff. The fixed comparisons continue;
 we do not choose training changes or a favorable checkpoint from these test scores.
 
 # Likely advisor questions
@@ -349,8 +356,8 @@ The separately labeled training-collection diagnosis is an additional
 September 29 source; its counts do not establish a training improvement.
 The later same-model interface comparison is also supplementary and is not a
 before-and-after learning result. It does not change the audience PDF's cutoff.
-The separately labeled first new RL result has its own **08:02:52 UTC** cutoff
-and is not a completed two-interface or extra-SFT comparison.
+The separately labeled first new RL comparisons have their own **08:37:19 UTC**
+cutoff; the extra-SFT control and further updates are not complete at that time.
 If later results change the story, update the slides and guide together.
 
 - [Teaching results, controls, exact counts, and limits](../../experiments/selective_delegation/teaching_synthesis_20260929/FINDING.md).
@@ -359,5 +366,5 @@ If later results change the story, update the slides and guide together.
 - [Prior work, novelty boundary, and unresolved mechanisms](../../experiments/selective_delegation/teaching_prior_art_20260929/README.md).
 - [Supplementary training-collection reward diagnosis](../../experiments/selective_delegation/fresh_reward_diagnosis_20260929/README.md).
 - [Later same-model assistance and reward-signal comparison](../../experiments/selective_delegation/fresh_interface_signal_20260929/README.md).
-- [First new RL update on different goals: paired outcomes and limits](../../experiments/selective_delegation/fresh_rl_results_20260929/README.md).
+- [First new RL updates on different goals: paired outcomes and limits](../../experiments/selective_delegation/fresh_rl_results_20260929/README.md).
 - [Previous deck's detailed speaker guide](../2026-09-29-research-update/speaker-guide.md), for historical continuity only.
