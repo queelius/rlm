@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T20:50:00Z
+cutoff_utc: 2026-10-04T21:53:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-04T20:50:00Z
+execution_update_utc: 2026-10-04T21:53:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -17,6 +17,44 @@ higher. **The first completed 500k pair reverses that ordering:** CURL scored
 842.74 and its same-crops control scored 866.94. The other two longer pairs
 remain incomplete. This shows why the training horizon matters, not that either
 method is generally superior.
+
+## Second longer CURL result at 21:53 UTC: more learning, comparison still pending
+
+CURL seed 456 finished at **866.1353**, up from **446.1711** at 100k. It used
+500k physical training interactions, without an abandoned branch. This is the
+second completed longer CURL model, but its control is still training. Do not
+compare the mean of two completed CURL seeds with one completed control seed as
+though that were a matched comparison. The only completed 500k pair remains
+seed 123, where the control finished higher.
+
+The new endpoint is the planned final policy, averaged over the ten expected
+evaluation starts. The last five measured means were 862.47, 863.91, 860.56,
+860.65 and 866.14. The final mean was independently recalculated from episode
+returns. Native completion is 62,500 decisions / 500,000 training steps / 61,500
+update calls; exit 0, complete=true, natural final episode, no failure, and all
+4,000 logged metric values in this invocation are finite. The final checkpoint
+is 11,386,654,987 bytes, matching its receipt; the write took 29.82 seconds.
+Evaluation used 1.26m interactions across the original run and continuation,
+separate from training. Continuing a saved model is not a new independent seed.
+
+**Interpretation:** both completed CURL models learned substantially more with
+longer training. That does not establish that continuing the extra objective
+helps compared with omitting it. The fresh seed's successful large saves also
+show that the repaired save path works beyond the original recovery case.
+This is operational confirmation, not an extra scientific replicate.
+
+**Decision:** keep the fixed-endpoint queue unchanged. The owner started control
+seed 456 about three seconds after CURL exited. Real learning returned within
+11 seconds; the control subsequently reached 127k with finite updates and a
+checked mean of 455.1383 at 124k. Both seed-789 extensions remain queued.
+Conditional mechanism and second-task proposals in NEXT_COMPARISONS.md remain
+unlaunched. The guide records the second CURL endpoint without adding an
+unmatched curve or claiming a second paired result.
+
+Evidence: [completed second CURL records](extension-data/curl-seed456-500k),
+[dated continuation snapshot](extension-data/second-curl-500k-summary.json).
+Original records are under the repaired external campaign root. The older
+sections below preserve what was known at their stated cutoffs.
 
 ## First longer pair at 20:50 UTC: an early lead does not guarantee a later lead
 

@@ -4,7 +4,8 @@ Start with [the nine-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **three completed 100k pairs and the first completed 500k pair**,
-with a 20:50 UTC evidence cutoff. It explains the cartpole task,
+plus a second completed 500k CURL model, with a 21:53 UTC evidence cutoff.
+It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
 446.17 versus 240.54 in the second, and 587.99 versus 463.26 in the third.
@@ -13,7 +14,9 @@ reverses the early ordering: **842.74 for CURL versus 866.94 for the control**.
 One pair does not establish a general late advantage for either method.
 Page 8 preserves the three early comparisons; page 9 shows the first full
 learning curves and explains the reversal, limits and recovery cost. The other
-two pairs are still being extended. Published scores and invented teaching
+two pairs are still being extended. The second CURL model finished at **866.14**,
+up from 446.17 at 100k; its matched control is still training. This is not yet a
+second completed longer comparison. Published scores and invented teaching
 examples are identified explicitly.
 
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
@@ -56,15 +59,15 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 4, 2026,
-at approximately 21:00 UTC. The nine-page edition was rebuilt after the first
-500k pair. Changed pages 1, 7, 8 and 9 were visually inspected; unchanged pages retain
+at approximately 21:55 UTC. The nine-page edition was updated after the second
+CURL model finished at 500k. Changed pages 1, 5 and 7 were visually inspected; unchanged pages retain
 their earlier inspection. The build reports no overfull
 boxes, and extracted text stays within every page boundary. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`ee827528509d3722c19531b35b637e563219821da20e58a7e253d75ee6c3dd11`.
+`a8dc82ddec15f8523fa375aaa46305914c7b60b2dc659350132bcff99f5b2c8d`.
 The new paired figure passed three focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
@@ -72,6 +75,7 @@ The runtime checks include real simulator behavior, CPU checkpoint restoration,
 and a completed GPU pilot. Three full matched pairs also completed, but this is
 still a small exploratory comparison, not a reproduction of the paper's mean.
 Both first-pair 500k endpoints passed native terminal and ancestry checks.
+The second CURL endpoint also passed; its control is not yet complete.
 Recovery cost is reported separately; three 100k pairs are still more evidence
 than the one completed longer pair.
 
@@ -97,6 +101,10 @@ than the one completed longer pair.
   [paired curve](figures/first-500k-pair.pdf): the 20:50 comparison, with CURL's
   additional recovery cost reported explicitly. To rebuild its figure, run
   `python plot_first_500k_pair.py` here with Matplotlib installed.
+- [Second completed longer CURL model](extension-data/curl-seed456-500k) and
+  [21:53 continuation snapshot](extension-data/second-curl-500k-summary.json):
+  866.14 at the fixed 500k endpoint; its control remains incomplete. No second
+  paired claim follows from this endpoint alone.
 - [Failed longer-run records](extension-data/failed-seed123) and
   [cleanly stopped control](extension-data/stopped-control-seed123): preserved
   execution evidence, not completed 500k scores. The [recovery plan](RECOVERY_PLAN.md)
