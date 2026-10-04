@@ -100,6 +100,180 @@ class QueueTest(unittest.TestCase):
         }
         return config, checkpoint
 
+    def recovery_fixture(self, base, stopped=False):
+        config, initial = self.continuation_fixture(base)
+        origin = base / "interrupted"
+        output = origin / "run"
+        output.mkdir(parents=True)
+        checkpoint = output / "latest.pt"
+        checkpoint.write_bytes(b"latest-successful-natural-checkpoint")
+        original_config = json.loads((initial.parent / "config.json").read_text())
+        parent_config = {**original_config, "num_train_steps": 62500}
+        (output / "config.json").write_text(json.dumps(parent_config))
+        origin_receipt = {
+            "job": dict(config["jobs"][0]),
+            "source_hashes": {"train_reference.py": "sealed-fixture"},
+            "parent": {"checkpoint": str(initial), "config": original_config},
+        }
+        (origin / "job.json").write_text(json.dumps(origin_receipt))
+        step = 25000 if stopped else 38375
+        rows = [
+            {"type": "resume", "step": 12500, "resume_path": str(initial)},
+            {
+                "type": "train_episode",
+                "step": step,
+                "env_steps": step * 8,
+                "truncated_by_budget": False,
+            },
+            {
+                "type": "checkpoint",
+                "reason": "signal_15" if stopped else "periodic",
+                "step": step,
+                "env_steps": step * 8,
+                "path": str(checkpoint),
+                "bytes": checkpoint.stat().st_size,
+            },
+        ]
+        if stopped:
+            rows.append(
+                {
+                    "type": "end",
+                    "reason": "signal_15",
+                    "step": step,
+                    "env_steps": step * 8,
+                    "updates": step - 1000,
+                }
+            )
+        else:
+            rows.extend(
+                [
+                    {
+                        "type": "train_episode",
+                        "step": 51125,
+                        "env_steps": 409000,
+                        "truncated_by_budget": False,
+                    },
+                    {"type": "failure", "step": 51125, "error": "OverflowError"},
+                ]
+            )
+        (output / "metrics.jsonl").write_text("".join(json.dumps(row) + "\n" for row in rows))
+        (origin / "result.json").write_text(
+            json.dumps(
+                {
+                    "id": "extended-123",
+                    "complete": False,
+                    "exit_code": 0 if stopped else 1,
+                    "reason": "stop" if stopped else None,
+                }
+            )
+        )
+        config["jobs"][0].update(resume=str(checkpoint), recovery=True)
+        return config, checkpoint, rows
+
+    def test_recovery_retains_latest_saved_state_and_receives_shared_lock(self):
+        # Hardcoded 100k admission, losing resume, or selecting the last failed episode breaks this.
+        for stopped, expected_step in ((False, 38375), (True, 25000)):
+            with self.subTest(stopped=stopped), tempfile.TemporaryDirectory() as directory:
+                config, checkpoint, _ = self.recovery_fixture(Path(directory), stopped)
+                original = checkpoint.read_bytes()
+                checkpoint_reads = []
+                real_digest = run_queue.stream_sha256
+
+                def digest(
+                    path,
+                    checkpoint=checkpoint,
+                    config=config,
+                    checkpoint_reads=checkpoint_reads,
+                    real_digest=real_digest,
+                ):
+                    if path == checkpoint:
+                        with Path(config["gpu_lock"]).open("a") as lock:
+                            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                            checkpoint_reads.append(path)
+                    return real_digest(path)
+
+                with patch.object(run_queue, "stream_sha256", side_effect=digest):
+                    run_queue.run_queue(config)
+                child = Path(config["campaign_root"]) / "extended-123"
+                received = json.loads((child / "run" / "received.json").read_text())
+                self.assertEqual(received, {"resume": str(checkpoint), "shared_lock": True})
+                proof = json.loads((child / "job.json").read_text())["parent"]
+                self.assertEqual(proof["kind"], "recovery")
+                self.assertEqual(proof["restore_step"], expected_step)
+                self.assertEqual(proof["restore_env_steps"], expected_step * 8)
+                self.assertEqual(proof["terminal_proof"]["train_episode"]["step"], expected_step)
+                self.assertEqual(proof["terminal_proof"]["end"] is not None, stopped)
+                origin_job = checkpoint.parent.parent / "job.json"
+                self.assertEqual(proof["origin_job_path"], str(origin_job))
+                self.assertEqual(
+                    proof["origin_job_sha256"], hashlib.sha256(origin_job.read_bytes()).hexdigest()
+                )
+                self.assertEqual(checkpoint_reads, [checkpoint])
+                self.assertEqual(checkpoint.read_bytes(), original)
+
+    def test_recovery_rejects_live_untrusted_or_nonlatest_natural_parent(self):
+        # Weakening termination, scientific matching or latest-save admission permits invalid forks.
+        for defect in (
+            "live",
+            "no_native_terminal",
+            "truncated",
+            "missing_origin",
+            "wrong_seed",
+            "wrong_budget",
+            "later_save",
+            "boolean_exit",
+            "wrong_origin_seed",
+            "wrong_result_id",
+            "wrong_native_resume",
+        ):
+            with self.subTest(defect=defect), tempfile.TemporaryDirectory() as directory:
+                config, checkpoint, rows = self.recovery_fixture(Path(directory))
+                origin = checkpoint.parent.parent
+                if defect == "live":
+                    (origin / "result.json").unlink()
+                elif defect == "missing_origin":
+                    (origin / "job.json").unlink()
+                elif defect == "boolean_exit":
+                    receipt = json.loads((origin / "result.json").read_text())
+                    receipt["exit_code"] = False
+                    (origin / "result.json").write_text(json.dumps(receipt))
+                elif defect == "wrong_result_id":
+                    receipt = json.loads((origin / "result.json").read_text())
+                    receipt["id"] = "another-owner"
+                    (origin / "result.json").write_text(json.dumps(receipt))
+                elif defect == "wrong_origin_seed":
+                    receipt = json.loads((origin / "job.json").read_text())
+                    receipt["job"]["seed"] = 456
+                    (origin / "job.json").write_text(json.dumps(receipt))
+                elif defect == "wrong_native_resume":
+                    rows[0]["step"] = 13000
+                elif defect in ("wrong_seed", "wrong_budget"):
+                    settings = json.loads((checkpoint.parent / "config.json").read_text())
+                    settings["seed" if defect == "wrong_seed" else "num_train_steps"] = 456
+                    (checkpoint.parent / "config.json").write_text(json.dumps(settings))
+                elif defect == "no_native_terminal":
+                    rows.pop()
+                elif defect == "truncated":
+                    rows[1]["truncated_by_budget"] = True
+                else:
+                    rows.insert(
+                        -1,
+                        {
+                            **rows[2],
+                            "step": 50000,
+                            "env_steps": 400000,
+                            "path": str(checkpoint.parent / "other.pt"),
+                        },
+                    )
+                (checkpoint.parent / "metrics.jsonl").write_text(
+                    "".join(json.dumps(row) + "\n" for row in rows)
+                )
+                with self.assertRaises((ValueError, FileNotFoundError)):
+                    run_queue.run_queue(config)
+                self.assertFalse(
+                    (Path(config["campaign_root"]) / "extended-123" / "console.log").exists()
+                )
+
     def test_continuation_receives_parent_and_shared_lock_and_records_provenance(self):
         # Ignoring resume silently fresh-trains; using a new lock permits competing GPU jobs.
         with tempfile.TemporaryDirectory() as directory:

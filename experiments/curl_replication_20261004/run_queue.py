@@ -75,6 +75,7 @@ def prepare_parent(job: dict[str, Any], snapshot: Path, source: Path) -> dict[st
     config_path = checkpoint.parent / "config.json"
     manifest = json.loads((snapshot / "manifest.json").read_text())
     config = json.loads(config_path.read_text())
+    recovery = job.get("recovery") is True
     expected = {
         key: value
         for key, value in manifest["reference_configuration"].items()
@@ -85,7 +86,7 @@ def prepare_parent(job: dict[str, Any], snapshot: Path, source: Path) -> dict[st
         arm=job["arm"],
         eval_freq=job["eval_every"],
         num_eval_episodes=job["eval_episodes"],
-        num_train_steps=12500,
+        num_train_steps=62500 if recovery else 12500,
     )
     mismatches = [key for key, value in expected.items() if config.get(key) != value]
     if mismatches or config.get("upstream_commit") != manifest["upstream"]["commit"]:
@@ -106,10 +107,14 @@ def prepare_parent(job: dict[str, Any], snapshot: Path, source: Path) -> dict[st
     ends = [row for row in native if row.get("type") == "end"]
     episodes = [row for row in native if row.get("type") == "train_episode"]
     saves = [row for row in native if row.get("type") == "checkpoint"]
-    if not ends or not episodes or not saves or native[-1].get("type") != "end":
+    extra = {}
+    if recovery:
+        extra, end, episode, saved = recovery_proof(job, checkpoint, native, config)
+    elif not ends or not episodes or not saves or native[-1].get("type") != "end":
         raise ValueError("Continuation parent has no terminal proof")
-    end, episode, saved = ends[-1], episodes[-1], saves[-1]
-    if (
+    else:
+        end, episode, saved = ends[-1], episodes[-1], saves[-1]
+    if not recovery and (
         end.get("reason") != "completed"
         or end.get("step") != 12500
         or end.get("env_steps") != 100000
@@ -129,6 +134,7 @@ def prepare_parent(job: dict[str, Any], snapshot: Path, source: Path) -> dict[st
     if checkpoint_identity(checkpoint) != identity:
         raise ValueError("Continuation parent changed during checksum verification")
     return {
+        **extra,
         "checkpoint": str(checkpoint),
         "checkpoint_sha256": digest,
         "checkpoint_identity": identity,
@@ -137,6 +143,98 @@ def prepare_parent(job: dict[str, Any], snapshot: Path, source: Path) -> dict[st
         "config": config,
         "terminal_proof": {"end": end, "train_episode": episode, "checkpoint": saved},
     }
+
+
+def recovery_proof(
+    job: dict[str, Any], checkpoint: Path, native: list[dict[str, Any]], config: dict[str, Any]
+) -> tuple[dict[str, Any], dict[str, Any] | None, dict[str, Any], dict[str, Any]]:
+    """Admit only the latest saved natural boundary of a terminated 500k attempt."""
+    origin = checkpoint.parent.parent
+    result = json.loads((origin / "result.json").read_text())
+    origin_path = origin / "job.json"
+    origin_digest = stream_sha256(origin_path)
+    receipt = json.loads(origin_path.read_text())
+    original = receipt.get("job", {})
+    ancestry = receipt.get("parent", {})
+    resumes = [row for row in native if row.get("type") in ("start", "resume")]
+    if (
+        result.get("complete") is not False
+        or type(result.get("exit_code")) is not int
+        or not original.get("id")
+        or result.get("id") != original["id"]
+        or not receipt.get("source_hashes")
+        or any(
+            original.get(key) != job[key] for key in ("arm", "seed", "eval_every", "eval_episodes")
+        )
+        or original.get("steps") != 62500
+        or original.get("env_steps", 500000) != 500000
+        or job["steps"] != 62500
+        or Path(original.get("resume", "")).resolve()
+        != Path(ancestry.get("checkpoint", "")).resolve()
+        or ancestry.get("config", {}).get("num_train_steps") != 12500
+        or any(
+            ancestry.get("config", {}).get(key) != config.get(key)
+            for key in ("arm", "seed", "upstream_commit", "upstream_sha256")
+        )
+        or len(resumes) != 1
+        or resumes[0].get("type") != "resume"
+        or resumes[0].get("step") != 12500
+        or Path(resumes[0].get("resume_path", "")).resolve()
+        != Path(original.get("resume", "")).resolve()
+    ):
+        raise ValueError("Recovery parent has no trustworthy terminated origin job")
+    if stream_sha256(origin_path) != origin_digest:
+        raise ValueError("Recovery parent origin job changed during preparation")
+    ends = [row for row in native if row.get("type") == "end"]
+    end = ends[-1] if ends else None
+    terminal = native[-1] if native else {}
+    stopped = terminal.get("type") == "end" and terminal.get("reason") in (
+        "signal_15",
+        "signal_2",
+        "time_cap",
+    )
+    if terminal.get("type") != "failure" and not stopped:
+        raise ValueError("Recovery parent has no native failure or stopped end")
+    saves = [row for row in native if row.get("type") == "checkpoint"]
+    if not saves:
+        raise ValueError("Recovery parent has no successful checkpoint")
+    saved = saves[-1]
+    step = saved.get("step")
+    episodes = [
+        row for row in native if row.get("type") == "train_episode" and row.get("step") == step
+    ]
+    if (
+        type(step) is not int
+        or not 12500 <= step < 62500
+        or saved.get("env_steps") != step * 8
+        or Path(saved.get("path", "")).resolve() != checkpoint
+        or len(episodes) != 1
+        or episodes[0].get("env_steps") != step * 8
+        or episodes[0].get("truncated_by_budget") is not False
+        or type(terminal.get("step")) is not int
+        or terminal["step"] < step
+        or (
+            stopped
+            and (
+                terminal["step"] != step
+                or terminal.get("env_steps") != step * 8
+                or terminal.get("updates") != step - 1000
+            )
+        )
+    ):
+        raise ValueError("Recovery parent latest checkpoint is not a natural saved boundary")
+    return (
+        {
+            "kind": "recovery",
+            "restore_step": step,
+            "restore_env_steps": step * 8,
+            "origin_job_path": str(origin_path),
+            "origin_job_sha256": origin_digest,
+        },
+        end,
+        episodes[0],
+        saved,
+    )
 
 
 def run_queue(config: dict[str, Any]) -> None:

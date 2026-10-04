@@ -1,9 +1,13 @@
 """Focused checkpoint regression; CPU only, no simulator required."""
 
+import hashlib
+import json
 import os
 import random
+import resource
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -13,23 +17,81 @@ import numpy as np
 import torch
 
 
+def small_agent():
+    agent = SimpleNamespace(training=True)
+    for name in checkpoint.MODULE_NAMES:
+        setattr(agent, name, torch.nn.Linear(3, 3))
+    agent.log_alpha = torch.tensor(-2.0, requires_grad=True)
+    for name, module in zip(checkpoint.OPTIMIZER_NAMES[:4], checkpoint.MODULE_NAMES, strict=True):
+        setattr(agent, name, torch.optim.Adam(getattr(agent, module).parameters()))
+    agent.log_alpha_optimizer = torch.optim.Adam([agent.log_alpha])
+    agent.train = lambda training=True: setattr(agent, "training", training)
+    return agent
+
+
 class CheckpointTest(unittest.TestCase):
+    @unittest.skipUnless(
+        os.environ.get("CURL_LARGE_CHECKPOINT_TEST_DIR"), "Opt in to the >4 GiB CPU/disk regression"
+    )
+    def test_numpy_array_larger_than_four_gib_round_trips_with_atomic_save(self):
+        # Default pickle protocol 2 cannot encode an individual replay array past 4 GiB.
+        torch.set_num_threads(1)
+        start = time.monotonic()
+        obs = np.full((1, 2**32 + 1), 17, dtype=np.uint8)
+        obs[0, 0], obs[0, 2**31], obs[0, -1] = 11, 23, 37
+        replay = SimpleNamespace(
+            capacity=1, batch_size=1, image_size=84, idx=0, full=True, last_save=0
+        )
+        for name in checkpoint.REPLAY_ARRAY_NAMES:
+            setattr(replay, name, obs if name == "obses" else np.ones((1, 1), dtype=np.float32))
+        agent = small_agent()
+        with tempfile.TemporaryDirectory(
+            dir=os.environ["CURL_LARGE_CHECKPOINT_TEST_DIR"]
+        ) as directory:
+            path = Path(directory) / "latest.pt"
+            with self.assertRaisesRegex(OverflowError, "4 GiB.*protocol 4"):
+                torch.save({"obs": obs}, Path(directory) / "protocol2.pt", pickle_protocol=2)
+            print(
+                json.dumps({"protocol2": "observed_OverflowError", "array_bytes": obs.nbytes}),
+                flush=True,
+            )
+            checkpoint.save_checkpoint(path, agent, replay, {"step": 51125}, {"seed": 123})
+            file_bytes = path.stat().st_size
+            target = SimpleNamespace(
+                capacity=1, batch_size=1, image_size=84, idx=0, full=False, last_save=0
+            )
+            for name in checkpoint.REPLAY_ARRAY_NAMES:
+                setattr(target, name, np.empty_like(getattr(replay, name)))
+            state, config = checkpoint.load_checkpoint(path, small_agent(), target)
+            self.assertEqual(state, {"step": 51125})
+            self.assertEqual(config, {"seed": 123})
+            self.assertTrue(target.full)
+            self.assertEqual(target.obses.nbytes, 2**32 + 1)
+            self.assertEqual(
+                hashlib.sha256(memoryview(target.obses)).digest(),
+                hashlib.sha256(memoryview(obs)).digest(),
+            )
+            for name in checkpoint.REPLAY_ARRAY_NAMES[1:]:
+                np.testing.assert_array_equal(getattr(target, name), getattr(replay, name))
+            self.assertFalse(list(Path(directory).glob(".checkpoint-*")))
+        print(
+            json.dumps(
+                {
+                    "large_roundtrip": "passed",
+                    "array_bytes": obs.nbytes,
+                    "checkpoint_bytes": file_bytes,
+                    "seconds": time.monotonic() - start,
+                    "peak_rss_kib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
+                }
+            ),
+            flush=True,
+        )
+
     def test_restore_reproduces_next_update_and_wrapped_replay(self):
         # Missing optimizer moments, alpha, replay wrap state or RNG breaks continuation.
         torch.set_num_threads(1)
 
-        def make_agent():
-            agent = SimpleNamespace(training=True)
-            for name in checkpoint.MODULE_NAMES:
-                setattr(agent, name, torch.nn.Linear(3, 3))
-            agent.log_alpha = torch.tensor(-2.0, requires_grad=True)
-            for name, module in zip(
-                checkpoint.OPTIMIZER_NAMES[:4], checkpoint.MODULE_NAMES, strict=True
-            ):
-                setattr(agent, name, torch.optim.Adam(getattr(agent, module).parameters()))
-            agent.log_alpha_optimizer = torch.optim.Adam([agent.log_alpha])
-            agent.train = lambda training=True: setattr(agent, "training", training)
-            return agent
+        make_agent = small_agent
 
         def update(agent):
             for module, optimizer in zip(

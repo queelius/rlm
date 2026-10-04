@@ -74,7 +74,7 @@ def save_checkpoint(
     descriptor, temporary = tempfile.mkstemp(prefix=".checkpoint-", suffix=".pt", dir=path.parent)
     try:
         with os.fdopen(descriptor, "wb") as handle:
-            torch.save(payload, handle)
+            torch.save(payload, handle, pickle_protocol=4)
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temporary, path)
