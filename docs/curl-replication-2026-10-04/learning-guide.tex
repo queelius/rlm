@@ -45,11 +45,10 @@ Three pairs give an encouraging
 signal, not a firm conclusion or a reproduction of the paper's average.
 The three 100,000-step pairs were complete at 18:37 UTC.
 
-The first longer pair reverses that ordering: after 500,000 steps, CURL scored
-\textbf{843 versus 867 for the control}. Both improved, but CURL's early lead
-did not last in this pair. The other two pairs are still being extended.
-The second CURL model has finished at \textbf{866}, up from 446; its control is
-still training. Page 9 shows the completed pair. Latest evidence: 21:53 UTC.
+After 500,000 steps, the first pair favors the control: \textbf{843 versus 867}.
+The second favors CURL: \textbf{866 versus 811}. Both methods learned more, but
+the later advantage is less consistent than the early one. The third pair is
+still being extended. Page 9 shows both completed pairs. Latest evidence: 22:48 UTC.
 
 \question{Why this paper?}
 
@@ -370,11 +369,11 @@ measurements separate from the model's retained training history.
 
 \question{How results will change the plan}
 
-The first control has caught up and finished higher. We must now ask whether
-that pattern repeats in the other two training seeds. An early advantage is
-not a promise of a better final controller. A second task or a change to when
-image matching is used could help explain the pattern, but one pair cannot
-establish its cause.
+The first control finished higher; in the second pair, CURL finished higher.
+We should not explain the first reversal as a general problem with image
+matching. Finish the third pair, then ask whether the early benefit also appears
+on another task. A later experiment could start from the same saved CURL model
+and test keeping versus stopping the matching exercise.
 
 Our independent small NumPy calculation matches the released Torch loss and
 gradients to numerical precision. That checks the calculation, not its usefulness
@@ -388,9 +387,9 @@ Item & Status\\
 \midrule
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
-GPU training and policy evaluation & Three 100k pairs; one 500k pair complete.\\
+GPU training and policy evaluation & Three 100k pairs; two 500k pairs complete.\\
 Checkpoint save/reload verification & Next-update and large-array tests passed.\\
-Evidence about the extra matching task & Ahead at 100k; first 500k pair reverses.\\
+Evidence about the extra matching task & Ahead at 100k; mixed results at 500k.\\
 \bottomrule
 \end{tabular}
 
@@ -398,9 +397,8 @@ Evidence about the extra matching task & Ahead at 100k; first 500k pair reverses
 
 We will show fixed final scores and curves for each training seed, with failures
 and recovery costs stated separately. Missing results will remain missing,
-not become zero scores. The first pair is complete at 500,000 steps. The second
-CURL model scored 866; its control is still training. The third pair is queued.
-We will report all outcomes, not only the favorable ones.
+not become zero scores. Two pairs are complete at 500,000 steps, and the third
+is in progress. We will report all outcomes, not only the favorable ones.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
@@ -444,8 +442,8 @@ Each training/evaluation loop took about 13--14.4 minutes, plus 11--12 seconds
 to save its checkpoint. Setup was extra. This matches training interactions,
 not computing time: CURL performs an extra learning update.
 
-The first longer comparison reverses the early ordering: 843 for CURL versus
-867 for the control. The next page shows the two full learning curves.
+The longer comparisons have different winners: the control in the first pair,
+CURL in the second. The next page shows both pairs' full learning curves.
 
 \small
 \textbf{Evidence.} Native records: the six run folders in \texttt{data/}.
@@ -454,39 +452,38 @@ evaluation seeds 10000--10009. Modern simulator compatibility adaptation.
 \end{frame}
 \begin{frame}[t]
 \vspace*{0.55in}
-\chapterpage{8 / THE FIRST LONGER COMPARISON}{The early lead did not last in this pair.}
+\chapterpage{8 / TWO LONGER COMPARISONS}{Longer training gave mixed results.}
 
-After 100,000 training steps, CURL scored \textbf{678 versus 454} for the control.
-After 500,000 steps, it scored \textbf{843 versus 867}. Both controllers improved,
-but the version without image matching finished slightly higher.
+At 500,000 steps, the first pair favors the control: \textbf{843 versus 867}.
+The second favors CURL: \textbf{866 versus 811}. CURL was ahead in both at
+100,000 steps. We show each pair so that an average does not hide the difference.
 
 \begin{center}
-\includegraphics[width=.96\linewidth]{figures/first-500k-pair.pdf}
+\includegraphics[width=.96\linewidth]{figures/completed-500k-pairs.pdf}
 \end{center}
 
-Each line follows one trained model. Both use random image crops; CURL also
-uses the image-matching exercise. Each point averages ten fixed evaluation
-episodes. Higher reward means better performance, not a percentage correct.
+Each panel is one training seed. Each line follows one model; each point averages
+ten fixed evaluation episodes. Both methods use random image crops. Only CURL
+has the extra image-matching exercise. Higher reward is better.
 
-\question{Does this mean image matching is harmful?}
+\question{What does this tell us?}
 
-We cannot conclude that from one pair. The extra exercise may help early
-learning without improving the later result, or the ordering may vary between
-training seeds. The other two pairs are still running. We compare the planned
-final checkpoints, not the highest point on either curve.
+The early benefit is more consistent so far than the later one. Two pairs cannot
+establish a general late benefit, harm or tie. The third pair is still running.
+We compare planned final checkpoints, not the best point on each curve.
 
 \question{A recovery cost matters when interpreting this plot.}
 
-The horizontal axis counts the training history retained in the saved model.
-CURL repeated 102,000 interactions after a save failure, using 602,000 in total;
-the control used 500,000. This is not an equal-computing-cost comparison.
-The abandoned branch is not mixed into the plotted curve.
+The first CURL model repeated 102,000 interactions after a save failure, using
+602,000 in total. Its control and both models in the second pair used 500,000.
+The axis shows retained training history, excluding the abandoned branch.
+These plots do not establish an advantage at equal computing cost.
 
-\takeaway{An advantage early in training does not guarantee a better final model. We need several training seeds and clearly stated training budgets to understand when a method helps.}
+\takeaway{One run can suggest a story that another run changes. We need several training seeds and clearly stated training budgets to understand when a method helps.}
 
 \small
-\textbf{Evidence.} One completed pair, training seed 123, on
+\textbf{Evidence.} Two completed pairs, training seeds 123 and 456, on
 \texttt{cartpole/swingup}. Native records and the dated paired summary are in
-\texttt{extension-data/}. Evidence cutoff: 4 October, 20:50 UTC.
+\texttt{extension-data/}. Evidence cutoff: 4 October, 22:48 UTC.
 \end{frame}
 \end{document}

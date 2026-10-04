@@ -1,12 +1,35 @@
 ---
 date: 2026-10-04
-status: three_100k_pairs_and_one_reversed_500k_pair_complete
+status: three_100k_pairs_and_two_mixed_500k_pairs_complete
 priority: replication_before_mechanism
 ---
 
 # What the next comparisons would establish
 
-## Current decision after the first longer pair, 20:50 UTC
+## Current decision after two longer pairs, 22:48 UTC
+
+The second pair did not repeat the first reversal: CURL scored 866.14 versus
+810.96, a +55.18 difference, while the first pair was -24.20. Both late
+differences are smaller than their early differences, but point in opposite
+directions. Two pairs are not enough to estimate a stable later effect.
+
+1. Finish the third prespecified pair without changing endpoints or settings.
+2. Prepare a second task, walker/walk, to ask whether the early benefit extends
+   beyond cartpole. The [task protocol](WALKER_PROTOCOL.md) records the paper's
+   task-specific settings, three declared seed pairs and separate evaluation
+   cost. The queue's small task-forwarding change passed nine focused tests
+   and independent review. CPU preparation overlaps active third-pair work;
+   no new task has launched yet.
+3. Retain the shared-checkpoint matching-on/off experiment below as a direct
+   test of continued value. Do not motivate it as a remedy for established
+   general late harm. Gradient diagnostics remain secondary to causal training
+   comparisons and scope checks.
+
+This revises the emphasis, not the running queue. The first reversal was useful
+evidence; it is not a conclusion to defend when another seed differs. Detailed
+second-task settings will be frozen before its results are observed.
+
+## Earlier decision after the first longer pair, 20:50 UTC
 
 For seed 123, CURL led 678.02 versus 454.47 at 100k, but finished 842.74 versus
 866.94 at 500k. The other two longer pairs are still being run. Finish them

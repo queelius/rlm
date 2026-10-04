@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T21:53:00Z
+cutoff_utc: 2026-10-04T22:48:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-04T21:53:00Z
+execution_update_utc: 2026-10-04T22:48:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -13,10 +13,55 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 # What we have learned so far
 
 Both versions learned in all three completed 100k pairs, where CURL finished
-higher. **The first completed 500k pair reverses that ordering:** CURL scored
-842.74 and its same-crops control scored 866.94. The other two longer pairs
-remain incomplete. This shows why the training horizon matters, not that either
-method is generally superior.
+higher. **The two completed 500k pairs have different winners.** The first
+favors the control; the second favors CURL. The early advantage is more consistent
+so far than the later advantage. The third pair remains incomplete. We cannot
+conclude general late harm, superiority or equivalence from these few seeds.
+
+## Two longer pairs at 22:48 UTC: the first reversal is not universal
+
+| Training seed | CURL at 100k | Control at 100k | CURL at 500k | Control at 500k | Final paired difference |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 123 | 678.02 | 454.47 | 842.74 | 866.94 | -24.20 |
+| 456 | 446.17 | 240.54 | 866.14 | 810.96 | +55.18 |
+
+All are the declared endpoint scores, not best checkpoints. Each score averages
+ten fixed evaluation starts; each row is one training seed. The corresponding
+early differences were +223.55 and +205.63. Both late differences are smaller,
+but their signs differ. The two-pair average difference is +15.49, a descriptive
+number that must not hide the opposing outcomes or be treated as precise evidence.
+
+**What changed:** the second pair contradicts a general account in which the
+control necessarily catches up and wins. Extra image matching may help early
+learning more reliably than final performance, and the later result can depend
+on training randomness. This is a hypothesis supported by a small local pattern,
+not a general causal mechanism or evidence that the methods are equivalent.
+
+**New endpoint checks:** control seed 456 ended naturally at 62,500 decisions /
+500,000 training steps / 61,500 update calls, exit 0 and complete=true. The
+mean 810.9574102627266 was independently recalculated from the ten expected
+evaluation seeds. All 3,500 logged training values in this invocation are finite;
+no failure occurred. Its last five means were 801.17, 781.36, 804.81, 815.77 and
+810.96. The final checkpoint is 11,354,767,581 bytes, matching the receipt;
+write time was 29.44 seconds. Both second-pair chains pass configuration,
+ancestry and fixed-endpoint checks. Each used 500k physical training interactions
+and 1.26m evaluation interactions. CURL still performs extra optimizer work,
+so matching interactions does not match wall-clock cost. First-pair CURL's extra
+102k recovery interactions remain separately reported.
+
+**Decision:** finish the third pair, then prioritize testing scope over explaining
+the first seed's reversal as general late harm. The owner already started CURL
+seed 789; real scientific updates arrived within 11 seconds, followed by finite
+learning and a checked evaluation of 565.99 at 116k. Its matched control is
+queued. A CPU protocol check is preparing a second-task comparison, not changing
+the live cartpole runs. The shared-checkpoint matching-on/off proposal remains
+available to test continued value, but no mechanism study was launched.
+
+The guide now shows both completed pairs side by side and keeps the three early
+results. Evidence: [second control records](extension-data/no-curl-seed456-500k),
+[two-pair snapshot](extension-data/two-500k-pairs-summary.json), and
+[completed-pair curves](figures/completed-500k-pairs.pdf). Earlier sections below
+preserve interpretations at their original cutoffs.
 
 ## Second longer CURL result at 21:53 UTC: more learning, comparison still pending
 
