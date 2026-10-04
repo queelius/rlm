@@ -14,6 +14,119 @@ import run_queue
 
 
 class QueueTest(unittest.TestCase):
+    def test_fresh_task_options_reach_the_child_and_completed_job_is_skipped(self):
+        # Losing any forwarding flag silently substitutes the driver's cartpole defaults.
+        for overrides, expected in (
+            ({}, {"domain": "cartpole", "task": "swingup", "action_repeat": 8}),
+            (
+                {"domain": "walker", "task": "walk", "action_repeat": 2},
+                {"domain": "walker", "task": "walk", "action_repeat": 2},
+            ),
+        ):
+            with self.subTest(overrides=overrides), tempfile.TemporaryDirectory() as directory:
+                base = Path(directory)
+                source = base / "snapshot"
+                source.mkdir()
+                (source / "train_reference.py").write_text(
+                    "import argparse,json,pathlib,sys\n"
+                    "p=argparse.ArgumentParser();p.add_argument('--output');"
+                    "p.add_argument('--domain',default='cartpole');"
+                    "p.add_argument('--task',default='swingup');"
+                    "p.add_argument('--action-repeat',type=int,default=8);"
+                    "a,_=p.parse_known_args();o=pathlib.Path(a.output);o.mkdir()\n"
+                    "(o/'received.json').write_text(json.dumps({'domain':a.domain,"
+                    "'task':a.task,'action_repeat':a.action_repeat,'argv':sys.argv[1:]}))\n"
+                    "(o/'config.json').write_text(json.dumps({'arm':'curl','seed':123,"
+                    "'num_train_steps':1,'max_seconds':1,'eval_freq':1,'num_eval_episodes':1,"
+                    "'domain_name':a.domain,'task_name':a.task,'action_repeat':a.action_repeat}))\n"
+                    "(o/'latest.pt').write_bytes(b'fixture');"
+                    "(o/'metrics.jsonl').write_text(json.dumps({'type':'eval_episode',"
+                    "'return':1})+'\\n'+json.dumps({'type':'end','reason':'completed',"
+                    "'step':1})+'\\n')\n"
+                )
+                job = {
+                    "id": "fresh-task",
+                    "arm": "curl",
+                    "seed": 123,
+                    "steps": 1,
+                    "cap": 1,
+                    "eval_every": 1,
+                    "eval_episodes": 1,
+                    **overrides,
+                }
+                config = {
+                    "source_snapshot": str(source),
+                    "source": str(source),
+                    "python": sys.executable,
+                    "campaign_root": str(base / "campaign"),
+                    "allocation_deadline": time.time() + 1000,
+                    "jobs": [job],
+                }
+                run_queue.run_queue(config)
+                child = base / "campaign" / "fresh-task"
+                received = json.loads((child / "run" / "received.json").read_text())
+                self.assertEqual({key: received[key] for key in expected}, expected)
+                for key, value in expected.items():
+                    flag = "--" + key.replace("_", "-")
+                    self.assertEqual(received["argv"][received["argv"].index(flag) + 1], str(value))
+                self.assertTrue(json.loads((child / "result.json").read_text())["complete"])
+                run_queue.run_queue(config)
+                events = run_queue.records(base / "campaign" / "queue.jsonl")
+                self.assertEqual(sum(row["type"] == "launch" for row in events), 1)
+                self.assertEqual(sum(row["type"] == "skip_complete" for row in events), 1)
+
+    def test_completed_rejects_different_effective_task_and_repeat(self):
+        # Omitting effective defaults from identity checks admits another scientific task.
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            job = {
+                "id": "same-id",
+                "arm": "curl",
+                "seed": 123,
+                "steps": 1,
+                "cap": 1,
+                "eval_every": 1,
+                "eval_episodes": 1,
+            }
+            config = {
+                "arm": "curl",
+                "seed": 123,
+                "num_train_steps": 1,
+                "max_seconds": 1,
+                "eval_freq": 1,
+                "num_eval_episodes": 1,
+                "domain_name": "cartpole",
+                "task_name": "swingup",
+                "action_repeat": 8,
+            }
+            (output / "latest.pt").write_bytes(b"fixture")
+            (output / "metrics.jsonl").write_text(
+                json.dumps({"type": "end", "reason": "completed", "step": 1}) + "\n"
+            )
+            (output / "config.json").write_text(json.dumps(config))
+            self.assertTrue(run_queue.completed(output, job))
+            for key, different in (
+                ("domain_name", "walker"),
+                ("task_name", "balance"),
+                ("action_repeat", 2),
+            ):
+                with self.subTest(key=key):
+                    (output / "config.json").write_text(json.dumps({**config, key: different}))
+                    with self.assertRaisesRegex(ValueError, "immutable"):
+                        run_queue.completed(output, job)
+
+    def test_nondefault_task_without_config_is_not_complete(self):
+        # Terminal counters alone cannot authenticate an unknown nondefault scientific task.
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            (output / "latest.pt").write_bytes(b"fixture")
+            (output / "metrics.jsonl").write_text(
+                json.dumps({"type": "end", "reason": "completed", "step": 1}) + "\n"
+            )
+            for override in ({"domain": "walker"}, {"task": "balance"}, {"action_repeat": 2}):
+                with self.subTest(override=override):
+                    self.assertFalse(run_queue.completed(output, {"steps": 1, **override}))
+
     def continuation_fixture(self, base, mismatch=None, truncated=False, child_env_steps=500000):
         source = base / "snapshot"
         source.mkdir()

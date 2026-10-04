@@ -32,6 +32,11 @@ def records(path: Path) -> list[dict[str, Any]]:
 
 def completed(output: Path, job: dict[str, Any]) -> bool:
     config_path = output / "config.json"
+    task_inputs = (
+        ("domain", "domain_name", "cartpole"),
+        ("task", "task_name", "swingup"),
+        ("action_repeat", "action_repeat", 8),
+    )
     if config_path.exists():
         config = json.loads(config_path.read_text())
         mapping = {
@@ -44,6 +49,11 @@ def completed(output: Path, job: dict[str, Any]) -> bool:
         }
         if any(config.get(key) != job[name] for name, key in mapping.items()):
             raise ValueError(f"Existing job ID has different immutable inputs: {job['id']}")
+        for name, key, default in task_inputs:
+            if config.get(key, default) != job.get(name, default):
+                raise ValueError(f"Existing job ID has different immutable inputs: {job['id']}")
+    elif any(job.get(name, default) != default for name, _, default in task_inputs):
+        return False  # Legacy fixtures omit config; only the original defaults are inferable.
     ends = [record for record in records(output / "metrics.jsonl") if record.get("type") == "end"]
     return bool(
         ends
@@ -357,6 +367,9 @@ def run_queue(config: dict[str, Any]) -> None:
                     "max-seconds": job["cap"],
                     "eval-every": job["eval_every"],
                     "eval-episodes": job["eval_episodes"],
+                    "domain": job.get("domain", "cartpole"),
+                    "task": job.get("task", "swingup"),
+                    "action-repeat": job.get("action_repeat", 8),
                 }
                 if parent is not None:
                     if (
