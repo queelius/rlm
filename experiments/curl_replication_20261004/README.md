@@ -209,7 +209,7 @@ Natural episode-boundary checkpoints retain task and action-space random state;
 a budget-truncated episode restarts on resume, which is explicitly recorded.
 The published driver now writes configuration metadata for a new-directory
 resume after validation, while preserving an existing directory's original
-configuration. The active fresh-run queue retains its earlier sealed source;
+configuration. The completed fresh runs retained their earlier sealed source;
 this metadata repair does not change those runs or the learning algorithm.
 
 The queue now also supports an explicit `gpu_lock` path for a sibling output
@@ -225,19 +225,33 @@ The observer accepts `additional_campaign_roots` for such sibling outputs. Its
 quota, exact-session delivery and acknowledgment rules are unchanged. Deploy
 these changes as new snapshots; never edit a live queue or observer's source.
 
-Use `summarize_continuations.py --runs /project/alex_phd/runs/curl-replication-20261004-500k
+Use `summarize_continuations.py --runs /project/alex_phd/runs/curl-replication-20261004-500k-repair-v2
 --output ANALYSIS_DIRECTORY` for the extension, not the original summarizer.
 JSON and Markdown use the standard library; `--plot` additionally needs
 Matplotlib. This checks explicit parent provenance, joins each chain without
 duplicating its 100k endpoint, and admits only complete fixed 500k results.
 Missing or failed attempts remain visible without contributing a score.
 
-The original serial queue finished all six runs. Its continuation owner is
-running in tmux `curl-20261004-500k-queue`; its external `QUEUE.json` is in
-`/project/alex_phd/runs/curl-replication-20261004-500k`. It shares the original
+The original serial queue finished all six runs. The first extension failed
+at 409k when our checkpoint serializer encountered an array larger than 4 GiB.
+Protocol 4 fixes this size limit; a real large-array save/load regression passed.
+The old owner stopped cleanly after saving its control at 198k. Its failed and
+stopped records remain in the original `curl-replication-20261004-500k` root.
+
+The repaired owner is running in tmux `curl-20261004-repair-v2`; its `QUEUE.json`
+is in `/project/alex_phd/runs/curl-replication-20261004-500k-repair-v2`. It shares the original
 campaign's GPU lock. Inspect `queue.jsonl` and per-run native
 metrics, not just process presence. Create `STOP` in that root to ask its owner
 to finish/checkpoint the current episode and stop. Do not edit its sealed code.
+
+Optional per-job `recovery: true` admits exactly the latest saved natural
+checkpoint of a closed failed/stopped extension, with original 100k ancestry.
+CURL seed 123 resumed at 307k; its control resumes from 198k; the other four
+models retain their 100k parents. The scientific settings and fixed target
+are unchanged. Analysis separates the abandoned 307k-to-409k branch: completion
+of that repaired CURL chain will cost 602k physical training steps for 500k
+retained history. It is one seed, not an extra replicate or an equal-physical-
+budget comparison. See the [recovery plan](../../docs/curl-replication-2026-10-04/RECOVERY_PLAN.md).
 
 A separate `review_monitor.py` observer uses the installed `codex queue`
 command to request review in this exact session. It neither trains models nor

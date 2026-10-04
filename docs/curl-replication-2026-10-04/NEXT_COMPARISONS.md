@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-status: three_pairs_complete_500k_continuations_launched
+status: three_pairs_complete_500k_technical_recovery_running
 priority: replication_before_mechanism
 ---
 
@@ -10,6 +10,14 @@ The prespecified three-seed CURL/no-CPC comparison is complete. All three pairs
 favor CURL at 100k. The 500k continuation queue launched at 18:36:58 UTC; other
 comparisons below remain proposals. These are replication and interpretation
 checks, not novelty claims.
+
+At 19:37 the repaired owner resumed CURL from 307k after a save-format failure
+at 409k. The control saved cleanly at 198k and is next. All six original models
+remain included. The immediate decision is still to finish the longer-horizon
+comparison, not add a learning variant in response to a serialization failure.
+Retained history and physical interaction cost now differ for the recovered
+CURL seed; report both. A clean fresh-seed paired run would be needed before
+making an equal-physical-budget claim about this recovery comparison.
 
 The [CURL paper](https://proceedings.mlr.press/v119/laskin20a/laskin20a.pdf)
 combines random crops, instance contrastive learning and SAC, and benchmarks the

@@ -136,3 +136,32 @@ decision 12,500 and produced finite update metrics, natural training episodes
 and a ten-episode evaluation at 104,000 steps (mean reward 679.7581). This is a
 live execution check, not evidence of a completed 500k comparison or bit-exact
 identity to uninterrupted training. No sealed training source was edited.
+
+## Follow-up: a large checkpoint failure and bounded recovery
+
+The first longer CURL run failed while saving at 409k training steps. Default
+pickle protocol 2 cannot serialize a single NumPy array larger than 4 GiB.
+This defect was in our added checkpoint code. It was not covered by the smaller
+CPU fixtures or the completed 100k runs. Atomic replacement preserved the
+307k checkpoint. The production repair explicitly requests protocol 4.
+
+A real 4 GiB + 1 byte array reproduced the old failure, then saved and reloaded
+with matching content under the repair. The root independently reran all three
+checkpoint tests, including this opt-in test: 26.82 seconds for the large case,
+about 16.5 GiB peak RAM, and a 4,294,984,149-byte temporary checkpoint. No live
+source or checkpoint was overwritten. Six focused queue tests also passed.
+
+Recovery admission accepts a closed failed or stopped origin, its latest natural
+checkpoint and authenticated original 100k ancestry. The new analysis separates
+the abandoned branch from the retained history. It still requires a fixed 500k
+endpoint and counts a complete chain as one seed. Twenty-four focused analysis
+tests and Ruff checks passed in the root session. Independent review identified
+admission mismatches; failing rejection fixtures reproduced them before repair.
+The reviewer found no remaining important issue in the final focused diff.
+
+The old control stopped and saved at 198k under its own owner. The replacement
+owner acquired the same lock and CURL resumed at 307k, returning a real evaluation
+within 37 seconds, followed by finite updates. A read of those actual records
+correctly reports one incomplete recovery, zero terminal scores and 102k abandoned
+training interactions. This verifies the handoff, not a completed experiment.
+We still need to observe a large live checkpoint save with the repaired format.

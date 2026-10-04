@@ -123,6 +123,114 @@ def parent_curve(parent, config):
     return points
 
 
+def recovery_curve(parent):
+    """Authenticate exactly one terminated continuation branch; never read weights."""
+    checkpoint = Path(parent["checkpoint"]).resolve()
+    origin_path = Path(parent["origin_job_path"])
+    require(
+        origin_path.is_absolute()
+        and origin_path.resolve() == checkpoint.parent.parent / "job.json",
+        "Recovery origin is not the checkpoint's job receipt",
+    )
+    require(
+        hashlib.sha256(origin_path.read_bytes()).hexdigest() == parent["origin_job_sha256"],
+        "Recovery origin job checksum changed",
+    )
+    origin_receipt = read(origin_path)
+    require(
+        origin_receipt["parent"].get("kind") != "recovery", "Only one recovery hop is supported"
+    )
+    origin = read_chain(origin_path)
+    require(origin.get("ancestry_validated") is True, "Original 100k ancestry is not authenticated")
+    require(origin["status"] in ("failure", "incomplete"), "Origin is not a failed/stopped attempt")
+    result = origin.get("result", {})
+    require(
+        type(result.get("exit_code")) is int and result.get("complete") is False,
+        "Recovery parent has no terminated owner receipt",
+    )
+    config_path = Path(parent["config_path"])
+    require(
+        config_path.resolve() == checkpoint.parent / "config.json"
+        and hashlib.sha256(config_path.read_bytes()).hexdigest() == parent["config_sha256"],
+        "Recovery parent config checksum changed",
+    )
+    config = read(config_path)
+    require(
+        config == parent["config"] == origin["config"], "Recovery parent config receipt differs"
+    )
+    rows = records(checkpoint.parent / "metrics.jsonl")
+    terminal = rows[-1] if rows else {}
+    stopped = terminal.get("type") == "end" and terminal.get("reason") in (
+        "signal_15",
+        "signal_2",
+        "time_cap",
+    )
+    require(
+        (terminal.get("type") == "failure" or stopped)
+        and not any(r.get("type") == "unreadable_json" for r in rows),
+        "Recovery parent has no native failure or supported stopped end",
+    )
+    step, env_steps = parent["restore_step"], parent["restore_env_steps"]
+    require(
+        type(step) is int
+        and type(env_steps) is int
+        and 12500 <= step < 62500
+        and 100000 <= env_steps < 500000
+        and env_steps == step * config["action_repeat"],
+        "Invalid recovery boundary",
+    )
+    saved = [r for r in rows if r.get("type") == "checkpoint"][-1]
+    episode = [
+        r
+        for r in rows
+        if r.get("type") == "train_episode"
+        and r.get("step") == step
+        and r.get("env_steps") == env_steps
+    ][-1]
+    ends = [r for r in rows if r.get("type") == "end"]
+    proof = {"checkpoint": saved, "train_episode": episode, "end": ends[-1] if ends else None}
+    require(
+        proof == parent["terminal_proof"]
+        and saved.get("step") == step
+        and saved.get("env_steps") == env_steps
+        and episode.get("truncated_by_budget") is False
+        and Path(saved.get("path", "")).resolve() == checkpoint,
+        "Recovery checkpoint is not the latest successful natural boundary",
+    )
+    stat = checkpoint.stat()
+    require(
+        parent["checkpoint_identity"]
+        == {"size": stat.st_size, "mtime_ns": stat.st_mtime_ns, "inode": stat.st_ino}
+        and saved.get("bytes") == stat.st_size,
+        "Recovery checkpoint identity changed",
+    )
+    require(
+        type(rows[-1].get("step")) is int and rows[-1]["step"] >= step,
+        "Recovery terminal step precedes saved state",
+    )
+    require(
+        not stopped
+        or (
+            terminal["step"] == step
+            and terminal.get("env_steps") == env_steps
+            and terminal.get("updates") == step - 1000
+        ),
+        "Stopped parent final counters differ from restored checkpoint",
+    )
+    last_step = rows[-1]["step"]
+    retained = [p for p in origin["curve"] if p["step"] <= step and p["env_steps"] <= env_steps]
+    abandoned = [p for p in origin["curve"] if p not in retained]
+    return {
+        "curve": retained,
+        "abandoned_curve": abandoned,
+        "origin_chain": origin,
+        "origin_last_training_step": last_step,
+        "origin_last_training_env_steps": last_step * config["action_repeat"],
+        "origin_terminal_reason": rows[-1].get("reason", rows[-1].get("error")),
+        "abandoned_training_env_steps": max(0, last_step * config["action_repeat"] - env_steps),
+    }
+
+
 def read_chain(job_path):
     entry = {
         "path": str(job_path.parent.resolve()),
@@ -132,6 +240,8 @@ def read_chain(job_path):
         "seed": None,
         "curve": [],
         "endpoint_return": None,
+        "abandoned_training_env_steps": 0,
+        "physical_training_env_steps_for_completed_chain": None,
     }
     try:
         receipt = read(job_path)
@@ -152,9 +262,16 @@ def read_chain(job_path):
         entry["result"] = result
         if result.get("exit_code") not in (None, 0):
             entry.update(status="failure", reason="nonzero child exit")
-        previous = parent_curve(parent, parent["config"])
+        restore_step, restore_env_steps = 12500, 100000
+        if parent.get("kind") == "recovery":
+            recovery = recovery_curve(parent)
+            entry.update(recovery)
+            previous = recovery["curve"]
+            restore_step, restore_env_steps = parent["restore_step"], parent["restore_env_steps"]
+        else:
+            previous = parent_curve(parent, parent["config"])
         entry["parent_curve"] = previous
-        entry["curve"] = [p for p in previous if p["env_steps"] <= 100000]
+        entry["curve"] = [p for p in previous if p["env_steps"] <= restore_env_steps]
         config = read(output / "config.json")
         entry["config"] = config
         rows = records(output / "metrics.jsonl")
@@ -163,7 +280,21 @@ def read_chain(job_path):
             entry.update(status="failure", reason="native failure record")
         points = curve(rows, config, output / "metrics.jsonl")
         entry["child_curve"] = points
-        entry["curve"] += [p for p in points if 100000 < p["env_steps"] <= 500000]
+        inherited = {(p["step"], p["env_steps"]) for p in entry["curve"]}
+        entry["curve"] += [
+            p
+            for p in points
+            if p["env_steps"] <= 500000
+            and (
+                (
+                    parent.get("kind") == "recovery"
+                    and p["env_steps"] >= restore_env_steps
+                    and p["step"] >= restore_step
+                )
+                or (parent.get("kind") != "recovery" and p["env_steps"] > 100000)
+            )
+            and (p["step"], p["env_steps"]) not in inherited
+        ]
         require(
             config.get("num_train_steps") == 62500
             and config.get("num_eval_episodes") == 10
@@ -180,12 +311,13 @@ def read_chain(job_path):
         require(
             len(resumes) == 1
             and resumes[0].get("type") == "resume"
-            and resumes[0].get("step") == 12500
+            and resumes[0].get("step") == restore_step
             and resumes[0].get("config") == config
             and Path(resumes[0].get("resume_path", "")).resolve()
             == Path(parent["checkpoint"]).resolve(),
-            "Expected one resume from the authenticated 100k parent",
+            "Expected one resume from the authenticated restore boundary",
         )
+        entry["ancestry_validated"] = True
         if entry["status"] == "failure":
             return entry
         ends = [r for r in rows if r.get("type") == "end"]
@@ -210,6 +342,9 @@ def read_chain(job_path):
                     status="completed",
                     reason="validated continuation endpoint",
                     endpoint_return=endpoint[0]["mean_return"],
+                    physical_training_env_steps_for_completed_chain=(
+                        500000 + entry["abandoned_training_env_steps"]
+                    ),
                 )
     except FileNotFoundError as error:
         entry["reason"] = str(error)
@@ -300,12 +435,26 @@ def write_outputs(summary, output: Path, plot=False):
         for r in summary["runs"]
     ] or ["No continuation job receipts discovered."]
     lines += [
+        f"- Recovery from {r['origin_last_training_env_steps']} observed training steps: "
+        f"restored {r['provenance']['parent']['restore_env_steps']}, "
+        f"abandoned {r['abandoned_training_env_steps']}; origin "
+        f"{r['origin_chain']['status']} ({r['origin_terminal_reason']}). "
+        f"Physical training steps for completed chain: "
+        f"{r['physical_training_env_steps_for_completed_chain']}."
+        for r in summary["runs"]
+        if "origin_chain" in r
+    ]
+    lines += [
         "",
         "JSON preserves parent receipts, config/checkpoint identities and curve source paths. "
         "Only the small parent config is rehashed; checkpoint weights are never read. "
         "Repeated child attempts cannot contribute endpoint scores. Pairs require matching "
         "scientific configurations. The control retains crops; "
         "it is not the paper's Pixel SAC baseline.",
+        "Recovery keeps the retained target at 500k; abandoned training consumed real compute. "
+        "Repaired chains can have different physical interaction budgets. Endpoint comparisons "
+        "therefore do not establish sample efficiency at equal physical interactions. "
+        "Abandoned measurements remain separate from joined trajectories in JSON.",
     ]
     (output / "RESULTS.md").write_text("\n".join(lines) + "\n")
     if plot:

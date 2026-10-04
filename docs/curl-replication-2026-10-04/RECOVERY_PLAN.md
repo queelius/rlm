@@ -19,29 +19,29 @@ for the other four. This choice is based on recoverable state, not reward.
 
 ## Bounded implementation checklist
 
-- [ ] Add a real, opt-in greater-than-4-GiB save/load regression, observe failure,
+- [x] Add a real, opt-in greater-than-4-GiB save/load regression, observe failure,
   then explicitly use a suitable pickle protocol in `checkpoint.py`. Preserve
   atomic replacement, trusted loading, arrays, optimizers, counters and RNG.
-- [ ] Add optional `recovery: true` queue admission without weakening ordinary
+- [x] Add optional `recovery: true` queue admission without weakening ordinary
   100k-parent admission. A recovery requires a terminated parent receipt, its
   latest successful checkpoint and matching natural-boundary episode, scientific
   configuration and source. Store `kind: recovery`, `restore_step`,
   `restore_env_steps`, `origin_job_path`, `origin_job_sha256` alongside existing
   parent checksum/config/identity fields. Hash large weights only before locking.
-- [ ] Extend continuation analysis for this one additional recovery link. Verify
+- [x] Extend continuation analysis for this one additional recovery link. Verify
   the origin job receipt and preserved original 100k ancestry. Join the ancestor
   curve only through the restored checkpoint. Retain later abandoned-branch
   measurements separately; never splice them into the resumed trajectory.
   Require the child's actual resume step and fixed 500k counters. One complete
   chain remains one training seed, including its earlier failed attempt.
-- [ ] Test admission/rejection and branch truncation with small CPU fixtures;
+- [x] Test admission/rejection and branch truncation with small CPU fixtures;
   independently review the focused diff. No broad unrelated test campaign.
-- [ ] Seal a new owner under a separate repair campaign root. Stop the current
+- [x] Seal a new owner under a separate repair campaign root. Stop the current
   owner via its existing STOP mechanism once replacements are ready, before
   the replay array exceeds the known limit. Preserve the final stopped control
   checkpoint and all original artifacts. Launch under the same GPU lock and
   verify actual resumed learning promptly. Keep all six prespecified seeds/arms.
-- [ ] Add the repair root to a new observer configuration without editing the
+- [x] Add the repair root to a new observer configuration without editing the
   live observer source. Record failure accounting, recovery ancestry, lost
   training interval, source changes and tests. Update the learning guide's
   execution status and public evidence without inventing a 500k score.
@@ -58,3 +58,13 @@ The failure is an execution failure, not a score of zero. The discarded
 307k-to-409k branch consumed real compute and remains documented. Do not call
 the resumed path bit-identical to uninterrupted CUDA training. The existing
 100k cohort and its published figures remain valid.
+
+## Verified outcome at 19:48 UTC
+
+The repaired queue is active, with CURL resumed at 307k and the cleanly stopped
+198k control next. Five jobs remain queued. The original owner has exited.
+Native learning returned within 37 seconds of repaired child launch. The
+observer uses CONFIG-v3 to watch all three roots; its prior acknowledgment
+history is intact. The eight-page guide was rebuilt and visually inspected.
+The next scientific milestone is still the fixed 500k comparison. A large live
+checkpoint under the repaired format has not yet been observed at this cutoff.

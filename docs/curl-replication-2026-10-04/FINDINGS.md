@@ -1,6 +1,7 @@
 ---
 date: 2026-10-04
 cutoff_utc: 2026-10-04T18:37:00Z
+execution_update_utc: 2026-10-04T19:42:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -10,8 +11,53 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 # What we have learned so far
 
 Both versions learned in all three completed pairs. CURL finished higher in
-each at the prespecified endpoint. All six saved models are now queued for
-continued training to 500k steps; the first continuation is running.
+each at the prespecified endpoint. The longer comparison encountered a
+checkpoint-saving defect in our adapter. Learning has resumed from saved state;
+there is no completed 500k comparison yet.
+
+## Longer training exposed a save-format limit, not a learning result
+
+The first CURL extension reached **409,000 training steps**, then failed while
+saving its replay memory. Our checkpoint adapter relied on a serialization
+format that cannot encode a single NumPy array larger than 4 GiB. The learning
+metrics remained finite; the last measured evaluation was 823.41 at 408k.
+That intermediate reward is not a substitute for the missing 500k endpoint.
+This is a defect in our adapter, not evidence of a failure in the paper's method.
+
+The previous checkpoint at **307,000 steps** survived because saves replace
+the old file only after the new one is complete. We repaired the format and
+verified a real save-and-reload of an array larger than 4 GiB. The independent
+root check took 26.82 seconds, about 16.5 GiB peak RAM and 4.30 GB temporary
+disk; all three focused checkpoint tests passed. The small pilot and earlier
+checkpoint checks did not cover this size boundary.
+
+The fixed recovery rule is to use the latest intact natural-boundary checkpoint,
+regardless of its reward. We preserved the failed run and asked its owner to stop
+the control before the same limit. The control saved cleanly at **198,000 steps**.
+The repaired owner then acquired the same GPU lock and resumed CURL at **307,000**.
+Its first real evaluation returned within 37 seconds of launch; finite learning
+updates and natural episodes followed. At this check it had reached 328,000
+retained steps. The control and four unstarted extensions remain queued.
+See the [recovery plan](RECOVERY_PLAN.md).
+The learning algorithm, evaluation starts and retained training target stay the
+same. Startup and resumed learning are verified; completion and a large live
+checkpoint under the repaired format still need observation.
+
+**An important accounting distinction:** the failed 307k-to-409k branch consumed
+102,000 real training interactions, about 15 minutes since the previous save,
+but its learning state was not retained. A recovered CURL path that finishes at
+500k will therefore have used **602k physical training interactions**. We must
+report this extra cost, not describe the repaired comparison as equal physical
+compute. Its saved model will still contain a 500k-step training history. The
+abandoned curve stays available as diagnostic evidence but must not be spliced
+into the recovered curve or counted as another training seed.
+
+Native [failed-attempt records](extension-data/failed-seed123) include the error,
+successful earlier checkpoint receipts and interrupted learning curve. They are
+stored outside the original `data/` cohort so the unchanged 100k report cannot
+accidentally combine duplicate training seeds. The original six 100k results
+and figure remain valid. The [cleanly stopped control](extension-data/stopped-control-seed123)
+also retains its native records. There are no completed 500k scores at this update.
 
 ## All three original pairs are complete
 

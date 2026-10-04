@@ -34,17 +34,21 @@
 
 \question{Where are we now?}
 
-We have selected the paper, checked its implementation, and completed a short
-GPU training test. \textbf{CURL finished higher in all three comparisons.}
-This edition explains the method and the plan. The worked numbers are
-explicitly labeled illustrations; the published scores belong to the authors.
-Page 8 shows all three completed pairs. Longer training is now running.
+We have completed three matched comparisons on one task.
+\textbf{CURL finished higher in all three at the planned 100,000-step endpoint.}
+Page 8 shows the measured curves. Worked teaching examples are labeled as
+illustrations; the published reference scores belong to the paper's authors.
 
 After 100,000 simulator steps, the scores were 678 versus 454 in the first pair,
 446 versus 241 in the second, and 588 versus 463 in the third, favoring CURL.
 Three pairs give an encouraging
 signal, not a firm conclusion or a reproduction of the paper's average.
-Evidence cutoff: 4 October, 18:37 UTC.
+Completed-results cutoff: 4 October, 18:37 UTC.
+
+Longer training is running again after a checkpoint-saving problem in our
+adapter. The earlier saved state survived. We repaired the format and verified
+that learning resumed. No 500,000-step result is complete yet.
+Execution update: 19:42 UTC; pages 6--7 explain the recovery and its extra cost.
 
 \question{Why this paper?}
 
@@ -229,7 +233,8 @@ The CPU advances the simulation and manages experience; the GPU performs neural
 network calculations. Training begins with random actions to fill replay memory.
 It then alternates collection with updates. The first protocol uses 1,000 random
 action decisions and batches of 128 replay records. A single GPU is sufficient
-as the planned execution shape; its actual speed and memory use still need a pilot.
+for this experiment. Our completed 100,000-step training/evaluation loops took
+about 13--14.4 minutes each, excluding setup and the final checkpoint write.
 
 \takeaway{One interaction and one gradient update are different things. Replay lets the learner revisit old experience. We must record both the amount of experience and the amount of computation.}
 
@@ -249,10 +254,10 @@ deviation across ten separately trained seeds, not a confidence interval.
 \begin{center}
 \begin{tabular}{lll}
 \toprule
-Training experience & Authors' CURL result & Our result\\
+Training experience & Authors' CURL result & Our CURL result\\
 \midrule
-100,000 simulator steps & 582 (SD 146) & Not measured\\
-500,000 simulator steps & 841 (SD 45) & Not measured\\
+100,000 simulator steps & 582 (SD 146) & 571 (SD 117; 3 seeds)\\
+500,000 simulator steps & 841 (SD 45) & Not complete\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -270,12 +275,12 @@ ablation, \textbf{not necessarily the paper's ``Pixel SAC'' baseline}.
 
 \question{What do the axes and score mean?}
 
-The future learning plot will put \textbf{training simulator steps} on the
-horizontal axis and \textbf{mean evaluation episode return} on the vertical axis.
+The plot on page 8 puts \textbf{training simulator steps} on the horizontal axis
+and \textbf{mean evaluation episode return} on the vertical axis.
 An episode return is the sum of its rewards. At each evaluation we average ten
 episodes without changing the weights. Higher return means better performance
 under this reward function, not a percentage of questions answered correctly.
-We will show each training seed, not only a smoothed average.
+It shows each training seed, not only a smoothed average.
 
 \takeaway{The cartpole setting repeats each chosen action eight times. So 12,500 model decisions normally produce 100,000 simulator steps. Evaluation interactions are counted separately.}
 
@@ -290,8 +295,8 @@ learning from less experience need not mean finishing faster.
 \vspace*{0.55in}
 \chapterpage{5 / WHAT SOURCE REVIEW FOUND}{What could make a run misleading?}
 
-These are concrete implementation findings, not local training results. The
-review uses upstream commit \texttt{8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc}.
+These findings concern the implementation, not which method performs better.
+The review uses upstream commit \texttt{8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc}.
 
 \question{A saved model is not necessarily a resumable run.}
 
@@ -305,6 +310,11 @@ To continue the same trajectory, we need simulator state and recent frames too.
 Restarting at a new episode can be useful, but must not be described as an
 identical continuation. Our CPU test restored the actual upstream agent and
 reproduced its next fixed-batch update exactly, including shared parameters.
+
+A longer run also exposed a defect in \emph{our} saving code: one replay array
+grew beyond the old format's size limit. The previous checkpoint survived.
+We changed the format and tested saving and reloading an array larger than
+4 GiB. Small pilot tests had not exercised this limit.
 
 \question{Evaluation should not disturb the training world.}
 
@@ -344,9 +354,15 @@ The hyperparameters and step terminology are documented in the supplement.\footn
 
 The short test and all three reference/control pairs have completed at the
 fixed 100,000-step budget. We are now continuing both versions from their saved
-states to 500,000 steps. This asks whether the early advantage lasts with more
+states to a saved training history of 500,000 steps. This asks whether the early advantage lasts with more
 training. Every original model is included, regardless of its score. Resuming
 a model does not create another independent training run.
+
+The first extension stopped at 409,000 steps because saving failed. Its latest
+intact state was at 307,000, and learning has resumed there. The lost branch
+still cost 102,000 interactions. Reaching 500,000 again will therefore cost
+602,000 physical training interactions in total. We will report that extra
+cost and keep the abandoned measurements separate from the resumed curve.
 
 \question{How results will change the plan}
 
@@ -369,18 +385,16 @@ Item & Status\\
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
 GPU training and policy evaluation & Three pairs complete; extensions running.\\
-Checkpoint save/reload verification & CPU next-update test passed.\\
+Checkpoint save/reload verification & Next-update and large-array tests passed.\\
 Evidence that CURL beats the control & Three favorable endpoints on one task.\\
 \bottomrule
 \end{tabular}
 
-\question{What will be added to this document?}
+\question{How will we report the longer comparison?}
 
-Actual learning curves, per-seed endpoint returns, measured runtime, any failed
-attempts, and a short explanation of what each result changes. Every plotted
-point must be traceable to evaluation records and its run configuration. Missing runs
-will remain missing, not become zero scores. If the result is inconclusive,
-the document will say so.
+We will show fixed final scores and curves for each training seed, with failures
+and recovery costs stated separately. Missing results will remain missing,
+not become zero scores. There is no completed 500,000-step result yet.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 

@@ -236,3 +236,190 @@ def test_missing_child_config_still_preserves_verified_parent_curve(tmp_path):
     run = summary["runs"][0]
     assert [point["env_steps"] for point in run["curve"]] == [0, 100000]
     assert run["status"] == "missing"
+
+
+def recovery_fixture(tmp_path, name="repaired"):
+    _, origin = fixture(tmp_path)
+    config = json.loads((origin / "run" / "config.json").read_text())
+    checkpoint = origin / "run" / "latest.pt"
+    checkpoint.write_bytes(b"intact 307k checkpoint; never load weights")
+    episode = {
+        "type": "train_episode",
+        "step": 38375,
+        "env_steps": 307000,
+        "truncated_by_budget": False,
+    }
+    saved = {
+        "type": "checkpoint",
+        "step": 38375,
+        "env_steps": 307000,
+        "reason": "periodic",
+        "path": str(checkpoint),
+        "bytes": checkpoint.stat().st_size,
+    }
+    terminal = {"type": "failure", "step": 51125, "error": "OverflowError"}
+    original = [
+        {
+            "type": "resume",
+            "step": 12500,
+            "resume_path": json.loads((origin / "job.json").read_text())["job"]["resume"],
+            "config": config,
+        }
+    ]
+    original += evaluation(38000, 304000, [300] * 10)
+    original += evaluation(38375, 307000, [307] * 10) + [episode, saved]
+    original += evaluation(51125, 409000, [999] * 10) + [terminal]
+    (origin / "run" / "metrics.jsonl").write_text("".join(json.dumps(r) + "\n" for r in original))
+    write(origin / "result.json", {"exit_code": 1, "complete": False, "reason": None})
+    stat = checkpoint.stat()
+    parent = {
+        "kind": "recovery",
+        "restore_step": 38375,
+        "restore_env_steps": 307000,
+        "origin_job_path": str((origin / "job.json").resolve()),
+        "origin_job_sha256": hashlib.sha256((origin / "job.json").read_bytes()).hexdigest(),
+        "checkpoint": str(checkpoint),
+        "checkpoint_sha256": "a" * 64,
+        "checkpoint_identity": {
+            "size": stat.st_size,
+            "mtime_ns": stat.st_mtime_ns,
+            "inode": stat.st_ino,
+        },
+        "config": config,
+        "config_path": str(origin / "run" / "config.json"),
+        "config_sha256": hashlib.sha256((origin / "run" / "config.json").read_bytes()).hexdigest(),
+        "terminal_proof": {"checkpoint": saved, "train_episode": episode, "end": None},
+    }
+    root, child = tmp_path / "repair-500k", tmp_path / "repair-500k" / name
+    write(
+        child / "job.json",
+        {
+            "job": {
+                "arm": "curl",
+                "seed": 123,
+                "steps": 62500,
+                "env_steps": 500000,
+                "resume": str(checkpoint),
+                "recovery": True,
+            },
+            "parent": parent,
+        },
+    )
+    write(child / "run" / "config.json", config)
+    rows = [{"type": "resume", "step": 38375, "resume_path": str(checkpoint), "config": config}]
+    rows += evaluation(38375, 307000, [888] * 10)
+    rows += evaluation(62500, 500000, list(range(800, 810)))
+    rows += [
+        {"type": "end", "reason": "completed", "step": 62500, "env_steps": 500000, "updates": 61500}
+    ]
+    (child / "run" / "metrics.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
+    write(child / "result.json", {"exit_code": 0, "complete": True, "reason": None})
+    return root, child, origin
+
+
+def test_recovery_joins_restored_history_and_retains_abandoned_failed_branch(tmp_path):
+    root, _, _ = recovery_fixture(tmp_path)
+    summary = module().summarize(root)
+    run = summary["runs"][0]
+    assert summary["arms"]["curl"]["n_seeds"] == 1
+    assert run["endpoint_return"] == 804.5
+    assert [p["env_steps"] for p in run["curve"]] == [0, 100000, 304000, 307000, 500000]
+    assert [p["mean_return"] for p in run["curve"]] == [10, 200, 300, 307, 804.5]
+    assert [p["mean_return"] for p in run["abandoned_curve"]] == [999]
+    assert run["origin_chain"]["status"] == "failure"
+    assert run["origin_last_training_step"] == 51125
+    assert run["origin_last_training_env_steps"] == 409000
+    assert run["abandoned_training_env_steps"] == 102000
+    assert run["physical_training_env_steps_for_completed_chain"] == 602000
+
+
+@pytest.mark.parametrize(
+    "fault", ["wrong_resume", "changed_config", "changed_ancestor", "origin_hash", "live_parent"]
+)
+def test_recovery_rejects_wrong_restore_and_unauthenticated_or_live_origin(tmp_path, fault):
+    root, child, origin = recovery_fixture(tmp_path)
+    if fault == "wrong_resume":
+        path = child / "run" / "metrics.jsonl"
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        rows[0]["step"] = 51125
+        path.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    elif fault == "changed_config":
+        write(origin / "run" / "config.json", {})
+    elif fault == "changed_ancestor":
+        receipt = json.loads((origin / "job.json").read_text())
+        write(Path(receipt["parent"]["config_path"]), {})
+    elif fault == "origin_hash":
+        receipt = json.loads((child / "job.json").read_text())
+        receipt["parent"]["origin_job_sha256"] = "0" * 64
+        write(child / "job.json", receipt)
+    else:
+        (origin / "result.json").unlink()
+    summary = module().summarize(root)
+    assert summary["runs"][0]["endpoint_return"] is None
+    assert summary["arms"]["curl"]["n_seeds"] == 0
+
+
+def test_duplicate_recovery_leaves_do_not_count_original_failure_as_second_seed(tmp_path):
+    root, child, _ = recovery_fixture(tmp_path)
+    duplicate = root / "repeat"
+    write(duplicate / "job.json", json.loads((child / "job.json").read_text()))
+    write(
+        duplicate / "run" / "config.json", json.loads((child / "run" / "config.json").read_text())
+    )
+    (duplicate / "run" / "metrics.jsonl").write_text((child / "run" / "metrics.jsonl").read_text())
+    write(duplicate / "result.json", {"exit_code": 0, "complete": True, "reason": None})
+    summary = module().summarize(root)
+    assert len(summary["runs"]) == 2
+    assert all(run["endpoint_return"] is None for run in summary["runs"])
+    assert summary["arms"]["curl"]["n_seeds"] == 0
+
+
+@pytest.mark.parametrize("fault", ["completed_receipt", "unknown_end", "stop_wrong_counters"])
+def test_recovery_rejects_terminal_states_outside_failed_or_saved_stop_admission(tmp_path, fault):
+    root, child, origin = recovery_fixture(tmp_path)
+    if fault == "completed_receipt":
+        write(origin / "result.json", {"exit_code": 1, "complete": True, "reason": None})
+    else:
+        path = origin / "run" / "metrics.jsonl"
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        end = {
+            "type": "end",
+            "step": 51125,
+            "env_steps": 409000,
+            "updates": 50125,
+            "reason": "unknown_stop" if fault == "unknown_end" else "signal_15",
+        }
+        rows[-1] = end
+        path.write_text("".join(json.dumps(r) + "\n" for r in rows))
+        write(origin / "result.json", {"exit_code": 0, "complete": False, "reason": "stop"})
+        receipt = json.loads((child / "job.json").read_text())
+        receipt["parent"]["terminal_proof"]["end"] = end
+        write(child / "job.json", receipt)
+    summary = module().summarize(root)
+    assert summary["arms"]["curl"]["n_seeds"] == 0
+
+
+def test_recovery_accepts_saved_natural_stop_without_abandoned_interactions(tmp_path):
+    root, child, origin = recovery_fixture(tmp_path)
+    path = origin / "run" / "metrics.jsonl"
+    rows = [json.loads(line) for line in path.read_text().splitlines()]
+    rows = [r for r in rows if r.get("step", 0) <= 38375]
+    end = {
+        "type": "end",
+        "step": 38375,
+        "env_steps": 307000,
+        "updates": 37375,
+        "reason": "signal_15",
+    }
+    rows += [end]
+    path.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    write(origin / "result.json", {"exit_code": 0, "complete": False, "reason": "stop"})
+    receipt = json.loads((child / "job.json").read_text())
+    receipt["parent"]["terminal_proof"]["end"] = end
+    write(child / "job.json", receipt)
+    summary = module().summarize(root)
+    assert summary["arms"]["curl"]["n_seeds"] == 1
+    run = summary["runs"][0]
+    assert run["origin_chain"]["status"] == "incomplete"
+    assert run["abandoned_training_env_steps"] == 0
+    assert run["physical_training_env_steps_for_completed_chain"] == 500000
