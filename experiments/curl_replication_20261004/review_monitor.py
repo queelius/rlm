@@ -41,11 +41,19 @@ def save(path: Path, value: dict) -> None:
     temporary.replace(path)
 
 
+def campaign_roots(config: dict) -> list[Path]:
+    roots = {}
+    for value in [config["campaign_root"], *config.get("additional_campaign_roots", [])]:
+        path = Path(value)
+        roots.setdefault(path.resolve(), path)
+    return list(roots.values())
+
+
 def observe(config: dict, now: float) -> list[str]:
     """Observe terminal native CURL records; live metrics do not trigger reviews."""
-    root = Path(config["campaign_root"])
+    roots = campaign_roots(config)
     events, receipted = [], set()
-    for terminal in sorted(root.glob("*/result.json")):
+    for terminal in sorted(path for root in roots for path in root.glob("*/result.json")):
         record = read(terminal)
         if record is None:
             continue
@@ -54,7 +62,7 @@ def observe(config: dict, now: float) -> list[str]:
         digest = hashlib.sha256(json.dumps(record, sort_keys=True).encode()).hexdigest()
         events.append(f"finished:{terminal}:{digest}")
         receipted.add(terminal.parent)
-    for path in sorted(root.glob("*/run/metrics.jsonl")):
+    for path in sorted(path for root in roots for path in root.glob("*/run/metrics.jsonl")):
         if path.parent.parent in receipted:
             continue
         terminal_record = None
@@ -109,7 +117,8 @@ def message(config: dict, request_id: str, why: str, events: list[str]) -> str:
         f"Review {request_id}: {why}. Continue this exact CURL reproduction session.\n"
         f"Read {config['checkpoint']} and "
         f"{output / 'requests' / (request_id + '.json')}.\n"
-        f"Read native events in {config['campaign_root']}: result.json receipts and "
+        f"Read native events in {', '.join(str(root) for root in campaign_roots(config))}: "
+        "result.json receipts and "
         "run/metrics.jsonl episode, update, end and failure records. Inspect real simulator "
         "rewards and learning updates, not merely GPU memory or process presence. "
         "Distinguish fixed endpoints from learning curves, pilot diagnostics from fresh "

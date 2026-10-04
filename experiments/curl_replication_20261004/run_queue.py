@@ -49,13 +49,100 @@ def completed(output: Path, job: dict[str, Any]) -> bool:
         ends
         and ends[-1].get("reason") == "completed"
         and ends[-1].get("step") == job["steps"]
+        and ("env_steps" not in job or ends[-1].get("env_steps") == job["env_steps"])
         and (output / "latest.pt").exists()
     )
+
+
+def checkpoint_identity(path: Path) -> dict[str, int]:
+    stat = path.stat()
+    return {"size": stat.st_size, "mtime_ns": stat.st_mtime_ns, "inode": stat.st_ino}
+
+
+def stream_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def prepare_parent(job: dict[str, Any], snapshot: Path, source: Path) -> dict[str, Any]:
+    """Native terminal evidence suffices here; the driver validates checkpoint payload on load."""
+    checkpoint = Path(job["resume"]).resolve()
+    if not checkpoint.is_file():
+        raise ValueError("Continuation parent checkpoint is missing")
+    config_path = checkpoint.parent / "config.json"
+    manifest = json.loads((snapshot / "manifest.json").read_text())
+    config = json.loads(config_path.read_text())
+    expected = {
+        key: value
+        for key, value in manifest["reference_configuration"].items()
+        if key != "num_train_steps"
+    }
+    expected.update(
+        seed=job["seed"],
+        arm=job["arm"],
+        eval_freq=job["eval_every"],
+        num_eval_episodes=job["eval_episodes"],
+        num_train_steps=12500,
+    )
+    mismatches = [key for key, value in expected.items() if config.get(key) != value]
+    if mismatches or config.get("upstream_commit") != manifest["upstream"]["commit"]:
+        raise ValueError(f"Continuation parent scientific config mismatch: {mismatches}")
+    source_hashes = {
+        name: stream_sha256(source / name)
+        for name in ("curl_sac.py", "utils.py", "encoder.py", "train.py")
+    }
+    if source_hashes != config.get("upstream_sha256"):
+        raise ValueError("Continuation parent upstream source mismatch")
+    if (
+        job["steps"] <= 12500
+        or config.get("action_repeat") != 8
+        or config.get("init_steps") != 1000
+    ):
+        raise ValueError("Continuation parent must be the prescribed cartpole 100k run")
+    native = records(checkpoint.parent / "metrics.jsonl")
+    ends = [row for row in native if row.get("type") == "end"]
+    episodes = [row for row in native if row.get("type") == "train_episode"]
+    saves = [row for row in native if row.get("type") == "checkpoint"]
+    if not ends or not episodes or not saves or native[-1].get("type") != "end":
+        raise ValueError("Continuation parent has no terminal proof")
+    end, episode, saved = ends[-1], episodes[-1], saves[-1]
+    if (
+        end.get("reason") != "completed"
+        or end.get("step") != 12500
+        or end.get("env_steps") != 100000
+        or end.get("updates") != 11500
+        or episode.get("step") != 12500
+        or episode.get("truncated_by_budget") is not False
+        or saved.get("reason") != "completed"
+        or saved.get("step") != 12500
+        or saved.get("env_steps") != 100000
+        or Path(saved.get("path", "")).resolve() != checkpoint
+    ):
+        raise ValueError("Continuation parent is incomplete or not at a natural 100k boundary")
+    identity = checkpoint_identity(checkpoint)
+    if saved.get("bytes") != identity["size"]:
+        raise ValueError("Continuation parent checkpoint size differs from terminal receipt")
+    digest = stream_sha256(checkpoint)
+    if checkpoint_identity(checkpoint) != identity:
+        raise ValueError("Continuation parent changed during checksum verification")
+    return {
+        "checkpoint": str(checkpoint),
+        "checkpoint_sha256": digest,
+        "checkpoint_identity": identity,
+        "config_path": str(config_path),
+        "config_sha256": stream_sha256(config_path),
+        "config": config,
+        "terminal_proof": {"end": end, "train_episode": episode, "checkpoint": saved},
+    }
 
 
 def run_queue(config: dict[str, Any]) -> None:
     root, snapshot = Path(config["campaign_root"]), Path(config["source_snapshot"])
     root.mkdir(parents=True, exist_ok=True)
+    gpu_lock = Path(config.get("gpu_lock", root / "GPU.lock")).resolve()
     stopped = {"signal": None}
     previous_handlers = {sig: signal.getsignal(sig) for sig in (signal.SIGTERM, signal.SIGINT)}
     for sig in previous_handlers:
@@ -91,6 +178,11 @@ def run_queue(config: dict[str, Any]) -> None:
                     event("skip_complete", id=job["id"])
                     continue
             if not exists:
+                parent = (
+                    prepare_parent(job, snapshot, Path(config["source"]))
+                    if "resume" in job
+                    else None
+                )
                 job_root.mkdir()
                 shutil.copytree(
                     snapshot, job_root / "code", ignore=shutil.ignore_patterns("__pycache__")
@@ -102,9 +194,10 @@ def run_queue(config: dict[str, Any]) -> None:
                     for path in (job_root / "code").rglob("*")
                     if path.is_file()
                 }
-                (job_root / "job.json").write_text(
-                    json.dumps({"job": job, "source_hashes": hashes}, indent=2) + "\n"
-                )
+                receipt = {"job": job, "source_hashes": hashes}
+                if parent is not None:
+                    receipt["parent"] = parent
+                (job_root / "job.json").write_text(json.dumps(receipt, indent=2) + "\n")
                 versions = {}
                 for package in ("torch", "numpy", "gym", "dm-control", "mujoco", "scikit-image"):
                     try:
@@ -129,7 +222,7 @@ def run_queue(config: dict[str, Any]) -> None:
                 }
                 provenance["environment"].update(MUJOCO_GL="egl", PYOPENGL_PLATFORM="egl")
                 (job_root / "runtime.json").write_text(json.dumps(provenance, indent=2) + "\n")
-            with (root / "GPU.lock").open("a") as lock:
+            with gpu_lock.open("a") as lock:
                 while True:
                     try:
                         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -167,6 +260,13 @@ def run_queue(config: dict[str, Any]) -> None:
                     "eval-every": job["eval_every"],
                     "eval-episodes": job["eval_episodes"],
                 }
+                if parent is not None:
+                    if (
+                        checkpoint_identity(Path(parent["checkpoint"]))
+                        != parent["checkpoint_identity"]
+                    ):
+                        raise ValueError("Continuation parent changed after preparation")
+                    options["resume"] = parent["checkpoint"]
                 command = [config["python"], str(job_root / "code" / "train_reference.py")]
                 command += [
                     value
@@ -178,7 +278,13 @@ def run_queue(config: dict[str, Any]) -> None:
                     child = subprocess.Popen(
                         command, stdout=console, stderr=subprocess.STDOUT, env=environment
                     )
-                    event("launch", id=job["id"], pid=child.pid, command=command)
+                    event(
+                        "launch",
+                        id=job["id"],
+                        pid=child.pid,
+                        command=command,
+                        gpu_lock=str(gpu_lock),
+                    )
                     start, last_progress, count, warned, terminate_at = (
                         time.monotonic(),
                         time.monotonic(),

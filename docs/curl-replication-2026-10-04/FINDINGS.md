@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T18:02:00Z
+cutoff_utc: 2026-10-04T18:15:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -9,10 +9,47 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 
 # What we have learned so far
 
-Both versions learned in the first completed pair. CURL finished higher at the
-prespecified endpoint, but repetitions are still running.
+Both versions learned in two completed pairs. CURL finished higher in both at
+the prespecified endpoint. The third pair is still running.
 
-## Second CURL run: learning repeats, but the score changes
+## Two matched pairs now favor CURL at the fixed endpoint
+
+The second matched control completed with a score of **240.54**, versus
+**446.17** for CURL, a difference of **205.63** reward points. The first pair's
+difference was **223.55**. All four runs completed the same 100,000 training
+simulator steps and 11,500 update calls. Each score averages ten fixed evaluation
+episodes. There are two independently trained pairs, not twenty repetitions.
+
+| Training seed | CURL | Same crops, no image matching | Paired difference |
+|---|---:|---:|---:|
+| 123 | 678.02 | 454.47 | +223.55 |
+| 456 | 446.17 | 240.54 | +205.63 |
+
+This strengthens the initial signal: the higher CURL endpoint was not confined
+to the first training seed. It remains a small exploratory comparison on one
+task and one training budget. We have not selected favorable checkpoints or
+dropped unfavorable runs. The difference measures the whole additional update,
+not just correct image correspondence independently of extra optimization.
+
+The curves give a more qualified picture than the endpoints alone. The first
+pair often traded places. CURL led for more of the second run. As a post-hoc
+descriptive check, the second pair's interpolated curve averages are 272.08
+for CURL and 187.46 for the control, compared with nearly equal averages in
+the first pair. These are not additional primary outcomes or independent
+repetitions. We retain the prespecified endpoint as the main comparison.
+
+The second control had no failure records or nonfinite logged update metrics.
+Its training/evaluation loop took 785.78 seconds and its final 2.506 GB checkpoint
+took another 12.16 seconds. Evaluation consumed 260,000 separate simulator steps,
+not training data. Its [native records](data/second-control) are published.
+
+**Decision:** finish the third pair, then extend all three pairs to 500,000
+steps if their final records and checkpoints are valid. This tests whether the
+early difference lasts, shrinks or reverses. Prepare the queue changes while
+the last pair runs, preserving all original checkpoints and analysis. The PDF
+now shows both completed pairs and explicitly says that the evidence is limited.
+
+## Earlier checkpoint: the second reference before its control finished
 
 With a new training seed, CURL improved from **18.62** to **446.17** at the
 same fixed 100,000-step endpoint. Its first training seed finished at 678.02.

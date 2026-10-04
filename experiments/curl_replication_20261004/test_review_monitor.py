@@ -95,6 +95,27 @@ def test_only_terminal_queue_receipts_or_manual_records_trigger_events(tmp_path)
     assert len(module.observe(cfg, 140)) == 3
 
 
+def test_additional_campaign_roots_collect_once_and_appear_in_review_payload(tmp_path):
+    module, cfg = monitor(), config(tmp_path)
+    original, extension = Path(cfg["campaign_root"]), tmp_path / "extension-500k"
+    cfg["additional_campaign_roots"] = [str(extension), str(original), str(extension / ".")]
+    save(original / "reference" / "result.json", {"exit_code": 0, "complete": True})
+    original_end = original / "reference" / "run" / "metrics.jsonl"
+    original_end.parent.mkdir(parents=True)
+    original_end.write_text(json.dumps({"type": "end", "reason": "completed"}) + "\n")
+    extension_end = extension / "extended" / "run" / "metrics.jsonl"
+    extension_end.parent.mkdir(parents=True)
+    extension_end.write_text(json.dumps({"type": "end", "reason": "completed"}) + "\n")
+    events = module.observe(cfg, 100)
+    assert len(events) == 2
+    assert sum(str(original / "reference" / "result.json") in event for event in events) == 1
+    assert sum(str(extension_end) in event for event in events) == 1
+    payload = module.message(cfg, "review-fixture", "new terminal results", events)
+    assert str(original) in payload
+    assert str(extension) in payload
+    assert payload.count(str(extension)) == 1
+
+
 def test_periodic_and_new_terminal_reviews_coalesce_while_pending():
     module = monitor()
     state = {"reviewed_at": 100, "seen": [], "pending": None}

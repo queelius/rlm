@@ -91,3 +91,21 @@ original tests, **five CPU tests passed**. An independent diff review found no
 blocking issue. This does not alter the learning algorithm or any live sealed
 run. Analysis of a future 500k continuation still needs an explicit endpoint and
 resume provenance; the current 100k summary deliberately excludes resumed runs.
+
+## Follow-up: continuation queue and multi-root review
+
+The next source snapshot adds optional resume, explicit shared-lock and
+environment-step endpoint fields to the existing queue. Native parent records
+must show matching completed 100k training and a natural episode boundary.
+Checkpoint hashing occurs before the GPU lock; the child receives the resolved
+resume path, and the original parent is not overwritten. The observer can
+watch sibling output roots while retaining its existing delivery and quota rules.
+
+Twenty focused CPU tests passed across the queue and observer. New fixtures
+exercise real subprocess argument/lock behavior, one pre-lock checkpoint hash,
+wrong or truncated parent rejection, a wrong simulator-step endpoint, and
+terminal events from two roots without duplication. Independent source review
+found no blocking scientific or process-ownership defect. Payload restoration
+remains the driver's responsibility; this is not a new claim of bit-exact
+uninterrupted GPU training. The 500k analysis is separate work, not supplied by
+these queue changes.

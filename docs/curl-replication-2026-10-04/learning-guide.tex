@@ -35,14 +35,15 @@
 \question{Where are we now?}
 
 We have selected the paper, checked its implementation, and completed a short
-GPU training test. \textbf{Both versions learned; CURL finished higher in the first pair.}
+GPU training test. \textbf{CURL finished higher in both completed comparisons.}
 This edition explains the method and the plan. The worked numbers are
 explicitly labeled illustrations; the published scores belong to the authors.
-Page 8 shows the first completed pair. Repetitions with new training seeds are ongoing.
+Page 8 shows two completed pairs. A third pair is still running.
 
-After 100,000 simulator steps, CURL scored 678 and the same-crops control scored
-454. Both started near 8. One pair does not establish a reliable CURL advantage
-or reproduce the paper's average. Evidence cutoff: 4 October, 17:42 UTC.
+After 100,000 simulator steps, the scores were 678 versus 454 in the first pair,
+and 446 versus 241 in the second, favoring CURL. Two pairs give an encouraging
+signal, not a firm conclusion or a reproduction of the paper's average.
+Evidence cutoff: 4 October, 18:15 UTC.
 
 \question{Why this paper?}
 
@@ -340,11 +341,11 @@ The hyperparameters and step terminology are documented in the supplement.\footn
 
 \question{The next useful sequence}
 
-The short test and first reference/control pair have completed at the fixed
-100k budget. We are repeating both with additional training seeds before treating a difference as a
-reliable effect. Extend to 500k only if time and measured throughput permit.
-The second requested GPU can run another seed independently; it is not required
-to begin the first comparison.
+The short test and two reference/control pairs have completed at the fixed
+100,000-step budget. Finish the third pair, then continue both versions from
+their saved states to 500,000 steps. This asks whether the early advantage
+lasts with more training. We have time for that comparison on one GPU, subject
+to checking the remaining runs and their checkpoints.
 
 \question{How results will change the plan}
 
@@ -367,9 +368,9 @@ Item & Status\\
 \midrule
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
-GPU training and policy evaluation & First pair complete; repetitions running.\\
+GPU training and policy evaluation & Two pairs complete; third pair running.\\
 Checkpoint save/reload verification & CPU next-update test passed.\\
-Evidence that CURL beats the control & Higher endpoint in one seed; not replicated.\\
+Evidence that CURL beats the control & Two favorable endpoints; limited evidence.\\
 \bottomrule
 \end{tabular}
 
@@ -392,40 +393,42 @@ Earlier RLM work is preserved in
 \end{frame}
 \begin{frame}[t]
 \vspace*{0.55in}
-\chapterpage{7 / FIRST PAIRED RESULT}{Both learned. CURL finished higher in the first pair.}
+\chapterpage{7 / TWO PAIRED RESULTS}{CURL finished higher in both comparisons.}
 
-After 100,000 training simulator steps, CURL scored \textbf{678} and the control
-without image matching scored \textbf{454}. Both started near \textbf{8}.
-Higher rewards mean better swinging and balancing, not a higher percentage of
-successful episodes. Only \textbf{one training seed per version} has finished.
+At the fixed 100,000-step endpoint, CURL scored \textbf{678 versus 454} in the
+first pair and \textbf{446 versus 241} in the second. Its control uses the same
+random crops but no image-matching update. Higher reward means better swinging
+and balancing, not a percentage of successful episodes.
 
 \begin{center}
-\includegraphics[width=.90\linewidth]{figures/first-pair.pdf}
+\includegraphics[width=.90\linewidth]{figures/two-pairs.pdf}
 \end{center}
 
-Every point averages ten evaluation episodes from the same fixed starting
-conditions. The solid line is CURL; the dashed line removes image matching
-but keeps the same crops and reinforcement-learning updates.
+Solid lines are CURL; dashed lines are the control. Each color is a separate
+training seed, which changes initialization and training randomness. Every
+point averages ten fixed evaluation starts. There are \textbf{two trained models
+per version}, not twenty independent training runs.
 
-\question{What does the uneven line tell us?}
+\question{What can we conclude so far?}
 
-Neither version stayed consistently ahead during training. CURL's final score
-jumped from 423 at the previous test to 678. The endpoint was chosen before
-the run, not selected afterward, but this late jump makes repetitions important.
-The control's improvement shows that image matching is not required to learn
-this task. Its additional benefit remains a question.
+Both endpoint comparisons favor CURL, by about 206--224 reward points. That is
+encouraging, but only two seeds have finished. The first pair traded places
+during training; CURL led for more of the second run. We report the endpoint
+chosen before training, not each curve's best point. The control also learned,
+so image matching is helpful in these comparisons, not required for learning.
 
 \question{What did it cost, and what happens next?}
 
-Training and evaluation took 14.4 minutes for CURL and 13.0 for the control,
-plus about 11 seconds each to save checkpoints. Setup was extra.
+Each training/evaluation loop took about 13--14.4 minutes, plus 11--12 seconds
+to save its checkpoint. Setup was extra. This matches training interactions,
+not computing time: CURL performs an extra learning update.
 
-Next we finish two more training seeds per version, then
-consider extending both to 500,000 steps. All seeds and curves will be reported.
+Next: finish the third pair, then extend all three pairs to 500,000 steps.
+Does the advantage last, shrink, or reverse with more training?
 
 \small
-\textbf{Evidence.} Native records: \texttt{data/first-reference/} and \texttt{data/first-control/}.
-Task: DeepMind Control Suite \texttt{cartpole/swingup}; training seed 123;
+\textbf{Evidence.} Native records: the four run folders in \texttt{data/}.
+Task: DeepMind Control Suite \texttt{cartpole/swingup}; training seeds 123 and 456;
 evaluation seeds 10000--10009. Modern simulator compatibility adaptation.
 \end{frame}
 \end{document}

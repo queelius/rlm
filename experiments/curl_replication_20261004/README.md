@@ -1,10 +1,10 @@
 ---
 date: 2026-10-04
-status: first_pair_completed_additional_seeds_running
+status: two_pairs_completed_third_pair_running
 question: Can we reproduce one published CURL learning result and isolate the contribution of its contrastive objective?
 stage: first_reference_and_control
 completed_pilots: 1
-completed_primary_runs: 2
+completed_primary_runs: 4
 primary_hardware: one_A100_40GB
 ---
 
@@ -20,7 +20,7 @@ Read the [learning guide PDF](../../docs/curl-replication-2026-10-04/learning-gu
 first; its source and build instructions are adjacent. The old research is preserved in
 [the RLM checkpoint](../../docs/RESEARCH_RESUME_2026-10-04.md).
 
-## Actual progress at 17:42 UTC
+## Actual progress at 18:15 UTC
 
 Execution access is restored. A real GPU pilot completed 1,200 decisions,
 9,600 training simulator steps, 200 updates, and six evaluation episodes in
@@ -29,8 +29,9 @@ about 30 seconds, excluding startup and its final checkpoint write. It saved a
 paper's learning result. The fresh reference then completed 100k steps, improving
 its ten-episode mean return from 8.44 to 678.02. One trained seed does not establish
 the published average or a reliable CURL advantage. The control completed at
-454.47, and CURL seed 456 is now training. The two curves were not consistently
-ordered; finish all prespecified pairs before interpreting the endpoint gap.
+454.47. The second pair completed at 446.17 for CURL versus 240.54 for its
+control. Both paired endpoint differences favor CURL, by 223.55 and 205.63.
+Two pairs remain limited evidence; finish the third pair and inspect all curves.
 
 The reference and control use the official agent unchanged, with our thin
 simulator, evaluation and checkpoint adapters. The runtime is Python 3.12.12,
@@ -73,8 +74,8 @@ alone is too weak a test of implementation agreement.
 
 ## Ordered queue
 
-The pilot and both seed-123 runs are complete. CURL seed 456 is active,
-followed by its control and the seed-789 pair. Native artifacts live in
+The pilot and both versions for seeds 123 and 456 are complete. CURL seed 789
+is active, followed by its control. Native artifacts live in
 `/project/alex_phd/runs/curl-replication-20261004`. The queue launcher records
 completion/failure separately; it is not a substitute for interpreting results.
 
@@ -207,6 +208,19 @@ The published driver now writes configuration metadata for a new-directory
 resume after validation, while preserving an existing directory's original
 configuration. The active fresh-run queue retains its earlier sealed source;
 this metadata repair does not change those runs or the learning algorithm.
+
+The queue now also supports an explicit `gpu_lock` path for a sibling output
+root, a per-job `resume` checkpoint, and an `env_steps` completion requirement.
+For a 100k-to-500k continuation, use `steps=62500`, `env_steps=500000`, and the
+matching parent's `run/latest.pt`. Parent configuration, natural terminal
+boundary and source hashes are checked before GPU ownership. The checkpoint is
+stream-hashed once and its provenance is retained in `job.json`; its file
+identity is checked again before launch. This is preparation support, not a
+claim that the extension batch has already run.
+
+The observer accepts `additional_campaign_roots` for such sibling outputs. Its
+quota, exact-session delivery and acknowledgment rules are unchanged. Deploy
+these changes as new snapshots; never edit a live queue or observer's source.
 
 The serial queue is running in tmux `curl-20261004-queue`; its external config
 is `QUEUE.json` in the artifact root. Inspect `queue.jsonl` and per-run native
