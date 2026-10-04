@@ -71,3 +71,49 @@ per 100k-to-500k extension, plus checkpoint I/O. A walker 100k run needs 50,000
 decisions at repeat 2: allow roughly 60–90 minutes, then measure. These are
 planning extrapolations. Keep seed-level curves, fixed endpoints and failed runs
 visible; evaluation episodes are not additional training replicates.
+
+## Preparation decision after the second reference run
+
+The second CURL seed learned but finished at 446, versus 678 for the first.
+Its control was still running at the 18:02 UTC review cutoff. This favors
+finishing the planned pairs before adding a loss variant. We can prepare a
+longer-training comparison without deciding its outcome in advance.
+
+The continuation batch will use a **separate sibling output directory**, but
+the **same GPU lock** as the initial batch. This keeps the original 100k
+results unchanged and avoids concurrent jobs on the reserved GPU. Preparation
+is not a launch: all six original runs must first be checked for valid completion.
+
+The narrow changes needed are:
+
+1. Let a new queue snapshot explicitly pass each parent's checkpoint as
+   `--resume`, recording its path, checksum and matching configuration. Merely
+   increasing the step budget in today's queue would start fresh training.
+2. Use a total budget of 62,500 decisions at action repeat 8: 500,000 simulator
+   steps. Restore the parent's 12,500 decisions and 11,500 updates, without
+   another warm-up. Require a natural episode boundary, not a budget-truncated
+   episode. The terminal update count should be 61,500. Preserve the original
+   parent checkpoint in place.
+3. Allow an explicit shared lock path when the output root is different.
+   Keep the original sealed queue unchanged. Make the review observer aware
+   of both output roots, or explicitly retain periodic review of the new root.
+4. Analyze the extension with an explicit 500k endpoint and parent links. A
+   continuation is the same training seed, not an additional independent run.
+   Do not point the old 100k summary at both phases: it deliberately rejects
+   repeated arm/seed identities and would then exclude valid original results.
+
+The child will not repeat the evaluation already saved at 100k. Its curve must
+link that parent point explicitly. Keeping the same evaluation schedule adds
+100 evaluation batches and one million separate evaluation simulator steps to
+each extension; none of those interactions is used for training.
+
+Retaining six 100k parents and six 500k children is expected to require roughly
+85 GB, plus temporary space during an atomic checkpoint save. That is a planning
+estimate, not a quota measurement. Host memory is ample for one sequential run;
+check project quota before admitting the batch. Keep the two-hour invocation
+caps and 15-minute checkpoint target, subject to the remaining allocation.
+
+The checkpoint restores learning state and random generators at an episode
+boundary. It does not serialize simulator physics or frame history. We will
+describe these as documented resumed continuations, not promise bit-for-bit
+identity to an uninterrupted GPU trajectory.

@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T17:42:00Z
+cutoff_utc: 2026-10-04T18:02:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -11,6 +11,31 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 
 Both versions learned in the first completed pair. CURL finished higher at the
 prespecified endpoint, but repetitions are still running.
+
+## Second CURL run: learning repeats, but the score changes
+
+With a new training seed, CURL improved from **18.62** to **446.17** at the
+same fixed 100,000-step endpoint. Its first training seed finished at 678.02.
+This is direct evidence that the exact result depends on the training run,
+even when the task and settings are unchanged. It is not a failure of the
+second run: it completed 11,500 updates, all recorded update metrics were finite,
+and it saved its full checkpoint. The last three scores were 399.57, 492.46
+and 446.17, so this run did not repeat the first run's final upward jump.
+
+The matched control for this new seed is still training. **We cannot yet say
+whether CURL's advantage repeated.** Comparing two completed CURL runs against
+just one control would change the comparison as results arrive. We will keep
+the matching by training seed and report unfinished runs separately.
+
+Native evidence is in [data/second-reference](data/second-reference). There are
+ten evaluation episodes per score, not ten independent training runs. The loop
+took 851.57 seconds, excluding startup and the final checkpoint write.
+
+**Decision:** leave the queued comparisons unchanged. Prepare the longer-training
+comparison on CPUs while these finish. The PDF retains its explicitly dated
+first-pair snapshot; this individual, as-yet-unpaired result reinforces its
+existing caution rather than changing the main conclusion. Update the PDF when
+the next complete pair changes what can be concluded.
 
 ## First matched pair: a higher endpoint, not a consistent lead
 

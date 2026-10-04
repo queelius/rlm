@@ -10,6 +10,10 @@ what source review found. CURL scored 678.02 and the matched control scored
 are running. Page 8 shows both measured curves. The
 published scores and invented teaching examples are identified explicitly.
 
+The [running findings](FINDINGS.md) include a later 18:02 UTC update: a second
+CURL training seed finished at 446.17, while its matched control is still
+running. The PDF keeps its stated first-pair cutoff until the next paired result.
+
 The [research protocol](../../experiments/curl_replication_20261004/README.md)
 contains the selected comparison, run order, settings, resolved access issue and
 resumption instructions. The [machine-readable manifest](../../experiments/curl_replication_20261004/manifest.json)
@@ -66,6 +70,8 @@ training seed does not establish a reliable CURL advantage over its control.
   100k training steps, ten fixed evaluation seeds, no best-checkpoint selection.
 - [Matched control's native records and configuration](data/first-control):
   the same crops and training budget, without the extra image-matching update.
+- [Second CURL seed's native records and configuration](data/second-reference):
+  another completed training run, not yet a completed matched comparison.
 - [Actual pilot input images](figures/pilot-observations.png): first, middle and
   last stored observations, each containing three frames. Top row: raw frames;
   bottom row: center crops used during evaluation. They were not selected for
