@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "campaign": "curl-replication-20261004",
+  "status": "pilot_completed_reference_running",
+  "training_started": true,
+  "retrieval_date": "2026-10-04",
+  "paper": {
+    "title": "CURL: Contrastive Unsupervised Representations for Reinforcement Learning",
+    "venue": "ICML 2020",
+    "url": "https://proceedings.mlr.press/v119/laskin20a.html",
+    "pdf": "https://proceedings.mlr.press/v119/laskin20a/laskin20a.pdf",
+    "supplement": "https://proceedings.mlr.press/v119/laskin20a/laskin20a-supp.pdf",
+    "pdf_sha256": null,
+    "target": "Table 1, cartpole swingup, CURL, 100k environment steps",
+    "published_mean_return": 582,
+    "published_seed_sd": 146,
+    "published_training_seeds": 10
+  },
+  "upstream": {
+    "repository": "https://github.com/MishaLaskin/curl",
+    "commit": "8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc",
+    "license": "MIT",
+    "retrieval_method": "official Git clone, pinned commit; initial review used GitHub connector",
+    "inspected_git_blobs": {
+      "train.py": "3768b31635907a7c1248ffb46cfc01697b1b2967",
+      "curl_sac.py": "5836371d313dc8633ac5c5092e42cac3d5515550",
+      "utils.py": "6603cafc2ca03e8cc684263e44fd99d1a09ac3fe",
+      "encoder.py": "9da499fed5110a690ab666b2fa8223e8ad4c40ae"
+    }
+  },
+  "reference_configuration": {
+    "domain_name": "cartpole", "task_name": "swingup", "agent": "curl_sac",
+    "encoder_type": "pixel", "pre_transform_image_size": 100, "image_size": 84,
+    "frame_stack": 3, "action_repeat": 8, "replay_buffer_capacity": 100000,
+    "init_steps": 1000, "num_train_steps": 12500, "batch_size": 128,
+    "hidden_dim": 1024, "encoder_feature_dim": 50, "num_layers": 4, "num_filters": 32,
+    "discount": 0.99, "critic_lr": 0.001, "critic_beta": 0.9, "critic_tau": 0.01,
+    "critic_target_update_freq": 2, "actor_lr": 0.001, "actor_beta": 0.9,
+    "actor_log_std_min": -10, "actor_log_std_max": 2, "actor_update_freq": 2,
+    "encoder_lr": 0.001, "encoder_tau": 0.05, "init_temperature": 0.1,
+    "alpha_lr": 0.0001, "alpha_beta": 0.5, "curl_latent_dim": 128,
+    "eval_freq": 500, "num_eval_episodes": 10
+  },
+  "planned_comparison": {
+    "training_seeds": [123, 456, 789],
+    "evaluation_seeds": [10000, 10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008, 10009],
+    "arms": ["upstream_curl", "same_crops_without_contrastive_update"],
+    "control_is_paper_pixel_sac": false,
+    "primary_environment_steps": 100000,
+    "secondary_environment_steps_if_extended": 500000,
+    "metric": "fixed-endpoint mean of ten deterministic episode reward sums, then summary across training seeds",
+    "pilot_agent_decisions": 1200,
+    "pilot_cap_seconds": 1800,
+    "per_run_cap_seconds": 7200,
+    "checkpoint_interval_seconds_target": 900,
+    "separate_eval_environment": true,
+    "preserve_training_rng_during_eval": true,
+    "evaluate_terminal_endpoint": true
+  },
+  "runtime": {
+    "validated": true,
+    "validation_scope": "real rendering, reward/step/seed checks, CPU full-state next-update restoration, GPU pilot",
+    "python_version": "3.12.12",
+    "torch_version": "2.13.0+cu130",
+    "simulator_revision": "dm-control 1.0.47; mujoco 3.14.0",
+    "dmc2gym_revision": "not installed; independently written env_adapter.py; reviewed upstream 1nadequacy/dmc2gym 06f7e335d988b17145947be9f6a76f557d0efe81",
+    "renderer": "EGL",
+    "dependency_lock": "requirements.lock.txt",
+    "allocation_deadline": "2026-10-07T15:36:06Z",
+    "external_artifact_directory": "/project/alex_phd/runs/curl-replication-20261004"
+  }
+}

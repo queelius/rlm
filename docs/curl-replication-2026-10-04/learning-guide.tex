@@ -1,0 +1,394 @@
+% Beamer is used as a portrait reading-document layout, not a slide deck.
+% This also permits an offline build with the cluster's existing TeX cache.
+\documentclass[12pt]{beamer}
+\geometry{paperwidth=8.5in,paperheight=11in}
+\setbeamersize{text margin left=0.85in,text margin right=0.85in}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill\small\insertframenumber\hspace{0.85in}\vspace{0.4in}}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,booktabs,array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\definecolor{ink}{HTML}{18354B}
+\definecolor{wash}{HTML}{EDF3F7}
+\definecolor{accent}{HTML}{267D72}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+\setlength{\emergencystretch}{2em}
+\newcommand{\takeaway}[1]{\par\medskip\noindent\colorbox{wash}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{The main idea.} #1}}\par\medskip}
+\newcommand{\chapterpage}[2]{{\small\color{accent}\textbf{#1}}\par{\LARGE\color{ink}\textbf{#2}}\par\medskip}
+\newcommand{\question}[1]{\par\smallskip{\large\color{ink}\textbf{#1}}\par}
+\hypersetup{pdftitle={Learning RL by reproducing CURL},pdfauthor={RLM research notebook},colorlinks=true,urlcolor=blue!55!black,linkcolor=blue!55!black}
+\begin{document}
+\begin{frame}[t]
+\vspace*{0.55in}
+{\small\color{accent}\textbf{REPRODUCTION NOTEBOOK \quad | \quad 4 OCTOBER 2026}}
+
+{\huge\color{ink}\textbf{Learning reinforcement learning\\by reproducing CURL}}
+
+{\large A guide to the experiment, the code, and the evidence we need.}
+
+\takeaway{We want a small training experiment whose behavior we can explain and check. First we will reproduce an existing method. Then we will remove one component to ask what it contributes.}
+
+\question{Where are we now?}
+
+We have selected the paper, checked its implementation, and completed a short
+GPU training test. \textbf{The first full reference run is now training.}
+This edition explains the method and the plan. The worked numbers are
+explicitly labeled illustrations; the published scores belong to the authors.
+Actual learning curves will be added after runs finish.
+
+The pilot ran 200 learning updates and saved a complete training checkpoint.
+This establishes that the system runs, not that we have reproduced the paper's
+result. The evidence cutoff for this edition is 4 October, 17:13 UTC.
+
+\question{Why this paper?}
+
+CURL combines two kinds of learning in a compact setting: learning which actions
+earn reward, and learning useful visual features by matching related images.
+The authors provide code. This gives us concrete pieces to inspect and compare
+without starting with a large language-model training system. The paper is
+\emph{CURL: Contrastive Unsupervised Representations for Reinforcement Learning},
+by Laskin, Srinivas and Abbeel, ICML 2020.\footnote{\url{https://proceedings.mlr.press/v119/laskin20a.html}}
+
+\question{What this exercise does not cover}
+
+This is not an RLM and does not train a language model. It does not use
+supervised fine-tuning (SFT), where a model imitates supplied answers or actions.
+Here, self-supervised learning (SSL) means constructing an image-matching task
+from the agent's own observations. Reinforcement learning (RL) uses rewards
+from a simulator. A successful reproduction would improve our experimental
+practice, but would not retroactively prove our earlier RLM training correct.
+
+\question{How to read this guide}
+
+Pages 2--4 explain the task and learning process with examples. Page 5 explains
+the comparison and scores. Page 6 records implementation findings that affect
+interpretation. Page 7 gives the next decisions and the results checklist.
+The detailed configuration is in the adjacent research protocol, not hidden in
+the prose.
+
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{1 / THE TASK}{What does the model actually do?}
+
+Imagine a cart that moves left and right on a track. A pole is attached to the
+cart. The controller must move the cart to swing the pole upward and keep it
+balanced. We use the \texttt{cartpole/swingup} task from DeepMind Control Suite,
+not the similarly named Gym CartPole benchmark.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=0.95]
+  \draw[thick,gray] (-3,0)--(3,0);
+  \filldraw[fill=wash,draw=ink,thick] (-.65,.18) rectangle (.65,.65);
+  \fill[ink] (-.4,.13) circle (.13); \fill[ink] (.4,.13) circle (.13);
+  \draw[line width=3pt,accent] (0,.65)--(.85,2.15);
+  \fill[ink] (0,.65) circle (.08);
+  \draw[->,thick,ink] (1.1,.5)--(2.3,.5);
+  \node[align=center] at (2.1,1.05) {The action is a\\horizontal push.};
+  \draw[->,dashed,gray] (0,.75)--(0,2.5);
+  \node[align=center] at (-2,1.8) {The goal is to\\bring the pole upright.};
+\end{tikzpicture}
+
+{\small Conceptual drawing, not an observation from a local simulator run.}
+\end{center}
+
+\question{The input is pictures, not the correct action.}
+
+The learner receives three recent color images together. Several images help
+it distinguish a pole moving left from one moving right, even when one snapshot
+looks similar. It is not handed the pole's angle and velocity as the policy's
+input. A neural network first turns these pixels into a compact numerical
+description. This part is called the \textbf{encoder}.
+
+The \textbf{policy}, also called the actor, uses that description to choose a
+continuous action: how hard to push the cart. Its weights are the numbers changed
+during training. For this reproduction they start from random initialization,
+not from a pretrained language model or a demonstration dataset.
+
+\question{The simulator provides feedback.}
+
+After a push, the simulator returns new images and a numerical reward. The task's
+reward function defines which behavior is desirable. The learner does not get a
+label saying, ``the correct action was to push left.'' It has to learn which
+actions lead to better outcomes over time.
+
+\takeaway{This is trial-and-error learning with feedback, not imitation of an expert's actions. The simulation supplies experiences as training proceeds.}
+
+\question{Where is the dataset?}
+
+The agent builds it while acting. Each record contains an observation, its
+action, the resulting reward, the next observation and whether the episode
+ended. Old records are kept in a \textbf{replay buffer}: a memory of experience
+that can be sampled repeatedly. Evaluation episodes are kept out of that memory.
+
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{2 / TWO LEARNING SIGNALS}{What is CURL learning from?}
+
+The task reward teaches the controller what to accomplish. CURL adds another
+exercise to help the encoder interpret its pictures. That exercise does not
+require someone to label the images.
+
+\question{A concrete image-matching example}
+
+Take one recorded three-image observation of a pole leaning right. Make two
+slightly different crops of it. Those two views come from the same observation,
+so we know that they should match. Views cropped from other recorded observations
+serve as alternatives. The pictures below are simplified labels, not actual frames.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,
+  box/.style={draw=ink,rounded corners,fill=wash,align=center,text width=4.8cm,minimum height=1.1cm}]
+  \node[box] (q) {Crop A of observation 1\\\small Pole leaning right};
+  \node[box,right=1.4cm of q,yshift=1.5cm] (a) {Crop B of observation 1\\\small The known matching source};
+  \node[box,below=.45cm of a] (b) {A crop of observation 2\\\small Another recorded moment};
+  \node[box,below=.45cm of b] (c) {A crop of observation 3\\\small Another recorded moment};
+  \draw[->,thick,accent] (q.east)--(a.west);
+  \draw[->,gray] (q.east)--(b.west);
+  \draw[->,gray] (q.east)--(c.west);
+\end{tikzpicture}
+\end{center}
+
+The matching target comes from how we constructed the pair. It is not an expert
+action and not the task reward. This is the \textbf{self-supervised} part. The
+method is \textbf{contrastive} because it compares a known match with alternatives.
+Different observations can still look very similar; being a different record
+does not guarantee a meaningfully different physical situation.
+
+\question{What does one loss calculation mean?}
+
+Suppose the model assigns similarity scores 2, 0 and $-1$ to those three
+candidates, with the correct match first. Taking the exponential of each score
+gives positive weights of approximately 7.389, 1 and 0.368. Dividing the matching
+weight by the total gives
+\begin{center}
+Probability of the match = 7.389 / (7.389 + 1 + 0.368)\\
+which is approximately 0.844.
+\end{center}
+The matching loss is the negative natural logarithm of that probability,
+approximately 0.170. If all three scores were equal,
+the probability would be 1/3 and the loss about 1.099. Lower loss means that
+this matching exercise is going better. \textbf{These are invented teaching
+numbers, calculated directly, not training measurements.}
+
+\takeaway{CURL's hope is that learning to recognize related views helps the controller learn from fewer interactions. A lower image-matching loss alone does not prove better control.}
+
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{3 / THE TRAINING LOOP}{How do the weights get updated?}
+
+CURL's control learner is Soft Actor-Critic (SAC). The most useful distinction
+is between choosing actions and estimating their consequences. The
+\textbf{actor} chooses an action. A \textbf{critic} estimates how much future
+reward that action could lead to. The implementation uses two critics to reduce
+reliance on an overly optimistic estimate.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,
+  box/.style={draw=ink,rounded corners,fill=wash,align=center,text width=4.8cm,minimum height=1.25cm}]
+  \node[box] (act) {Observe, choose an action,\\and step the simulator.};
+  \node[box,right=1.1cm of act] (save) {Save that experience\\in replay memory.};
+  \node[box,below=.65cm of save] (batch) {Sample a batch of\\previous experiences.};
+  \node[box,left=1.1cm of batch] (learn) {Update action values,\\the policy, and features.};
+  \draw[->,thick] (act)--(save); \draw[->,thick] (save)--(batch);
+  \draw[->,thick] (batch)--(learn); \draw[->,thick] (learn)--(act);
+\end{tikzpicture}
+\end{center}
+
+\question{What teaches the critic?}
+
+For a saved transition, it compares its previous prediction with the reward
+actually received plus an estimate of what can happen next. In simplified form,
+\begin{center}
+Target = reward now + discounted estimate of future value.
+\end{center}
+The discount factor gives less weight to distant rewards. SAC also includes an
+exploration term and special handling of episode endings; this equation explains
+the idea, not every term of the implementation.
+
+\question{What teaches the actor and encoder?}
+
+The actor is updated toward actions the critics value, while SAC also encourages
+some action diversity. The encoder receives learning signals from predicting
+values and from CURL's image-matching exercise. Related target networks change
+gradually, rather than immediately copying every update. This helps prevent the
+learner's targets from moving too abruptly. Exact parameter sharing and update
+order matter; we preserve the authors' implementation before making changes.
+
+\question{What does the computer do during a run?}
+
+The CPU advances the simulation and manages experience; the GPU performs neural
+network calculations. Training begins with random actions to fill replay memory.
+It then alternates collection with updates. The first protocol uses 1,000 random
+action decisions and batches of 128 replay records. A single GPU is sufficient
+as the planned execution shape; its actual speed and memory use still need a pilot.
+
+\takeaway{One interaction and one gradient update are different things. Replay lets the learner revisit old experience. We must record both the amount of experience and the amount of computation.}
+
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{4 / THE COMPARISON}{How will we know whether it worked?}
+
+There are two questions, and they need different evidence.
+
+\question{First: can we reproduce a published result?}
+
+We start with the authors' CURL implementation on cartpole swing-up. The paper's
+Table 1 reports the following episode returns. The spread is the standard
+deviation across ten separately trained seeds, not a confidence interval.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Training experience & Authors' CURL result & Our result\\
+\midrule
+100,000 simulator steps & 582 (SD 146) & Not measured\\
+500,000 simulator steps & 841 (SD 45) & Not measured\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+We will report any modern software changes and use the published values as
+reference points, not declare success because one lucky run enters that range.
+Our first three-seed comparison is smaller than the authors' ten-seed report.
+
+\question{Second: does the extra matching objective help?}
+
+Compare CURL with the same learner after removing only the contrastive update.
+Keep random image crops in both arms. Otherwise, an apparent benefit could come
+from cropping rather than the extra learning objective. This is our controlled
+ablation, \textbf{not necessarily the paper's ``Pixel SAC'' baseline}.
+
+\question{What do the axes and score mean?}
+
+The future learning plot will put \textbf{training simulator steps} on the
+horizontal axis and \textbf{mean evaluation episode return} on the vertical axis.
+An episode return is the sum of its rewards. At each evaluation we average ten
+episodes without changing the weights. Higher return means better performance
+under this reward function, not a percentage of questions answered correctly.
+We will show each training seed, not only a smoothed average.
+
+\takeaway{The cartpole setting repeats each chosen action eight times. So 12,500 model decisions normally produce 100,000 simulator steps. Evaluation interactions are counted separately.}
+
+We evaluate a separate simulator with fixed seeds and deterministic actions.
+Ten episodes of one trained policy tell us about that policy; they are not ten
+independent training runs. We compare the fixed final checkpoint, not the most
+flattering point on the curve. Time and GPU use are separate measurements:
+learning from less experience need not mean finishing faster.
+
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{5 / WHAT SOURCE REVIEW FOUND}{What could make a run misleading?}
+
+These are concrete implementation findings, not local training results. The
+review uses upstream commit \texttt{8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc}.
+
+\question{A saved model is not necessarily a resumable run.}
+
+The training script's \texttt{--save\_model} path saves CURL's representation
+module. That does not include the full acting policy and learning state. Another
+method saves actor and critic weights, but still omits important state.
+
+For resumption, we also need optimizer history, target networks, the learned
+exploration parameter, replay memory, counters and random-generator states.
+To continue the same trajectory, we need simulator state and recent frames too.
+Restarting at a new episode can be useful, but must not be described as an
+identical continuation. Our CPU test restored the actual upstream agent and
+reproduced its next fixed-batch update exactly, including shared parameters.
+
+\question{Evaluation should not disturb the training world.}
+
+The upstream loop evaluates using the same environment object used for training.
+If evaluation resets that object halfway through a training episode, the stored
+observation can stop matching the simulator's actual state. We use a separate
+evaluation environment and preserved training random state. This is a documented
+adaptation; it is not evidence that this failure occurred in the paper's runs.
+
+\question{The exact optimizer wiring matters.}
+
+Two optimizers in the contrastive update include the same query encoder
+parameters, and both take a step. A clean-room implementation with only one step
+would therefore not automatically match this released code. We should first
+measure that behavior on a fixed batch and preserve it in the reference run.
+Calling it an established bug, or silently ``fixing'' it, would be premature.
+
+\question{A quickstart command is not the paper's protocol.}
+
+The README's example runs one million model decisions. That is not the paper's
+100,000-simulator-step comparison. The old dependencies also need a pinned
+compatibility stack. We must identify changes to rendering, environment behavior
+and learning code instead of assuming that a program which starts is a faithful
+reproduction.
+
+\takeaway{The lesson is not to build a huge testing system before learning anything. It is to check the few details that can change the scientific meaning of the result.}
+
+These findings come from the authors' MIT-licensed implementation.\footnote{\url{https://github.com/MishaLaskin/curl/tree/8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc}}
+The hyperparameters and step terminology are documented in the supplement.\footnote{\url{https://proceedings.mlr.press/v119/laskin20a/laskin20a-supp.pdf}}
+
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{6 / OUR NOTEBOOK}{What happens next, and what can we conclude?}
+
+\question{The next useful sequence}
+
+The short real simulation and update test has passed. We are now running the
+reference, followed by the no-contrastive control, at the fixed 100k
+budget. Repeat both with additional seeds before treating a difference as a
+reliable effect. Extend to 500k only if time and measured throughput permit.
+The second requested GPU can run another seed independently; it is not required
+to begin the first comparison.
+
+\question{How results will change the plan}
+
+If both learners improve similarly, the extra objective may add little on this
+task at this budget. That would not show that self-supervised learning is useless.
+If CURL improves more, we will check repeatability and then another task. If
+neither improves, inspect observations, rewards, actual weight changes and
+evaluation before increasing the budget. A falling auxiliary loss with flat
+return suggests that solving the image exercise is not enough.
+
+After the reference is understood, independently implement the matching loss
+and compare identical inputs, probabilities, gradients and updates. This is how
+we separate understanding the algorithm from merely running its repository.
+
+\question{What has actually been established today?}
+
+\begin{tabular}{p{.48\linewidth}p{.44\linewidth}}
+\toprule
+Item & Status\\
+\midrule
+Paper and core source review & Complete for the first task.\\
+Budget and comparison specified & Yes; modern simulator stack recorded.\\
+GPU training and policy evaluation & Pilot complete; full comparison running.\\
+Checkpoint save/reload verification & CPU next-update test passed.\\
+Evidence that CURL beats the control & None yet; full results pending.\\
+\bottomrule
+\end{tabular}
+
+\question{What will be added to this document?}
+
+Actual learning curves, per-seed endpoint returns, measured runtime, any failed
+attempts, and a short explanation of what each result changes. Every plotted
+point must be traceable to evaluation records and a checkpoint. Missing runs
+will remain missing, not become zero scores. If the result is inconclusive,
+the document will say so.
+
+\takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
+
+\small
+\textbf{Research records.} The configuration and execution handoff are in
+\nolinkurl{experiments/curl_replication_20261004/README.md} and
+\nolinkurl{experiments/curl_replication_20261004/manifest.json}.
+Earlier RLM work is preserved in
+\nolinkurl{docs/RESEARCH_RESUME_2026-10-04.md}.
+\end{frame}
+\end{document}
