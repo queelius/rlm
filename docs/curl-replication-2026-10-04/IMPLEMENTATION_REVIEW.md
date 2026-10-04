@@ -165,3 +165,13 @@ within 37 seconds, followed by finite updates. A read of those actual records
 correctly reports one incomplete recovery, zero terminal scores and 102k abandoned
 training interactions. This verifies the handoff, not a completed experiment.
 We still need to observe a large live checkpoint save with the repaired format.
+
+### Live follow-up at 19:54 UTC
+
+The repaired periodic save completed at 408k: 9,316,517,003 bytes in 23.24 seconds,
+with on-disk size matching its native receipt. Learning continued past 409k without
+a failure. Across the repeated interval after 307k, all 1,024 overlapping logged
+update values, 260 evaluation returns and 102 training returns exactly match the
+failed origin's records. This is a run-specific consistency observation, not a
+proof about unlogged state or arbitrary uninterrupted GPU trajectories. The first
+500k terminal result remains pending.

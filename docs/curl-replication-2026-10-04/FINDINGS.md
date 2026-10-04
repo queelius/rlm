@@ -1,7 +1,7 @@
 ---
 date: 2026-10-04
 cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-04T19:42:00Z
+execution_update_utc: 2026-10-04T19:54:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -14,6 +14,26 @@ Both versions learned in all three completed pairs. CURL finished higher in
 each at the prespecified endpoint. The longer comparison encountered a
 checkpoint-saving defect in our adapter. Learning has resumed from saved state;
 there is no completed 500k comparison yet.
+
+## Recovery check at 19:54 UTC
+
+The repaired run successfully saved its first large live checkpoint at
+**408,000 retained training steps**: 9,316,517,003 bytes, written in 23.24 seconds.
+The file size matches the native receipt, and finite updates and natural episodes
+continued beyond the old 409k failure point. This verifies the repaired save path
+on the real workload; it is not a new final performance score.
+
+The repeated portion of training provides a useful consistency check. All 1,024
+overlapping logged update values, 260 evaluation episode returns and 102 training
+episode returns after the restored 307k boundary exactly match the old branch.
+This is observed agreement for these records on this machine. It does not prove
+that all unlogged state matches or that every future restart will reproduce an
+uninterrupted CUDA run. Repeated interactions still cost real compute and are
+not additional independent evidence. Five other extensions remain queued.
+
+The new review alert itself was the already documented clean control stop,
+not an additional completed scientific result. Continue to the fixed endpoints.
+The learning PDF's completed-results cutoff and figure remain unchanged.
 
 ## Longer training exposed a save-format limit, not a learning result
 
