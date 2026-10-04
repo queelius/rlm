@@ -3,15 +3,16 @@
 Start with [the eight-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
-This is the **three-pairs-completed** edition, with an 18:37 UTC evidence cutoff. It explains the cartpole task,
+This edition includes **three completed 100k pairs and the first 500k CURL result**,
+with a 20:08 UTC evidence cutoff. It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
 446.17 versus 240.54 in the second, and 587.99 versus 463.26 in the third.
 All six models are included in continued training to 500k. The first extension
-hit a save-format limit in our adapter. We repaired it and verified resumed
-learning from the latest intact checkpoint; the other five remain queued.
-The execution update is 19:42 UTC. There is no completed 500k result yet.
-Page 8 shows all six measured curves. Three pairs on one task are encouraging
+hit a save-format limit in our adapter. After repair it completed at **842.74**,
+up from 678.02 at 100k, with the extra recovery cost recorded. Its matched control
+is running and the four other extensions remain queued. There is no completed
+500k pair yet. Page 8 shows all six measured 100k curves. Three pairs on one task are encouraging
 but limited evidence. The
 published scores and invented teaching examples are identified explicitly.
 
@@ -55,18 +56,20 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 4, 2026,
-at approximately 19:43 UTC. The eight-page edition was rebuilt after the recovery
-update. Pages 1, 4, 5, 6, 7 and 8 were visually inspected; unchanged pages retain
+at approximately 20:12 UTC. The eight-page edition was rebuilt after the first
+500k result. Changed pages 1, 5, 7 and 8 were visually inspected; unchanged pages retain
 their earlier inspection. The build reports no overfull
 boxes, and extracted text stays within every page boundary. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`f5229c4fe38ae6baf4af64c19e053154f6bb3b59887ffe420d91baaeefdb0aca`.
+`8ebd5a04f3ddddac072375f15c12301b18058ef818c655e14700ef1bcf082222`.
 The runtime checks include real simulator behavior, CPU checkpoint restoration,
 and a completed GPU pilot. Three full matched pairs also completed, but this is
 still a small exploratory comparison, not a reproduction of the paper's mean.
+The first 500k CURL endpoint also passed native terminal and ancestry checks;
+its matched control has not finished, and recovery cost is reported separately.
 
 ## Evidence and next comparisons
 
@@ -82,6 +85,9 @@ still a small exploratory comparison, not a reproduction of the paper's mean.
   [its matched control](data/third-control): both complete at the fixed endpoint.
 - [Machine-readable three-pair summary](data/three-pairs-summary.json): the
   complete original cohort, with individual curves and paired differences.
+- [First completed 500k CURL run](extension-data/recovered-curl-seed123) and
+  [dated continuation summary](extension-data/first-500k-summary.json): one
+  trained model, not yet a paired 500k comparison. Extra recovery cost is explicit.
 - [Failed longer-run records](extension-data/failed-seed123) and
   [cleanly stopped control](extension-data/stopped-control-seed123): preserved
   execution evidence, not completed 500k scores. The [recovery plan](RECOVERY_PLAN.md)

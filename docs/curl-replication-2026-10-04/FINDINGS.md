@@ -1,19 +1,61 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-04T19:54:00Z
+cutoff_utc: 2026-10-04T20:08:00Z
+original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
+execution_update_utc: 2026-10-04T20:08:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
+continuation_endpoint: 500000_retained_training_simulator_steps
 external_runs: /project/alex_phd/runs/curl-replication-20261004
 ---
 
 # What we have learned so far
 
-Both versions learned in all three completed pairs. CURL finished higher in
-each at the prespecified endpoint. The longer comparison encountered a
-checkpoint-saving defect in our adapter. Learning has resumed from saved state;
-there is no completed 500k comparison yet.
+Both versions learned in all three completed 100k pairs. CURL finished higher in
+each at that prespecified endpoint. The first longer CURL run has now completed
+at 500k after technical recovery, scoring **842.74**. Its matched control is still
+training, so there is no completed 500k comparison yet.
+
+## First 500k result at 20:08 UTC: a higher score, not yet a comparison
+
+The first CURL model scored **842.7436** at the fixed final checkpoint, compared
+with **678.0208** at 100k: a gain of **164.7227** reward points for the same
+training seed. The score averages ten fixed evaluation episodes on cartpole
+swing-up. Those episodes are not ten separately trained models. The final
+reward was not chosen from the best checkpoint; the last five measured means
+were 843.62, 832.22, 847.59, 847.46 and 842.74.
+
+**Interpretation:** this model learned a stronger controller with longer
+training. It does not yet show that image matching remains beneficial compared
+with the same-crops control. That control is now running and had already learned
+substantially before its planned technical stop. Nor does one score close to a
+published average reproduce the paper's multi-seed result on its original stack.
+Continue the prespecified paired endpoints rather than declaring success early.
+
+**Native completion checks:** 62,500 decisions, 500,000 retained training steps,
+61,500 update calls, all ten expected evaluation seeds, a natural final episode,
+no failure and all 1,928 logged update values finite in the repaired invocation.
+The final checkpoint is 11,386,654,987 bytes, matching its receipt; its write took
+29.68 seconds. The owner reports exit 0 and complete=true. Full original ancestry
+and recovery metadata pass the continuation analysis.
+
+**Cost:** this one chain used 602,000 physical training interactions because
+102,000 had to be repeated after the saving failure. Its three invocations also
+performed 1,530,000 actual evaluation interactions (260k + 770k + 500k), none used
+for learning. The restored counter ends at 1,270,000 evaluation interactions;
+that counter omits the abandoned branch, so it is not the physical total.
+No equal-physical-budget claim is justified by the repaired comparison.
+
+**Next:** finish its matched control, then the remaining two pairs, all already
+queued. The control resumed at 198k, produced real update metrics within
+18 seconds of launch and reached 203k with a checked ten-episode evaluation.
+No extra GPU owner or new training variant was started. See the
+[completed recovery records](extension-data/recovered-curl-seed123) and the
+[dated continuation summary](extension-data/first-500k-summary.json).
+The guide now shows this single completed endpoint explicitly while retaining
+the three-pair 100k figure. A paired 500k plot will be more informative once both
+versions have finished; no unpaired line is presented as comparative evidence.
 
 ## Recovery check at 19:54 UTC
 
@@ -35,7 +77,7 @@ The new review alert itself was the already documented clean control stop,
 not an additional completed scientific result. Continue to the fixed endpoints.
 The learning PDF's completed-results cutoff and figure remain unchanged.
 
-## Longer training exposed a save-format limit, not a learning result
+## Earlier recovery decision at 19:42: a save-format limit, not a learning result
 
 The first CURL extension reached **409,000 training steps**, then failed while
 saving its replay memory. Our checkpoint adapter relied on a serialization

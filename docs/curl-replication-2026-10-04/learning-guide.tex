@@ -43,12 +43,12 @@ After 100,000 simulator steps, the scores were 678 versus 454 in the first pair,
 446 versus 241 in the second, and 588 versus 463 in the third, favoring CURL.
 Three pairs give an encouraging
 signal, not a firm conclusion or a reproduction of the paper's average.
-Completed-results cutoff: 4 October, 18:37 UTC.
+The three 100,000-step pairs were complete at 18:37 UTC.
 
-Longer training is running again after a checkpoint-saving problem in our
-adapter. The earlier saved state survived. We repaired the format and verified
-that learning resumed. No 500,000-step result is complete yet.
-Execution update: 19:42 UTC; pages 6--7 explain the recovery and its extra cost.
+The first CURL model has now reached 500,000 steps and scored \textbf{843},
+up from 678 at 100,000 steps. Its matched control is still training, so we do
+not yet know whether CURL's advantage lasts. A checkpoint-saving problem was
+repaired; pages 6--7 explain the extra cost. Latest evidence: 20:08 UTC.
 
 \question{Why this paper?}
 
@@ -257,7 +257,7 @@ deviation across ten separately trained seeds, not a confidence interval.
 Training experience & Authors' CURL result & Our CURL result\\
 \midrule
 100,000 simulator steps & 582 (SD 146) & 571 (SD 117; 3 seeds)\\
-500,000 simulator steps & 841 (SD 45) & Not complete\\
+500,000 simulator steps & 841 (SD 45) & 843 (1 seed only)\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -265,6 +265,8 @@ Training experience & Authors' CURL result & Our CURL result\\
 We will report any modern software changes and use the published values as
 reference points, not declare success because one lucky run enters that range.
 Our first three-seed comparison is smaller than the authors' ten-seed report.
+The single 500,000-step result followed recovery and used extra physical
+interactions; it is not a ten-seed mean or an equal-cost comparison.
 
 \question{Second: does the extra matching objective help?}
 
@@ -359,10 +361,10 @@ training. Every original model is included, regardless of its score. Resuming
 a model does not create another independent training run.
 
 The first extension stopped at 409,000 steps because saving failed. Its latest
-intact state was at 307,000, and learning has resumed there. The lost branch
-still cost 102,000 interactions. Reaching 500,000 again will therefore cost
-602,000 physical training interactions in total. We will report that extra
-cost and keep the abandoned measurements separate from the resumed curve.
+intact state was at 307,000. After recovery it reached 500,000 and scored 843.
+The repeated branch still cost 102,000 interactions: this model used 602,000
+physical training interactions in total. We keep those costs and the abandoned
+measurements separate from the model's retained training history.
 
 \question{How results will change the plan}
 
@@ -384,7 +386,7 @@ Item & Status\\
 \midrule
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
-GPU training and policy evaluation & Three pairs complete; extensions running.\\
+GPU training and policy evaluation & Three 100k pairs; one 500k run complete.\\
 Checkpoint save/reload verification & Next-update and large-array tests passed.\\
 Evidence that CURL beats the control & Three favorable endpoints on one task.\\
 \bottomrule
@@ -394,7 +396,8 @@ Evidence that CURL beats the control & Three favorable endpoints on one task.\\
 
 We will show fixed final scores and curves for each training seed, with failures
 and recovery costs stated separately. Missing results will remain missing,
-not become zero scores. There is no completed 500,000-step result yet.
+not become zero scores. One CURL model has finished at 500,000 steps; its control
+is still running. Their comparison is not ready yet.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
@@ -438,8 +441,8 @@ Each training/evaluation loop took about 13--14.4 minutes, plus 11--12 seconds
 to save its checkpoint. Setup was extra. This matches training interactions,
 not computing time: CURL performs an extra learning update.
 
-Now running: extend all three pairs to 500,000 steps. Does the advantage last,
-shrink, or reverse with more training? There is no completed 500k result yet.
+At 500,000 steps, CURL scored 843 in one run. Its control is still training,
+so we cannot yet compare their final scores.
 
 \small
 \textbf{Evidence.} Native records: the six run folders in \texttt{data/}.
