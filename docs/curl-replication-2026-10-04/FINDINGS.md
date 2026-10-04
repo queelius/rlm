@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T20:08:00Z
+cutoff_utc: 2026-10-04T20:50:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-04T20:08:00Z
+execution_update_utc: 2026-10-04T20:50:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -12,12 +12,59 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 
 # What we have learned so far
 
-Both versions learned in all three completed 100k pairs. CURL finished higher in
-each at that prespecified endpoint. The first longer CURL run has now completed
-at 500k after technical recovery, scoring **842.74**. Its matched control is still
-training, so there is no completed 500k comparison yet.
+Both versions learned in all three completed 100k pairs, where CURL finished
+higher. **The first completed 500k pair reverses that ordering:** CURL scored
+842.74 and its same-crops control scored 866.94. The other two longer pairs
+remain incomplete. This shows why the training horizon matters, not that either
+method is generally superior.
 
-## First 500k result at 20:08 UTC: a higher score, not yet a comparison
+## First longer pair at 20:50 UTC: an early lead does not guarantee a later lead
+
+| Retained training steps | CURL | Same crops, no image matching | CURL minus control |
+| --- | ---: | ---: | ---: |
+| 100,000 | 678.02 | 454.47 | +223.55 |
+| 500,000 | 842.74 | 866.94 | -24.20 |
+
+Both rows follow the same training seed, not independent repetitions. Each score
+averages ten fixed evaluation starts. The 500k scores are the planned terminal
+policies, not the best points along the curves. Neither failed attempts nor
+the diagnostic pilot contribute scores. See the [paired summary](extension-data/first-500k-pair-summary.json),
+[completed control records](extension-data/recovered-control-seed123), and
+[paired curve](figures/first-500k-pair.pdf).
+
+**What changed:** the early difference in this pair did not persist. That is
+consistent with an early-learning benefit, followed by the control catching up.
+It is not proof that the extra objective caused late harm, nor that the methods
+are equivalent or that the control usually wins. A single training seed cannot
+establish the size or consistency of this late difference. The other two seeds
+and another task could change the interpretation.
+
+**Checks:** the control ended naturally at 62,500 decisions / 500,000 retained
+training steps / 61,500 update calls, with all ten expected evaluation seeds and
+mean return 866.9394162304535. Its 2,639 logged update values in this invocation
+are finite; no failure appears. The final checkpoint is 11,354,767,581 bytes,
+matching its receipt, with a 30.45-second write. Exit was 0 and complete=true.
+The last five evaluation means were 854.99, 853.15, 874.71, 860.42 and 866.94.
+Both chains pass the same configuration/ancestry and endpoint checks.
+
+**Costs and scope:** CURL used 602k physical training interactions after repeating
+102k lost-state work; the control used 500k. Both retain a 500k-step history.
+Their physical evaluation totals are 1.53m and 1.27m interactions, respectively,
+separate from learning. This is not an equal-physical-cost efficiency comparison.
+The chart excludes the abandoned branch and any unfinished training seed.
+
+**Decision:** finish the remaining two prespecified pairs. CURL seed 456 has
+already resumed from 100k under the same owner and produced real updates within
+12 seconds, then finite learning and checked evaluation through 108k. Its control
+and both seed-789 extensions remain queued. No live source was changed.
+
+The learning guide gains one page showing both curves and the limits above.
+The original 100k result is preserved, now clearly labeled as early performance.
+This is a useful reproduction lesson, not a novel general result. Any experiment
+about *when* to stop the extra matching objective must be declared as a new
+comparison, not inferred from this changing ordering alone.
+
+## Earlier 500k result at 20:08 UTC: a higher score, not yet a comparison
 
 The first CURL model scored **842.7436** at the fixed final checkpoint, compared
 with **678.0208** at 100k: a gain of **164.7227** reward points for the same

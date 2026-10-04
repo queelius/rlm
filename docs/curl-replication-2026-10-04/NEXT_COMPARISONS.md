@@ -1,10 +1,64 @@
 ---
 date: 2026-10-04
-status: three_pairs_complete_500k_technical_recovery_running
+status: three_100k_pairs_and_one_reversed_500k_pair_complete
 priority: replication_before_mechanism
 ---
 
 # What the next comparisons would establish
+
+## Current decision after the first longer pair, 20:50 UTC
+
+For seed 123, CURL led 678.02 versus 454.47 at 100k, but finished 842.74 versus
+866.94 at 500k. The other two longer pairs are still being run. Finish them
+before treating this reversal as a repeatable pattern. The first pair has extra
+CURL recovery cost, so it cannot establish efficiency at equal physical cost.
+
+If the reversal repeats, the most direct next question is **whether continuing
+the image-matching exercise helps or hurts a model that already learned with it**.
+This is different from asking whether the no-matching learner eventually catches up.
+
+1. **Fork the same saved 100k CURL state into two declared training branches.**
+   One keeps the image-matching update; the other disables it after 100k. Restore
+   the same policy, critic, targets, replay, optimizers and random state. Keep
+   random crops, positive-crop sampling and the RL encoder update. Compare fixed
+   500k scores and a declared curve summary; do not choose the best checkpoint.
+   If disabling matching wins repeatedly, continuing that whole extra update has
+   negative incremental value in this setting. A tie while the scratch control
+   catches up favors a history/catch-up explanation, but does not prove no harm.
+   Removing matching also removes optimizer work: this is not a pure test of
+   correspondence information. Preserve the reference's two encoder optimizer
+   steps in the on branch. Approximate budget: two A100-hours per matched fork
+   pair, six hours for three prespecified parents. These are planning estimates.
+
+2. **Use a small gradient diagnostic only to help explain that comparison.**
+   On prespecified saved experience batches, compare the directions and sizes
+   of the RL and image-matching gradients, without updating weights. Opposing
+   directions would motivate a conflict hypothesis, not prove poor control.
+   Adam history and overlapping optimizers complicate the link. Expected cost:
+   minutes after checkpoint loading, no new training interactions. It should
+   not replace the actual on/off training comparison.
+
+3. **A second task answers a different question: does the early pattern transfer?**
+   A matched walker/walk pair at 100k, action repeat 2 and 50,000 decisions, would
+   test scope beyond cartpole. Freeze the task-specific paper settings first.
+   Budget roughly two to three A100-hours per pair, then measure and replicate.
+   This cannot by itself explain why the first cartpole ordering reversed.
+
+These are conditional proposals, not launches or novelty claims. The
+[pinned implementation](https://github.com/MishaLaskin/curl/blob/8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc/curl_sac.py#L421)
+defines the preserved update, the [paper](https://proceedings.mlr.press/v119/laskin20a/laskin20a.pdf)
+describes shared representation learning, and the
+[supplement](https://proceedings.mlr.press/v119/laskin20a/laskin20a-supp.pdf)
+supplies task-specific settings. Augmentation-only prior work is discussed below.
+
+The current resume validator rejects changing an arm's scientific configuration.
+Any switch-off study must explicitly record a new schedule intervention and its
+ancestry; do not relabel a CURL checkpoint as a scratch no-CURL run or weaken
+the current continuation checks. Both fork branches come from one training seed,
+not two independent seeds. The clean new on/off pair avoids making the recovered
+seed-123 continuation the sole mechanistic reference.
+
+## Earlier plan and source context
 
 The prespecified three-seed CURL/no-CPC comparison is complete. All three pairs
 favor CURL at 100k. The 500k continuation queue launched at 18:36:58 UTC; other
