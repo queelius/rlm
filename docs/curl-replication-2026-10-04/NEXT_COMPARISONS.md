@@ -1,13 +1,15 @@
 ---
 date: 2026-10-04
-status: proposed_followups_not_launched
+status: three_pairs_complete_500k_continuations_launched
 priority: replication_before_mechanism
 ---
 
 # What the next comparisons would establish
 
-Finish the prespecified three-seed CURL/no-CPC comparison before choosing another
-arm. These are replication and interpretation checks, not novelty claims.
+The prespecified three-seed CURL/no-CPC comparison is complete. All three pairs
+favor CURL at 100k. The 500k continuation queue launched at 18:36:58 UTC; other
+comparisons below remain proposals. These are replication and interpretation
+checks, not novelty claims.
 
 The [CURL paper](https://proceedings.mlr.press/v119/laskin20a/laskin20a.pdf)
 combines random crops, instance contrastive learning and SAC, and benchmarks the
@@ -16,6 +18,13 @@ seeds; our three seeds can establish a local pattern, not reproduce that precisi
 or the full benchmark claim. The [supplement](https://proceedings.mlr.press/v119/laskin20a/laskin20a-supp.pdf)
 also makes task-specific action repeats explicit. One task cannot establish
 general representation quality or transfer.
+
+The paper's Table 1 reports cartpole CURL at **582 ± 146 after 100k steps**
+and **841 ± 45 after 500k steps** (mean and standard deviation across ten
+training seeds). This motivates checking the later endpoint: the early score
+is not the method's final level of performance. These published numbers are
+context, not pass/fail thresholds for our three-seed modern-stack comparison.
+The paper's Pixel SAC baseline is not our same-crops control.
 
 The augmentation-only question already has substantial precedent.
 [RAD, especially §I](https://arxiv.org/pdf/2004.14990), trains the RL objective

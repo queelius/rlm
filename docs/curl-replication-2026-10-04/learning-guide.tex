@@ -35,15 +35,16 @@
 \question{Where are we now?}
 
 We have selected the paper, checked its implementation, and completed a short
-GPU training test. \textbf{CURL finished higher in both completed comparisons.}
+GPU training test. \textbf{CURL finished higher in all three comparisons.}
 This edition explains the method and the plan. The worked numbers are
 explicitly labeled illustrations; the published scores belong to the authors.
-Page 8 shows two completed pairs. A third pair is still running.
+Page 8 shows all three completed pairs. Longer training is now running.
 
 After 100,000 simulator steps, the scores were 678 versus 454 in the first pair,
-and 446 versus 241 in the second, favoring CURL. Two pairs give an encouraging
+446 versus 241 in the second, and 588 versus 463 in the third, favoring CURL.
+Three pairs give an encouraging
 signal, not a firm conclusion or a reproduction of the paper's average.
-Evidence cutoff: 4 October, 18:15 UTC.
+Evidence cutoff: 4 October, 18:37 UTC.
 
 \question{Why this paper?}
 
@@ -341,20 +342,19 @@ The hyperparameters and step terminology are documented in the supplement.\footn
 
 \question{The next useful sequence}
 
-The short test and two reference/control pairs have completed at the fixed
-100,000-step budget. Finish the third pair, then continue both versions from
-their saved states to 500,000 steps. This asks whether the early advantage
-lasts with more training. We have time for that comparison on one GPU, subject
-to checking the remaining runs and their checkpoints.
+The short test and all three reference/control pairs have completed at the
+fixed 100,000-step budget. We are now continuing both versions from their saved
+states to 500,000 steps. This asks whether the early advantage lasts with more
+training. Every original model is included, regardless of its score. Resuming
+a model does not create another independent training run.
 
 \question{How results will change the plan}
 
-If both learners improve similarly, the extra objective may add little on this
-task at this budget. That would not show that self-supervised learning is useless.
-If CURL improves more, we will check repeatability and then another task. If
-neither improves, inspect observations, rewards, actual weight changes and
-evaluation before increasing the budget. A falling auxiliary loss with flat
-return suggests that solving the image exercise is not enough.
+If the control catches up, the extra objective may mainly help early learning.
+If CURL keeps its lead, we will test whether the effect extends to another task.
+If the ordering reverses, we must revise the story: better early performance
+does not guarantee better later performance. A falling image-matching loss with
+flat reward would also remind us that solving the image exercise is not enough.
 
 Our independent small NumPy calculation matches the released Torch loss and
 gradients to numerical precision. That checks the calculation, not its usefulness
@@ -368,9 +368,9 @@ Item & Status\\
 \midrule
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
-GPU training and policy evaluation & Two pairs complete; third pair running.\\
+GPU training and policy evaluation & Three pairs complete; extensions running.\\
 Checkpoint save/reload verification & CPU next-update test passed.\\
-Evidence that CURL beats the control & Two favorable endpoints; limited evidence.\\
+Evidence that CURL beats the control & Three favorable endpoints on one task.\\
 \bottomrule
 \end{tabular}
 
@@ -393,29 +393,30 @@ Earlier RLM work is preserved in
 \end{frame}
 \begin{frame}[t]
 \vspace*{0.55in}
-\chapterpage{7 / TWO PAIRED RESULTS}{CURL finished higher in both comparisons.}
+\chapterpage{7 / THREE PAIRED RESULTS}{CURL finished higher in all three comparisons.}
 
 At the fixed 100,000-step endpoint, CURL scored \textbf{678 versus 454} in the
-first pair and \textbf{446 versus 241} in the second. Its control uses the same
+first pair, \textbf{446 versus 241} in the second, and \textbf{588 versus 463}
+in the third. Its control uses the same
 random crops but no image-matching update. Higher reward means better swinging
 and balancing, not a percentage of successful episodes.
 
 \begin{center}
-\includegraphics[width=.90\linewidth]{figures/two-pairs.pdf}
+\includegraphics[width=.90\linewidth]{figures/three-pairs.pdf}
 \end{center}
 
 Solid lines are CURL; dashed lines are the control. Each color is a separate
 training seed, which changes initialization and training randomness. Every
-point averages ten fixed evaluation starts. There are \textbf{two trained models
-per version}, not twenty independent training runs.
+point averages ten fixed evaluation starts. There are \textbf{three trained models
+per version}, not thirty independent training runs.
 
 \question{What can we conclude so far?}
 
-Both endpoint comparisons favor CURL, by about 206--224 reward points. That is
-encouraging, but only two seeds have finished. The first pair traded places
-during training; CURL led for more of the second run. We report the endpoint
-chosen before training, not each curve's best point. The control also learned,
-so image matching is helpful in these comparisons, not required for learning.
+The average endpoint is \textbf{571 for CURL versus 386 for the control}.
+All three paired differences favor CURL, but the curves sometimes trade places.
+We report the endpoint chosen before training, not each curve's best point.
+The control also learned: image matching was helpful here, not necessary for
+learning. Three seeds on one task do not establish a general advantage.
 
 \question{What did it cost, and what happens next?}
 
@@ -423,12 +424,12 @@ Each training/evaluation loop took about 13--14.4 minutes, plus 11--12 seconds
 to save its checkpoint. Setup was extra. This matches training interactions,
 not computing time: CURL performs an extra learning update.
 
-Next: finish the third pair, then extend all three pairs to 500,000 steps.
-Does the advantage last, shrink, or reverse with more training?
+Now running: extend all three pairs to 500,000 steps. Does the advantage last,
+shrink, or reverse with more training? There is no completed 500k result yet.
 
 \small
-\textbf{Evidence.} Native records: the four run folders in \texttt{data/}.
-Task: DeepMind Control Suite \texttt{cartpole/swingup}; training seeds 123 and 456;
+\textbf{Evidence.} Native records: the six run folders in \texttt{data/}.
+Task: DeepMind Control Suite \texttt{cartpole/swingup}; training seeds 123, 456, 789;
 evaluation seeds 10000--10009. Modern simulator compatibility adaptation.
 \end{frame}
 \end{document}

@@ -3,11 +3,13 @@
 Start with [the eight-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
-This is the **two-pairs-completed** edition, with an 18:15 UTC evidence cutoff. It explains the cartpole task,
+This is the **three-pairs-completed** edition, with an 18:37 UTC evidence cutoff. It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
-and 446.17 versus 240.54 in the second. The third pair is running. Page 8 shows
-all four measured curves. Two pairs are encouraging but limited evidence. The
+446.17 versus 240.54 in the second, and 587.99 versus 463.26 in the third.
+All six models are queued for continued training to 500k; the first is running.
+Page 8 shows all six measured curves. Three pairs on one task are encouraging
+but limited evidence. The
 published scores and invented teaching examples are identified explicitly.
 
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
@@ -50,17 +52,17 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 4, 2026,
-at approximately 18:18 UTC. All seven original letter-sized pages were inspected;
+at approximately 18:40 UTC. All seven original letter-sized pages were inspected;
 the changed first, seventh and eighth pages were visually checked again at
-18:18 UTC. The build reports no overfull
+18:40 UTC. The build reports no overfull
 boxes, and extracted text stays within every page boundary. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`deb6ac18f847cec0ad7140771506fa90da040cb06ca33c937c87a25670cdc929`.
+`3011cdd7f7ecf10cfa8a32b6b73f1dddbb90fc199cc5bd240c4e612f3e853b52`.
 The runtime checks include real simulator behavior, CPU checkpoint restoration,
-and a completed GPU pilot. Two full matched pairs also completed, but this is
+and a completed GPU pilot. Three full matched pairs also completed, but this is
 still a small exploratory comparison, not a reproduction of the paper's mean.
 
 ## Evidence and next comparisons
@@ -73,6 +75,10 @@ still a small exploratory comparison, not a reproduction of the paper's mean.
   another completed training run with the same scientific settings.
 - [Second matched control's native records and configuration](data/second-control):
   completes the second pair, without selecting a favorable checkpoint.
+- [Third CURL seed's native records and configuration](data/third-reference) and
+  [its matched control](data/third-control): both complete at the fixed endpoint.
+- [Machine-readable three-pair summary](data/three-pairs-summary.json): the
+  complete original cohort, with individual curves and paired differences.
 - [Actual pilot input images](figures/pilot-observations.png): first, middle and
   last stored observations, each containing three frames. Top row: raw frames;
   bottom row: center crops used during evaluation. They were not selected for

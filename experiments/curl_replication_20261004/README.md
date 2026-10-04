@@ -1,10 +1,10 @@
 ---
 date: 2026-10-04
-status: two_pairs_completed_third_pair_running
+status: three_pairs_completed_500k_continuations_running
 question: Can we reproduce one published CURL learning result and isolate the contribution of its contrastive objective?
 stage: first_reference_and_control
 completed_pilots: 1
-completed_primary_runs: 4
+completed_primary_runs: 6
 primary_hardware: one_A100_40GB
 ---
 
@@ -20,7 +20,7 @@ Read the [learning guide PDF](../../docs/curl-replication-2026-10-04/learning-gu
 first; its source and build instructions are adjacent. The old research is preserved in
 [the RLM checkpoint](../../docs/RESEARCH_RESUME_2026-10-04.md).
 
-## Actual progress at 18:15 UTC
+## Actual progress at 18:37 UTC
 
 Execution access is restored. A real GPU pilot completed 1,200 decisions,
 9,600 training simulator steps, 200 updates, and six evaluation episodes in
@@ -31,7 +31,10 @@ its ten-episode mean return from 8.44 to 678.02. One trained seed does not estab
 the published average or a reliable CURL advantage. The control completed at
 454.47. The second pair completed at 446.17 for CURL versus 240.54 for its
 control. Both paired endpoint differences favor CURL, by 223.55 and 205.63.
-Two pairs remain limited evidence; finish the third pair and inspect all curves.
+The third pair finished at 587.99 versus 463.26, a difference of 124.74. All
+three pairs favor CURL at 100k, with means of 570.73 versus 386.09. This remains
+limited to one task, three training seeds and the matched modern-stack protocol.
+All six models are now queued to continue to 500k; the first is running.
 
 The reference and control use the official agent unchanged, with our thin
 simulator, evaluation and checkpoint adapters. The runtime is Python 3.12.12,
@@ -215,15 +218,24 @@ For a 100k-to-500k continuation, use `steps=62500`, `env_steps=500000`, and the
 matching parent's `run/latest.pt`. Parent configuration, natural terminal
 boundary and source hashes are checked before GPU ownership. The checkpoint is
 stream-hashed once and its provenance is retained in `job.json`; its file
-identity is checked again before launch. This is preparation support, not a
-claim that the extension batch has already run.
+identity is checked again before launch. This support is now in use by the
+500k queue, launched at 18:36:58 UTC after all six parents were validated.
 
 The observer accepts `additional_campaign_roots` for such sibling outputs. Its
 quota, exact-session delivery and acknowledgment rules are unchanged. Deploy
 these changes as new snapshots; never edit a live queue or observer's source.
 
-The serial queue is running in tmux `curl-20261004-queue`; its external config
-is `QUEUE.json` in the artifact root. Inspect `queue.jsonl` and per-run native
+Use `summarize_continuations.py --runs /project/alex_phd/runs/curl-replication-20261004-500k
+--output ANALYSIS_DIRECTORY` for the extension, not the original summarizer.
+JSON and Markdown use the standard library; `--plot` additionally needs
+Matplotlib. This checks explicit parent provenance, joins each chain without
+duplicating its 100k endpoint, and admits only complete fixed 500k results.
+Missing or failed attempts remain visible without contributing a score.
+
+The original serial queue finished all six runs. Its continuation owner is
+running in tmux `curl-20261004-500k-queue`; its external `QUEUE.json` is in
+`/project/alex_phd/runs/curl-replication-20261004-500k`. It shares the original
+campaign's GPU lock. Inspect `queue.jsonl` and per-run native
 metrics, not just process presence. Create `STOP` in that root to ask its owner
 to finish/checkpoint the current episode and stop. Do not edit its sealed code.
 

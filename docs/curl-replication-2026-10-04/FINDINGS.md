@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T18:15:00Z
+cutoff_utc: 2026-10-04T18:37:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -9,10 +9,64 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 
 # What we have learned so far
 
-Both versions learned in two completed pairs. CURL finished higher in both at
-the prespecified endpoint. The third pair is still running.
+Both versions learned in all three completed pairs. CURL finished higher in
+each at the prespecified endpoint. All six saved models are now queued for
+continued training to 500k steps; the first continuation is running.
 
-## Two matched pairs now favor CURL at the fixed endpoint
+## All three original pairs are complete
+
+| Training seed | CURL | Same crops, no image matching | Paired difference |
+|---|---:|---:|---:|
+| 123 | 678.02 | 454.47 | +223.55 |
+| 456 | 446.17 | 240.54 | +205.63 |
+| 789 | 587.99 | 463.26 | +124.74 |
+| Mean across three training seeds | 570.73 | 386.09 | +184.64 |
+
+The standard deviations across trained seeds are 116.89 for CURL and 126.13
+for the control. They describe variation between training runs, not uncertainty
+from treating the ten evaluation episodes as independent trained models. The
+[summary](data/three-pairs-summary.json) and all six native run directories
+provide the numbers behind the figure. No completed run was excluded.
+
+**What changed:** the third, prespecified comparison also favors CURL, though
+its advantage is smaller. The direction repeated across all three training
+seeds. This supports a local benefit from the additional image-matching update
+at 100k interactions. It does not demonstrate a consistently higher curve,
+general usefulness across tasks, or a novel method. Our mean is near the paper's
+published 582, but agreement on one task with three seeds and a modern simulator
+is not a reproduction of the paper's ten-seed benchmark.
+
+**Competing explanations and limits:** the extra update changes both the
+learning objective and optimization work. We have not isolated correct image
+correspondence from all other effects of that update. Learning curves fluctuate,
+and longer training may let the control catch up. The same ten evaluation
+starts were reused throughout: this makes comparisons stable, but does not
+establish performance on a broad range of new starting conditions.
+
+**Native checks:** all six runs have exact terminal counters of 12,500 decisions,
+100,000 training simulator steps and 11,500 update calls; all ten terminal
+evaluation seeds are present. Logged updates are finite, no failure events
+appear, and final checkpoints match their byte-count receipts at natural episode
+boundaries. Each run also used 260,000 evaluation simulator steps, kept out of
+training. The third control's loop took 792.07 seconds and its checkpoint write
+took 11.48 seconds; the third CURL loop took 853.63 seconds plus 11.62 seconds
+for its checkpoint.
+
+**Decision:** continue all six models to the previously proposed 500k endpoint.
+The owner launched at 18:36:58 UTC after every original result was checked.
+Each continuation retains its original seed, replay, optimizers and counters;
+each parent/child chain is one replicate. Original checkpoints remain intact.
+The question is whether the early advantage lasts, shrinks or reverses. These
+are documented resumed runs, not a claim of bit-for-bit identity to uninterrupted
+GPU training. There are no completed 500k scores at this cutoff.
+
+**Publication/teaching impact:** the eight-page guide now shows all three pairs,
+the precise score definition and the longer-training question. This is useful
+replication evidence and a worked learning example, not a publication novelty
+claim. Finish the horizon comparison before choosing the next mechanism probe
+or a second task.
+
+## Earlier checkpoint at 18:15: two matched pairs
 
 The second matched control completed with a score of **240.54**, versus
 **446.17** for CURL, a difference of **205.63** reward points. The first pair's

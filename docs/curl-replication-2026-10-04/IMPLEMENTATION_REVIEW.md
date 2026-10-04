@@ -109,3 +109,30 @@ found no blocking scientific or process-ownership defect. Payload restoration
 remains the driver's responsibility; this is not a new claim of bit-exact
 uninterrupted GPU training. The 500k analysis is separate work, not supplied by
 these queue changes.
+
+## Follow-up: separate continuation analysis and live resumption
+
+`summarize_continuations.py` is separate from the unchanged 100k summarizer.
+It authenticates the original configuration and native terminal records against
+the queue's parent receipt, checks the small configuration checksum and saved
+checkpoint identity, and joins the parent curve to the child exactly once.
+It does not repeatedly read or hash multi-gigabyte weights. One parent/child
+chain counts as one training seed. The 500k endpoint requires exact cumulative
+decision/interaction/update counters, ten distinct evaluation starts and a
+successful queue receipt. Duplicate child attempts are retained but cannot
+contribute a selected endpoint. Missing and failed runs never become zero scores.
+
+Thirteen focused tests passed, along with Ruff checks and formatting. Independent
+source review found no blocking issue and checked the real first continuation's
+receipt, configuration and resume schema. The final small additions preserve
+the verified parent curve before child startup and preserve measured points
+from partially written child logs without admitting a terminal score. Their
+focused tests also passed; the root reviewer inspected the final implementation.
+JSON and Markdown reporting require only the standard library; plots are optional.
+
+A real read of the active 500k directory correctly reports one incomplete chain
+and zero scored chains. GPU resumption also worked: the first child restored
+decision 12,500 and produced finite update metrics, natural training episodes
+and a ten-episode evaluation at 104,000 steps (mean reward 679.7581). This is a
+live execution check, not evidence of a completed 500k comparison or bit-exact
+identity to uninterrupted training. No sealed training source was edited.

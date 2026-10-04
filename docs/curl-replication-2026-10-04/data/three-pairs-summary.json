@@ -1,0 +1,1446 @@
+{
+  "target_env_steps": 100000,
+  "runs_root": "/project/alex_phd/repos/rlm/.worktrees/curl-replication-20261004/docs/curl-replication-2026-10-04/data",
+  "runs": [
+    {
+      "path": "/project/alex_phd/repos/rlm/.worktrees/curl-replication-20261004/docs/curl-replication-2026-10-04/data/first-control",
+      "segment": 0,
+      "arm": "no_curl",
+      "seed": 123,
+      "config": {
+        "domain_name": "cartpole",
+        "task_name": "swingup",
+        "agent": "curl_sac",
+        "encoder_type": "pixel",
+        "pre_transform_image_size": 100,
+        "image_size": 84,
+        "frame_stack": 3,
+        "action_repeat": 8,
+        "replay_buffer_capacity": 100000,
+        "init_steps": 1000,
+        "num_train_steps": 12500,
+        "batch_size": 128,
+        "hidden_dim": 1024,
+        "encoder_feature_dim": 50,
+        "num_layers": 4,
+        "num_filters": 32,
+        "discount": 0.99,
+        "critic_lr": 0.001,
+        "critic_beta": 0.9,
+        "critic_tau": 0.01,
+        "critic_target_update_freq": 2,
+        "actor_lr": 0.001,
+        "actor_beta": 0.9,
+        "actor_log_std_min": -10,
+        "actor_log_std_max": 2,
+        "actor_update_freq": 2,
+        "encoder_lr": 0.001,
+        "encoder_tau": 0.05,
+        "init_temperature": 0.1,
+        "alpha_lr": 0.0001,
+        "alpha_beta": 0.5,
+        "curl_latent_dim": 128,
+        "eval_freq": 500,
+        "num_eval_episodes": 10,
+        "seed": 123,
+        "arm": "no_curl",
+        "upstream_commit": "8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc",
+        "upstream_sha256": {
+          "curl_sac.py": "5e40fc9981f2947ffa3f4c3ff09f6ddf8a38ac7f89ca1d917fdb86278bb24046",
+          "utils.py": "f163581689b1c2d8db46f22d318336c3ecb5a7e428499b3010ba4f9a5fe8ca47",
+          "encoder.py": "b19aa9a2cc5ac4a496844d31255d35f597a5844c1974d9769b6a5f51cf46db3c",
+          "train.py": "57796f6b46bb8e2a7336c549de1e038f7a3ab4acd2236a9c69adfe9dd30ac9a8"
+        },
+        "evaluation_seeds": [
+          10000,
+          10001,
+          10002,
+          10003,
+          10004,
+          10005,
+          10006,
+          10007,
+          10008,
+          10009
+        ],
+        "resume_semantics": "episode-boundary reset; simulator physics/frame history not serialized",
+        "training_episode_rng": "task and action-space states preserved at boundaries",
+        "torch_version": "2.13.0+cu130",
+        "python_version": "3.12.12 (main, Oct 28 2025, 12:10:49) [Clang 20.1.4 ]",
+        "device": "cuda",
+        "log_interval": 100,
+        "detach_encoder": false,
+        "max_seconds": 7200.0,
+        "checkpoint_seconds": 900
+      },
+      "status": "completed",
+      "reason": "completed",
+      "resumed": false,
+      "curve": [
+        {
+          "step": 0,
+          "env_steps": 0,
+          "mean_return": 8.444584656557007,
+          "episodes": 10
+        },
+        {
+          "step": 500,
+          "env_steps": 4000,
+          "mean_return": 8.444584656557007,
+          "episodes": 10
+        },
+        {
+          "step": 1000,
+          "env_steps": 8000,
+          "mean_return": 8.444584656557007,
+          "episodes": 10
+        },
+        {
+          "step": 1500,
+          "env_steps": 12000,
+          "mean_return": 3.789720078333741,
+          "episodes": 10
+        },
+        {
+          "step": 2000,
+          "env_steps": 16000,
+          "mean_return": 87.3081978089704,
+          "episodes": 10
+        },
+        {
+          "step": 2500,
+          "env_steps": 20000,
+          "mean_return": 152.4117920270496,
+          "episodes": 10
+        },
+        {
+          "step": 3000,
+          "env_steps": 24000,
+          "mean_return": 116.08101143078376,
+          "episodes": 10
+        },
+        {
+          "step": 3500,
+          "env_steps": 28000,
+          "mean_return": 197.7254957143514,
+          "episodes": 10
+        },
+        {
+          "step": 4000,
+          "env_steps": 32000,
+          "mean_return": 187.90145025828093,
+          "episodes": 10
+        },
+        {
+          "step": 4500,
+          "env_steps": 36000,
+          "mean_return": 198.65334293588228,
+          "episodes": 10
+        },
+        {
+          "step": 5000,
+          "env_steps": 40000,
+          "mean_return": 277.2394095205189,
+          "episodes": 10
+        },
+        {
+          "step": 5500,
+          "env_steps": 44000,
+          "mean_return": 254.18389443906426,
+          "episodes": 10
+        },
+        {
+          "step": 6000,
+          "env_steps": 48000,
+          "mean_return": 276.1039307870888,
+          "episodes": 10
+        },
+        {
+          "step": 6500,
+          "env_steps": 52000,
+          "mean_return": 298.04270320305176,
+          "episodes": 10
+        },
+        {
+          "step": 7000,
+          "env_steps": 56000,
+          "mean_return": 327.6371020240191,
+          "episodes": 10
+        },
+        {
+          "step": 7500,
+          "env_steps": 60000,
+          "mean_return": 298.2349786724808,
+          "episodes": 10
+        },
+        {
+          "step": 8000,
+          "env_steps": 64000,
+          "mean_return": 376.54882317925257,
+          "episodes": 10
+        },
+        {
+          "step": 8500,
+          "env_steps": 68000,
+          "mean_return": 266.6855552329616,
+          "episodes": 10
+        },
+        {
+          "step": 9000,
+          "env_steps": 72000,
+          "mean_return": 306.6596090891806,
+          "episodes": 10
+        },
+        {
+          "step": 9500,
+          "env_steps": 76000,
+          "mean_return": 354.84168310235407,
+          "episodes": 10
+        },
+        {
+          "step": 10000,
+          "env_steps": 80000,
+          "mean_return": 377.74698423483034,
+          "episodes": 10
+        },
+        {
+          "step": 10500,
+          "env_steps": 84000,
+          "mean_return": 421.61887742111537,
+          "episodes": 10
+        },
+        {
+          "step": 11000,
+          "env_steps": 88000,
+          "mean_return": 468.7039233992037,
+          "episodes": 10
+        },
+        {
+          "step": 11500,
+          "env_steps": 92000,
+          "mean_return": 288.7730604996327,
+          "episodes": 10
+        },
+        {
+          "step": 12000,
+          "env_steps": 96000,
+          "mean_return": 472.1657335652282,
+          "episodes": 10
+        },
+        {
+          "step": 12500,
+          "env_steps": 100000,
+          "mean_return": 454.4710285971863,
+          "episodes": 10
+        }
+      ],
+      "endpoint_return": 454.4710285971863
+    },
+    {
+      "path": "/project/alex_phd/repos/rlm/.worktrees/curl-replication-20261004/docs/curl-replication-2026-10-04/data/first-reference",
+      "segment": 0,
+      "arm": "curl",
+      "seed": 123,
+      "config": {
+        "domain_name": "cartpole",
+        "task_name": "swingup",
+        "agent": "curl_sac",
+        "encoder_type": "pixel",
+        "pre_transform_image_size": 100,
+        "image_size": 84,
+        "frame_stack": 3,
+        "action_repeat": 8,
+        "replay_buffer_capacity": 100000,
+        "init_steps": 1000,
+        "num_train_steps": 12500,
+        "batch_size": 128,
+        "hidden_dim": 1024,
+        "encoder_feature_dim": 50,
+        "num_layers": 4,
+        "num_filters": 32,
+        "discount": 0.99,
+        "critic_lr": 0.001,
+        "critic_beta": 0.9,
+        "critic_tau": 0.01,
+        "critic_target_update_freq": 2,
+        "actor_lr": 0.001,
+        "actor_beta": 0.9,
+        "actor_log_std_min": -10,
+        "actor_log_std_max": 2,
+        "actor_update_freq": 2,
+        "encoder_lr": 0.001,
+        "encoder_tau": 0.05,
+        "init_temperature": 0.1,
+        "alpha_lr": 0.0001,
+        "alpha_beta": 0.5,
+        "curl_latent_dim": 128,
+        "eval_freq": 500,
+        "num_eval_episodes": 10,
+        "seed": 123,
+        "arm": "curl",
+        "upstream_commit": "8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc",
+        "upstream_sha256": {
+          "curl_sac.py": "5e40fc9981f2947ffa3f4c3ff09f6ddf8a38ac7f89ca1d917fdb86278bb24046",
+          "utils.py": "f163581689b1c2d8db46f22d318336c3ecb5a7e428499b3010ba4f9a5fe8ca47",
+          "encoder.py": "b19aa9a2cc5ac4a496844d31255d35f597a5844c1974d9769b6a5f51cf46db3c",
+          "train.py": "57796f6b46bb8e2a7336c549de1e038f7a3ab4acd2236a9c69adfe9dd30ac9a8"
+        },
+        "evaluation_seeds": [
+          10000,
+          10001,
+          10002,
+          10003,
+          10004,
+          10005,
+          10006,
+          10007,
+          10008,
+          10009
+        ],
+        "resume_semantics": "episode-boundary reset; simulator physics/frame history not serialized",
+        "training_episode_rng": "task and action-space states preserved at boundaries",
+        "torch_version": "2.13.0+cu130",
+        "python_version": "3.12.12 (main, Oct 28 2025, 12:10:49) [Clang 20.1.4 ]",
+        "device": "cuda",
+        "log_interval": 100,
+        "detach_encoder": false,
+        "max_seconds": 7200.0,
+        "checkpoint_seconds": 900.0
+      },
+      "status": "completed",
+      "reason": "completed",
+      "resumed": false,
+      "curve": [
+        {
+          "step": 0,
+          "env_steps": 0,
+          "mean_return": 8.444584656557007,
+          "episodes": 10
+        },
+        {
+          "step": 500,
+          "env_steps": 4000,
+          "mean_return": 8.444584656557007,
+          "episodes": 10
+        },
+        {
+          "step": 1000,
+          "env_steps": 8000,
+          "mean_return": 8.444584656557007,
+          "episodes": 10
+        },
+        {
+          "step": 1500,
+          "env_steps": 12000,
+          "mean_return": 9.056196329316991,
+          "episodes": 10
+        },
+        {
+          "step": 2000,
+          "env_steps": 16000,
+          "mean_return": 167.65106273248907,
+          "episodes": 10
+        },
+        {
+          "step": 2500,
+          "env_steps": 20000,
+          "mean_return": 141.4873030866345,
+          "episodes": 10
+        },
+        {
+          "step": 3000,
+          "env_steps": 24000,
+          "mean_return": 120.65162588256882,
+          "episodes": 10
+        },
+        {
+          "step": 3500,
+          "env_steps": 28000,
+          "mean_return": 214.2904355886335,
+          "episodes": 10
+        },
+        {
+          "step": 4000,
+          "env_steps": 32000,
+          "mean_return": 209.65530284876527,
+          "episodes": 10
+        },
+        {
+          "step": 4500,
+          "env_steps": 36000,
+          "mean_return": 235.1677515045421,
+          "episodes": 10
+        },
+        {
+          "step": 5000,
+          "env_steps": 40000,
+          "mean_return": 278.99646553110904,
+          "episodes": 10
+        },
+        {
+          "step": 5500,
+          "env_steps": 44000,
+          "mean_return": 318.2955677535994,
+          "episodes": 10
+        },
+        {
+          "step": 6000,
+          "env_steps": 48000,
+          "mean_return": 230.63514717009315,
+          "episodes": 10
+        },
+        {
+          "step": 6500,
+          "env_steps": 52000,
+          "mean_return": 227.95044833340847,
+          "episodes": 10
+        },
+        {
+          "step": 7000,
+          "env_steps": 56000,
+          "mean_return": 259.8422912201137,
+          "episodes": 10
+        },
+        {
+          "step": 7500,
+          "env_steps": 60000,
+          "mean_return": 360.60475343552247,
+          "episodes": 10
+        },
+        {
+          "step": 8000,
+          "env_steps": 64000,
+          "mean_return": 336.9509836633898,
+          "episodes": 10
+        },
+        {
+          "step": 8500,
+          "env_steps": 68000,
+          "mean_return": 367.3052300243072,
+          "episodes": 10
+        },
+        {
+          "step": 9000,
+          "env_steps": 72000,
+          "mean_return": 323.23094997258397,
+          "episodes": 10
+        },
+        {
+          "step": 9500,
+          "env_steps": 76000,
+          "mean_return": 222.2418263991533,
+          "episodes": 10
+        },
+        {
+          "step": 10000,
+          "env_steps": 80000,
+          "mean_return": 355.2816045101363,
+          "episodes": 10
+        },
+        {
+          "step": 10500,
+          "env_steps": 84000,
+          "mean_return": 321.239579745546,
+          "episodes": 10
+        },
+        {
+          "step": 11000,
+          "env_steps": 88000,
+          "mean_return": 388.06420921497795,
+          "episodes": 10
+        },
+        {
+          "step": 11500,
+          "env_steps": 92000,
+          "mean_return": 360.40388264980174,
+          "episodes": 10
+        },
+        {
+          "step": 12000,
+          "env_steps": 96000,
+          "mean_return": 423.0734583713149,
+          "episodes": 10
+        },
+        {
+          "step": 12500,
+          "env_steps": 100000,
+          "mean_return": 678.0208181129025,
+          "episodes": 10
+        }
+      ],
+      "endpoint_return": 678.0208181129025
+    },
+    {
+      "path": "/project/alex_phd/repos/rlm/.worktrees/curl-replication-20261004/docs/curl-replication-2026-10-04/data/second-control",
+      "segment": 0,
+      "arm": "no_curl",
+      "seed": 456,
+      "config": {
+        "domain_name": "cartpole",
+        "task_name": "swingup",
+        "agent": "curl_sac",
+        "encoder_type": "pixel",
+        "pre_transform_image_size": 100,
+        "image_size": 84,
+        "frame_stack": 3,
+        "action_repeat": 8,
+        "replay_buffer_capacity": 100000,
+        "init_steps": 1000,
+        "num_train_steps": 12500,
+        "batch_size": 128,
+        "hidden_dim": 1024,
+        "encoder_feature_dim": 50,
+        "num_layers": 4,
+        "num_filters": 32,
+        "discount": 0.99,
+        "critic_lr": 0.001,
+        "critic_beta": 0.9,
+        "critic_tau": 0.01,
+        "critic_target_update_freq": 2,
+        "actor_lr": 0.001,
+        "actor_beta": 0.9,
+        "actor_log_std_min": -10,
+        "actor_log_std_max": 2,
+        "actor_update_freq": 2,
+        "encoder_lr": 0.001,
+        "encoder_tau": 0.05,
+        "init_temperature": 0.1,
+        "alpha_lr": 0.0001,
+        "alpha_beta": 0.5,
+        "curl_latent_dim": 128,
+        "eval_freq": 500,
+        "num_eval_episodes": 10,
+        "seed": 456,
+        "arm": "no_curl",
+        "upstream_commit": "8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc",
+        "upstream_sha256": {
+          "curl_sac.py": "5e40fc9981f2947ffa3f4c3ff09f6ddf8a38ac7f89ca1d917fdb86278bb24046",
+          "utils.py": "f163581689b1c2d8db46f22d318336c3ecb5a7e428499b3010ba4f9a5fe8ca47",
+          "encoder.py": "b19aa9a2cc5ac4a496844d31255d35f597a5844c1974d9769b6a5f51cf46db3c",
+          "train.py": "57796f6b46bb8e2a7336c549de1e038f7a3ab4acd2236a9c69adfe9dd30ac9a8"
+        },
+        "evaluation_seeds": [
+          10000,
+          10001,
+          10002,
+          10003,
+          10004,
+          10005,
+          10006,
+          10007,
+          10008,
+          10009
+        ],
+        "resume_semantics": "episode-boundary reset; simulator physics/frame history not serialized",
+        "training_episode_rng": "task and action-space states preserved at boundaries",
+        "torch_version": "2.13.0+cu130",
+        "python_version": "3.12.12 (main, Oct 28 2025, 12:10:49) [Clang 20.1.4 ]",
+        "device": "cuda",
+        "log_interval": 100,
+        "detach_encoder": false,
+        "max_seconds": 7200.0,
+        "checkpoint_seconds": 900
+      },
+      "status": "completed",
+      "reason": "completed",
+      "resumed": false,
+      "curve": [
+        {
+          "step": 0,
+          "env_steps": 0,
+          "mean_return": 18.615652213368644,
+          "episodes": 10
+        },
+        {
+          "step": 500,
+          "env_steps": 4000,
+          "mean_return": 18.615652213368644,
+          "episodes": 10
+        },
+        {
+          "step": 1000,
+          "env_steps": 8000,
+          "mean_return": 18.615652213368644,
+          "episodes": 10
+        },
+        {
+          "step": 1500,
+          "env_steps": 12000,
+          "mean_return": 57.198678416330274,
+          "episodes": 10
+        },
+        {
+          "step": 2000,
+          "env_steps": 16000,
+          "mean_return": 43.22600536884142,
+          "episodes": 10
+        },
+        {
+          "step": 2500,
+          "env_steps": 20000,
+          "mean_return": 118.26627507879255,
+          "episodes": 10
+        },
+        {
+          "step": 3000,
+          "env_steps": 24000,
+          "mean_return": 180.16010416075198,
+          "episodes": 10
+        },
+        {
+          "step": 3500,
+          "env_steps": 28000,
+          "mean_return": 144.14292503315704,
+          "episodes": 10
+        },
+        {
+          "step": 4000,
+          "env_steps": 32000,
+          "mean_return": 232.27086304227637,
+          "episodes": 10
+        },
+        {
+          "step": 4500,
+          "env_steps": 36000,
+          "mean_return": 219.57979375345377,
+          "episodes": 10
+        },
+        {
+          "step": 5000,
+          "env_steps": 40000,
+          "mean_return": 190.9848628647439,
+          "episodes": 10
+        },
+        {
+          "step": 5500,
+          "env_steps": 44000,
+          "mean_return": 205.07895224038884,
+          "episodes": 10
+        },
+        {
+          "step": 6000,
+          "env_steps": 48000,
+          "mean_return": 211.1259079613264,
+          "episodes": 10
+        },
+        {
+          "step": 6500,
+          "env_steps": 52000,
+          "mean_return": 240.95552879437378,
+          "episodes": 10
+        },
+        {
+          "step": 7000,
+          "env_steps": 56000,
+          "mean_return": 251.8978877609442,
+          "episodes": 10
+        },
+        {
+          "step": 7500,
+          "env_steps": 60000,
+          "mean_return": 185.22477627082196,
+          "episodes": 10
+        },
+        {
+          "step": 8000,
+          "env_steps": 64000,
+          "mean_return": 222.80106646404764,
+          "episodes": 10
+        },
+        {
+          "step": 8500,
+          "env_steps": 68000,
+          "mean_return": 215.29376034989866,
+          "episodes": 10
+        },
+        {
+          "step": 9000,
+          "env_steps": 72000,
+          "mean_return": 233.37976352694102,
+          "episodes": 10
+        },
+        {
+          "step": 9500,
+          "env_steps": 76000,
+          "mean_return": 214.6006676850545,
+          "episodes": 10
+        },
+        {
+          "step": 10000,
+          "env_steps": 80000,
+          "mean_return": 299.740347181793,
+          "episodes": 10
+        },
+        {
+          "step": 10500,
+          "env_steps": 84000,
+          "mean_return": 254.56467564498504,
+          "episodes": 10
+        },
+        {
+          "step": 11000,
+          "env_steps": 88000,
+          "mean_return": 232.96986817058894,
+          "episodes": 10
+        },
+        {
+          "step": 11500,
+          "env_steps": 92000,
+          "mean_return": 265.84998660591754,
+          "episodes": 10
+        },
+        {
+          "step": 12000,
+          "env_steps": 96000,
+          "mean_return": 300.4019964014109,
+          "episodes": 10
+        },
+        {
+          "step": 12500,
+          "env_steps": 100000,
+          "mean_return": 240.5389283475572,
+          "episodes": 10
+        }
+      ],
+      "endpoint_return": 240.5389283475572
+    },
+    {
+      "path": "/project/alex_phd/repos/rlm/.worktrees/curl-replication-20261004/docs/curl-replication-2026-10-04/data/second-reference",
+      "segment": 0,
+      "arm": "curl",
+      "seed": 456,
+      "config": {
+        "domain_name": "cartpole",
+        "task_name": "swingup",
+        "agent": "curl_sac",
+        "encoder_type": "pixel",
+        "pre_transform_image_size": 100,
+        "image_size": 84,
+        "frame_stack": 3,
+        "action_repeat": 8,
+        "replay_buffer_capacity": 100000,
+        "init_steps": 1000,
+        "num_train_steps": 12500,
+        "batch_size": 128,
+        "hidden_dim": 1024,
+        "encoder_feature_dim": 50,
+        "num_layers": 4,
+        "num_filters": 32,
+        "discount": 0.99,
+        "critic_lr": 0.001,
+        "critic_beta": 0.9,
+        "critic_tau": 0.01,
+        "critic_target_update_freq": 2,
+        "actor_lr": 0.001,
+        "actor_beta": 0.9,
+        "actor_log_std_min": -10,
+        "actor_log_std_max": 2,
+        "actor_update_freq": 2,
+        "encoder_lr": 0.001,
+        "encoder_tau": 0.05,
+        "init_temperature": 0.1,
+        "alpha_lr": 0.0001,
+        "alpha_beta": 0.5,
+        "curl_latent_dim": 128,
+        "eval_freq": 500,
+        "num_eval_episodes": 10,
+        "seed": 456,
+        "arm": "curl",
+        "upstream_commit": "8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc",
+        "upstream_sha256": {
+          "curl_sac.py": "5e40fc9981f2947ffa3f4c3ff09f6ddf8a38ac7f89ca1d917fdb86278bb24046",
+          "utils.py": "f163581689b1c2d8db46f22d318336c3ecb5a7e428499b3010ba4f9a5fe8ca47",
+          "encoder.py": "b19aa9a2cc5ac4a496844d31255d35f597a5844c1974d9769b6a5f51cf46db3c",
+          "train.py": "57796f6b46bb8e2a7336c549de1e038f7a3ab4acd2236a9c69adfe9dd30ac9a8"
+        },
+        "evaluation_seeds": [
+          10000,
+          10001,
+          10002,
+          10003,
+          10004,
+          10005,
+          10006,
+          10007,
+          10008,
+          10009
+        ],
+        "resume_semantics": "episode-boundary reset; simulator physics/frame history not serialized",
+        "training_episode_rng": "task and action-space states preserved at boundaries",
+        "torch_version": "2.13.0+cu130",
+        "python_version": "3.12.12 (main, Oct 28 2025, 12:10:49) [Clang 20.1.4 ]",
+        "device": "cuda",
+        "log_interval": 100,
+        "detach_encoder": false,
+        "max_seconds": 7200.0,
+        "checkpoint_seconds": 900
+      },
+      "status": "completed",
+      "reason": "completed",
+      "resumed": false,
+      "curve": [
+        {
+          "step": 0,
+          "env_steps": 0,
+          "mean_return": 18.615652213368644,
+          "episodes": 10
+        },
+        {
+          "step": 500,
+          "env_steps": 4000,
+          "mean_return": 18.615652213368644,
+          "episodes": 10
+        },
+        {
+          "step": 1000,
+          "env_steps": 8000,
+          "mean_return": 18.615652213368644,
+          "episodes": 10
+        },
+        {
+          "step": 1500,
+          "env_steps": 12000,
+          "mean_return": 182.29382273294542,
+          "episodes": 10
+        },
+        {
+          "step": 2000,
+          "env_steps": 16000,
+          "mean_return": 70.15980336747666,
+          "episodes": 10
+        },
+        {
+          "step": 2500,
+          "env_steps": 20000,
+          "mean_return": 173.03544019208874,
+          "episodes": 10
+        },
+        {
+          "step": 3000,
+          "env_steps": 24000,
+          "mean_return": 244.41588766773094,
+          "episodes": 10
+        },
+        {
+          "step": 3500,
+          "env_steps": 28000,
+          "mean_return": 261.4271747870173,
+          "episodes": 10
+        },
+        {
+          "step": 4000,
+          "env_steps": 32000,
+          "mean_return": 240.2370295269035,
+          "episodes": 10
+        },
+        {
+          "step": 4500,
+          "env_steps": 36000,
+          "mean_return": 232.28176846546395,
+          "episodes": 10
+        },
+        {
+          "step": 5000,
+          "env_steps": 40000,
+          "mean_return": 313.6057953931744,
+          "episodes": 10
+        },
+        {
+          "step": 5500,
+          "env_steps": 44000,
+          "mean_return": 329.5518508395713,
+          "episodes": 10
+        },
+        {
+          "step": 6000,
+          "env_steps": 48000,
+          "mean_return": 308.78335794201587,
+          "episodes": 10
+        },
+        {
+          "step": 6500,
+          "env_steps": 52000,
+          "mean_return": 210.435845087808,
+          "episodes": 10
+        },
+        {
+          "step": 7000,
+          "env_steps": 56000,
+          "mean_return": 374.10985712377305,
+          "episodes": 10
+        },
+        {
+          "step": 7500,
+          "env_steps": 60000,
+          "mean_return": 317.36108049904584,
+          "episodes": 10
+        },
+        {
+          "step": 8000,
+          "env_steps": 64000,
+          "mean_return": 351.5491830955778,
+          "episodes": 10
+        },
+        {
+          "step": 8500,
+          "env_steps": 68000,
+          "mean_return": 247.85632977072683,
+          "episodes": 10
+        },
+        {
+          "step": 9000,
+          "env_steps": 72000,
+          "mean_return": 309.09601869069246,
+          "episodes": 10
+        },
+        {
+          "step": 9500,
+          "env_steps": 76000,
+          "mean_return": 400.7010434624077,
+          "episodes": 10
+        },
+        {
+          "step": 10000,
+          "env_steps": 80000,
+          "mean_return": 362.10682229870633,
+          "episodes": 10
+        },
+        {
+          "step": 10500,
+          "env_steps": 84000,
+          "mean_return": 339.36062405880574,
+          "episodes": 10
+        },
+        {
+          "step": 11000,
+          "env_steps": 88000,
+          "mean_return": 372.0145137544532,
+          "episodes": 10
+        },
+        {
+          "step": 11500,
+          "env_steps": 92000,
+          "mean_return": 399.56950590194623,
+          "episodes": 10
+        },
+        {
+          "step": 12000,
+          "env_steps": 96000,
+          "mean_return": 492.462486055019,
+          "episodes": 10
+        },
+        {
+          "step": 12500,
+          "env_steps": 100000,
+          "mean_return": 446.1710866051146,
+          "episodes": 10
+        }
+      ],
+      "endpoint_return": 446.1710866051146
+    },
+    {
+      "path": "/project/alex_phd/repos/rlm/.worktrees/curl-replication-20261004/docs/curl-replication-2026-10-04/data/third-control",
+      "segment": 0,
+      "arm": "no_curl",
+      "seed": 789,
+      "config": {
+        "domain_name": "cartpole",
+        "task_name": "swingup",
+        "agent": "curl_sac",
+        "encoder_type": "pixel",
+        "pre_transform_image_size": 100,
+        "image_size": 84,
+        "frame_stack": 3,
+        "action_repeat": 8,
+        "replay_buffer_capacity": 100000,
+        "init_steps": 1000,
+        "num_train_steps": 12500,
+        "batch_size": 128,
+        "hidden_dim": 1024,
+        "encoder_feature_dim": 50,
+        "num_layers": 4,
+        "num_filters": 32,
+        "discount": 0.99,
+        "critic_lr": 0.001,
+        "critic_beta": 0.9,
+        "critic_tau": 0.01,
+        "critic_target_update_freq": 2,
+        "actor_lr": 0.001,
+        "actor_beta": 0.9,
+        "actor_log_std_min": -10,
+        "actor_log_std_max": 2,
+        "actor_update_freq": 2,
+        "encoder_lr": 0.001,
+        "encoder_tau": 0.05,
+        "init_temperature": 0.1,
+        "alpha_lr": 0.0001,
+        "alpha_beta": 0.5,
+        "curl_latent_dim": 128,
+        "eval_freq": 500,
+        "num_eval_episodes": 10,
+        "seed": 789,
+        "arm": "no_curl",
+        "upstream_commit": "8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc",
+        "upstream_sha256": {
+          "curl_sac.py": "5e40fc9981f2947ffa3f4c3ff09f6ddf8a38ac7f89ca1d917fdb86278bb24046",
+          "utils.py": "f163581689b1c2d8db46f22d318336c3ecb5a7e428499b3010ba4f9a5fe8ca47",
+          "encoder.py": "b19aa9a2cc5ac4a496844d31255d35f597a5844c1974d9769b6a5f51cf46db3c",
+          "train.py": "57796f6b46bb8e2a7336c549de1e038f7a3ab4acd2236a9c69adfe9dd30ac9a8"
+        },
+        "evaluation_seeds": [
+          10000,
+          10001,
+          10002,
+          10003,
+          10004,
+          10005,
+          10006,
+          10007,
+          10008,
+          10009
+        ],
+        "resume_semantics": "episode-boundary reset; simulator physics/frame history not serialized",
+        "training_episode_rng": "task and action-space states preserved at boundaries",
+        "torch_version": "2.13.0+cu130",
+        "python_version": "3.12.12 (main, Oct 28 2025, 12:10:49) [Clang 20.1.4 ]",
+        "device": "cuda",
+        "log_interval": 100,
+        "detach_encoder": false,
+        "max_seconds": 7200.0,
+        "checkpoint_seconds": 900
+      },
+      "status": "completed",
+      "reason": "completed",
+      "resumed": false,
+      "curve": [
+        {
+          "step": 0,
+          "env_steps": 0,
+          "mean_return": 85.23581943977226,
+          "episodes": 10
+        },
+        {
+          "step": 500,
+          "env_steps": 4000,
+          "mean_return": 85.23581943977226,
+          "episodes": 10
+        },
+        {
+          "step": 1000,
+          "env_steps": 8000,
+          "mean_return": 85.23581943977226,
+          "episodes": 10
+        },
+        {
+          "step": 1500,
+          "env_steps": 12000,
+          "mean_return": 53.01921788798704,
+          "episodes": 10
+        },
+        {
+          "step": 2000,
+          "env_steps": 16000,
+          "mean_return": 209.43540144814585,
+          "episodes": 10
+        },
+        {
+          "step": 2500,
+          "env_steps": 20000,
+          "mean_return": 125.17861366724043,
+          "episodes": 10
+        },
+        {
+          "step": 3000,
+          "env_steps": 24000,
+          "mean_return": 179.16293080611618,
+          "episodes": 10
+        },
+        {
+          "step": 3500,
+          "env_steps": 28000,
+          "mean_return": 88.2581250363167,
+          "episodes": 10
+        },
+        {
+          "step": 4000,
+          "env_steps": 32000,
+          "mean_return": 70.24375623748809,
+          "episodes": 10
+        },
+        {
+          "step": 4500,
+          "env_steps": 36000,
+          "mean_return": 210.99878079657134,
+          "episodes": 10
+        },
+        {
+          "step": 5000,
+          "env_steps": 40000,
+          "mean_return": 161.67540535797923,
+          "episodes": 10
+        },
+        {
+          "step": 5500,
+          "env_steps": 44000,
+          "mean_return": 182.48035347943713,
+          "episodes": 10
+        },
+        {
+          "step": 6000,
+          "env_steps": 48000,
+          "mean_return": 193.78990864083872,
+          "episodes": 10
+        },
+        {
+          "step": 6500,
+          "env_steps": 52000,
+          "mean_return": 238.76050172515698,
+          "episodes": 10
+        },
+        {
+          "step": 7000,
+          "env_steps": 56000,
+          "mean_return": 260.5140911373967,
+          "episodes": 10
+        },
+        {
+          "step": 7500,
+          "env_steps": 60000,
+          "mean_return": 292.65396606034864,
+          "episodes": 10
+        },
+        {
+          "step": 8000,
+          "env_steps": 64000,
+          "mean_return": 278.5693297184386,
+          "episodes": 10
+        },
+        {
+          "step": 8500,
+          "env_steps": 68000,
+          "mean_return": 231.14448216452934,
+          "episodes": 10
+        },
+        {
+          "step": 9000,
+          "env_steps": 72000,
+          "mean_return": 343.3244693181253,
+          "episodes": 10
+        },
+        {
+          "step": 9500,
+          "env_steps": 76000,
+          "mean_return": 384.89348035492867,
+          "episodes": 10
+        },
+        {
+          "step": 10000,
+          "env_steps": 80000,
+          "mean_return": 277.80886323418133,
+          "episodes": 10
+        },
+        {
+          "step": 10500,
+          "env_steps": 84000,
+          "mean_return": 306.2192279076282,
+          "episodes": 10
+        },
+        {
+          "step": 11000,
+          "env_steps": 88000,
+          "mean_return": 396.57001100164837,
+          "episodes": 10
+        },
+        {
+          "step": 11500,
+          "env_steps": 92000,
+          "mean_return": 313.79851597920276,
+          "episodes": 10
+        },
+        {
+          "step": 12000,
+          "env_steps": 96000,
+          "mean_return": 492.59115218308335,
+          "episodes": 10
+        },
+        {
+          "step": 12500,
+          "env_steps": 100000,
+          "mean_return": 463.25850101501237,
+          "episodes": 10
+        }
+      ],
+      "endpoint_return": 463.25850101501237
+    },
+    {
+      "path": "/project/alex_phd/repos/rlm/.worktrees/curl-replication-20261004/docs/curl-replication-2026-10-04/data/third-reference",
+      "segment": 0,
+      "arm": "curl",
+      "seed": 789,
+      "config": {
+        "domain_name": "cartpole",
+        "task_name": "swingup",
+        "agent": "curl_sac",
+        "encoder_type": "pixel",
+        "pre_transform_image_size": 100,
+        "image_size": 84,
+        "frame_stack": 3,
+        "action_repeat": 8,
+        "replay_buffer_capacity": 100000,
+        "init_steps": 1000,
+        "num_train_steps": 12500,
+        "batch_size": 128,
+        "hidden_dim": 1024,
+        "encoder_feature_dim": 50,
+        "num_layers": 4,
+        "num_filters": 32,
+        "discount": 0.99,
+        "critic_lr": 0.001,
+        "critic_beta": 0.9,
+        "critic_tau": 0.01,
+        "critic_target_update_freq": 2,
+        "actor_lr": 0.001,
+        "actor_beta": 0.9,
+        "actor_log_std_min": -10,
+        "actor_log_std_max": 2,
+        "actor_update_freq": 2,
+        "encoder_lr": 0.001,
+        "encoder_tau": 0.05,
+        "init_temperature": 0.1,
+        "alpha_lr": 0.0001,
+        "alpha_beta": 0.5,
+        "curl_latent_dim": 128,
+        "eval_freq": 500,
+        "num_eval_episodes": 10,
+        "seed": 789,
+        "arm": "curl",
+        "upstream_commit": "8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc",
+        "upstream_sha256": {
+          "curl_sac.py": "5e40fc9981f2947ffa3f4c3ff09f6ddf8a38ac7f89ca1d917fdb86278bb24046",
+          "utils.py": "f163581689b1c2d8db46f22d318336c3ecb5a7e428499b3010ba4f9a5fe8ca47",
+          "encoder.py": "b19aa9a2cc5ac4a496844d31255d35f597a5844c1974d9769b6a5f51cf46db3c",
+          "train.py": "57796f6b46bb8e2a7336c549de1e038f7a3ab4acd2236a9c69adfe9dd30ac9a8"
+        },
+        "evaluation_seeds": [
+          10000,
+          10001,
+          10002,
+          10003,
+          10004,
+          10005,
+          10006,
+          10007,
+          10008,
+          10009
+        ],
+        "resume_semantics": "episode-boundary reset; simulator physics/frame history not serialized",
+        "training_episode_rng": "task and action-space states preserved at boundaries",
+        "torch_version": "2.13.0+cu130",
+        "python_version": "3.12.12 (main, Oct 28 2025, 12:10:49) [Clang 20.1.4 ]",
+        "device": "cuda",
+        "log_interval": 100,
+        "detach_encoder": false,
+        "max_seconds": 7200.0,
+        "checkpoint_seconds": 900
+      },
+      "status": "completed",
+      "reason": "completed",
+      "resumed": false,
+      "curve": [
+        {
+          "step": 0,
+          "env_steps": 0,
+          "mean_return": 85.23581943977226,
+          "episodes": 10
+        },
+        {
+          "step": 500,
+          "env_steps": 4000,
+          "mean_return": 85.23581943977226,
+          "episodes": 10
+        },
+        {
+          "step": 1000,
+          "env_steps": 8000,
+          "mean_return": 85.23581943977226,
+          "episodes": 10
+        },
+        {
+          "step": 1500,
+          "env_steps": 12000,
+          "mean_return": 124.31294515629465,
+          "episodes": 10
+        },
+        {
+          "step": 2000,
+          "env_steps": 16000,
+          "mean_return": 29.84888760253644,
+          "episodes": 10
+        },
+        {
+          "step": 2500,
+          "env_steps": 20000,
+          "mean_return": 260.25253312416004,
+          "episodes": 10
+        },
+        {
+          "step": 3000,
+          "env_steps": 24000,
+          "mean_return": 29.97210919089039,
+          "episodes": 10
+        },
+        {
+          "step": 3500,
+          "env_steps": 28000,
+          "mean_return": 164.8842406811715,
+          "episodes": 10
+        },
+        {
+          "step": 4000,
+          "env_steps": 32000,
+          "mean_return": 243.50066390624846,
+          "episodes": 10
+        },
+        {
+          "step": 4500,
+          "env_steps": 36000,
+          "mean_return": 240.92881689065146,
+          "episodes": 10
+        },
+        {
+          "step": 5000,
+          "env_steps": 40000,
+          "mean_return": 244.18117596755292,
+          "episodes": 10
+        },
+        {
+          "step": 5500,
+          "env_steps": 44000,
+          "mean_return": 230.44620109061793,
+          "episodes": 10
+        },
+        {
+          "step": 6000,
+          "env_steps": 48000,
+          "mean_return": 322.6801880664993,
+          "episodes": 10
+        },
+        {
+          "step": 6500,
+          "env_steps": 52000,
+          "mean_return": 303.88280949906635,
+          "episodes": 10
+        },
+        {
+          "step": 7000,
+          "env_steps": 56000,
+          "mean_return": 292.99594124898954,
+          "episodes": 10
+        },
+        {
+          "step": 7500,
+          "env_steps": 60000,
+          "mean_return": 224.24766085173056,
+          "episodes": 10
+        },
+        {
+          "step": 8000,
+          "env_steps": 64000,
+          "mean_return": 363.18664918988446,
+          "episodes": 10
+        },
+        {
+          "step": 8500,
+          "env_steps": 68000,
+          "mean_return": 382.5879318878879,
+          "episodes": 10
+        },
+        {
+          "step": 9000,
+          "env_steps": 72000,
+          "mean_return": 329.53725687205605,
+          "episodes": 10
+        },
+        {
+          "step": 9500,
+          "env_steps": 76000,
+          "mean_return": 379.3107995135732,
+          "episodes": 10
+        },
+        {
+          "step": 10000,
+          "env_steps": 80000,
+          "mean_return": 313.8975250218193,
+          "episodes": 10
+        },
+        {
+          "step": 10500,
+          "env_steps": 84000,
+          "mean_return": 321.33191959166686,
+          "episodes": 10
+        },
+        {
+          "step": 11000,
+          "env_steps": 88000,
+          "mean_return": 297.71275926392053,
+          "episodes": 10
+        },
+        {
+          "step": 11500,
+          "env_steps": 92000,
+          "mean_return": 537.8353162502563,
+          "episodes": 10
+        },
+        {
+          "step": 12000,
+          "env_steps": 96000,
+          "mean_return": 575.4243052142301,
+          "episodes": 10
+        },
+        {
+          "step": 12500,
+          "env_steps": 100000,
+          "mean_return": 587.9943232935827,
+          "episodes": 10
+        }
+      ],
+      "endpoint_return": 587.9943232935827
+    }
+  ],
+  "arms": {
+    "curl": {
+      "n_seeds": 3,
+      "planned_seeds": 3,
+      "mean_return": 570.7287426705333,
+      "seed_sd": 116.88519883093237
+    },
+    "no_curl": {
+      "n_seeds": 3,
+      "planned_seeds": 3,
+      "mean_return": 386.0894859865853,
+      "seed_sd": 126.12703334197448
+    }
+  },
+  "pairs": [
+    {
+      "seed": 123,
+      "curl": 678.0208181129025,
+      "no_curl": 454.4710285971863,
+      "difference": 223.54978951571616
+    },
+    {
+      "seed": 456,
+      "curl": 446.1710866051146,
+      "no_curl": 240.5389283475572,
+      "difference": 205.63215825755742
+    },
+    {
+      "seed": 789,
+      "curl": 587.9943232935827,
+      "no_curl": 463.25850101501237,
+      "difference": 124.73582227857037
+    }
+  ],
+  "excluded": [],
+  "interpretation": "Exploratory; three planned training seeds per arm. Evaluation episodes are not training replicates."
+}
