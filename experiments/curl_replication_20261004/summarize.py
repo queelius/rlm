@@ -201,19 +201,23 @@ def write_outputs(summary: dict, output: Path) -> None:
                 [p["mean_return"] for p in points],
                 color=colors[run["seed"]],
                 linestyle="-" if run["arm"] == "curl" else "--",
-                label=f"{run['arm']} seed {run['seed']} ({run['status']}, "
-                f"segment {run['segment']})",
+                label=(
+                    f"{'CURL' if run['arm'] == 'curl' else 'Without image matching'}, "
+                    f"training seed {run['seed']}"
+                    + (f" ({run['status']})" if run["status"] != "completed" else "")
+                    + (f", resume segment {run['segment']}" if run["resumed"] else "")
+                ),
             )
     ax.set(
-        xlabel="Training environment steps",
-        ylabel="Mean evaluation episode return",
+        xlabel="Simulator steps used for training",
+        ylabel="Average reward (higher is better)",
         ylim=(0, 1000),
         xlim=(0, TARGET),
-        title="Exploratory CURL comparison; all recorded seed curves",
+        title="Learning to control the cart from images",
     )
     ax.grid(alpha=0.2)
     if any(r["curve"] for r in summary["runs"]):
-        ax.legend(fontsize=7)
+        ax.legend(fontsize=10)
     fig.tight_layout()
     for suffix in ("pdf", "png"):
         fig.savefig(output / f"learning-curves.{suffix}", dpi=160)

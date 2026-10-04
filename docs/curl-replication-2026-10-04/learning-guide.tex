@@ -35,14 +35,14 @@
 \question{Where are we now?}
 
 We have selected the paper, checked its implementation, and completed a short
-GPU training test. \textbf{The first full reference run is now training.}
+GPU training test. \textbf{The first full reference run learned better control.}
 This edition explains the method and the plan. The worked numbers are
 explicitly labeled illustrations; the published scores belong to the authors.
-Actual learning curves will be added after runs finish.
+Page 8 shows our first completed run. The control and repetitions are ongoing.
 
-The pilot ran 200 learning updates and saved a complete training checkpoint.
-This establishes that the system runs, not that we have reproduced the paper's
-result. The evidence cutoff for this edition is 4 October, 17:13 UTC.
+The first full run scored 678 after 100,000 simulator steps, up from about 8
+before training. One run does not establish CURL's benefit over the control or
+reproduce the paper's average. Evidence cutoff: 4 October, 17:28 UTC.
 
 \question{Why this paper?}
 
@@ -66,7 +66,7 @@ practice, but would not retroactively prove our earlier RLM training correct.
 
 Pages 2--4 explain the task and learning process with examples. Page 5 explains
 the comparison and scores. Page 6 records implementation findings that affect
-interpretation. Page 7 gives the next decisions and the results checklist.
+interpretation. Pages 7--8 give next decisions, checks and the first real curve.
 The detailed configuration is in the adjacent research protocol, not hidden in
 the prose.
 
@@ -340,8 +340,8 @@ The hyperparameters and step terminology are documented in the supplement.\footn
 
 \question{The next useful sequence}
 
-The short real simulation and update test has passed. We are now running the
-reference, followed by the no-contrastive control, at the fixed 100k
+The short test and first full reference run have completed. We are now running
+the no-contrastive control at the fixed 100k
 budget. Repeat both with additional seeds before treating a difference as a
 reliable effect. Extend to 500k only if time and measured throughput permit.
 The second requested GPU can run another seed independently; it is not required
@@ -356,9 +356,9 @@ neither improves, inspect observations, rewards, actual weight changes and
 evaluation before increasing the budget. A falling auxiliary loss with flat
 return suggests that solving the image exercise is not enough.
 
-After the reference is understood, independently implement the matching loss
-and compare identical inputs, probabilities, gradients and updates. This is how
-we separate understanding the algorithm from merely running its repository.
+Our independent small NumPy calculation matches the released Torch loss and
+gradients to numerical precision. That checks the calculation, not its usefulness
+for control. We need the matched experiment to answer the latter question.
 
 \question{What has actually been established today?}
 
@@ -368,7 +368,7 @@ Item & Status\\
 \midrule
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
-GPU training and policy evaluation & Pilot complete; full comparison running.\\
+GPU training and policy evaluation & First reference complete; control running.\\
 Checkpoint save/reload verification & CPU next-update test passed.\\
 Evidence that CURL beats the control & None yet; full results pending.\\
 \bottomrule
@@ -378,7 +378,7 @@ Evidence that CURL beats the control & None yet; full results pending.\\
 
 Actual learning curves, per-seed endpoint returns, measured runtime, any failed
 attempts, and a short explanation of what each result changes. Every plotted
-point must be traceable to evaluation records and a checkpoint. Missing runs
+point must be traceable to evaluation records and its run configuration. Missing runs
 will remain missing, not become zero scores. If the result is inconclusive,
 the document will say so.
 
@@ -390,5 +390,43 @@ the document will say so.
 \nolinkurl{experiments/curl_replication_20261004/manifest.json}.
 Earlier RLM work is preserved in
 \nolinkurl{docs/RESEARCH_RESUME_2026-10-04.md}.
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{7 / FIRST MEASURED RESULT}{The controller learned, but the comparison is not finished.}
+
+One CURL training run reached an average reward of \textbf{678} after 100,000
+training simulator steps. Before training, the same ten evaluation starting
+conditions gave about \textbf{8}. Higher rewards mean better swinging and
+balancing; these numbers are not percentages of successful episodes.
+
+\begin{center}
+\includegraphics[width=.90\linewidth]{figures/first-reference.pdf}
+\end{center}
+
+Every point averages ten evaluation episodes of the policy at that moment.
+The line is the one completed CURL run. The control without image matching is
+still running and is not plotted here. An unfinished experiment is not a
+failed zero-score experiment.
+
+\question{What does the uneven line tell us?}
+
+Learning was not steady. The last score is much higher than the previous one.
+We used the endpoint chosen before the run, not a selected best checkpoint,
+but one high endpoint still needs repetitions. This is evidence that our system
+can learn this task, not that the extra image-matching objective caused the gain.
+
+\question{What did it cost, and what happens next?}
+
+Training and evaluation took 14.4 minutes, plus 11.4 seconds to save the
+checkpoint. Setup was extra. Evaluation experience was not used for training.
+
+Next we finish the control and two more training seeds per version, then
+consider extending both to 500,000 steps. All seeds and curves will be reported.
+
+\small
+\textbf{Evidence.} Native records: \texttt{data/first-reference/metrics.jsonl}.
+Task: DeepMind Control Suite \texttt{cartpole/swingup}; training seed 123;
+evaluation seeds 10000--10009. Modern simulator compatibility adaptation.
 \end{frame}
 \end{document}

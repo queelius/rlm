@@ -1,10 +1,10 @@
 ---
 date: 2026-10-04
-status: pilot_completed_reference_running
+status: first_reference_completed_control_running
 question: Can we reproduce one published CURL learning result and isolate the contribution of its contrastive objective?
 stage: first_reference_and_control
 completed_pilots: 1
-completed_primary_runs: 0
+completed_primary_runs: 1
 primary_hardware: one_A100_40GB
 ---
 
@@ -20,13 +20,15 @@ Read the [learning guide PDF](../../docs/curl-replication-2026-10-04/learning-gu
 first; its source and build instructions are adjacent. The old research is preserved in
 [the RLM checkpoint](../../docs/RESEARCH_RESUME_2026-10-04.md).
 
-## Actual progress at 17:13 UTC
+## Actual progress at 17:28 UTC
 
 Execution access is restored. A real GPU pilot completed 1,200 decisions,
 9,600 training simulator steps, 200 updates, and six evaluation episodes in
 about 30 seconds, excluding startup and its final checkpoint write. It saved a
 366 MB full-state checkpoint. This checks execution, not reproduction of the
-paper's learning result. The fresh reference run is now training to 100k steps.
+paper's learning result. The fresh reference then completed 100k steps, improving
+its ten-episode mean return from 8.44 to 678.02. One trained seed does not establish
+the published average or a CURL advantage. The control is now running.
 
 The reference and control use the official agent unchanged, with our thin
 simulator, evaluation and checkpoint adapters. The runtime is Python 3.12.12,
@@ -69,8 +71,8 @@ alone is too weak a test of implementation agreement.
 
 ## Ordered queue
 
-The pilot is complete and reference seed 123 is active. The next ready jobs are
-the matched control and additional prespecified seeds. Native artifacts live in
+The pilot and reference seed 123 are complete. The matched control is active,
+followed by the additional prespecified seeds. Native artifacts live in
 `/project/alex_phd/runs/curl-replication-20261004`. The queue launcher records
 completion/failure separately; it is not a substitute for interpreting results.
 
@@ -199,6 +201,21 @@ The original clone is commit `8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc`.
 `--max-seconds` limits each invocation, not the cumulative time across resumes.
 Natural episode-boundary checkpoints retain task and action-space random state;
 a budget-truncated episode restarts on resume, which is explicitly recorded.
+
+The serial queue is running in tmux `curl-20261004-queue`; its external config
+is `QUEUE.json` in the artifact root. Inspect `queue.jsonl` and per-run native
+metrics, not just process presence. Create `STOP` in that root to ask its owner
+to finish/checkpoint the current episode and stop. Do not edit its sealed code.
+
+A separate `review_monitor.py` observer uses the installed `codex queue`
+command to request review in this exact session. It neither trains models nor
+interprets scores itself. It coalesces completed-run events for five minutes,
+otherwise requests review after twenty minutes, and waits for an evidence-backed
+acknowledgment before requesting another. It reads the live account quota and
+requires more than 12% remaining to protect the 10% reserve. Its own `reviews/STOP`
+stops review requests without stopping the scientific queue. Admission is not
+proof of delivery; `reviews/STATUS.json` records that distinction. Both processes
+are bounded by the current allocation deadline.
 
 The pedagogical document distinguishes execution checks from learning results.
 Do not treat a completed pilot as evidence that CURL beats the control.

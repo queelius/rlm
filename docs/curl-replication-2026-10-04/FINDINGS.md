@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T17:23:00Z
+cutoff_utc: 2026-10-04T17:28:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -9,8 +9,37 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 
 # What we have learned so far
 
-The simulator, learning updates, evaluations, and checkpoints now run on the
-assigned A100. We do not yet have a completed full-budget comparison.
+The first full reference learned better control. The matched control and
+repetitions are still running, so the comparison is not complete.
+
+## First 100k reference: meaningful learning in one seed
+
+Fresh run `curl-seed123-100k-v1` completed exactly 12,500 decisions and 100,000
+training simulator steps, with 11,500 update calls. Its fixed ten-episode mean
+return was 8.4446 before updates and 678.0208 at the endpoint. This is reward
+on a roughly 0–1,000 scale, not a success percentage. Native records and config
+are published in [data/first-reference](data/first-reference).
+
+The trajectory fluctuates substantially: the 96k score was 423.07, followed by
+678.02 at 100k. The endpoint was prespecified, not picked after looking at scores,
+but this last-point jump makes repeatability and later behavior important. Do
+not infer a stable 678-level policy or an advantage over the control yet.
+
+The paper's 582 ± 146 is a mean and SD over ten trained seeds, not a threshold
+that one local result can pass. Our runtime differs from the historical stack.
+The result supports continuing the reference/control comparison; it is not a
+claim that we reproduced the entire paper or discovered a new method.
+
+The loop took 866.44 seconds, including evaluation; the final 2,540,402,075-byte
+checkpoint took 11.43 seconds more. Setup and startup are excluded. Evaluation
+consumed 260,000 separate simulator steps, not training data. The control
+started automatically within about one second of reference termination and
+produced scientific records within 20 seconds of launch.
+
+Next decision: finish the already-queued three-seed pair before choosing another
+arm. The [follow-up memo](NEXT_COMPARISONS.md) explains why a matched extension
+to 500k and a second task are more informative than declaring victory from one
+score. A shuffled-positive control is conditional, not launched.
 
 ## First pilot: execution works
 
@@ -71,6 +100,6 @@ execution session then ran successfully. That brief failed launch consumed no
 scientific budget and is retained in this account. Future owners must verify
 actual episode/update records, not assume a returned PID means work is running.
 
-The advisor deck is not changed by the pilot. The user changed the priority to
+The advisor deck is not changed by this first reproduction run. The user changed the priority to
 paper reproduction and requested a learning document; that document is the
 appropriate place for these execution findings.
