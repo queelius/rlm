@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T22:48:00Z
+cutoff_utc: 2026-10-04T23:46:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-04T22:48:00Z
+execution_update_utc: 2026-10-04T23:46:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -17,6 +17,41 @@ higher. **The two completed 500k pairs have different winners.** The first
 favors the control; the second favors CURL. The early advantage is more consistent
 so far than the later advantage. The third pair remains incomplete. We cannot
 conclude general late harm, superiority or equivalence from these few seeds.
+
+## Third longer CURL result at 23:46 UTC: all references complete
+
+CURL seed 789 finished at **855.2208340094433**, up from 587.9943 at 100k.
+The three longer CURL scores are now 842.74, 866.14 and 855.22: mean 854.70,
+sample SD 11.70 across three training seeds. This is not a third paired result:
+the final control has only just started. Do not compare a three-seed CURL mean
+against a two-seed control mean as though the comparison were matched.
+
+The new model ended naturally at 62,500 decisions, 500,000 training simulator
+steps and 61,500 update calls, with exit 0 and complete=true. Its final mean was
+recomputed from the ten declared evaluation seeds. All 4,000 logged learning
+values are finite; no failure occurred. The last five means were 836.21, 854.12,
+871.24, 866.71 and 855.22. We report the final value, not the highest one.
+Its 11,386,654,987-byte checkpoint matches the receipt and took 29.88 seconds
+to write. This chain used 500k physical training interactions and 1.26m
+evaluation interactions, with no abandoned training branch.
+
+All three reference runs learned substantially more with continued training.
+That supports a working learning reproduction, not an exact reproduction of
+the paper's ten-seed mean or proof that the extra matching update helps later.
+The two completed paired differences remain -24.20 and +55.18. The observed
+early benefit and uncertain later benefit remain the main local pattern.
+
+The owner started the final control 3.78 seconds after CURL exited. Actual
+learning records arrived within 12 seconds; finite learning and natural
+episodes were checked through 107k, with mean 528.19 at 104k. Keep that run's
+fixed endpoint unchanged. Six walker runs remain prepared, not launched.
+Next: finish this pair, test scope on walker, then reconsider the conditional
+shared-checkpoint matching-on/off study. No source or GPU owner changed.
+
+Evidence: [third completed CURL records](extension-data/curl-seed789-500k) and
+[dated continuation snapshot](extension-data/third-curl-500k-summary.json).
+The guide's paired figure retains its earlier 22:48 cutoff and only the two
+completed pairs; the text and reference table now include the new endpoint.
 
 ## Two longer pairs at 22:48 UTC: the first reversal is not universal
 

@@ -4,7 +4,7 @@ Start with [the nine-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **three completed 100k pairs and two completed 500k pairs**,
-with a 22:48 UTC evidence cutoff.
+plus the third completed 500k CURL model, with a 23:46 UTC evidence cutoff.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -15,8 +15,10 @@ have different winners: **842.74 versus 866.94** in the first pair, and
 The early advantage is more consistent so far than the later one. Two pairs
 cannot establish general late harm, superiority or equivalence.
 Page 8 preserves the three early comparisons; page 9 shows both completed
-longer pairs and explains the limits and recovery cost. The third pair is in
-progress. Published scores and invented teaching
+longer pairs and explains the limits and recovery cost. The third CURL model
+finished at **855.22**, up from 587.99; its control is still training. The
+three-seed CURL mean of 854.70 is not a matched comparison with only two
+completed controls. Published scores and invented teaching
 examples are identified explicitly.
 
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
@@ -59,24 +61,25 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 4, 2026,
-at approximately 22:57 UTC. The nine-page edition was updated after the second
-matched pair finished at 500k. Changed pages 1, 7, 8 and 9 were visually inspected; unchanged pages retain
+at approximately 23:48 UTC. The nine-page edition was updated after the third
+CURL model finished at 500k. Changed pages 1, 5 and 7 were visually inspected; unchanged pages retain
 their earlier inspection. The build reports no overfull
 boxes, and extracted text stays within every page boundary. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`7d47d36f8eacb20236a3e9d3f41b761319a83007a2478d13691bc7bc7fa3d4a9`.
+`abf6dc792444ec73e672b4f8205b3d42c6c451d217f6b80b9a2c2bf39c09b5be`.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
 The runtime checks include real simulator behavior, CPU checkpoint restoration,
 and a completed GPU pilot. Three full matched pairs also completed, but this is
 still a small exploratory comparison, not a reproduction of the paper's mean.
-All four completed 500k endpoints passed native terminal and ancestry checks.
-Recovery cost is reported separately; three 100k pairs are still more evidence
-than the two completed longer pairs.
+All five completed 500k endpoints passed native terminal and ancestry checks.
+The three-seed CURL mean and sample SD were recalculated from native final
+episode returns. Recovery cost is reported separately. There are still only
+two completed longer pairs; the last control remains incomplete.
 
 ## Evidence and next comparisons
 
@@ -107,6 +110,10 @@ than the two completed longer pairs.
   [22:48 two-pair snapshot](extension-data/two-500k-pairs-summary.json), and
   [completed-pair curves](figures/completed-500k-pairs.pdf): different winners
   in the two pairs. Rebuild with `python plot_completed_500k_pairs.py` here.
+- [Third completed longer CURL model](extension-data/curl-seed789-500k) and
+  [23:46 continuation snapshot](extension-data/third-curl-500k-summary.json):
+  855.22 at the fixed endpoint; its control remains incomplete. No third paired
+  claim follows from this endpoint alone.
 - [Failed longer-run records](extension-data/failed-seed123) and
   [cleanly stopped control](extension-data/stopped-control-seed123): preserved
   execution evidence, not completed 500k scores. The [recovery plan](RECOVERY_PLAN.md)

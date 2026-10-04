@@ -47,8 +47,9 @@ The three 100,000-step pairs were complete at 18:37 UTC.
 
 After 500,000 steps, the first pair favors the control: \textbf{843 versus 867}.
 The second favors CURL: \textbf{866 versus 811}. Both methods learned more, but
-the later advantage is less consistent than the early one. The third pair is
-still being extended. Page 9 shows both completed pairs. Latest evidence: 22:48 UTC.
+the later advantage is less consistent than the early one. The third CURL model
+finished at \textbf{855}; its control is still training. Page 9 shows the two
+completed pairs. Latest evidence: 23:46 UTC.
 
 \question{Why this paper?}
 
@@ -257,17 +258,18 @@ deviation across ten separately trained seeds, not a confidence interval.
 Training experience & Authors' CURL result & Our CURL result\\
 \midrule
 100,000 simulator steps & 582 (SD 146) & 571 (SD 117; 3 seeds)\\
-500,000 simulator steps & 841 (SD 45) & 843, 866 (2 seeds)\\
+500,000 simulator steps & 841 (SD 45) & 855 (SD 12; 3 seeds)\\
 \bottomrule
 \end{tabular}
 \end{center}
 
 We will report any modern software changes and use the published values as
 reference points, not declare success because one lucky run enters that range.
-Our first three-seed comparison is smaller than the authors' ten-seed report.
-The two longer CURL scores are individual results, not a ten-seed mean.
-The first required extra recovery interactions; the second did not. This is
-not an equal-cost comparison with the published experiment.
+Our three-seed summaries are smaller than the authors' ten-seed report.
+The individual longer CURL scores were 843, 866 and 855. The first required
+extra recovery interactions; the other two did not. This is not an equal-cost
+comparison with the published experiment. The last control is still training,
+so this table does not establish CURL's advantage over our matched control.
 
 \question{Second: does the extra matching objective help?}
 
@@ -397,8 +399,9 @@ Evidence about the extra matching task & Ahead at 100k; mixed results at 500k.\\
 
 We will show fixed final scores and curves for each training seed, with failures
 and recovery costs stated separately. Missing results will remain missing,
-not become zero scores. Two pairs are complete at 500,000 steps, and the third
-is in progress. We will report all outcomes, not only the favorable ones.
+not become zero scores. Two pairs are complete at 500,000 steps. The third CURL
+model finished at 855; its control is still training. We will report all
+outcomes, not only the favorable ones.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
