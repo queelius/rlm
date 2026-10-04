@@ -212,7 +212,7 @@ def main() -> None:
         if not counters["episode_boundary"]:
             raise ValueError("Only episode-boundary checkpoints can resume")
         env.set_rng_state(counters["env_rng"])
-    else:
+    if not (output / "config.json").exists():
         (output / "config.json").write_text(json.dumps(config, indent=2) + "\n")
     logger = JsonLogger(output / "metrics.jsonl")
     logger.record(

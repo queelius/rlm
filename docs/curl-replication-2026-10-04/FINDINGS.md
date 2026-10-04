@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T17:28:00Z
+cutoff_utc: 2026-10-04T17:42:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -9,10 +9,42 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 
 # What we have learned so far
 
-The first full reference learned better control. The matched control and
-repetitions are still running, so the comparison is not complete.
+Both versions learned in the first completed pair. CURL finished higher at the
+prespecified endpoint, but repetitions are still running.
 
-## First 100k reference: meaningful learning in one seed
+## First matched pair: a higher endpoint, not a consistent lead
+
+At 100,000 training simulator steps, CURL scored **678.02** and the control
+without image matching scored **454.47**. Both started at **8.44**. These are
+means of ten fixed evaluation episodes from **one training seed per version**,
+not ten independently trained models. The paired endpoint difference is +223.55.
+Both runs completed 11,500 update calls and saved their full checkpoints.
+The control's native records are in [data/first-control](data/first-control).
+
+The learning curves trade places. At 76k steps the control scored 354.84 while
+CURL scored 222.24. CURL's final jump matters to its endpoint advantage. Because
+evaluation uses the same starting seeds and deterministic actions, these curves
+are not merely noisy because we drew different evaluation starts each time.
+The policies themselves change during training.
+
+As a **post-hoc descriptive check**, linearly interpolating and averaging each
+recorded learning curve over 0–100k steps gives 249.29 for CURL and 250.30 for
+the control. This was not a prespecified primary metric and does not replace
+the endpoint. It cautions against claiming a consistent sample-efficiency gain
+from the last point alone. Checkpoints are not independent replicates.
+
+CURL's training/evaluation loop took 866.44 seconds; the control took 782.83.
+Their evaluation portions were 371.88 and 362.31 seconds. This is an equal
+training-interaction comparison, not equal computing time. Startup and final
+checkpoint writes, about 11 seconds each, are excluded from those loop times.
+
+**Decision:** finish both arms for the two remaining prespecified training seeds.
+If those runs are valid, a paired extension to 500k can test whether the apparent
+late advantage persists. Do not launch a new loss variant merely because one
+endpoint is favorable. A fixed additional evaluation panel for all final
+policies is another possible check, not a substitute for training repetitions.
+
+## Earlier checkpoint: first 100k reference
 
 Fresh run `curl-seed123-100k-v1` completed exactly 12,500 decisions and 100,000
 training simulator steps, with 11,500 update calls. Its fixed ten-episode mean
@@ -23,11 +55,11 @@ are published in [data/first-reference](data/first-reference).
 The trajectory fluctuates substantially: the 96k score was 423.07, followed by
 678.02 at 100k. The endpoint was prespecified, not picked after looking at scores,
 but this last-point jump makes repeatability and later behavior important. Do
-not infer a stable 678-level policy or an advantage over the control yet.
+not infer a stable 678-level policy or a repeatable advantage over the control.
 
 The paper's 582 ± 146 is a mean and SD over ten trained seeds, not a threshold
 that one local result can pass. Our runtime differs from the historical stack.
-The result supports continuing the reference/control comparison; it is not a
+That result supported continuing the reference/control comparison; it was not a
 claim that we reproduced the entire paper or discovered a new method.
 
 The loop took 866.44 seconds, including evaluation; the final 2,540,402,075-byte
@@ -76,7 +108,7 @@ not isolate the mathematical objective from the number of encoder updates.
 
 ## Next decisions
 
-1. Finish fresh CURL and no-contrastive runs for seed 123 at 100k steps.
+1. The fresh CURL and no-contrastive runs for seed 123 are complete at 100k steps.
 2. Complete both arms for seeds 456 and 789 regardless of the first pair's sign.
 3. If both are valid, consider a 500k extension of both arms. Do not select only
    a favorable seed or checkpoint. If learning fails, inspect actual observations

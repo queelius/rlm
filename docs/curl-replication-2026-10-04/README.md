@@ -3,10 +3,11 @@
 Start with [the eight-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
-This is the **first-reference-completed** edition, with a 17:28 UTC evidence cutoff. It explains the cartpole task,
+This is the **first-pair-completed** edition, with a 17:42 UTC evidence cutoff. It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
-what source review found. The first reference improved from 8.44 to 678.02;
-the control and repetitions are running. Page 8 shows the measured curve. The
+what source review found. CURL scored 678.02 and the matched control scored
+454.47 at the fixed endpoint. Both started at 8.44. Additional training seeds
+are running. Page 8 shows both measured curves. The
 published scores and invented teaching examples are identified explicitly.
 
 The [research protocol](../../experiments/curl_replication_20261004/README.md)
@@ -46,22 +47,25 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 4, 2026,
-at approximately 17:35 UTC. All seven original letter-sized pages were inspected;
-the changed first/seventh pages and new result page were checked again. The build reports no overfull
+at approximately 17:47 UTC. All seven original letter-sized pages were inspected;
+the changed first, seventh and eighth pages were visually checked again at
+17:49 UTC. The build reports no overfull
 boxes, and extracted text stays within every page boundary. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`6f4c4411ef967a55d1e52b22ff16601b28a3d8d71c5e67cc592a1e771bd2531d`.
+`3c228e085bc4a462f7e32fdf595395008d590f5f75016a4ba0254a9ac6231ed8`.
 The runtime checks include real simulator behavior, CPU checkpoint restoration,
-and a completed GPU pilot. The first full reference also completed, but one
+and a completed GPU pilot. The first full matched pair also completed, but one
 training seed does not establish a reliable CURL advantage over its control.
 
 ## Evidence and next comparisons
 
 - [First reference's native records and configuration](data/first-reference):
   100k training steps, ten fixed evaluation seeds, no best-checkpoint selection.
+- [Matched control's native records and configuration](data/first-control):
+  the same crops and training budget, without the extra image-matching update.
 - [Actual pilot input images](figures/pilot-observations.png): first, middle and
   last stored observations, each containing three frames. Top row: raw frames;
   bottom row: center crops used during evaluation. They were not selected for

@@ -75,3 +75,19 @@ coverage, style cleanup and production hardening are outside this review.
 Historical blocked-status metadata and incomplete independent-objective work
 should be reconciled at their own milestones; neither warrants stopping the
 independent pilot. No source changes or production fixes are requested.
+
+## Follow-up: metadata for a resumed run in a new directory
+
+At the first paired-results review, a focused test reproduced one metadata
+omission: resuming into a new output directory did not write `config.json`.
+The driver now writes the configuration when that file is absent, after
+validating the checkpoint's scientific settings and episode boundary. Existing
+configuration files remain unchanged; the resume event still records the parent
+checkpoint and current extended configuration.
+
+The two added tests cover new-directory metadata, preservation of an existing
+configuration, and rejection of a changed training seed. Together with the
+original tests, **five CPU tests passed**. An independent diff review found no
+blocking issue. This does not alter the learning algorithm or any live sealed
+run. Analysis of a future 500k continuation still needs an explicit endpoint and
+resume provenance; the current 100k summary deliberately excludes resumed runs.

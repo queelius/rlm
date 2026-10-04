@@ -35,14 +35,14 @@
 \question{Where are we now?}
 
 We have selected the paper, checked its implementation, and completed a short
-GPU training test. \textbf{The first full reference run learned better control.}
+GPU training test. \textbf{Both versions learned; CURL finished higher in the first pair.}
 This edition explains the method and the plan. The worked numbers are
 explicitly labeled illustrations; the published scores belong to the authors.
-Page 8 shows our first completed run. The control and repetitions are ongoing.
+Page 8 shows the first completed pair. Repetitions with new training seeds are ongoing.
 
-The first full run scored 678 after 100,000 simulator steps, up from about 8
-before training. One run does not establish CURL's benefit over the control or
-reproduce the paper's average. Evidence cutoff: 4 October, 17:28 UTC.
+After 100,000 simulator steps, CURL scored 678 and the same-crops control scored
+454. Both started near 8. One pair does not establish a reliable CURL advantage
+or reproduce the paper's average. Evidence cutoff: 4 October, 17:42 UTC.
 
 \question{Why this paper?}
 
@@ -66,7 +66,7 @@ practice, but would not retroactively prove our earlier RLM training correct.
 
 Pages 2--4 explain the task and learning process with examples. Page 5 explains
 the comparison and scores. Page 6 records implementation findings that affect
-interpretation. Pages 7--8 give next decisions, checks and the first real curve.
+interpretation. Pages 7--8 give next decisions, checks and the first paired curves.
 The detailed configuration is in the adjacent research protocol, not hidden in
 the prose.
 
@@ -340,9 +340,8 @@ The hyperparameters and step terminology are documented in the supplement.\footn
 
 \question{The next useful sequence}
 
-The short test and first full reference run have completed. We are now running
-the no-contrastive control at the fixed 100k
-budget. Repeat both with additional seeds before treating a difference as a
+The short test and first reference/control pair have completed at the fixed
+100k budget. We are repeating both with additional training seeds before treating a difference as a
 reliable effect. Extend to 500k only if time and measured throughput permit.
 The second requested GPU can run another seed independently; it is not required
 to begin the first comparison.
@@ -368,9 +367,9 @@ Item & Status\\
 \midrule
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
-GPU training and policy evaluation & First reference complete; control running.\\
+GPU training and policy evaluation & First pair complete; repetitions running.\\
 Checkpoint save/reload verification & CPU next-update test passed.\\
-Evidence that CURL beats the control & None yet; full results pending.\\
+Evidence that CURL beats the control & Higher endpoint in one seed; not replicated.\\
 \bottomrule
 \end{tabular}
 
@@ -393,39 +392,39 @@ Earlier RLM work is preserved in
 \end{frame}
 \begin{frame}[t]
 \vspace*{0.55in}
-\chapterpage{7 / FIRST MEASURED RESULT}{The controller learned, but the comparison is not finished.}
+\chapterpage{7 / FIRST PAIRED RESULT}{Both learned. CURL finished higher in the first pair.}
 
-One CURL training run reached an average reward of \textbf{678} after 100,000
-training simulator steps. Before training, the same ten evaluation starting
-conditions gave about \textbf{8}. Higher rewards mean better swinging and
-balancing; these numbers are not percentages of successful episodes.
+After 100,000 training simulator steps, CURL scored \textbf{678} and the control
+without image matching scored \textbf{454}. Both started near \textbf{8}.
+Higher rewards mean better swinging and balancing, not a higher percentage of
+successful episodes. Only \textbf{one training seed per version} has finished.
 
 \begin{center}
-\includegraphics[width=.90\linewidth]{figures/first-reference.pdf}
+\includegraphics[width=.90\linewidth]{figures/first-pair.pdf}
 \end{center}
 
-Every point averages ten evaluation episodes of the policy at that moment.
-The line is the one completed CURL run. The control without image matching is
-still running and is not plotted here. An unfinished experiment is not a
-failed zero-score experiment.
+Every point averages ten evaluation episodes from the same fixed starting
+conditions. The solid line is CURL; the dashed line removes image matching
+but keeps the same crops and reinforcement-learning updates.
 
 \question{What does the uneven line tell us?}
 
-Learning was not steady. The last score is much higher than the previous one.
-We used the endpoint chosen before the run, not a selected best checkpoint,
-but one high endpoint still needs repetitions. This is evidence that our system
-can learn this task, not that the extra image-matching objective caused the gain.
+Neither version stayed consistently ahead during training. CURL's final score
+jumped from 423 at the previous test to 678. The endpoint was chosen before
+the run, not selected afterward, but this late jump makes repetitions important.
+The control's improvement shows that image matching is not required to learn
+this task. Its additional benefit remains a question.
 
 \question{What did it cost, and what happens next?}
 
-Training and evaluation took 14.4 minutes, plus 11.4 seconds to save the
-checkpoint. Setup was extra. Evaluation experience was not used for training.
+Training and evaluation took 14.4 minutes for CURL and 13.0 for the control,
+plus about 11 seconds each to save checkpoints. Setup was extra.
 
-Next we finish the control and two more training seeds per version, then
+Next we finish two more training seeds per version, then
 consider extending both to 500,000 steps. All seeds and curves will be reported.
 
 \small
-\textbf{Evidence.} Native records: \texttt{data/first-reference/metrics.jsonl}.
+\textbf{Evidence.} Native records: \texttt{data/first-reference/} and \texttt{data/first-control/}.
 Task: DeepMind Control Suite \texttt{cartpole/swingup}; training seed 123;
 evaluation seeds 10000--10009. Modern simulator compatibility adaptation.
 \end{frame}
