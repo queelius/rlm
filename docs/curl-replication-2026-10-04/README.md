@@ -3,22 +3,21 @@
 Start with [the nine-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
-This edition includes **three completed 100k pairs and two completed 500k pairs**,
-plus the third completed 500k CURL model, with a 23:46 UTC evidence cutoff.
+This edition includes **all three completed pairs at both 100k and 500k**,
+with an October 5, 00:46 UTC evidence cutoff.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
 446.17 versus 240.54 in the second, and 587.99 versus 463.26 in the third.
-All six models are included in continued training to 500k. The longer comparisons
-have different winners: **842.74 versus 866.94** in the first pair, and
-**866.14 versus 810.96** in the second (CURL first in each).
-The early advantage is more consistent so far than the later one. Two pairs
-cannot establish general late harm, superiority or equivalence.
-Page 8 preserves the three early comparisons; page 9 shows both completed
-longer pairs and explains the limits and recovery cost. The third CURL model
-finished at **855.22**, up from 587.99; its control is still training. The
-three-seed CURL mean of 854.70 is not a matched comparison with only two
-completed controls. Published scores and invented teaching
+All six models continued to the fixed 500k endpoint. The longer comparisons
+have different winners: **842.74 versus 866.94**, **866.14 versus 810.96**, and
+**855.22 versus 870.53** (CURL first in each).
+The mean advantage shrank from **+184.64 to +5.22**. That is an early benefit
+without a consistent late winner in this small study, not proof of equivalence.
+Page 8 preserves the early comparisons; page 9 shows all three longer pairs
+with limits and recovery cost. A fresh-model comparison on a walking task is
+now running to test the scope of the early finding. No walking endpoint is
+complete yet. Published scores and invented teaching
 examples are identified explicitly.
 
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
@@ -60,26 +59,26 @@ Keep published reference scores separate from our measurements.
 
 ## Verification of this edition
 
-Compiled with Tectonic 0.17.0 using cached dependencies on October 4, 2026,
-at approximately 23:48 UTC. The nine-page edition was updated after the third
-CURL model finished at 500k. Changed pages 1, 5 and 7 were visually inspected; unchanged pages retain
+Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
+The nine-page edition was updated after all three matched pairs finished at
+500k. Changed pages 1, 5, 7, 8 and 9 were visually inspected; unchanged pages retain
 their earlier inspection. The build reports no overfull
 boxes, and extracted text stays within every page boundary. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`abf6dc792444ec73e672b4f8205b3d42c6c451d217f6b80b9a2c2bf39c09b5be`.
+`8aba1e14f89f3123874c47fede200628d21b920bd74169e18ba46950df329220`.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
 The runtime checks include real simulator behavior, CPU checkpoint restoration,
 and a completed GPU pilot. Three full matched pairs also completed, but this is
 still a small exploratory comparison, not a reproduction of the paper's mean.
-All five completed 500k endpoints passed native terminal and ancestry checks.
-The three-seed CURL mean and sample SD were recalculated from native final
-episode returns. Recovery cost is reported separately. There are still only
-two completed longer pairs; the last control remains incomplete.
+All six completed 500k endpoints passed native terminal and ancestry checks.
+An independent CPU audit recalculated the 12 endpoint means from 120 episode
+records across both budgets, checked the ten evaluation starts and matched configurations, and
+confirmed the paired differences. Recovery cost is reported separately.
 
 ## Evidence and next comparisons
 
@@ -112,8 +111,12 @@ two completed longer pairs; the last control remains incomplete.
   in the two pairs. Rebuild with `python plot_completed_500k_pairs.py` here.
 - [Third completed longer CURL model](extension-data/curl-seed789-500k) and
   [23:46 continuation snapshot](extension-data/third-curl-500k-summary.json):
-  855.22 at the fixed endpoint; its control remains incomplete. No third paired
-  claim follows from this endpoint alone.
+  855.22 at the fixed endpoint; this historical snapshot predates its control.
+- [Final completed control](extension-data/no-curl-seed789-500k),
+  [complete six-run summary](extension-data/three-500k-pairs-summary.json) and
+  [all three longer curves](figures/three-completed-pairs/completed-500k-pairs.pdf):
+  the complete cohort. Rebuild the current figure with
+  `python plot_completed_500k_pairs.py --summary extension-data/three-500k-pairs-summary.json --output figures/three-completed-pairs`.
 - [Failed longer-run records](extension-data/failed-seed123) and
   [cleanly stopped control](extension-data/stopped-control-seed123): preserved
   execution evidence, not completed 500k scores. The [recovery plan](RECOVERY_PLAN.md)
@@ -125,6 +128,6 @@ two completed longer pairs; the last control remains incomplete.
 - [Ranked next comparisons and primary research](NEXT_COMPARISONS.md): the
   augmentation-only question has prior work; this is a learning reproduction,
   not a novelty claim.
-- [Prepared walker/walk protocol](WALKER_PROTOCOL.md): the next task tests
-  whether the early benefit extends to learning to walk. It has not launched;
-  the current cartpole queue keeps its original owner and settings.
+- [Walker/walk protocol](WALKER_PROTOCOL.md): now running after the cartpole
+  queue completed. It tests whether the early benefit also appears when fresh
+  models learn to walk; it does not transfer the cartpole model's weights.

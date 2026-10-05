@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-status: three_pairs_completed_500k_continuations_running
+status: three_pairs_completed_at_100k_and_500k
 question: Can we reproduce one published CURL learning result and isolate the contribution of its contrastive objective?
 stage: first_reference_and_control
 completed_pilots: 1
@@ -20,7 +20,20 @@ Read the [learning guide PDF](../../docs/curl-replication-2026-10-04/learning-gu
 first; its source and build instructions are adjacent. The old research is preserved in
 [the RLM checkpoint](../../docs/RESEARCH_RESUME_2026-10-04.md).
 
-## Actual progress at 18:37 UTC
+## Current checkpoint: October 5, 00:46 UTC
+
+All three cartpole pairs are complete at both 100k and 500k. The mean paired
+advantage for CURL shrank from +184.64 to +5.22; late differences were -24.20,
++55.18 and -15.31. This supports an early benefit in this small study, not
+equivalence or a reliable late winner. First-pair CURL used 602k physical
+interactions after recovery; the other five used 500k. See the current
+[findings and evidence](../../docs/curl-replication-2026-10-04/FINDINGS.md).
+
+The [walker scope comparison](../../docs/curl-replication-2026-10-04/WALKER_PROTOCOL.md)
+is now running from its separate sealed source and campaign root. No live
+source was changed. Earlier progress descriptions below are historical.
+
+## Historical progress at October 4, 18:37 UTC
 
 Execution access is restored. A real GPU pilot completed 1,200 decisions,
 9,600 training simulator steps, 200 updates, and six evaluation episodes in

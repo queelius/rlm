@@ -1,12 +1,38 @@
 ---
 date: 2026-10-04
-status: three_100k_pairs_and_two_mixed_500k_pairs_complete
+status: three_pairs_complete_both_budgets_walker_running
 priority: replication_before_mechanism
 ---
 
 # What the next comparisons would establish
 
-## Current decision after two longer pairs, 22:48 UTC
+## Current decision after all three pairs, October 5 at 00:46 UTC
+
+The early paired advantage was +184.64 on average; at 500k it is +5.22, with
+differences -24.20, +55.18 and -15.31. Every pair's gap shrank, but the later
+sign differs across seeds. This is neither a consistent late advantage nor
+evidence of equivalence. First-pair CURL's extra recovery cost remains explicit.
+
+1. **Run the already-declared walker scope check.** It launched at 00:43:32 UTC
+   after the cartpole queue ended. All three pairs, fresh weights, fixed 100k
+   endpoint and unchanged settings in [WALKER_PROTOCOL.md](WALKER_PROTOCOL.md).
+   Native simulator returns and finite learning updates are verified; no final
+   walking result yet. The initial evaluation alone took 85 seconds, so measure
+   throughput rather than assuming cartpole's duration.
+2. **Decide on more seeds or a longer walker horizon from the complete cohort.**
+   A repeated early benefit strengthens its scope within these tasks; a mixed
+   result narrows the claim. Do not stop after a favorable first seed or change
+   the declared endpoints in response to interim rewards.
+3. **Keep the shared-checkpoint matching-on/off intervention conditional.** It
+   asks whether continued extra learning helps after an early foundation. It
+   should not be framed as repairing proven late harm. Removing the update also
+   removes optimizer work; correspondence information needs a separate control.
+
+This remains a learning reproduction, not a novelty claim or a result about
+language-model agents. The complete cartpole guide and native records are the
+checkpoint; GPU work now answers the second-task question.
+
+## Earlier decision after two longer pairs, October 4 at 22:48 UTC
 
 The second pair did not repeat the first reversal: CURL scored 866.14 versus
 810.96, a +55.18 difference, while the first pair was -24.20. Both late

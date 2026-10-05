@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-04T23:46:00Z
+cutoff_utc: 2026-10-05T00:46:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-04T23:46:00Z
+execution_update_utc: 2026-10-05T00:46:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -12,11 +12,71 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 
 # What we have learned so far
 
-Both versions learned in all three completed 100k pairs, where CURL finished
-higher. **The two completed 500k pairs have different winners.** The first
-favors the control; the second favors CURL. The early advantage is more consistent
-so far than the later advantage. The third pair remains incomplete. We cannot
-conclude general late harm, superiority or equivalence from these few seeds.
+All three pairs are complete at both budgets. CURL finished higher in every
+100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
+with different late winners. This small study shows an early benefit but no
+consistent late winner. It does not establish equivalence or a universal rule.
+
+## Completed cohort, October 5 at 00:46 UTC
+
+| Seed | CURL at 100k | Control at 100k | Early difference | CURL at 500k | Control at 500k | Late difference |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 123 | 678.02 | 454.47 | +223.55 | 842.74 | 866.94 | -24.20 |
+| 456 | 446.17 | 240.54 | +205.63 | 866.14 | 810.96 | +55.18 |
+| 789 | 587.99 | 463.26 | +124.74 | 855.22 | 870.53 | -15.31 |
+| Mean | 570.73 | 386.09 | +184.64 | 854.70 | 849.48 | +5.22 |
+
+The early gap shrank in every pair. Each score is the mean reward of ten fixed
+evaluation episodes for the planned endpoint, not the best checkpoint. A row
+follows one training seed through both budgets, not two independent replicates.
+An independent CPU audit recomputed the 12 endpoint means from 120 evaluation
+episode records, checked
+the ten declared starts, terminal counters and matched configurations, and
+confirmed these values. Later sample SD across seeds is 11.70 for CURL and
+33.41 for the control; three seeds do not establish a precise population effect.
+
+**What we learned:** more training changed the comparison substantially. The
+extra image-matching exercise helped at the early endpoint, but did not produce
+a consistent later advantage in this task and protocol. The control also
+learned strong behavior. We should not call the extra exercise necessary for
+learning, or infer a universal benefit or harm from one horizon.
+
+**What remains uncertain:** close averages do not prove equivalence. We have
+one task, three training seeds and ten fixed evaluation starts. The software
+stack differs from the historical paper. Removing the matching update also
+removes extra optimizer work, so the ablation does not isolate image correspondence
+information from additional optimization. Shared-checkpoint interventions could
+test continued value, but this scratch comparison does not identify a mechanism.
+
+**New endpoint evidence:** final control mean 870.5324417389436; natural
+62,500 decisions, 500k training steps and 61,500 update calls, exit 0 and
+complete=true. All 3,500 logged learning values are finite; no failure. Last
+five means: 868.39, 866.53, 869.62, 845.11, 870.53. The 11,354,767,581-byte
+checkpoint matches its receipt and took 29.47 seconds to write. It used 500k
+physical training steps and 1.26m evaluation steps. All six final chains pass
+the same endpoint and ancestry checks.
+
+**Cost caveat:** first-pair CURL used 602k physical training steps after repeating
+102k lost-state work. The other five models used 500k each. All retain a 500k
+history; the abandoned branch is not plotted or counted as another seed. These
+are not equal-physical-cost claims. Evaluation work is separate from training.
+
+**Decision and launch:** the prepared walker/walk comparison started at
+00:43:32 UTC, after cartpole queue completion and owner exit. It asks whether
+the early benefit appears on another task with fresh models, not whether
+cartpole-trained weights transfer. Run all three declared pairs regardless of
+the first result. First real returns were recorded after 89.59 seconds, following
+an 85-second initial evaluation; finite learning updates followed after 107.46
+seconds, after the random-action warmup. No walking endpoint exists yet.
+The 107-second gap between cartpole queue exit and walker child launch included
+review/admission checks and a corrected read-only command typo; it was not
+training. No document polishing delayed the launch.
+
+See [final control records](extension-data/no-curl-seed789-500k),
+[complete six-run summary](extension-data/three-500k-pairs-summary.json),
+[all three longer curves](figures/three-completed-pairs/completed-500k-pairs.pdf)
+and [walker protocol](WALKER_PROTOCOL.md). Older dated entries below preserve
+what was known at each earlier decision point.
 
 ## Third longer CURL result at 23:46 UTC: all references complete
 

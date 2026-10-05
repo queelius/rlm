@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-status: prepared_not_launched
+status: running_first_reference_no_completed_endpoints
 question: Does the early benefit of the extra image-matching update extend to a walking task?
 primary_endpoint: 100000_training_simulator_steps
 training_seeds: [123, 456, 789]
@@ -9,7 +9,7 @@ external_campaign: /project/alex_phd/runs/curl-walker-replication-20261004
 
 # A second task: learn to walk from images
 
-The first cartpole comparisons favor CURL after short training, but the two
+The first cartpole comparisons favor CURL after short training, but the three
 completed longer comparisons have different winners. We should check the scope
 of the early result before building an explanation around one later reversal.
 Walker/walk asks a simulated body to stay upright and move forward. It changes
@@ -71,18 +71,22 @@ The driver already supports walker. The queue now forwards domain, task
 and action repeat and checks those fields when recognizing completed jobs.
 That small change passed nine focused tests and independent review, separately
 from the sealed live cartpole sources.
-Use a distinct campaign and source snapshot. Do not start a competing owner
-while the current cartpole owner still has work. No walker run has launched
-as of this protocol. Cartpole-specific continuation admission remains unchanged;
+The distinct campaign launched on October 5 at 00:43:32 UTC, after the cartpole
+queue ended and its owner exited. The first CURL reference is running; five
+follow-ons are queued. No completed walking result exists yet.
+Cartpole-specific continuation admission remains unchanged;
 any later walker continuation requires its own explicit protocol.
 
-The six-job queue and source snapshot are prepared at
+The six-job queue and source snapshot are stored at
 `/project/alex_phd/runs/curl-walker-replication-20261004`. Source commit:
 `bad5b90a3d8113faad987ff034806282b7f05888`; the task-specific manifest changes
 and file hashes are recorded in its `SOURCE.json`. The simulator check completed
 a natural 500-decision / 1,000-step episode with six action components and the
 expected image stack. This checks the adapter, not learned walking performance.
-Its `HANDOFF.md` records the launch boundary and observer update still required.
+Its `LAUNCH.json` and `HANDOFF.md` record runtime ownership and monitoring.
+Native returns arrived 89.59 seconds after launch, and finite learning updates
+after 107.46 seconds, following warmup. Initial evaluation of ten episodes took
+85 seconds; the early returns check execution, not learned task competence.
 
 ## How the evidence will change our plan
 
