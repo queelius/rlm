@@ -1,12 +1,12 @@
 ---
 date: 2026-10-04
-status: cartpole_complete_second_walker_reference_complete_control_running
+status: cartpole_complete_two_walker_pairs_complete_third_running
 priority: replication_before_mechanism
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 04:27 UTC
+## Current decision, October 5 at 05:43 UTC
 
 The early paired advantage was +184.64 on average; at 500k it is +5.22, with
 differences -24.20, +55.18 and -15.31. Every pair's gap shrank, but the later
@@ -16,17 +16,40 @@ evidence of equivalence. First-pair CURL's extra recovery cost remains explicit.
 1. **Run the already-declared walker scope check.** It launched at 00:43:32 UTC
    after the cartpole queue ended. All three pairs, fresh weights, fixed 100k
    endpoint and unchanged settings in [WALKER_PROTOCOL.md](WALKER_PROTOCOL.md).
-   First pair finished at 482.83 versus 241.28, favoring CURL. The second CURL
-   seed finished at 385.23; its control has verified returns and finite updates.
-   There is still only one completed walking pair. Finish the cohort;
-   one favorable pair does not establish a repeatable advantage.
-2. **Decide on more seeds or a longer walker horizon from the complete cohort.**
+   The first two pairs finished at 482.83 versus 241.28 and 385.23 versus 360.96.
+   Both favor CURL, but their differences are +241.55 and +24.27. The third
+   CURL seed is running, with its control queued. Finish the cohort; two
+   favorable signs with unequal gaps do not establish a stable benefit.
+2. **Check sensitivity to the test starts with every frozen final model.**
+   After all six runs finish, a separately declared panel of 50 fresh starts
+   could be applied to all six fixed 100k checkpoints. Keep the original
+   ten-start primary result unchanged. This probes evaluation variability,
+   not variability from training new models. The second control's ten returns
+   include 46.98 while the other nine are 290.65--503.13; retain all of them.
+   The small +24.27 gap deserves a check on a fresh panel, without dropping
+   difficult starts or selecting checkpoints. CPU inspection estimates 45--60
+   minutes including loading, with only small output files. A proposed panel
+   is starts 20000--20049, distinct from the original 10000--10009. Do not choose
+   later checkpoints or training seeds because this panel favors them. An evaluation-only
+   entrypoint is needed; this follow-up is prepared conceptually, not launched.
+3. **Decide on more training seeds or a longer walker horizon from the cohort.**
    The first control was improving near its endpoint, so a longer horizon could
    distinguish delayed learning from a persistent gap if the pattern repeats.
    A mixed cohort would instead motivate more seeds. Do not stop after a
-   favorable first seed or change
+   favorable partial cohort or change
    the declared endpoints in response to interim rewards.
-3. **Keep the shared-checkpoint matching-on/off intervention conditional.** It
+   CPU inspection finds all-six 100k-to-200k continuations feasible in roughly
+   7--9 hours, versus 28--32 hours for direct 500k continuations. Both would use
+   about 127 GB of additional space including one temporary checkpoint, because
+   replay reaches capacity by 200k. Also reserve 19 GB for the unfinished
+   third pair's parent checkpoints; those were not yet included in the 05:42
+   free-space reading. Recheck shared project quota before any launch.
+   Admission and analysis are still specific
+   to cartpole and need a small explicit walker extension; the learner does
+   not. Do not launch against unmodified cartpole admission. Resume semantics
+   reset simulator state at natural episode boundaries; these would not be
+   bit-identical uninterrupted runs. Neither continuation has been launched.
+4. **Keep the shared-checkpoint matching-on/off intervention conditional.** It
    asks whether continued extra learning helps after an early foundation. It
    should not be framed as repairing proven late harm. Removing the update also
    removes optimizer work; correspondence information needs a separate control.

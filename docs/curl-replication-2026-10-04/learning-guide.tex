@@ -49,9 +49,9 @@ All three pairs are now complete after 500,000 steps. Their average scores are
 \textbf{855 for CURL versus 849 for the control}, with different winners across
 runs. The large early advantage became much smaller. This is not proof that
 the methods are equivalent. Page 9 shows every pair. On the walking task, the
-first pair finished at \textbf{483 for CURL versus 241 for the control}.
-Page 10 shows the curves. Two more pairs are planned before judging how
-repeatable this is. Latest evidence: 5 October, 03:13 UTC.
+first two pairs finished at \textbf{483 versus 241} and \textbf{385 versus 361},
+with CURL first. The second advantage is much smaller. Page 10 shows both
+pairs; the third is running. Latest evidence: 5 October, 05:43 UTC.
 
 \question{Why this paper?}
 
@@ -402,10 +402,10 @@ Evidence about the extra matching task & Ahead at 100k; mixed results at 500k.\\
 The walking comparison uses three fresh training seeds and both methods, each
 with 100,000 training simulator steps. We will report all six outcomes, not
 only favorable ones. It tests another task, not transfer of the cartpole model's
-weights. The first pair finished at \textbf{483 versus 241}, favoring CURL.
-These are the planned final scores, not the best points on their curves.
-The next training seed is running. Page 10 shows why the first result is
-encouraging, and why we still need the other pairs.
+weights. Two pairs finished at \textbf{483 versus 241} and \textbf{385 versus 361},
+with CURL first. These are the planned final scores, not selected peaks.
+The third pair is running. Page 10 shows why the benefit's size remains
+uncertain even though both completed comparisons favor CURL.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
@@ -502,32 +502,32 @@ In \texttt{walker/walk}, a simulated body learns to stay upright and move forwar
 using pictures. We trained fresh models, not the cartpole models.
 
 \begin{center}
-\includegraphics[width=\linewidth]{figures/walker-first-pair/learning-curves.pdf}
+\includegraphics[width=\linewidth]{figures/walker-two-pairs/learning-curves.pdf}
 \end{center}
 
 \textbf{How to read the plot.} Each point averages ten test episodes without
-changing the weights. The solid line includes image matching; the dashed line
-keeps the image crops but removes the matching update. Higher reward is better.
+changing the weights. Each color is one training pair. Solid lines include image
+matching; dashed lines keep the crops but remove matching. Higher is better.
 
-\question{What did the first pair show?}
+\question{What did the two pairs show?}
 
-At the planned 100,000-step endpoint, CURL scored \textbf{483} and the control
-scored \textbf{241}. Both started around 18. CURL learned earlier in this pair.
-We show the full recorded curves, without smoothing or selecting the best
-checkpoint. The control was still improving near the end.
+At the planned 100,000-step endpoint, CURL scored \textbf{483 versus 241} for
+the control in the first pair, and \textbf{385 versus 361} in the second.
+Both favor CURL, but the second advantage is much smaller. We show full curves,
+without smoothing or selecting the best checkpoint.
 
 \question{What can we conclude, and what comes next?}
 
-This is one training pair, not ten independently trained models. Two more pairs
-will check whether the difference repeats. If it does, longer training could
-test whether the control catches up, as it largely did in the cartpole comparisons.
+These are two training pairs, not twenty independent models per method.
+We will finish the third pair. More test starts can check the small gap;
+longer training can check whether the benefit lasts.
 
 \takeaway{Our question is not just whether a model learns. We want to know
 which extra learning exercise helps, on which task, and for how much training.}
 
 \small
-\textbf{Cost and evidence.} Both used 100k training and 260k evaluation simulator
-steps. CURL took 75 minutes, the control 69; equal experience is not equal
-computation. Records: \texttt{walker-data/}. Cutoff: 5 October, 03:13 UTC.
+\textbf{Cost and evidence.} Each run used 100k training and 260k evaluation steps.
+CURL took 75--77 minutes, controls 69--72; equal experience is not equal
+computation. Records: \texttt{walker-data/}. Cutoff: 5 October, 05:43 UTC.
 \end{frame}
 \end{document}

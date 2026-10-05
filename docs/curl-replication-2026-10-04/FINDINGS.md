@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T04:27:00Z
+cutoff_utc: 2026-10-05T05:43:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T04:27:00Z
+execution_update_utc: 2026-10-05T05:43:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,46 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## Two walking pairs complete, October 5 at 05:43 UTC
+
+At the fixed 100k endpoint, the second pair scored **385.23473 for CURL versus
+360.96295 for the control**, a difference of **+24.27177**. The first difference
+was +241.55020. Both signs favor CURL, but the benefit's size varies greatly.
+The two-pair means are 434.03 versus 301.12, with a mean difference of +132.91;
+the individual pairs are more informative than this average alone.
+
+The second control nearly matched CURL at several late checkpoints, but its
+curve fluctuates. This does not establish steady catch-up, uniform CURL
+dominance, a persistent advantage or a mechanism. These are two training
+pairs, not twenty independent models per arm or 1,040 training replicates.
+The third pair must be completed regardless of these first two results.
+
+Both root and an independent CPU audit recomputed all 104 curve means from
+1,040 individual episode records, checked ten distinct declared starts per
+point, and confirmed that configurations differ only in arm within each pair.
+All four runs completed naturally at 50k decisions, 100k training steps and
+49k ordinary updates, with no failures or recovery. The second control has
+3,430 finite logged learning values and a final checkpoint of 9,105,904,477
+bytes matching its receipt. It took 71.54 minutes, including 36.12 minutes of
+evaluation and 1.27 minutes of checkpoint writes. Each run used another 260k
+evaluation simulator steps; experience is matched, not compute or wall time.
+
+The owner launched CURL seed 789, child 1704067, 0.277 seconds after the control
+exited. First real returns arrived after 89.46 seconds and finite updates
+after 106.25 seconds. The third control remains queued. Continue unchanged,
+then decide between longer training and more seeds. CPU-only feasibility work
+on a future continuation is preparation, not a changed or launched protocol.
+The small second gap also motivates testing all six final models on a new
+fixed panel of starts before expensive new training. This would supplement,
+not replace, the original primary result or create new training replicates.
+See [ranked follow-ups and feasibility](NEXT_COMPARISONS.md).
+
+The guide now shows [both complete curves](figures/walker-two-pairs/learning-curves.pdf)
+and explicitly emphasizes the unequal gaps. See the [paired summary](figures/walker-two-pairs/summary.json),
+[second reference records](walker-data/second-reference) and
+[second control records](walker-data/second-control). The first-pair figure is
+preserved as a historical snapshot. Full weights remain external.
 
 ## Second walking CURL run complete, October 5 at 04:27 UTC
 
