@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: declared_before_supplemental_results_not_launched
+status: declared_before_supplemental_results_now_running
 question: How sensitive are the walking comparisons to the starting states used for testing?
 training_endpoint: 100000_simulator_steps
 training_seeds: [123, 456, 789]
@@ -9,7 +9,7 @@ evaluation_seeds: 20000_to_20049_inclusive
 
 # Test the same learned walkers from more starting positions
 
-The first two completed comparisons both favor CURL, but by very different
+When this panel was declared, the first two completed comparisons favored CURL by very different
 amounts: about 242 reward points for one training pair and 24 for the other.
 Each score averages ten test episodes. In the second control, nine returns
 range from 291 to 503, while one is 47. We keep that difficult episode in the
@@ -90,6 +90,14 @@ This document declares the experiment; it is not evidence that it has run.
 Before launch, verify all six parent endpoints, the current owner has exited,
 and the shared GPU lock is available. The live training source, original queue,
 primary evaluation and checkpoints remain unchanged.
+
+Execution update, October 5 at 08:03 UTC: all original parents completed, the
+original queue ended, and the prepared owner acquired the shared lock and
+started this panel. A real first episode return arrived about 35 seconds after
+child launch. The above conditions describe the admission checks, not a request
+to launch it again. No supplemental scores are included in the original-cohort
+PDF cutoff. The third original pair favored the control; this does not change
+the declared panel membership, settings or reporting separation.
 
 The per-policy entrypoint is
 [`evaluate_frozen.py`](../../experiments/curl_replication_20261004/evaluate_frozen.py).

@@ -1,12 +1,37 @@
 ---
 date: 2026-10-04
-status: cartpole_complete_two_walker_pairs_complete_third_running
+status: original_walker_complete_mixed_additional_seeds_admitted
 priority: replication_before_mechanism
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 05:43 UTC
+## Current decision, October 5 at 08:07 UTC
+
+The complete walking cohort has differences **+241.55, +24.27 and -262.23**,
+averaging +1.20. The third pair overturns the impression of a repeatable early
+advantage from the first two. It does not prove a tie or that matching never
+helps. The main uncertainty is now variability between trained models.
+
+1. Finish the already-admitted all-six [frozen-policy panel](WALKER_FRESH_STARTS.md).
+   It is running and producing real returns. New starting states test the
+   policies we already trained, not variability from training new policies.
+2. Run the [three new-seed pairs](WALKER_ADDITIONAL_SEEDS.md), keeping settings
+   and the 100k endpoint unchanged. They are admitted and waiting behind the
+   supplemental batch. Report all three, separately from the original cohort.
+   This decision was made from original terminal evidence, not supplemental
+   score-based selection. The external root contains source hashes and admission.
+3. Reassess horizon or mechanism studies from the expanded evidence. Do not
+   immediately spend 28--32 hours on all six 500k extensions while the early
+   effect is so variable. Additional seeds target a different uncertainty than
+   longer training; neither alone establishes a mechanism.
+
+The new cohort needs roughly 7--9 hours and 64 GB including one temporary save.
+Project quota had 164.27 GB free after the original final checkpoint. Keeping
+this cohort plus another approximately 127 GB longer-training generation would
+need a new storage plan; no existing checkpoints are being deleted.
+
+## Earlier decision, October 5 at 05:43 UTC
 
 The early paired advantage was +184.64 on average; at 500k it is +5.22, with
 differences -24.20, +55.18 and -15.31. Every pair's gap shrank, but the later

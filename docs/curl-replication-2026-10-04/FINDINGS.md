@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T05:43:00Z
+cutoff_utc: 2026-10-05T08:03:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T06:54:00Z
+execution_update_utc: 2026-10-05T08:07:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,49 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## The complete walking cohort changes the story, October 5 at 08:03 UTC
+
+The third control finished at **698.06230**, compared with **435.82973** for
+CURL. Its advantage was visible well before the final checkpoint. This is a
+completed fixed-endpoint result, not a selected high point on its curve.
+
+| Training pair | CURL | Same-crops control | CURL minus control |
+|---|---:|---:|---:|
+| Seed 123 | 482.83 | 241.28 | +241.55 |
+| Seed 456 | 385.23 | 360.96 | +24.27 |
+| Seed 789 | 435.83 | 698.06 | -262.23 |
+| Mean across the three pairs | 434.63 | 433.44 | +1.20 |
+
+The first two wins did not establish a dependable walking advantage. The third
+pair nearly cancels their pooled benefit. The near-tied averages also do not
+establish equivalence: outcomes vary greatly across just three training seeds.
+The control's across-seed standard deviation is 236.86, versus 48.81 for CURL,
+but three seeds are insufficient to claim that one method is generally more
+reliable. This is a reason to measure more training runs, not defend the earlier
+two-pair impression. Keep the historical snapshots below as the record of how
+the evidence changed our view.
+
+All six runs completed naturally with no failure or restart. The analysis and
+an independent CPU audit recomputed 156 means from 1,560 raw test episodes,
+checked exact start seeds and paired configurations, and confirmed 50,000
+decisions, 100,000 training steps and 49,000 updates per run. Each model also
+used 260,000 separate evaluation steps. Checkpoint sizes match their receipts.
+The complete cohort used 438.85 minutes of native start-to-end time, including
+213.57 minutes of evaluation and 7.54 minutes writing checkpoints. Equal
+training experience is not equal wall time or optimization work.
+
+The [six full curves](figures/walker-three-pairs/learning-curves.pdf),
+[machine-readable summary](figures/walker-three-pairs/summary.json), and
+[final control's records](walker-data/third-control) support this update.
+
+**Next decision:** the already-declared [new-start panel](WALKER_FRESH_STARTS.md)
+is running on all six unchanged policies. It checks sensitivity to test starts.
+We also admitted [three new training-seed pairs](WALKER_ADDITIONAL_SEEDS.md)
+with unchanged settings, queued after that panel. They check variability from
+training new models. This choice follows the mixed original cohort, not
+selection of favorable policies or schedules using the supplemental panel.
+Report the new cohort separately; any pooled six-pair summary remains exploratory.
 
 ## Third walking CURL model complete, October 5 at 06:54 UTC
 

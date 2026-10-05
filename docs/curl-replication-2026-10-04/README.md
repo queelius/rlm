@@ -4,7 +4,7 @@ Start with [the ten-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **all three completed pairs at both 100k and 500k**,
-plus two completed walking pairs, with an October 5, 05:43 UTC evidence cutoff.
+plus all three completed walking pairs, with an October 5, 08:03 UTC evidence cutoff.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -15,22 +15,23 @@ have different winners: **842.74 versus 866.94**, **866.14 versus 810.96**, and
 The mean advantage shrank from **+184.64 to +5.22**. That is an early benefit
 without a consistent late winner in this small study, not proof of equivalence.
 Page 8 preserves the early comparisons; page 9 shows all three longer pairs
-with limits and recovery cost. A fresh-model comparison on a walking task is
-now running to test the scope of the early finding. Its first two pairs finished
-at **482.83 versus 241.28** and **385.23 versus 360.96**, with CURL first.
-Both favor CURL, but the second advantage is much smaller. Page 10 shows all
-four complete curves. The third pair is running. We do not yet know how stable
-the benefit is, or whether longer training would let the control catch up.
+with limits and recovery cost. The fresh-model walking comparison is also complete:
+**482.83 versus 241.28**, **385.23 versus 360.96**, and **435.83 versus 698.06**,
+with CURL first. Its two wins are offset by a large loss in the third pair.
+The means, **434.63 versus 433.44**, hide those differences. Page 10 shows
+all six curves. Three pairs establish neither a dependable winner nor equivalence.
 Published scores and invented teaching
 examples are identified explicitly.
 
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
 the earlier interpretations as dated checkpoints.
 
-Execution update, October 5 at 06:54 UTC: the third walking CURL model has
-finished at 435.83, and its control is training. This unpaired result is in
-the [findings](FINDINGS.md) and [native records](walker-data/third-reference).
-It does not add a third comparison to the PDF yet.
+The [fresh-start evaluation](WALKER_FRESH_STARTS.md) is now running on all six
+unchanged walking models. [Three additional training pairs](WALKER_ADDITIONAL_SEEDS.md)
+are queued behind it to check variability between independently trained models.
+This decision follows the original mixed cohort, not favorable selection from
+the supplemental evaluation. New test episodes and new training runs answer
+different questions; neither should be counted as the other.
 
 The [research protocol](../../experiments/curl_replication_20261004/README.md)
 contains the selected comparison, run order, settings, resolved access issue and
@@ -70,7 +71,7 @@ Keep published reference scores separate from our measurements.
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
 The ten-page edition includes all three matched cartpole pairs at 500k and the
-first two walking pairs. Updated pages 1, 7 and 10 were visually inspected after
+three walking pairs. Updated pages 1, 7, 9 and 10 were visually inspected after
 compilation; earlier unchanged pages retain their previous inspection. The
 current build has no overfull/underfull messages, and text stays inside all
 ten page boundaries. No font or plot shrink was needed. The numerical
@@ -78,7 +79,7 @@ teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`48a752b97ec8f1178a9515ce1c7a9ff36c5c2a21ada7141a11e4ec801eccea08`.
+`70ffd7c3a5ad7a0ba74bac121f70da51ff0a9c7f3ba3ddabc821540f215f3b4f`.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
@@ -89,10 +90,10 @@ All six completed 500k endpoints passed native terminal and ancestry checks.
 An independent CPU audit recalculated the 12 endpoint means from 120 episode
 records across both budgets, checked the ten evaluation starts and matched configurations, and
 confirmed the paired differences. Recovery cost is reported separately.
-For the two walking pairs, root and an independent CPU audit recomputed all
-104 means from 1,040 episode records, checked the ten declared starts, native
-endpoints, finite learning values and paired configurations. All 16 public
-record files match their external originals byte for byte. The four checkpoints'
+For the three walking pairs, the analysis and an independent CPU audit recomputed all
+156 means from 1,560 episode records, checked the ten declared starts, native
+endpoints, finite learning values and paired configurations. All 24 public
+record files match their external originals byte for byte. The six checkpoints'
 sizes were checked against receipts across the completed reviews.
 The existing summarizer was reused without a code change. Its previous plot-title
 addition passed a failing-first rendered-PDF regression, all seven focused
@@ -103,30 +104,32 @@ or live training-source change. The prior first-pair figure remains preserved.
 
 - [Declared fresh-start evaluation](WALKER_FRESH_STARTS.md) and its
   [fixed panel and budget](walker-fresh-starts.json): a supplemental check of
-  all six final walkers on 50 new starts each. Prepared separately from the
-  ongoing training; no new result yet. The PDF's completed-result cutoff is
-  unchanged.
+  all six final walkers on 50 new starts each. This separate evaluation has
+  started; its results are not included in the original-cohort PDF cutoff.
+- [Additional training-seed protocol](WALKER_ADDITIONAL_SEEDS.md): three new
+  matched pairs with unchanged settings, queued after the evaluation batch.
 - [First walking reference](walker-data/first-reference) and
   [matched control](walker-data/first-control), plus
   [second reference](walker-data/second-reference) and
-  [second control](walker-data/second-control): two completed pairs at fixed 100k.
-- [Current walking paired summary](figures/walker-two-pairs/summary.json) and
-  [learning curves](figures/walker-two-pairs/learning-curves.pdf).
-  This is the preserved two-pair snapshot. The records directory now also
-  includes the unpaired third reference. To summarize all currently published
-  records into a separate output directory, without overwriting that snapshot:
+  [second control](walker-data/second-control), and
+  [third reference](walker-data/third-reference) with
+  [third control](walker-data/third-control): three completed pairs at fixed 100k.
+- [Current walking paired summary](figures/walker-three-pairs/summary.json) and
+  [learning curves](figures/walker-three-pairs/learning-curves.pdf).
+  All six original runs are included. To rebuild this complete-cohort snapshot:
 
   ```sh
   python experiments/curl_replication_20261004/summarize.py \
     --runs docs/curl-replication-2026-10-04/walker-data \
-    --output docs/curl-replication-2026-10-04/figures/walker-current \
-    --title 'Learning to walk: currently published runs'
+    --output docs/curl-replication-2026-10-04/figures/walker-three-pairs \
+    --title 'Learning to walk: the three pairs have different winners'
   ```
 
-  Until the third control finishes, arm-level averages have unequal numbers
-  of models. Use the matched-pair differences, not the difference between
-  those unequal averages, when comparing methods.
+  Compare the individual pairs as well as the averages. The near-zero mean
+  difference does not establish that the methods are equivalent.
 
+- [Historical two-pair snapshot](figures/walker-two-pairs/summary.json): preserved
+  to show how the interpretation changed when the final pair arrived.
 - [Historical first walking pair](figures/walker-first-pair/summary.json) and
   [its original figure](figures/walker-first-pair/learning-curves.pdf).
 - [First reference's native records and configuration](data/first-reference):
@@ -175,6 +178,6 @@ or live training-source change. The prior first-pair figure remains preserved.
 - [Ranked next comparisons and primary research](NEXT_COMPARISONS.md): the
   augmentation-only question has prior work; this is a learning reproduction,
   not a novelty claim.
-- [Walker/walk protocol](WALKER_PROTOCOL.md): now running after the cartpole
-  queue completed. It tests whether the early benefit also appears when fresh
+- [Walker/walk protocol](WALKER_PROTOCOL.md): all three original pairs complete.
+  It tests whether the early benefit also appears when fresh
   models learn to walk; it does not transfer the cartpole model's weights.
