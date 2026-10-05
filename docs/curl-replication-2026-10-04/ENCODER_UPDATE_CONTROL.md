@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: preparing_not_admitted
+status: admitted_owner_waiting_for_final_predecessor
 question: Does the effect of correct or wrong image matching depend on the strength of its encoder update?
 task: cartpole/swingup
 training_seeds: [123, 456, 789]
@@ -9,6 +9,12 @@ new_arms: [single_encoder_curl, single_encoder_shuffled_curl]
 ---
 
 # Does the strength of the extra learning exercise matter?
+
+**Execution update, October 5 at 16:36 UTC:** implementation and focused
+real-upstream CPU tests passed independent review. All six jobs are admitted,
+with a sealed source snapshot. Their owner waits for the current wrong-matching
+batch's final seed. No new follow-up training has started. The design below
+was fixed at 16:28 UTC, when only the first wrong-matching endpoint was known.
 
 The first model taught to match the wrong pictures finished with almost no
 test reward. The original model with correct matches, and the model without
@@ -84,8 +90,11 @@ about 18 GB peak additional checkpoint space. Save full state periodically and
 at the endpoint. Prepare a separate source snapshot; never edit the current
 live batch. Admit a waiting owner only after its final seed has launched, or
 after the entire predecessor batch ends, so it cannot displace a queued seed.
-The allocation deadline is epoch 1791387366. This document is a prospective
-protocol, not evidence that the six new runs have launched or succeeded.
+The allocation deadline is epoch 1791387366. The external run store is
+`/project/alex_phd/runs/curl-cartpole-encoder-strength-20261005`.
+Its SOURCE.json, ADMISSION.json, LAUNCH.json and HANDOFF.md record hashes,
+verification, resource checks and owner identity. Admission is not evidence
+that the six new models have trained or succeeded.
 
 See the [wrong-matching protocol](CORRESPONDENCE_CONTROL.md),
 [running findings](FINDINGS.md), and

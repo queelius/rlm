@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T16:04:00Z
+cutoff_utc: 2026-10-05T16:36:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T16:04:00Z
+execution_update_utc: 2026-10-05T16:36:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,75 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## Two completed wrong-matching runs are worse, October 5 at 16:36 UTC
+
+| Training seed | Correct matching | No matching exercise | Wrong matching |
+|---|---:|---:|---:|
+| 123 | 678.02 | 454.47 | 0.11 |
+| 456 | 446.17 | 240.54 | 68.10 |
+
+These are fixed-100k test rewards, averaged over ten declared starting states
+per model. Only two of the three new runs are complete. Both are worse than
+their original comparators, but their outcomes differ: the second did not
+finish near zero. Do not describe every wrong-matching model as collapsing,
+or report a completed group average before the last model finishes.
+
+Seed 456 completed normally with 11,500 updates and a successful 2.39 GB
+checkpoint. Root recomputed all 26 means from 260 raw episodes and checked
+all 920 logged learning values for finiteness. All 115 sampled permutations
+had no fixed positions; three residual same-record matches reflect replay
+duplicates. Its curve fluctuated substantially, reaching 171.68 at 48k and
+ending at 68.10. The [native records](correspondence-data/shuffled_curl-seed456)
+preserve those fluctuations. No failures or restarts occurred.
+
+The final seed 789 is running and has returned actual rewards and learning
+updates. The [six-run update-strength follow-up](ENCODER_UPDATE_CONTROL.md)
+passed focused CPU tests and independent review. Its owner is now waiting
+behind this final run, with a separate source snapshot and fixed resource
+caps. Its design was fixed before seed 456 finished. No new follow-up model
+has trained yet; a waiting process is not evidence of learning.
+
+## One wrong-matching model fails to learn a useful test policy, October 5 at 16:28 UTC
+
+For training seed 123, the fixed-100k scores are **678.02 with correct image
+matching, 454.47 without the matching exercise, and 0.11 with wrong matches**.
+The score is the mean total reward over the same ten declared test starts.
+This is one completed new model, not a completed three-seed group. The other
+two wrong-matching runs remain scheduled without changes or early stopping.
+
+The low score is a scientific outcome, not a crashed run. Root and an independent
+audit recomputed all 26 test means from 260 raw episodes. The run completed
+100k training steps and 11,500 updates; all 920 logged learning values were
+finite. Its successful receipt and 2.39 GB final checkpoint agree. There were
+no failures or resumes. Total native duration was 14.57 minutes, including
+6.12 minutes of evaluation and 6.20 seconds writing the final checkpoint.
+
+The learning curve was poor and unstable, not a monotonic decline: it started
+at 8.44, reached 106.10 at 60k and ended at 0.11. All ten final test rewards were
+near zero. Stochastic training episodes sometimes scored higher than deterministic
+test episodes. Different action selection and initial states can explain that
+discrepancy; it does not by itself establish an evaluation bug. The late matching
+loss was close to chance-level classification, but this does not prove that the
+learned image representation collapsed.
+
+All 115 sampled pairing diagnostics had no unchanged permutation positions.
+Two residual same-record matches occurred because experience is sampled with
+replacement. Do not claim that every training pair contained different records,
+or that all different records were semantically unrelated.
+
+**Interpretation:** wrong teaching targets can seriously harm learning in this
+run. That is not yet an explanation of the benefit from correct matches. Finish
+the three-seed comparison and retain the no-matching control. We are preparing
+a [small encoder-update-strength comparison](ENCODER_UPDATE_CONTROL.md) to
+separate the pairing question from sensitivity to update magnitude.
+
+The [public native records](correspondence-data/shuffled_curl-seed123) are
+byte-exact copies from `curl-cartpole-correspondence-20261005/shuffled_curl-seed123-100k-v1`
+under the external run store; the [protocol](CORRESPONDENCE_CONTROL.md) records
+the exact settings. The learning PDF remains at its explicit 16:04 UTC cutoff
+until the three-seed comparison is complete; this dated note records the newer
+single-model result without replacing it with a group claim.
 
 ## The additional walking cohort is complete, October 5 at 16:04 UTC
 

@@ -1,12 +1,40 @@
 ---
 date: 2026-10-04
-status: additional_walking_cohort_complete_correspondence_running
-priority: finish_three_condition_cartpole_comparison
+status: two_correspondence_results_encoder_strength_followup_admitted
+priority: finish_correspondence_and_prepare_six_fixed_strength_runs
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 16:04 UTC
+Execution update at 16:36 UTC: the second wrong-matching run finished at 68.10,
+also below its original comparators. The final seed is running. The six-run
+follow-up fixed below passed focused CPU tests and independent review; it is
+admitted with a waiting owner behind the final seed. No follow-up training has
+started. Keep every condition unchanged and report all individual endpoints.
+
+## Current decision, October 5 at 16:28 UTC
+
+The first wrong-matching model finished at **0.11**, compared with **678.02**
+for correct matching and **454.47** without matching for the same seed.
+Actual test episodes, updates and the normal completion were independently
+audited. Wrong targets can be actively harmful; this result alone does not
+explain why correct matching helps. The other two declared seeds continue
+unchanged. There is no complete new-group estimate yet.
+
+Prepare the [six-run encoder-strength comparison](ENCODER_UPDATE_CONTROL.md)
+while those jobs run. This is a bounded, within-task test of whether the effect
+of correct and incorrect targets depends on how strongly the auxiliary exercise
+updates the encoder. Keep all six conditions/seeds fixed before inspecting
+the remaining wrong-matching endpoints. Preparation does not imply admission.
+
+Ranked next: complete and interpret this small two-by-two comparison; then
+consider a shared-checkpoint matching-on/off intervention if the evidence
+warrants it. A correct-single-update-only study is cheaper but cannot test the
+explanation for harmful wrong targets. A longer walking study remains less
+informative per hour at this point. Retain all original comparators and failed
+attempts; do not tune against supplemental test starts.
+
+## Earlier decision, October 5 at 16:04 UTC
 
 The additional walking cohort is complete: paired differences **+302.52,
 -80.56 and +280.37**, averaging **+167.44**. This adds positive evidence for

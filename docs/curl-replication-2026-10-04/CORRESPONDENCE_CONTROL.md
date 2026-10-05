@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: first_training_run_active_two_following_seeds_queued
+status: two_training_runs_complete_final_seed_running
 question: Does matching the right observations matter for the early cartpole benefit?
 task: cartpole/swingup
 new_arm: shuffled_curl
@@ -10,6 +10,15 @@ external_campaign: /project/alex_phd/runs/curl-cartpole-correspondence-20261005
 ---
 
 # Does the model need to match the right pictures?
+
+**October 5, 16:36 UTC:** two wrong-matching models completed normally.
+Seed 123 scored **0.11**, compared with **678.02** for original CURL and
+**454.47** without matching. Seed 456 scored **68.10**, compared with **446.17**
+and **240.54**. The final seed is running unchanged. This is evidence of harm
+in two runs, not a full-group result or an explanation of why correct matching
+helps. See the dated
+[native-result audit](FINDINGS.md) and prospective
+[update-strength comparison](ENCODER_UPDATE_CONTROL.md).
 
 Our three original cartpole comparisons favored CURL at 100,000 training steps.
 That comparison removed the whole extra image-matching update, not just its
@@ -107,8 +116,8 @@ The allocation deadline remains epoch 1791387366. Use the existing GPU lock and
 start training only after all six additional walking jobs have finished or been
 accounted for by their owner. A waiting owner was admitted only after verifying
 that the sixth/final walking job was running and holding that lock. Waiting is
-not training. The handoff has now occurred, but no completed correspondence
-outcome is available at this cutoff.
+not training. The handoff has occurred and two endpoints are available;
+the full three-seed comparison is not complete at the 16:36 UTC cutoff.
 
 Report all three conditions at the fixed endpoint, with individual training-seed
 scores and unsmoothed curves. Correct matches above both alternatives would be

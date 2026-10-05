@@ -31,6 +31,12 @@ examples are identified explicitly.
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
 the earlier interpretations as dated checkpoints.
 
+Newer than the PDF: two wrong-matching cartpole models finished at **0.11** and
+**68.10**, below both original comparators for each seed. The final seed is
+running. These two outcomes suggest harm from wrong targets, but are not a
+completed group or a mechanism explanation. The [dated findings](FINDINGS.md) and
+[next comparison](ENCODER_UPDATE_CONTROL.md) explain the evidence and limits.
+
 All three additional training pairs are complete:
 **502.95 versus 200.43**, **254.63 versus 335.20**, and **436.58 versus 156.22**,
 CURL first. Their
