@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T17:50:00Z
+cutoff_utc: 2026-10-05T18:08:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T17:50:00Z
+execution_update_utc: 2026-10-05T18:08:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,51 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## The smaller update is not consistently better, October 5 at 18:08 UTC
+
+All three models with correct image matches and the smaller encoder update
+have finished. The final score is **531.20**, below original CURL's **587.99**
+but above **463.26** without image matching.
+
+| Training seed | Original CURL | Smaller matching update | No matching | Smaller minus original |
+|---|---:|---:|---:|---:|
+| 123 | 678.02 | 795.84 | 454.47 | +117.81 |
+| 456 | 446.17 | 316.12 | 240.54 | -130.05 |
+| 789 | 587.99 | 531.20 | 463.26 | -56.80 |
+| Mean across these three models | 570.73 | 547.72 | 386.09 | -23.01 |
+
+Each score is total reward averaged over ten fixed cartpole test starts after
+100k training simulator steps. The ten tests are not ten independently trained
+models. Every smaller-update model still beat its no-matching comparison, but
+reducing the update helped once and hurt twice. The initial favorable result
+does not support a claim that this change reliably improves CURL. Three seeds
+also do not establish equivalence or a dependable ranking between update rules.
+
+One explanation is ordinary variation between training runs. Another is that
+the update rule changes learning differently across runs. Because policies
+collect different experience as they learn, this whole-training comparison
+does not isolate an immediate encoder effect on identical data.
+
+The new model completed without a failure or restart. We recomputed its 26
+test means from 260 episode returns, along with the two original seed-789
+comparators (78 means and 780 tests in total). All 920 logged learning values
+are finite; the native records show 100 natural training episodes, 11,500
+updates and 260k additional test interactions. The final checkpoint exists at
+the recorded size of 2,370,118,435 bytes. Runtime was 14.31 minutes, including
+6.15 minutes testing and 6.11 seconds saving. Configuration differences are
+the intended arm/update rule and a nonbinding runtime cap. The four
+[native evidence files](encoder-strength-data/single_encoder_curl-seed789)
+are copied unchanged.
+
+The final wrong-target model is still running; its partial curve is not a
+fixed endpoint. The [nine fresh-seed jobs](CARTPOLE_FRESH_SEEDS.md) are admitted
+and waiting behind it under the shared GPU lock. Their design was fixed before
+the third seed's results, and all nine will run regardless of the last outcome.
+Report that added cohort separately. It checks reproducibility of useful
+matching, not the correctness-by-update-strength interaction, because it has
+no new wrong-target conditions. The learning PDF will be updated when the
+current two-by-two comparison finishes, without waiting for the fresh cohort.
 
 ## Wrong-target harm persists at the smaller update, October 5 at 17:50 UTC
 

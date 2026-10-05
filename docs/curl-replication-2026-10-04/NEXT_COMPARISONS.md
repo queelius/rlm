@@ -6,7 +6,24 @@ priority: finish_six_fixed_strength_runs_and_compare_all_conditions
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 17:50 UTC
+## Current decision, October 5 at 18:08 UTC
+
+The smaller correct-matching update helped one training seed and hurt two.
+All three still beat no matching, but neither a reliable improvement over
+original CURL nor equivalence is established. Finish the final wrong-target
+run, then publish the complete two-by-two comparison and update the learning
+PDF. Do not wait for another cohort before reporting these results.
+
+The nine fresh-seed jobs fixed at 17:50 UTC are now admitted. Their owner is
+waiting on the shared lock behind the authenticated final current child;
+the existing GPU run continues uninterrupted. The observer covers both queues.
+No fresh model has started at this cutoff. Run all conditions as declared,
+report the added cohort separately, and show all three paired contrasts.
+Reproducibility remains a more informative next question than a tuning sweep.
+The shared-checkpoint mechanism probe and longer walking study remain lower
+priority. These runs do not replicate the wrong-target interaction.
+
+## Earlier decision, October 5 at 17:50 UTC
 
 Wrong matching with the smaller update remains below no matching in both
 completed seeds: 138.08 versus 454.47 and 72.01 versus 240.54. The second
