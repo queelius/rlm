@@ -1,12 +1,13 @@
 # Learning RL by reproducing CURL
 
-Start with [the thirteen-page PDF](learning-guide.pdf). The
+Start with [the fourteen-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **all three completed pairs at both 100k and 500k**,
 plus all three original walking pairs, their supplemental tests, and all three
 pairs from the new training cohort. It also includes all three wrong-matching
-cartpole models. Latest cutoff: October 5, 16:52 UTC.
+cartpole models and all six smaller-update follow-ups. Latest cutoff:
+October 5, 18:18 UTC.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -40,19 +41,20 @@ curve and a simple example. Wrong targets can actively harm learning, so this
 does not by itself explain why correct matching helps. The
 [complete comparison](figures/correspondence-three-seeds/RESULTS.md),
 [native records](correspondence-data), and [dated findings](FINDINGS.md) preserve
-the evidence. The [smaller-update comparison](ENCODER_UPDATE_CONTROL.md) has
-started; its results are not yet complete. **Supporting update at 18:08 UTC:**
-all three correct-matching comparisons are complete. The smaller update helped
+the evidence. The [smaller-update comparison](ENCODER_UPDATE_CONTROL.md) is
+complete and appears on **page 14**. The smaller update helped
 the first seed (795.84 versus 678.02) but hurt the second (316.12 versus 446.17)
 and third (531.20 versus 587.99). It is not consistently better. All three
 smaller-update models still beat their no-matching comparisons.
-The smaller-update wrong-matching scores are 138.08 and 72.01, both below
-their no-matching comparisons (454.47 and 240.54). The
-[evidence and limitations](FINDINGS.md) preserve these mixed outcomes.
-A [fresh-seed comparison](CARTPOLE_FRESH_SEEDS.md) is admitted to check
-reproducibility. Its queue is waiting behind the final active wrong-target run;
-no fresh training has begun at this cutoff. The PDF retains the complete-cohort
-cutoff above until that final run finishes.
+The smaller-update wrong-matching scores are **138.08, 72.01 and 19.90**, all
+below their no-matching comparisons (454.47, 240.54 and 463.26). Reducing the
+update did not remove wrong-target harm. The final page explains the change
+and shows every score; [exact data](encoder-strength-data/SUMMARY.json) and
+[evidence and limitations](FINDINGS.md) support it. No reliable update ranking
+or general mechanism is established by three seeds. The six new runs took
+86.67 minutes, including testing and checkpoint saves.
+A [nine-model fresh-seed comparison](CARTPOLE_FRESH_SEEDS.md) is now running
+to check reproducibility; it will be reported separately.
 
 All three additional training pairs are complete:
 **502.95 versus 200.43**, **254.63 versus 335.20**, and **436.58 versus 156.22**,
@@ -111,16 +113,20 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
-The thirteen-page edition adds the complete three-condition cartpole comparison
-to the previously reported walking tests and separate training cohorts.
-Changed pages 1, 6, 7 and 13 were rendered and visually inspected, including
-the new complete-cohort plot. No TeX overflow warnings or out-of-page text
+The fourteen-page edition adds the completed update-strength comparison to
+the previously reported wrong-target, walking and separate-cohort results.
+Changed pages 1, 6, 7, 13 and 14 were rendered and visually inspected, including
+the complete fifteen-model table. No TeX overflow warnings or out-of-page text
 were found on any page; unchanged pages retain their earlier inspection. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`f5b69d4e191fa1b946e80e466c0847241c9a478124b3295dabca8a54e15716dc`.
+`0a49687c91b79f7ea4d59d2f62e5a4f85bcd5c617b02c58c71060c6833f2a711`.
+An independent CPU audit recomputed all 390 test means from 3,900 episode
+returns across the fifteen models in the update-strength comparison. Every
+table cell in the new page was checked against the native-backed summary.
+Fresh-model learning is continuing; these checks did not interrupt the GPU.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.

@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T18:08:00Z
+cutoff_utc: 2026-10-05T18:18:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T18:08:00Z
+execution_update_utc: 2026-10-05T18:18:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,72 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## The full update-strength comparison, October 5 at 18:18 UTC
+
+All six new models have finished. The final wrong-matching score was **19.90**,
+below its original-update score of **107.79** and far below **463.26** without
+matching. Here is the complete comparison, with every training seed retained:
+
+| Training condition | Seed 123 | Seed 456 | Seed 789 | Mean |
+|---|---:|---:|---:|---:|
+| Correct matches, original update | 678.02 | 446.17 | 587.99 | 570.73 |
+| Correct matches, smaller update | 795.84 | 316.12 | 531.20 | 547.72 |
+| No matching | 454.47 | 240.54 | 463.26 | 386.09 |
+| Wrong matches, original update | 0.11 | 68.10 | 107.79 | 58.67 |
+| Wrong matches, smaller update | 138.08 | 72.01 | 19.90 | 76.66 |
+
+Scores are mean total reward over ten fixed test starts after 100k cartpole
+training steps. Each row has three independently trained models, not thirty.
+The original nine models are reused comparisons, not nine new replications.
+
+**Wrong targets remained harmful at both tested update strengths.** Correct
+matching remained above both wrong matching and no matching in every seed.
+Thus the observed correct-versus-wrong gap did not require the dedicated
+second matching-task encoder step. However, removing that step helped correct
+matching once and hurt it twice; it helped wrong matching twice and hurt it
+once. This does not establish a better update rule or a general bug fix.
+
+The correct-minus-wrong gap changed by -20.15, -133.96 and +31.09 points when
+we reduced the update. Its mean change is -41.00, but the mixed directions and
+three seeds do not establish a reliable interaction. In the second seed, the
+gap shrank mostly because correct matching worsened, not because wrong matching
+recovered. Different policies collect different experience; these full runs
+do not isolate immediate encoder effects on the same data. Wrong-target harm
+still does not explain why correct targets help, nor establish visual-feature
+collapse. The follow-up is adaptive and limited to this one task and budget.
+
+An independent CPU audit reproduced **390 means from 3,900 test episodes**
+across all 15 models. All declared starts, finite learning values, completed
+counters, fresh starts and six new checkpoints passed. The last model had
+920 finite learning records, 100 natural training episodes, 11,500 updates,
+260k additional test interactions, and a 2,370,118,883-byte final checkpoint.
+There were no failures or restarts in the six new runs. Each wrong-matching
+update rule has 345 sampled pairing diagnostics: zero fixed positions, 578
+duplicate replay indices and eight residual same-record matches. These are
+sampled checks, not an exhaustive guarantee that every pair differs.
+
+**Cost clarification:** all six new runs took 86.67 minutes from native start
+to end, including 36.68 minutes of testing and 38.71 seconds of saving. Their
+summed `elapsed_seconds` is 86.03 minutes because that field excludes the final
+checkpoint write. Earlier smaller-update entries below have been corrected to
+separate that final write from the reported training/evaluation time. The last
+run took 872.78 seconds start to end, including 370.24 seconds of testing and
+6.20 seconds saving. Setup and queue startup are additional costs.
+
+The [fourteen-page learning guide](learning-guide.pdf) now explains the complete
+comparison on page 14, including the changed step, full table and limitations.
+[Exact results](encoder-strength-data/SUMMARY.json) and
+[unchanged native evidence](encoder-strength-data) accompany it.
+
+The fresh-seed owner took over 0.92 seconds after this queue ended and returned
+actual simulator rewards within 19.01 seconds of launch. The nine fixed
+[fresh-seed jobs](CARTPOLE_FRESH_SEEDS.md) now test reproducibility of correct
+matching under both update rules against no matching. The first is active and
+eight are queued. Keep the added group separate, with all three contrasts and
+no favorable selection. No new wrong-target runs are in that group, so it
+cannot replicate the correctness-by-strength interaction. No additional sweep
+or learner change is warranted at this checkpoint.
 
 ## The smaller update is not consistently better, October 5 at 18:08 UTC
 
@@ -47,8 +113,9 @@ test means from 260 episode returns, along with the two original seed-789
 comparators (78 means and 780 tests in total). All 920 logged learning values
 are finite; the native records show 100 natural training episodes, 11,500
 updates and 260k additional test interactions. The final checkpoint exists at
-the recorded size of 2,370,118,435 bytes. Runtime was 14.31 minutes, including
-6.15 minutes testing and 6.11 seconds saving. Configuration differences are
+the recorded size of 2,370,118,435 bytes. Reported training/evaluation time was
+14.31 minutes, including 6.15 minutes testing; final saving added 6.11 seconds.
+Configuration differences are
 the intended arm/update rule and a nonbinding runtime cap. The four
 [native evidence files](encoder-strength-data/single_encoder_curl-seed789)
 are copied unchanged.
@@ -88,8 +155,8 @@ learning records, 100 natural training episodes, 11,500 updates and a verified
 2,370,118,883-byte checkpoint. No failure or restart. All 115 sampled pairing
 records had zero fixed positions; replay duplicates produced three residual
 same-record matches. The curve was unstable, reaching 179.55 at 92k before
-finishing at 72.01; we retain the declared endpoint. Native time was 14.23
-minutes, including 6.03 minutes testing and 6.53 seconds saving state.
+finishing at 72.01; we retain the declared endpoint. Reported training/evaluation
+time was 14.23 minutes, including 6.03 minutes testing; final saving added 6.53 seconds.
 The [native records](encoder-strength-data/single_encoder_shuffled_curl-seed456)
 are available unchanged.
 
@@ -128,8 +195,8 @@ completed 100 natural training episodes and 11,500 updates, saved a verified
 2,370,118,499-byte checkpoint, and used the declared ten test starts. Its
 configuration differs from original CURL only in the arm/update rule and a
 shorter time cap that did not bind. The fixed endpoint was 316.12; the earlier
-330.81 at 84k is not substituted for it. Native elapsed time was 14.36 minutes,
-including 6.14 minutes testing and 6.36 seconds saving state.
+330.81 at 84k is not substituted for it. Reported training/evaluation time was
+14.36 minutes, including 6.14 minutes testing; final saving added 6.36 seconds.
 The [new native records](encoder-strength-data/single_encoder_curl-seed456)
 are published unchanged.
 
@@ -178,8 +245,8 @@ checkpoint. Its 115 sampled pairing records had no fixed permutation positions;
 duplicate replay sampling produced two residual same-record matches. These are
 sampled diagnostics, not a complete count of all updates. Settings differ from
 the original wrong-target run only in the declared arm and encoder-update rule.
-Elapsed time was 14.47 minutes, including 6.16 minutes testing and 6.48 seconds
-saving state. The [native evidence](encoder-strength-data/single_encoder_shuffled_curl-seed123)
+Reported training/evaluation time was 14.47 minutes, including 6.16 minutes
+testing; final saving added 6.48 seconds. The [native evidence](encoder-strength-data/single_encoder_shuffled_curl-seed123)
 is available unchanged, alongside the correct-matching counterpart.
 
 **Decision:** finish the four remaining models for seeds 456 and 789. The
@@ -220,7 +287,7 @@ No failure or restart occurred. Rechecking the three original seed-123
 comparators also reproduced their reported curves and endpoints. The only
 configuration differences against original CURL are the declared arm/update
 rule and a shorter time cap that did not bind. Native elapsed time was
-14.22 minutes, including 6.03 minutes of testing and 7.02 seconds saving state.
+14.22 minutes, including 6.03 minutes of testing; final saving added 7.02 seconds.
 
 The four [native evidence files](encoder-strength-data/single_encoder_curl-seed123)
 are published unchanged. The [protocol](ENCODER_UPDATE_CONTROL.md) explains the

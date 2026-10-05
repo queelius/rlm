@@ -1,12 +1,38 @@
 ---
 date: 2026-10-04
-status: correspondence_complete_encoder_strength_running
-priority: finish_six_fixed_strength_runs_and_compare_all_conditions
+status: encoder_strength_complete_fresh_seed_cohort_running
+priority: finish_nine_fixed_fresh_seed_runs_and_report_separately
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 18:08 UTC
+## Current decision, October 5 at 18:18 UTC
+
+The full comparison is complete. Wrong matches remain below no matching at
+both tested update rules, for all three seeds. Correct matching stays above
+both comparisons, but the smaller update helped only one correct-matching
+seed and hurt two. The gap between correct and wrong changes in mixed
+directions. Neither a reliable update improvement nor a general mechanism is
+established. The learning guide now shows all 15 endpoints on its new page 14.
+
+1. Continue the nine already-fixed fresh-seed models. The first is learning;
+   eight follow under the existing owner and caps. Report that cohort separately,
+   including every seed and all three contrasts. No wrong-target replication claim.
+2. When all new seeds finish, ask whether the early correct-matching benefit
+   and mixed update-strength effects repeat. This information outranks tuning
+   a setting to win on the original seeds. Do not choose a favorable checkpoint.
+3. Prepare the next informative comparison before the queue empties. A shared
+   checkpoint and fixed replay data could test immediate update effects without
+   changing collected experience, but it would not establish full-policy benefits.
+   A different task or reward-learning budget answers a separate scope question.
+   Neither probe is admitted yet; choose from the completed fresh-seed evidence.
+
+The current evidence weakens the idea that the dedicated second encoder step
+alone explains wrong-target harm. It does not establish that update strength
+never matters, explain all seed variation or support a novelty claim. The aim
+remains a trustworthy reproduction and a useful experimental lesson.
+
+## Earlier decision, October 5 at 18:08 UTC
 
 The smaller correct-matching update helped one training seed and hurt two.
 All three still beat no matching, but neither a reliable improvement over

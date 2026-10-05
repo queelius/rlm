@@ -44,12 +44,13 @@ Their average scores were \textbf{435 versus 433} and \textbf{398 versus 231}
 (CURL first). Pages 10--12 keep both groups visible. New test starts did not
 change the original pair-by-pair winners.
 
-Our new cartpole comparison asks what happens when the image-matching exercise
-uses wrong targets. All three new models finished below both original
-comparators. Average reward was \textbf{571 with correct matching, 386 without
-matching, and 59 with wrong matching}. Page 13 explains why this shows harm
-from wrong teaching targets, but does not yet explain the benefit of correct
-targets. Latest evidence: 5 October, 16:52 UTC.
+Wrong image matches hurt cartpole learning in every tested seed. Reducing the
+matching update did not remove that harm. With correct matches, the smaller
+update helped once and hurt twice, so it has not shown a dependable improvement.
+Pages 13--14 show every score and explain why harm from wrong targets does not
+by itself explain the benefit of correct targets. Nine fresh-model runs are
+now checking whether the useful effects repeat. Latest evidence:
+5 October, 18:18 UTC.
 
 \question{Why this paper?}
 
@@ -72,7 +73,7 @@ practice, but would not retroactively prove our earlier RLM training correct.
 \question{How to read this guide}
 
 Pages 2--4 explain the task with examples. Pages 5--6 explain the comparison
-and code. Pages 7--13 give next decisions, checks and measured results.
+and code. Pages 7--14 give next decisions, checks and measured results.
 Teaching examples are labeled; published reference scores belong to the authors.
 
 \end{frame}
@@ -333,9 +334,10 @@ adaptation; it is not evidence that this failure occurred in the paper's runs.
 Two optimizers in the contrastive update include the same query encoder
 parameters, and both take a step. A clean-room implementation with only one step
 would therefore not automatically match this released code. Our fixed-batch
-tests check this behavior, and our reference runs preserve it. A new comparison
-now removes only one of those steps deliberately. This tests sensitivity to
-the update's strength; it is not a correction of an established bug.
+tests check this behavior, and our reference runs preserve it. Our completed
+comparison removes only one of those steps deliberately. Page 14 shows its
+mixed effects. This tests sensitivity to the update's strength; it is not a
+correction of an established bug.
 
 \question{A quickstart command is not the paper's protocol.}
 
@@ -374,7 +376,8 @@ The control finished higher in two longer cartpole pairs; CURL won one.
 Both completed walking groups also have different winners, though the new group
 favors CURL on average. The benefit varies across training runs. The completed
 wrong-matching comparison now shows that false teaching targets can hurt
-cartpole learning. We are testing whether that harm depends on update strength.
+cartpole learning. That harm remained after reducing the matching update;
+the smaller update did not consistently improve correct matching either.
 
 Our independent small NumPy calculation matches the released Torch loss and
 gradients to numerical precision. That checks the calculation, not its usefulness
@@ -396,11 +399,11 @@ Evidence about the extra matching task & Cartpole: early lead. Walking: mixed.\\
 
 \question{What is running next?}
 
-The wrong-matching models are complete; page 13 shows all three. We are now
-training six fresh models with a smaller change to the image encoder during
-the matching exercise. Three use correct matches and three use wrong matches.
-Does reducing that change reduce the harm, or also reduce the benefit? This
-follow-up is running, not a completed result. Original comparisons stay visible.
+The smaller-update comparison is complete on page 14. We are now training
+nine new cartpole models: original CURL, smaller-update CURL and no matching,
+each with three new training seeds. Do the useful effects repeat? We will
+report this added group separately and keep every outcome. This checks
+variation between trained models, not a new task or the wrong-target effect.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
@@ -664,7 +667,7 @@ evidence that every model completely collapses, or that the same pattern holds
 on other tasks.
 
 \takeaway{A harmful teaching exercise is not a neutral control. Its poor result
-does not, by itself, explain why correct matching helps. We are now testing
+does not, by itself, explain why correct matching helps. The next page tests
 whether a smaller update changes the effect of both correct and wrong targets.}
 
 \small
@@ -673,5 +676,74 @@ original cartpole models. No best-checkpoint selection; test episodes are not
 extra training replicates. Native records: \texttt{correspondence-data/} and
 \texttt{data/}; figure and exact summary: \texttt{figures/correspondence-three-seeds/}.
 Cutoff: 5 October, 16:52 UTC. This is an exploratory follow-up, not a novelty claim.
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{13 / CHANGING THE UPDATE}{A smaller update did not remove the harm.}
+
+Could wrong image matches hurt mainly because the model changes too much
+when learning from them? We repeated both the correct- and wrong-matching
+conditions with a smaller update to the image encoder, the part that turns
+pictures into useful features. Each model started from fresh weights.
+
+\question{What exactly changed?}
+
+The original code changes the encoder twice from the same matching-loss
+gradient, using two separate optimizers. We skip only the dedicated encoder
+optimizer's step. The other still changes the encoder and the comparison
+between image features. Reward-learning updates, image crops and matching
+labels stay the same. This is not a proven bug fix, and it does not halve all learning.
+
+\question{Every result at the planned endpoint}
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Training condition & Seed 123 & Seed 456 & Seed 789\\
+\midrule
+Correct matches, original update & 678.02 & 446.17 & 587.99\\
+Correct matches, smaller update & 795.84 & 316.12 & 531.20\\
+\midrule
+No matching exercise & 454.47 & 240.54 & 463.26\\
+\midrule
+Wrong matches, original update & 0.11 & 68.10 & 107.79\\
+Wrong matches, smaller update & 138.08 & 72.01 & 19.90\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Each score averages total reward over ten fixed test starts after 100,000
+cartpole training steps. Higher means better swinging and balancing, not
+percentage correct. A seed changes initialization and training randomness;
+each row contains three separately trained models. We use final checkpoints,
+not the highest point on each learning curve.
+
+\question{What did we learn?}
+
+With correct matches, the smaller update helped once and hurt twice.
+All three models still beat their no-matching comparison, but this change is
+not consistently better than original CURL. With wrong matches, the scores
+rose twice and fell once. All three still scored below no matching.
+
+\takeaway{Wrong teaching targets remained harmful at both tested update
+strengths. Making the update smaller was not a dependable rescue or a
+consistent improvement. This is a limit on a proposed explanation, not
+proof that update strength never matters.}
+
+\question{Why are we training more models next?}
+
+Three seeds cannot tell us how repeatable these differences are. Our nine
+fresh-seed runs compare correct matching under both update rules against no
+matching. They do not include new wrong targets. Different policies also
+collect different experience, so this study does not isolate an immediate
+encoder effect on identical data.
+
+\small
+\textbf{Evidence and cost.} The six new runs took 86.67 minutes, including
+36.68 minutes testing and 38.71 seconds saving. No restarts or failures.
+Native records: \texttt{encoder-strength-data/}, with original
+comparisons in \texttt{data/} and \texttt{correspondence-data/}.
+Details: \texttt{ENCODER\_UPDATE\_CONTROL.md}. Cutoff: 5 October, 18:18 UTC.
+This adaptively chosen, one-task comparison is exploratory.
 \end{frame}
 \end{document}

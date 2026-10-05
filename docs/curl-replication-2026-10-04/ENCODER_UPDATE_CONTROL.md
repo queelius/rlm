@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: five_complete_final_running
+status: complete_all_six_models
 question: Does the effect of correct or wrong image matching depend on the strength of its encoder update?
 task: cartpole/swingup
 training_seeds: [123, 456, 789]
@@ -10,16 +10,21 @@ new_arms: [single_encoder_curl, single_encoder_shuffled_curl]
 
 # Does the strength of the extra learning exercise matter?
 
-**Execution update, October 5 at 18:08 UTC:** five of six models are complete.
+**Execution update, October 5 at 18:18 UTC:** all six models are complete.
 Correct matching with the smaller update helped seed 123 (795.84 versus 678.02)
 but hurt seed 456 (316.12 versus 446.17) and seed 789 (531.20 versus 587.99).
 All three remain above no matching; there is no consistent advantage over
 the original update rule.
-The smaller-update wrong-target scores are 138.08 and 72.01, compared with
-0.11 and 68.10 originally. Both remain below no matching (454.47 and 240.54).
-Wrong matching for seed 789 is running. Finish it unchanged. A separate
-[fresh-seed comparison](CARTPOLE_FRESH_SEEDS.md) is admitted and waiting behind
-that final job under the shared lock. No fresh training has begun at this cutoff.
+The smaller-update wrong-target scores are 138.08, 72.01 and 19.90, compared
+with 0.11, 68.10 and 107.79 originally. All remain below no matching (454.47,
+240.54 and 463.26). Reducing the update did not remove wrong-target harm.
+The correct-minus-wrong gap changes by -20.15, -133.96 and +31.09: no reliable
+interaction is established by these three seeds. The independent audit checked
+390 means from 3,900 raw tests across all 15 models. Six new models cost 86.67
+minutes start to end, including 36.68 minutes testing and 38.71 seconds saving.
+See the [complete summary](encoder-strength-data/SUMMARY.json).
+A separate [fresh-seed comparison](CARTPOLE_FRESH_SEEDS.md) is now running,
+with eight more jobs queued. No new wrong-target conditions are in that cohort.
 Actual returns, finite learning values, native completion and saved checkpoint
 sizes were checked. Do not infer equivalence or a reliable interaction yet.
 The [dated findings](FINDINGS.md) and [native records](encoder-strength-data)

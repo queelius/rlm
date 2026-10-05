@@ -1,0 +1,63 @@
+{
+  "cutoff_utc": "2026-10-05T18:18:00Z",
+  "stage": "adaptive_exploratory_comparison",
+  "task": "DeepMind Control Suite cartpole/swingup",
+  "training_simulator_steps": 100000,
+  "training_decisions": 12500,
+  "updates_per_model": 11500,
+  "evaluation_seeds": [10000, 10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008, 10009],
+  "score": "mean total episode reward at fixed final checkpoint, not best checkpoint",
+  "training_seeds": [123, 456, 789],
+  "scores_in_training_seed_order": {
+    "curl": [678.0208181129024, 446.1710866051147, 587.9943232935827],
+    "single_encoder_curl": [795.8353182006759, 316.12129745313797, 531.1984523038608],
+    "no_curl": [454.47102859718626, 240.5389283475572, 463.25850101501237],
+    "shuffled_curl": [0.11391963193712518, 68.10277851069648, 107.78618351953983],
+    "single_encoder_shuffled_curl": [138.0757863241539, 72.01182448123576, 19.896023962447423]
+  },
+  "paired_differences_in_training_seed_order": {
+    "smaller_minus_original_correct": [117.81450008777358, -130.0497891519767, -56.79587098972195],
+    "smaller_minus_original_wrong": [137.96186669221677, 3.9090459705392817, -87.8901595570924],
+    "correct_minus_wrong_original": [677.9068984809652, 378.06830809441817, 480.20813977404293],
+    "correct_minus_wrong_smaller": [657.759531876522, 244.10947297190222, 511.30242834141336],
+    "smaller_gap_minus_original_gap": [-20.147366604443164, -133.95883512251595, 31.094288567370427]
+  },
+  "evidence_directories_relative_to_this_file": {
+    "curl": ["../data/first-reference", "../data/second-reference", "../data/third-reference"],
+    "no_curl": ["../data/first-control", "../data/second-control", "../data/third-control"],
+    "shuffled_curl": ["../correspondence-data/shuffled_curl-seed123", "../correspondence-data/shuffled_curl-seed456", "../correspondence-data/shuffled_curl-seed789"],
+    "single_encoder_curl": ["single_encoder_curl-seed123", "single_encoder_curl-seed456", "single_encoder_curl-seed789"],
+    "single_encoder_shuffled_curl": ["single_encoder_shuffled_curl-seed123", "single_encoder_shuffled_curl-seed456", "single_encoder_shuffled_curl-seed789"]
+  },
+  "audit": {
+    "trained_models": 15,
+    "new_trained_models": 6,
+    "reused_original_models": 9,
+    "eval_means_recomputed": 390,
+    "raw_eval_episodes": 3900,
+    "means_per_model": 26,
+    "test_interactions_per_model": 260000,
+    "new_failures": 0,
+    "new_resumes": 0,
+    "sampled_wrong_pairing_diagnostics_per_update_rule": 345,
+    "fixed_positions_per_update_rule": 0,
+    "duplicate_replay_indices_per_update_rule": 578,
+    "residual_same_record_matches_per_update_rule": 8,
+    "pairing_limitation": "sampled diagnostics, not exhaustive guarantees"
+  },
+  "six_new_models_cost": {
+    "native_start_to_end_seconds": 5200.327055931091,
+    "reported_elapsed_seconds_excluding_final_save": 5161.614550679922,
+    "evaluation_seconds": 2200.576852204278,
+    "checkpoint_seconds": 38.70917907357216,
+    "scope": "native loops; environment setup, process startup and queue overhead additional"
+  },
+  "limits": [
+    "Three training seeds, one task, fixed shared test starts, adaptive follow-up.",
+    "Evaluation episodes are not independent training replicates.",
+    "The smaller rule omits only the dedicated encoder optimizer step for matching; reward learning remains.",
+    "Policies collect different experience as training diverges.",
+    "No reliable ranking, equivalence, universal mechanism, visual-feature collapse, or novelty claim.",
+    "Fresh-seed follow-up is separate and contains no new wrong-target condition."
+  ]
+}

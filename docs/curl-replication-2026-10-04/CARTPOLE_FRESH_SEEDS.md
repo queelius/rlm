@@ -1,7 +1,7 @@
 ---
 date: 2026-10-05
 decision_fixed_utc: 2026-10-05T17:50:00Z
-status: admitted_waiting_for_predecessor_gpu_lock
+status: first_model_running_eight_jobs_queued
 question: Do the early benefits of image matching and its smaller update repeat in fresh training seeds?
 task: cartpole/swingup
 training_seeds: [234, 567, 890]
@@ -12,10 +12,12 @@ external_runs: /project/alex_phd/runs/curl-cartpole-fresh-seeds-20261005
 
 # Does the result repeat when we train new models?
 
-**Execution update, October 5 at 18:08 UTC:** the unchanged nine-job queue is
-admitted and waiting behind the final encoder-strength run. Resources, source
-hashes, owner identity and the shared lock were checked. No new model has
-started training at this cutoff. The design below was fixed at 17:50 UTC,
+**Execution update, October 5 at 18:18 UTC:** the unchanged nine-job queue is
+running. The first model launched 0.92 seconds after the previous queue ended,
+and actual simulator rewards arrived within 19.01 seconds. Its native records
+show finite learning updates; eight later jobs are queued. Resources, source
+hashes, owner identity and the shared lock were checked.
+The design below was fixed at 17:50 UTC,
 before the third seed's smaller-update endpoints. Admission and launch receipts
 live in the external run store; the sealed protocol there is unchanged.
 
