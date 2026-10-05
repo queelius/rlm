@@ -1,5 +1,6 @@
 """Focused evaluation isolation checks without rendering or GPU use."""
 
+import copy
 import json
 import random
 import sys
@@ -68,7 +69,16 @@ class EvaluationTest(unittest.TestCase):
 
 
 class ResumeConfigTest(unittest.TestCase):
-    def run_resume(self, output, source, checkpoint_seed=123):
+    def run_resume(
+        self,
+        output,
+        source,
+        checkpoint_seed=123,
+        arm="curl",
+        private_state=None,
+        previous_arm=None,
+        captured=None,
+    ):
         # Replace expensive external learning/simulation; execute the real main/file/logger path.
         args = SimpleNamespace(
             source=source,
@@ -80,7 +90,7 @@ class ResumeConfigTest(unittest.TestCase):
             steps=2,
             eval_every=500,
             eval_episodes=1,
-            arm="curl",
+            arm=arm,
             resume=source / "parent.pt",
             max_seconds=10,
             checkpoint_seconds=900,
@@ -97,9 +107,31 @@ class ResumeConfigTest(unittest.TestCase):
             get_rng_state=lambda: {},
             close=lambda: None,
         )
+
+        class TinyCURL:
+            def compute_logits(self, query, keys):
+                return query @ keys.T
+
+        class TinyReplay:
+            batch_size, capacity, idx, full = 2, 3, 1, False
+
+            def sample_cpc(self):
+                return None
+
+            def add(self, *args):
+                pass
+
+        class TinyAgent:
+            CURL = TinyCURL()
+
+            def update_cpc(self, *args):
+                return "enabled"
+
+        agent = TinyAgent()
+        replay = TinyReplay()
         utils = SimpleNamespace(
             set_seed_everywhere=lambda seed: None,
-            ReplayBuffer=lambda **kwargs: SimpleNamespace(add=lambda *args: None),
+            ReplayBuffer=lambda **kwargs: replay,
         )
         upstream = SimpleNamespace(CurlSacAgent=object)
         counters = {
@@ -113,12 +145,21 @@ class ResumeConfigTest(unittest.TestCase):
             "eval_env_steps": 0,
             "elapsed_seconds": 0,
         }
+        if private_state is not None:
+            counters["contrastive_permutation_rng"] = private_state
 
         def imports(name):
             return utils if name == "utils" else upstream
 
-        def saved(path, *unused):
+        def saved(path, saved_agent, saved_replay, saved_counters, saved_config):
             path.write_bytes(b"test-checkpoint")
+            if captured is not None:
+                captured.update(
+                    counters=copy.deepcopy(saved_counters),
+                    config=copy.deepcopy(saved_config),
+                    agent=saved_agent,
+                    replay=saved_replay,
+                )
 
         with (
             patch.object(train_reference, "parse_args", return_value=args),
@@ -126,11 +167,14 @@ class ResumeConfigTest(unittest.TestCase):
             patch.object(train_reference.importlib, "import_module", side_effect=imports),
             patch.dict(sys.modules, {"env_adapter": SimpleNamespace(make_env=lambda *args: env)}),
             patch.object(sys, "path", list(sys.path)),
-            patch.object(train_reference, "build_agent", return_value=object()),
+            patch.object(train_reference, "build_agent", return_value=agent),
             patch.object(
                 train_reference,
                 "load_checkpoint",
-                return_value=(counters, {"seed": checkpoint_seed, "num_train_steps": 1}),
+                return_value=(
+                    counters,
+                    {"seed": checkpoint_seed, "num_train_steps": 1, "arm": previous_arm or arm},
+                ),
             ),
             patch.object(
                 train_reference, "evaluate", return_value=[{"return": 1, "eval_env_steps": 8}]
@@ -174,6 +218,57 @@ class ResumeConfigTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "scientific inputs.*seed"):
                 self.run_resume(rejected, base, checkpoint_seed=456)
             self.assertFalse((rejected / "config.json").exists())
+
+    def test_shuffled_resume_requires_private_state_and_preserves_arm_rejection(self):
+        from contrastive_control import ShuffledKeys
+
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            for name in ("curl_sac.py", "utils.py", "encoder.py", "train.py"):
+                (base / name).write_text("# frozen\n")
+            for state, previous_arm, expected in (
+                (None, None, "private permutation"),
+                (None, "curl", "scientific inputs.*arm"),
+            ):
+                with (
+                    self.subTest(previous_arm=previous_arm),
+                    self.assertRaisesRegex(ValueError, expected),
+                ):
+                    self.run_resume(
+                        base / (previous_arm or "missing"),
+                        base,
+                        arm="shuffled_curl",
+                        private_state=state,
+                        previous_arm=previous_arm,
+                    )
+            dummy = SimpleNamespace(CURL=SimpleNamespace(compute_logits=lambda q, p: q @ p.T))
+            replay = SimpleNamespace(batch_size=2, sample_cpc=lambda: None)
+            control = ShuffledKeys(dummy, replay, 123)
+            control.rng.permutation(128)
+            state = control.state_dict()
+            captured = {}
+            self.run_resume(
+                base / "valid", base, arm="shuffled_curl", private_state=state, captured=captured
+            )
+            self.assertEqual(captured["counters"]["contrastive_permutation_rng"], state)
+            self.assertEqual(captured["config"]["contrastive_control"]["seed"], 1000123)
+
+    def test_main_reference_arms_have_no_shuffling_hooks_or_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            for name in ("curl_sac.py", "utils.py", "encoder.py", "train.py"):
+                (base / name).write_text("# frozen\n")
+            for arm in ("curl", "no_curl"):
+                with self.subTest(arm=arm):
+                    captured = {}
+                    self.run_resume(base / arm, base, arm=arm, captured=captured)
+                    self.assertNotIn("contrastive_control", captured["config"])
+                    self.assertNotIn("contrastive_permutation_rng", captured["counters"])
+                    self.assertNotIn("compute_logits", captured["agent"].CURL.__dict__)
+                    self.assertNotIn("sample_cpc", captured["replay"].__dict__)
+                    self.assertEqual(
+                        captured["agent"].update_cpc(), "enabled" if arm == "curl" else None
+                    )
 
 
 if __name__ == "__main__":

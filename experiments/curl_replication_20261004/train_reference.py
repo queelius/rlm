@@ -106,7 +106,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--eval-every", type=int, default=500)
     parser.add_argument("--eval-episodes", type=int, default=10)
-    parser.add_argument("--arm", choices=("curl", "no_curl"), default="curl")
+    parser.add_argument("--arm", choices=("curl", "no_curl", "shuffled_curl"), default="curl")
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--max-seconds", type=float, default=7200)
     parser.add_argument("--device", default="cuda")
@@ -124,6 +124,30 @@ def build_agent(
         and key not in {"obs_shape", "action_shape", "device"}
     }
     return agent_class(obs_shape=(9, 84, 84), action_shape=action_shape, device=device, **kwargs)
+
+
+def configure_arm(agent: Any, replay: Any, config: dict[str, Any]) -> Any:
+    """Apply the one declared intervention; reference sampling/math stay untouched."""
+    if config["arm"] == "no_curl":
+        # Upstream update still samples the positive crop and performs the same SAC updates.
+        agent.update_cpc = lambda *unused_args, **unused_kwargs: None
+    elif config["arm"] == "shuffled_curl":
+        from contrastive_control import ShuffledKeys
+
+        control = ShuffledKeys(agent, replay, config["seed"])
+        config["contrastive_control"] = {
+            "kind": "deranged_encoded_key_rows",
+            "seed": control.seed,
+            "generator": "numpy.PCG64",
+            "permutation": "uniform_rejection_no_fixed_points",
+            "labels": "diagonal_unchanged",
+            "encoder_optimizer_steps": "upstream_two",
+            "replay_index_tracking": "shadow_global_numpy_first_randint",
+        }
+        return control
+    elif config["arm"] != "curl":
+        raise ValueError("Unknown contrastive arm")
+    return None
 
 
 def main() -> None:
@@ -182,9 +206,6 @@ def main() -> None:
     env = make_env(args.domain, args.task, args.seed, args.action_repeat)
     eval_env = make_env(args.domain, args.task, 10000, args.action_repeat)
     agent = build_agent(Agent, config, env.action_space.shape, device)
-    if args.arm == "no_curl":
-        # Upstream update still samples the positive crop and performs the same SAC updates.
-        agent.update_cpc = lambda *unused_args, **unused_kwargs: None
     replay = utils.ReplayBuffer(
         obs_shape=env.observation_space.shape,
         action_shape=env.action_space.shape,
@@ -193,6 +214,7 @@ def main() -> None:
         device=device,
         image_size=84,
     )
+    control = configure_arm(agent, replay, config)
     counters = {
         "step": 0,
         "env_steps": 0,
@@ -211,6 +233,8 @@ def main() -> None:
             raise ValueError(f"Resume config changed scientific inputs: {sorted(changed)}")
         if not counters["episode_boundary"]:
             raise ValueError("Only episode-boundary checkpoints can resume")
+        if control is not None:
+            control.load_state_dict(counters.get("contrastive_permutation_rng"))
         env.set_rng_state(counters["env_rng"])
     if not (output / "config.json").exists():
         (output / "config.json").write_text(json.dumps(config, indent=2) + "\n")
@@ -238,6 +262,8 @@ def main() -> None:
         nonlocal last_checkpoint
         counters["elapsed_seconds"] = previous_elapsed + time.monotonic() - start
         counters["env_rng"] = env.get_rng_state()
+        if control is not None:
+            counters["contrastive_permutation_rng"] = control.state_dict()
         before = time.monotonic()
         save_checkpoint(output / "latest.pt", agent, replay, counters, config)
         last_checkpoint = time.monotonic()
@@ -289,6 +315,10 @@ def main() -> None:
                     with utils.eval_mode(agent):
                         action = agent.sample_action(obs)
                     agent.update(replay, logger, step)
+                    if control is not None and step % config["log_interval"] == 0:
+                        logger.record(
+                            {"type": "contrastive_control", "step": step, **control.diagnostics}
+                        )
                     counters["updates"] += 1
                 next_obs, reward, done, info = env.step(action)
                 if not math.isfinite(float(reward)):
