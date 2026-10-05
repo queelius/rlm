@@ -39,19 +39,18 @@ We have completed three matched comparisons on the cartpole task.
 Page 8 shows the measured curves. Worked teaching examples are labeled as
 illustrations; the published reference scores belong to the paper's authors.
 
-The three early wins are encouraging, but not a firm conclusion or a
-reproduction of the paper's average. Each pair trains two new models.
+These three early wins are exploratory, not a reproduction of the paper's average.
 
 All three pairs are now complete after 500,000 steps. Their average scores are
 \textbf{855 for CURL versus 849 for the control}, with different winners across
 runs. The large early advantage became much smaller. This is not proof that
 the methods are equivalent. Page 9 shows every pair.
 
-On the walking task, CURL won two pairs, but the control won the third by a
+In the original walking study, CURL won two pairs, but the control won the third by a
 large margin. The average scores were \textbf{435 versus 433}, hiding very
 different individual outcomes. The same winners persisted on 50 new test starts.
-Pages 10--11 explain why we still cannot claim a dependable walking advantage.
-Latest evidence: 5 October, 08:48 UTC.
+New training pairs also have different winners. Pages 10--11 explain why we
+cannot claim a dependable walking advantage. Latest evidence: 5 October, 13:39 UTC.
 
 \question{Why this paper?}
 
@@ -73,9 +72,8 @@ practice, but would not retroactively prove our earlier RLM training correct.
 
 \question{How to read this guide}
 
-Pages 2--4 explain the task and learning process with examples. Page 5 explains
-the comparison and scores. Page 6 records implementation findings that affect
-interpretation. Pages 7--11 give next decisions, checks and the measured results.
+Pages 2--4 explain the task with examples. Pages 5--6 explain the comparison
+and code. Pages 7--11 give next decisions, checks and measured results.
 
 \end{frame}
 \begin{frame}[t]
@@ -387,7 +385,7 @@ Item & Status\\
 \midrule
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
-GPU training and policy evaluation & Three pairs on each task.\\
+Original training and evaluation & Three pairs on each task.\\
 Checkpoint save/reload verification & Next-update and large-array tests passed.\\
 Evidence about the extra matching task & Cartpole: early lead. Walking: mixed.\\
 \bottomrule
@@ -395,10 +393,10 @@ Evidence about the extra matching task & Cartpole: early lead. Walking: mixed.\\
 
 \question{What is running next?}
 
-All six frozen models have now been tested on 50 new starting states each.
-The same pair-by-pair winners persisted. Three more training pairs with new
-random seeds have begun. New test episodes check the models we already have;
-new training runs check whether a different set of models teaches the same lesson.
+All six original walking models kept the same pair-by-pair winners on 50 new
+test starts. Two additional training pairs are now complete, with opposite
+winners; the final pair is underway. New test episodes check existing models.
+New training runs check whether different models teach the same lesson.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
@@ -563,9 +561,15 @@ us which part of training creates the differences, or how often CURL helps.
 \question{Why train more models instead of just testing these again?}
 
 Testing one learned walker 50 times still gives us only one learned walker.
-We still have three training pairs, not 300 independent training runs.
-Three additional pairs now start from fresh weights with unchanged settings.
-They ask whether the conclusion repeats with a different set of trained models.
+The fifty-start panel contains the original three training pairs, not 300
+independent training runs. We also began three additional pairs from fresh
+weights, with unchanged settings, to test variation between trained models.
+
+\textbf{Two new pairs are now complete, with opposite winners.} CURL scored
+\textbf{503 versus 200} in one pair, but \textbf{255 versus 335} in the other.
+The third pair is still running. These new models also show that the result
+can depend strongly on the training run. We will finish the whole group,
+not stop after a favorable comparison.
 
 \takeaway{More tests of the same models and training more models answer
 different questions. We need to keep those sources of variation separate.}
@@ -576,6 +580,7 @@ new task. We used every fixed 100k model, with no checkpoint selection or furthe
 learning. The original scores remain unchanged. This supplemental check cost
 300 test episodes, 300k simulator steps and about 45 minutes. Native records:
 \texttt{walker-fresh-starts-data/}; details: \texttt{WALKER\_FRESH\_STARTS.md}.
-Cutoff: 5 October, 08:48 UTC.
+Supplemental cutoff: 5 October, 08:48 UTC. New training-pair records:
+\texttt{walker-additional-data/}; cutoff: 5 October, 13:39 UTC.
 \end{frame}
 \end{document}

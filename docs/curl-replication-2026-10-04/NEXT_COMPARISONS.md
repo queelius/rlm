@@ -1,12 +1,56 @@
 ---
 date: 2026-10-04
 status: supplemental_panel_complete_additional_seeds_running
-priority: replication_before_mechanism
+priority: finish_walker_replication_prepare_correspondence_control
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 08:49 UTC
+## Current decision, October 5 at 14:00 UTC
+
+Two of the three additional walking pairs are complete. Their differences are
+**+302.52 and -80.56**, again with opposite winners. Finish the final pair with
+unchanged settings. Do not pool the unfinished cohort into a favorable headline
+or replace a weak endpoint with a better intermediate checkpoint. The first
+control's late decline and the second pair's crossing curves are visible in
+the [new figure](figures/walker-additional-two-pairs/learning-curves.pdf).
+
+Prepare the next small comparison while the final walking jobs run. The
+cartpole result at 100k, where all three original pairs favored CURL, is a
+better starting point for this mechanism question than the variable walker
+results: **does the extra learning help because it matches the right pictures?**
+This is preparation, not an admitted or launched experiment.
+
+1. Add a third condition that deliberately matches each observation to another
+   observation's crop. Keep the original CURL and same-crops control results
+   visible. Wrong matches can actively harm learning, so this is not a neutral
+   control for extra computation. It will not by itself explain walker variation.
+2. Use cartpole/swingup, the original seeds 123/456/789 and fixed 100k endpoint.
+   Preserve action repeat 8, 12,500 decisions, 11,500 learning updates and the
+   original ten test starts and evaluation schedule. No favorable stopping.
+3. Isolate the change at the encoded-key rows immediately before the original
+   similarity calculation. Keep diagonal labels and both upstream encoder
+   optimizer steps. Use a separately seeded, checkpointed permutation generator
+   so this intervention does not consume the replay/crop random stream. Require
+   no unchanged row positions; record residual matching replay indices, because
+   duplicate experience can still appear in a batch.
+4. Before admission, use a focused CPU check with the actual upstream learner
+   to establish unchanged reference behavior, changed pairings, unchanged global
+   random state, preserved optimizer calls and exact restoration of the private
+   permutation state. Keep the three-arm report distinct from the existing
+   two-arm summarizer. Seal a new source snapshot; do not edit the live owner.
+5. Budget roughly 45--60 minutes for all three new runs, based on original
+   measured CURL times of 866, 852 and 854 seconds. Reserve about 10.2 GB for
+   three final checkpoints plus one temporary save; recheck shared quota before
+   admission. Retain periodic and final checkpointing and the allocation cap.
+
+Ranked afterward: the single-encoder-optimizer sensitivity check, then a
+shared-checkpoint matching-on/off intervention. Neither is a proven bug fix.
+A full longer-horizon walker cohort remains lower priority because it is much
+more expensive and needs a new storage plan. Do not retune using the supplemental
+test starts. These are exploratory follow-ups, not new confirmatory claims.
+
+## Earlier decision, October 5 at 08:49 UTC
 
 The [complete 50-start check](WALKER_FRESH_STARTS.md) preserves the original
 pair-by-pair winners: differences +287.28, +23.01 and -240.92. Replacing the

@@ -4,8 +4,8 @@ Start with [the eleven-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **all three completed pairs at both 100k and 500k**,
-plus all three completed walking pairs and their supplemental tests, with an
-October 5, 08:48 UTC evidence cutoff.
+plus all three original walking pairs, their supplemental tests, and two
+completed pairs from the new training cohort. Latest cutoff: October 5, 13:39 UTC.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -31,11 +31,12 @@ examples are identified explicitly.
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
 the earlier interpretations as dated checkpoints.
 
-Later execution update, October 5 at 10:06 UTC: the first additional CURL
-model finished at 502.95, and its matched control is running. Its
-[native records](walker-additional-data/curl-seed234) are saved separately.
-This is not a completed pair or another CURL win. The PDF retains its
-08:48 completed-comparison cutoff; see the running findings for this new run.
+The first two additional training pairs also have opposite winners:
+**502.95 versus 200.43** and **254.63 versus 335.20**, CURL first. Their
+[native records](walker-additional-data) and
+[learning curves](figures/walker-additional-two-pairs/learning-curves.pdf) are
+reported separately from the original cohort. The third new pair is still
+running. Page 11 includes this limited update without claiming a complete cohort.
 
 The [fresh-start evaluation](WALKER_FRESH_STARTS.md) is complete for all six
 unchanged walking models. [Three additional training pairs](WALKER_ADDITIONAL_SEEDS.md)
@@ -81,18 +82,16 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
-The eleven-page edition adds the complete supplemental walking test to the
-three matched cartpole pairs at 500k and the three original walking pairs.
-Changed pages 1, 7, 10 and 11 were rendered and visually inspected. A small
-page-10 overflow was fixed by shortening repeated text, without shrinking
-fonts or the figure. The final build has no overfull/underfull warnings, and
-all text stays within the eleven page boundaries. Unchanged pages retain
-their earlier inspection. The numerical
+The eleven-page edition includes the complete supplemental walking test and
+the first two pairs of the additional training cohort, clearly marked incomplete.
+Changed pages 1, 7 and 11 were rendered and visually inspected, along with the
+new two-pair plot. The page-1 footnote crowding was corrected. No TeX overflow
+warnings or out-of-page text were found; other pages retain their earlier inspection. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`6af2f468a49be3060d1c7f6103a07cef8d41aff147782428781c919e435d173b`.
+`ecd9c915d12b10d197cb6d95ebba70677dbb2775777062c91e3cc4a7ea638e7a`.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
@@ -121,6 +120,13 @@ favorable comparisons. All 30 copied evidence files match the native originals
 byte for byte. The [machine-readable summary](walker-fresh-starts-data/summary.json)
 includes exact values, parent identities and file checksums. No large checkpoint
 weights are committed to Git.
+
+For the two additional pairs, root and independent CPU audits recomputed all
+104 means from 1,040 episodes, verified the exact test starts, native endpoints,
+finite learning, matched configurations and checkpoint receipts. Scientific
+settings match the original cohort except for the new training seeds. Their
+four curves preserve late fluctuations and crossings, not just final winners.
+All 16 public record files match their external originals byte for byte.
 
 ## Evidence and next comparisons
 

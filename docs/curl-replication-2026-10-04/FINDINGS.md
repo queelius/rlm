@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T10:04:00Z
+cutoff_utc: 2026-10-05T13:39:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T10:06:00Z
+execution_update_utc: 2026-10-05T13:55:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,40 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## Two additional walking pairs have opposite winners, October 5 at 13:39 UTC
+
+| New training seed | CURL | Same-crops control | CURL minus control |
+|---|---:|---:|---:|
+| 234 | 502.95151 | 200.42850 | +302.52301 |
+| 567 | 254.63460 | 335.19614 | -80.56155 |
+
+This is a separately reported, unfinished follow-up cohort: two of its three
+pairs are complete. The first favors CURL strongly; the second favors the
+control. The original three pairs were also mixed. We cannot claim a dependable
+benefit from this partial follow-up, and we will not stop after a favorable
+subset. The last reference and its control retain the same settings and endpoint.
+
+The curves matter as well as the endpoints. The first control dropped from
+324.88 at 92k steps to 263.33 at 96k and 200.43 at 100k. We keep the declared
+100k score rather than replace it with a better earlier checkpoint. That late
+decline is a reason to interpret the size of this pair's difference cautiously,
+not evidence that every control deteriorates: the second control finished
+above its CURL counterpart and improved over its last three evaluations.
+
+All four runs completed naturally without failures or restarts. Recomputed
+104 means from 1,040 exact-start test episodes. Every run used 100k training
+steps, 49k updates, 100 natural training episodes, and 260k separate evaluation
+steps. Paired configurations differ only by learning arm; final checkpoint
+sizes match receipts. Keep test episodes separate from training replicates.
+
+[All four native records](walker-additional-data), the
+[two-pair curves](figures/walker-additional-two-pairs/learning-curves.pdf), and
+[machine-readable summary](figures/walker-additional-two-pairs/summary.json)
+support this snapshot. The figure labels this as two completed pairs, not a
+complete cohort. The third pair is running and is not assigned a missing-as-zero
+score. This strengthens the motivation to study training variation, but does
+not identify its cause or establish equivalence.
 
 ## First additional walking model complete, October 5 at 10:04 UTC
 
