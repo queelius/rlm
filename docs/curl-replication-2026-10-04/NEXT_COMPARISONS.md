@@ -1,10 +1,33 @@
 ---
 date: 2026-10-04
-status: two_correspondence_results_encoder_strength_followup_admitted
-priority: finish_correspondence_and_prepare_six_fixed_strength_runs
+status: correspondence_complete_encoder_strength_running
+priority: finish_six_fixed_strength_runs_and_compare_all_conditions
 ---
 
 # What the next comparisons would establish
+
+## Current decision, October 5 at 16:52 UTC
+
+The complete wrong-matching group averages **58.67**, compared with **570.73**
+for correct matching and **386.09** without matching. All three wrong-target
+models are worse than both comparators. This strengthens the narrow conclusion
+that incorrect targets can harm learning under this setup. It does not isolate
+the cause of correct matching's benefit, establish representation collapse,
+or justify a claim about other tasks.
+
+Continue the six already-fixed [encoder-strength comparisons](ENCODER_UPDATE_CONTROL.md).
+The first has started and returned real rewards and updates; five follow under
+the same owner. Do not change conditions, seeds or endpoints based on partial
+scores. Report correct-single versus correct-two, wrong-single versus wrong-two,
+and how the correct-minus-wrong gap changes. Retain the no-matching baseline.
+
+Update the learning guide with the completed three-condition figure. Then let
+the small strength study determine whether another mechanism probe is useful.
+A shared-checkpoint matching-on/off comparison remains conditional and ranked
+below these runs. A longer walking extension remains lower priority; there is
+no need to launch a new owner or repeat the finished wrong-target batch.
+
+## Earlier execution update, October 5 at 16:36 UTC
 
 Execution update at 16:36 UTC: the second wrong-matching run finished at 68.10,
 also below its original comparators. The final seed is running. The six-run
@@ -12,7 +35,7 @@ follow-up fixed below passed focused CPU tests and independent review; it is
 admitted with a waiting owner behind the final seed. No follow-up training has
 started. Keep every condition unchanged and report all individual endpoints.
 
-## Current decision, October 5 at 16:28 UTC
+## Earlier decision, October 5 at 16:28 UTC
 
 The first wrong-matching model finished at **0.11**, compared with **678.02**
 for correct matching and **454.47** without matching for the same seed.

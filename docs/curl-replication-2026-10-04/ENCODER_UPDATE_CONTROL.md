@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: admitted_owner_waiting_for_final_predecessor
+status: first_model_running_five_queued
 question: Does the effect of correct or wrong image matching depend on the strength of its encoder update?
 task: cartpole/swingup
 training_seeds: [123, 456, 789]
@@ -10,16 +10,21 @@ new_arms: [single_encoder_curl, single_encoder_shuffled_curl]
 
 # Does the strength of the extra learning exercise matter?
 
-**Execution update, October 5 at 16:36 UTC:** implementation and focused
-real-upstream CPU tests passed independent review. All six jobs are admitted,
-with a sealed source snapshot. Their owner waits for the current wrong-matching
-batch's final seed. No new follow-up training has started. The design below
-was fixed at 16:28 UTC, when only the first wrong-matching endpoint was known.
+**Execution update, October 5 at 16:52 UTC:** the first correct-matching model
+with a smaller encoder update is learning; five fixed jobs follow. It launched
+0.875 seconds after the wrong-matching batch ended and returned actual rewards
+after 19.01 seconds. Finite learning values and the declared update-rule metadata
+were checked. There is no completed endpoint yet. Implementation and focused
+real-upstream CPU tests passed independent review before admission.
 
-The first model taught to match the wrong pictures finished with almost no
+The design below was fixed at 16:28 UTC, when only the first wrong-matching
+endpoint was known. All three original wrong-target models have since finished;
+their [complete results](CORRESPONDENCE_CONTROL.md) do not change this fixed design.
+
+At the time of that decision, the first model taught to match the wrong pictures had finished with almost no
 test reward. The original model with correct matches, and the model without
-the matching exercise, both learned much more. This is one training seed;
-the other two wrong-matching runs must finish unchanged.
+the matching exercise, had both learned much more. Only one new training seed
+was complete, and the other two were required to finish unchanged.
 
 That result raises a narrower question: **are incorrect targets particularly
 harmful because the extra exercise changes the image encoder too strongly?**
@@ -47,7 +52,7 @@ the total training effect is exactly halved.
 | Matching exercise | Original update rule | Smaller encoder update |
 |---|---|---|
 | Correct picture pairs | Three existing models | Three new models |
-| Wrong picture pairs | Three models in the current batch | Three new models |
+| Wrong picture pairs | Three completed models | Three new models |
 
 Keep the original three models without matching in the report as context.
 They are not part of the two-by-two comparison above.

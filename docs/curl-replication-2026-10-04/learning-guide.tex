@@ -34,24 +34,22 @@
 
 \question{Where are we now?}
 
-We have completed three matched comparisons on the cartpole task.
-\textbf{CURL finished higher in all three at the planned 100,000-step endpoint.}
-Page 8 shows the measured curves. Worked teaching examples are labeled as
-illustrations; the published reference scores belong to the paper's authors.
+\textbf{CURL finished higher in all three short cartpole comparisons.}
+After five times as much training, its average advantage became much smaller,
+with different winners across runs. This is an early benefit in a small study,
+not proof of a lasting advantage or equivalence. Pages 8--9 show every pair.
 
-These three early wins are exploratory, not a reproduction of the paper's average.
+Walking results varied more: both training groups had different winners.
+Their average scores were \textbf{435 versus 433} and \textbf{398 versus 231}
+(CURL first). Pages 10--12 keep both groups visible. New test starts did not
+change the original pair-by-pair winners.
 
-All three pairs are now complete after 500,000 steps. Their average scores are
-\textbf{855 for CURL versus 849 for the control}, with different winners across
-runs. The large early advantage became much smaller. This is not proof that
-the methods are equivalent. Page 9 shows every pair.
-
-In the original walking study, CURL won two pairs, but the control won the third by a
-large margin. The average scores were \textbf{435 versus 433}, hiding very
-different individual outcomes. The same winners persisted on 50 new test starts.
-Three new training pairs also have different winners, but favor CURL on average:
-\textbf{398 versus 231}. Pages 10--12 keep both groups visible rather than
-choose the more favorable one. Latest evidence: 5 October, 16:04 UTC.
+Our new cartpole comparison asks what happens when the image-matching exercise
+uses wrong targets. All three new models finished below both original
+comparators. Average reward was \textbf{571 with correct matching, 386 without
+matching, and 59 with wrong matching}. Page 13 explains why this shows harm
+from wrong teaching targets, but does not yet explain the benefit of correct
+targets. Latest evidence: 5 October, 16:52 UTC.
 
 \question{Why this paper?}
 
@@ -74,7 +72,8 @@ practice, but would not retroactively prove our earlier RLM training correct.
 \question{How to read this guide}
 
 Pages 2--4 explain the task with examples. Pages 5--6 explain the comparison
-and code. Pages 7--12 give next decisions, checks and measured results.
+and code. Pages 7--13 give next decisions, checks and measured results.
+Teaching examples are labeled; published reference scores belong to the authors.
 
 \end{frame}
 \begin{frame}[t]
@@ -333,9 +332,10 @@ adaptation; it is not evidence that this failure occurred in the paper's runs.
 
 Two optimizers in the contrastive update include the same query encoder
 parameters, and both take a step. A clean-room implementation with only one step
-would therefore not automatically match this released code. We should first
-measure that behavior on a fixed batch and preserve it in the reference run.
-Calling it an established bug, or silently ``fixing'' it, would be premature.
+would therefore not automatically match this released code. Our fixed-batch
+tests check this behavior, and our reference runs preserve it. A new comparison
+now removes only one of those steps deliberately. This tests sensitivity to
+the update's strength; it is not a correction of an established bug.
 
 \question{A quickstart command is not the paper's protocol.}
 
@@ -372,8 +372,9 @@ measurements separate from the model's retained training history.
 
 The control finished higher in two longer cartpole pairs; CURL won one.
 Both completed walking groups also have different winners, though the new group
-favors CURL on average. The benefit varies across training runs. Our next
-comparison asks whether matching the right pictures matters in cartpole.
+favors CURL on average. The benefit varies across training runs. The completed
+wrong-matching comparison now shows that false teaching targets can hurt
+cartpole learning. We are testing whether that harm depends on update strength.
 
 Our independent small NumPy calculation matches the released Torch loss and
 gradients to numerical precision. That checks the calculation, not its usefulness
@@ -387,7 +388,7 @@ Item & Status\\
 \midrule
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
-Training and evaluation & Three cartpole pairs; six walking pairs.\\
+Training and evaluation & Cartpole, walking and wrong-match tests.\\
 Checkpoint save/reload verification & Next-update and large-array tests passed.\\
 Evidence about the extra matching task & Cartpole: early lead. Walking: mixed.\\
 \bottomrule
@@ -395,11 +396,11 @@ Evidence about the extra matching task & Cartpole: early lead. Walking: mixed.\\
 
 \question{What is running next?}
 
-We are training cartpole models with deliberately wrong image matches: for
-example, pairing a view of the pole leaning right with a different recorded
-moment. The extra learning exercise remains, but its targets change. We keep
-the original correct-matching and no-matching comparisons. Wrong targets may
-harm learning; a poor score alone would not explain why correct matching helps.
+The wrong-matching models are complete; page 13 shows all three. We are now
+training six fresh models with a smaller change to the image encoder during
+the matching exercise. Three use correct matches and three use wrong matches.
+Does reducing that change reduce the harm, or also reduce the benefit? This
+follow-up is running, not a completed result. Original comparisons stay visible.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
@@ -622,5 +623,55 @@ changed the size of the apparent benefit, but did not eliminate different winner
 The group took 7.26 hours, including 3.53 hours of testing. Native records:
 \texttt{walker-additional-data/}; figure and exact summary:
 \texttt{figures/walker-additional-three-pairs/}. Cutoff: 5 October, 16:04 UTC.
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{12 / CHANGING THE TEACHING TARGET}{Wrong image matches hurt learning here.}
+
+Normally, two crops of the same recorded observation are the intended match.
+We changed the exercise to treat another recorded moment as the match instead.
+For example, a picture of the pole leaning right might be paired with one
+from a different moment. This is a simplified example, not a saved image pair.
+The reward-learning task and image crops stayed the same.
+
+\begin{center}
+\includegraphics[width=.95\linewidth]{figures/correspondence-three-seeds/learning-curves.pdf}
+\end{center}
+
+Each panel shows one training seed. Blue uses correct matching, orange removes
+the matching exercise, and green uses wrong matches. Each point averages ten
+fixed test episodes. Reward measures swinging and balancing, not a percentage
+correct. We compare every model at its planned 100,000-training-step checkpoint.
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Training seed & Correct matches & No matching & Wrong matches\\
+\midrule
+123 & 678.02 & 454.47 & 0.11\\
+456 & 446.17 & 240.54 & 68.10\\
+789 & 587.99 & 463.26 & 107.79\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\question{What does this show, and what does it not show?}
+
+Wrong matching finished lower in all three comparisons. The average rewards
+were \textbf{571, 386 and 59}, in the table's order. This is evidence that
+incorrect teaching targets can damage learning in this setting. It is not
+evidence that every model completely collapses, or that the same pattern holds
+on other tasks.
+
+\takeaway{A harmful teaching exercise is not a neutral control. Its poor result
+does not, by itself, explain why correct matching helps. We are now testing
+whether a smaller update changes the effect of both correct and wrong targets.}
+
+\small
+\textbf{Evidence.} Three new models from fresh weights, compared with the six
+original cartpole models. No best-checkpoint selection; test episodes are not
+extra training replicates. Native records: \texttt{correspondence-data/} and
+\texttt{data/}; figure and exact summary: \texttt{figures/correspondence-three-seeds/}.
+Cutoff: 5 October, 16:52 UTC. This is an exploratory follow-up, not a novelty claim.
 \end{frame}
 \end{document}

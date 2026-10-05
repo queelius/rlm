@@ -1,11 +1,12 @@
 # Learning RL by reproducing CURL
 
-Start with [the twelve-page PDF](learning-guide.pdf). The
+Start with [the thirteen-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **all three completed pairs at both 100k and 500k**,
 plus all three original walking pairs, their supplemental tests, and all three
-pairs from the new training cohort. Latest cutoff: October 5, 16:04 UTC.
+pairs from the new training cohort. It also includes all three wrong-matching
+cartpole models. Latest cutoff: October 5, 16:52 UTC.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -31,11 +32,16 @@ examples are identified explicitly.
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
 the earlier interpretations as dated checkpoints.
 
-Newer than the PDF: two wrong-matching cartpole models finished at **0.11** and
-**68.10**, below both original comparators for each seed. The final seed is
-running. These two outcomes suggest harm from wrong targets, but are not a
-completed group or a mechanism explanation. The [dated findings](FINDINGS.md) and
-[next comparison](ENCODER_UPDATE_CONTROL.md) explain the evidence and limits.
+Page 13 asks whether matching the right pictures matters. The three new models
+with deliberately wrong matches scored **0.11, 68.10 and 107.79**, below both
+original comparators in every seed. Averages are **570.73 with correct matching,
+386.09 without matching, and 58.67 with wrong matching**. The page shows every
+curve and a simple example. Wrong targets can actively harm learning, so this
+does not by itself explain why correct matching helps. The
+[complete comparison](figures/correspondence-three-seeds/RESULTS.md),
+[native records](correspondence-data), and [dated findings](FINDINGS.md) preserve
+the evidence. The [smaller-update comparison](ENCODER_UPDATE_CONTROL.md) has
+started; its results are not yet complete.
 
 All three additional training pairs are complete:
 **502.95 versus 200.43**, **254.63 versus 335.20**, and **436.58 versus 156.22**,
@@ -94,18 +100,16 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
-The twelve-page edition includes the complete supplemental walking test and
-the complete additional training cohort, reported separately from the original.
-Changed pages 1, 7, 11 and 12 were rendered and visually inspected, including
-the new complete-cohort plot. The new page's figure initially left too little
-room for its evidence footer; its size was reduced and the page rechecked.
-No TeX overflow
-warnings or out-of-page text were found; other pages retain their earlier inspection. The numerical
+The thirteen-page edition adds the complete three-condition cartpole comparison
+to the previously reported walking tests and separate training cohorts.
+Changed pages 1, 6, 7 and 13 were rendered and visually inspected, including
+the new complete-cohort plot. No TeX overflow warnings or out-of-page text
+were found on any page; unchanged pages retain their earlier inspection. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`f718c3ff7a4bac479e92c3624bfdb78d1cfb91cdea4e5c57e75818f4da468726`.
+`f5b69d4e191fa1b946e80e466c0847241c9a478124b3295dabca8a54e15716dc`.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
@@ -143,12 +147,26 @@ six curves preserve late fluctuations and crossings, not just final winners.
 All 24 public record files match their external originals byte for byte.
 The existing two-arm summarizer was reused without changing its source.
 
+For the complete three-condition cartpole comparison, an independent CPU audit
+recomputed all 234 means from 2,340 raw test episodes and checked native
+endpoints, matched settings, finite learning and checkpoint sizes for all nine
+models. Root checked all new-run means and byte-verified all 12 public copies.
+The explicit three-arm helper retains all original comparators and every new
+model; incomplete, failed and missing runs do not receive scientific scores.
+It passed 17 focused tests and independent review before this data-only update.
+The figure was generated from the raw episode records without smoothing or
+favorable endpoint selection and inspected within the compiled PDF.
+
 ## Evidence and next comparisons
 
 - [Correct versus wrong image matches](CORRESPONDENCE_CONTROL.md): a three-run
-  cartpole follow-up now training, after the walking cohort finished. It retains
-  the original correct-matching and no-matching comparisons, with an explicit
-  warning that false targets can harm learning. No completed outcome is available yet.
+  cartpole follow-up, now complete. The [three-condition report](figures/correspondence-three-seeds)
+  retains every original comparator and all three new models. Wrong targets
+  harmed learning here; this alone is not a mechanism explanation.
+- [Encoder-update strength](ENCODER_UPDATE_CONTROL.md): six fixed fresh-model
+  runs are admitted and the first is learning. The study asks whether a smaller
+  encoder update changes the effect of correct and wrong teaching targets.
+  This is a sensitivity test, not a proven bug fix.
 - [Declared fresh-start evaluation](WALKER_FRESH_STARTS.md) and its
   [fixed panel and budget](walker-fresh-starts.json): a supplemental check of
   all six final walkers on 50 new starts each. This separate evaluation is

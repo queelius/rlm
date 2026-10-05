@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T16:36:00Z
+cutoff_utc: 2026-10-05T16:52:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T16:36:00Z
+execution_update_utc: 2026-10-05T16:52:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,66 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## Wrong matching hurts across all three training seeds, October 5 at 16:52 UTC
+
+| Training seed | Correct matching | No matching exercise | Wrong matching |
+|---|---:|---:|---:|
+| 123 | 678.02 | 454.47 | 0.11 |
+| 456 | 446.17 | 240.54 | 68.10 |
+| 789 | 587.99 | 463.26 | 107.79 |
+| Mean across three trained models | 570.73 | 386.09 | 58.67 |
+
+These are all the declared fixed-100k endpoints, not the best points on each
+curve. The score is total reward averaged over ten fixed test starts; it is
+not a percentage. Every wrong-matching model scored below both corresponding
+original models. Its mean difference is **-512.06 versus correct matching**
+and **-327.42 versus no matching**. The sample standard deviations across
+training seeds are 116.89, 126.13 and 54.45 for the three columns. These describe
+variation between trained models, not confidence intervals. Testing one model
+ten times does not create ten independent training runs.
+
+The [complete curves and machine-readable report](figures/correspondence-three-seeds)
+show all nine models. These are six original comparators and three later
+wrong-target models, not nine new runs. Every method keeps random image crops.
+The extra matching update is retained in the wrong-target condition, with the
+candidate pictures reassigned before computing the original matching loss.
+
+**What we learned:** incorrect teaching targets can harm learning in this
+setting. The third model fluctuated from 85.24 initially through 187.13 at 96k
+to 107.79 at the endpoint. It did not collapse to zero. These results do not
+establish representation collapse, a universal effect on other tasks, or the
+reason correct matching helped. A damaging update is not a neutral substitute
+for one without useful information. Our no-matching comparison remains essential.
+
+Root and an independent CPU audit verified native completion and settings.
+The independent audit recomputed all 234 means from 2,340 raw test episodes,
+checked the exact starts 10000--10009, finite learning values, natural episode
+boundaries and checkpoint sizes for all nine models. Each trained for 100k
+simulator steps and 11,500 updates, with 260k separate evaluation interactions.
+No new failures or resumes. Original CURL seed 123 has a native completion
+and a later queue skip-complete record, rather than a standalone result receipt.
+All 12 [public wrong-matching evidence files](correspondence-data) are byte-exact
+copies of their native records. Earlier partial reports below remain dated history.
+
+The three wrong-target runs have 345 sampled pairing diagnostics. All have
+zero fixed permutation positions. Duplicate replay sampling nevertheless
+produced eight residual same-record matches among 44,160 logged row pairs;
+the logs are not an exhaustive count of all training updates. Distinct records
+may also show similar physical states.
+
+Their total native time was **43.68 minutes**, including **18.29 minutes of
+testing** and **19.19 seconds saving checkpoints**. Original three-run totals
+were 43.43 minutes with correct matching and 39.93 without matching. These
+comparisons match training interactions, not wall time or optimizer work.
+
+**Next decision:** keep the six [smaller-encoder-update runs](ENCODER_UPDATE_CONTROL.md)
+fixed and finish them. The first launched 0.875 seconds after the wrong-target
+queue ended and returned real simulator rewards after 19.01 seconds. Actual
+learning values are finite; no new fixed endpoint exists yet. The design was
+chosen before the last two wrong-target endpoints, and these outcomes do not
+change its seeds, conditions or stopping points. The updated thirteen-page
+[learning guide](learning-guide.pdf) explains this result and the next question.
 
 ## Two completed wrong-matching runs are worse, October 5 at 16:36 UTC
 
