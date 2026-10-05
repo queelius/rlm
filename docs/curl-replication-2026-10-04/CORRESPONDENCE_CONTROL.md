@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: prepared_and_reviewed_not_launched
+status: admitted_owner_waiting_training_not_started
 question: Does matching the right observations matter for the early cartpole benefit?
 task: cartpole/swingup
 new_arm: shuffled_curl
@@ -88,7 +88,10 @@ Implementation: [the small pairing controller](../../experiments/curl_replicatio
 and [focused tests](../../experiments/curl_replication_20261004/test_contrastive_control.py).
 A separate source snapshot includes the new module; all copied executable
 files match the verified implementation. The live walking snapshot is unchanged.
-At 14:33 UTC, the three-job batch is prepared but has no owner or GPU outputs.
+At 14:33 UTC, the three-job batch was prepared without an owner or GPU outputs.
+At 14:56 UTC, its owner started waiting behind the final walking control.
+Training has not started. The existing shared lock permits an automatic handoff
+when that control finishes, without displacing any walking job.
 
 ## Budget, ordering and interpretation
 
@@ -97,8 +100,10 @@ Save the complete state periodically at natural episode boundaries and at the
 endpoint. Retain all failed attempts. Allow approximately 10.2 GB for three
 final checkpoints and one temporary save, in addition to unfinished walking jobs.
 The allocation deadline remains epoch 1791387366. Use the existing GPU lock and
-start only after all six additional walking jobs have finished or been accounted
-for by their owner. Preparation is not a GPU launch.
+start training only after all six additional walking jobs have finished or been
+accounted for by their owner. A waiting owner was admitted only after verifying
+that the sixth/final walking job was running and holding that lock. Waiting is
+not training, and no correspondence outcome is available yet.
 
 Report all three conditions at the fixed endpoint, with individual training-seed
 scores and unsmoothed curves. Correct matches above both alternatives would be

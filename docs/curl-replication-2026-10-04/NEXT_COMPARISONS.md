@@ -1,12 +1,28 @@
 ---
 date: 2026-10-04
 status: supplemental_panel_complete_additional_seeds_running
-priority: finish_walker_replication_prepare_correspondence_control
+priority: finish_walker_replication_then_run_admitted_correspondence_control
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 14:00 UTC
+## Current decision, October 5 at 14:58 UTC
+
+The third additional CURL walker finished at **436.58**, after the declared
+100k training steps. Its matched control is now running. This is evidence that
+another CURL model learned, not a third paired win: the control has no endpoint
+yet. Finish that run unchanged and report the whole additional cohort separately
+from the original three pairs. The [findings](FINDINGS.md) retain native evidence.
+
+The [wrong-matching cartpole comparison](CORRESPONDENCE_CONTROL.md) is now
+admitted. Its owner is waiting for the shared GPU lock, behind the final walking
+control. All three jobs, fixed endpoints, source snapshots and resource caps are
+recorded; no new training has started. This ordering avoids an idle handoff and
+prevents the new batch from displacing the last matched walking comparison.
+Prepare an explicitly three-condition report while those runs execute. Report
+harm from false targets separately from evidence favoring correct matching.
+
+## Earlier decision, October 5 at 14:00 UTC
 
 Two of the three additional walking pairs are complete. Their differences are
 **+302.52 and -80.56**, again with opposite winners. Finish the final pair with

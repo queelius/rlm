@@ -38,6 +38,11 @@ The first two additional training pairs also have opposite winners:
 reported separately from the original cohort. The third new pair is still
 running. Page 11 includes this limited update without claiming a complete cohort.
 
+Update at October 5, 14:58 UTC: the third CURL model finished at **436.58**,
+but its control is still running. This is not yet a third paired result.
+The [running findings](FINDINGS.md) explain it and link the native records.
+The PDF retains its earlier, explicitly dated comparison cutoff.
+
 The [fresh-start evaluation](WALKER_FRESH_STARTS.md) is complete for all six
 unchanged walking models. [Three additional training pairs](WALKER_ADDITIONAL_SEEDS.md)
 have begun to check variability between independently trained models.
@@ -131,9 +136,9 @@ All 16 public record files match their external originals byte for byte.
 ## Evidence and next comparisons
 
 - [Correct versus wrong image matches](CORRESPONDENCE_CONTROL.md): a three-run
-  cartpole follow-up being prepared while the walking cohort finishes. It retains
+  cartpole follow-up admitted and waiting behind the final walking control. It retains
   the original correct-matching and no-matching comparisons, with an explicit
-  warning that false targets can harm learning. Preparation is not a launch.
+  warning that false targets can harm learning. Its training has not started yet.
 - [Declared fresh-start evaluation](WALKER_FRESH_STARTS.md) and its
   [fixed panel and budget](walker-fresh-starts.json): a supplemental check of
   all six final walkers on 50 new starts each. This separate evaluation is

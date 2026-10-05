@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T13:39:00Z
+cutoff_utc: 2026-10-05T14:58:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T13:55:00Z
+execution_update_utc: 2026-10-05T14:58:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,37 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## One more trained walker, but not yet another comparison, October 5 at 14:58 UTC
+
+The third additional CURL model, seed890, completed its fixed 100k training
+budget with an average test reward of **436.58392**. Its matched control is
+still training. We therefore have five completed models in this six-model
+follow-up, but still only two completed pairs. There is no third winner yet.
+
+This model improved from 17.31 before training. Its last three recorded test
+means were 404.20, 402.92 and 436.58. Improvement was uneven, and the final score
+falls within the earlier CURL walkers' range. The trajectory supports actual
+learning; it does not establish a benefit over the unfinished control.
+
+Root and an independent CPU audit recomputed all 26 means from 260 raw test
+episodes, each with the declared starts 10000--10009. The run completed 50k
+decisions, 100k training steps, 49k learning updates and 100 natural training
+episodes. All 3,920 logged learning values were finite. There were no failures
+or resumes, and the final checkpoint size matched its saved receipt. Training
+settings differ from its active control only by the matching update. The
+[native records](walker-additional-data/curl-seed890) preserve the full curve.
+
+Start-to-end wall time was 75.98 minutes, including 36.08 minutes of testing and
+1.23 minutes of checkpoint writes. The 260k test interactions are not training
+interactions or additional independently trained models.
+
+The next [three-run cartpole comparison](CORRESPONDENCE_CONTROL.md) is admitted
+and waiting behind the final walking control. It tests correct versus wrong
+image matches, retaining the original no-matching control. The eleven-page
+learning PDF remains at its clearly marked earlier cutoff: this unmatched
+endpoint does not yet change its scientific conclusions. Revisit that edition
+when the cohort or the new comparison is complete.
 
 ## Two additional walking pairs have opposite winners, October 5 at 13:39 UTC
 
