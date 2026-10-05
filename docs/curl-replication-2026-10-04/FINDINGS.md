@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T18:18:00Z
+cutoff_utc: 2026-10-05T18:33:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T18:18:00Z
+execution_update_utc: 2026-10-05T18:33:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,34 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## First fresh-seed result: no matched conclusion yet, October 5 at 18:33 UTC
+
+The first new original-CURL model, training seed 234, finished at **280.41**
+mean reward after the fixed 100k training steps. This is below the original
+three CURL scores (678.02, 446.17 and 587.99), despite matching task and learning
+settings. It adds an example of training variation, not evidence that matching
+failed to help: this seed's smaller-update and no-matching endpoints do not
+exist yet. Do not compare one new model with an old group average to estimate
+the matching effect, or select a different seed because this score is lower.
+
+All 26 test means were recomputed from 260 raw episodes with the declared ten
+test starts. Native records show 100 natural training episodes, 11,500 updates,
+920 finite logged learning values, no restart or failure, and a verified
+2,386,051,291-byte checkpoint. The curve rose from 9.84 initially to 280.41;
+its 288.34 score at 92k is not substituted for the final score. Native start-to-end
+time was 14.41 minutes, including 6.08 minutes testing and 6.57 seconds saving.
+Compared with the original seed-789 configuration, only the seed and nonbinding
+time cap differ. The [four native evidence files](fresh-seed-data/curl-seed234)
+are copied unchanged.
+
+Continue all nine declared jobs. The smaller-update seed-234 model is learning,
+and seven later jobs remain queued under the same owner. Its partial curve is
+not a final comparison. The useful next evidence is the completed three-way
+comparison on this seed, followed by the complete fresh cohort. No new tuning
+sweep or change to the plan is warranted. The learning PDF retains its explicit
+18:18 completed-comparison cutoff; this unpaired result does not change its
+main conclusion. Report the new cohort separately when comparisons are ready.
 
 ## The full update-strength comparison, October 5 at 18:18 UTC
 

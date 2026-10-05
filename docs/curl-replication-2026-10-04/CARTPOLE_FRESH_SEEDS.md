@@ -1,7 +1,7 @@
 ---
 date: 2026-10-05
 decision_fixed_utc: 2026-10-05T17:50:00Z
-status: first_model_running_eight_jobs_queued
+status: one_complete_second_running_seven_queued
 question: Do the early benefits of image matching and its smaller update repeat in fresh training seeds?
 task: cartpole/swingup
 training_seeds: [234, 567, 890]
@@ -12,11 +12,14 @@ external_runs: /project/alex_phd/runs/curl-cartpole-fresh-seeds-20261005
 
 # Does the result repeat when we train new models?
 
-**Execution update, October 5 at 18:18 UTC:** the unchanged nine-job queue is
-running. The first model launched 0.92 seconds after the previous queue ended,
-and actual simulator rewards arrived within 19.01 seconds. Its native records
-show finite learning updates; eight later jobs are queued. Resources, source
-hashes, owner identity and the shared lock were checked.
+**Execution update, October 5 at 18:33 UTC:** original CURL seed 234 completed
+at 280.41. Its two matching-seed comparisons are not complete, so no new
+matching-effect conclusion is available. The smaller-update model is learning,
+and seven later jobs are queued. Native rewards, finite updates, completed
+records and checkpoint size were verified. Read the [dated findings](FINDINGS.md)
+and [unchanged evidence](fresh-seed-data/curl-seed234). All nine jobs continue
+as declared, regardless of this first score. Resources, source hashes, owner
+identity and the shared lock were checked.
 The design below was fixed at 17:50 UTC,
 before the third seed's smaller-update endpoints. Admission and launch receipts
 live in the external run store; the sealed protocol there is unchanged.
