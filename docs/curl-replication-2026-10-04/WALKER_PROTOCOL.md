@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-status: two_pairs_complete_third_reference_running
+status: two_pairs_complete_third_control_running
 question: Does the early benefit of the extra image-matching update extend to a walking task?
 primary_endpoint: 100000_training_simulator_steps
 training_seeds: [123, 456, 789]
@@ -95,6 +95,11 @@ favoring CURL by 24.27, much less than the first pair's 241.55. The third CURL
 seed is running and its control is queued. The guide and
 [two-pair summary](figures/walker-two-pairs/summary.json) include both pairs;
 the primary endpoint and all remaining settings are unchanged.
+
+At October 5, 06:54 UTC, the third CURL reference completed naturally at
+435.82973. Its matched control is now training with actual rewards and finite
+updates. All original settings and endpoints remain unchanged. This is still
+two completed pairs, not three. See [third-reference evidence](walker-data/third-reference).
 
 The six-job queue and source snapshot are stored at
 `/project/alex_phd/runs/curl-walker-replication-20261004`. Source commit:

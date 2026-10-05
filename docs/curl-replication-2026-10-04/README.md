@@ -27,6 +27,11 @@ examples are identified explicitly.
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
 the earlier interpretations as dated checkpoints.
 
+Execution update, October 5 at 06:54 UTC: the third walking CURL model has
+finished at 435.83, and its control is training. This unpaired result is in
+the [findings](FINDINGS.md) and [native records](walker-data/third-reference).
+It does not add a third comparison to the PDF yet.
+
 The [research protocol](../../experiments/curl_replication_20261004/README.md)
 contains the selected comparison, run order, settings, resolved access issue and
 resumption instructions. The [machine-readable manifest](../../experiments/curl_replication_20261004/manifest.json)
@@ -107,14 +112,20 @@ or live training-source change. The prior first-pair figure remains preserved.
   [second control](walker-data/second-control): two completed pairs at fixed 100k.
 - [Current walking paired summary](figures/walker-two-pairs/summary.json) and
   [learning curves](figures/walker-two-pairs/learning-curves.pdf).
-  Rebuild from the closed copied records with:
+  This is the preserved two-pair snapshot. The records directory now also
+  includes the unpaired third reference. To summarize all currently published
+  records into a separate output directory, without overwriting that snapshot:
 
   ```sh
   python experiments/curl_replication_20261004/summarize.py \
     --runs docs/curl-replication-2026-10-04/walker-data \
-    --output docs/curl-replication-2026-10-04/figures/walker-two-pairs \
-    --title 'Learning to walk from images: two training pairs'
+    --output docs/curl-replication-2026-10-04/figures/walker-current \
+    --title 'Learning to walk: currently published runs'
   ```
+
+  Until the third control finishes, arm-level averages have unequal numbers
+  of models. Use the matched-pair differences, not the difference between
+  those unequal averages, when comparing methods.
 
 - [Historical first walking pair](figures/walker-first-pair/summary.json) and
   [its original figure](figures/walker-first-pair/learning-curves.pdf).

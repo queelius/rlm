@@ -2,7 +2,7 @@
 date: 2026-10-04
 cutoff_utc: 2026-10-05T05:43:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T05:43:00Z
+execution_update_utc: 2026-10-05T06:54:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,34 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## Third walking CURL model complete, October 5 at 06:54 UTC
+
+The third CURL model finished at **435.82973** after the fixed 100k training
+steps, compared with 18.16 before training. Its score falls between the other
+two CURL models, 482.83 and 385.23. Its matched control has started, so this is
+not yet a third completed comparison or evidence of a third CURL advantage.
+
+Root and an independent CPU audit recomputed all 26 test averages from the
+260 recorded episodes. The run completed naturally at 50,000 decisions,
+100,000 training simulator steps and 49,000 learning updates. All 3,920 logged
+learning values were finite, with no failure or recovery. The final checkpoint
+is 9,137,791,883 bytes, matching its receipt. Native start-to-end duration was
+74.69 minutes, including 35.06 minutes of evaluation and 72.51 seconds of
+checkpoint writes. The 260,000 evaluation steps were separate from training.
+
+The control started 0.444 seconds after this process exited. It has returned
+real episode rewards and finite learning updates; its initial score and all
+configuration fields except the learning arm match the reference. Finish it
+before interpreting the third difference. The early two-pair conclusion is
+unchanged, and the PDF retains its explicit 05:43 completed-comparison cutoff.
+The [third reference records](walker-data/third-reference) are now available.
+
+The next check is separately declared: test all six final policies on
+[50 fresh starting states](WALKER_FRESH_STARTS.md), without further training
+or replacing the primary scores. Its evaluation tool has passed focused CPU
+checks; a serial launcher is being prepared while the control trains. This
+tests sensitivity to test starts, not new training seeds or why CURL works.
 
 ## Two walking pairs complete, October 5 at 05:43 UTC
 
