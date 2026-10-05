@@ -96,6 +96,11 @@ or live training-source change. The prior first-pair figure remains preserved.
 
 ## Evidence and next comparisons
 
+- [Declared fresh-start evaluation](WALKER_FRESH_STARTS.md) and its
+  [fixed panel and budget](walker-fresh-starts.json): a supplemental check of
+  all six final walkers on 50 new starts each. Prepared separately from the
+  ongoing training; no new result yet. The PDF's completed-result cutoff is
+  unchanged.
 - [First walking reference](walker-data/first-reference) and
   [matched control](walker-data/first-control), plus
   [second reference](walker-data/second-reference) and

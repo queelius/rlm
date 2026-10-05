@@ -31,7 +31,11 @@ evidence of equivalence. First-pair CURL's extra recovery cost remains explicit.
    minutes including loading, with only small output files. A proposed panel
    is starts 20000--20049, distinct from the original 10000--10009. Do not choose
    later checkpoints or training seeds because this panel favors them. An evaluation-only
-   entrypoint is needed; this follow-up is prepared conceptually, not launched.
+   entrypoint passed four focused CPU tests and independent review on October 5.
+   [The declared supplemental protocol](WALKER_FRESH_STARTS.md) now fixes all
+   six endpoints, starts 20000--20049, separate reporting and compute caps.
+   The serial batch owner still needs preparation. The training queue is
+   unchanged; the supplemental evaluation has not launched.
 3. **Decide on more training seeds or a longer walker horizon from the cohort.**
    The first control was improving near its endpoint, so a longer horizon could
    distinguish delayed learning from a persistent gap if the pattern repeats.
