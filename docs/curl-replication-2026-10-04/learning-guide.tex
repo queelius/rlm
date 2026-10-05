@@ -49,9 +49,9 @@ the methods are equivalent. Page 9 shows every pair.
 
 On the walking task, CURL won two pairs, but the control won the third by a
 large margin. The average scores were \textbf{435 versus 433}, hiding very
-different individual outcomes. Page 10 shows all three pairs. We cannot claim
-a dependable walking advantage from these results. Latest evidence:
-5 October, 08:03 UTC.
+different individual outcomes. The same winners persisted on 50 new test starts.
+Pages 10--11 explain why we still cannot claim a dependable walking advantage.
+Latest evidence: 5 October, 08:48 UTC.
 
 \question{Why this paper?}
 
@@ -75,7 +75,7 @@ practice, but would not retroactively prove our earlier RLM training correct.
 
 Pages 2--4 explain the task and learning process with examples. Page 5 explains
 the comparison and scores. Page 6 records implementation findings that affect
-interpretation. Pages 7--10 give next decisions, checks and the measured results.
+interpretation. Pages 7--11 give next decisions, checks and the measured results.
 
 \end{frame}
 \begin{frame}[t]
@@ -395,10 +395,10 @@ Evidence about the extra matching task & Cartpole: early lead. Walking: mixed.\\
 
 \question{What is running next?}
 
-We are testing all six frozen models on new starting states. Next, three more
-training pairs with new random seeds will check whether the mixed pattern
-repeats. New test episodes check the models we already have; new training runs
-check whether we would learn the same lesson from a different set of models.
+All six frozen models have now been tested on 50 new starting states each.
+The same pair-by-pair winners persisted. Three more training pairs with new
+random seeds have begun. New test episodes check the models we already have;
+new training runs check whether a different set of models teaches the same lesson.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
@@ -512,9 +512,8 @@ curve without smoothing or choosing the best checkpoint.
 
 \question{What can we conclude, and what comes next?}
 
-Three pairs establish neither a dependable winner nor a tie. New test starts
-check the six existing models; three new training pairs will check variability
-between trained models. Test episodes are not additional trained models.
+Three pairs establish neither a dependable winner nor a tie. The next page
+tests whether different starting states change this pattern.
 
 \takeaway{Our question is not just whether a model learns. We want to know
 which extra learning exercise helps, on which task, and how repeatable its benefit is.}
@@ -523,5 +522,60 @@ which extra learning exercise helps, on which task, and how repeatable its benef
 \textbf{Cost and evidence.} Each run used 100k training and 260k evaluation steps.
 CURL took 75--77 minutes, controls 69--72; equal experience is not equal
 computation. Records: \texttt{walker-data/}. Cutoff: 5 October, 08:03 UTC.
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{10 / CHECKING THE TEST}{Do different starting states change the result?}
+
+Suppose one learned walker handles most initial postures well but often falls
+from a particular posture. A test with only ten starts could give a misleading
+impression of that model. We therefore tested \textbf{every final walking model
+on the same 50 new starts}, without changing its weights.
+
+\question{The same winners appeared again.}
+
+The table shows CURL's score minus the control's score. Positive numbers favor
+CURL; negative numbers favor the control. A score is the average total reward
+per test episode. It measures walking behavior, not percentage correct.
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Training pair & Original 10 starts & New 50 starts\\
+\midrule
+First pair & $+242$ & $+287$\\
+Second pair & $+24$ & $+23$\\
+Third pair & $-262$ & $-241$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+On the new starts, the third pair scored \textbf{429 for CURL versus 670 for
+the control}. Its opposite result did not disappear with more testing.
+
+\question{What did we learn?}
+
+The mixed pattern is not explained away by replacing the original ten test
+starts. It persists in the same trained models on this larger panel. That makes
+variation between training runs important to investigate. It does not yet tell
+us which part of training creates the differences, or how often CURL helps.
+
+\question{Why train more models instead of just testing these again?}
+
+Testing one learned walker 50 times still gives us only one learned walker.
+We still have three training pairs, not 300 independent training runs.
+Three additional pairs now start from fresh weights with unchanged settings.
+They ask whether the conclusion repeats with a different set of trained models.
+
+\takeaway{More tests of the same models and training more models answer
+different questions. We need to keep those sources of variation separate.}
+
+\small
+\textbf{Scope and evidence.} This is the same walking task, not transfer to a
+new task. We used every fixed 100k model, with no checkpoint selection or further
+learning. The original scores remain unchanged. This supplemental check cost
+300 test episodes, 300k simulator steps and about 45 minutes. Native records:
+\texttt{walker-fresh-starts-data/}; details: \texttt{WALKER\_FRESH\_STARTS.md}.
+Cutoff: 5 October, 08:48 UTC.
 \end{frame}
 \end{document}

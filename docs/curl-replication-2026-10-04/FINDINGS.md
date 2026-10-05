@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T08:03:00Z
+cutoff_utc: 2026-10-05T08:48:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T08:07:00Z
+execution_update_utc: 2026-10-05T08:49:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,33 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## The walking pattern persists on new test starts, October 5 at 08:48 UTC
+
+We retested every original final walking model on 50 new starts, with no
+learning or checkpoint selection. CURL-minus-control differences are
+**+287.28, +23.01 and -240.92**, compared with **+241.55, +24.27 and -262.23**
+originally. The same two CURL wins and one large control win remain. The
+third pair scores 428.59 versus 669.51 on this larger panel.
+
+The mixed result is therefore not explained away by replacing the original
+ten starts. Variability between trained models remains an important question;
+this panel does not identify its cause. More episodes do not create new
+independent training runs, and this is not transfer to another task. The
+original primary scores remain unchanged.
+
+All 300 finite returns, exact starts, zero training/updates and successful
+completion receipts were checked. Evaluation used 300k simulator steps and
+44.44 minutes of evaluator elapsed time, including validation and setup.
+Total batch wall time was 44.57 minutes; neither is pure rollout time. See the
+[complete supplemental report](WALKER_FRESH_STARTS.md) and
+[all six native records](walker-fresh-starts-data).
+
+The [three additional training pairs](WALKER_ADDITIONAL_SEEDS.md), admitted
+before any supplemental comparison was complete, have begun automatically.
+The first new run returned its initial ten test episodes, then proceeds to
+learning from fresh weights. It is not yet a completed training result.
+Keep the cohort and its settings unchanged; do not tune from supplemental scores.
 
 ## The complete walking cohort changes the story, October 5 at 08:03 UTC
 

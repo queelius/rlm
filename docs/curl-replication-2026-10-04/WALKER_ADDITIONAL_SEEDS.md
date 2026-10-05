@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: admitted_owner_waiting_for_supplemental_batch
+status: running_first_training_seed
 question: Does the fixed100k walking effect repeat across new training seeds?
 training_seeds: [234, 567, 890]
 primary_endpoint: 100000_training_simulator_steps
@@ -56,6 +56,13 @@ QUEUE.json, SOURCE.json, ADMISSION.md and LAUNCH.json. The last file distinguish
 a waiting owner from actual training. At the October 5, 08:07 UTC cutoff, its
 owner is waiting on the shared GPU lock held by the entire supplemental batch.
 It will begin after that lock is released. No new training result exists yet.
+
+Execution update, October 5 at 08:49 UTC: all supplemental evaluations finished,
+and this cohort's first child launched 0.46 seconds after that queue ended.
+Its initial ten test returns arrived 87.47 seconds after launch. Training
+starts from fresh weights; these initial returns are not a learned endpoint.
+The existing owner, settings and caps are unchanged. The earlier waiting
+snapshot above is historical, not an instruction to start another owner.
 
 The decision follows the complete original cohort, before any complete
 supplemental policy comparison existed. Original evidence, checkpoints and

@@ -1,10 +1,11 @@
 # Learning RL by reproducing CURL
 
-Start with [the ten-page PDF](learning-guide.pdf). The
+Start with [the eleven-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **all three completed pairs at both 100k and 500k**,
-plus all three completed walking pairs, with an October 5, 08:03 UTC evidence cutoff.
+plus all three completed walking pairs and their supplemental tests, with an
+October 5, 08:48 UTC evidence cutoff.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -20,15 +21,19 @@ with limits and recovery cost. The fresh-model walking comparison is also comple
 with CURL first. Its two wins are offset by a large loss in the third pair.
 The means, **434.63 versus 433.44**, hide those differences. Page 10 shows
 all six curves. Three pairs establish neither a dependable winner nor equivalence.
+Page 11 asks whether changing the test starts changes that pattern. On 50 new
+starts, the same pairs favor the same methods: differences **+287.28, +23.01
+and -240.92**. The third pair's control advantage persists. This is still three
+training pairs; testing their frozen models again does not add training replicates.
 Published scores and invented teaching
 examples are identified explicitly.
 
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
 the earlier interpretations as dated checkpoints.
 
-The [fresh-start evaluation](WALKER_FRESH_STARTS.md) is now running on all six
+The [fresh-start evaluation](WALKER_FRESH_STARTS.md) is complete for all six
 unchanged walking models. [Three additional training pairs](WALKER_ADDITIONAL_SEEDS.md)
-are queued behind it to check variability between independently trained models.
+have begun to check variability between independently trained models.
 This decision follows the original mixed cohort, not favorable selection from
 the supplemental evaluation. New test episodes and new training runs answer
 different questions; neither should be counted as the other.
@@ -70,16 +75,18 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
-The ten-page edition includes all three matched cartpole pairs at 500k and the
-three walking pairs. Updated pages 1, 7, 9 and 10 were visually inspected after
-compilation; earlier unchanged pages retain their previous inspection. The
-current build has no overfull/underfull messages, and text stays inside all
-ten page boundaries. No font or plot shrink was needed. The numerical
+The eleven-page edition adds the complete supplemental walking test to the
+three matched cartpole pairs at 500k and the three original walking pairs.
+Changed pages 1, 7, 10 and 11 were rendered and visually inspected. A small
+page-10 overflow was fixed by shortening repeated text, without shrinking
+fonts or the figure. The final build has no overfull/underfull warnings, and
+all text stays within the eleven page boundaries. Unchanged pages retain
+their earlier inspection. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`70ffd7c3a5ad7a0ba74bac121f70da51ff0a9c7f3ba3ddabc821540f215f3b4f`.
+`6af2f468a49be3060d1c7f6103a07cef8d41aff147782428781c919e435d173b`.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
@@ -100,14 +107,24 @@ addition passed a failing-first rendered-PDF regression, all seven focused
 tests and Ruff checks. This data/document update required no new test campaign
 or live training-source change. The prior first-pair figure remains preserved.
 
+For the supplemental panel, root and independent CPU audits recomputed all six
+means from 300 raw returns and checked exact starts, successful endpoints,
+zero learning updates and parent provenance. All six original final models
+are included. Native public records preserve the complete panel, not just the
+favorable comparisons. All 30 copied evidence files match the native originals
+byte for byte. The [machine-readable summary](walker-fresh-starts-data/summary.json)
+includes exact values, parent identities and file checksums. No large checkpoint
+weights are committed to Git.
+
 ## Evidence and next comparisons
 
 - [Declared fresh-start evaluation](WALKER_FRESH_STARTS.md) and its
   [fixed panel and budget](walker-fresh-starts.json): a supplemental check of
-  all six final walkers on 50 new starts each. This separate evaluation has
-  started; its results are not included in the original-cohort PDF cutoff.
+  all six final walkers on 50 new starts each. This separate evaluation is
+  complete, with [all native records](walker-fresh-starts-data). Page 11 reports
+  it separately; page 10's original results remain unchanged.
 - [Additional training-seed protocol](WALKER_ADDITIONAL_SEEDS.md): three new
-  matched pairs with unchanged settings, queued after the evaluation batch.
+  matched pairs with unchanged settings, now running after the evaluation batch.
 - [First walking reference](walker-data/first-reference) and
   [matched control](walker-data/first-control), plus
   [second reference](walker-data/second-reference) and

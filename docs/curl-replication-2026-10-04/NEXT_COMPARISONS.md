@@ -1,12 +1,32 @@
 ---
 date: 2026-10-04
-status: original_walker_complete_mixed_additional_seeds_admitted
+status: supplemental_panel_complete_additional_seeds_running
 priority: replication_before_mechanism
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 08:07 UTC
+## Current decision, October 5 at 08:49 UTC
+
+The [complete 50-start check](WALKER_FRESH_STARTS.md) preserves the original
+pair-by-pair winners: differences +287.28, +23.01 and -240.92. Replacing the
+original ten starts did not remove the mixed pattern. This is evidence about
+the same six models, not six new trained models or a new task.
+
+1. Continue the admitted new three-pair training cohort unchanged. The first
+   run has started and returned actual test episodes; no endpoint exists yet.
+   Finish every pair and report the new cohort separately.
+2. Use that cohort to reassess repeatability before choosing a costly longer
+   horizon or mechanism experiment. The original cohort remains in the report.
+3. Do not retune or select checkpoints using the supplemental scores. A cause
+   of training variability remains unestablished; repeated testing alone cannot
+   answer it. The existing horizon and mechanism ideas below remain conditional.
+
+The automatic handoff took 0.46 seconds from the supplemental queue ending to
+the first training child launch. Native initial evaluation returns arrived
+87.47 seconds after launch. No live source or owner change was needed.
+
+## Earlier decision, October 5 at 08:07 UTC
 
 The complete walking cohort has differences **+241.55, +24.27 and -262.23**,
 averaging +1.20. The third pair overturns the impression of a repeatable early

@@ -1,0 +1,215 @@
+{
+  "additional_optimizer_updates": 0,
+  "additional_training_steps": 0,
+  "cutoff_utc": "2026-10-05T08:48:00Z",
+  "evaluation_episode_count": 300,
+  "evaluation_seeds": [
+    20000,
+    20001,
+    20002,
+    20003,
+    20004,
+    20005,
+    20006,
+    20007,
+    20008,
+    20009,
+    20010,
+    20011,
+    20012,
+    20013,
+    20014,
+    20015,
+    20016,
+    20017,
+    20018,
+    20019,
+    20020,
+    20021,
+    20022,
+    20023,
+    20024,
+    20025,
+    20026,
+    20027,
+    20028,
+    20029,
+    20030,
+    20031,
+    20032,
+    20033,
+    20034,
+    20035,
+    20036,
+    20037,
+    20038,
+    20039,
+    20040,
+    20041,
+    20042,
+    20043,
+    20044,
+    20045,
+    20046,
+    20047,
+    20048,
+    20049
+  ],
+  "evaluation_simulator_steps": 300000,
+  "evaluator_elapsed_seconds_including_preparation": 2666.3795892428607,
+  "fresh_mean_paired_difference": 23.125746681223063,
+  "fresh_mean_return_by_arm": {
+    "curl": 446.7178887084616,
+    "no_curl": 423.59214202723854
+  },
+  "primary_results_replaced": false,
+  "records": [
+    {
+      "arms": {
+        "curl": {
+          "episodes": 50,
+          "evaluation_simulator_steps": 50000,
+          "evaluator_elapsed_seconds_including_preparation": 452.6724346820265,
+          "evidence_directory": "curl-seed123",
+          "files_sha256": {
+            "config.json": "a111b30d559a1f12fb2d81e0805ac48e8fd7408335007fc026a1450124189cea",
+            "job.json": "1aed5e1df6112d58f1667d0b0b0291cba4aa45b00f89a5423c50e7a8d5898947",
+            "metrics.jsonl": "7fd8483bda237a9ba7036bb7aa1dc9a97b265c6cdeb7852091166ba64a7f08ac",
+            "owner-result.json": "f864be3b42baf3c82b8e5287021576f13181108dfcdd5616495393562b9341c3",
+            "result.json": "6b558e458cacee084a81e56fb4763b5f2818e4123b77e6612b99524d04f46a18"
+          },
+          "mean_return": 516.8012488328352,
+          "optimizer_updates": 0,
+          "original_mean_return": 482.8334696476193,
+          "parent_checkpoint_sha256": "1575e0944c27f46c64f7b3d91554a717ec98422c9b2d1eb9ebb4d68eb9baf2e6",
+          "recorded_end_minus_start_seconds": 441.45648193359375,
+          "test_episode_sample_sd": 109.9786775724354,
+          "training_steps": 0
+        },
+        "no_curl": {
+          "episodes": 50,
+          "evaluation_simulator_steps": 50000,
+          "evaluator_elapsed_seconds_including_preparation": 422.07547670416534,
+          "evidence_directory": "no_curl-seed123",
+          "files_sha256": {
+            "config.json": "28b7550f8a13b8ba92eca1ef729c7b49c64b811eb26d0a75a6e5ec9f6d143f24",
+            "job.json": "d42633e4f08dd771404b88d737961ffc3a295f6bc5027c6a4ebeb4a706de5a01",
+            "metrics.jsonl": "be2af75ff67b6568aab219484ad69146439d4942985e271711f9e44a5514edd5",
+            "owner-result.json": "78df1c996daf62d1cbc835ae599dd5013d1ecf162d2b1fa3527d757d32f43f2e",
+            "result.json": "23fcf5268cd22cb988af8026fcc9a1daa03d9a3af0b833ccf7d339fe0d5bcdbd"
+          },
+          "mean_return": 229.51764610076756,
+          "optimizer_updates": 0,
+          "original_mean_return": 241.28327144796737,
+          "parent_checkpoint_sha256": "4a07bef4ad5cbf4a3f0083996e9be24bc7600d9cf572ab6cbff1d6457427bc45",
+          "recorded_end_minus_start_seconds": 410.8811376094818,
+          "test_episode_sample_sd": 96.08767478184261,
+          "training_steps": 0
+        }
+      },
+      "fresh_difference_curl_minus_control": 287.2836027320676,
+      "original_difference_curl_minus_control": 241.55019819965196,
+      "training_seed": 123
+    },
+    {
+      "arms": {
+        "curl": {
+          "episodes": 50,
+          "evaluation_simulator_steps": 50000,
+          "evaluator_elapsed_seconds_including_preparation": 465.7286039572209,
+          "evidence_directory": "curl-seed456",
+          "files_sha256": {
+            "config.json": "4a7ab666684ca556dce00dad62cb01c8e533b0773258b0a38cbe5a9b23838cbf",
+            "job.json": "5986e9f91270ee06184910a384ccc8fe147017181e897d2d07998b4eac6e4e7a",
+            "metrics.jsonl": "52230ce6d3b12e358e8db1ec15c501dda6ebe4d22a340a6c73eb49f47d1f4e62",
+            "owner-result.json": "f910f9082dc9226182eca3d478e24b8a112a207450c97e9203b72177ec691fc1",
+            "result.json": "642b0396b3457d6f12f4876770703c065f11649febe640de377bd517be559f83"
+          },
+          "mean_return": 394.7610891086147,
+          "optimizer_updates": 0,
+          "original_mean_return": 385.23472867873534,
+          "parent_checkpoint_sha256": "6dc8ee5aa2a3ae847b51f123c5e6c95d02060eed12acd2a8ab212b7b2a141421",
+          "recorded_end_minus_start_seconds": 454.6362020969391,
+          "test_episode_sample_sd": 23.47462810355008,
+          "training_steps": 0
+        },
+        "no_curl": {
+          "episodes": 50,
+          "evaluation_simulator_steps": 50000,
+          "evaluator_elapsed_seconds_including_preparation": 442.07587914168835,
+          "evidence_directory": "no_curl-seed456",
+          "files_sha256": {
+            "config.json": "bb212d9a8b148228e1db91a0788f702406e9a37e05e876d3a9f4ff770e8f6bbb",
+            "job.json": "950bbc3fc5eb601fac3ec130ba18882a36545fb530d985d9cdea8b9c096bf515",
+            "metrics.jsonl": "d4ce7ab8e9dba5010e2e150cfa17cf1b48cdc35136a6b2456bbee3d8b06f33b4",
+            "owner-result.json": "c6a33583afadceae652e0c153086eea409b33788d18b4196eb2c92d2d8370e40",
+            "result.json": "d43eb5c342166660608533a18922c1e6109dd2b104faeb1cb157eae19d82a111"
+          },
+          "mean_return": 371.74662867666115,
+          "optimizer_updates": 0,
+          "original_mean_return": 360.96295436764217,
+          "parent_checkpoint_sha256": "4c30c52d0d9e96d17899dbd9efe17556cab9eae217fc657d7bf56268c1b9f0cd",
+          "recorded_end_minus_start_seconds": 435.0199990272522,
+          "test_episode_sample_sd": 102.31864165995235,
+          "training_steps": 0
+        }
+      },
+      "fresh_difference_curl_minus_control": 23.01446043195358,
+      "original_difference_curl_minus_control": 24.271774311093168,
+      "training_seed": 456
+    },
+    {
+      "arms": {
+        "curl": {
+          "episodes": 50,
+          "evaluation_simulator_steps": 50000,
+          "evaluator_elapsed_seconds_including_preparation": 444.8219638057053,
+          "evidence_directory": "curl-seed789",
+          "files_sha256": {
+            "config.json": "d8d8dd5570df782da1404513b68c9020e0afe252ea7f22b1ae20cc0e3fd786a7",
+            "job.json": "aa9997bc6a2adabeaa31e3924758ccc6f49f7cf4498e5d76bd258cf78d0224a0",
+            "metrics.jsonl": "a5a8ea09278796daf3c74acd56f15711c0820e3fa2f871bf5f45a908f1af4045",
+            "owner-result.json": "dbc0f5be131381e65bf25147571fff8129933add519e9ae2dd5f69d19cc15a3f",
+            "result.json": "990ea51ba0f985b020be7372a613f225811643db90cae327966bb9b62774f55c"
+          },
+          "mean_return": 428.5913281839348,
+          "optimizer_updates": 0,
+          "original_mean_return": 435.8297314191702,
+          "parent_checkpoint_sha256": "d7a2ab72f7266fe30be10460de2eaded6225b2222f645978d45a54566d3828b9",
+          "recorded_end_minus_start_seconds": 435.1158833503723,
+          "test_episode_sample_sd": 72.3844777734373,
+          "training_steps": 0
+        },
+        "no_curl": {
+          "episodes": 50,
+          "evaluation_simulator_steps": 50000,
+          "evaluator_elapsed_seconds_including_preparation": 439.00523095205426,
+          "evidence_directory": "no_curl-seed789",
+          "files_sha256": {
+            "config.json": "01d371d540f7bc11be601a7988df5cb377045d1330ac2272d9fe64b0e0dbc99d",
+            "job.json": "20343184696cd1daf4687b0fbe86fdfe7e641afd0eb34d62ba3fb36860f5baa0",
+            "metrics.jsonl": "c599f006cc733e98fe72389829bd8a254d18f12d9c85a26bb44f6ad3b5784b59",
+            "owner-result.json": "db02b052437e3697ea1dd67a7a053ed1437e1fc247a969cf681125c0d9a4a407",
+            "result.json": "91fb967e3a487d807f0167bab430e19f6ce3383e18231cf16b153ce8058adbcc"
+          },
+          "mean_return": 669.5121513042868,
+          "optimizer_updates": 0,
+          "original_mean_return": 698.062302655139,
+          "parent_checkpoint_sha256": "5ac04f28f3d069198dc7fb73e2aad058c1241c60ef5f8ea9164d3363f2fcf0bc",
+          "recorded_end_minus_start_seconds": 431.93561458587646,
+          "test_episode_sample_sd": 101.7846151716135,
+          "training_steps": 0
+        }
+      },
+      "fresh_difference_curl_minus_control": -240.920823120352,
+      "original_difference_curl_minus_control": -262.2325712359688,
+      "training_seed": 789
+    }
+  ],
+  "scope": "Supplemental evaluation of the same fixed100k original policies; not new training replicates or cross-task transfer",
+  "selection": "All six original fixed100k terminal checkpoints; no favorable selection",
+  "status": "all_six_frozen_policies_complete",
+  "task": "DeepMind Control Suite walker/walk",
+  "training_pairs": 3,
+  "uncertainty_note": "Episode SD is not uncertainty across independent trained models. Three opposite training-pair outcomes do not establish equivalence or dependable general advantage."
+}

@@ -1,6 +1,7 @@
 ---
 date: 2026-10-05
-status: declared_before_supplemental_results_now_running
+status: complete_all_six_policies
+cutoff_utc: 2026-10-05T08:48:00Z
 question: How sensitive are the walking comparisons to the starting states used for testing?
 training_endpoint: 100000_simulator_steps
 training_seeds: [123, 456, 789]
@@ -8,6 +9,45 @@ evaluation_seeds: 20000_to_20049_inclusive
 ---
 
 # Test the same learned walkers from more starting positions
+
+## Completed result: the same winners, October 5 at 08:48 UTC
+
+All six frozen models completed the declared 50 new starts. The opposite
+outcomes across training pairs persisted. The control's large third-pair win
+did not disappear with more testing.
+
+| Training seed | CURL on new starts | Control on new starts | New difference | Original difference |
+|---|---:|---:|---:|---:|
+| 123 | 516.80 | 229.52 | +287.28 | +241.55 |
+| 456 | 394.76 | 371.75 | +23.01 | +24.27 |
+| 789 | 428.59 | 669.51 | -240.92 | -262.23 |
+
+Each score averages total episode reward; higher means better walking, not a
+percentage correct. Every model was evaluated at its original final 100k
+checkpoint, with zero training or optimizer updates. We verified all 300 raw
+returns, exact seeds 20000--20049, terminal counters and owner receipts.
+The six reported evaluator durations total 44.44 minutes, including validation
+and setup. Total batch wall time was 44.57 minutes. Neither measures pure rollout
+time. Their 300,000 simulator steps are evaluation cost, not training experience.
+
+This makes an explanation based solely on the original ten test starts less
+compelling. It does not explain why training produced different outcomes.
+The new averages, 446.72 versus 423.59, still conceal large opposite pairwise
+differences; they do not establish a dependable winner. There remain three
+training pairs, not 300 independent models. This checks new starts on the same
+task, not transfer to a new task.
+
+[Native records for all six policies](walker-fresh-starts-data) preserve each
+configuration, raw episode return, evaluation result, job and owner result.
+The [machine-readable summary](walker-fresh-starts-data/summary.json) includes
+the exact values and checksums of all 30 copied native files.
+The original results remain in [walker-data](walker-data). No model or training
+schedule is selected using this panel. The already-admitted
+[additional training cohort](WALKER_ADDITIONAL_SEEDS.md) began after the batch
+released its lock. It asks a different question: do the findings repeat when
+we train different models?
+
+## Original motivation and declaration
 
 When this panel was declared, the first two completed comparisons favored CURL by very different
 amounts: about 242 reward points for one training pair and 24 for the other.
