@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: running_first_training_seed
+status: first_reference_complete_matched_control_running
 question: Does the fixed100k walking effect repeat across new training seeds?
 training_seeds: [234, 567, 890]
 primary_endpoint: 100000_training_simulator_steps
@@ -8,6 +8,14 @@ external_campaign: /project/alex_phd/runs/curl-walker-additional-seeds-20261005
 ---
 
 # Does the result change when we train a different set of models?
+
+**Execution update, October 5 at 10:06 UTC:** the first new CURL model finished
+at 502.95151 on the declared 100k endpoint. Its matched control is running;
+there is no completed pair in this cohort yet. The
+[first model's native records](walker-additional-data/curl-seed234) and
+[dated interpretation](FINDINGS.md) are available. Continue all six runs with
+unchanged settings; the historical admission and waiting snapshots below
+remain the record of how this cohort was started.
 
 The original walking study produced two wins for CURL and one large win for
 the control. Their average scores were almost tied. Three pairs cannot tell

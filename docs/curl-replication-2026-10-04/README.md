@@ -31,6 +31,12 @@ examples are identified explicitly.
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
 the earlier interpretations as dated checkpoints.
 
+Later execution update, October 5 at 10:06 UTC: the first additional CURL
+model finished at 502.95, and its matched control is running. Its
+[native records](walker-additional-data/curl-seed234) are saved separately.
+This is not a completed pair or another CURL win. The PDF retains its
+08:48 completed-comparison cutoff; see the running findings for this new run.
+
 The [fresh-start evaluation](WALKER_FRESH_STARTS.md) is complete for all six
 unchanged walking models. [Three additional training pairs](WALKER_ADDITIONAL_SEEDS.md)
 have begun to check variability between independently trained models.

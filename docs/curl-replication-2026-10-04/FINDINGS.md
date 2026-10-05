@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T08:48:00Z
+cutoff_utc: 2026-10-05T10:04:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T08:49:00Z
+execution_update_utc: 2026-10-05T10:06:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,28 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## First additional walking model complete, October 5 at 10:04 UTC
+
+The first new CURL model (training seed 234) scored **502.95151** at the fixed
+100,000-step endpoint, versus 23.14947 before training. Its early progress was
+slow: it scored 80.42 at 48k steps before improving to 328.28 at 76k. This is a
+completed learning run, but **not yet a comparison with its matched control**.
+The control has started. Do not interpret this score as an extra CURL win.
+
+All 26 means were recomputed from 260 test episodes on the declared ten starts.
+The run completed naturally with 50,000 decisions, 100,000 training simulator
+steps, 49,000 updates and 100 training episodes. All 3,920 logged learning values
+were finite, with no failure or restart. The final checkpoint's 9,137,791,883-byte
+size matches its receipt. Native start-to-end time was 76.26 minutes, including
+36.07 minutes of evaluation and 73.90 seconds writing checkpoints. The separate
+260k evaluation steps were not training experience.
+
+[Native records](walker-additional-data/curl-seed234) preserve the endpoint,
+full curve, configuration and successful owner receipt. Continue the matched
+control and remaining two pairs unchanged. The PDF's completed-comparison
+story does not change; this dated entry records new evidence while the first
+pair is unfinished.
 
 ## The walking pattern persists on new test starts, October 5 at 08:48 UTC
 
