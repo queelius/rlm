@@ -123,6 +123,7 @@ class ResumeConfigTest(unittest.TestCase):
 
         class TinyAgent:
             CURL = TinyCURL()
+            encoder_optimizer = SimpleNamespace(step=lambda: "stepped")
 
             def update_cpc(self, *args):
                 return "enabled"
@@ -263,12 +264,85 @@ class ResumeConfigTest(unittest.TestCase):
                     captured = {}
                     self.run_resume(base / arm, base, arm=arm, captured=captured)
                     self.assertNotIn("contrastive_control", captured["config"])
+                    self.assertNotIn("contrastive_encoder_step_rule", captured["config"])
                     self.assertNotIn("contrastive_permutation_rng", captured["counters"])
                     self.assertNotIn("compute_logits", captured["agent"].CURL.__dict__)
                     self.assertNotIn("sample_cpc", captured["replay"].__dict__)
                     self.assertEqual(
                         captured["agent"].update_cpc(), "enabled" if arm == "curl" else None
                     )
+
+    def test_single_encoder_main_retains_step_rule_and_shuffled_private_resume(self):
+        from contrastive_control import ShuffledKeys
+
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            for name in ("curl_sac.py", "utils.py", "encoder.py", "train.py"):
+                (base / name).write_text("# frozen\n")
+            dummy = SimpleNamespace(CURL=SimpleNamespace(compute_logits=lambda q, p: q @ p.T))
+            replay = SimpleNamespace(batch_size=2, sample_cpc=lambda: None)
+            control = ShuffledKeys(dummy, replay, 123)
+            control.rng.permutation(128)
+            state = control.state_dict()
+            for arm in ("single_encoder_curl", "single_encoder_shuffled_curl"):
+                with self.subTest(arm=arm):
+                    with patch.object(
+                        sys,
+                        "argv",
+                        [
+                            "train_reference",
+                            "--source",
+                            str(base),
+                            "--output",
+                            str(base / arm),
+                            "--arm",
+                            arm,
+                        ],
+                    ):
+                        self.assertEqual(train_reference.parse_args().arm, arm)
+                    captured = {}
+                    private = state if arm == "single_encoder_shuffled_curl" else None
+                    self.run_resume(
+                        base / arm, base, arm=arm, private_state=private, captured=captured
+                    )
+                    self.assertEqual(captured["agent"].encoder_optimizer.step(), None)
+                    self.assertEqual(
+                        captured["config"]["contrastive_encoder_step_rule"],
+                        "skip_dedicated_encoder_optimizer_step",
+                    )
+                    if private is not None:
+                        self.assertEqual(captured["counters"]["contrastive_permutation_rng"], state)
+                        self.assertEqual(
+                            captured["config"]["contrastive_control"]["encoder_optimizer_steps"],
+                            "cpc_only_one",
+                        )
+                    else:
+                        self.assertNotIn("contrastive_permutation_rng", captured["counters"])
+                        self.assertNotIn("contrastive_control", captured["config"])
+            with self.assertRaisesRegex(ValueError, "private permutation"):
+                self.run_resume(
+                    base / "missing-single-private", base, arm="single_encoder_shuffled_curl"
+                )
+
+    def test_cross_step_rule_or_matching_arm_resume_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            for name in ("curl_sac.py", "utils.py", "encoder.py", "train.py"):
+                (base / name).write_text("# frozen\n")
+            for index, (arm, previous_arm) in enumerate(
+                (
+                    ("single_encoder_curl", "curl"),
+                    ("single_encoder_shuffled_curl", "shuffled_curl"),
+                    ("single_encoder_curl", "single_encoder_shuffled_curl"),
+                    ("curl", "single_encoder_curl"),
+                    ("shuffled_curl", "single_encoder_shuffled_curl"),
+                )
+            ):
+                with (
+                    self.subTest(arm=arm, previous_arm=previous_arm),
+                    self.assertRaisesRegex(ValueError, "scientific inputs.*arm"),
+                ):
+                    self.run_resume(base / str(index), base, arm=arm, previous_arm=previous_arm)
 
 
 if __name__ == "__main__":

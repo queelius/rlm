@@ -248,34 +248,41 @@ class UpstreamControlTest(unittest.TestCase):
         )
 
     def test_full_checkpoint_restores_next_permutation_loss_parameters_and_optimizers(self):
+        for arm in ("shuffled_curl", "single_encoder_curl", "single_encoder_shuffled_curl"):
+            with self.subTest(arm=arm):
+                self.check_next_update_restore(arm)
+
+    def check_next_update_restore(self, arm):
         self.assertIsNotNone(ShuffledKeys)
         agent, replay = self.make_agent(), self.replay()
-        control = train_reference.configure_arm(
-            agent, replay, {"arm": "shuffled_curl", "seed": 456}
-        )
+        control = train_reference.configure_arm(agent, replay, {"arm": arm, "seed": 456})
         agent.update(replay, Logger(), 1000)
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "latest.pt"
-            config = {"arm": "shuffled_curl", "seed": 456}
-            counters = {"step": 1001, "contrastive_permutation_rng": control.state_dict()}
+            config = {"arm": arm, "seed": 456}
+            counters = {"step": 1001}
+            if control is not None:
+                counters["contrastive_permutation_rng"] = control.state_dict()
             checkpoint.save_checkpoint(path, agent, replay, counters, config)
             expected_logger = Logger()
             agent.update(replay, expected_logger, 1100)
-            expected_permutation = control.permutation.copy()
-            expected_private_rng = control.state_dict()
+            expected_permutation = control.permutation.copy() if control is not None else None
+            expected_private_rng = control.state_dict() if control is not None else None
             expected_state = self.learning_state(agent)
             expected_random = (random.random(), np.random.random(), torch.rand(1))
             restored, restored_replay = self.make_agent(), self.replay()
             restored_control = train_reference.configure_arm(
-                restored, restored_replay, {"arm": "shuffled_curl", "seed": 456}
+                restored, restored_replay, {"arm": arm, "seed": 456}
             )
             saved, previous = checkpoint.load_checkpoint(path, restored, restored_replay)
-            restored_control.load_state_dict(saved["contrastive_permutation_rng"])
+            if restored_control is not None:
+                restored_control.load_state_dict(saved["contrastive_permutation_rng"])
             logger = Logger()
             restored.update(restored_replay, logger, 1100)
             self.assertEqual(previous, config)
-            np.testing.assert_array_equal(restored_control.permutation, expected_permutation)
-            self.assertEqual(restored_control.state_dict(), expected_private_rng)
+            if restored_control is not None:
+                np.testing.assert_array_equal(restored_control.permutation, expected_permutation)
+                self.assertEqual(restored_control.state_dict(), expected_private_rng)
             self.assertEqual(
                 logger.values["train/curl_loss"], expected_logger.values["train/curl_loss"]
             )
@@ -287,8 +294,100 @@ class UpstreamControlTest(unittest.TestCase):
             self.assertIs(
                 restored.actor.encoder.convs[0].weight, restored.critic.encoder.convs[0].weight
             )
-            with self.assertRaises(ValueError):
-                restored_control.load_state_dict(None)
+            if restored_control is not None:
+                with self.assertRaises(ValueError):
+                    restored_control.load_state_dict(None)
+
+    def test_single_encoder_matches_skip_only_oracle_and_preserves_W_labels_rng(self):
+        for arm in ("single_encoder_curl", "single_encoder_shuffled_curl"):
+            with self.subTest(arm=arm):
+                torch.manual_seed(5)
+                agent = self.make_agent()
+                oracle, two_step = copy.deepcopy(agent), copy.deepcopy(agent)
+                replay, oracle_replay, two_replay = self.replay(2), self.replay(2), self.replay(2)
+                optimizers = {name: getattr(agent, name) for name in checkpoint.OPTIMIZER_NAMES}
+                memberships = {
+                    name: [[id(p) for p in g["params"]] for g in optimizer.param_groups]
+                    for name, optimizer in optimizers.items()
+                }
+                config = {"arm": arm, "seed": 123}
+                control = train_reference.configure_arm(agent, replay, config)
+                oracle.encoder_optimizer.step = lambda *args, **kwargs: None
+                wrong = arm == "single_encoder_shuffled_curl"
+                if wrong:
+                    logits = oracle.CURL.compute_logits
+                    oracle.CURL.compute_logits = lambda q, p, logits=logits: logits(q, p[[1, 0]])
+                train_reference.configure_arm(
+                    two_step, two_replay, {"arm": "shuffled_curl" if wrong else "curl", "seed": 123}
+                )
+                np.random.seed(0)
+                rng = checkpoint.capture_rng()
+                oracle_logger, two_logger, logger = Logger(), Logger(), Logger()
+                oracle.update(oracle_replay, oracle_logger, 1000)
+                expected_random = (random.random(), np.random.random(), torch.rand(1))
+                checkpoint.restore_rng(rng)
+                two_step.update(two_replay, two_logger, 1000)
+                self.assert_tree_equal(
+                    expected_random, (random.random(), np.random.random(), torch.rand(1))
+                )
+                checkpoint.restore_rng(rng)
+                with (
+                    patch.object(
+                        agent.encoder_optimizer,
+                        "zero_grad",
+                        wraps=agent.encoder_optimizer.zero_grad,
+                    ) as enc_zero,
+                    patch.object(
+                        agent.cpc_optimizer, "zero_grad", wraps=agent.cpc_optimizer.zero_grad
+                    ) as cpc_zero,
+                    patch.object(
+                        agent.cpc_optimizer, "step", wraps=agent.cpc_optimizer.step
+                    ) as cpc_step,
+                    patch.object(
+                        agent.cross_entropy_loss, "forward", wraps=agent.cross_entropy_loss.forward
+                    ) as loss,
+                ):
+                    agent.update(replay, logger, 1000)
+                self.assertEqual(
+                    (enc_zero.call_count, cpc_zero.call_count, cpc_step.call_count), (1, 1, 1)
+                )
+                torch.testing.assert_close(loss.call_args.args[1], torch.arange(2), rtol=0, atol=0)
+                self.assert_tree_equal(self.learning_state(agent), self.learning_state(oracle))
+                self.assert_tree_equal(
+                    expected_random, (random.random(), np.random.random(), torch.rand(1))
+                )
+                self.assertEqual(
+                    logger.values["train/curl_loss"], oracle_logger.values["train/curl_loss"]
+                )
+                self.assertEqual(
+                    logger.values["train/curl_loss"], two_logger.values["train/curl_loss"]
+                )
+                torch.testing.assert_close(agent.CURL.W, two_step.CURL.W, rtol=0, atol=0)
+                self.assertFalse(
+                    torch.equal(
+                        agent.critic.encoder.convs[0].weight,
+                        two_step.critic.encoder.convs[0].weight,
+                    )
+                )
+                self.assertEqual(agent.encoder_optimizer.state_dict()["state"], {})
+                for name, optimizer in optimizers.items():
+                    self.assertIs(getattr(agent, name), optimizer)
+                    self.assertEqual(
+                        [[id(p) for p in g["params"]] for g in optimizer.param_groups],
+                        memberships[name],
+                    )
+                self.assertEqual(
+                    config["contrastive_encoder_step_rule"], "skip_dedicated_encoder_optimizer_step"
+                )
+                if wrong:
+                    np.testing.assert_array_equal(control.permutation, [1, 0])
+                    self.assertEqual(
+                        config["contrastive_control"]["encoder_optimizer_steps"], "cpc_only_one"
+                    )
+                else:
+                    self.assertIsNone(control)
+                    self.assertNotIn("compute_logits", agent.CURL.__dict__)
+                    self.assertNotIn("sample_cpc", replay.__dict__)
 
 
 if __name__ == "__main__":

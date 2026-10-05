@@ -106,7 +106,17 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--eval-every", type=int, default=500)
     parser.add_argument("--eval-episodes", type=int, default=10)
-    parser.add_argument("--arm", choices=("curl", "no_curl", "shuffled_curl"), default="curl")
+    parser.add_argument(
+        "--arm",
+        choices=(
+            "curl",
+            "no_curl",
+            "shuffled_curl",
+            "single_encoder_curl",
+            "single_encoder_shuffled_curl",
+        ),
+        default="curl",
+    )
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--max-seconds", type=float, default=7200)
     parser.add_argument("--device", default="cuda")
@@ -128,10 +138,16 @@ def build_agent(
 
 def configure_arm(agent: Any, replay: Any, config: dict[str, Any]) -> Any:
     """Apply the one declared intervention; reference sampling/math stay untouched."""
+    single_encoder = config["arm"] in ("single_encoder_curl", "single_encoder_shuffled_curl")
+    if single_encoder:
+        # Keep this Adam object/parameters/zero_grad and all checkpoint state, but skip its step.
+        # The original CPC optimizer still owns and steps the encoder and bilinear W.
+        agent.encoder_optimizer.step = lambda *unused_args, **unused_kwargs: None
+        config["contrastive_encoder_step_rule"] = "skip_dedicated_encoder_optimizer_step"
     if config["arm"] == "no_curl":
         # Upstream update still samples the positive crop and performs the same SAC updates.
         agent.update_cpc = lambda *unused_args, **unused_kwargs: None
-    elif config["arm"] == "shuffled_curl":
+    elif config["arm"] in ("shuffled_curl", "single_encoder_shuffled_curl"):
         from contrastive_control import ShuffledKeys
 
         control = ShuffledKeys(agent, replay, config["seed"])
@@ -141,11 +157,11 @@ def configure_arm(agent: Any, replay: Any, config: dict[str, Any]) -> Any:
             "generator": "numpy.PCG64",
             "permutation": "uniform_rejection_no_fixed_points",
             "labels": "diagonal_unchanged",
-            "encoder_optimizer_steps": "upstream_two",
+            "encoder_optimizer_steps": "cpc_only_one" if single_encoder else "upstream_two",
             "replay_index_tracking": "shadow_global_numpy_first_randint",
         }
         return control
-    elif config["arm"] != "curl":
+    elif config["arm"] not in ("curl", "single_encoder_curl"):
         raise ValueError("Unknown contrastive arm")
     return None
 
