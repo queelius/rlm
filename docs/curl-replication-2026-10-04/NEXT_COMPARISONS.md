@@ -34,8 +34,10 @@ evidence of equivalence. First-pair CURL's extra recovery cost remains explicit.
    entrypoint passed four focused CPU tests and independent review on October 5.
    [The declared supplemental protocol](WALKER_FRESH_STARTS.md) now fixes all
    six endpoints, starts 20000--20049, separate reporting and compute caps.
-   The serial batch owner still needs preparation. The training queue is
-   unchanged; the supplemental evaluation has not launched.
+   The serial batch owner has also passed eight focused CPU tests and
+   independent review. It can wait without taking the GPU until all six
+   original runs are complete. The original training queue is unchanged;
+   the supplemental GPU evaluation has not launched.
 3. **Decide on more training seeds or a longer walker horizon from the cohort.**
    The first control was improving near its endpoint, so a longer horizon could
    distinguish delayed learning from a persistent gap if the pattern repeats.

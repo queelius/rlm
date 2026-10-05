@@ -122,3 +122,42 @@ or panel mismatches, incomplete caps, retained failures and overwrite refusal.
 Root and an independent reviewer reran them successfully; Ruff checks passed.
 These are software checks, not walking scores. Full-size checkpoint loading,
 real rendering and GPU throughput still need verification at actual launch.
+
+## Serial launch and unattended handoff
+
+[`run_frozen_queue.py`](../../experiments/curl_replication_20261004/run_frozen_queue.py)
+can wait while the final original control is training. During that wait it
+holds only its own batch-owner lock, not the GPU lock. It requires the original
+queue's end record and all six successful native training endpoints before
+acquiring the shared GPU lock. It then runs the fixed six panels sequentially.
+
+The owner checks actual episode returns, not GPU memory or a live process.
+It validates each final mean against all 50 declared episodes. Failed or
+unfinished attempts remain visible and unscored; valid remaining policies can
+still be evaluated. Existing attempts are not silently overwritten or retried.
+The 20-minute policy cap and two-hour active-batch cap reserve two minutes
+for stopping an unresponsive child. Waiting for training does not consume
+the active-batch budget; the allocation deadline still bounds everything.
+
+Eight focused CPU tests use real short-lived subprocesses to check waiting,
+shared ownership, exact panel membership, return-based completion, incorrect
+means, stalled children, STOP, deadline and duplicate-owner handling. Review
+found an exception path that released the shared lock too early. A failing-first
+test reproduced it; the corrected owner keeps the lock until its own child
+has exited. Independent re-review passed. These checks do not replace checking
+real simulator returns once the supplemental evaluation starts.
+
+The prepared external configuration is
+`/project/alex_phd/runs/curl-walker-fresh-starts-20261005/QUEUE.json`.
+Its `HANDOFF.md`, `SOURCE.json`, `LAUNCH.json` and `queue.jsonl` record actual
+deployment and progress. The reusable invocation is:
+
+```sh
+python experiments/curl_replication_20261004/run_frozen_queue.py \
+  /project/alex_phd/runs/curl-walker-fresh-starts-20261005/QUEUE.json
+```
+
+Do not launch a duplicate owner. The deployed process uses a separately sealed
+source copy; the command above describes the interface, not a request to start
+a second process. Each policy's native outputs are under its job directory's
+`run/`, with the owner's completion receipt in the job directory itself.
