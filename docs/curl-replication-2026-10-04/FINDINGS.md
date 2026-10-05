@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T16:52:00Z
+cutoff_utc: 2026-10-05T17:09:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T16:52:00Z
+execution_update_utc: 2026-10-05T17:09:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,52 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## First smaller-update result is encouraging, October 5 at 17:09 UTC
+
+The first model with a smaller image-matching update has finished. The task
+is still cartpole swing-up: learn from pictures how to move a cart so that
+its pole swings up and stays upright. The score is total test reward, averaged
+over ten fixed starting states, after 100k training simulator steps.
+
+| Condition, training seed 123 | Fixed-endpoint score |
+|---|---:|
+| Correct image matches, original update | 678.02 |
+| Correct image matches, smaller update | 795.84 |
+| No image-matching exercise | 454.47 |
+
+The new model finished **117.81 points above the original CURL model**. We
+changed how strongly the extra matching exercise updates the image encoder,
+not its targets or reward-learning optimizer. The new score comes from the
+declared endpoint, not selection of a favorable point on its learning curve.
+
+**What this does and does not tell us:** one smaller-update model learned well.
+It does not yet show that this change reliably improves CURL. Training varies
+between seeds, and matched seeds do not force models to have identical
+experiences once their actions diverge. Nor does this tell us whether a smaller
+update reduces the harm from incorrect picture matches. That counterpart is
+still running. Finish all six declared new models before assessing the pattern;
+do not average one completed new seed against all three original seeds.
+
+Root recomputed all 26 means from 260 native test episodes, checked the ten
+declared starts, all 920 logged learning values for finiteness, 100 natural
+training episodes, 11,500 updates, and the completed 2,370,118,499-byte checkpoint.
+No failure or restart occurred. Rechecking the three original seed-123
+comparators also reproduced their reported curves and endpoints. The only
+configuration differences against original CURL are the declared arm/update
+rule and a shorter time cap that did not bind. Native elapsed time was
+14.22 minutes, including 6.03 minutes of testing and 7.02 seconds saving state.
+
+The four [native evidence files](encoder-strength-data/single_encoder_curl-seed123)
+are published unchanged. The [protocol](ENCODER_UPDATE_CONTROL.md) explains the
+intervention. The wrong-target counterpart is making actual learning updates,
+and four later models are queued under the existing owner. No source, condition,
+seed or endpoint was changed in response to this first result.
+
+**Presentation decision:** keep this single-run observation in the supporting
+documents. The PDF remains the complete-cohort account at its explicit 16:52 UTC
+cutoff. Update its conclusions and figures when the strength comparison is ready
+to interpret, rather than adding a headline from one favorable training run.
 
 ## Wrong matching hurts across all three training seeds, October 5 at 16:52 UTC
 

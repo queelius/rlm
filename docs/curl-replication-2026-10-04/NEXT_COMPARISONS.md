@@ -6,7 +6,30 @@ priority: finish_six_fixed_strength_runs_and_compare_all_conditions
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 16:52 UTC
+## Current decision, October 5 at 17:09 UTC
+
+The first correct-matching model with a smaller encoder update finished at
+795.84, compared with 678.02 under the original update rule for seed 123.
+This is encouraging but leaves training-seed variation and the wrong-target
+comparison unresolved. The second model is learning, with four more queued.
+Keep the six-run plan unchanged; no new GPU owner or speculative sweep is needed.
+
+1. Finish all six new endpoints and show individual seeds under both update
+   rules, retaining the no-matching comparison. Do not pool unequal seed sets.
+2. Examine whether reducing the update improves correct matching, wrong
+   matching, both or neither. A shared-checkpoint intervention could help
+   separate immediate update effects from different experience collected over
+   training, but remains conditional on the completed pattern.
+3. Only after this comparison, weigh a fresh-seed replication or a within-task
+   update-frequency test against a longer walking study. Do not choose a new
+   mechanism story or declare an algorithm improvement from the first seed.
+
+Record the first outcome in the supporting documents now. Leave the PDF's
+main conclusions at the explicitly dated completed-cohort cutoff until the
+new comparison is interpretable. Its eventual figure must preserve all seeds,
+fixed endpoints, and the adaptive origin of this follow-up.
+
+## Earlier decision, October 5 at 16:52 UTC
 
 The complete wrong-matching group averages **58.67**, compared with **570.73**
 for correct matching and **386.09** without matching. All three wrong-target

@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: first_model_running_five_queued
+status: one_complete_second_running_four_queued
 question: Does the effect of correct or wrong image matching depend on the strength of its encoder update?
 task: cartpole/swingup
 training_seeds: [123, 456, 789]
@@ -10,12 +10,17 @@ new_arms: [single_encoder_curl, single_encoder_shuffled_curl]
 
 # Does the strength of the extra learning exercise matter?
 
-**Execution update, October 5 at 16:52 UTC:** the first correct-matching model
-with a smaller encoder update is learning; five fixed jobs follow. It launched
-0.875 seconds after the wrong-matching batch ended and returned actual rewards
-after 19.01 seconds. Finite learning values and the declared update-rule metadata
-were checked. There is no completed endpoint yet. Implementation and focused
-real-upstream CPU tests passed independent review before admission.
+**Execution update, October 5 at 17:09 UTC:** the first correct-matching model
+with a smaller encoder update has finished at **795.84**, versus **678.02**
+for original CURL with training seed 123. This is one fixed-100k endpoint,
+not a completed three-seed comparison. The wrong-target counterpart is running;
+four later models remain queued. Finish all six unchanged. Actual returns,
+finite learning values, native completion and the saved checkpoint were checked.
+The [dated findings](FINDINGS.md) and
+[native records](encoder-strength-data/single_encoder_curl-seed123) give the evidence.
+Implementation and focused real-upstream CPU tests passed independent review
+before admission. The first model launched 0.875 seconds after the predecessor
+queue ended; the next launched 0.020 seconds after its completion receipt.
 
 The design below was fixed at 16:28 UTC, when only the first wrong-matching
 endpoint was known. All three original wrong-target models have since finished;
