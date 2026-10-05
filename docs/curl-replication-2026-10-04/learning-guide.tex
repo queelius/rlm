@@ -48,8 +48,9 @@ The three 100,000-step pairs were complete at 18:37 UTC.
 All three pairs are now complete after 500,000 steps. Their average scores are
 \textbf{855 for CURL versus 849 for the control}, with different winners across
 runs. The large early advantage became much smaller. This is not proof that
-the methods are equivalent. Page 9 shows every pair. We have started the same
-comparison on a walking task. Latest evidence: 5 October, 00:46 UTC.
+the methods are equivalent. Page 9 shows every pair. On the walking task, the
+first CURL run finished at 483. Its control is still running, so we cannot yet
+say whether image matching helped there. Latest evidence: 5 October, 02:01 UTC.
 
 \question{Why this paper?}
 
@@ -400,7 +401,10 @@ Evidence about the extra matching task & Ahead at 100k; mixed results at 500k.\\
 The walking comparison uses three fresh training seeds and both methods, each
 with 100,000 training simulator steps. We will report all six outcomes, not
 only favorable ones. It tests another task, not transfer of the cartpole model's
-weights. No completed walking result is available yet.
+weights. The first CURL run finished at \textbf{483 average reward}, up from
+18 before training. This is the planned final score, not its earlier peak of
+544. Its control is running. One trained model shows that learning occurred,
+but cannot tell us whether the extra image-matching exercise helped.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 

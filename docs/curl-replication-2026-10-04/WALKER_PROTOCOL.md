@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-status: running_first_reference_no_completed_endpoints
+status: first_reference_complete_matched_control_running
 question: Does the early benefit of the extra image-matching update extend to a walking task?
 primary_endpoint: 100000_training_simulator_steps
 training_seeds: [123, 456, 789]
@@ -72,8 +72,12 @@ and action repeat and checks those fields when recognizing completed jobs.
 That small change passed nine focused tests and independent review, separately
 from the sealed live cartpole sources.
 The distinct campaign launched on October 5 at 00:43:32 UTC, after the cartpole
-queue ended and its owner exited. The first CURL reference is running; five
-follow-ons are queued. No completed walking result exists yet.
+queue ended and its owner exited. At the October 5, 02:01 UTC review, the first
+CURL reference is complete: **482.83** at the fixed 100k endpoint. Its control
+is running, with four later jobs queued. This is not a completed comparison.
+The first reference took 74.83 minutes from native start to end, including
+35.10 minutes of evaluation and 1.24 minutes of checkpoint writes.
+Its final checkpoint is 9.14 GB. See [native evidence](walker-data/first-reference).
 Cartpole-specific continuation admission remains unchanged;
 any later walker continuation requires its own explicit protocol.
 

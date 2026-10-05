@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T00:46:00Z
+cutoff_utc: 2026-10-05T02:01:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T00:46:00Z
+execution_update_utc: 2026-10-05T02:01:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -12,12 +12,52 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 
 # What we have learned so far
 
-All three pairs are complete at both budgets. CURL finished higher in every
+All three cartpole pairs are complete at both budgets. CURL finished higher in every
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
 
-## Completed cohort, October 5 at 00:46 UTC
+## First walking reference complete, October 5 at 02:01 UTC
+
+The first fresh walker/walk CURL model finished at **482.83347 average episode
+reward** after the declared 100,000 training simulator steps. Its initial mean
+was 17.98903. This establishes learning in one run on the second task, not an
+advantage over the control or a reproduction of the paper's average.
+Its matched control is running; all three pairs remain planned.
+
+The last six evaluation means were 489.84, 541.42, 526.97, 491.15, 543.51 and
+482.83. We report the fixed final value, not the more flattering 96k peak.
+The final ten declared evaluation starts give returns from 202.33 to 612.46.
+These ten episodes describe one trained model, not ten training replicates.
+
+Native records confirm a natural 50,000-decision endpoint, 100 training
+episodes, 49,000 ordinary update calls, exit 0 and complete=true. All 3,920
+logged learning values are finite. The final checkpoint is 9,137,791,883 bytes,
+matching its receipt; saving took 23.77 seconds. No recovery or repeated
+training was needed. It used 100k training plus 260k evaluation simulator steps.
+Start-to-end wall time was 4,489.66 seconds (74.83 minutes), including 2,106.02
+seconds of evaluation and 74.50 seconds of checkpoint writes. The remainder is
+not a separately measured optimizer-only duration.
+
+The existing owner launched the control 0.018 seconds after the reference
+process exited. Initial simulator returns arrived after 87.87 seconds, and
+finite learning updates after 105.28 seconds following warmup. Its configuration
+differs only in the arm, and its initial evaluation mean matches the reference.
+This checks the matched starting setup, not equality of later training data.
+Four more jobs are queued after the active control.
+
+**Decision:** finish all three declared pairs without changing the endpoint.
+Use the matched outcomes to decide whether the cartpole early benefit extends
+to walking. A single reference score cannot answer that question, even if it
+looks favorable next to a published mean. No new mechanism claim is warranted.
+The guide records this single-run milestone; comparative walking plots will
+be added when a matched pair exists.
+
+See [native records and configuration](walker-data/first-reference) and
+[the predeclared walking protocol](WALKER_PROTOCOL.md). Earlier entries below
+retain their original evidence cutoffs.
+
+## Completed cartpole cohort, October 5 at 00:46 UTC
 
 | Seed | CURL at 100k | Control at 100k | Early difference | CURL at 500k | Control at 500k | Late difference |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |

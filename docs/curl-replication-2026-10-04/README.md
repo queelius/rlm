@@ -4,7 +4,7 @@ Start with [the nine-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **all three completed pairs at both 100k and 500k**,
-with an October 5, 00:46 UTC evidence cutoff.
+plus the first completed walking run, with an October 5, 02:01 UTC evidence cutoff.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -16,8 +16,9 @@ The mean advantage shrank from **+184.64 to +5.22**. That is an early benefit
 without a consistent late winner in this small study, not proof of equivalence.
 Page 8 preserves the early comparisons; page 9 shows all three longer pairs
 with limits and recovery cost. A fresh-model comparison on a walking task is
-now running to test the scope of the early finding. No walking endpoint is
-complete yet. Published scores and invented teaching
+now running to test the scope of the early finding. Its first CURL run finished
+at **482.83**, with the matched control still running. This is one model, not
+evidence that image matching helps on walking. Published scores and invented teaching
 examples are identified explicitly.
 
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
@@ -60,15 +61,15 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
-The nine-page edition was updated after all three matched pairs finished at
-500k. Changed pages 1, 5, 7, 8 and 9 were visually inspected; unchanged pages retain
-their earlier inspection. The build reports no overfull
-boxes, and extracted text stays within every page boundary. The numerical
+The nine-page edition includes all three matched cartpole pairs at 500k and the
+first walking reference. Updated pages 1 and 7 were visually inspected; other
+pages retain their earlier inspection. The current build reports no overfull
+or underfull boxes, and extracted text stays within every page boundary. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`8aba1e14f89f3123874c47fede200628d21b920bd74169e18ba46950df329220`.
+`969dea5cbf9da111f29410bcdf6a0388a747a8014795bcb73c2f4d6445e7bd4c`.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
@@ -79,9 +80,15 @@ All six completed 500k endpoints passed native terminal and ancestry checks.
 An independent CPU audit recalculated the 12 endpoint means from 120 episode
 records across both budgets, checked the ten evaluation starts and matched configurations, and
 confirmed the paired differences. Recovery cost is reported separately.
+For the new walking reference, the final mean was recomputed from all ten
+declared evaluation starts, native endpoint counters and checkpoint size were
+verified, and the four public record files match the external originals byte
+for byte. No new runtime or plotting code was needed for this update.
 
 ## Evidence and next comparisons
 
+- [First walking reference's native records](walker-data/first-reference):
+  fixed 100k endpoint, one fresh training seed; no completed matched pair yet.
 - [First reference's native records and configuration](data/first-reference):
   100k training steps, ten fixed evaluation seeds, no best-checkpoint selection.
 - [Matched control's native records and configuration](data/first-control):
