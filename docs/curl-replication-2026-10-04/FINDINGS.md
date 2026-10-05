@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T03:13:00Z
+cutoff_utc: 2026-10-05T04:27:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T03:13:00Z
+execution_update_utc: 2026-10-05T04:27:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,43 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## Second walking CURL run complete, October 5 at 04:27 UTC
+
+The second fresh CURL model scored **385.23473** at the declared 100k endpoint,
+up from 20.83 before training. Its matched control has started, so this is not
+yet another completed comparison. Do not compare it against the first seed's
+control. The first pair remains 482.83 versus 241.28.
+
+All 26 evaluation means were recomputed from their ten distinct declared
+starts. The final mean is 385.23472867873534; no favorable checkpoint selection.
+The run completed naturally: 50k decisions, 100k training simulator steps,
+100 training episodes and 49k ordinary update calls. All 3,920 logged learning
+values were finite, with no failure or recovery. Its final 9,137,791,883-byte
+checkpoint matches its receipt. Native start-to-end time was 76.82 minutes,
+including 36.32 minutes of evaluation and 1.27 minutes of checkpoint writes.
+Evaluation used another 260k simulator steps, separately from training.
+
+**Lesson:** an earlier lead does not guarantee a higher final score. At 56k,
+the second CURL seed scored 285.04 versus 140.34 for the first. At 100k their
+ordering reversed: 385.23 versus 482.83. This is variation between two runs of
+the same method, not evidence for or against the image-matching update. Keep
+the full curves and complete every declared pair.
+
+The owner launched the matched control 0.408 seconds after the reference
+process exited. Real returns arrived after 88.15 seconds and finite updates
+after 105.03 seconds. Configurations differ only in the arm; both have the same
+initial mean of 20.83289. Both third-seed jobs remain queued. No live source or
+protocol change. Decide on longer training versus additional seeds only after
+the cohort. The PDF still reports the first completed pair at its explicit
+03:13 cutoff; this unpaired endpoint does not change its main conclusion.
+
+Native evidence is in the external campaign
+`/project/alex_phd/runs/curl-walker-replication-20261004/`:
+`curl-seed456-100k-v1/result.json`, `curl-seed456-100k-v1/run/metrics.jsonl`,
+the matched control's native records and `queue.jsonl`. The dated review is
+`/project/alex_phd/runs/curl-replication-20261004/reviews/REVIEW-1791174299-850971b1.md`.
+These external records and model checkpoints are not backed up by this Git push.
 
 ## First walking pair complete, October 5 at 03:13 UTC
 

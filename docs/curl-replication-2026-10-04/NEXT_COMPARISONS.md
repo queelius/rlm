@@ -1,12 +1,12 @@
 ---
 date: 2026-10-04
-status: cartpole_complete_first_walker_pair_complete_second_seed_running
+status: cartpole_complete_second_walker_reference_complete_control_running
 priority: replication_before_mechanism
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 03:13 UTC
+## Current decision, October 5 at 04:27 UTC
 
 The early paired advantage was +184.64 on average; at 500k it is +5.22, with
 differences -24.20, +55.18 and -15.31. Every pair's gap shrank, but the later
@@ -17,7 +17,8 @@ evidence of equivalence. First-pair CURL's extra recovery cost remains explicit.
    after the cartpole queue ended. All three pairs, fresh weights, fixed 100k
    endpoint and unchanged settings in [WALKER_PROTOCOL.md](WALKER_PROTOCOL.md).
    First pair finished at 482.83 versus 241.28, favoring CURL. The second CURL
-   seed is running with verified returns and finite updates. Finish the cohort;
+   seed finished at 385.23; its control has verified returns and finite updates.
+   There is still only one completed walking pair. Finish the cohort;
    one favorable pair does not establish a repeatable advantage.
 2. **Decide on more seeds or a longer walker horizon from the complete cohort.**
    The first control was improving near its endpoint, so a longer horizon could

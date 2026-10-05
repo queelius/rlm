@@ -23,6 +23,11 @@ the control catch up? One pair cannot establish a general advantage.
 Published scores and invented teaching
 examples are identified explicitly.
 
+**Later update, October 5 at 04:27 UTC:** the second CURL walking model finished
+at **385.23**. Its matched control is running, so there is still only one
+completed walking pair. The PDF keeps its explicit 03:13 cutoff; the
+[running findings](FINDINGS.md) record this newer endpoint and its limitations.
+
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
 the earlier interpretations as dated checkpoints.
 
