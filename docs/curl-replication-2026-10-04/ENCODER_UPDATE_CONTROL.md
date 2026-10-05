@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: two_complete_third_running_three_queued
+status: three_complete_fourth_running_two_queued
 question: Does the effect of correct or wrong image matching depend on the strength of its encoder update?
 task: cartpole/swingup
 training_seeds: [123, 456, 789]
@@ -10,14 +10,14 @@ new_arms: [single_encoder_curl, single_encoder_shuffled_curl]
 
 # Does the strength of the extra learning exercise matter?
 
-**Execution update, October 5 at 17:18 UTC:** both smaller-update models for
-seed 123 are complete: **795.84 with correct matching and 138.08 with wrong
-matching**, versus **678.02 and 0.11** under the original rule. The no-matching
-model scored **454.47**. Both new scores rose by similar amounts; the wrong-target
-model still performed much worse than the no-matching model. This is one seed,
-not a reliable improvement or interaction. Seed 456 with correct matches is
-training; three jobs follow. Finish all six unchanged. Actual returns, finite
-learning values, native completion and saved checkpoint sizes were checked.
+**Execution update, October 5 at 17:32 UTC:** three of six models are complete.
+Correct matching with the smaller update helped seed 123 (795.84 versus 678.02)
+but hurt seed 456 (316.12 versus 446.17). There is no consistent advantage.
+The smaller-update wrong-target model for seed 123 scored 138.08, compared
+with 0.11 originally and 454.47 without matching. Its seed-456 counterpart is
+running, followed by both seed-789 conditions. Finish all six unchanged.
+Actual returns, finite learning values, native completion and saved checkpoint
+sizes were checked. Do not infer equivalence or a reliable interaction yet.
 The [dated findings](FINDINGS.md) and [native records](encoder-strength-data)
 give the evidence.
 Implementation and focused real-upstream CPU tests passed independent review

@@ -1,0 +1,1309 @@
+{"time_unix": 1791220594.4311934, "type": "start", "step": 0, "resume_path": null, "config": {"domain_name": "cartpole", "task_name": "swingup", "agent": "curl_sac", "encoder_type": "pixel", "pre_transform_image_size": 100, "image_size": 84, "frame_stack": 3, "action_repeat": 8, "replay_buffer_capacity": 100000, "init_steps": 1000, "num_train_steps": 12500, "batch_size": 128, "hidden_dim": 1024, "encoder_feature_dim": 50, "num_layers": 4, "num_filters": 32, "discount": 0.99, "critic_lr": 0.001, "critic_beta": 0.9, "critic_tau": 0.01, "critic_target_update_freq": 2, "actor_lr": 0.001, "actor_beta": 0.9, "actor_log_std_min": -10, "actor_log_std_max": 2, "actor_update_freq": 2, "encoder_lr": 0.001, "encoder_tau": 0.05, "init_temperature": 0.1, "alpha_lr": 0.0001, "alpha_beta": 0.5, "curl_latent_dim": 128, "eval_freq": 500, "num_eval_episodes": 10, "seed": 456, "arm": "single_encoder_curl", "upstream_commit": "8416d6e3869e38ca0e46fcbc54a2f784dc09d7fc", "upstream_sha256": {"curl_sac.py": "5e40fc9981f2947ffa3f4c3ff09f6ddf8a38ac7f89ca1d917fdb86278bb24046", "utils.py": "f163581689b1c2d8db46f22d318336c3ecb5a7e428499b3010ba4f9a5fe8ca47", "encoder.py": "b19aa9a2cc5ac4a496844d31255d35f597a5844c1974d9769b6a5f51cf46db3c", "train.py": "57796f6b46bb8e2a7336c549de1e038f7a3ab4acd2236a9c69adfe9dd30ac9a8"}, "evaluation_seeds": [10000, 10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008, 10009], "resume_semantics": "episode-boundary reset; simulator physics/frame history not serialized", "training_episode_rng": "task and action-space states preserved at boundaries", "torch_version": "2.13.0+cu130", "python_version": "3.12.12 (main, Oct 28 2025, 12:10:49) [Clang 20.1.4 ]", "device": "cuda", "log_interval": 100, "detach_encoder": false, "max_seconds": 2700.0, "checkpoint_seconds": 900, "contrastive_encoder_step_rule": "skip_dedicated_encoder_optimizer_step"}}
+{"time_unix": 1791220610.2488444, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10000, "return": 18.865558268711094, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.248944, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10001, "return": 18.506843560654545, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.2489576, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10002, "return": 18.81192670163471, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.2489667, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10003, "return": 18.956560761763257, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.248975, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10004, "return": 18.000361274572377, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.2489827, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10005, "return": 19.138270134213172, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.24899, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10006, "return": 18.522624773597368, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.2489982, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10007, "return": 18.70153331046649, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.2490065, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10008, "return": 17.985952743819652, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.249014, "type": "eval_episode", "step": 0, "env_steps": 0, "eval_seed": 10009, "return": 18.66689060425377, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220610.2490811, "type": "eval_summary", "step": 0, "env_steps": 0, "mean_return": 18.61565221336864, "episodes": 10, "seconds": 15.8178118057549}
+{"time_unix": 1791220611.7747633, "type": "train_episode", "step": 125, "env_steps": 1000, "episode": 1, "return": 94.15501865241681, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220613.1924012, "type": "train_episode", "step": 250, "env_steps": 2000, "episode": 2, "return": 182.0736601870928, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220614.5583792, "type": "train_episode", "step": 375, "env_steps": 3000, "episode": 3, "return": 102.83963363548625, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220630.5339944, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10000, "return": 18.865558268711094, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.5340908, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10001, "return": 18.506843560654545, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.5341039, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10002, "return": 18.81192670163471, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.5341127, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10003, "return": 18.956560761763257, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.5341206, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10004, "return": 18.000361274572377, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.534128, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10005, "return": 19.138270134213172, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.534136, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10006, "return": 18.522624773597368, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.5341432, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10007, "return": 18.70153331046649, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.5341508, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10008, "return": 17.985952743819652, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.5341587, "type": "eval_episode", "step": 500, "env_steps": 4000, "eval_seed": 10009, "return": 18.66689060425377, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220630.5342164, "type": "eval_summary", "step": 500, "env_steps": 4000, "mean_return": 18.61565221336864, "episodes": 10, "seconds": 14.636082958430052}
+{"time_unix": 1791220630.534236, "type": "train_episode", "step": 500, "env_steps": 4000, "episode": 4, "return": 41.73188447645249, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220631.9013255, "type": "train_episode", "step": 625, "env_steps": 5000, "episode": 5, "return": 69.18647595410019, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220633.249435, "type": "train_episode", "step": 750, "env_steps": 6000, "episode": 6, "return": 241.1256427034113, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220634.633059, "type": "train_episode", "step": 875, "env_steps": 7000, "episode": 7, "return": 47.11738428792866, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220650.4234757, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10000, "return": 18.865558268711094, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.4235506, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10001, "return": 18.506843560654545, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.4235616, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10002, "return": 18.81192670163471, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.4235697, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10003, "return": 18.956560761763257, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.4235775, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10004, "return": 18.000361274572377, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.423591, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10005, "return": 19.138270134213172, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.4235985, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10006, "return": 18.522624773597368, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.4236062, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10007, "return": 18.70153331046649, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.4236135, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10008, "return": 17.985952743819652, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.4236207, "type": "eval_episode", "step": 1000, "env_steps": 8000, "eval_seed": 10009, "return": 18.66689060425377, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220650.4236615, "type": "eval_summary", "step": 1000, "env_steps": 8000, "mean_return": 18.61565221336864, "episodes": 10, "seconds": 14.433737279847264}
+{"time_unix": 1791220650.4236832, "type": "train_episode", "step": 1000, "env_steps": 8000, "episode": 8, "return": 63.31006854938217, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220650.4979556, "type": "train_metric", "step": 1000, "metric": "train/batch_reward", "value": 0.8384170532226562}
+{"time_unix": 1791220650.58683, "type": "train_metric", "step": 1000, "metric": "train_critic/loss", "value": 3.8447492122650146}
+{"time_unix": 1791220650.692638, "type": "train_metric", "step": 1000, "metric": "train_actor/loss", "value": -0.4795359969139099}
+{"time_unix": 1791220650.6927059, "type": "train_metric", "step": 1000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220650.69284, "type": "train_metric", "step": 1000, "metric": "train_actor/entropy", "value": -2.5504133701324463}
+{"time_unix": 1791220650.766908, "type": "train_metric", "step": 1000, "metric": "train_alpha/loss", "value": -0.1563728302717209}
+{"time_unix": 1791220650.7669764, "type": "train_metric", "step": 1000, "metric": "train_alpha/value", "value": 0.10000000000000002}
+{"time_unix": 1791220650.8121405, "type": "train_metric", "step": 1000, "metric": "train/curl_loss", "value": 6.002623558044434}
+{"time_unix": 1791220654.9580865, "type": "train_metric", "step": 1100, "metric": "train/batch_reward", "value": 0.7226492166519165}
+{"time_unix": 1791220654.962196, "type": "train_metric", "step": 1100, "metric": "train_critic/loss", "value": 1.5380477905273438}
+{"time_unix": 1791220654.969429, "type": "train_metric", "step": 1100, "metric": "train_actor/loss", "value": -1.5991904735565186}
+{"time_unix": 1791220654.9694557, "type": "train_metric", "step": 1100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220654.9695714, "type": "train_metric", "step": 1100, "metric": "train_actor/entropy", "value": 1.156229853630066}
+{"time_unix": 1791220654.9719388, "type": "train_metric", "step": 1100, "metric": "train_alpha/loss", "value": 0.16233211755752563}
+{"time_unix": 1791220654.9720056, "type": "train_metric", "step": 1100, "metric": "train_alpha/value", "value": 0.09954182830694126}
+{"time_unix": 1791220654.979954, "type": "train_metric", "step": 1100, "metric": "train/curl_loss", "value": 3.4701547622680664}
+{"time_unix": 1791220656.002149, "type": "train_episode", "step": 1125, "env_steps": 9000, "episode": 9, "return": 165.7990026194452, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220659.1598592, "type": "train_metric", "step": 1200, "metric": "train/batch_reward", "value": 0.7463870048522949}
+{"time_unix": 1791220659.164004, "type": "train_metric", "step": 1200, "metric": "train_critic/loss", "value": 1.1983163356781006}
+{"time_unix": 1791220659.171224, "type": "train_metric", "step": 1200, "metric": "train_actor/loss", "value": -1.9581562280654907}
+{"time_unix": 1791220659.1712594, "type": "train_metric", "step": 1200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220659.1713748, "type": "train_metric", "step": 1200, "metric": "train_actor/entropy", "value": 1.2474522590637207}
+{"time_unix": 1791220659.1738245, "type": "train_metric", "step": 1200, "metric": "train_alpha/loss", "value": 0.1693703532218933}
+{"time_unix": 1791220659.1738982, "type": "train_metric", "step": 1200, "metric": "train_alpha/value", "value": 0.09903135346721563}
+{"time_unix": 1791220659.1820385, "type": "train_metric", "step": 1200, "metric": "train/curl_loss", "value": 3.245760917663574}
+{"time_unix": 1791220661.2225046, "type": "train_episode", "step": 1250, "env_steps": 10000, "episode": 10, "return": 73.72927984569912, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220663.3503182, "type": "train_metric", "step": 1300, "metric": "train/batch_reward", "value": 0.8600371479988098}
+{"time_unix": 1791220663.3544235, "type": "train_metric", "step": 1300, "metric": "train_critic/loss", "value": 2.233750820159912}
+{"time_unix": 1791220663.3616502, "type": "train_metric", "step": 1300, "metric": "train_actor/loss", "value": -2.5016252994537354}
+{"time_unix": 1791220663.3616812, "type": "train_metric", "step": 1300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220663.3618057, "type": "train_metric", "step": 1300, "metric": "train_actor/entropy", "value": 0.9752339124679565}
+{"time_unix": 1791220663.3641958, "type": "train_metric", "step": 1300, "metric": "train_alpha/loss", "value": 0.1584133505821228}
+{"time_unix": 1791220663.3642607, "type": "train_metric", "step": 1300, "metric": "train_alpha/value", "value": 0.09852913467219683}
+{"time_unix": 1791220663.3723872, "type": "train_metric", "step": 1300, "metric": "train/curl_loss", "value": 3.0342140197753906}
+{"time_unix": 1791220666.464495, "type": "train_episode", "step": 1375, "env_steps": 11000, "episode": 11, "return": 80.967144131273, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220667.537485, "type": "train_metric", "step": 1400, "metric": "train/batch_reward", "value": 0.7900959849357605}
+{"time_unix": 1791220667.5415907, "type": "train_metric", "step": 1400, "metric": "train_critic/loss", "value": 2.496220111846924}
+{"time_unix": 1791220667.548806, "type": "train_metric", "step": 1400, "metric": "train_actor/loss", "value": -2.6823489665985107}
+{"time_unix": 1791220667.5488315, "type": "train_metric", "step": 1400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220667.5489552, "type": "train_metric", "step": 1400, "metric": "train_actor/entropy", "value": 1.4046227931976318}
+{"time_unix": 1791220667.5513387, "type": "train_metric", "step": 1400, "metric": "train_alpha/loss", "value": 0.16018573939800262}
+{"time_unix": 1791220667.5514045, "type": "train_metric", "step": 1400, "metric": "train_alpha/value", "value": 0.09803855010157259}
+{"time_unix": 1791220667.5593488, "type": "train_metric", "step": 1400, "metric": "train/curl_loss", "value": 2.9507641792297363}
+{"time_unix": 1791220686.1014016, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10000, "return": 64.63295259641448, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.1015131, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10001, "return": 65.33382264740786, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.101527, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10002, "return": 64.31101345348863, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.1015353, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10003, "return": 65.04290068550459, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.1015434, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10004, "return": 65.30812625512795, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.1015594, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10005, "return": 64.53225668574615, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.101568, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10006, "return": 65.44611676919297, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.1015754, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10007, "return": 65.47064619468553, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.1015832, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10008, "return": 64.37907395795767, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.1015906, "type": "eval_episode", "step": 1500, "env_steps": 12000, "eval_seed": 10009, "return": 65.28307495524085, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220686.1016433, "type": "eval_summary", "step": 1500, "env_steps": 12000, "mean_return": 64.97399842007667, "episodes": 10, "seconds": 14.397201308980584}
+{"time_unix": 1791220686.1016674, "type": "train_episode", "step": 1500, "env_steps": 12000, "episode": 12, "return": 189.56880319548267, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220686.131503, "type": "train_metric", "step": 1500, "metric": "train/batch_reward", "value": 0.690592885017395}
+{"time_unix": 1791220686.135656, "type": "train_metric", "step": 1500, "metric": "train_critic/loss", "value": 1.5886945724487305}
+{"time_unix": 1791220686.1436021, "type": "train_metric", "step": 1500, "metric": "train_actor/loss", "value": -2.890615701675415}
+{"time_unix": 1791220686.143629, "type": "train_metric", "step": 1500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220686.1437478, "type": "train_metric", "step": 1500, "metric": "train_actor/entropy", "value": 1.0628819465637207}
+{"time_unix": 1791220686.1463704, "type": "train_metric", "step": 1500, "metric": "train_alpha/loss", "value": 0.154707670211792}
+{"time_unix": 1791220686.1464367, "type": "train_metric", "step": 1500, "metric": "train_alpha/value", "value": 0.09755010580773368}
+{"time_unix": 1791220686.1546705, "type": "train_metric", "step": 1500, "metric": "train/curl_loss", "value": 2.754408836364746}
+{"time_unix": 1791220690.3091779, "type": "train_metric", "step": 1600, "metric": "train/batch_reward", "value": 0.905826210975647}
+{"time_unix": 1791220690.3132749, "type": "train_metric", "step": 1600, "metric": "train_critic/loss", "value": 2.728236198425293}
+{"time_unix": 1791220690.3205125, "type": "train_metric", "step": 1600, "metric": "train_actor/loss", "value": -3.5109262466430664}
+{"time_unix": 1791220690.320538, "type": "train_metric", "step": 1600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220690.3206532, "type": "train_metric", "step": 1600, "metric": "train_actor/entropy", "value": 1.0347695350646973}
+{"time_unix": 1791220690.323269, "type": "train_metric", "step": 1600, "metric": "train_alpha/loss", "value": 0.14528505504131317}
+{"time_unix": 1791220690.323334, "type": "train_metric", "step": 1600, "metric": "train_alpha/value", "value": 0.09706783746643505}
+{"time_unix": 1791220690.3313081, "type": "train_metric", "step": 1600, "metric": "train/curl_loss", "value": 2.664865016937256}
+{"time_unix": 1791220691.334779, "type": "train_episode", "step": 1625, "env_steps": 13000, "episode": 13, "return": 146.7408872767655, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220694.514205, "type": "train_metric", "step": 1700, "metric": "train/batch_reward", "value": 0.7956786155700684}
+{"time_unix": 1791220694.5183134, "type": "train_metric", "step": 1700, "metric": "train_critic/loss", "value": 1.8740545511245728}
+{"time_unix": 1791220694.52553, "type": "train_metric", "step": 1700, "metric": "train_actor/loss", "value": -3.458665370941162}
+{"time_unix": 1791220694.5255556, "type": "train_metric", "step": 1700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220694.5256793, "type": "train_metric", "step": 1700, "metric": "train_actor/entropy", "value": 0.9307861328125}
+{"time_unix": 1791220694.528048, "type": "train_metric", "step": 1700, "metric": "train_alpha/loss", "value": 0.14607825875282288}
+{"time_unix": 1791220694.5281136, "type": "train_metric", "step": 1700, "metric": "train_alpha/value", "value": 0.09659705175571369}
+{"time_unix": 1791220694.5362852, "type": "train_metric", "step": 1700, "metric": "train/curl_loss", "value": 2.5602402687072754}
+{"time_unix": 1791220696.5912285, "type": "train_episode", "step": 1750, "env_steps": 14000, "episode": 14, "return": 66.197689534197, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220698.7062094, "type": "train_metric", "step": 1800, "metric": "train/batch_reward", "value": 1.050247073173523}
+{"time_unix": 1791220698.7103474, "type": "train_metric", "step": 1800, "metric": "train_critic/loss", "value": 5.4815287590026855}
+{"time_unix": 1791220698.7175958, "type": "train_metric", "step": 1800, "metric": "train_actor/loss", "value": -4.586545944213867}
+{"time_unix": 1791220698.717622, "type": "train_metric", "step": 1800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220698.717737, "type": "train_metric", "step": 1800, "metric": "train_actor/entropy", "value": 1.0461642742156982}
+{"time_unix": 1791220698.7200537, "type": "train_metric", "step": 1800, "metric": "train_alpha/loss", "value": 0.14189356565475464}
+{"time_unix": 1791220698.7201185, "type": "train_metric", "step": 1800, "metric": "train_alpha/value", "value": 0.09614738645223941}
+{"time_unix": 1791220698.7280464, "type": "train_metric", "step": 1800, "metric": "train/curl_loss", "value": 2.5303921699523926}
+{"time_unix": 1791220701.8127718, "type": "train_episode", "step": 1875, "env_steps": 15000, "episode": 15, "return": 238.4377542357995, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220702.8963654, "type": "train_metric", "step": 1900, "metric": "train/batch_reward", "value": 0.9885004758834839}
+{"time_unix": 1791220702.9004629, "type": "train_metric", "step": 1900, "metric": "train_critic/loss", "value": 4.475080490112305}
+{"time_unix": 1791220702.907731, "type": "train_metric", "step": 1900, "metric": "train_actor/loss", "value": -4.864375591278076}
+{"time_unix": 1791220702.9077573, "type": "train_metric", "step": 1900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220702.9078715, "type": "train_metric", "step": 1900, "metric": "train_actor/entropy", "value": 1.1875250339508057}
+{"time_unix": 1791220702.9102259, "type": "train_metric", "step": 1900, "metric": "train_alpha/loss", "value": 0.14447760581970215}
+{"time_unix": 1791220702.9102914, "type": "train_metric", "step": 1900, "metric": "train_alpha/value", "value": 0.09570709217518157}
+{"time_unix": 1791220702.9182096, "type": "train_metric", "step": 1900, "metric": "train/curl_loss", "value": 2.696756362915039}
+{"time_unix": 1791220721.3320236, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10000, "return": 189.83018754654879, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.3321247, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10001, "return": 189.151501485877, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.3321362, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10002, "return": 193.9982571420724, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.3321445, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10003, "return": 191.68305832071513, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.332152, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10004, "return": 192.02679839516063, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.3321595, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10005, "return": 193.16027953130998, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.3321757, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10006, "return": 186.37128465919395, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.3321834, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10007, "return": 194.06449763624795, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.3321908, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10008, "return": 191.77512428379276, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.3321981, "type": "eval_episode", "step": 2000, "env_steps": 16000, "eval_seed": 10009, "return": 191.44332902799718, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220721.3322463, "type": "eval_summary", "step": 2000, "env_steps": 16000, "mean_return": 191.35043180289156, "episodes": 10, "seconds": 14.273115517571568}
+{"time_unix": 1791220721.332266, "type": "train_episode", "step": 2000, "env_steps": 16000, "episode": 16, "return": 144.96914208318134, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220721.3619354, "type": "train_metric", "step": 2000, "metric": "train/batch_reward", "value": 1.0587997436523438}
+{"time_unix": 1791220721.3660777, "type": "train_metric", "step": 2000, "metric": "train_critic/loss", "value": 8.50590705871582}
+{"time_unix": 1791220721.3738081, "type": "train_metric", "step": 2000, "metric": "train_actor/loss", "value": -5.4128828048706055}
+{"time_unix": 1791220721.373835, "type": "train_metric", "step": 2000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220721.3739662, "type": "train_metric", "step": 2000, "metric": "train_actor/entropy", "value": 1.0789544582366943}
+{"time_unix": 1791220721.3765414, "type": "train_metric", "step": 2000, "metric": "train_alpha/loss", "value": 0.14806392788887024}
+{"time_unix": 1791220721.3766072, "type": "train_metric", "step": 2000, "metric": "train_alpha/value", "value": 0.09526320335639071}
+{"time_unix": 1791220721.384762, "type": "train_metric", "step": 2000, "metric": "train/curl_loss", "value": 2.491305112838745}
+{"time_unix": 1791220725.549078, "type": "train_metric", "step": 2100, "metric": "train/batch_reward", "value": 0.8466970920562744}
+{"time_unix": 1791220725.5531993, "type": "train_metric", "step": 2100, "metric": "train_critic/loss", "value": 5.35220193862915}
+{"time_unix": 1791220725.5604682, "type": "train_metric", "step": 2100, "metric": "train_actor/loss", "value": -5.284462928771973}
+{"time_unix": 1791220725.560495, "type": "train_metric", "step": 2100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220725.5606093, "type": "train_metric", "step": 2100, "metric": "train_actor/entropy", "value": 0.9666045904159546}
+{"time_unix": 1791220725.562937, "type": "train_metric", "step": 2100, "metric": "train_alpha/loss", "value": 0.13671714067459106}
+{"time_unix": 1791220725.5630035, "type": "train_metric", "step": 2100, "metric": "train_alpha/value", "value": 0.09483440923228195}
+{"time_unix": 1791220725.5711915, "type": "train_metric", "step": 2100, "metric": "train/curl_loss", "value": 2.2707114219665527}
+{"time_unix": 1791220726.5685763, "type": "train_episode", "step": 2125, "env_steps": 17000, "episode": 17, "return": 73.37167151457135, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220729.7427561, "type": "train_metric", "step": 2200, "metric": "train/batch_reward", "value": 1.0043177604675293}
+{"time_unix": 1791220729.7469044, "type": "train_metric", "step": 2200, "metric": "train_critic/loss", "value": 4.2380571365356445}
+{"time_unix": 1791220729.7541564, "type": "train_metric", "step": 2200, "metric": "train_actor/loss", "value": -5.158882141113281}
+{"time_unix": 1791220729.7541826, "type": "train_metric", "step": 2200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220729.7543077, "type": "train_metric", "step": 2200, "metric": "train_actor/entropy", "value": 0.8848775029182434}
+{"time_unix": 1791220729.7567127, "type": "train_metric", "step": 2200, "metric": "train_alpha/loss", "value": 0.12104913592338562}
+{"time_unix": 1791220729.7567775, "type": "train_metric", "step": 2200, "metric": "train_alpha/value", "value": 0.09440842711353378}
+{"time_unix": 1791220729.7649248, "type": "train_metric", "step": 2200, "metric": "train/curl_loss", "value": 2.2490992546081543}
+{"time_unix": 1791220731.8105924, "type": "train_episode", "step": 2250, "env_steps": 18000, "episode": 18, "return": 217.23527732718676, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220733.9357991, "type": "train_metric", "step": 2300, "metric": "train/batch_reward", "value": 1.0617681741714478}
+{"time_unix": 1791220733.9399197, "type": "train_metric", "step": 2300, "metric": "train_critic/loss", "value": 7.962942600250244}
+{"time_unix": 1791220733.9471762, "type": "train_metric", "step": 2300, "metric": "train_actor/loss", "value": -5.609155178070068}
+{"time_unix": 1791220733.9472017, "type": "train_metric", "step": 2300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220733.9473226, "type": "train_metric", "step": 2300, "metric": "train_actor/entropy", "value": 0.7301992774009705}
+{"time_unix": 1791220733.9496877, "type": "train_metric", "step": 2300, "metric": "train_alpha/loss", "value": 0.1313684582710266}
+{"time_unix": 1791220733.9497533, "type": "train_metric", "step": 2300, "metric": "train_alpha/value", "value": 0.09400350055469787}
+{"time_unix": 1791220733.9580035, "type": "train_metric", "step": 2300, "metric": "train/curl_loss", "value": 2.203200578689575}
+{"time_unix": 1791220737.0463026, "type": "train_episode", "step": 2375, "env_steps": 19000, "episode": 19, "return": 148.5504620823751, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220738.1159842, "type": "train_metric", "step": 2400, "metric": "train/batch_reward", "value": 0.9237848520278931}
+{"time_unix": 1791220738.1200964, "type": "train_metric", "step": 2400, "metric": "train_critic/loss", "value": 7.566904067993164}
+{"time_unix": 1791220738.1273441, "type": "train_metric", "step": 2400, "metric": "train_actor/loss", "value": -6.205507278442383}
+{"time_unix": 1791220738.1273699, "type": "train_metric", "step": 2400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220738.1274843, "type": "train_metric", "step": 2400, "metric": "train_actor/entropy", "value": 0.7933394908905029}
+{"time_unix": 1791220738.1298423, "type": "train_metric", "step": 2400, "metric": "train_alpha/loss", "value": 0.13122227787971497}
+{"time_unix": 1791220738.1299164, "type": "train_metric", "step": 2400, "metric": "train_alpha/value", "value": 0.09362180568840316}
+{"time_unix": 1791220738.13788, "type": "train_metric", "step": 2400, "metric": "train/curl_loss", "value": 2.106916666030884}
+{"time_unix": 1791220756.6313915, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10000, "return": 107.06791751847935, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.631457, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10001, "return": 110.84789527141913, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.6314683, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10002, "return": 116.43127668720932, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.6314762, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10003, "return": 113.73050959167847, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.6314845, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10004, "return": 95.07585256581922, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.6314914, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10005, "return": 111.69447956839281, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.6315076, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10006, "return": 87.99857478992594, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.6315145, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10007, "return": 106.10508556510831, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.6315215, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10008, "return": 109.83808386992061, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.6315284, "type": "eval_episode", "step": 2500, "env_steps": 20000, "eval_seed": 10009, "return": 107.08829572177741, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220756.6315737, "type": "eval_summary", "step": 2500, "env_steps": 20000, "mean_return": 106.58779711497307, "episodes": 10, "seconds": 14.390120550990105}
+{"time_unix": 1791220756.631591, "type": "train_episode", "step": 2500, "env_steps": 20000, "episode": 20, "return": 220.55915517733138, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220756.6591797, "type": "train_metric", "step": 2500, "metric": "train/batch_reward", "value": 0.9470778703689575}
+{"time_unix": 1791220756.663288, "type": "train_metric", "step": 2500, "metric": "train_critic/loss", "value": 9.69003677368164}
+{"time_unix": 1791220756.6712248, "type": "train_metric", "step": 2500, "metric": "train_actor/loss", "value": -7.114771842956543}
+{"time_unix": 1791220756.6712523, "type": "train_metric", "step": 2500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220756.6713674, "type": "train_metric", "step": 2500, "metric": "train_actor/entropy", "value": 0.6136361956596375}
+{"time_unix": 1791220756.673904, "type": "train_metric", "step": 2500, "metric": "train_alpha/loss", "value": 0.09404793381690979}
+{"time_unix": 1791220756.6739705, "type": "train_metric", "step": 2500, "metric": "train_alpha/value", "value": 0.093220941413402}
+{"time_unix": 1791220756.6821127, "type": "train_metric", "step": 2500, "metric": "train/curl_loss", "value": 2.1958532333374023}
+{"time_unix": 1791220760.8496337, "type": "train_metric", "step": 2600, "metric": "train/batch_reward", "value": 0.9817801713943481}
+{"time_unix": 1791220760.853772, "type": "train_metric", "step": 2600, "metric": "train_critic/loss", "value": 9.33145809173584}
+{"time_unix": 1791220760.8610213, "type": "train_metric", "step": 2600, "metric": "train_actor/loss", "value": -6.582902908325195}
+{"time_unix": 1791220760.8610468, "type": "train_metric", "step": 2600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220760.8611622, "type": "train_metric", "step": 2600, "metric": "train_actor/entropy", "value": 0.858773946762085}
+{"time_unix": 1791220760.8635974, "type": "train_metric", "step": 2600, "metric": "train_alpha/loss", "value": 0.11683738231658936}
+{"time_unix": 1791220760.863664, "type": "train_metric", "step": 2600, "metric": "train_alpha/value", "value": 0.09282816489488845}
+{"time_unix": 1791220760.8718925, "type": "train_metric", "step": 2600, "metric": "train/curl_loss", "value": 2.0955076217651367}
+{"time_unix": 1791220761.8749363, "type": "train_episode", "step": 2625, "env_steps": 21000, "episode": 21, "return": 172.96303886868083, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220765.0252197, "type": "train_metric", "step": 2700, "metric": "train/batch_reward", "value": 1.1051528453826904}
+{"time_unix": 1791220765.0293427, "type": "train_metric", "step": 2700, "metric": "train_critic/loss", "value": 6.231966018676758}
+{"time_unix": 1791220765.0365944, "type": "train_metric", "step": 2700, "metric": "train_actor/loss", "value": -8.141366958618164}
+{"time_unix": 1791220765.0366194, "type": "train_metric", "step": 2700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220765.036744, "type": "train_metric", "step": 2700, "metric": "train_actor/entropy", "value": 0.765378475189209}
+{"time_unix": 1791220765.0391035, "type": "train_metric", "step": 2700, "metric": "train_alpha/loss", "value": 0.10897237062454224}
+{"time_unix": 1791220765.0391693, "type": "train_metric", "step": 2700, "metric": "train_alpha/value", "value": 0.09246067744313327}
+{"time_unix": 1791220765.0476658, "type": "train_metric", "step": 2700, "metric": "train/curl_loss", "value": 2.1277146339416504}
+{"time_unix": 1791220767.1074724, "type": "train_episode", "step": 2750, "env_steps": 22000, "episode": 22, "return": 135.53937713718918, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220769.2198877, "type": "train_metric", "step": 2800, "metric": "train/batch_reward", "value": 0.8443818688392639}
+{"time_unix": 1791220769.224032, "type": "train_metric", "step": 2800, "metric": "train_critic/loss", "value": 9.777822494506836}
+{"time_unix": 1791220769.231269, "type": "train_metric", "step": 2800, "metric": "train_actor/loss", "value": -9.179301261901855}
+{"time_unix": 1791220769.2313004, "type": "train_metric", "step": 2800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220769.2314284, "type": "train_metric", "step": 2800, "metric": "train_actor/entropy", "value": 0.6975478529930115}
+{"time_unix": 1791220769.2337792, "type": "train_metric", "step": 2800, "metric": "train_alpha/loss", "value": 0.11789052933454514}
+{"time_unix": 1791220769.2338438, "type": "train_metric", "step": 2800, "metric": "train_alpha/value", "value": 0.09210471719037576}
+{"time_unix": 1791220769.2420106, "type": "train_metric", "step": 2800, "metric": "train/curl_loss", "value": 2.359285831451416}
+{"time_unix": 1791220772.3343937, "type": "train_episode", "step": 2875, "env_steps": 23000, "episode": 23, "return": 257.9669570418651, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220773.4178307, "type": "train_metric", "step": 2900, "metric": "train/batch_reward", "value": 1.3037924766540527}
+{"time_unix": 1791220773.4219525, "type": "train_metric", "step": 2900, "metric": "train_critic/loss", "value": 11.026503562927246}
+{"time_unix": 1791220773.4295797, "type": "train_metric", "step": 2900, "metric": "train_actor/loss", "value": -9.329599380493164}
+{"time_unix": 1791220773.4296057, "type": "train_metric", "step": 2900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220773.429721, "type": "train_metric", "step": 2900, "metric": "train_actor/entropy", "value": 0.750015139579773}
+{"time_unix": 1791220773.432078, "type": "train_metric", "step": 2900, "metric": "train_alpha/loss", "value": 0.10480720549821854}
+{"time_unix": 1791220773.4321473, "type": "train_metric", "step": 2900, "metric": "train_alpha/value", "value": 0.09174606918723974}
+{"time_unix": 1791220773.4404209, "type": "train_metric", "step": 2900, "metric": "train/curl_loss", "value": 2.095366954803467}
+{"time_unix": 1791220792.0349915, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10000, "return": 196.77057014587436, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.0350597, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10001, "return": 264.86218734050664, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.035071, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10002, "return": 183.663513028086, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.0350792, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10003, "return": 189.6095714112129, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.035087, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10004, "return": 217.8058550113432, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.0350952, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10005, "return": 217.2458208463328, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.035117, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10006, "return": 235.60112517744267, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.0351245, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10007, "return": 235.59014438641987, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.0351317, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10008, "return": 190.23803643034188, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.035139, "type": "eval_episode", "step": 3000, "env_steps": 24000, "eval_seed": 10009, "return": 251.71900656384653, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220792.0352082, "type": "eval_summary", "step": 3000, "env_steps": 24000, "mean_return": 218.3105830341407, "episodes": 10, "seconds": 14.477680400013924}
+{"time_unix": 1791220792.0352266, "type": "train_episode", "step": 3000, "env_steps": 24000, "episode": 24, "return": 197.79323386673698, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220792.0841517, "type": "train_metric", "step": 3000, "metric": "train/batch_reward", "value": 1.269919514656067}
+{"time_unix": 1791220792.0882876, "type": "train_metric", "step": 3000, "metric": "train_critic/loss", "value": 15.862649917602539}
+{"time_unix": 1791220792.0961454, "type": "train_metric", "step": 3000, "metric": "train_actor/loss", "value": -10.029284477233887}
+{"time_unix": 1791220792.0961714, "type": "train_metric", "step": 3000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220792.0962894, "type": "train_metric", "step": 3000, "metric": "train_actor/entropy", "value": 0.7071197628974915}
+{"time_unix": 1791220792.0993237, "type": "train_metric", "step": 3000, "metric": "train_alpha/loss", "value": 0.11416201293468475}
+{"time_unix": 1791220792.0993905, "type": "train_metric", "step": 3000, "metric": "train_alpha/value", "value": 0.09139031072673812}
+{"time_unix": 1791220792.107828, "type": "train_metric", "step": 3000, "metric": "train/curl_loss", "value": 2.0963187217712402}
+{"time_unix": 1791220796.2475946, "type": "train_metric", "step": 3100, "metric": "train/batch_reward", "value": 1.041723608970642}
+{"time_unix": 1791220796.2518096, "type": "train_metric", "step": 3100, "metric": "train_critic/loss", "value": 9.11551284790039}
+{"time_unix": 1791220796.2590785, "type": "train_metric", "step": 3100, "metric": "train_actor/loss", "value": -10.163480758666992}
+{"time_unix": 1791220796.259104, "type": "train_metric", "step": 3100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220796.2592192, "type": "train_metric", "step": 3100, "metric": "train_actor/entropy", "value": 0.9531038999557495}
+{"time_unix": 1791220796.2616215, "type": "train_metric", "step": 3100, "metric": "train_alpha/loss", "value": 0.1056382805109024}
+{"time_unix": 1791220796.261687, "type": "train_metric", "step": 3100, "metric": "train_alpha/value", "value": 0.09104266480713663}
+{"time_unix": 1791220796.2697337, "type": "train_metric", "step": 3100, "metric": "train/curl_loss", "value": 2.2696142196655273}
+{"time_unix": 1791220797.2691445, "type": "train_episode", "step": 3125, "env_steps": 25000, "episode": 25, "return": 262.86034942048684, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220800.3949533, "type": "train_metric", "step": 3200, "metric": "train/batch_reward", "value": 1.437748670578003}
+{"time_unix": 1791220800.3990593, "type": "train_metric", "step": 3200, "metric": "train_critic/loss", "value": 15.145627975463867}
+{"time_unix": 1791220800.4063506, "type": "train_metric", "step": 3200, "metric": "train_actor/loss", "value": -11.021366119384766}
+{"time_unix": 1791220800.4063761, "type": "train_metric", "step": 3200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220800.406491, "type": "train_metric", "step": 3200, "metric": "train_actor/entropy", "value": 0.6695192456245422}
+{"time_unix": 1791220800.40891, "type": "train_metric", "step": 3200, "metric": "train_alpha/loss", "value": 0.07595641911029816}
+{"time_unix": 1791220800.4089768, "type": "train_metric", "step": 3200, "metric": "train_alpha/value", "value": 0.09067381454952769}
+{"time_unix": 1791220800.4171982, "type": "train_metric", "step": 3200, "metric": "train/curl_loss", "value": 1.7826249599456787}
+{"time_unix": 1791220802.4438431, "type": "train_episode", "step": 3250, "env_steps": 26000, "episode": 26, "return": 257.70419607766894, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220804.5510125, "type": "train_metric", "step": 3300, "metric": "train/batch_reward", "value": 1.2765774726867676}
+{"time_unix": 1791220804.5551343, "type": "train_metric", "step": 3300, "metric": "train_critic/loss", "value": 12.8201904296875}
+{"time_unix": 1791220804.562427, "type": "train_metric", "step": 3300, "metric": "train_actor/loss", "value": -11.146934509277344}
+{"time_unix": 1791220804.562453, "type": "train_metric", "step": 3300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220804.5625677, "type": "train_metric", "step": 3300, "metric": "train_actor/entropy", "value": 0.8524150252342224}
+{"time_unix": 1791220804.56497, "type": "train_metric", "step": 3300, "metric": "train_alpha/loss", "value": 0.10042919963598251}
+{"time_unix": 1791220804.5650358, "type": "train_metric", "step": 3300, "metric": "train_alpha/value", "value": 0.0903292073113547}
+{"time_unix": 1791220804.5730507, "type": "train_metric", "step": 3300, "metric": "train/curl_loss", "value": 2.096967935562134}
+{"time_unix": 1791220807.68333, "type": "train_episode", "step": 3375, "env_steps": 27000, "episode": 27, "return": 228.96159919705738, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220808.751737, "type": "train_metric", "step": 3400, "metric": "train/batch_reward", "value": 1.1148858070373535}
+{"time_unix": 1791220808.755865, "type": "train_metric", "step": 3400, "metric": "train_critic/loss", "value": 8.663581848144531}
+{"time_unix": 1791220808.763158, "type": "train_metric", "step": 3400, "metric": "train_actor/loss", "value": -11.469100952148438}
+{"time_unix": 1791220808.7631838, "type": "train_metric", "step": 3400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220808.7632976, "type": "train_metric", "step": 3400, "metric": "train_actor/entropy", "value": 0.8771740198135376}
+{"time_unix": 1791220808.7656755, "type": "train_metric", "step": 3400, "metric": "train_alpha/loss", "value": 0.09197046607732773}
+{"time_unix": 1791220808.765741, "type": "train_metric", "step": 3400, "metric": "train_alpha/value", "value": 0.08999127903394749}
+{"time_unix": 1791220808.7740352, "type": "train_metric", "step": 3400, "metric": "train/curl_loss", "value": 1.9001803398132324}
+{"time_unix": 1791220827.2971485, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10000, "return": 183.35630079644702, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.2972457, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10001, "return": 195.22247587613774, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.2972577, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10002, "return": 195.8849604428162, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.2972653, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10003, "return": 180.64295619807777, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.2972736, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10004, "return": 185.46290465749664, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.297281, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10005, "return": 178.54585771555946, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.2972972, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10006, "return": 174.21031498712745, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.2973046, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10007, "return": 188.40812308793215, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.2973123, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10008, "return": 218.19098169906934, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.2973192, "type": "eval_episode", "step": 3500, "env_steps": 28000, "eval_seed": 10009, "return": 173.55240230122251, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220827.2973683, "type": "eval_summary", "step": 3500, "env_steps": 28000, "mean_return": 187.34772777618863, "episodes": 10, "seconds": 14.392130458727479}
+{"time_unix": 1791220827.297388, "type": "train_episode", "step": 3500, "env_steps": 28000, "episode": 28, "return": 161.9519755880111, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220827.325234, "type": "train_metric", "step": 3500, "metric": "train/batch_reward", "value": 1.3393465280532837}
+{"time_unix": 1791220827.3293633, "type": "train_metric", "step": 3500, "metric": "train_critic/loss", "value": 8.548042297363281}
+{"time_unix": 1791220827.3372493, "type": "train_metric", "step": 3500, "metric": "train_actor/loss", "value": -12.676095008850098}
+{"time_unix": 1791220827.3372757, "type": "train_metric", "step": 3500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220827.337391, "type": "train_metric", "step": 3500, "metric": "train_actor/entropy", "value": 0.672182023525238}
+{"time_unix": 1791220827.3399582, "type": "train_metric", "step": 3500, "metric": "train_alpha/loss", "value": 0.09095565229654312}
+{"time_unix": 1791220827.3400238, "type": "train_metric", "step": 3500, "metric": "train_alpha/value", "value": 0.08966864296049963}
+{"time_unix": 1791220827.3481147, "type": "train_metric", "step": 3500, "metric": "train/curl_loss", "value": 1.78007173538208}
+{"time_unix": 1791220831.5404937, "type": "train_metric", "step": 3600, "metric": "train/batch_reward", "value": 1.3971831798553467}
+{"time_unix": 1791220831.5447037, "type": "train_metric", "step": 3600, "metric": "train_critic/loss", "value": 12.18171215057373}
+{"time_unix": 1791220831.5519564, "type": "train_metric", "step": 3600, "metric": "train_actor/loss", "value": -13.100708961486816}
+{"time_unix": 1791220831.5519826, "type": "train_metric", "step": 3600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220831.5520985, "type": "train_metric", "step": 3600, "metric": "train_actor/entropy", "value": 0.6381909847259521}
+{"time_unix": 1791220831.5544093, "type": "train_metric", "step": 3600, "metric": "train_alpha/loss", "value": 0.09651325643062592}
+{"time_unix": 1791220831.5544748, "type": "train_metric", "step": 3600, "metric": "train_alpha/value", "value": 0.08932693397986873}
+{"time_unix": 1791220831.5626628, "type": "train_metric", "step": 3600, "metric": "train/curl_loss", "value": 1.7863318920135498}
+{"time_unix": 1791220832.5807521, "type": "train_episode", "step": 3625, "env_steps": 29000, "episode": 29, "return": 157.86424779610252, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220835.7718391, "type": "train_metric", "step": 3700, "metric": "train/batch_reward", "value": 1.0272237062454224}
+{"time_unix": 1791220835.7759736, "type": "train_metric", "step": 3700, "metric": "train_critic/loss", "value": 8.022079467773438}
+{"time_unix": 1791220835.7832372, "type": "train_metric", "step": 3700, "metric": "train_actor/loss", "value": -13.276686668395996}
+{"time_unix": 1791220835.7832632, "type": "train_metric", "step": 3700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220835.7833786, "type": "train_metric", "step": 3700, "metric": "train_actor/entropy", "value": 0.526183009147644}
+{"time_unix": 1791220835.7860386, "type": "train_metric", "step": 3700, "metric": "train_alpha/loss", "value": 0.0789967030286789}
+{"time_unix": 1791220835.7861254, "type": "train_metric", "step": 3700, "metric": "train_alpha/value", "value": 0.0889764613755493}
+{"time_unix": 1791220835.7941716, "type": "train_metric", "step": 3700, "metric": "train/curl_loss", "value": 1.620877981185913}
+{"time_unix": 1791220837.8751628, "type": "train_episode", "step": 3750, "env_steps": 30000, "episode": 30, "return": 234.86535739321118, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220840.0058439, "type": "train_metric", "step": 3800, "metric": "train/batch_reward", "value": 1.1551309823989868}
+{"time_unix": 1791220840.0099778, "type": "train_metric", "step": 3800, "metric": "train_critic/loss", "value": 9.781281471252441}
+{"time_unix": 1791220840.0172155, "type": "train_metric", "step": 3800, "metric": "train_actor/loss", "value": -12.07244873046875}
+{"time_unix": 1791220840.0172412, "type": "train_metric", "step": 3800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220840.0173542, "type": "train_metric", "step": 3800, "metric": "train_actor/entropy", "value": 0.5543372631072998}
+{"time_unix": 1791220840.019721, "type": "train_metric", "step": 3800, "metric": "train_alpha/loss", "value": 0.07517077028751373}
+{"time_unix": 1791220840.0197866, "type": "train_metric", "step": 3800, "metric": "train_alpha/value", "value": 0.08863886909831405}
+{"time_unix": 1791220840.027781, "type": "train_metric", "step": 3800, "metric": "train/curl_loss", "value": 1.6186134815216064}
+{"time_unix": 1791220843.1360505, "type": "train_episode", "step": 3875, "env_steps": 31000, "episode": 31, "return": 218.0201103199929, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220844.2120214, "type": "train_metric", "step": 3900, "metric": "train/batch_reward", "value": 1.5912072658538818}
+{"time_unix": 1791220844.216174, "type": "train_metric", "step": 3900, "metric": "train_critic/loss", "value": 15.581876754760742}
+{"time_unix": 1791220844.2234535, "type": "train_metric", "step": 3900, "metric": "train_actor/loss", "value": -14.719304084777832}
+{"time_unix": 1791220844.2234805, "type": "train_metric", "step": 3900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220844.223594, "type": "train_metric", "step": 3900, "metric": "train_actor/entropy", "value": 0.790816605091095}
+{"time_unix": 1791220844.2259264, "type": "train_metric", "step": 3900, "metric": "train_alpha/loss", "value": 0.09967857599258423}
+{"time_unix": 1791220844.2259922, "type": "train_metric", "step": 3900, "metric": "train_alpha/value", "value": 0.08830303969113626}
+{"time_unix": 1791220844.233948, "type": "train_metric", "step": 3900, "metric": "train/curl_loss", "value": 1.673925518989563}
+{"time_unix": 1791220862.7442844, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10000, "return": 186.7431300342343, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.7443593, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10001, "return": 193.91815946493958, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.7443707, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10002, "return": 193.67013226576722, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.7443783, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10003, "return": 196.5490067802006, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.7443862, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10004, "return": 41.490176389938384, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.744394, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10005, "return": 174.24584045282026, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.7444022, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10006, "return": 42.28982695204214, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.744416, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10007, "return": 28.176908183263595, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.7444232, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10008, "return": 250.6430224329578, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.7444303, "type": "eval_episode", "step": 4000, "env_steps": 32000, "eval_seed": 10009, "return": 41.77969555875394, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220862.744497, "type": "eval_summary", "step": 4000, "env_steps": 32000, "mean_return": 134.95058985149177, "episodes": 10, "seconds": 14.394688807427883}
+{"time_unix": 1791220862.7445297, "type": "train_episode", "step": 4000, "env_steps": 32000, "episode": 32, "return": 285.784611726646, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220862.7745697, "type": "train_metric", "step": 4000, "metric": "train/batch_reward", "value": 1.3398621082305908}
+{"time_unix": 1791220862.778774, "type": "train_metric", "step": 4000, "metric": "train_critic/loss", "value": 10.964826583862305}
+{"time_unix": 1791220862.7865818, "type": "train_metric", "step": 4000, "metric": "train_actor/loss", "value": -15.4451904296875}
+{"time_unix": 1791220862.7866085, "type": "train_metric", "step": 4000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220862.7867265, "type": "train_metric", "step": 4000, "metric": "train_actor/entropy", "value": 0.7746390700340271}
+{"time_unix": 1791220862.7893116, "type": "train_metric", "step": 4000, "metric": "train_alpha/loss", "value": 0.08684015274047852}
+{"time_unix": 1791220862.7893786, "type": "train_metric", "step": 4000, "metric": "train_alpha/value", "value": 0.08795517926062925}
+{"time_unix": 1791220862.7976305, "type": "train_metric", "step": 4000, "metric": "train/curl_loss", "value": 1.516106367111206}
+{"time_unix": 1791220866.9420137, "type": "train_metric", "step": 4100, "metric": "train/batch_reward", "value": 1.3580405712127686}
+{"time_unix": 1791220866.9461503, "type": "train_metric", "step": 4100, "metric": "train_critic/loss", "value": 13.895133972167969}
+{"time_unix": 1791220866.9533985, "type": "train_metric", "step": 4100, "metric": "train_actor/loss", "value": -14.781330108642578}
+{"time_unix": 1791220866.9534245, "type": "train_metric", "step": 4100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220866.9535387, "type": "train_metric", "step": 4100, "metric": "train_actor/entropy", "value": 0.8101756572723389}
+{"time_unix": 1791220866.955993, "type": "train_metric", "step": 4100, "metric": "train_alpha/loss", "value": 0.08989997208118439}
+{"time_unix": 1791220866.9560587, "type": "train_metric", "step": 4100, "metric": "train_alpha/value", "value": 0.08761577015716716}
+{"time_unix": 1791220866.9641325, "type": "train_metric", "step": 4100, "metric": "train/curl_loss", "value": 1.7067208290100098}
+{"time_unix": 1791220867.971101, "type": "train_episode", "step": 4125, "env_steps": 33000, "episode": 33, "return": 83.66854067065626, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220871.1211495, "type": "train_metric", "step": 4200, "metric": "train/batch_reward", "value": 1.2848999500274658}
+{"time_unix": 1791220871.1252582, "type": "train_metric", "step": 4200, "metric": "train_critic/loss", "value": 9.644301414489746}
+{"time_unix": 1791220871.132514, "type": "train_metric", "step": 4200, "metric": "train_actor/loss", "value": -16.092357635498047}
+{"time_unix": 1791220871.1325402, "type": "train_metric", "step": 4200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220871.132655, "type": "train_metric", "step": 4200, "metric": "train_actor/entropy", "value": 0.7042697668075562}
+{"time_unix": 1791220871.1349685, "type": "train_metric", "step": 4200, "metric": "train_alpha/loss", "value": 0.08046566694974899}
+{"time_unix": 1791220871.1350327, "type": "train_metric", "step": 4200, "metric": "train_alpha/value", "value": 0.08728236733101664}
+{"time_unix": 1791220871.1431653, "type": "train_metric", "step": 4200, "metric": "train/curl_loss", "value": 1.8477838039398193}
+{"time_unix": 1791220873.2002194, "type": "train_episode", "step": 4250, "env_steps": 34000, "episode": 34, "return": 273.8974415653196, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220875.3156617, "type": "train_metric", "step": 4300, "metric": "train/batch_reward", "value": 1.2042975425720215}
+{"time_unix": 1791220875.3198128, "type": "train_metric", "step": 4300, "metric": "train_critic/loss", "value": 9.31863021850586}
+{"time_unix": 1791220875.3270857, "type": "train_metric", "step": 4300, "metric": "train_actor/loss", "value": -15.472366333007812}
+{"time_unix": 1791220875.327112, "type": "train_metric", "step": 4300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220875.3272269, "type": "train_metric", "step": 4300, "metric": "train_actor/entropy", "value": 0.7961674332618713}
+{"time_unix": 1791220875.3295984, "type": "train_metric", "step": 4300, "metric": "train_alpha/loss", "value": 0.08875048160552979}
+{"time_unix": 1791220875.329665, "type": "train_metric", "step": 4300, "metric": "train_alpha/value", "value": 0.08698185467702219}
+{"time_unix": 1791220875.337601, "type": "train_metric", "step": 4300, "metric": "train/curl_loss", "value": 1.8232091665267944}
+{"time_unix": 1791220878.4307754, "type": "train_episode", "step": 4375, "env_steps": 35000, "episode": 35, "return": 194.06366573700365, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220879.5020626, "type": "train_metric", "step": 4400, "metric": "train/batch_reward", "value": 1.5877406597137451}
+{"time_unix": 1791220879.5061839, "type": "train_metric", "step": 4400, "metric": "train_critic/loss", "value": 12.647075653076172}
+{"time_unix": 1791220879.513442, "type": "train_metric", "step": 4400, "metric": "train_actor/loss", "value": -18.25701904296875}
+{"time_unix": 1791220879.5134673, "type": "train_metric", "step": 4400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220879.513583, "type": "train_metric", "step": 4400, "metric": "train_actor/entropy", "value": 0.8397055864334106}
+{"time_unix": 1791220879.5159543, "type": "train_metric", "step": 4400, "metric": "train_alpha/loss", "value": 0.06798110902309418}
+{"time_unix": 1791220879.5160189, "type": "train_metric", "step": 4400, "metric": "train_alpha/value", "value": 0.08669436995794948}
+{"time_unix": 1791220879.5242887, "type": "train_metric", "step": 4400, "metric": "train/curl_loss", "value": 1.476798176765442}
+{"time_unix": 1791220898.234752, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10000, "return": 293.06209486184184, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.2348182, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10001, "return": 276.23331057952396, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.2348309, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10002, "return": 296.71868283658847, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.2348392, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10003, "return": 303.27100004170313, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.2348478, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10004, "return": 255.6682606899034, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.2348554, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10005, "return": 262.7655746038483, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.234863, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10006, "return": 242.84561985522896, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.2348752, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10007, "return": 280.83347418747917, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.234883, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10008, "return": 281.6602356073023, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.2348993, "type": "eval_episode", "step": 4500, "env_steps": 36000, "eval_seed": 10009, "return": 294.80631672307817, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220898.2350016, "type": "eval_summary", "step": 4500, "env_steps": 36000, "mean_return": 278.7864569986497, "episodes": 10, "seconds": 14.56272540986538}
+{"time_unix": 1791220898.2350197, "type": "train_episode", "step": 4500, "env_steps": 36000, "episode": 36, "return": 174.67485670070374, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220898.2846286, "type": "train_metric", "step": 4500, "metric": "train/batch_reward", "value": 1.290285587310791}
+{"time_unix": 1791220898.288778, "type": "train_metric", "step": 4500, "metric": "train_critic/loss", "value": 21.433841705322266}
+{"time_unix": 1791220898.2964494, "type": "train_metric", "step": 4500, "metric": "train_actor/loss", "value": -18.153926849365234}
+{"time_unix": 1791220898.2964756, "type": "train_metric", "step": 4500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220898.2965913, "type": "train_metric", "step": 4500, "metric": "train_actor/entropy", "value": 0.7232156991958618}
+{"time_unix": 1791220898.2991962, "type": "train_metric", "step": 4500, "metric": "train_alpha/loss", "value": 0.08510245382785797}
+{"time_unix": 1791220898.2992632, "type": "train_metric", "step": 4500, "metric": "train_alpha/value", "value": 0.08640256382427404}
+{"time_unix": 1791220898.3074138, "type": "train_metric", "step": 4500, "metric": "train/curl_loss", "value": 1.531747579574585}
+{"time_unix": 1791220902.5009837, "type": "train_metric", "step": 4600, "metric": "train/batch_reward", "value": 1.3381175994873047}
+{"time_unix": 1791220902.5051134, "type": "train_metric", "step": 4600, "metric": "train_critic/loss", "value": 13.478706359863281}
+{"time_unix": 1791220902.5128405, "type": "train_metric", "step": 4600, "metric": "train_actor/loss", "value": -18.045324325561523}
+{"time_unix": 1791220902.5128658, "type": "train_metric", "step": 4600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220902.512989, "type": "train_metric", "step": 4600, "metric": "train_actor/entropy", "value": 0.6531354188919067}
+{"time_unix": 1791220902.5154724, "type": "train_metric", "step": 4600, "metric": "train_alpha/loss", "value": 0.09698367118835449}
+{"time_unix": 1791220902.5155392, "type": "train_metric", "step": 4600, "metric": "train_alpha/value", "value": 0.08610836247163203}
+{"time_unix": 1791220902.5239048, "type": "train_metric", "step": 4600, "metric": "train/curl_loss", "value": 1.306890845298767}
+{"time_unix": 1791220903.554383, "type": "train_episode", "step": 4625, "env_steps": 37000, "episode": 37, "return": 187.7622185246057, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220906.7183893, "type": "train_metric", "step": 4700, "metric": "train/batch_reward", "value": 1.4955542087554932}
+{"time_unix": 1791220906.7225046, "type": "train_metric", "step": 4700, "metric": "train_critic/loss", "value": 16.75104522705078}
+{"time_unix": 1791220906.7297688, "type": "train_metric", "step": 4700, "metric": "train_actor/loss", "value": -20.56090545654297}
+{"time_unix": 1791220906.7297945, "type": "train_metric", "step": 4700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220906.7299159, "type": "train_metric", "step": 4700, "metric": "train_actor/entropy", "value": 0.497550904750824}
+{"time_unix": 1791220906.7323198, "type": "train_metric", "step": 4700, "metric": "train_alpha/loss", "value": 0.05875368416309357}
+{"time_unix": 1791220906.7323945, "type": "train_metric", "step": 4700, "metric": "train_alpha/value", "value": 0.08580006835666065}
+{"time_unix": 1791220906.740457, "type": "train_metric", "step": 4700, "metric": "train/curl_loss", "value": 1.2794418334960938}
+{"time_unix": 1791220908.8141518, "type": "train_episode", "step": 4750, "env_steps": 38000, "episode": 38, "return": 196.66746418206517, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220910.9667027, "type": "train_metric", "step": 4800, "metric": "train/batch_reward", "value": 1.3567020893096924}
+{"time_unix": 1791220910.9708252, "type": "train_metric", "step": 4800, "metric": "train_critic/loss", "value": 14.239919662475586}
+{"time_unix": 1791220910.9781125, "type": "train_metric", "step": 4800, "metric": "train_actor/loss", "value": -20.134912490844727}
+{"time_unix": 1791220910.978138, "type": "train_metric", "step": 4800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220910.9782538, "type": "train_metric", "step": 4800, "metric": "train_actor/entropy", "value": 0.7159241437911987}
+{"time_unix": 1791220910.980672, "type": "train_metric", "step": 4800, "metric": "train_alpha/loss", "value": 0.08005864918231964}
+{"time_unix": 1791220910.9807365, "type": "train_metric", "step": 4800, "metric": "train_alpha/value", "value": 0.08552156238810366}
+{"time_unix": 1791220910.988798, "type": "train_metric", "step": 4800, "metric": "train/curl_loss", "value": 1.1327297687530518}
+{"time_unix": 1791220914.0946848, "type": "train_episode", "step": 4875, "env_steps": 39000, "episode": 39, "return": 243.77374043052436, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220915.18325, "type": "train_metric", "step": 4900, "metric": "train/batch_reward", "value": 1.446282148361206}
+{"time_unix": 1791220915.1873803, "type": "train_metric", "step": 4900, "metric": "train_critic/loss", "value": 13.248041152954102}
+{"time_unix": 1791220915.1950047, "type": "train_metric", "step": 4900, "metric": "train_actor/loss", "value": -19.889755249023438}
+{"time_unix": 1791220915.1950307, "type": "train_metric", "step": 4900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220915.1951458, "type": "train_metric", "step": 4900, "metric": "train_actor/entropy", "value": 0.5361450910568237}
+{"time_unix": 1791220915.19761, "type": "train_metric", "step": 4900, "metric": "train_alpha/loss", "value": 0.07144804298877716}
+{"time_unix": 1791220915.1976755, "type": "train_metric", "step": 4900, "metric": "train_alpha/value", "value": 0.08520782839666229}
+{"time_unix": 1791220915.2057297, "type": "train_metric", "step": 4900, "metric": "train/curl_loss", "value": 1.427304744720459}
+{"time_unix": 1791220933.4686046, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10000, "return": 293.41498114090155, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4687836, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10001, "return": 270.2809371534828, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4687953, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10002, "return": 278.74436887872866, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4688036, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10003, "return": 229.55568715386806, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4688115, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10004, "return": 245.3020470053633, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4688194, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10005, "return": 235.75540092535996, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4688268, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10006, "return": 258.59908738525115, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4688413, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10007, "return": 205.39280657571368, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4688485, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10008, "return": 248.9990929307122, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4688559, "type": "eval_episode", "step": 5000, "env_steps": 40000, "eval_seed": 10009, "return": 213.55982192943216, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220933.4689372, "type": "eval_summary", "step": 5000, "env_steps": 40000, "mean_return": 247.96042310788135, "episodes": 10, "seconds": 14.055899240076542}
+{"time_unix": 1791220933.468961, "type": "train_episode", "step": 5000, "env_steps": 40000, "episode": 40, "return": 224.79685267298362, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220933.4964514, "type": "train_metric", "step": 5000, "metric": "train/batch_reward", "value": 1.2867186069488525}
+{"time_unix": 1791220933.5005622, "type": "train_metric", "step": 5000, "metric": "train_critic/loss", "value": 14.103803634643555}
+{"time_unix": 1791220933.5082762, "type": "train_metric", "step": 5000, "metric": "train_actor/loss", "value": -20.579593658447266}
+{"time_unix": 1791220933.5083036, "type": "train_metric", "step": 5000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220933.5084174, "type": "train_metric", "step": 5000, "metric": "train_actor/entropy", "value": 0.7321819067001343}
+{"time_unix": 1791220933.5109565, "type": "train_metric", "step": 5000, "metric": "train_alpha/loss", "value": 0.07370223104953766}
+{"time_unix": 1791220933.5110216, "type": "train_metric", "step": 5000, "metric": "train_alpha/value", "value": 0.08492691598964386}
+{"time_unix": 1791220933.5194216, "type": "train_metric", "step": 5000, "metric": "train/curl_loss", "value": 1.4195830821990967}
+{"time_unix": 1791220937.700909, "type": "train_metric", "step": 5100, "metric": "train/batch_reward", "value": 1.4428720474243164}
+{"time_unix": 1791220937.705031, "type": "train_metric", "step": 5100, "metric": "train_critic/loss", "value": 15.781538963317871}
+{"time_unix": 1791220937.712321, "type": "train_metric", "step": 5100, "metric": "train_actor/loss", "value": -22.55846405029297}
+{"time_unix": 1791220937.7123468, "type": "train_metric", "step": 5100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220937.7124612, "type": "train_metric", "step": 5100, "metric": "train_actor/entropy", "value": 0.4020431637763977}
+{"time_unix": 1791220937.7147732, "type": "train_metric", "step": 5100, "metric": "train_alpha/loss", "value": 0.0659216046333313}
+{"time_unix": 1791220937.7148383, "type": "train_metric", "step": 5100, "metric": "train_alpha/value", "value": 0.08461059187617541}
+{"time_unix": 1791220937.7227972, "type": "train_metric", "step": 5100, "metric": "train/curl_loss", "value": 1.8504688739776611}
+{"time_unix": 1791220938.7368808, "type": "train_episode", "step": 5125, "env_steps": 41000, "episode": 41, "return": 257.20012788831843, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220941.902899, "type": "train_metric", "step": 5200, "metric": "train/batch_reward", "value": 1.5285060405731201}
+{"time_unix": 1791220941.907005, "type": "train_metric", "step": 5200, "metric": "train_critic/loss", "value": 16.17173194885254}
+{"time_unix": 1791220941.9142566, "type": "train_metric", "step": 5200, "metric": "train_actor/loss", "value": -22.87376594543457}
+{"time_unix": 1791220941.914283, "type": "train_metric", "step": 5200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220941.9143982, "type": "train_metric", "step": 5200, "metric": "train_actor/entropy", "value": 0.5510240197181702}
+{"time_unix": 1791220941.9170735, "type": "train_metric", "step": 5200, "metric": "train_alpha/loss", "value": 0.06322432309389114}
+{"time_unix": 1791220941.917147, "type": "train_metric", "step": 5200, "metric": "train_alpha/value", "value": 0.08433149895310428}
+{"time_unix": 1791220941.9251132, "type": "train_metric", "step": 5200, "metric": "train/curl_loss", "value": 1.2985873222351074}
+{"time_unix": 1791220943.9761522, "type": "train_episode", "step": 5250, "env_steps": 42000, "episode": 42, "return": 170.60877574607332, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220946.0968997, "type": "train_metric", "step": 5300, "metric": "train/batch_reward", "value": 1.4068412780761719}
+{"time_unix": 1791220946.1010044, "type": "train_metric", "step": 5300, "metric": "train_critic/loss", "value": 20.7452392578125}
+{"time_unix": 1791220946.1082997, "type": "train_metric", "step": 5300, "metric": "train_actor/loss", "value": -23.608448028564453}
+{"time_unix": 1791220946.1083257, "type": "train_metric", "step": 5300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220946.108439, "type": "train_metric", "step": 5300, "metric": "train_actor/entropy", "value": 0.5798841714859009}
+{"time_unix": 1791220946.1109223, "type": "train_metric", "step": 5300, "metric": "train_alpha/loss", "value": 0.06617000699043274}
+{"time_unix": 1791220946.1109889, "type": "train_metric", "step": 5300, "metric": "train_alpha/value", "value": 0.08404244348184498}
+{"time_unix": 1791220946.118942, "type": "train_metric", "step": 5300, "metric": "train/curl_loss", "value": 1.2491883039474487}
+{"time_unix": 1791220949.2163801, "type": "train_episode", "step": 5375, "env_steps": 43000, "episode": 43, "return": 263.0598013464816, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220950.2879744, "type": "train_metric", "step": 5400, "metric": "train/batch_reward", "value": 1.254988431930542}
+{"time_unix": 1791220950.2920933, "type": "train_metric", "step": 5400, "metric": "train_critic/loss", "value": 17.594146728515625}
+{"time_unix": 1791220950.2993593, "type": "train_metric", "step": 5400, "metric": "train_actor/loss", "value": -22.842130661010742}
+{"time_unix": 1791220950.2993858, "type": "train_metric", "step": 5400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220950.2994995, "type": "train_metric", "step": 5400, "metric": "train_actor/entropy", "value": 0.6738855242729187}
+{"time_unix": 1791220950.3017867, "type": "train_metric", "step": 5400, "metric": "train_alpha/loss", "value": 0.06205933541059494}
+{"time_unix": 1791220950.301851, "type": "train_metric", "step": 5400, "metric": "train_alpha/value", "value": 0.08374806899335584}
+{"time_unix": 1791220950.3097987, "type": "train_metric", "step": 5400, "metric": "train/curl_loss", "value": 1.6576623916625977}
+{"time_unix": 1791220968.469121, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10000, "return": 197.08335429538388, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.469193, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10001, "return": 194.04441224160976, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.4692042, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10002, "return": 200.8147334678818, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.4692125, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10003, "return": 182.83285861967093, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.4692202, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10004, "return": 164.18104842205344, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.4692278, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10005, "return": 214.71515391475376, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.4692357, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10006, "return": 253.81895975122833, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.469252, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10007, "return": 221.6594583214599, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.469259, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10008, "return": 206.04113758953844, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.4692662, "type": "eval_episode", "step": 5500, "env_steps": 44000, "eval_seed": 10009, "return": 355.6975146227598, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791220968.469304, "type": "eval_summary", "step": 5500, "env_steps": 44000, "mean_return": 219.088863124634, "episodes": 10, "seconds": 14.0287542976439}
+{"time_unix": 1791220968.469319, "type": "train_episode", "step": 5500, "env_steps": 44000, "episode": 44, "return": 206.02261442131095, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220968.4973745, "type": "train_metric", "step": 5500, "metric": "train/batch_reward", "value": 1.351672649383545}
+{"time_unix": 1791220968.501494, "type": "train_metric", "step": 5500, "metric": "train_critic/loss", "value": 25.110820770263672}
+{"time_unix": 1791220968.5089798, "type": "train_metric", "step": 5500, "metric": "train_actor/loss", "value": -24.87786865234375}
+{"time_unix": 1791220968.5090053, "type": "train_metric", "step": 5500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220968.5091202, "type": "train_metric", "step": 5500, "metric": "train_actor/entropy", "value": 0.8033921122550964}
+{"time_unix": 1791220968.5116096, "type": "train_metric", "step": 5500, "metric": "train_alpha/loss", "value": 0.07856428623199463}
+{"time_unix": 1791220968.5116737, "type": "train_metric", "step": 5500, "metric": "train_alpha/value", "value": 0.08345188348499333}
+{"time_unix": 1791220968.5199268, "type": "train_metric", "step": 5500, "metric": "train/curl_loss", "value": 1.5342016220092773}
+{"time_unix": 1791220972.6974857, "type": "train_metric", "step": 5600, "metric": "train/batch_reward", "value": 1.0609151124954224}
+{"time_unix": 1791220972.701602, "type": "train_metric", "step": 5600, "metric": "train_critic/loss", "value": 16.207317352294922}
+{"time_unix": 1791220972.7088633, "type": "train_metric", "step": 5600, "metric": "train_actor/loss", "value": -23.44598388671875}
+{"time_unix": 1791220972.7088997, "type": "train_metric", "step": 5600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220972.7090383, "type": "train_metric", "step": 5600, "metric": "train_actor/entropy", "value": 0.49938714504241943}
+{"time_unix": 1791220972.7113361, "type": "train_metric", "step": 5600, "metric": "train_alpha/loss", "value": 0.048000749200582504}
+{"time_unix": 1791220972.7114005, "type": "train_metric", "step": 5600, "metric": "train_alpha/value", "value": 0.08318551572591677}
+{"time_unix": 1791220972.7193491, "type": "train_metric", "step": 5600, "metric": "train/curl_loss", "value": 1.6954948902130127}
+{"time_unix": 1791220973.736538, "type": "train_episode", "step": 5625, "env_steps": 45000, "episode": 45, "return": 314.508772564485, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220976.902814, "type": "train_metric", "step": 5700, "metric": "train/batch_reward", "value": 1.2257237434387207}
+{"time_unix": 1791220976.906954, "type": "train_metric", "step": 5700, "metric": "train_critic/loss", "value": 14.601785659790039}
+{"time_unix": 1791220976.9142218, "type": "train_metric", "step": 5700, "metric": "train_actor/loss", "value": -25.47604751586914}
+{"time_unix": 1791220976.9142482, "type": "train_metric", "step": 5700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220976.9143636, "type": "train_metric", "step": 5700, "metric": "train_actor/entropy", "value": 0.8169150948524475}
+{"time_unix": 1791220976.916843, "type": "train_metric", "step": 5700, "metric": "train_alpha/loss", "value": 0.05644432082772255}
+{"time_unix": 1791220976.9169276, "type": "train_metric", "step": 5700, "metric": "train_alpha/value", "value": 0.08291910614175405}
+{"time_unix": 1791220976.9250462, "type": "train_metric", "step": 5700, "metric": "train/curl_loss", "value": 1.2475206851959229}
+{"time_unix": 1791220979.0023685, "type": "train_episode", "step": 5750, "env_steps": 46000, "episode": 46, "return": 265.49443367995207, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220981.1327248, "type": "train_metric", "step": 5800, "metric": "train/batch_reward", "value": 1.1331706047058105}
+{"time_unix": 1791220981.136848, "type": "train_metric", "step": 5800, "metric": "train_critic/loss", "value": 14.177855491638184}
+{"time_unix": 1791220981.144139, "type": "train_metric", "step": 5800, "metric": "train_actor/loss", "value": -26.447368621826172}
+{"time_unix": 1791220981.144165, "type": "train_metric", "step": 5800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220981.1442797, "type": "train_metric", "step": 5800, "metric": "train_actor/entropy", "value": 0.6772679090499878}
+{"time_unix": 1791220981.1466293, "type": "train_metric", "step": 5800, "metric": "train_alpha/loss", "value": 0.06243087351322174}
+{"time_unix": 1791220981.1466942, "type": "train_metric", "step": 5800, "metric": "train_alpha/value", "value": 0.08265805947897308}
+{"time_unix": 1791220981.1549296, "type": "train_metric", "step": 5800, "metric": "train/curl_loss", "value": 1.2216415405273438}
+{"time_unix": 1791220984.2755835, "type": "train_episode", "step": 5875, "env_steps": 47000, "episode": 47, "return": 206.13709212191398, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791220985.357103, "type": "train_metric", "step": 5900, "metric": "train/batch_reward", "value": 1.354752779006958}
+{"time_unix": 1791220985.361219, "type": "train_metric", "step": 5900, "metric": "train_critic/loss", "value": 14.005002975463867}
+{"time_unix": 1791220985.3684654, "type": "train_metric", "step": 5900, "metric": "train_actor/loss", "value": -27.320804595947266}
+{"time_unix": 1791220985.368491, "type": "train_metric", "step": 5900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791220985.368606, "type": "train_metric", "step": 5900, "metric": "train_actor/entropy", "value": 0.6130452156066895}
+{"time_unix": 1791220985.3711104, "type": "train_metric", "step": 5900, "metric": "train_alpha/loss", "value": 0.07134455442428589}
+{"time_unix": 1791220985.3711746, "type": "train_metric", "step": 5900, "metric": "train_alpha/value", "value": 0.08239423141599733}
+{"time_unix": 1791220985.3791857, "type": "train_metric", "step": 5900, "metric": "train/curl_loss", "value": 1.3641765117645264}
+{"time_unix": 1791221003.5723307, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10000, "return": 261.8682818784867, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.572401, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10001, "return": 256.6324448556596, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.5724123, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10002, "return": 186.05264126935074, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.5724204, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10003, "return": 267.3507646286297, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.572428, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10004, "return": 274.50632612343225, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.5724351, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10005, "return": 286.70576110750073, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.5724428, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10006, "return": 262.3411074443264, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.5724583, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10007, "return": 251.5340676851969, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.5724652, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10008, "return": 286.57455065196956, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.5724723, "type": "eval_episode", "step": 6000, "env_steps": 48000, "eval_seed": 10009, "return": 271.33387553873007, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221003.57251, "type": "eval_summary", "step": 6000, "env_steps": 48000, "mean_return": 260.48998211832827, "episodes": 10, "seconds": 14.020805006846786}
+{"time_unix": 1791221003.572526, "type": "train_episode", "step": 6000, "env_steps": 48000, "episode": 48, "return": 227.85046204491192, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221003.6003253, "type": "train_metric", "step": 6000, "metric": "train/batch_reward", "value": 1.4096624851226807}
+{"time_unix": 1791221003.604429, "type": "train_metric", "step": 6000, "metric": "train_critic/loss", "value": 18.406360626220703}
+{"time_unix": 1791221003.6117318, "type": "train_metric", "step": 6000, "metric": "train_actor/loss", "value": -27.144119262695312}
+{"time_unix": 1791221003.6117578, "type": "train_metric", "step": 6000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221003.6118717, "type": "train_metric", "step": 6000, "metric": "train_actor/entropy", "value": 0.5855117440223694}
+{"time_unix": 1791221003.614204, "type": "train_metric", "step": 6000, "metric": "train_alpha/loss", "value": 0.05271558463573456}
+{"time_unix": 1791221003.614268, "type": "train_metric", "step": 6000, "metric": "train_alpha/value", "value": 0.08213675614955074}
+{"time_unix": 1791221003.622202, "type": "train_metric", "step": 6000, "metric": "train/curl_loss", "value": 0.9422928094863892}
+{"time_unix": 1791221007.7854428, "type": "train_metric", "step": 6100, "metric": "train/batch_reward", "value": 1.5185844898223877}
+{"time_unix": 1791221007.7895575, "type": "train_metric", "step": 6100, "metric": "train_critic/loss", "value": 15.07772159576416}
+{"time_unix": 1791221007.7968853, "type": "train_metric", "step": 6100, "metric": "train_actor/loss", "value": -28.662506103515625}
+{"time_unix": 1791221007.7969153, "type": "train_metric", "step": 6100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221007.7970297, "type": "train_metric", "step": 6100, "metric": "train_actor/entropy", "value": 0.35469019412994385}
+{"time_unix": 1791221007.7993946, "type": "train_metric", "step": 6100, "metric": "train_alpha/loss", "value": 0.048261888325214386}
+{"time_unix": 1791221007.7994592, "type": "train_metric", "step": 6100, "metric": "train_alpha/value", "value": 0.08187573473880423}
+{"time_unix": 1791221007.8074555, "type": "train_metric", "step": 6100, "metric": "train/curl_loss", "value": 1.3346452713012695}
+{"time_unix": 1791221008.8245404, "type": "train_episode", "step": 6125, "env_steps": 49000, "episode": 49, "return": 250.11179174780412, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221011.9999642, "type": "train_metric", "step": 6200, "metric": "train/batch_reward", "value": 1.4225950241088867}
+{"time_unix": 1791221012.004082, "type": "train_metric", "step": 6200, "metric": "train_critic/loss", "value": 10.160980224609375}
+{"time_unix": 1791221012.0113456, "type": "train_metric", "step": 6200, "metric": "train_actor/loss", "value": -28.509761810302734}
+{"time_unix": 1791221012.0113716, "type": "train_metric", "step": 6200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221012.0114846, "type": "train_metric", "step": 6200, "metric": "train_actor/entropy", "value": 0.3733164072036743}
+{"time_unix": 1791221012.0141973, "type": "train_metric", "step": 6200, "metric": "train_alpha/loss", "value": 0.029593678191304207}
+{"time_unix": 1791221012.0142627, "type": "train_metric", "step": 6200, "metric": "train_alpha/value", "value": 0.08165085559061154}
+{"time_unix": 1791221012.0222812, "type": "train_metric", "step": 6200, "metric": "train/curl_loss", "value": 1.277496337890625}
+{"time_unix": 1791221014.0897295, "type": "train_episode", "step": 6250, "env_steps": 50000, "episode": 50, "return": 232.02983942010573, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221016.2176087, "type": "train_metric", "step": 6300, "metric": "train/batch_reward", "value": 1.4652810096740723}
+{"time_unix": 1791221016.2217302, "type": "train_metric", "step": 6300, "metric": "train_critic/loss", "value": 21.634979248046875}
+{"time_unix": 1791221016.228975, "type": "train_metric", "step": 6300, "metric": "train_actor/loss", "value": -28.82427978515625}
+{"time_unix": 1791221016.2290003, "type": "train_metric", "step": 6300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221016.2291164, "type": "train_metric", "step": 6300, "metric": "train_actor/entropy", "value": 0.42737090587615967}
+{"time_unix": 1791221016.2314873, "type": "train_metric", "step": 6300, "metric": "train_alpha/loss", "value": 0.0564713329076767}
+{"time_unix": 1791221016.231552, "type": "train_metric", "step": 6300, "metric": "train_alpha/value", "value": 0.08143369859761822}
+{"time_unix": 1791221016.2396822, "type": "train_metric", "step": 6300, "metric": "train/curl_loss", "value": 1.3721699714660645}
+{"time_unix": 1791221019.3370183, "type": "train_episode", "step": 6375, "env_steps": 51000, "episode": 51, "return": 218.56797567742854, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221020.4157667, "type": "train_metric", "step": 6400, "metric": "train/batch_reward", "value": 1.4906413555145264}
+{"time_unix": 1791221020.4198802, "type": "train_metric", "step": 6400, "metric": "train_critic/loss", "value": 12.8048677444458}
+{"time_unix": 1791221020.4271364, "type": "train_metric", "step": 6400, "metric": "train_actor/loss", "value": -30.69835090637207}
+{"time_unix": 1791221020.4271617, "type": "train_metric", "step": 6400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221020.4272757, "type": "train_metric", "step": 6400, "metric": "train_actor/entropy", "value": 0.3253880441188812}
+{"time_unix": 1791221020.4296427, "type": "train_metric", "step": 6400, "metric": "train_alpha/loss", "value": 0.05375896766781807}
+{"time_unix": 1791221020.4297075, "type": "train_metric", "step": 6400, "metric": "train_alpha/value", "value": 0.08120338153978007}
+{"time_unix": 1791221020.4379978, "type": "train_metric", "step": 6400, "metric": "train/curl_loss", "value": 1.0211167335510254}
+{"time_unix": 1791221038.6134765, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10000, "return": 264.065820829889, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.6135519, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10001, "return": 200.67264796743385, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.6135643, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10002, "return": 216.9013773414882, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.613572, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10003, "return": 312.44763572895334, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.613581, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10004, "return": 265.3444923015353, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.6135883, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10005, "return": 183.49931514640653, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.613596, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10006, "return": 188.49222634498068, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.6136038, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10007, "return": 178.3253601836812, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.613621, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10008, "return": 254.50014335840424, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.613628, "type": "eval_episode", "step": 6500, "env_steps": 52000, "eval_seed": 10009, "return": 186.5360693054307, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221038.6136696, "type": "eval_summary", "step": 6500, "env_steps": 52000, "mean_return": 225.0785088508203, "episodes": 10, "seconds": 14.022124320268631}
+{"time_unix": 1791221038.613688, "type": "train_episode", "step": 6500, "env_steps": 52000, "episode": 52, "return": 209.78185512486553, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221038.641547, "type": "train_metric", "step": 6500, "metric": "train/batch_reward", "value": 1.533866047859192}
+{"time_unix": 1791221038.6456473, "type": "train_metric", "step": 6500, "metric": "train_critic/loss", "value": 12.485088348388672}
+{"time_unix": 1791221038.653151, "type": "train_metric", "step": 6500, "metric": "train_actor/loss", "value": -30.870052337646484}
+{"time_unix": 1791221038.653177, "type": "train_metric", "step": 6500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221038.6532936, "type": "train_metric", "step": 6500, "metric": "train_actor/entropy", "value": 0.449250727891922}
+{"time_unix": 1791221038.6558142, "type": "train_metric", "step": 6500, "metric": "train_alpha/loss", "value": 0.03544032201170921}
+{"time_unix": 1791221038.655881, "type": "train_metric", "step": 6500, "metric": "train_alpha/value", "value": 0.08098928292049055}
+{"time_unix": 1791221038.6642332, "type": "train_metric", "step": 6500, "metric": "train/curl_loss", "value": 1.2922019958496094}
+{"time_unix": 1791221042.7902825, "type": "train_metric", "step": 6600, "metric": "train/batch_reward", "value": 1.4870163202285767}
+{"time_unix": 1791221042.794393, "type": "train_metric", "step": 6600, "metric": "train_critic/loss", "value": 20.742040634155273}
+{"time_unix": 1791221042.8016562, "type": "train_metric", "step": 6600, "metric": "train_actor/loss", "value": -32.14273452758789}
+{"time_unix": 1791221042.8016822, "type": "train_metric", "step": 6600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221042.8017979, "type": "train_metric", "step": 6600, "metric": "train_actor/entropy", "value": 0.3079403042793274}
+{"time_unix": 1791221042.8042545, "type": "train_metric", "step": 6600, "metric": "train_alpha/loss", "value": 0.04376925900578499}
+{"time_unix": 1791221042.8043206, "type": "train_metric", "step": 6600, "metric": "train_alpha/value", "value": 0.08076681036353534}
+{"time_unix": 1791221042.8123484, "type": "train_metric", "step": 6600, "metric": "train/curl_loss", "value": 1.1270216703414917}
+{"time_unix": 1791221043.8131595, "type": "train_episode", "step": 6625, "env_steps": 53000, "episode": 53, "return": 175.6378417856514, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221046.9695902, "type": "train_metric", "step": 6700, "metric": "train/batch_reward", "value": 1.5518286228179932}
+{"time_unix": 1791221046.9737136, "type": "train_metric", "step": 6700, "metric": "train_critic/loss", "value": 18.02391815185547}
+{"time_unix": 1791221046.9809594, "type": "train_metric", "step": 6700, "metric": "train_actor/loss", "value": -32.158634185791016}
+{"time_unix": 1791221046.9809852, "type": "train_metric", "step": 6700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221046.981101, "type": "train_metric", "step": 6700, "metric": "train_actor/entropy", "value": 0.5139190554618835}
+{"time_unix": 1791221046.9834921, "type": "train_metric", "step": 6700, "metric": "train_alpha/loss", "value": 0.04251536726951599}
+{"time_unix": 1791221046.9835587, "type": "train_metric", "step": 6700, "metric": "train_alpha/value", "value": 0.0805513473619983}
+{"time_unix": 1791221046.9921017, "type": "train_metric", "step": 6700, "metric": "train/curl_loss", "value": 0.9756789207458496}
+{"time_unix": 1791221049.0327437, "type": "train_episode", "step": 6750, "env_steps": 54000, "episode": 54, "return": 215.26644462956, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221051.1378262, "type": "train_metric", "step": 6800, "metric": "train/batch_reward", "value": 1.3237215280532837}
+{"time_unix": 1791221051.141957, "type": "train_metric", "step": 6800, "metric": "train_critic/loss", "value": 20.99795913696289}
+{"time_unix": 1791221051.1492407, "type": "train_metric", "step": 6800, "metric": "train_actor/loss", "value": -31.814769744873047}
+{"time_unix": 1791221051.1492665, "type": "train_metric", "step": 6800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221051.1493807, "type": "train_metric", "step": 6800, "metric": "train_actor/entropy", "value": 0.43933433294296265}
+{"time_unix": 1791221051.1518528, "type": "train_metric", "step": 6800, "metric": "train_alpha/loss", "value": 0.03362078592181206}
+{"time_unix": 1791221051.1519306, "type": "train_metric", "step": 6800, "metric": "train_alpha/value", "value": 0.08032485502671473}
+{"time_unix": 1791221051.1599693, "type": "train_metric", "step": 6800, "metric": "train/curl_loss", "value": 1.472472071647644}
+{"time_unix": 1791221054.2044215, "type": "train_episode", "step": 6875, "env_steps": 55000, "episode": 55, "return": 254.32267565553383, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221055.2660446, "type": "train_metric", "step": 6900, "metric": "train/batch_reward", "value": 1.469133734703064}
+{"time_unix": 1791221055.2701588, "type": "train_metric", "step": 6900, "metric": "train_critic/loss", "value": 13.678997039794922}
+{"time_unix": 1791221055.2774322, "type": "train_metric", "step": 6900, "metric": "train_actor/loss", "value": -32.586917877197266}
+{"time_unix": 1791221055.2774577, "type": "train_metric", "step": 6900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221055.277573, "type": "train_metric", "step": 6900, "metric": "train_actor/entropy", "value": 0.5054762363433838}
+{"time_unix": 1791221055.2799833, "type": "train_metric", "step": 6900, "metric": "train_alpha/loss", "value": 0.03944791480898857}
+{"time_unix": 1791221055.280049, "type": "train_metric", "step": 6900, "metric": "train_alpha/value", "value": 0.08012196328097691}
+{"time_unix": 1791221055.288053, "type": "train_metric", "step": 6900, "metric": "train/curl_loss", "value": 1.1588599681854248}
+{"time_unix": 1791221072.9976656, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10000, "return": 198.538409162977, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.9977381, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10001, "return": 191.8189021877222, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.9977496, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10002, "return": 247.68496255376826, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.997758, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10003, "return": 181.79919333816974, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.9977655, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10004, "return": 199.0061031785622, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.9977732, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10005, "return": 212.74668830115397, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.9977808, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10006, "return": 180.97341994997106, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.9977884, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10007, "return": 224.72795142910033, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.9978185, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10008, "return": 207.90230167659885, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.9978263, "type": "eval_episode", "step": 7000, "env_steps": 56000, "eval_seed": 10009, "return": 206.32153000178414, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221072.997866, "type": "eval_summary", "step": 7000, "env_steps": 56000, "mean_return": 205.1519461779808, "episodes": 10, "seconds": 13.611884199082851}
+{"time_unix": 1791221072.9978824, "type": "train_episode", "step": 7000, "env_steps": 56000, "episode": 56, "return": 185.12677556911459, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221073.0255973, "type": "train_metric", "step": 7000, "metric": "train/batch_reward", "value": 1.5275907516479492}
+{"time_unix": 1791221073.0297065, "type": "train_metric", "step": 7000, "metric": "train_critic/loss", "value": 13.046899795532227}
+{"time_unix": 1791221073.0373256, "type": "train_metric", "step": 7000, "metric": "train_actor/loss", "value": -34.66334533691406}
+{"time_unix": 1791221073.0373511, "type": "train_metric", "step": 7000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221073.0374658, "type": "train_metric", "step": 7000, "metric": "train_actor/entropy", "value": 0.4312099516391754}
+{"time_unix": 1791221073.0399857, "type": "train_metric", "step": 7000, "metric": "train_alpha/loss", "value": 0.03186722844839096}
+{"time_unix": 1791221073.0400505, "type": "train_metric", "step": 7000, "metric": "train_alpha/value", "value": 0.07989427671317156}
+{"time_unix": 1791221073.0481029, "type": "train_metric", "step": 7000, "metric": "train/curl_loss", "value": 0.9963093996047974}
+{"time_unix": 1791221077.1823483, "type": "train_metric", "step": 7100, "metric": "train/batch_reward", "value": 1.5114214420318604}
+{"time_unix": 1791221077.186453, "type": "train_metric", "step": 7100, "metric": "train_critic/loss", "value": 22.678314208984375}
+{"time_unix": 1791221077.1941943, "type": "train_metric", "step": 7100, "metric": "train_actor/loss", "value": -36.564849853515625}
+{"time_unix": 1791221077.19422, "type": "train_metric", "step": 7100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221077.1943336, "type": "train_metric", "step": 7100, "metric": "train_actor/entropy", "value": 0.42491790652275085}
+{"time_unix": 1791221077.1969073, "type": "train_metric", "step": 7100, "metric": "train_alpha/loss", "value": 0.0467645525932312}
+{"time_unix": 1791221077.1969764, "type": "train_metric", "step": 7100, "metric": "train_alpha/value", "value": 0.07968011324393434}
+{"time_unix": 1791221077.2049897, "type": "train_metric", "step": 7100, "metric": "train/curl_loss", "value": 1.097051739692688}
+{"time_unix": 1791221078.217325, "type": "train_episode", "step": 7125, "env_steps": 57000, "episode": 57, "return": 289.716651118526, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221081.3448212, "type": "train_metric", "step": 7200, "metric": "train/batch_reward", "value": 1.6292715072631836}
+{"time_unix": 1791221081.3489425, "type": "train_metric", "step": 7200, "metric": "train_critic/loss", "value": 19.223388671875}
+{"time_unix": 1791221081.3562114, "type": "train_metric", "step": 7200, "metric": "train_actor/loss", "value": -35.93524169921875}
+{"time_unix": 1791221081.3562367, "type": "train_metric", "step": 7200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221081.3563526, "type": "train_metric", "step": 7200, "metric": "train_actor/entropy", "value": 0.5324186086654663}
+{"time_unix": 1791221081.3587701, "type": "train_metric", "step": 7200, "metric": "train_alpha/loss", "value": 0.0373980812728405}
+{"time_unix": 1791221081.3588345, "type": "train_metric", "step": 7200, "metric": "train_alpha/value", "value": 0.07948534262289501}
+{"time_unix": 1791221081.367078, "type": "train_metric", "step": 7200, "metric": "train/curl_loss", "value": 1.3031021356582642}
+{"time_unix": 1791221083.4096274, "type": "train_episode", "step": 7250, "env_steps": 58000, "episode": 58, "return": 222.14694889592352, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221085.5093045, "type": "train_metric", "step": 7300, "metric": "train/batch_reward", "value": 1.5520319938659668}
+{"time_unix": 1791221085.5134254, "type": "train_metric", "step": 7300, "metric": "train_critic/loss", "value": 16.230422973632812}
+{"time_unix": 1791221085.5206969, "type": "train_metric", "step": 7300, "metric": "train_actor/loss", "value": -36.49064636230469}
+{"time_unix": 1791221085.5207222, "type": "train_metric", "step": 7300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221085.5208359, "type": "train_metric", "step": 7300, "metric": "train_actor/entropy", "value": 0.545951247215271}
+{"time_unix": 1791221085.5232348, "type": "train_metric", "step": 7300, "metric": "train_alpha/loss", "value": 0.012580711394548416}
+{"time_unix": 1791221085.5233, "type": "train_metric", "step": 7300, "metric": "train_alpha/value", "value": 0.0793038615119918}
+{"time_unix": 1791221085.5314825, "type": "train_metric", "step": 7300, "metric": "train/curl_loss", "value": 1.1574045419692993}
+{"time_unix": 1791221088.6075864, "type": "train_episode", "step": 7375, "env_steps": 59000, "episode": 59, "return": 231.44006044567524, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221089.6738126, "type": "train_metric", "step": 7400, "metric": "train/batch_reward", "value": 1.5209760665893555}
+{"time_unix": 1791221089.6779294, "type": "train_metric", "step": 7400, "metric": "train_critic/loss", "value": 16.10777473449707}
+{"time_unix": 1791221089.6852047, "type": "train_metric", "step": 7400, "metric": "train_actor/loss", "value": -37.34033203125}
+{"time_unix": 1791221089.6852305, "type": "train_metric", "step": 7400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221089.6853468, "type": "train_metric", "step": 7400, "metric": "train_actor/entropy", "value": 0.3251601457595825}
+{"time_unix": 1791221089.6878135, "type": "train_metric", "step": 7400, "metric": "train_alpha/loss", "value": 0.013495618477463722}
+{"time_unix": 1791221089.68788, "type": "train_metric", "step": 7400, "metric": "train_alpha/value", "value": 0.07911291729457627}
+{"time_unix": 1791221089.6958864, "type": "train_metric", "step": 7400, "metric": "train/curl_loss", "value": 1.0641591548919678}
+{"time_unix": 1791221107.851576, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10000, "return": 283.6440835836758, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.8516448, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10001, "return": 296.2685434954869, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.851656, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10002, "return": 261.4871649466514, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.851664, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10003, "return": 315.4176062788484, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.8516726, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10004, "return": 310.1623988745588, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.8516798, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10005, "return": 298.9309183088673, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.8516874, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10006, "return": 223.80348092194342, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.851695, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10007, "return": 252.36051100443217, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.8517096, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10008, "return": 260.54563041441344, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.8517172, "type": "eval_episode", "step": 7500, "env_steps": 60000, "eval_seed": 10009, "return": 241.5000208176355, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221107.8517566, "type": "eval_summary", "step": 7500, "env_steps": 60000, "mean_return": 274.41203586465133, "episodes": 10, "seconds": 14.04897841066122}
+{"time_unix": 1791221107.851773, "type": "train_episode", "step": 7500, "env_steps": 60000, "episode": 60, "return": 242.1214070229439, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221107.8784916, "type": "train_metric", "step": 7500, "metric": "train/batch_reward", "value": 1.6202483177185059}
+{"time_unix": 1791221107.8826034, "type": "train_metric", "step": 7500, "metric": "train_critic/loss", "value": 20.872602462768555}
+{"time_unix": 1791221107.8902314, "type": "train_metric", "step": 7500, "metric": "train_actor/loss", "value": -38.107601165771484}
+{"time_unix": 1791221107.890257, "type": "train_metric", "step": 7500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221107.890374, "type": "train_metric", "step": 7500, "metric": "train_actor/entropy", "value": 0.4867684841156006}
+{"time_unix": 1791221107.8929064, "type": "train_metric", "step": 7500, "metric": "train_alpha/loss", "value": 0.01481602806597948}
+{"time_unix": 1791221107.8929734, "type": "train_metric", "step": 7500, "metric": "train_alpha/value", "value": 0.07894185115957403}
+{"time_unix": 1791221107.9010394, "type": "train_metric", "step": 7500, "metric": "train/curl_loss", "value": 1.000914454460144}
+{"time_unix": 1791221112.030243, "type": "train_metric", "step": 7600, "metric": "train/batch_reward", "value": 1.3941874504089355}
+{"time_unix": 1791221112.03435, "type": "train_metric", "step": 7600, "metric": "train_critic/loss", "value": 25.30263900756836}
+{"time_unix": 1791221112.0420344, "type": "train_metric", "step": 7600, "metric": "train_actor/loss", "value": -38.48902130126953}
+{"time_unix": 1791221112.0420601, "type": "train_metric", "step": 7600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221112.0421753, "type": "train_metric", "step": 7600, "metric": "train_actor/entropy", "value": 0.4663575291633606}
+{"time_unix": 1791221112.0446353, "type": "train_metric", "step": 7600, "metric": "train_alpha/loss", "value": 0.00022923247888684273}
+{"time_unix": 1791221112.0447013, "type": "train_metric", "step": 7600, "metric": "train_alpha/value", "value": 0.07875316489020351}
+{"time_unix": 1791221112.052992, "type": "train_metric", "step": 7600, "metric": "train/curl_loss", "value": 1.19672429561615}
+{"time_unix": 1791221113.0600781, "type": "train_episode", "step": 7625, "env_steps": 61000, "episode": 61, "return": 269.8524051415098, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221116.1751971, "type": "train_metric", "step": 7700, "metric": "train/batch_reward", "value": 1.4350037574768066}
+{"time_unix": 1791221116.1793215, "type": "train_metric", "step": 7700, "metric": "train_critic/loss", "value": 19.61881446838379}
+{"time_unix": 1791221116.1866028, "type": "train_metric", "step": 7700, "metric": "train_actor/loss", "value": -40.12665557861328}
+{"time_unix": 1791221116.1866279, "type": "train_metric", "step": 7700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221116.1867435, "type": "train_metric", "step": 7700, "metric": "train_actor/entropy", "value": 0.45562201738357544}
+{"time_unix": 1791221116.1891522, "type": "train_metric", "step": 7700, "metric": "train_alpha/loss", "value": 0.023349791765213013}
+{"time_unix": 1791221116.1892173, "type": "train_metric", "step": 7700, "metric": "train_alpha/value", "value": 0.07856868823729998}
+{"time_unix": 1791221116.1977303, "type": "train_metric", "step": 7700, "metric": "train/curl_loss", "value": 1.2649180889129639}
+{"time_unix": 1791221118.235433, "type": "train_episode", "step": 7750, "env_steps": 62000, "episode": 62, "return": 274.94872129578516, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221120.3434308, "type": "train_metric", "step": 7800, "metric": "train/batch_reward", "value": 1.5820574760437012}
+{"time_unix": 1791221120.3475447, "type": "train_metric", "step": 7800, "metric": "train_critic/loss", "value": 24.282283782958984}
+{"time_unix": 1791221120.3548028, "type": "train_metric", "step": 7800, "metric": "train_actor/loss", "value": -39.45023727416992}
+{"time_unix": 1791221120.3548284, "type": "train_metric", "step": 7800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221120.3549502, "type": "train_metric", "step": 7800, "metric": "train_actor/entropy", "value": 0.6022455096244812}
+{"time_unix": 1791221120.3574111, "type": "train_metric", "step": 7800, "metric": "train_alpha/loss", "value": 0.022909680381417274}
+{"time_unix": 1791221120.357477, "type": "train_metric", "step": 7800, "metric": "train_alpha/value", "value": 0.07838372486714713}
+{"time_unix": 1791221120.3657544, "type": "train_metric", "step": 7800, "metric": "train/curl_loss", "value": 1.1194912195205688}
+{"time_unix": 1791221123.454137, "type": "train_episode", "step": 7875, "env_steps": 63000, "episode": 63, "return": 303.66092689645103, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221124.5160766, "type": "train_metric", "step": 7900, "metric": "train/batch_reward", "value": 1.4325553178787231}
+{"time_unix": 1791221124.5201876, "type": "train_metric", "step": 7900, "metric": "train_critic/loss", "value": 28.28081512451172}
+{"time_unix": 1791221124.5274613, "type": "train_metric", "step": 7900, "metric": "train_actor/loss", "value": -39.94384002685547}
+{"time_unix": 1791221124.5274866, "type": "train_metric", "step": 7900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221124.5276003, "type": "train_metric", "step": 7900, "metric": "train_actor/entropy", "value": 0.4843754470348358}
+{"time_unix": 1791221124.530016, "type": "train_metric", "step": 7900, "metric": "train_alpha/loss", "value": 0.013644209131598473}
+{"time_unix": 1791221124.530081, "type": "train_metric", "step": 7900, "metric": "train_alpha/value", "value": 0.07822907335853325}
+{"time_unix": 1791221124.538117, "type": "train_metric", "step": 7900, "metric": "train/curl_loss", "value": 1.1557316780090332}
+{"time_unix": 1791221142.454898, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10000, "return": 176.46800166206086, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.4550025, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10001, "return": 233.41983141145784, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.455016, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10002, "return": 225.7980505491767, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.4550242, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10003, "return": 203.45553570370564, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.4550323, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10004, "return": 207.19923184814803, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.4550395, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10005, "return": 269.5691038542827, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.4550467, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10006, "return": 178.82425883110858, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.455054, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10007, "return": 201.36918373588827, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.4550679, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10008, "return": 218.87798902022266, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.4550753, "type": "eval_episode", "step": 8000, "env_steps": 64000, "eval_seed": 10009, "return": 203.15048163788092, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221142.4551346, "type": "eval_summary", "step": 8000, "env_steps": 64000, "mean_return": 211.81316682539324, "episodes": 10, "seconds": 13.799227444455028}
+{"time_unix": 1791221142.4551659, "type": "train_episode", "step": 8000, "env_steps": 64000, "episode": 64, "return": 236.0897633456939, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221142.4882183, "type": "train_metric", "step": 8000, "metric": "train/batch_reward", "value": 1.49336838722229}
+{"time_unix": 1791221142.4933813, "type": "train_metric", "step": 8000, "metric": "train_critic/loss", "value": 17.15369415283203}
+{"time_unix": 1791221142.5014803, "type": "train_metric", "step": 8000, "metric": "train_actor/loss", "value": -42.00865173339844}
+{"time_unix": 1791221142.501514, "type": "train_metric", "step": 8000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221142.5016418, "type": "train_metric", "step": 8000, "metric": "train_actor/entropy", "value": 0.4704872667789459}
+{"time_unix": 1791221142.5044162, "type": "train_metric", "step": 8000, "metric": "train_alpha/loss", "value": 0.04384273663163185}
+{"time_unix": 1791221142.5044844, "type": "train_metric", "step": 8000, "metric": "train_alpha/value", "value": 0.07806245934525938}
+{"time_unix": 1791221142.51298, "type": "train_metric", "step": 8000, "metric": "train/curl_loss", "value": 1.2628883123397827}
+{"time_unix": 1791221146.867551, "type": "train_metric", "step": 8100, "metric": "train/batch_reward", "value": 1.4244188070297241}
+{"time_unix": 1791221146.8716981, "type": "train_metric", "step": 8100, "metric": "train_critic/loss", "value": 22.357704162597656}
+{"time_unix": 1791221146.878975, "type": "train_metric", "step": 8100, "metric": "train_actor/loss", "value": -42.06821823120117}
+{"time_unix": 1791221146.8790004, "type": "train_metric", "step": 8100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221146.8791156, "type": "train_metric", "step": 8100, "metric": "train_actor/entropy", "value": 0.4191618859767914}
+{"time_unix": 1791221146.8815947, "type": "train_metric", "step": 8100, "metric": "train_alpha/loss", "value": 0.028759468346834183}
+{"time_unix": 1791221146.8816602, "type": "train_metric", "step": 8100, "metric": "train_alpha/value", "value": 0.07795423427006204}
+{"time_unix": 1791221146.8897107, "type": "train_metric", "step": 8100, "metric": "train/curl_loss", "value": 1.4105596542358398}
+{"time_unix": 1791221147.9313836, "type": "train_episode", "step": 8125, "env_steps": 65000, "episode": 65, "return": 241.86820519620179, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221151.1116428, "type": "train_metric", "step": 8200, "metric": "train/batch_reward", "value": 1.662346363067627}
+{"time_unix": 1791221151.1157713, "type": "train_metric", "step": 8200, "metric": "train_critic/loss", "value": 17.034595489501953}
+{"time_unix": 1791221151.1230292, "type": "train_metric", "step": 8200, "metric": "train_actor/loss", "value": -42.083351135253906}
+{"time_unix": 1791221151.1230545, "type": "train_metric", "step": 8200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221151.1231706, "type": "train_metric", "step": 8200, "metric": "train_actor/entropy", "value": 0.45807504653930664}
+{"time_unix": 1791221151.1256602, "type": "train_metric", "step": 8200, "metric": "train_alpha/loss", "value": 0.029882675036787987}
+{"time_unix": 1791221151.1257262, "type": "train_metric", "step": 8200, "metric": "train_alpha/value", "value": 0.07779936099194824}
+{"time_unix": 1791221151.1337574, "type": "train_metric", "step": 8200, "metric": "train/curl_loss", "value": 1.139007568359375}
+{"time_unix": 1791221153.1778634, "type": "train_episode", "step": 8250, "env_steps": 66000, "episode": 66, "return": 207.78094108434263, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221155.280714, "type": "train_metric", "step": 8300, "metric": "train/batch_reward", "value": 1.5652433633804321}
+{"time_unix": 1791221155.2848387, "type": "train_metric", "step": 8300, "metric": "train_critic/loss", "value": 21.973386764526367}
+{"time_unix": 1791221155.2921329, "type": "train_metric", "step": 8300, "metric": "train_actor/loss", "value": -43.16316223144531}
+{"time_unix": 1791221155.2921584, "type": "train_metric", "step": 8300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221155.2922723, "type": "train_metric", "step": 8300, "metric": "train_actor/entropy", "value": 0.5078914761543274}
+{"time_unix": 1791221155.294681, "type": "train_metric", "step": 8300, "metric": "train_alpha/loss", "value": 0.021309401839971542}
+{"time_unix": 1791221155.2947466, "type": "train_metric", "step": 8300, "metric": "train_alpha/value", "value": 0.0776693015773564}
+{"time_unix": 1791221155.302769, "type": "train_metric", "step": 8300, "metric": "train/curl_loss", "value": 1.0249419212341309}
+{"time_unix": 1791221158.4366581, "type": "train_episode", "step": 8375, "env_steps": 67000, "episode": 67, "return": 285.43955772864604, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221159.5192633, "type": "train_metric", "step": 8400, "metric": "train/batch_reward", "value": 1.4357314109802246}
+{"time_unix": 1791221159.5234032, "type": "train_metric", "step": 8400, "metric": "train_critic/loss", "value": 18.431222915649414}
+{"time_unix": 1791221159.5307167, "type": "train_metric", "step": 8400, "metric": "train_actor/loss", "value": -43.20760726928711}
+{"time_unix": 1791221159.5307426, "type": "train_metric", "step": 8400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221159.530859, "type": "train_metric", "step": 8400, "metric": "train_actor/entropy", "value": 0.4652820825576782}
+{"time_unix": 1791221159.5333807, "type": "train_metric", "step": 8400, "metric": "train_alpha/loss", "value": 0.03144306689500809}
+{"time_unix": 1791221159.533447, "type": "train_metric", "step": 8400, "metric": "train_alpha/value", "value": 0.07753622045009476}
+{"time_unix": 1791221159.5415082, "type": "train_metric", "step": 8400, "metric": "train/curl_loss", "value": 1.1053099632263184}
+{"time_unix": 1791221177.562676, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10000, "return": 238.92370430877168, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5627768, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10001, "return": 222.55214175682855, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5627887, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10002, "return": 233.57640843852167, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5627964, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10003, "return": 230.07152247992943, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5628037, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10004, "return": 237.67359775269105, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5628111, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10005, "return": 237.48530863513002, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5628188, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10006, "return": 231.6292348880494, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5628257, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10007, "return": 235.40511567318381, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5628395, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10008, "return": 221.30590262045862, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5628464, "type": "eval_episode", "step": 8500, "env_steps": 68000, "eval_seed": 10009, "return": 223.86418697789262, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221177.5629041, "type": "eval_summary", "step": 8500, "env_steps": 68000, "mean_return": 231.24871235314566, "episodes": 10, "seconds": 13.825540175661445}
+{"time_unix": 1791221177.562928, "type": "train_episode", "step": 8500, "env_steps": 68000, "episode": 68, "return": 284.37927773876373, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221177.59286, "type": "train_metric", "step": 8500, "metric": "train/batch_reward", "value": 1.4024170637130737}
+{"time_unix": 1791221177.5971544, "type": "train_metric", "step": 8500, "metric": "train_critic/loss", "value": 13.654319763183594}
+{"time_unix": 1791221177.6053483, "type": "train_metric", "step": 8500, "metric": "train_actor/loss", "value": -44.42922592163086}
+{"time_unix": 1791221177.6053736, "type": "train_metric", "step": 8500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221177.6054933, "type": "train_metric", "step": 8500, "metric": "train_actor/entropy", "value": 0.47255194187164307}
+{"time_unix": 1791221177.6082559, "type": "train_metric", "step": 8500, "metric": "train_alpha/loss", "value": 0.008931651711463928}
+{"time_unix": 1791221177.6083229, "type": "train_metric", "step": 8500, "metric": "train_alpha/value", "value": 0.07735715001831514}
+{"time_unix": 1791221177.6166782, "type": "train_metric", "step": 8500, "metric": "train/curl_loss", "value": 1.1887426376342773}
+{"time_unix": 1791221181.8322225, "type": "train_metric", "step": 8600, "metric": "train/batch_reward", "value": 1.5588109493255615}
+{"time_unix": 1791221181.8363662, "type": "train_metric", "step": 8600, "metric": "train_critic/loss", "value": 27.921716690063477}
+{"time_unix": 1791221181.8436563, "type": "train_metric", "step": 8600, "metric": "train_actor/loss", "value": -47.67742156982422}
+{"time_unix": 1791221181.843681, "type": "train_metric", "step": 8600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221181.8437974, "type": "train_metric", "step": 8600, "metric": "train_actor/entropy", "value": 0.6037226915359497}
+{"time_unix": 1791221181.8462906, "type": "train_metric", "step": 8600, "metric": "train_alpha/loss", "value": 0.0032568173483014107}
+{"time_unix": 1791221181.8463564, "type": "train_metric", "step": 8600, "metric": "train_alpha/value", "value": 0.07725363986260157}
+{"time_unix": 1791221181.8544106, "type": "train_metric", "step": 8600, "metric": "train/curl_loss", "value": 0.9276732206344604}
+{"time_unix": 1791221182.8870745, "type": "train_episode", "step": 8625, "env_steps": 69000, "episode": 69, "return": 257.7192393855935, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221186.0897102, "type": "train_metric", "step": 8700, "metric": "train/batch_reward", "value": 1.5659871101379395}
+{"time_unix": 1791221186.093837, "type": "train_metric", "step": 8700, "metric": "train_critic/loss", "value": 21.352807998657227}
+{"time_unix": 1791221186.1011608, "type": "train_metric", "step": 8700, "metric": "train_actor/loss", "value": -47.15259552001953}
+{"time_unix": 1791221186.1011858, "type": "train_metric", "step": 8700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221186.1013048, "type": "train_metric", "step": 8700, "metric": "train_actor/entropy", "value": 0.3305177092552185}
+{"time_unix": 1791221186.103779, "type": "train_metric", "step": 8700, "metric": "train_alpha/loss", "value": 0.012259402312338352}
+{"time_unix": 1791221186.1038442, "type": "train_metric", "step": 8700, "metric": "train_alpha/value", "value": 0.07711686088909665}
+{"time_unix": 1791221186.1119072, "type": "train_metric", "step": 8700, "metric": "train/curl_loss", "value": 0.9051922559738159}
+{"time_unix": 1791221188.1966515, "type": "train_episode", "step": 8750, "env_steps": 70000, "episode": 70, "return": 277.4184361159207, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221190.3245199, "type": "train_metric", "step": 8800, "metric": "train/batch_reward", "value": 1.662164330482483}
+{"time_unix": 1791221190.328651, "type": "train_metric", "step": 8800, "metric": "train_critic/loss", "value": 25.694488525390625}
+{"time_unix": 1791221190.3359356, "type": "train_metric", "step": 8800, "metric": "train_actor/loss", "value": -46.92539596557617}
+{"time_unix": 1791221190.3359616, "type": "train_metric", "step": 8800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221190.336078, "type": "train_metric", "step": 8800, "metric": "train_actor/entropy", "value": 0.48922744393348694}
+{"time_unix": 1791221190.3389459, "type": "train_metric", "step": 8800, "metric": "train_alpha/loss", "value": 0.005586368963122368}
+{"time_unix": 1791221190.339012, "type": "train_metric", "step": 8800, "metric": "train_alpha/value", "value": 0.07702201683675063}
+{"time_unix": 1791221190.3472614, "type": "train_metric", "step": 8800, "metric": "train/curl_loss", "value": 0.9706892967224121}
+{"time_unix": 1791221193.524911, "type": "train_episode", "step": 8875, "env_steps": 71000, "episode": 71, "return": 228.5042182953426, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221194.6101627, "type": "train_metric", "step": 8900, "metric": "train/batch_reward", "value": 1.5095281600952148}
+{"time_unix": 1791221194.6142874, "type": "train_metric", "step": 8900, "metric": "train_critic/loss", "value": 17.726770401000977}
+{"time_unix": 1791221194.6215641, "type": "train_metric", "step": 8900, "metric": "train_actor/loss", "value": -47.580078125}
+{"time_unix": 1791221194.6215892, "type": "train_metric", "step": 8900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221194.621705, "type": "train_metric", "step": 8900, "metric": "train_actor/entropy", "value": 0.5574814677238464}
+{"time_unix": 1791221194.624126, "type": "train_metric", "step": 8900, "metric": "train_alpha/loss", "value": 0.002066626213490963}
+{"time_unix": 1791221194.624191, "type": "train_metric", "step": 8900, "metric": "train_alpha/value", "value": 0.07704622510465005}
+{"time_unix": 1791221194.632521, "type": "train_metric", "step": 8900, "metric": "train/curl_loss", "value": 1.1149876117706299}
+{"time_unix": 1791221212.7425907, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10000, "return": 237.23136469077954, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.7428002, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10001, "return": 70.49267005911743, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.7428129, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10002, "return": 60.6118478124865, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.742821, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10003, "return": 231.54231555101748, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.7428284, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10004, "return": 232.4564177274223, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.7428358, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10005, "return": 233.56137148632584, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.7428432, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10006, "return": 239.83538187503203, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.7428503, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10007, "return": 71.93023093179403, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.7428572, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10008, "return": 70.38540657482586, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.74287, "type": "eval_episode", "step": 9000, "env_steps": 72000, "eval_seed": 10009, "return": 252.5225429371884, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221212.7429433, "type": "eval_summary", "step": 9000, "env_steps": 72000, "mean_return": 170.05695496459893, "episodes": 10, "seconds": 13.903558930382133}
+{"time_unix": 1791221212.742976, "type": "train_episode", "step": 9000, "env_steps": 72000, "episode": 72, "return": 283.20591913703225, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221212.7944496, "type": "train_metric", "step": 9000, "metric": "train/batch_reward", "value": 1.5952837467193604}
+{"time_unix": 1791221212.7988758, "type": "train_metric", "step": 9000, "metric": "train_critic/loss", "value": 21.19605255126953}
+{"time_unix": 1791221212.8072855, "type": "train_metric", "step": 9000, "metric": "train_actor/loss", "value": -48.53341293334961}
+{"time_unix": 1791221212.8073108, "type": "train_metric", "step": 9000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221212.8074365, "type": "train_metric", "step": 9000, "metric": "train_actor/entropy", "value": 0.37583932280540466}
+{"time_unix": 1791221212.8103042, "type": "train_metric", "step": 9000, "metric": "train_alpha/loss", "value": 0.004880208522081375}
+{"time_unix": 1791221212.8103695, "type": "train_metric", "step": 9000, "metric": "train_alpha/value", "value": 0.07697671709055556}
+{"time_unix": 1791221212.818773, "type": "train_metric", "step": 9000, "metric": "train/curl_loss", "value": 1.1577833890914917}
+{"time_unix": 1791221216.976637, "type": "train_metric", "step": 9100, "metric": "train/batch_reward", "value": 1.6285803318023682}
+{"time_unix": 1791221216.9807897, "type": "train_metric", "step": 9100, "metric": "train_critic/loss", "value": 25.880176544189453}
+{"time_unix": 1791221216.988065, "type": "train_metric", "step": 9100, "metric": "train_actor/loss", "value": -50.58921432495117}
+{"time_unix": 1791221216.9880905, "type": "train_metric", "step": 9100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221216.988204, "type": "train_metric", "step": 9100, "metric": "train_actor/entropy", "value": 0.6347762942314148}
+{"time_unix": 1791221216.990556, "type": "train_metric", "step": 9100, "metric": "train_alpha/loss", "value": 0.026807567104697227}
+{"time_unix": 1791221216.9906209, "type": "train_metric", "step": 9100, "metric": "train_alpha/value", "value": 0.07692682193412688}
+{"time_unix": 1791221216.9987013, "type": "train_metric", "step": 9100, "metric": "train/curl_loss", "value": 1.054173231124878}
+{"time_unix": 1791221218.0002, "type": "train_episode", "step": 9125, "env_steps": 73000, "episode": 73, "return": 263.0077749414495, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221221.1341748, "type": "train_metric", "step": 9200, "metric": "train/batch_reward", "value": 1.8434734344482422}
+{"time_unix": 1791221221.1384, "type": "train_metric", "step": 9200, "metric": "train_critic/loss", "value": 17.736303329467773}
+{"time_unix": 1791221221.1456656, "type": "train_metric", "step": 9200, "metric": "train_actor/loss", "value": -51.35746765136719}
+{"time_unix": 1791221221.1456907, "type": "train_metric", "step": 9200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221221.1458051, "type": "train_metric", "step": 9200, "metric": "train_actor/entropy", "value": 0.4046616852283478}
+{"time_unix": 1791221221.1481946, "type": "train_metric", "step": 9200, "metric": "train_alpha/loss", "value": 0.016283627599477768}
+{"time_unix": 1791221221.1482608, "type": "train_metric", "step": 9200, "metric": "train_alpha/value", "value": 0.0768234076509824}
+{"time_unix": 1791221221.156286, "type": "train_metric", "step": 9200, "metric": "train/curl_loss", "value": 0.7745287418365479}
+{"time_unix": 1791221223.20228, "type": "train_episode", "step": 9250, "env_steps": 74000, "episode": 74, "return": 336.91986882058274, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221225.329325, "type": "train_metric", "step": 9300, "metric": "train/batch_reward", "value": 1.7776775360107422}
+{"time_unix": 1791221225.3334541, "type": "train_metric", "step": 9300, "metric": "train_critic/loss", "value": 20.211620330810547}
+{"time_unix": 1791221225.34072, "type": "train_metric", "step": 9300, "metric": "train_actor/loss", "value": -52.084075927734375}
+{"time_unix": 1791221225.3407457, "type": "train_metric", "step": 9300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221225.3408604, "type": "train_metric", "step": 9300, "metric": "train_actor/entropy", "value": 0.5664812326431274}
+{"time_unix": 1791221225.343301, "type": "train_metric", "step": 9300, "metric": "train_alpha/loss", "value": 0.02895882911980152}
+{"time_unix": 1791221225.343367, "type": "train_metric", "step": 9300, "metric": "train_alpha/value", "value": 0.0767247294397245}
+{"time_unix": 1791221225.3516643, "type": "train_metric", "step": 9300, "metric": "train/curl_loss", "value": 0.9728885889053345}
+{"time_unix": 1791221228.4109256, "type": "train_episode", "step": 9375, "env_steps": 75000, "episode": 75, "return": 288.6086018388345, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221229.4699888, "type": "train_metric", "step": 9400, "metric": "train/batch_reward", "value": 1.7690178155899048}
+{"time_unix": 1791221229.4741035, "type": "train_metric", "step": 9400, "metric": "train_critic/loss", "value": 25.793441772460938}
+{"time_unix": 1791221229.4814034, "type": "train_metric", "step": 9400, "metric": "train_actor/loss", "value": -51.879093170166016}
+{"time_unix": 1791221229.4814308, "type": "train_metric", "step": 9400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221229.4815454, "type": "train_metric", "step": 9400, "metric": "train_actor/entropy", "value": 0.5148930549621582}
+{"time_unix": 1791221229.4839082, "type": "train_metric", "step": 9400, "metric": "train_alpha/loss", "value": -0.012466666288673878}
+{"time_unix": 1791221229.4839742, "type": "train_metric", "step": 9400, "metric": "train_alpha/value", "value": 0.07663815661080398}
+{"time_unix": 1791221229.4921758, "type": "train_metric", "step": 9400, "metric": "train/curl_loss", "value": 0.8126420974731445}
+{"time_unix": 1791221247.450658, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10000, "return": 235.04462280578596, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.4507508, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10001, "return": 232.19122898448322, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.450763, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10002, "return": 236.85618837368364, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.4507706, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10003, "return": 230.97963147628892, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.4507787, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10004, "return": 232.65386930768605, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.4507859, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10005, "return": 235.12218801886408, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.4507935, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10006, "return": 233.08837279679744, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.4508011, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10007, "return": 238.58945346455064, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.4508083, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10008, "return": 231.39421998867684, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.4508226, "type": "eval_episode", "step": 9500, "env_steps": 76000, "eval_seed": 10009, "return": 232.47209826234084, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221247.450887, "type": "eval_summary", "step": 9500, "env_steps": 76000, "mean_return": 233.83918734791573, "episodes": 10, "seconds": 13.847237082198262}
+{"time_unix": 1791221247.4509163, "type": "train_episode", "step": 9500, "env_steps": 76000, "episode": 76, "return": 231.29369515567515, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221247.4785216, "type": "train_metric", "step": 9500, "metric": "train/batch_reward", "value": 1.660031795501709}
+{"time_unix": 1791221247.4826286, "type": "train_metric", "step": 9500, "metric": "train_critic/loss", "value": 14.341588020324707}
+{"time_unix": 1791221247.4901729, "type": "train_metric", "step": 9500, "metric": "train_actor/loss", "value": -53.70933532714844}
+{"time_unix": 1791221247.490199, "type": "train_metric", "step": 9500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221247.490314, "type": "train_metric", "step": 9500, "metric": "train_actor/entropy", "value": 0.3274523615837097}
+{"time_unix": 1791221247.4928114, "type": "train_metric", "step": 9500, "metric": "train_alpha/loss", "value": 0.011998169124126434}
+{"time_unix": 1791221247.4928768, "type": "train_metric", "step": 9500, "metric": "train_alpha/value", "value": 0.07658531303477974}
+{"time_unix": 1791221247.501231, "type": "train_metric", "step": 9500, "metric": "train/curl_loss", "value": 0.6678006649017334}
+{"time_unix": 1791221251.6302958, "type": "train_metric", "step": 9600, "metric": "train/batch_reward", "value": 1.411767840385437}
+{"time_unix": 1791221251.6344228, "type": "train_metric", "step": 9600, "metric": "train_critic/loss", "value": 15.29228401184082}
+{"time_unix": 1791221251.64171, "type": "train_metric", "step": 9600, "metric": "train_actor/loss", "value": -52.857669830322266}
+{"time_unix": 1791221251.641735, "type": "train_metric", "step": 9600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221251.641851, "type": "train_metric", "step": 9600, "metric": "train_actor/entropy", "value": 0.6778033971786499}
+{"time_unix": 1791221251.6442873, "type": "train_metric", "step": 9600, "metric": "train_alpha/loss", "value": -0.001986728049814701}
+{"time_unix": 1791221251.6443534, "type": "train_metric", "step": 9600, "metric": "train_alpha/value", "value": 0.07651362067528825}
+{"time_unix": 1791221251.652385, "type": "train_metric", "step": 9600, "metric": "train/curl_loss", "value": 0.9408761262893677}
+{"time_unix": 1791221252.6651158, "type": "train_episode", "step": 9625, "env_steps": 77000, "episode": 77, "return": 234.97117239700725, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221255.8459663, "type": "train_metric", "step": 9700, "metric": "train/batch_reward", "value": 1.4561200141906738}
+{"time_unix": 1791221255.8500886, "type": "train_metric", "step": 9700, "metric": "train_critic/loss", "value": 17.97357177734375}
+{"time_unix": 1791221255.8573494, "type": "train_metric", "step": 9700, "metric": "train_actor/loss", "value": -53.71986770629883}
+{"time_unix": 1791221255.8573744, "type": "train_metric", "step": 9700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221255.8574889, "type": "train_metric", "step": 9700, "metric": "train_actor/entropy", "value": 0.619449257850647}
+{"time_unix": 1791221255.8598716, "type": "train_metric", "step": 9700, "metric": "train_alpha/loss", "value": -0.006217797286808491}
+{"time_unix": 1791221255.8599484, "type": "train_metric", "step": 9700, "metric": "train_alpha/value", "value": 0.0764817908319209}
+{"time_unix": 1791221255.8683567, "type": "train_metric", "step": 9700, "metric": "train/curl_loss", "value": 1.2229530811309814}
+{"time_unix": 1791221257.9298668, "type": "train_episode", "step": 9750, "env_steps": 78000, "episode": 78, "return": 239.87110928571337, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221260.0456247, "type": "train_metric", "step": 9800, "metric": "train/batch_reward", "value": 1.4761070013046265}
+{"time_unix": 1791221260.049767, "type": "train_metric", "step": 9800, "metric": "train_critic/loss", "value": 15.119693756103516}
+{"time_unix": 1791221260.0570889, "type": "train_metric", "step": 9800, "metric": "train_actor/loss", "value": -54.58551025390625}
+{"time_unix": 1791221260.0571148, "type": "train_metric", "step": 9800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221260.0572286, "type": "train_metric", "step": 9800, "metric": "train_actor/entropy", "value": 0.5718123912811279}
+{"time_unix": 1791221260.0596926, "type": "train_metric", "step": 9800, "metric": "train_alpha/loss", "value": -0.010792139917612076}
+{"time_unix": 1791221260.0597632, "type": "train_metric", "step": 9800, "metric": "train_alpha/value", "value": 0.07646331167209854}
+{"time_unix": 1791221260.0678203, "type": "train_metric", "step": 9800, "metric": "train/curl_loss", "value": 0.9728610515594482}
+{"time_unix": 1791221263.1858618, "type": "train_episode", "step": 9875, "env_steps": 79000, "episode": 79, "return": 241.1790364980818, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221264.2597797, "type": "train_metric", "step": 9900, "metric": "train/batch_reward", "value": 1.6870176792144775}
+{"time_unix": 1791221264.26391, "type": "train_metric", "step": 9900, "metric": "train_critic/loss", "value": 18.929515838623047}
+{"time_unix": 1791221264.2712226, "type": "train_metric", "step": 9900, "metric": "train_actor/loss", "value": -57.6796760559082}
+{"time_unix": 1791221264.2712476, "type": "train_metric", "step": 9900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221264.2713628, "type": "train_metric", "step": 9900, "metric": "train_actor/entropy", "value": 0.5331613421440125}
+{"time_unix": 1791221264.2737963, "type": "train_metric", "step": 9900, "metric": "train_alpha/loss", "value": -0.0027620652690529823}
+{"time_unix": 1791221264.2738624, "type": "train_metric", "step": 9900, "metric": "train_alpha/value", "value": 0.07646945684269647}
+{"time_unix": 1791221264.2818925, "type": "train_metric", "step": 9900, "metric": "train/curl_loss", "value": 0.9175373911857605}
+{"time_unix": 1791221282.384189, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10000, "return": 227.25045915308033, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.384289, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10001, "return": 230.75709049039983, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.3843007, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10002, "return": 228.34117920178323, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.384309, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10003, "return": 229.99145376595948, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.3843164, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10004, "return": 229.94165231646707, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.3843236, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10005, "return": 230.9972128960303, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.3843307, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10006, "return": 229.80497218754957, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.384338, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10007, "return": 233.58502658952733, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.3843448, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10008, "return": 229.44151311489492, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.3843598, "type": "eval_episode", "step": 10000, "env_steps": 80000, "eval_seed": 10009, "return": 230.71376863714693, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221282.3844085, "type": "eval_summary", "step": 10000, "env_steps": 80000, "mean_return": 230.0824328352839, "episodes": 10, "seconds": 13.945371732115746}
+{"time_unix": 1791221282.3844323, "type": "train_episode", "step": 10000, "env_steps": 80000, "episode": 80, "return": 278.69702906957497, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221282.4359446, "type": "train_metric", "step": 10000, "metric": "train/batch_reward", "value": 1.4972670078277588}
+{"time_unix": 1791221282.4400687, "type": "train_metric", "step": 10000, "metric": "train_critic/loss", "value": 21.907102584838867}
+{"time_unix": 1791221282.4479604, "type": "train_metric", "step": 10000, "metric": "train_actor/loss", "value": -55.92730712890625}
+{"time_unix": 1791221282.447986, "type": "train_metric", "step": 10000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221282.4481041, "type": "train_metric", "step": 10000, "metric": "train_actor/entropy", "value": 0.5637810230255127}
+{"time_unix": 1791221282.4507577, "type": "train_metric", "step": 10000, "metric": "train_alpha/loss", "value": 0.0004138951189815998}
+{"time_unix": 1791221282.4508219, "type": "train_metric", "step": 10000, "metric": "train_alpha/value", "value": 0.0764478033714165}
+{"time_unix": 1791221282.4590235, "type": "train_metric", "step": 10000, "metric": "train/curl_loss", "value": 1.0725892782211304}
+{"time_unix": 1791221286.6394317, "type": "train_metric", "step": 10100, "metric": "train/batch_reward", "value": 1.6848833560943604}
+{"time_unix": 1791221286.643545, "type": "train_metric", "step": 10100, "metric": "train_critic/loss", "value": 35.59275436401367}
+{"time_unix": 1791221286.6508167, "type": "train_metric", "step": 10100, "metric": "train_actor/loss", "value": -58.2928581237793}
+{"time_unix": 1791221286.6508417, "type": "train_metric", "step": 10100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221286.6509652, "type": "train_metric", "step": 10100, "metric": "train_actor/entropy", "value": 0.5301465392112732}
+{"time_unix": 1791221286.6533902, "type": "train_metric", "step": 10100, "metric": "train_alpha/loss", "value": 0.006036767270416021}
+{"time_unix": 1791221286.653456, "type": "train_metric", "step": 10100, "metric": "train_alpha/value", "value": 0.07640507921968473}
+{"time_unix": 1791221286.661508, "type": "train_metric", "step": 10100, "metric": "train/curl_loss", "value": 0.8184922933578491}
+{"time_unix": 1791221287.68446, "type": "train_episode", "step": 10125, "env_steps": 81000, "episode": 81, "return": 221.73020420382304, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221290.8297913, "type": "train_metric", "step": 10200, "metric": "train/batch_reward", "value": 1.6315221786499023}
+{"time_unix": 1791221290.8339453, "type": "train_metric", "step": 10200, "metric": "train_critic/loss", "value": 18.23450469970703}
+{"time_unix": 1791221290.8412244, "type": "train_metric", "step": 10200, "metric": "train_actor/loss", "value": -58.257652282714844}
+{"time_unix": 1791221290.8412495, "type": "train_metric", "step": 10200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221290.8413653, "type": "train_metric", "step": 10200, "metric": "train_actor/entropy", "value": 0.5657036900520325}
+{"time_unix": 1791221290.8438625, "type": "train_metric", "step": 10200, "metric": "train_alpha/loss", "value": 5.539506673812866e-06}
+{"time_unix": 1791221290.8439453, "type": "train_metric", "step": 10200, "metric": "train_alpha/value", "value": 0.07637394939258767}
+{"time_unix": 1791221290.8519747, "type": "train_metric", "step": 10200, "metric": "train/curl_loss", "value": 0.9302713871002197}
+{"time_unix": 1791221292.885002, "type": "train_episode", "step": 10250, "env_steps": 82000, "episode": 82, "return": 71.46970642633055, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221294.9873266, "type": "train_metric", "step": 10300, "metric": "train/batch_reward", "value": 1.4777356386184692}
+{"time_unix": 1791221294.9914322, "type": "train_metric", "step": 10300, "metric": "train_critic/loss", "value": 9.15384292602539}
+{"time_unix": 1791221294.998662, "type": "train_metric", "step": 10300, "metric": "train_actor/loss", "value": -59.04924774169922}
+{"time_unix": 1791221294.9986873, "type": "train_metric", "step": 10300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221294.9988027, "type": "train_metric", "step": 10300, "metric": "train_actor/entropy", "value": 0.5561996698379517}
+{"time_unix": 1791221295.0011795, "type": "train_metric", "step": 10300, "metric": "train_alpha/loss", "value": 0.021349797025322914}
+{"time_unix": 1791221295.0012438, "type": "train_metric", "step": 10300, "metric": "train_alpha/value", "value": 0.07631306919178528}
+{"time_unix": 1791221295.0094104, "type": "train_metric", "step": 10300, "metric": "train/curl_loss", "value": 1.0013140439987183}
+{"time_unix": 1791221298.0825121, "type": "train_episode", "step": 10375, "env_steps": 83000, "episode": 83, "return": 56.56306520993377, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221299.1582887, "type": "train_metric", "step": 10400, "metric": "train/batch_reward", "value": 1.5657484531402588}
+{"time_unix": 1791221299.1624625, "type": "train_metric", "step": 10400, "metric": "train_critic/loss", "value": 15.713085174560547}
+{"time_unix": 1791221299.1697307, "type": "train_metric", "step": 10400, "metric": "train_actor/loss", "value": -59.705806732177734}
+{"time_unix": 1791221299.1697564, "type": "train_metric", "step": 10400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221299.169873, "type": "train_metric", "step": 10400, "metric": "train_actor/entropy", "value": 0.5431547164916992}
+{"time_unix": 1791221299.172341, "type": "train_metric", "step": 10400, "metric": "train_alpha/loss", "value": 0.022162441164255142}
+{"time_unix": 1791221299.1724062, "type": "train_metric", "step": 10400, "metric": "train_alpha/value", "value": 0.07625912361604603}
+{"time_unix": 1791221299.1804779, "type": "train_metric", "step": 10400, "metric": "train/curl_loss", "value": 1.2477973699569702}
+{"time_unix": 1791221317.406782, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10000, "return": 291.86556457623453, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.4068792, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10001, "return": 420.86408744344595, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.4068987, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10002, "return": 333.43145841110515, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.406907, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10003, "return": 311.0299997977412, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.4069147, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10004, "return": 359.74825814158436, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.406922, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10005, "return": 307.2582303631461, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.4069293, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10006, "return": 294.55996656587166, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.4069364, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10007, "return": 414.28562524219393, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.4069436, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10008, "return": 317.4363635257455, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.4069593, "type": "eval_episode", "step": 10500, "env_steps": 84000, "eval_seed": 10009, "return": 257.6146677634574, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221317.407009, "type": "eval_summary", "step": 10500, "env_steps": 84000, "mean_return": 330.80942218305256, "episodes": 10, "seconds": 14.063775517046452}
+{"time_unix": 1791221317.407027, "type": "train_episode", "step": 10500, "env_steps": 84000, "episode": 84, "return": 221.46494632533384, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221317.456648, "type": "train_metric", "step": 10500, "metric": "train/batch_reward", "value": 1.6101360321044922}
+{"time_unix": 1791221317.460785, "type": "train_metric", "step": 10500, "metric": "train_critic/loss", "value": 18.497716903686523}
+{"time_unix": 1791221317.4684289, "type": "train_metric", "step": 10500, "metric": "train_actor/loss", "value": -60.02744674682617}
+{"time_unix": 1791221317.4684534, "type": "train_metric", "step": 10500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221317.4685717, "type": "train_metric", "step": 10500, "metric": "train_actor/entropy", "value": 0.6568357944488525}
+{"time_unix": 1791221317.4712062, "type": "train_metric", "step": 10500, "metric": "train_alpha/loss", "value": 0.013534070923924446}
+{"time_unix": 1791221317.4712708, "type": "train_metric", "step": 10500, "metric": "train_alpha/value", "value": 0.0760854731994309}
+{"time_unix": 1791221317.4793465, "type": "train_metric", "step": 10500, "metric": "train/curl_loss", "value": 1.0620372295379639}
+{"time_unix": 1791221321.5947554, "type": "train_metric", "step": 10600, "metric": "train/batch_reward", "value": 1.5572397708892822}
+{"time_unix": 1791221321.598881, "type": "train_metric", "step": 10600, "metric": "train_critic/loss", "value": 19.632970809936523}
+{"time_unix": 1791221321.606188, "type": "train_metric", "step": 10600, "metric": "train_actor/loss", "value": -62.43368148803711}
+{"time_unix": 1791221321.6062138, "type": "train_metric", "step": 10600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221321.6063318, "type": "train_metric", "step": 10600, "metric": "train_actor/entropy", "value": 0.3806579113006592}
+{"time_unix": 1791221321.6087928, "type": "train_metric", "step": 10600, "metric": "train_alpha/loss", "value": 0.006587487179785967}
+{"time_unix": 1791221321.608858, "type": "train_metric", "step": 10600, "metric": "train_alpha/value", "value": 0.07600304091975975}
+{"time_unix": 1791221321.6168234, "type": "train_metric", "step": 10600, "metric": "train/curl_loss", "value": 0.898565411567688}
+{"time_unix": 1791221322.6169333, "type": "train_episode", "step": 10625, "env_steps": 85000, "episode": 85, "return": 228.0086639305693, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221325.7272787, "type": "train_metric", "step": 10700, "metric": "train/batch_reward", "value": 1.813058853149414}
+{"time_unix": 1791221325.7313814, "type": "train_metric", "step": 10700, "metric": "train_critic/loss", "value": 17.0626220703125}
+{"time_unix": 1791221325.738666, "type": "train_metric", "step": 10700, "metric": "train_actor/loss", "value": -62.579200744628906}
+{"time_unix": 1791221325.7386968, "type": "train_metric", "step": 10700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221325.7388186, "type": "train_metric", "step": 10700, "metric": "train_actor/entropy", "value": 0.4682663679122925}
+{"time_unix": 1791221325.741148, "type": "train_metric", "step": 10700, "metric": "train_alpha/loss", "value": 0.04474581778049469}
+{"time_unix": 1791221325.7412138, "type": "train_metric", "step": 10700, "metric": "train_alpha/value", "value": 0.07584353908917982}
+{"time_unix": 1791221325.7496243, "type": "train_metric", "step": 10700, "metric": "train/curl_loss", "value": 0.8833188414573669}
+{"time_unix": 1791221327.7681675, "type": "train_episode", "step": 10750, "env_steps": 86000, "episode": 86, "return": 336.494241016332, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221329.842144, "type": "train_metric", "step": 10800, "metric": "train/batch_reward", "value": 1.4803080558776855}
+{"time_unix": 1791221329.846252, "type": "train_metric", "step": 10800, "metric": "train_critic/loss", "value": 22.19855499267578}
+{"time_unix": 1791221329.8535285, "type": "train_metric", "step": 10800, "metric": "train_actor/loss", "value": -60.450382232666016}
+{"time_unix": 1791221329.8535542, "type": "train_metric", "step": 10800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221329.8536687, "type": "train_metric", "step": 10800, "metric": "train_actor/entropy", "value": 0.458061158657074}
+{"time_unix": 1791221329.8560338, "type": "train_metric", "step": 10800, "metric": "train_alpha/loss", "value": 0.028030961751937866}
+{"time_unix": 1791221329.856098, "type": "train_metric", "step": 10800, "metric": "train_alpha/value", "value": 0.07559748782791798}
+{"time_unix": 1791221329.8640766, "type": "train_metric", "step": 10800, "metric": "train/curl_loss", "value": 0.7661290168762207}
+{"time_unix": 1791221332.8993142, "type": "train_episode", "step": 10875, "env_steps": 87000, "episode": 87, "return": 437.64365141286885, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221333.943989, "type": "train_metric", "step": 10900, "metric": "train/batch_reward", "value": 1.55391263961792}
+{"time_unix": 1791221333.9480817, "type": "train_metric", "step": 10900, "metric": "train_critic/loss", "value": 25.517616271972656}
+{"time_unix": 1791221333.9553676, "type": "train_metric", "step": 10900, "metric": "train_actor/loss", "value": -63.23870086669922}
+{"time_unix": 1791221333.9553938, "type": "train_metric", "step": 10900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221333.9555075, "type": "train_metric", "step": 10900, "metric": "train_actor/entropy", "value": 0.45037055015563965}
+{"time_unix": 1791221333.957844, "type": "train_metric", "step": 10900, "metric": "train_alpha/loss", "value": 0.005384039133787155}
+{"time_unix": 1791221333.9579177, "type": "train_metric", "step": 10900, "metric": "train_alpha/value", "value": 0.07536514171536968}
+{"time_unix": 1791221333.9658694, "type": "train_metric", "step": 10900, "metric": "train/curl_loss", "value": 0.7244372963905334}
+{"time_unix": 1791221351.8406641, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10000, "return": 333.08251025840457, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.8407288, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10001, "return": 413.5921575665087, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.8407395, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10002, "return": 390.04276409811945, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.8407476, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10003, "return": 308.1071173606262, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.840755, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10004, "return": 341.9116472785511, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.8407621, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10005, "return": 307.34084883752337, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.8407698, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10006, "return": 352.0034708887819, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.8407772, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10007, "return": 236.86797462654374, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.840784, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10008, "return": 297.2675917928487, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.8407986, "type": "eval_episode", "step": 11000, "env_steps": 88000, "eval_seed": 10009, "return": 287.4069672207012, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221351.8408449, "type": "eval_summary", "step": 11000, "env_steps": 88000, "mean_return": 326.7623049928609, "episodes": 10, "seconds": 13.816146928817034}
+{"time_unix": 1791221351.8408608, "type": "train_episode", "step": 11000, "env_steps": 88000, "episode": 88, "return": 446.5001374366193, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221351.8931568, "type": "train_metric", "step": 11000, "metric": "train/batch_reward", "value": 1.4877772331237793}
+{"time_unix": 1791221351.89734, "type": "train_metric", "step": 11000, "metric": "train_critic/loss", "value": 18.94646644592285}
+{"time_unix": 1791221351.9050972, "type": "train_metric", "step": 11000, "metric": "train_actor/loss", "value": -63.249698638916016}
+{"time_unix": 1791221351.9051225, "type": "train_metric", "step": 11000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221351.9052389, "type": "train_metric", "step": 11000, "metric": "train_actor/entropy", "value": 0.5428237915039062}
+{"time_unix": 1791221351.907844, "type": "train_metric", "step": 11000, "metric": "train_alpha/loss", "value": -0.008802727796137333}
+{"time_unix": 1791221351.907919, "type": "train_metric", "step": 11000, "metric": "train_alpha/value", "value": 0.07520259495632271}
+{"time_unix": 1791221351.9161222, "type": "train_metric", "step": 11000, "metric": "train/curl_loss", "value": 1.0055816173553467}
+{"time_unix": 1791221356.0433369, "type": "train_metric", "step": 11100, "metric": "train/batch_reward", "value": 1.7979018688201904}
+{"time_unix": 1791221356.0474591, "type": "train_metric", "step": 11100, "metric": "train_critic/loss", "value": 30.408523559570312}
+{"time_unix": 1791221356.054733, "type": "train_metric", "step": 11100, "metric": "train_actor/loss", "value": -65.1101303100586}
+{"time_unix": 1791221356.0547612, "type": "train_metric", "step": 11100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221356.0548756, "type": "train_metric", "step": 11100, "metric": "train_actor/entropy", "value": 0.5407806038856506}
+{"time_unix": 1791221356.0572858, "type": "train_metric", "step": 11100, "metric": "train_alpha/loss", "value": 0.06291797012090683}
+{"time_unix": 1791221356.0573525, "type": "train_metric", "step": 11100, "metric": "train_alpha/value", "value": 0.07488409809299754}
+{"time_unix": 1791221356.065366, "type": "train_metric", "step": 11100, "metric": "train/curl_loss", "value": 0.941002368927002}
+{"time_unix": 1791221357.0707412, "type": "train_episode", "step": 11125, "env_steps": 89000, "episode": 89, "return": 305.03020943080827, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221360.2035613, "type": "train_metric", "step": 11200, "metric": "train/batch_reward", "value": 1.896254062652588}
+{"time_unix": 1791221360.2077215, "type": "train_metric", "step": 11200, "metric": "train_critic/loss", "value": 17.38224983215332}
+{"time_unix": 1791221360.2150059, "type": "train_metric", "step": 11200, "metric": "train_actor/loss", "value": -65.98060607910156}
+{"time_unix": 1791221360.2150314, "type": "train_metric", "step": 11200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221360.215144, "type": "train_metric", "step": 11200, "metric": "train_actor/entropy", "value": 0.46263837814331055}
+{"time_unix": 1791221360.2175574, "type": "train_metric", "step": 11200, "metric": "train_alpha/loss", "value": 0.014169640839099884}
+{"time_unix": 1791221360.2176218, "type": "train_metric", "step": 11200, "metric": "train_alpha/value", "value": 0.07465216389766365}
+{"time_unix": 1791221360.2257707, "type": "train_metric", "step": 11200, "metric": "train/curl_loss", "value": 0.7246837019920349}
+{"time_unix": 1791221362.2652142, "type": "train_episode", "step": 11250, "env_steps": 90000, "episode": 90, "return": 365.8376673101341, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221364.3466575, "type": "train_metric", "step": 11300, "metric": "train/batch_reward", "value": 1.710521936416626}
+{"time_unix": 1791221364.3507648, "type": "train_metric", "step": 11300, "metric": "train_critic/loss", "value": 21.451007843017578}
+{"time_unix": 1791221364.3580098, "type": "train_metric", "step": 11300, "metric": "train_actor/loss", "value": -67.1287841796875}
+{"time_unix": 1791221364.358036, "type": "train_metric", "step": 11300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221364.35815, "type": "train_metric", "step": 11300, "metric": "train_actor/entropy", "value": 0.42640000581741333}
+{"time_unix": 1791221364.3605702, "type": "train_metric", "step": 11300, "metric": "train_alpha/loss", "value": -0.005724518559873104}
+{"time_unix": 1791221364.3606396, "type": "train_metric", "step": 11300, "metric": "train_alpha/value", "value": 0.07450874344785695}
+{"time_unix": 1791221364.3686793, "type": "train_metric", "step": 11300, "metric": "train/curl_loss", "value": 0.8790783882141113}
+{"time_unix": 1791221367.4241831, "type": "train_episode", "step": 11375, "env_steps": 91000, "episode": 91, "return": 349.33547259443765, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221368.4822872, "type": "train_metric", "step": 11400, "metric": "train/batch_reward", "value": 1.7678486108779907}
+{"time_unix": 1791221368.4863954, "type": "train_metric", "step": 11400, "metric": "train_critic/loss", "value": 23.64786720275879}
+{"time_unix": 1791221368.4936438, "type": "train_metric", "step": 11400, "metric": "train_actor/loss", "value": -66.49327087402344}
+{"time_unix": 1791221368.4936693, "type": "train_metric", "step": 11400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221368.4937851, "type": "train_metric", "step": 11400, "metric": "train_actor/entropy", "value": 0.501554012298584}
+{"time_unix": 1791221368.4961762, "type": "train_metric", "step": 11400, "metric": "train_alpha/loss", "value": 0.0017735203728079796}
+{"time_unix": 1791221368.496243, "type": "train_metric", "step": 11400, "metric": "train_alpha/value", "value": 0.07441658256825971}
+{"time_unix": 1791221368.504281, "type": "train_metric", "step": 11400, "metric": "train/curl_loss", "value": 0.8400571942329407}
+{"time_unix": 1791221386.3757849, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10000, "return": 267.70505037385277, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.3758557, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10001, "return": 235.54228289290043, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.3758664, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10002, "return": 320.77237644716826, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.3758745, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10003, "return": 224.91609312752, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.375882, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10004, "return": 248.09468355153243, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.375896, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10005, "return": 244.03996922167738, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.3759038, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10006, "return": 434.783593296353, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.3759112, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10007, "return": 227.10467570463075, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.3759184, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10008, "return": 295.04717244382715, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.3759446, "type": "eval_episode", "step": 11500, "env_steps": 92000, "eval_seed": 10009, "return": 323.9790246745286, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221386.3759918, "type": "eval_summary", "step": 11500, "env_steps": 92000, "mean_return": 282.19849217339913, "episodes": 10, "seconds": 13.76943614706397}
+{"time_unix": 1791221386.3760085, "type": "train_episode", "step": 11500, "env_steps": 92000, "episode": 92, "return": 245.03307364487222, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221386.4029264, "type": "train_metric", "step": 11500, "metric": "train/batch_reward", "value": 2.0259013175964355}
+{"time_unix": 1791221386.4070306, "type": "train_metric", "step": 11500, "metric": "train_critic/loss", "value": 19.639938354492188}
+{"time_unix": 1791221386.4144976, "type": "train_metric", "step": 11500, "metric": "train_actor/loss", "value": -69.19876098632812}
+{"time_unix": 1791221386.4145231, "type": "train_metric", "step": 11500, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221386.4146383, "type": "train_metric", "step": 11500, "metric": "train_actor/entropy", "value": 0.5387591123580933}
+{"time_unix": 1791221386.4171336, "type": "train_metric", "step": 11500, "metric": "train_alpha/loss", "value": 0.016292577609419823}
+{"time_unix": 1791221386.4171982, "type": "train_metric", "step": 11500, "metric": "train_alpha/value", "value": 0.07430990362983567}
+{"time_unix": 1791221386.4252174, "type": "train_metric", "step": 11500, "metric": "train/curl_loss", "value": 0.7041103839874268}
+{"time_unix": 1791221390.5263014, "type": "train_metric", "step": 11600, "metric": "train/batch_reward", "value": 1.569016695022583}
+{"time_unix": 1791221390.530403, "type": "train_metric", "step": 11600, "metric": "train_critic/loss", "value": 31.65888214111328}
+{"time_unix": 1791221390.53767, "type": "train_metric", "step": 11600, "metric": "train_actor/loss", "value": -68.1016845703125}
+{"time_unix": 1791221390.537696, "type": "train_metric", "step": 11600, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221390.537814, "type": "train_metric", "step": 11600, "metric": "train_actor/entropy", "value": 0.49275264143943787}
+{"time_unix": 1791221390.5402136, "type": "train_metric", "step": 11600, "metric": "train_alpha/loss", "value": 0.03737599402666092}
+{"time_unix": 1791221390.5402787, "type": "train_metric", "step": 11600, "metric": "train_alpha/value", "value": 0.07418108712397685}
+{"time_unix": 1791221390.5482996, "type": "train_metric", "step": 11600, "metric": "train/curl_loss", "value": 1.0637084245681763}
+{"time_unix": 1791221391.5477376, "type": "train_episode", "step": 11625, "env_steps": 93000, "episode": 93, "return": 248.73232953628215, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221394.6612241, "type": "train_metric", "step": 11700, "metric": "train/batch_reward", "value": 1.790938377380371}
+{"time_unix": 1791221394.6653826, "type": "train_metric", "step": 11700, "metric": "train_critic/loss", "value": 12.798585891723633}
+{"time_unix": 1791221394.672625, "type": "train_metric", "step": 11700, "metric": "train_actor/loss", "value": -69.49034118652344}
+{"time_unix": 1791221394.6726503, "type": "train_metric", "step": 11700, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221394.672766, "type": "train_metric", "step": 11700, "metric": "train_actor/entropy", "value": 0.6550836563110352}
+{"time_unix": 1791221394.6751478, "type": "train_metric", "step": 11700, "metric": "train_alpha/loss", "value": 0.019199660047888756}
+{"time_unix": 1791221394.675213, "type": "train_metric", "step": 11700, "metric": "train_alpha/value", "value": 0.07404828415937219}
+{"time_unix": 1791221394.6834438, "type": "train_metric", "step": 11700, "metric": "train/curl_loss", "value": 0.8096703290939331}
+{"time_unix": 1791221396.717047, "type": "train_episode", "step": 11750, "env_steps": 94000, "episode": 94, "return": 311.9179062658524, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221398.8001516, "type": "train_metric", "step": 11800, "metric": "train/batch_reward", "value": 1.7463200092315674}
+{"time_unix": 1791221398.8042672, "type": "train_metric", "step": 11800, "metric": "train_critic/loss", "value": 29.813274383544922}
+{"time_unix": 1791221398.8115373, "type": "train_metric", "step": 11800, "metric": "train_actor/loss", "value": -70.1328353881836}
+{"time_unix": 1791221398.811562, "type": "train_metric", "step": 11800, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221398.8116777, "type": "train_metric", "step": 11800, "metric": "train_actor/entropy", "value": 0.445550799369812}
+{"time_unix": 1791221398.8140578, "type": "train_metric", "step": 11800, "metric": "train_alpha/loss", "value": 0.0022726021707057953}
+{"time_unix": 1791221398.8141236, "type": "train_metric", "step": 11800, "metric": "train_alpha/value", "value": 0.0738944937792097}
+{"time_unix": 1791221398.822312, "type": "train_metric", "step": 11800, "metric": "train/curl_loss", "value": 0.7875950932502747}
+{"time_unix": 1791221401.896346, "type": "train_episode", "step": 11875, "env_steps": 95000, "episode": 95, "return": 312.51613350648734, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221402.9561408, "type": "train_metric", "step": 11900, "metric": "train/batch_reward", "value": 1.9014971256256104}
+{"time_unix": 1791221402.960247, "type": "train_metric", "step": 11900, "metric": "train_critic/loss", "value": 31.306535720825195}
+{"time_unix": 1791221402.967526, "type": "train_metric", "step": 11900, "metric": "train_actor/loss", "value": -70.13429260253906}
+{"time_unix": 1791221402.9675512, "type": "train_metric", "step": 11900, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221402.9676673, "type": "train_metric", "step": 11900, "metric": "train_actor/entropy", "value": 0.40082162618637085}
+{"time_unix": 1791221402.9700475, "type": "train_metric", "step": 11900, "metric": "train_alpha/loss", "value": -0.005059795454144478}
+{"time_unix": 1791221402.970113, "type": "train_metric", "step": 11900, "metric": "train_alpha/value", "value": 0.07377081950207166}
+{"time_unix": 1791221402.9783657, "type": "train_metric", "step": 11900, "metric": "train/curl_loss", "value": 0.7202283143997192}
+{"time_unix": 1791221421.1941972, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10000, "return": 341.45304319941476, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.1942756, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10001, "return": 364.91970080562356, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.1942873, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10002, "return": 354.6016657637904, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.1942956, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10003, "return": 307.80810402572513, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.194303, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10004, "return": 374.94366582139406, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.1943107, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10005, "return": 299.3511871667152, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.1943185, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10006, "return": 286.80390559765766, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.194326, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10007, "return": 224.44619140422918, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.19434, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10008, "return": 310.1537222881703, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.1943474, "type": "eval_episode", "step": 12000, "env_steps": 96000, "eval_seed": 10009, "return": 293.27284519670695, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221421.1943936, "type": "eval_summary", "step": 12000, "env_steps": 96000, "mean_return": 315.7754031269427, "episodes": 10, "seconds": 14.064782863482833}
+{"time_unix": 1791221421.194414, "type": "train_episode", "step": 12000, "env_steps": 96000, "episode": 96, "return": 388.2186559481405, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221421.243967, "type": "train_metric", "step": 12000, "metric": "train/batch_reward", "value": 1.8590190410614014}
+{"time_unix": 1791221421.248329, "type": "train_metric", "step": 12000, "metric": "train_critic/loss", "value": 35.19685745239258}
+{"time_unix": 1791221421.2566538, "type": "train_metric", "step": 12000, "metric": "train_actor/loss", "value": -71.8547592163086}
+{"time_unix": 1791221421.2566788, "type": "train_metric", "step": 12000, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221421.2567968, "type": "train_metric", "step": 12000, "metric": "train_actor/entropy", "value": 0.49683380126953125}
+{"time_unix": 1791221421.2595654, "type": "train_metric", "step": 12000, "metric": "train_alpha/loss", "value": 0.00758777279406786}
+{"time_unix": 1791221421.259631, "type": "train_metric", "step": 12000, "metric": "train_alpha/value", "value": 0.07362902952283351}
+{"time_unix": 1791221421.267898, "type": "train_metric", "step": 12000, "metric": "train/curl_loss", "value": 0.920440673828125}
+{"time_unix": 1791221425.445816, "type": "train_metric", "step": 12100, "metric": "train/batch_reward", "value": 1.687791109085083}
+{"time_unix": 1791221425.4499755, "type": "train_metric", "step": 12100, "metric": "train_critic/loss", "value": 19.35409927368164}
+{"time_unix": 1791221425.45724, "type": "train_metric", "step": 12100, "metric": "train_actor/loss", "value": -72.44996643066406}
+{"time_unix": 1791221425.4572659, "type": "train_metric", "step": 12100, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221425.4573815, "type": "train_metric", "step": 12100, "metric": "train_actor/entropy", "value": 0.513397216796875}
+{"time_unix": 1791221425.459843, "type": "train_metric", "step": 12100, "metric": "train_alpha/loss", "value": 0.007130451966077089}
+{"time_unix": 1791221425.459917, "type": "train_metric", "step": 12100, "metric": "train_alpha/value", "value": 0.07365084296891915}
+{"time_unix": 1791221425.4679353, "type": "train_metric", "step": 12100, "metric": "train/curl_loss", "value": 0.8300523161888123}
+{"time_unix": 1791221426.474513, "type": "train_episode", "step": 12125, "env_steps": 97000, "episode": 97, "return": 350.96212323260767, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221429.609039, "type": "train_metric", "step": 12200, "metric": "train/batch_reward", "value": 1.9179327487945557}
+{"time_unix": 1791221429.6131625, "type": "train_metric", "step": 12200, "metric": "train_critic/loss", "value": 23.456668853759766}
+{"time_unix": 1791221429.6204255, "type": "train_metric", "step": 12200, "metric": "train_actor/loss", "value": -74.27880096435547}
+{"time_unix": 1791221429.6204512, "type": "train_metric", "step": 12200, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221429.6205661, "type": "train_metric", "step": 12200, "metric": "train_actor/entropy", "value": 0.46500444412231445}
+{"time_unix": 1791221429.6229491, "type": "train_metric", "step": 12200, "metric": "train_alpha/loss", "value": 0.00565861351788044}
+{"time_unix": 1791221429.6230145, "type": "train_metric", "step": 12200, "metric": "train_alpha/value", "value": 0.07355040938725008}
+{"time_unix": 1791221429.6309898, "type": "train_metric", "step": 12200, "metric": "train/curl_loss", "value": 0.9582397937774658}
+{"time_unix": 1791221431.6685631, "type": "train_episode", "step": 12250, "env_steps": 98000, "episode": 98, "return": 433.82997910121315, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221433.754887, "type": "train_metric", "step": 12300, "metric": "train/batch_reward", "value": 1.8504396677017212}
+{"time_unix": 1791221433.7590096, "type": "train_metric", "step": 12300, "metric": "train_critic/loss", "value": 19.018779754638672}
+{"time_unix": 1791221433.7667081, "type": "train_metric", "step": 12300, "metric": "train_actor/loss", "value": -74.74497985839844}
+{"time_unix": 1791221433.766734, "type": "train_metric", "step": 12300, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221433.7668478, "type": "train_metric", "step": 12300, "metric": "train_actor/entropy", "value": 0.40995997190475464}
+{"time_unix": 1791221433.7692385, "type": "train_metric", "step": 12300, "metric": "train_alpha/loss", "value": 0.0021762619726359844}
+{"time_unix": 1791221433.7693028, "type": "train_metric", "step": 12300, "metric": "train_alpha/value", "value": 0.07350334767599939}
+{"time_unix": 1791221433.7776783, "type": "train_metric", "step": 12300, "metric": "train/curl_loss", "value": 0.7871007919311523}
+{"time_unix": 1791221436.8448262, "type": "train_episode", "step": 12375, "env_steps": 99000, "episode": 99, "return": 359.03721886711486, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221437.9032354, "type": "train_metric", "step": 12400, "metric": "train/batch_reward", "value": 1.7708451747894287}
+{"time_unix": 1791221437.907347, "type": "train_metric", "step": 12400, "metric": "train_critic/loss", "value": 30.235271453857422}
+{"time_unix": 1791221437.914638, "type": "train_metric", "step": 12400, "metric": "train_actor/loss", "value": -74.4732666015625}
+{"time_unix": 1791221437.9146643, "type": "train_metric", "step": 12400, "metric": "train_actor/target_entropy", "value": -1.0}
+{"time_unix": 1791221437.9147785, "type": "train_metric", "step": 12400, "metric": "train_actor/entropy", "value": 0.4500172436237335}
+{"time_unix": 1791221437.9172285, "type": "train_metric", "step": 12400, "metric": "train_alpha/loss", "value": 0.0030272037256509066}
+{"time_unix": 1791221437.9172938, "type": "train_metric", "step": 12400, "metric": "train_alpha/value", "value": 0.07347271671254658}
+{"time_unix": 1791221437.9252515, "type": "train_metric", "step": 12400, "metric": "train/curl_loss", "value": 0.792792797088623}
+{"time_unix": 1791221455.9565985, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10000, "return": 358.89466464751604, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.9566872, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10001, "return": 278.301988076524, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.9567, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10002, "return": 252.86558459843656, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.9567091, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10003, "return": 362.3743695826848, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.9567175, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10004, "return": 344.4329266804047, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.9567258, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10005, "return": 265.07935877291357, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.9567335, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10006, "return": 403.0769477453142, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.956741, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10007, "return": 303.84885522325345, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.956754, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10008, "return": 280.46238664727224, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.9567614, "type": "eval_episode", "step": 12500, "env_steps": 100000, "eval_seed": 10009, "return": 311.87589255706007, "eval_decisions": 125, "eval_env_steps": 1000}
+{"time_unix": 1791221455.95687, "type": "eval_summary", "step": 12500, "env_steps": 100000, "mean_return": 316.12129745313797, "episodes": 10, "seconds": 13.937565552070737}
+{"time_unix": 1791221455.9568994, "type": "train_episode", "step": 12500, "env_steps": 100000, "episode": 100, "return": 348.7342178545778, "decisions": 125, "episode_env_steps": 1000, "truncated_by_budget": false}
+{"time_unix": 1791221462.317486, "type": "checkpoint", "step": 12500, "env_steps": 100000, "reason": "completed", "path": "/project/alex_phd/runs/curl-cartpole-encoder-strength-20261005/single_encoder_curl-seed456-100k-v1/run/latest.pt", "seconds": 6.3602010272443295, "bytes": 2370118499}
+{"time_unix": 1791221462.3175867, "type": "end", "reason": "completed", "step": 12500, "env_steps": 100000, "updates": 11500, "elapsed_seconds": 861.5256837699562, "eval_env_steps": 260000}

@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T17:18:00Z
+cutoff_utc: 2026-10-05T17:32:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T17:18:00Z
+execution_update_utc: 2026-10-05T17:32:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,43 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## The second seed reverses the smaller-update advantage, October 5 at 17:32 UTC
+
+The first two completed correct-matching comparisons now favor different
+update rules. Scores are test reward averaged over ten fixed starting states
+after 100k training simulator steps in cartpole swing-up.
+
+| Training seed | Original CURL update | Smaller matching update | Change | No matching |
+|---|---:|---:|---:|---:|
+| 123 | 678.02 | 795.84 | +117.81 | 454.47 |
+| 456 | 446.17 | 316.12 | -130.05 | 240.54 |
+
+**The first favorable result did not repeat in the second seed.** The smaller
+update still finished above no matching in both seeds, but it is not consistently
+better than the original update. We should not describe it as an improvement
+to CURL or a demonstrated bug fix. Opposite outcomes also do not prove that the
+two update rules are equivalent. The third correct-matching seed and two
+wrong-matching counterparts remain unfinished.
+
+The new seed-456 run completed normally, without a restart or failure. Root
+recomputed its 26 means from 260 test episodes and rechecked both original
+seed-456 comparators. All 920 logged learning values were finite. The run
+completed 100 natural training episodes and 11,500 updates, saved a verified
+2,370,118,499-byte checkpoint, and used the declared ten test starts. Its
+configuration differs from original CURL only in the arm/update rule and a
+shorter time cap that did not bind. The fixed endpoint was 316.12; the earlier
+330.81 at 84k is not substituted for it. Native elapsed time was 14.36 minutes,
+including 6.14 minutes testing and 6.36 seconds saving state.
+The [new native records](encoder-strength-data/single_encoder_curl-seed456)
+are published unchanged.
+
+**Decision:** finish the original six-run plan. Wrong matching for seed 456
+is active; both seed-789 conditions follow. Retain the opposite signs and the
+first seed's wrong-target result together. Keep the PDF at its explicit
+completed-cohort cutoff until this comparison is complete. At the next review,
+prepare the most useful follow-up while the final runs are still working;
+do not wait for an empty queue or start a tuning sweep from these partial results.
 
 ## First seed: smaller updates do not remove wrong-target harm, October 5 at 17:18 UTC
 

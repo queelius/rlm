@@ -6,7 +6,23 @@ priority: finish_six_fixed_strength_runs_and_compare_all_conditions
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 17:18 UTC
+## Current decision, October 5 at 17:32 UTC
+
+Correct matching with the smaller update has opposite effects in the first
+two seeds: +117.81 and -130.05 points. The early favorable observation has
+not repeated. Finish the six fixed runs before concluding that either rule
+is better, equivalent, or selectively changes the harm from wrong targets.
+Wrong matching for seed 456 is active, with two final-seed jobs ready.
+
+Ranked next: finish the same-seed comparison; then prepare a bounded follow-up
+before the queue empties. If mixed outcomes persist, favor estimating training
+variation with fresh matched seeds over a sweep designed to find a winning
+setting. A shared-checkpoint intervention remains useful only for a clearly
+specified question about immediate update effects versus collected experience.
+No extra study is admitted at this partial cutoff. Keep the mixed results
+visible in supporting documents; the PDF awaits the completed comparison.
+
+## Earlier decision, October 5 at 17:18 UTC
 
 Both smaller-update conditions for seed 123 now have fixed endpoints. Correct
 matching rose by 117.81 points and wrong matching by 137.96, leaving the
