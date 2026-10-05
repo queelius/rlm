@@ -41,13 +41,15 @@ does not by itself explain why correct matching helps. The
 [complete comparison](figures/correspondence-three-seeds/RESULTS.md),
 [native records](correspondence-data), and [dated findings](FINDINGS.md) preserve
 the evidence. The [smaller-update comparison](ENCODER_UPDATE_CONTROL.md) has
-started; its results are not yet complete. **Supporting update at 17:32 UTC:**
+started; its results are not yet complete. **Supporting update at 17:50 UTC:**
 the smaller correct-matching update helped the first seed (795.84 versus 678.02)
 but hurt the second (316.12 versus 446.17). It is not consistently better.
-The first smaller-update wrong-matching model scored 138.08, still below 454.47
-without matching. The [evidence and limitations](FINDINGS.md) preserve these
-mixed outcomes. The PDF retains the complete-cohort cutoff above while the
-remaining three runs finish.
+The smaller-update wrong-matching scores are 138.08 and 72.01, both below
+their no-matching comparisons (454.47 and 240.54). The
+[evidence and limitations](FINDINGS.md) preserve these mixed outcomes.
+A [fresh-seed comparison](CARTPOLE_FRESH_SEEDS.md) is prepared to check
+reproducibility, not yet launched. The PDF retains the complete-cohort cutoff
+above while the remaining two runs finish.
 
 All three additional training pairs are complete:
 **502.95 versus 200.43**, **254.63 versus 335.20**, and **436.58 versus 156.22**,

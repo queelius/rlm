@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T17:32:00Z
+cutoff_utc: 2026-10-05T17:50:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T17:32:00Z
+execution_update_utc: 2026-10-05T17:50:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,47 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## Wrong-target harm persists at the smaller update, October 5 at 17:50 UTC
+
+The second smaller-update model taught to match the wrong pictures finished
+at **72.01**, close to its original **68.10** and below **240.54** without
+the matching exercise. Here are both completed wrong-target comparisons:
+
+| Training seed | Wrong matches, original update | Wrong matches, smaller update | No matching |
+|---|---:|---:|---:|
+| 123 | 0.11 | 138.08 | 454.47 |
+| 456 | 68.10 | 72.01 | 240.54 |
+
+Scores are total reward averaged over ten fixed cartpole test starts after
+100k training simulator steps. Reducing the update did not remove wrong-target
+harm in either completed seed. The increase was 137.96 points for the first
+and only 3.91 for the second. Correct matching's changes remain mixed:
++117.81 and -130.05. This is not evidence for a consistent improvement or a
+reliable interaction. In seed 456, the correct-minus-wrong gap narrowed mainly
+because correct matching got worse, not because wrong matching recovered.
+
+Root recomputed all 260 means from 2,600 raw tests across the five conditions
+for these two seeds, and checked native completion, finite updates, fresh
+starts, settings and checkpoint sizes. The new wrong-target run had 920 finite
+learning records, 100 natural training episodes, 11,500 updates and a verified
+2,370,118,883-byte checkpoint. No failure or restart. All 115 sampled pairing
+records had zero fixed positions; replay duplicates produced three residual
+same-record matches. The curve was unstable, reaching 179.55 at 92k before
+finishing at 72.01; we retain the declared endpoint. Native time was 14.23
+minutes, including 6.03 minutes testing and 6.53 seconds saving state.
+The [native records](encoder-strength-data/single_encoder_shuffled_curl-seed456)
+are available unchanged.
+
+The final seed's two models will finish unchanged. Meanwhile, a
+[nine-model fresh-seed comparison](CARTPOLE_FRESH_SEEDS.md) is prepared on CPUs:
+original CURL, smaller-update CURL and no matching, each with three new seeds.
+Its purpose is to assess reproducibility and training variation, not to find
+a winning setting. It omits new wrong-target models and therefore cannot claim
+to replicate the correctness-by-strength interaction. The new cohort will be
+reported separately. Preparation is not admission: it cannot displace the
+current batch's final job. The learning PDF retains its completed-cohort cutoff
+until the ongoing comparison is complete.
 
 ## The second seed reverses the smaller-update advantage, October 5 at 17:32 UTC
 

@@ -6,7 +6,33 @@ priority: finish_six_fixed_strength_runs_and_compare_all_conditions
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 17:32 UTC
+## Current decision, October 5 at 17:50 UTC
+
+Wrong matching with the smaller update remains below no matching in both
+completed seeds: 138.08 versus 454.47 and 72.01 versus 240.54. The second
+wrong-target score is only 3.91 above its original counterpart. Correct
+matching's smaller-update effects still have opposite signs. Complete the
+final two models unchanged and then report the whole comparison.
+
+Prepare nine [fresh-seed runs](CARTPOLE_FRESH_SEEDS.md) using the existing code:
+original CURL, smaller-update CURL and no matching for seeds 234, 567 and 890.
+The protocol fixes all three paired contrasts and a rotated order. Report this
+added cohort separately, with any combined view explicitly secondary. This
+is adaptive replication, not an untouched confirmation or a new algorithm.
+
+Read-only CPU review favors nine runs over fifteen: the uncertain useful
+effects need replication more than the already harmful wrong-target conditions.
+Omitting those arms means no new interaction claim. The shared-checkpoint
+mechanism probe is less ready and answers a different question; defer it.
+No sweep, learning-rate search or new learner changes are needed.
+
+Inputs are prepared and hash-verified on CPUs, not admitted. Launch a waiting
+successor only once the final current job is running (or its queue has ended),
+using the shared lock, existing caps and checked resources. This avoids GPU
+idleness without jumping ahead of an accepted job. Update the PDF when the
+current two-by-two comparison completes; the fresh cohort need not delay that.
+
+## Earlier decision, October 5 at 17:32 UTC
 
 Correct matching with the smaller update has opposite effects in the first
 two seeds: +117.81 and -130.05 points. The early favorable observation has
