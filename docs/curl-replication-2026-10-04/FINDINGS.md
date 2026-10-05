@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T14:58:00Z
+cutoff_utc: 2026-10-05T16:04:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T14:58:00Z
+execution_update_utc: 2026-10-05T16:04:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,56 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## The additional walking cohort is complete, October 5 at 16:04 UTC
+
+| New training seed | CURL | Same-crops control | CURL minus control |
+|---|---:|---:|---:|
+| 234 | 502.95151 | 200.42850 | +302.52301 |
+| 567 | 254.63460 | 335.19614 | -80.56155 |
+| 890 | 436.58392 | 156.21813 | +280.36579 |
+
+CURL won two pairs and lost one. The new group's averages are **398.06 versus
+230.61**, a **+167.44** mean difference favoring CURL. This is a more positive
+group than the original, whose mean difference was +1.20. Keep both groups
+visible. The follow-up adds evidence that the extra update can help under these
+settings, but the pair-to-pair variation remains substantial. It does not
+establish a universal benefit, equivalence, or the cause of the differences.
+
+The six-pair descriptive mean difference would be +84.32, with four CURL wins
+and two control wins. That is not a new confirmatory estimate: we added the
+second cohort after inspecting the first. Our main presentation therefore
+reports the original and additional groups separately, with every pair shown.
+The additional paired differences have sample standard deviation 215.06,
+which describes variation across three training pairs, not standard error or
+variation across the 30 final test episodes.
+
+The final control learned from 17.31 initially to 156.22. Its intermediate score
+reached 177.29 at 88k and then fluctuated. We retain the declared 100k endpoint.
+This is limited learning at this budget, not a software failure or proof that
+it could never catch up with more training.
+
+Root and an independent CPU audit verified all 156 means from 1,560 exact-start
+episodes, successful natural endpoints, finite learning values and checkpoint
+sizes. Every run used 100k training steps, 49k updates, 100 natural training
+episodes and 260k separate test steps. No failures or restarts. Within-pair
+settings differ only by arm; the original cohort differs only by training seed.
+All 24 [public native records](walker-additional-data) match their originals.
+The [complete-group curves and summary](figures/walker-additional-three-pairs)
+preserve all models; the earlier two-pair figure remains a historical snapshot.
+
+Total native start-to-end time was 435.33 minutes (7.26 hours), including
+211.72 minutes (3.53 hours) of testing and 7.43 minutes of checkpoint writes.
+The next cartpole condition launched 0.081 seconds after the walking queue
+ended. Real test returns arrived after 19.01 seconds; learning updates and
+zero-fixed-position pairing diagnostics followed. Two further seeds are queued.
+This is a running experiment, not evidence yet that wrong matching helps or hurts.
+
+**Next decision:** finish the admitted [three-condition cartpole comparison](CORRESPONDENCE_CONTROL.md),
+where the original early benefit was more consistent. Compare correct matching,
+no matching, and wrong matching. Incorrect targets can actively harm learning;
+their failure alone would not establish why correct matching helps. Update the
+learning guide to show both walking cohorts and this narrower mechanism question.
 
 ## One more trained walker, but not yet another comparison, October 5 at 14:58 UTC
 

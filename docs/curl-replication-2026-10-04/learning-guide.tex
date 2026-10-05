@@ -49,8 +49,9 @@ the methods are equivalent. Page 9 shows every pair.
 In the original walking study, CURL won two pairs, but the control won the third by a
 large margin. The average scores were \textbf{435 versus 433}, hiding very
 different individual outcomes. The same winners persisted on 50 new test starts.
-New training pairs also have different winners. Pages 10--11 explain why we
-cannot claim a dependable walking advantage. Latest evidence: 5 October, 13:39 UTC.
+Three new training pairs also have different winners, but favor CURL on average:
+\textbf{398 versus 231}. Pages 10--12 keep both groups visible rather than
+choose the more favorable one. Latest evidence: 5 October, 16:04 UTC.
 
 \question{Why this paper?}
 
@@ -73,7 +74,7 @@ practice, but would not retroactively prove our earlier RLM training correct.
 \question{How to read this guide}
 
 Pages 2--4 explain the task with examples. Pages 5--6 explain the comparison
-and code. Pages 7--11 give next decisions, checks and measured results.
+and code. Pages 7--12 give next decisions, checks and measured results.
 
 \end{frame}
 \begin{frame}[t]
@@ -370,8 +371,9 @@ measurements separate from the model's retained training history.
 \question{How results will change the plan}
 
 The control finished higher in two longer cartpole pairs; CURL won one.
-The completed walking comparison also has different winners. Before trying
-to explain why matching helps, we need to check how repeatable its benefit is.
+Both completed walking groups also have different winners, though the new group
+favors CURL on average. The benefit varies across training runs. Our next
+comparison asks whether matching the right pictures matters in cartpole.
 
 Our independent small NumPy calculation matches the released Torch loss and
 gradients to numerical precision. That checks the calculation, not its usefulness
@@ -385,7 +387,7 @@ Item & Status\\
 \midrule
 Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
-Original training and evaluation & Three pairs on each task.\\
+Training and evaluation & Three cartpole pairs; six walking pairs.\\
 Checkpoint save/reload verification & Next-update and large-array tests passed.\\
 Evidence about the extra matching task & Cartpole: early lead. Walking: mixed.\\
 \bottomrule
@@ -393,10 +395,11 @@ Evidence about the extra matching task & Cartpole: early lead. Walking: mixed.\\
 
 \question{What is running next?}
 
-All six original walking models kept the same pair-by-pair winners on 50 new
-test starts. Two additional training pairs are now complete, with opposite
-winners; the final pair is underway. New test episodes check existing models.
-New training runs check whether different models teach the same lesson.
+We are training cartpole models with deliberately wrong image matches: for
+example, pairing a view of the pole leaning right with a different recorded
+moment. The extra learning exercise remains, but its targets change. We keep
+the original correct-matching and no-matching comparisons. Wrong targets may
+harm learning; a poor score alone would not explain why correct matching helps.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
@@ -562,14 +565,10 @@ us which part of training creates the differences, or how often CURL helps.
 
 Testing one learned walker 50 times still gives us only one learned walker.
 The fifty-start panel contains the original three training pairs, not 300
-independent training runs. We also began three additional pairs from fresh
+independent training runs. We also trained three additional pairs from fresh
 weights, with unchanged settings, to test variation between trained models.
-
-\textbf{Two new pairs are now complete, with opposite winners.} CURL scored
-\textbf{503 versus 200} in one pair, but \textbf{255 versus 335} in the other.
-The third pair is still running. These new models also show that the result
-can depend strongly on the training run. We will finish the whole group,
-not stop after a favorable comparison.
+The whole new group is now complete. The next page reports every pair rather
+than selecting the models that support the more favorable story.
 
 \takeaway{More tests of the same models and training more models answer
 different questions. We need to keep those sources of variation separate.}
@@ -580,7 +579,48 @@ new task. We used every fixed 100k model, with no checkpoint selection or furthe
 learning. The original scores remain unchanged. This supplemental check cost
 300 test episodes, 300k simulator steps and about 45 minutes. Native records:
 \texttt{walker-fresh-starts-data/}; details: \texttt{WALKER\_FRESH\_STARTS.md}.
-Supplemental cutoff: 5 October, 08:48 UTC. New training-pair records:
-\texttt{walker-additional-data/}; cutoff: 5 October, 13:39 UTC.
+Supplemental cutoff: 5 October, 08:48 UTC.
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{11 / TRAINING NEW MODELS}{The new group favors CURL, but not in every pair.}
+
+We trained three more walking pairs from fresh weights. Each pair uses a new
+training seed, which changes initialization and training randomness. Both
+methods keep the same task, crops, settings and fixed 100,000-step budget.
+
+\begin{center}
+\includegraphics[width=.82\linewidth]{figures/walker-additional-three-pairs/learning-curves.pdf}
+\end{center}
+
+\textbf{Reading the plot.} Each color is a new training pair. Solid lines use
+CURL; dashed lines remove image matching. Each point averages ten test episodes
+without changing the model. Higher reward means better walking, not a success
+percentage. All six curves are shown, without smoothing or checkpoint selection.
+
+\question{What are the results at the planned endpoint?}
+
+CURL scored \textbf{503 versus 200}, \textbf{255 versus 335}, and
+\textbf{437 versus 156}. It won two pairs and lost one. This new group's
+average is \textbf{398 versus 231}, an advantage of about 167 reward points.
+The original group's average advantage was about 1 point. Both groups remain
+in the report; neither replaces the other.
+
+\question{What does this change?}
+
+This adds positive evidence for CURL in this setting, while showing how much
+the result can depend on training randomness. It does not establish a reliable
+win on every run, an advantage on every task, or why the extra update helps.
+The new group was added after inspecting the original results, so this remains
+an exploratory study, not a new untouched confirmation.
+
+\takeaway{A single average can hide important variation. Repeating the training
+changed the size of the apparent benefit, but did not eliminate different winners.}
+
+\small
+\textbf{Evidence and cost.} All six runs finished without failures or restarts.
+The group took 7.26 hours, including 3.53 hours of testing. Native records:
+\texttt{walker-additional-data/}; figure and exact summary:
+\texttt{figures/walker-additional-three-pairs/}. Cutoff: 5 October, 16:04 UTC.
 \end{frame}
 \end{document}

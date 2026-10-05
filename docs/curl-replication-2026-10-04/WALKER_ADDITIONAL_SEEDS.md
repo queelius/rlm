@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: two_pairs_complete_third_pair_running
+status: all_three_pairs_complete
 question: Does the fixed100k walking effect repeat across new training seeds?
 training_seeds: [234, 567, 890]
 primary_endpoint: 100000_training_simulator_steps
@@ -9,13 +9,16 @@ external_campaign: /project/alex_phd/runs/curl-walker-additional-seeds-20261005
 
 # Does the result change when we train a different set of models?
 
-**Execution update, October 5 at 13:55 UTC:** two new pairs are complete.
-CURL/control scores are 502.95151/200.42850 and 254.63460/335.19614, so the
-winners differ. The final pair is running. The
-[four models' native records](walker-additional-data) and
-[dated interpretation](FINDINGS.md) are available. Continue all six runs with
-unchanged settings; the historical admission and waiting snapshots below
-remain the record of how this cohort was started.
+**Completed, October 5 at 16:04 UTC:** all three new pairs are complete.
+CURL/control scores are 502.95151/200.42850, 254.63460/335.19614 and
+436.58392/156.21813. CURL won two pairs and lost one. Mean scores are
+398.06/230.61, a +167.44 mean difference. The original group's mean difference
+was +1.20; retain both groups rather than select the more favorable one.
+All runs ended naturally with no failures or restarts. The
+[six models' native records](walker-additional-data),
+[complete-group figure](figures/walker-additional-three-pairs/learning-curves.pdf)
+and [dated interpretation](FINDINGS.md) are available. The historical protocol,
+admission and waiting snapshots below explain how the cohort was started.
 
 The original walking study produced two wins for CURL and one large win for
 the control. Their average scores were almost tied. Three pairs cannot tell

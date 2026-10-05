@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: admitted_owner_waiting_training_not_started
+status: first_training_run_active_two_following_seeds_queued
 question: Does matching the right observations matter for the early cartpole benefit?
 task: cartpole/swingup
 new_arm: shuffled_curl
@@ -90,8 +90,12 @@ A separate source snapshot includes the new module; all copied executable
 files match the verified implementation. The live walking snapshot is unchanged.
 At 14:33 UTC, the three-job batch was prepared without an owner or GPU outputs.
 At 14:56 UTC, its owner started waiting behind the final walking control.
-Training has not started. The existing shared lock permits an automatic handoff
-when that control finishes, without displacing any walking job.
+At 16:03 UTC the walking cohort finished, and the first new child launched
+0.081 seconds after its queue ended. Real test returns arrived after 19.01
+seconds; finite learning updates followed. Logged pairings have no unchanged
+positions, with occasional residual same-record matches from duplicate replay
+samples, as anticipated. These are sampled diagnostics, not an outcome or a
+claim that every incorrectly paired picture is semantically unrelated.
 
 ## Budget, ordering and interpretation
 
@@ -103,7 +107,8 @@ The allocation deadline remains epoch 1791387366. Use the existing GPU lock and
 start training only after all six additional walking jobs have finished or been
 accounted for by their owner. A waiting owner was admitted only after verifying
 that the sixth/final walking job was running and holding that lock. Waiting is
-not training, and no correspondence outcome is available yet.
+not training. The handoff has now occurred, but no completed correspondence
+outcome is available at this cutoff.
 
 Report all three conditions at the fixed endpoint, with individual training-seed
 scores and unsmoothed curves. Correct matches above both alternatives would be

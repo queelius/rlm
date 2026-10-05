@@ -1,12 +1,33 @@
 ---
 date: 2026-10-04
-status: supplemental_panel_complete_additional_seeds_running
-priority: finish_walker_replication_then_run_admitted_correspondence_control
+status: additional_walking_cohort_complete_correspondence_running
+priority: finish_three_condition_cartpole_comparison
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 14:58 UTC
+## Current decision, October 5 at 16:04 UTC
+
+The additional walking cohort is complete: paired differences **+302.52,
+-80.56 and +280.37**, averaging **+167.44**. This adds positive evidence for
+CURL under these settings, but keeps the between-run variation visible. Report
+it separately from the original +1.20 group; neither group replaces the other.
+Do not call the adaptively added cohort an untouched confirmatory study.
+
+The first wrong-matching cartpole run is now learning, with real simulator
+returns and verified pairing diagnostics; two seeds follow under the same
+owner. Finish these small admitted comparisons before choosing a larger
+follow-up. The automatic GPU handoff took 0.081 seconds after the walking
+queue ended. Source snapshots and caps are unchanged.
+
+Update the guide with the completed walking figure and the next question:
+does correct image correspondence contribute to the early cartpole advantage?
+Keep all three conditions in the report. Wrong labels can actively hurt, so a
+poor wrong-matching score alone is not a mechanism explanation. Subsequent
+optimizer sensitivity and within-task update-frequency proposals stay ranked
+below finishing this comparison; no extra batch is admitted in this review.
+
+## Earlier decision, October 5 at 14:58 UTC
 
 The third additional CURL walker finished at **436.58**, after the declared
 100k training steps. Its matched control is now running. This is evidence that

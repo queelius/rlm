@@ -1,11 +1,11 @@
 # Learning RL by reproducing CURL
 
-Start with [the eleven-page PDF](learning-guide.pdf). The
+Start with [the twelve-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **all three completed pairs at both 100k and 500k**,
-plus all three original walking pairs, their supplemental tests, and two
-completed pairs from the new training cohort. Latest cutoff: October 5, 13:39 UTC.
+plus all three original walking pairs, their supplemental tests, and all three
+pairs from the new training cohort. Latest cutoff: October 5, 16:04 UTC.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -31,21 +31,22 @@ examples are identified explicitly.
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
 the earlier interpretations as dated checkpoints.
 
-The first two additional training pairs also have opposite winners:
-**502.95 versus 200.43** and **254.63 versus 335.20**, CURL first. Their
+All three additional training pairs are complete:
+**502.95 versus 200.43**, **254.63 versus 335.20**, and **436.58 versus 156.22**,
+CURL first. Their
 [native records](walker-additional-data) and
-[learning curves](figures/walker-additional-two-pairs/learning-curves.pdf) are
-reported separately from the original cohort. The third new pair is still
-running. Page 11 includes this limited update without claiming a complete cohort.
-
-Update at October 5, 14:58 UTC: the third CURL model finished at **436.58**,
-but its control is still running. This is not yet a third paired result.
-The [running findings](FINDINGS.md) explain it and link the native records.
-The PDF retains its earlier, explicitly dated comparison cutoff.
+[learning curves](figures/walker-additional-three-pairs/learning-curves.pdf) are
+reported separately from the original cohort on page 12. The new mean scores
+are **398.06 versus 230.61**, a **+167.44** advantage for CURL, compared with
+the original group's +1.20. This adds positive evidence in this setting, but
+the different winners and large variation remain important. The follow-up was
+added after inspecting earlier results, not run as a new untouched confirmation.
+The [running findings](FINDINGS.md) preserve all dated interpretations, including
+the earlier incomplete-cohort reports.
 
 The [fresh-start evaluation](WALKER_FRESH_STARTS.md) is complete for all six
 unchanged walking models. [Three additional training pairs](WALKER_ADDITIONAL_SEEDS.md)
-have begun to check variability between independently trained models.
+are complete, checking variability between independently trained models.
 This decision follows the original mixed cohort, not favorable selection from
 the supplemental evaluation. New test episodes and new training runs answer
 different questions; neither should be counted as the other.
@@ -87,16 +88,18 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
-The eleven-page edition includes the complete supplemental walking test and
-the first two pairs of the additional training cohort, clearly marked incomplete.
-Changed pages 1, 7 and 11 were rendered and visually inspected, along with the
-new two-pair plot. The page-1 footnote crowding was corrected. No TeX overflow
+The twelve-page edition includes the complete supplemental walking test and
+the complete additional training cohort, reported separately from the original.
+Changed pages 1, 7, 11 and 12 were rendered and visually inspected, including
+the new complete-cohort plot. The new page's figure initially left too little
+room for its evidence footer; its size was reduced and the page rechecked.
+No TeX overflow
 warnings or out-of-page text were found; other pages retain their earlier inspection. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`ecd9c915d12b10d197cb6d95ebba70677dbb2775777062c91e3cc4a7ea638e7a`.
+`f718c3ff7a4bac479e92c3624bfdb78d1cfb91cdea4e5c57e75818f4da468726`.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
@@ -126,26 +129,31 @@ byte for byte. The [machine-readable summary](walker-fresh-starts-data/summary.j
 includes exact values, parent identities and file checksums. No large checkpoint
 weights are committed to Git.
 
-For the two additional pairs, root and independent CPU audits recomputed all
-104 means from 1,040 episodes, verified the exact test starts, native endpoints,
+For the three additional pairs, root and independent CPU audits recomputed all
+156 means from 1,560 episodes, verified the exact test starts, native endpoints,
 finite learning, matched configurations and checkpoint receipts. Scientific
 settings match the original cohort except for the new training seeds. Their
-four curves preserve late fluctuations and crossings, not just final winners.
-All 16 public record files match their external originals byte for byte.
+six curves preserve late fluctuations and crossings, not just final winners.
+All 24 public record files match their external originals byte for byte.
+The existing two-arm summarizer was reused without changing its source.
 
 ## Evidence and next comparisons
 
 - [Correct versus wrong image matches](CORRESPONDENCE_CONTROL.md): a three-run
-  cartpole follow-up admitted and waiting behind the final walking control. It retains
+  cartpole follow-up now training, after the walking cohort finished. It retains
   the original correct-matching and no-matching comparisons, with an explicit
-  warning that false targets can harm learning. Its training has not started yet.
+  warning that false targets can harm learning. No completed outcome is available yet.
 - [Declared fresh-start evaluation](WALKER_FRESH_STARTS.md) and its
   [fixed panel and budget](walker-fresh-starts.json): a supplemental check of
   all six final walkers on 50 new starts each. This separate evaluation is
   complete, with [all native records](walker-fresh-starts-data). Page 11 reports
   it separately; page 10's original results remain unchanged.
 - [Additional training-seed protocol](WALKER_ADDITIONAL_SEEDS.md): three new
-  matched pairs with unchanged settings, now running after the evaluation batch.
+  matched pairs with unchanged settings, now complete. The
+  [complete-cohort summary](figures/walker-additional-three-pairs/summary.json)
+  and curves include every model. The earlier
+  [two-pair snapshot](figures/walker-additional-two-pairs/learning-curves.pdf)
+  is retained as historical evidence, not the current result.
 - [First walking reference](walker-data/first-reference) and
   [matched control](walker-data/first-control), plus
   [second reference](walker-data/second-reference) and
