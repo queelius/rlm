@@ -6,7 +6,23 @@ priority: finish_six_fixed_strength_runs_and_compare_all_conditions
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 17:09 UTC
+## Current decision, October 5 at 17:18 UTC
+
+Both smaller-update conditions for seed 123 now have fixed endpoints. Correct
+matching rose by 117.81 points and wrong matching by 137.96, leaving the
+correct-minus-wrong gap only 20.15 points smaller. Wrong matching remains
+316.40 below no matching. This first seed does not support a selective rescue
+of wrong-target learning. It also cannot establish a reliable pattern.
+
+Continue the remaining four models unchanged; seed 456 with correct matches
+is active and three follow. Next assess all same-seed contrasts, not a favorable
+single result or unequal-seed average. The shared-checkpoint follow-up remains
+conditional: different policies collect different experience, so a full-training
+comparison does not by itself isolate immediate gradient effects. No new batch
+is admitted. Keep the new table in the supporting findings until the full
+comparison warrants a PDF update; retain all partial reports below as history.
+
+## Earlier decision, October 5 at 17:09 UTC
 
 The first correct-matching model with a smaller encoder update finished at
 795.84, compared with 678.02 under the original update rule for seed 123.

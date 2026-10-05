@@ -1,6 +1,6 @@
 ---
 date: 2026-10-05
-status: one_complete_second_running_four_queued
+status: two_complete_third_running_three_queued
 question: Does the effect of correct or wrong image matching depend on the strength of its encoder update?
 task: cartpole/swingup
 training_seeds: [123, 456, 789]
@@ -10,17 +10,19 @@ new_arms: [single_encoder_curl, single_encoder_shuffled_curl]
 
 # Does the strength of the extra learning exercise matter?
 
-**Execution update, October 5 at 17:09 UTC:** the first correct-matching model
-with a smaller encoder update has finished at **795.84**, versus **678.02**
-for original CURL with training seed 123. This is one fixed-100k endpoint,
-not a completed three-seed comparison. The wrong-target counterpart is running;
-four later models remain queued. Finish all six unchanged. Actual returns,
-finite learning values, native completion and the saved checkpoint were checked.
-The [dated findings](FINDINGS.md) and
-[native records](encoder-strength-data/single_encoder_curl-seed123) give the evidence.
+**Execution update, October 5 at 17:18 UTC:** both smaller-update models for
+seed 123 are complete: **795.84 with correct matching and 138.08 with wrong
+matching**, versus **678.02 and 0.11** under the original rule. The no-matching
+model scored **454.47**. Both new scores rose by similar amounts; the wrong-target
+model still performed much worse than the no-matching model. This is one seed,
+not a reliable improvement or interaction. Seed 456 with correct matches is
+training; three jobs follow. Finish all six unchanged. Actual returns, finite
+learning values, native completion and saved checkpoint sizes were checked.
+The [dated findings](FINDINGS.md) and [native records](encoder-strength-data)
+give the evidence.
 Implementation and focused real-upstream CPU tests passed independent review
 before admission. The first model launched 0.875 seconds after the predecessor
-queue ended; the next launched 0.020 seconds after its completion receipt.
+queue ended; subsequent jobs launched immediately under the same owner.
 
 The design below was fixed at 16:28 UTC, when only the first wrong-matching
 endpoint was known. All three original wrong-target models have since finished;

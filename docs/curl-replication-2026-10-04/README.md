@@ -41,11 +41,13 @@ does not by itself explain why correct matching helps. The
 [complete comparison](figures/correspondence-three-seeds/RESULTS.md),
 [native records](correspondence-data), and [dated findings](FINDINGS.md) preserve
 the evidence. The [smaller-update comparison](ENCODER_UPDATE_CONTROL.md) has
-started; its results are not yet complete. **Supporting update at 17:09 UTC:**
-the first smaller-update model scored 795.84 versus 678.02 for original CURL
-with the same training seed. This is one model, not a reliable improvement
-across seeds. Its [evidence and limitations](FINDINGS.md) are now available;
-the PDF retains the complete-cohort cutoff above while the other five runs finish.
+started; its results are not yet complete. **Supporting update at 17:18 UTC:**
+the smaller-update models for the first seed scored 795.84 with correct matching
+and 138.08 with wrong matching. Original scores were 678.02 and 0.11; without
+matching, the score was 454.47. Both new scores rose, but wrong targets remained
+harmful relative to no matching. This is only one seed, not a reliable effect
+across seeds. The [evidence and limitations](FINDINGS.md) are available;
+the PDF retains the complete-cohort cutoff above while the remaining four runs finish.
 
 All three additional training pairs are complete:
 **502.95 versus 200.43**, **254.63 versus 335.20**, and **436.58 versus 156.22**,
