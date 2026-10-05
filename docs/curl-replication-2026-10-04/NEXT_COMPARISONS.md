@@ -21,6 +21,14 @@ better starting point for this mechanism question than the variable walker
 results: **does the extra learning help because it matches the right pictures?**
 This is preparation, not an admitted or launched experiment.
 
+Preparation update at 14:33 UTC: the bounded trainer condition is implemented
+and its focused CPU tests pass, including the actual reference-arm path and
+next-update checkpoint restoration. Independent review passed, and a separate
+source snapshot and three fixed jobs are ready for admission. No owner or new
+GPU run has launched; do not let the new queue displace the final walker control.
+The [fixed three-run protocol](CORRESPONDENCE_CONTROL.md) records the comparison
+and interpretation limits. The live walking owner is unchanged.
+
 1. Add a third condition that deliberately matches each observation to another
    observation's crop. Keep the original CURL and same-crops control results
    visible. Wrong matches can actively harm learning, so this is not a neutral
@@ -49,6 +57,16 @@ shared-checkpoint matching-on/off intervention. Neither is a proven bug fix.
 A full longer-horizon walker cohort remains lower priority because it is much
 more expensive and needs a new storage plan. Do not retune using the supplemental
 test starts. These are exploratory follow-ups, not new confirmatory claims.
+
+One further question is worth preserving: does the value of the extra matching
+update depend on how often we update the model per simulator interaction? Our
+fixed-100k cartpole runs have 11,500 learning updates, whereas the fixed-100k
+walking runs have 49,000, because their action repeats differ. Both conditions
+are matched within each task, so this does not invalidate those comparisons.
+It does mean the cross-task difference does not isolate task identity from the
+amount of optimization. A future within-task update-frequency comparison could
+separate them. This is a hypothesis from recorded budgets, not an established
+cause of the mixed walking results or an admitted experiment.
 
 ## Earlier decision, October 5 at 08:49 UTC
 

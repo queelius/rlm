@@ -130,6 +130,10 @@ All 16 public record files match their external originals byte for byte.
 
 ## Evidence and next comparisons
 
+- [Correct versus wrong image matches](CORRESPONDENCE_CONTROL.md): a three-run
+  cartpole follow-up being prepared while the walking cohort finishes. It retains
+  the original correct-matching and no-matching comparisons, with an explicit
+  warning that false targets can harm learning. Preparation is not a launch.
 - [Declared fresh-start evaluation](WALKER_FRESH_STARTS.md) and its
   [fixed panel and budget](walker-fresh-starts.json): a supplemental check of
   all six final walkers on 50 new starts each. This separate evaluation is
