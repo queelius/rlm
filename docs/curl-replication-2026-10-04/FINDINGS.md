@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T18:33:00Z
+cutoff_utc: 2026-10-05T18:46:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T18:33:00Z
+execution_update_utc: 2026-10-05T18:46:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,41 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## A large gain on one fresh seed, October 5 at 18:46 UTC
+
+On training seed 234, the smaller matching update finished at **668.22**,
+compared with **280.41** for original CURL. Both use correct image matches.
+The difference is **+387.81 reward points**, measured at the fixed 100k
+training-step endpoint on the same ten test starts. This is one matched
+training-seed comparison, not ten independent replications.
+
+The result shows that removing the dedicated extra encoder step can matter
+substantially in this setting. It does not establish a reliable improvement:
+the original three seeds showed one gain and two losses. Do not promote this
+one favorable fresh pair above the mixed earlier evidence, pool a partially
+completed new cohort into a favorable headline, or change the remaining seeds.
+The no-matching control for this seed is unfinished, so we still cannot say
+whether either matching method helped relative to using no matching exercise.
+
+The smaller-update curve pulled ahead during training, but remained variable:
+it reached 723.18 at 92k and finished at 668.22. We retain the declared final
+score. Root recomputed all 52 means from 520 raw tests across the completed
+pair. Both runs completed normally with 100 natural training episodes and
+11,500 updates. The new run has 920 finite learning records, no restart or
+failure, and a verified 2,370,118,499-byte checkpoint. Its configuration differs
+from the paired original only in the intended arm and encoder-update rule.
+The new [native files](fresh-seed-data/single_encoder_curl-seed234) are unchanged
+copies. Start-to-end time was 14.67 minutes, including 6.35 minutes testing
+and 6.29 seconds saving. Equal training experience is not equal computing time.
+
+Continue the no-matching control and six subsequent jobs unchanged. Different
+policies collect different experience; this final-score comparison cannot
+separate an immediate encoder effect from later changes in experience. The
+complete three-way comparison is the next useful evidence, followed by all
+three fresh seeds. A fixed-data mechanism probe remains a possible later step,
+not a new experiment admitted from this one result. The guide remains at its
+explicit completed-study cutoff; this partial cohort adds no reliable ranking.
 
 ## First fresh-seed result: no matched conclusion yet, October 5 at 18:33 UTC
 
