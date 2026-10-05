@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T02:01:00Z
+cutoff_utc: 2026-10-05T03:13:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T02:01:00Z
+execution_update_utc: 2026-10-05T03:13:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -16,6 +16,45 @@ All three cartpole pairs are complete at both budgets. CURL finished higher in e
 100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
 with different late winners. This small study shows an early benefit but no
 consistent late winner. It does not establish equivalence or a universal rule.
+
+## First walking pair complete, October 5 at 03:13 UTC
+
+At the fixed 100k endpoint, **CURL scored 482.83347 versus 241.28327 for the
+same-crops control**, a difference of **+241.55020**. This is one fresh training
+pair on walker/walk, not a three-seed result, a transfer of cartpole weights or
+a novelty claim. Both configurations match except for the arm. Each score is
+the mean of ten declared evaluation starts. All 52 points on the two complete
+curves were recomputed from the individual episode records.
+
+Both methods learned from their initial mean of 17.99. CURL learned earlier
+in this pair. The control's last six means were 163.19, 200.75, 212.38, 229.18,
+170.84 and 241.28. Its improvement makes a learning delay plausible, but neither
+catch-up with more training nor a persistent gap is established. Seed variation
+could also explain part of the difference. Ten evaluations of one policy are
+not ten independent trained models.
+
+The control completed 50k decisions, 100k training simulator steps, 100 natural
+training episodes and 49k ordinary update calls, with exit 0 and complete=true.
+All 3,430 logged learning values were finite; no recovery. The final checkpoint
+is 9,105,904,477 bytes, matching its receipt, saved in 24.03 seconds.
+Both arms used 100k training and 260k evaluation simulator steps. Native
+start-to-end durations were 74.83 minutes for CURL and 69.40 for the control.
+Control evaluation took 2,091.56 seconds and checkpoint writes 78.44 seconds.
+The comparison is matched on experience, not wall time or optimizer work.
+
+**Decision:** continue all three declared pairs, regardless of this favorable
+first result. The owner started CURL seed 456 immediately after the control
+exited. Its real simulator returns arrived after 87.32 seconds and finite
+updates after 104.27 seconds. Three later jobs remain queued. If the completed
+cohort supports the gap, a longer-horizon comparison can ask whether the
+control catches up; if seed outcomes vary, more seeds may be more informative.
+No live protocol or training source was changed.
+
+See [paired curves](figures/walker-first-pair/learning-curves.pdf),
+[machine-readable summary](figures/walker-first-pair/summary.json),
+[reference records](walker-data/first-reference) and
+[control records](walker-data/first-control). The guide adds a page with the
+task, score definition, complete curves, limitations and next decision.
 
 ## First walking reference complete, October 5 at 02:01 UTC
 

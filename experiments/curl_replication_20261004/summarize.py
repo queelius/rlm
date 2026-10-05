@@ -140,7 +140,9 @@ def summarize(root: Path) -> dict:
     }
 
 
-def write_outputs(summary: dict, output: Path) -> None:
+def write_outputs(
+    summary: dict, output: Path, title: str = "Learning to control the cart from images"
+) -> None:
     import matplotlib
 
     matplotlib.use("Agg")
@@ -213,7 +215,7 @@ def write_outputs(summary: dict, output: Path) -> None:
         ylabel="Average reward (higher is better)",
         ylim=(0, 1000),
         xlim=(0, TARGET),
-        title="Learning to control the cart from images",
+        title=title,
     )
     ax.grid(alpha=0.2)
     if any(r["curve"] for r in summary["runs"]):
@@ -228,5 +230,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--runs", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--title", default="Learning to control the cart from images")
     args = parser.parse_args()
-    write_outputs(summarize(args.runs), args.output)
+    write_outputs(summarize(args.runs), args.output, title=args.title)

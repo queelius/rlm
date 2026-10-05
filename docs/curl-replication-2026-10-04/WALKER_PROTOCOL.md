@@ -1,6 +1,6 @@
 ---
 date: 2026-10-04
-status: first_reference_complete_matched_control_running
+status: first_pair_complete_second_seed_running
 question: Does the early benefit of the extra image-matching update extend to a walking task?
 primary_endpoint: 100000_training_simulator_steps
 training_seeds: [123, 456, 789]
@@ -72,12 +72,15 @@ and action repeat and checks those fields when recognizing completed jobs.
 That small change passed nine focused tests and independent review, separately
 from the sealed live cartpole sources.
 The distinct campaign launched on October 5 at 00:43:32 UTC, after the cartpole
-queue ended and its owner exited. At the October 5, 02:01 UTC review, the first
-CURL reference is complete: **482.83** at the fixed 100k endpoint. Its control
-is running, with four later jobs queued. This is not a completed comparison.
+queue ended and its owner exited. At the October 5, 03:13 UTC review, the first
+pair is complete: **482.83 for CURL versus 241.28 for the control** at the fixed
+100k endpoint. The second CURL seed is running, with three later jobs queued.
+One pair does not establish repeatability. See the [paired curves and summary](figures/walker-first-pair).
 The first reference took 74.83 minutes from native start to end, including
 35.10 minutes of evaluation and 1.24 minutes of checkpoint writes.
-Its final checkpoint is 9.14 GB. See [native evidence](walker-data/first-reference).
+Its final checkpoint is 9.14 GB. The control took 69.40 minutes and saved a
+9.11 GB checkpoint. See [reference evidence](walker-data/first-reference) and
+[control evidence](walker-data/first-control).
 Cartpole-specific continuation admission remains unchanged;
 any later walker continuation requires its own explicit protocol.
 

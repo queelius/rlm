@@ -1,12 +1,12 @@
 ---
 date: 2026-10-04
-status: cartpole_complete_first_walker_reference_complete_control_running
+status: cartpole_complete_first_walker_pair_complete_second_seed_running
 priority: replication_before_mechanism
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 02:01 UTC
+## Current decision, October 5 at 03:13 UTC
 
 The early paired advantage was +184.64 on average; at 500k it is +5.22, with
 differences -24.20, +55.18 and -15.31. Every pair's gap shrank, but the later
@@ -16,13 +16,14 @@ evidence of equivalence. First-pair CURL's extra recovery cost remains explicit.
 1. **Run the already-declared walker scope check.** It launched at 00:43:32 UTC
    after the cartpole queue ended. All three pairs, fresh weights, fixed 100k
    endpoint and unchanged settings in [WALKER_PROTOCOL.md](WALKER_PROTOCOL.md).
-   First CURL reference finished at 482.83 in 74.83 minutes; its control is
-   running with verified native returns and finite updates. There is no
-   completed walking pair yet. Preserve all declared outcomes; do not choose
-   the reference's higher interim score or treat one run as a comparative result.
+   First pair finished at 482.83 versus 241.28, favoring CURL. The second CURL
+   seed is running with verified returns and finite updates. Finish the cohort;
+   one favorable pair does not establish a repeatable advantage.
 2. **Decide on more seeds or a longer walker horizon from the complete cohort.**
-   A repeated early benefit strengthens its scope within these tasks; a mixed
-   result narrows the claim. Do not stop after a favorable first seed or change
+   The first control was improving near its endpoint, so a longer horizon could
+   distinguish delayed learning from a persistent gap if the pattern repeats.
+   A mixed cohort would instead motivate more seeds. Do not stop after a
+   favorable first seed or change
    the declared endpoints in response to interim rewards.
 3. **Keep the shared-checkpoint matching-on/off intervention conditional.** It
    asks whether continued extra learning helps after an early foundation. It

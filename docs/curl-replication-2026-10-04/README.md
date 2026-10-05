@@ -1,10 +1,10 @@
 # Learning RL by reproducing CURL
 
-Start with [the nine-page PDF](learning-guide.pdf). The
+Start with [the ten-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **all three completed pairs at both 100k and 500k**,
-plus the first completed walking run, with an October 5, 02:01 UTC evidence cutoff.
+plus the first completed walking pair, with an October 5, 03:13 UTC evidence cutoff.
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -16,9 +16,11 @@ The mean advantage shrank from **+184.64 to +5.22**. That is an early benefit
 without a consistent late winner in this small study, not proof of equivalence.
 Page 8 preserves the early comparisons; page 9 shows all three longer pairs
 with limits and recovery cost. A fresh-model comparison on a walking task is
-now running to test the scope of the early finding. Its first CURL run finished
-at **482.83**, with the matched control still running. This is one model, not
-evidence that image matching helps on walking. Published scores and invented teaching
+now running to test the scope of the early finding. Its first pair finished
+at **482.83 versus 241.28**, favoring CURL. Page 10 shows the complete learning
+curves and the next question: does this repeat, and would longer training let
+the control catch up? One pair cannot establish a general advantage.
+Published scores and invented teaching
 examples are identified explicitly.
 
 The [running findings](FINDINGS.md) explain the latest comparison and preserve
@@ -61,15 +63,17 @@ Keep published reference scores separate from our measurements.
 ## Verification of this edition
 
 Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
-The nine-page edition includes all three matched cartpole pairs at 500k and the
-first walking reference. Updated pages 1 and 7 were visually inspected; other
-pages retain their earlier inspection. The current build reports no overfull
-or underfull boxes, and extracted text stays within every page boundary. The numerical
+The ten-page edition includes all three matched cartpole pairs at 500k and the
+first walking pair. Updated pages 1, 7 and 10 were visually inspected after
+compilation; the earlier pages retain their previous inspection. The first
+draft of page 10 overflowed. Shortening repeated explanations and its heading
+fixed this without shrinking the plot or body text. The final build has no
+overfull/underfull messages, and text stays inside all ten page boundaries. The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`969dea5cbf9da111f29410bcdf6a0388a747a8014795bcb73c2f4d6445e7bd4c`.
+`f34aa5b66481912e05034fcd61c3a41297b3ebe0572a73174e508e4286df318a`.
 The paired-figure code passed eight focused selection/endpoint tests, Ruff checks
 and independent code review. It uses the recorded joined curves without
 smoothing and excludes incomplete seeds and the abandoned branch.
@@ -80,15 +84,31 @@ All six completed 500k endpoints passed native terminal and ancestry checks.
 An independent CPU audit recalculated the 12 endpoint means from 120 episode
 records across both budgets, checked the ten evaluation starts and matched configurations, and
 confirmed the paired differences. Recovery cost is reported separately.
-For the new walking reference, the final mean was recomputed from all ten
-declared evaluation starts, native endpoint counters and checkpoint size were
-verified, and the four public record files match the external originals byte
-for byte. No new runtime or plotting code was needed for this update.
+For the walking pair, all 52 means were recomputed from their ten declared
+evaluation starts, native endpoint counters and checkpoint sizes were verified,
+and the public record files match the external originals byte for byte.
+The existing summarizer gained only a plot-title option, with a test that
+checks the rendered PDF. The new test failed before the option was added;
+all seven summarizer tests then passed, including the default CLI test.
+Ruff checks and formatting passed for both changed Python files. Training code
+and sealed live sources were unchanged. No full runtime test suite was needed
+for this plotting-only change.
 
 ## Evidence and next comparisons
 
-- [First walking reference's native records](walker-data/first-reference):
-  fixed 100k endpoint, one fresh training seed; no completed matched pair yet.
+- [First walking reference](walker-data/first-reference) and
+  [matched control](walker-data/first-control): one completed pair at fixed 100k.
+- [Walking paired summary](figures/walker-first-pair/summary.json) and
+  [learning curves](figures/walker-first-pair/learning-curves.pdf).
+  Rebuild from the closed copied records with:
+
+  ```sh
+  python experiments/curl_replication_20261004/summarize.py \
+    --runs docs/curl-replication-2026-10-04/walker-data \
+    --output docs/curl-replication-2026-10-04/figures/walker-first-pair \
+    --title 'Learning to walk from images: first training pair'
+  ```
+
 - [First reference's native records and configuration](data/first-reference):
   100k training steps, ten fixed evaluation seeds, no best-checkpoint selection.
 - [Matched control's native records and configuration](data/first-control):

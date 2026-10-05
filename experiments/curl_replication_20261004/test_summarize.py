@@ -152,3 +152,28 @@ def test_cli_outputs_readable_summary_and_all_seed_curves(tmp_path):
     assert "1/3" in (output / "RESULTS.md").read_text()
     for suffix in ("pdf", "png"):
         assert (output / f"learning-curves.{suffix}").stat().st_size > 1000
+
+
+def test_cli_uses_requested_task_title_in_rendered_pdf(tmp_path):
+    """Ignoring the requested title would mislabel a walking result as cartpole."""
+    pytest.importorskip("matplotlib")
+    fitz = pytest.importorskip("fitz")
+    run_fixture(tmp_path, "reference")
+    output = tmp_path / "analysis"
+    subprocess.run(
+        [
+            sys.executable,
+            str(Path(__file__).with_name("summarize.py")),
+            "--runs",
+            str(tmp_path),
+            "--output",
+            str(output),
+            "--title",
+            "Learning to walk from images",
+        ],
+        check=True,
+    )
+    with fitz.open(output / "learning-curves.pdf") as document:
+        text = document[0].get_text()
+    assert "Learning to walk from images" in text
+    assert "Learning to control the cart" not in text
