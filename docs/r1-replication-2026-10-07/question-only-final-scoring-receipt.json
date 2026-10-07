@@ -1,0 +1,38 @@
+{
+  "cutoff_utc": "2026-10-07T11:34:00Z",
+  "status": "Both first final evaluations complete; fixed-weight repeats pending",
+  "question": "Does the same short RL recipe improve on the stronger question-only starting format?",
+  "training": "Fresh original base, same 512 questions, 32 updates, learner seed42, official no-template option. Independent of the earlier chat-trained model.",
+  "training_receipt": "question-only-training-receipt.json",
+  "model_sha256": "7798f4d2738a407baf17d3032cf5e6d9acfef97def07bb37355889952a1b1d0f",
+  "dataset": "Official bundled evaluation_suite math split, all 500 MATH500 questions",
+  "evaluation": "Official evaluate_model.py, template no, temperature0, top_p1, one response, 3000-token limit, prescribed final checkpoint. No checkpoint selection.",
+  "verification": "All 500 saved final answers rescored with official boxed_reward_fn(fast=False); every prompt and reference checked against the source dataset. Baseline verification is in prompt-control-scoring-receipt.json.",
+  "before": {"correct":305,"n":500,"capped":15,"mean_response_tokens":694.31},
+  "after": {"correct":314,"n":500,"capped":19,"empty":0,"mean_response_tokens":693.614},
+  "paired": {"gains":24,"losses":15,"net":9,"percentage_point_change":1.8},
+  "roles": {
+    "monitor64": {"n":64,"before":39,"after":39,"gains":2,"losses":2},
+    "original_test128_in_fresh500_batch": {"n":128,"before":79,"after":84,"gains":9,"losses":4},
+    "additional308": {"n":308,"before":187,"after":191,"gains":13,"losses":9}
+  },
+  "native_base_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base-no-template",
+  "native_final_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawtrained-final-no-template",
+  "base_answers_sha256": "90aa2a7140a9679835dffc3d1bb88e39af180740bf004836b669d5a8f72557dd",
+  "final_answers_sha256": "6090f3cc669ae4801e38377f01cd580809721230d82eb6306e228454ca0ceae9",
+  "chat_style_cross_prompt": {
+    "native_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawtrained-final-chat",
+    "answers_sha256": "ca033ec97bd084d5768778aef3e2a5d19c9dc5daaa2279d66c6eba2b76da77ec",
+    "verification": "All500 independently rescored with the same full checker; exact official chat template and references checked against source",
+    "before":154,"after":168,"n":500,"gains":21,"losses":7,
+    "capped":201,"empty":0,"mean_response_tokens":1616.546,
+    "roles": {
+      "monitor64": {"n":64,"before":21,"after":24,"gains":3,"losses":0},
+      "original_test128_in_fresh500_batch": {"n":128,"before":41,"after":45,"gains":6,"losses":2},
+      "additional308": {"n":308,"before":92,"after":99,"gains":12,"losses":5}
+    }
+  },
+  "interpretation": "A small positive difference in one short training run. This does not yet establish a reliable benefit. Unlike the original chat-format comparison, there is no reduction in capped-response count.",
+  "limits": ["One training run", "64 questions were used for monitoring", "Greedy generations were not exactly repeatable in earlier checks", "Correct final answers do not verify every reasoning step", "No model-generated code was executed", "Pretraining exposure unknown"],
+  "next_decision": "Finish both prompt formats and the preplanned fixed-weight repeats. Prepare a fresh seed43 training repeat with isolated input cache, rather than choose a favorable checkpoint or change hyperparameters. Publish the completed comparison before13UTC."
+}

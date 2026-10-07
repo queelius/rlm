@@ -19,19 +19,19 @@
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "Training used chat style. We tested BOTH\nmodels with BOTH formats. All 500\nquestions were excluded from weight\ntraining; 64 were monitored. Earlier\npretraining exposure is unknown. No\nworked-solution SFT was added. The\noriginal separate 128 test remains 41 to\n80."
+      "note": "Two runs started from the original\nweights: one chat-style, one question-\nonly. Each used the same 512 training\nquestions. We tested all three models in\nboth formats. All 500 test questions were\nexcluded from weight training; 64 were\nmonitored. No SFT stage was added."
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "Read across each row: the prompt stays\nfixed while weights change. Read down each\ncolumn: weights stay fixed while the\nprompt changes. Chat gains 154; question-\nonly gains 12, with 18 gains and six\nlosses. This is one training run, not\nproof of a general effect."
+      "note": "Across a row, test input stays fixed. Down\na column, weights stay fixed. Question-\nonly training gains nine over the stronger\nbase: 24 gains and 15 losses. It does not\nrepair chat performance comparably. One\nrun per format; small gains need\nreplication."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "Actual separate-test row 5, summarized. Of\nits 44 gains, 36 started as capped\nresponses. No generated code was executed.\nThe new run trains with question-only\nprompts from the original weights. It\ntests improvement beyond the stronger\nbaseline. Results are pending."
+      "note": "Actual separate-test row 5, summarized. Of\nits 44 gains, 36 started as capped\nresponses. No generated code was executed.\nThis does not prove every gain is format\nrepair. We are checking repeatability\nbefore claiming a reliable gain or moving\nto recursive choices."
     }
   ]
 }

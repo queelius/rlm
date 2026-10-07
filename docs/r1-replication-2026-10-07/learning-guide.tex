@@ -18,13 +18,14 @@
   {\LARGE\color{ink}\textbf{#2}}\par\medskip}
 \newcommand{\topic}[1]{\par\smallskip{\large\color{ink}\textbf{#1}}\par}
 \newcommand{\code}[1]{\texttt{#1}}
-% UPDATE POINT: revise this status, cutoff, and page 5 when the adaptive
-% question-only training experiment has a completed fixed-checkpoint evaluation.
-\newcommand{\NextExperimentStatus}{The next run trains on question-only inputs.
-  This adaptive, exploratory comparison uses the same 512 questions, learner
-  seed 42, and training settings, with a 90-minute cap. Its results are pending.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 10:36 UTC.
-  Full-500 prompt comparisons complete; question-only training results pending.}
+% UPDATE POINT: preserve these first evaluations when adding repeats.
+% Update the status, cutoff, and pages 4--5 when repeat evidence is verified.
+\newcommand{\NextExperimentStatus}{Repeated evaluations of unchanged weights
+  are running, and a fresh question-only training run with learner seed 43 is
+  prepared. No result from either repeat is included here. All repeats will be
+  retained, rather than selecting the highest score.}
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 11:34 UTC.
+  Two training runs evaluated in both formats; repeat results pending.}
 \begin{document}
 \pagetitle{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}
   {Learning language-model RL\\from an official reproduction}
@@ -73,13 +74,13 @@ R1-Zero-like training does not mean beginning with random weights.
 
 \topic{What has been established so far?}
 
-Training on 512 questions improved the full-500 score from \textbf{154 to 308}
-with the Qwen-Math chat prompt. But the base model already scored
-\textbf{305 with the question alone}; the same trained weights scored
-\textbf{317} in that format. The large chat-format gain therefore needs the
-context of a much stronger question-only baseline. Pages 4--5 explain these
-matched comparisons and the next experiment. Page 6 uses the smaller pilot
-to illustrate what an individual score change can mean.
+Training with the chat prompt improved its full-500 score from \textbf{154 to
+308}. But the base model already scored \textbf{305 with the question alone}.
+On question-only evaluation, the chat-trained model scored \textbf{317} and a
+separate question-trained model scored \textbf{314}. These modest gains over
+the stronger baseline need replication. Pages 4--5 distinguish training format,
+evaluation format, and completion behavior. Page 6 uses the smaller pilot to
+illustrate what an individual score change can mean.
 
 {\small\color{accent}\EvidenceCutoff}
 
@@ -139,7 +140,7 @@ takes one optimizer update. It then sends the new weights to vLLM for the next
 collection. We use one pass over each collection, full-model BF16 training,
 learning rate $10^{-6}$, and the author's Adam settings.
 
-The pilot's 64 questions gave four updates; the completed 512-question run gave
+The pilot's 64 questions gave four updates; each completed 512-question run gave
 32 updates from 4096 sampled responses. Training and generation alternate on
 one A100 with 40 GB of memory.
 Putting the generator to sleep frees memory; it does not reset the weights.
@@ -161,7 +162,7 @@ Purpose & Size & Selection and use \\
 Pilot training & 64 & First 64 indices after shuffling 12,000 author training
 rows with Python \code{random.Random(42)}. \\
 Larger training & 512 & First 512 indices from the same shuffle. This includes
-the pilot questions, but training restarts from the base weights. \\
+the pilot questions; both prompt-format runs restart from the base weights. \\
 Monitoring & 64 & Shuffle the author's 500 MATH evaluation rows with seed 142;
 take the first 64. Reused for progress checks. \\
 Final comparison & 128 & Take the next 128 from that evaluation shuffle.
@@ -178,9 +179,9 @@ model's pretraining.
 
 \topic{Keep three kinds of settings separate}
 
-\textbf{Weights.} The baseline uses the original base checkpoint. The trained
-model uses the final saved checkpoint from the specified run. The 512-question
-run does not continue from the pilot's weights.
+\textbf{Weights.} The baseline uses the original base checkpoint. Each trained
+model uses its prescribed final checkpoint. The two 512-question runs start
+separately from the base, not from the pilot or each other's weights.
 
 \textbf{Generation.} Each before/after pair uses the same input format, the same
 3000-token response limit, and greedy decoding with one answer per question.
@@ -192,14 +193,15 @@ weight changes. This is a central warning of the paper [1].
 \textbf{Scoring.} The author's training program uses a faster checker. The
 standalone evaluator uses an additional mathematical-equivalence check
 (\code{fast=False}). We apply the same standalone checker to both saved answer
-sets for the reported comparisons, including all 1000 question-only outputs.
+sets for every reported comparison, including both formats for the newly
+completed question-trained model.
 Source questions and reference answers were checked against the frozen data.
 We never combine scores from different checkers.
 
 \topic{Choose the checkpoint before reading the final score}
 
 We retain the prescribed final checkpoint and evaluation, even if an earlier
-evaluation looks better. On the 64 monitoring questions, the main run's final
+evaluation looks better. On the 64 monitoring questions, the chat-trained run's final
 evaluation scored 36, versus 20 at baseline; another evaluation after the same
 32 updates scored 39. The pilot likewise scored 23 and then 22 with identical
 saved weights. Greedy GPU decoding was not exactly repeatable. We report this
@@ -212,51 +214,55 @@ question-only gain especially needs evaluation repeats and independent training
 runs to assess its reproducibility. A fixed seed label alone does not supply them.
 
 \newpage
-\pagetitle{3 / THE COMPLETED MAIN RUN}{The gain depends strongly on the prompt}
+\pagetitle{3 / TWO COMPLETED TRAINING RUNS}{Training format and evaluation format both matter}
 
-The 512-question run restarted from the original Qwen2.5-Math-1.5B base weights.
-It completed one training epoch: 4096 sampled responses and 32 optimizer updates.
-Training used the Qwen-Math chat prompt and full BF16 weight updates in the
-unchanged author code. The table evaluates that same final checkpoint,
-\code{step\_00033}, and the original base weights on all 500 questions [4].
+Two separate runs restarted from the original Qwen2.5-Math-1.5B base weights.
+Each used the same 512 questions, learner seed 42, 4096 sampled responses, and
+32 full-model BF16 updates. One trained with the chat prompt; the other trained
+with the question alone. Both used the unchanged author algorithm. We compare
+their prescribed final checkpoints with the starting weights on all 500
+questions, using the full checker [4].
 
-\begin{tabular}{@{}p{0.37\linewidth}rrr@{}}
+\begin{tabular}{@{}p{0.35\linewidth}rrr@{}}
 \toprule
-Evaluation input & Base weights & After chat-prompt RL & Change \\
+Evaluation input & Starting weights & \shortstack[r]{Trained with\\chat prompt}
+  & \shortstack[r]{Trained with\\question only} \\
 \midrule
-Qwen-Math chat prompt & 154/500 & 308/500 & $+154$ \\
-Question alone & 305/500 & 317/500 & $+12$ \\
+Qwen-Math chat prompt & 154/500 & 308/500 & 168/500 \\
+Question alone & 305/500 & 317/500 & 314/500 \\
 \bottomrule
 \end{tabular}
 
-Within each row, base and trained weights are compared under matched settings.
-Between rows, the evaluation prompt changes. No question-only training produced the 317 score: these are
-still the weights trained with the chat prompt. This prompt comparison was
-planned before main training finished.
+Within each row, models are compared under matched evaluation settings. Between
+rows, the input format changes. The two trained columns come from different
+training runs. The question-only training follow-up was chosen after seeing
+the stronger question-only baseline; it is exploratory.
 
-The chat-format comparison rises from 30.8\% to 61.6\%; the question-only
-comparison rises from 61.0\% to 63.4\%. In the latter, 18 answers become correct
-and six become incorrect. The much stronger base-model result with the question
-alone changes how we interpret the large chat-format gain. It shows why the
-starting prompt belongs in the experiment's definition.
+On question-only evaluation, chat-prompt training gains 12 answers (18 gains,
+six losses), while question-only training gains nine (24 gains, 15 losses).
+These are increases of 2.4 and 1.8 percentage points over 61.0\%. The three-answer
+difference between trained models does not establish which training format is
+more reliable. With the chat evaluation prompt, question-only training changes
+154 to 168, with 21 gains and seven losses.
 
 \topic{What do the different gains mean?}
 
-RL substantially improved answers under the chat prompt and produced a smaller
-positive change under the stronger question-only baseline. These observations
-do not show that the model learned no mathematics, that it acquired a new
-mathematical ability, or that every improvement has the same cause. A change
-in the chosen prompt alters the measured benefit without changing the weights.
-We need these distinctions before transferring claims to an RLM.
+The large gain remains the chat-trained model under chat evaluation, from
+30.8\% to 61.6\%. Gains against the strong question-only baseline are modest
+in both runs. These observations do not establish newly acquired mathematics,
+zero learning, or a single cause for every changed answer. They also do not
+validate RLM tool use or credit assignment across multiple calls.
 
-Responses reaching the 3000-token cap fell from 205 to 29 in the chat-format
-comparison. With the question alone, they changed from 15 to 17; mean response
-length changed little, from 694.31 to 691.10 tokens. This describes a large
-completion change in one format, without establishing its causal mechanism.
+Chat evaluation had 205 capped responses initially, 29 after chat-prompt
+training, and 201 after question-only training. Question-only evaluation had
+15, 17, and 19 respectively. Its mean response lengths were 694.31, 691.10,
+and 693.61 tokens. The new question-trained model's chat responses averaged
+1616.55 tokens, compared with 1628.04 initially. These are descriptive
+completion measurements; all new final-evaluation responses were nonempty.
 
 \topic{Keep the original fixed test intact}
 
-The separately generated, prescribed 128-question chat-format comparison
+For the chat-trained model, the separate prescribed 128-question comparison
 remains \textbf{41/128 before and 80/128 after}, with 44 gains and five losses.
 The newly generated full-500 batch contains those same 128 questions, but its
 chat-format counts are 41 and 82. That later observation does not replace the
@@ -296,36 +302,40 @@ extra instructions. Only the base model's input format has changed.
 
 All 500 questions were excluded from our weight training. Their roles in this
 study nevertheless differ: 64 were repeatedly monitored, 128 formed the original
-fixed test, and 308 add further coverage. Here is the question-only comparison,
-always using the same chat-trained final checkpoint:
+fixed test, and 308 add further coverage. These counts come from the fresh
+full-500 evaluations, with both trained checkpoints kept separate:
 
-\begin{tabular}{@{}p{0.38\linewidth}rrrr@{}}
+\begin{tabular}{@{}p{0.17\linewidth}p{0.28\linewidth}rrr@{}}
 \toprule
-Question role & Base & Trained & Gains & Losses \\
+Input & Question role & Starting & \shortstack[r]{Trained\\with chat}
+  & \shortstack[r]{Trained\\with questions} \\
 \midrule
-Monitored 64 & 39 & 37 & 1 & 3 \\
-Original test 128 & 79 & 84 & 6 & 1 \\
-Additional 308 & 187 & 196 & 11 & 2 \\
+Question only & Monitored 64 & 39 & 37 & 39 \\
+ & Original test 128 & 79 & 84 & 84 \\
+ & Additional 308 & 187 & 196 & 191 \\
 \midrule
-All 500 & 305 & 317 & 18 & 6 \\
+Chat prompt & Monitored 64 & 21 & 42 & 24 \\
+ & Original test 128 & 41 & 82 & 45 \\
+ & Additional 308 & 92 & 184 & 99 \\
 \bottomrule
 \end{tabular}
 
 The additional questions broaden the evaluation, but the full set is not 500
-entirely uninspected questions. It is also not a second training run. We do not
+entirely uninspected questions. More evaluation rows are not more training
+replicates. We do not
 know whether these problems appeared during the base model's pretraining.
 
-\topic{The next experiment follows the strongest baseline}
+\topic{Check the actual inputs, then repeat the result}
 
-\NextExperimentStatus\ It restarts from the base weights and uses the author's
-\code{--prompt\_template no} option. The question is whether training in the
-question-only format can improve on the strong 305/500 base result. A completed
-evaluation must compare the new checkpoint with that base under matched settings.
+The 10:35 question-only attempt was rejected: despite its command-line setting,
+a dataset cache supplied chat-formatted training inputs. The valid fresh run
+used an isolated cache, started at 10:40, and finished by 11:24. All 4096 saved
+training prompts were checked against the 512 raw source questions. A setting
+in a configuration file is not evidence of what the model actually received.
 
-This follow-up was chosen after inspecting the prompt comparison, so it is
-explicitly exploratory. Its result will not retroactively change the original
-chat-prompt experiment. Repeating training, testing the normalization choices,
-and adding real RLM tool actions remain separate scientific questions.
+\NextExperimentStatus\ Re-evaluating one saved model measures variation in
+generation; training again measures variation in the learning process. Neither
+check should be replaced by choosing a favorable checkpoint or answer batch.
 
 \newpage
 \pagetitle{5 / A SMALL EXAMPLE}{What did the pilot's two extra points mean?}
@@ -379,7 +389,7 @@ This establishes an operational path from sampled answers to weight updates.
 It does not make the small monitoring gain statistically conclusive.
 
 The pilot illustrates why an aggregate score needs accompanying examples.
-The larger chat-format gain and the smaller question-only gain both need
+The larger chat-format gain and the modest question-only gains both need
 the same care in interpretation.
 
 \smallskip
@@ -397,6 +407,8 @@ the same care in interpretation.
 \href{fixed128-scoring-receipt.json}{fixed-128 scoring receipt};
 \href{full500-scoring-receipt.json}{full-500 chat-format receipt};
 \href{prompt-control-scoring-receipt.json}{prompt-comparison receipt};
+\href{question-only-training-receipt.json}{question-only training receipt};
+\href{question-only-final-scoring-receipt.json}{question-trained final scores};
 \href{pilot-scoring-receipt.json}{pilot receipt}.
 The research record links the question-only answer files and scoring evidence.
 }

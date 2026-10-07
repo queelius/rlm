@@ -1,10 +1,12 @@
 # Learning from correct answers: a small reproduction
 
-Evidence cutoff: 7 October 2026, 10:36 UTC. Aim for about five minutes.
-The main lesson is now about the starting prompt: scores improved from 154 to
-308 out of 500 with chat-style input, but from 305 to 317 with the question alone.
-These are the same starting weights and the same trained weights, tested twice.
-New training with question-only inputs is running; its result is pending.
+Evidence cutoff: 7 October 2026, 11:34 UTC. Aim for about five minutes.
+The main lesson is about the starting prompt and the format used in training.
+Chat-style training raised scores from 154 to 308 out of 500 with chat input,
+but from 305 to 317 with the question alone. A second run trained on questions
+alone instead. It scored 314 with question-only input and 168 in chat style.
+We have a working RL pipeline, but only a small observed gain over the stronger
+starting setup. We are checking whether that small gain repeats.
 
 ## 1. Why start with this experiment? (45 seconds)
 
@@ -46,9 +48,10 @@ observed change specifically to that modification.
 
 ## 3. What exactly did we run? (60 seconds)
 
-Say: “We updated the full weights of a 1.5-billion-parameter math model on one
-40-gigabyte A100. The main run used 512 training questions and completed 32
-updates. We tested both models on the same 500 questions, in two input formats.”
+Say: “We ran two short training experiments on one A100. Each started with the
+same model, used the same 512 math questions, and completed 32 weight updates.
+One trained on chat-style inputs. The other received only the questions.
+We tested the starting model and both trained models in both formats.”
 
 The run started from Qwen2.5-Math-1.5B, not an instruction-tuned model. Each training
 question yields eight sampled answers. Sixteen questions produce 128 attempts
@@ -76,8 +79,10 @@ For example, a user question might be “Write 3/20 as a decimal.” In the
 question-only condition, that question is the entire input. Both are existing
 options in the authors' evaluation code, not newly invented methods.
 
-The completed training run used chat style. Testing changes the input format,
-not the weights. For each format, the before/after comparison uses the same
+The first training run used chat style; the second used questions alone. The
+second started from the original weights, not from the first trained model.
+Within a model's column, testing changes the input format, not the weights.
+For each format, the before/after comparison uses the same
 questions, final-answer checker, greedy generation, and 3,000-token response cap.
 Greedy generation selects the most likely token at each step. Training instead
 samples alternatives. This base model is not the instruction-tuned variant;
@@ -88,14 +93,25 @@ chat formatting is not automatically its best starting interface.
 Say: “With a chat-style prompt, training doubled the number of correct answers,
 from 154 to 308. But the original model could already answer 305 correctly if
 we simply gave it the question. With that stronger starting prompt, the same
-training improved the score to 317. The gain is positive, but much smaller.”
+training improved the score to 317. Training on questions alone instead gave
+314. Both changes over the stronger starting setup are much smaller.”
 
 Read across a row to see the effect of training while keeping the prompt fixed.
 Read down a column to see the effect of changing the prompt while keeping the
-model weights fixed. We did not choose a different best model for each cell.
-All four cells use the same 500 questions. In the question-only row, 18 answers
-became correct and six became incorrect. The net change is 12 questions, or
-2.4 percentage points, compared with 30.8 points in the chat-style row.
+model weights fixed. The two trained columns are two separate training runs,
+not different checkpoints chosen for different tests. All six cells use the
+same 500 questions and the prescribed final models.
+
+Chat-style training improved question-only answers by 12: 18 became correct
+and six became incorrect. Question-only training improved them by nine: 24
+became correct and 15 became incorrect. The latter is a net increase of 1.8
+percentage points, not 24 successes with no cost. These are small one-run
+differences; neither establishes a dependable improvement yet.
+
+The other direction is also informative. Question-only training scored only
+168 in chat style, compared with 154 before training. It did not produce the
+large chat-style gain of the chat-trained model. That supports examining what
+format the model learned to handle, but does not isolate every causal mechanism.
 
 The score counts final answers accepted by the authors' mathematical answer
 checker. It recognizes mathematically equivalent answers, not just identical
@@ -143,12 +159,24 @@ reaching the limit fell from 205 to 29 in the full500 chat-style comparison.
 With questions alone, they changed from 15 to 17. Thus the large reduction
 in runaway responses is not an equally large effect in both input formats.
 
-The next experiment started at 10:35 UTC: train again from the original model,
-using only the questions, with the same 512 questions and 32 updates. Can RL
-improve beyond the stronger 305/500 baseline? We will test the final model in
-both formats and report both outcomes. This is an exploratory follow-up chosen
-after seeing these results, not a fresh confirmatory experiment. It takes
-priority over immediately repeating the original chat-style training.
+The question-only training follow-up is now complete. It scored 314/500 with
+questions alone, versus 305 before training. Capped responses increased from
+15 to 19; this is not another large reduction in runaway answers. Under chat
+input, it scored 168 and still had 201 capped responses, compared with 205
+before training. We report both outcomes, not just its better input format.
+
+We are repeating the evaluation of the same weights to measure variation in
+generated answers. A fresh training repeat, with the same settings and a
+different learner seed, is prepared. These answer different questions: rerunning
+evaluation checks scoring/generation repeatability; rerunning training checks
+whether another set of learning updates produces a similar result.
+
+These are exploratory follow-ups chosen after inspecting the earlier results,
+not independent confirmation on a new test set. The first raw-training attempt
+at 10:35 used a stale transformed-data cache and was rejected. The valid run
+used an isolated cache, started at 10:40, and finished at 11:24. We inspected
+its actual training inputs rather than trusting only the configuration. This
+is an important practical lesson for future RLM experiments too.
 
 Successful optimization, useful answer improvement, and useful recursive
 behavior are three different claims. We verified the first and observed the

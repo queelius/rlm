@@ -3,10 +3,12 @@
 `research-update.tex` is the 16:9 Beamer source. `results.tex` holds the numbers
 for the checked final comparison. `speaker-guide.md` explains the ideas
 in plain language; `speaker-notes.json` holds concise laptop presenter notes.
-The deck reports the completed 500-question prompt comparison: chat-style scores
-rose from 154 to 308, while question-only scores rose from 305 to 317.
+The deck reports two short training runs and all six model/input combinations.
+Chat-style training scored 308/500 in chat style and 317 with questions alone;
+question-only training scored 168 and 314. The starting model scored 154 and 305.
 The original separate 128-question result (41 to 80) remains in the guide and
-evidence. New training with question-only inputs is running; its result is pending.
+evidence. We are checking whether the small improvement over the stronger
+question-only starting point repeats.
 It is not a reproduction of the paper's full benchmark scores.
 
 Build on a laptop with LaTeX installed:

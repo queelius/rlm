@@ -10,15 +10,15 @@
     },
     {
       "title": "We train on math, then test on different questions.",
-      "notes": "Training used chat style. We tested BOTH models with BOTH formats. All 500 questions were excluded from weight training; 64 were monitored. Earlier pretraining exposure is unknown. No worked-solution SFT was added. The original separate 128 test remains 41 to 80."
+      "notes": "Two runs started from the original weights: one chat-style, one question-only. Each used the same 512 training questions. We tested all three models in both formats. All 500 test questions were excluded from weight training; 64 were monitored. No SFT stage was added."
     },
     {
-      "title": "The starting prompt changes the size of the gain.",
-      "notes": "Read across each row: the prompt stays fixed while weights change. Read down each column: weights stay fixed while the prompt changes. Chat gains 154; question-only gains 12, with 18 gains and six losses. This is one training run, not proof of a general effect."
+      "title": "The input format changes the size of the gain.",
+      "notes": "Across a row, test input stays fixed. Down a column, weights stay fixed. Question-only training gains nine over the stronger base: 24 gains and 15 losses. It does not repair chat performance comparably. One run per format; small gains need replication."
     },
     {
       "title": "A higher score does not always mean a new skill.",
-      "notes": "Actual separate-test row 5, summarized. Of its 44 gains, 36 started as capped responses. No generated code was executed. The new run trains with question-only prompts from the original weights. It tests improvement beyond the stronger baseline. Results are pending."
+      "notes": "Actual separate-test row 5, summarized. Of its 44 gains, 36 started as capped responses. No generated code was executed. This does not prove every gain is format repair. We are checking repeatability before claiming a reliable gain or moving to recursive choices."
     }
   ]
 }

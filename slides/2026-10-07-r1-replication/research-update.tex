@@ -62,7 +62,7 @@ The checker judges the final answer. We do not supply worked solutions for the m
 
 \begin{frame}[t]
 \frametitle{We train on math, then test on different questions.}
-We trained \textbf{Qwen2.5-Math-1.5B} on 512 math questions, with eight attempts per question and 32 weight updates, on one A100 GPU.
+Each training run used \textbf{Qwen2.5-Math-1.5B}, the same 512 math questions, eight attempts per question, and 32 weight updates on one A100 GPU.
 \medskip
 
 We tested the starting and trained models on the same \textbf{500 MATH500 questions}, all excluded from weight training.
@@ -70,33 +70,33 @@ We tested the starting and trained models on the same \textbf{500 MATH500 questi
 
 \begin{block}{We also tested two ways of asking each question.}
 \textbf{Chat style:} Put the question inside a conversation, with an instruction to explain the steps and mark the final answer.\par\smallskip
-\textbf{Question alone:} Supply only the original question, with no added conversation or instruction.
+\textbf{Question alone:} Give only the original question.
 \end{block}
-Training used chat style; testing used both formats.
+We trained once in each format, starting from the same original model.
 \aside{Of the 500 questions, 64 were used to monitor progress. We did not choose the best checkpoint. Earlier pretraining exposure is unknown.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{The starting prompt changes the size of the gain.}
+\frametitle{The input format changes the size of the gain.}
 \textbf{Correct answers out of the same 500 MATH500 questions.}
 \begin{center}
 \renewcommand{\arraystretch}{1.45}
 \begin{tabular}{lrrr}
 \toprule
-How we ask & Before RL & After RL & Change \\
+How we ask & \shortstack{Starting\\model} & \shortstack{Trained with\\chat style} & \shortstack{Trained with\\questions alone} \\
 \midrule
-Chat style & 154 & 308 & $+154$ \\
-Question alone & 305 & 317 & $+12$ \\
+Chat style & 154 & 308 & 168 \\
+Question alone & 305 & 317 & 314 \\
 \bottomrule
 \end{tabular}
 \end{center}
 \medskip
 
-Without any new training, giving only the question nearly matched the trained model's chat-style score.
+Chat-style training raised the chat score from 154 to 308. But giving only the question already scored 305, without training.
 \medskip
 
-\textbf{Lesson:} RL improved the score, but the large gain does not by itself show that the model learned new mathematical abilities.
-\aside{One training run; the same final checkpoint, checker, and length limit in both formats. The checker judges final answers, not every reasoning step.}
+Training on questions alone raised that stronger starting score to 314. This is a much smaller gain, and it needs replication.
+\aside{Each trained column is one run, evaluated at its final checkpoint. The same checker and length limit apply throughout. Scores judge final answers, not every reasoning step.}
 \end{frame}
 
 \begin{frame}[t]
@@ -111,7 +111,7 @@ Without any new training, giving only the question nearly matched the trained mo
 This came from the earlier 128-question chat-style test. Many gains were recoveries from repetitive responses, not necessarily new mathematical knowledge.
 \medskip
 
-\textbf{Now running:} Start again from the original model and train with the question alone. Can RL improve on that stronger starting point?
+\textbf{Next:} Repeat the training to check whether the small gain holds up. Then use the same careful comparisons when training an RLM's choices.
 \aside{For future RLM work: compare against a strong starting setup and inspect what changes. Better math answers do not yet establish better problem decomposition.}
 \end{frame}
 

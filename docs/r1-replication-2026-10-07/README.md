@@ -32,11 +32,33 @@ versus 38/64 before training. That small change is not the final test result.
 The [training receipt](question-only-training-receipt.json) records all 4,096
 attempts, including one empty response, and the verified checkpoint.
 
-Full500 evaluations are now running in both formats. We will also repeat the
-question-only evaluation for both starting and final models to measure how
+**First final result at 11:32 UTC:** With questions alone, the new model scored
+**314/500**, compared with **305/500** before training. Twenty-four answers
+became correct and fifteen became incorrect. This is a small positive change
+from one training run, not yet a reliable improvement. The
+[final-answer receipt](question-only-final-scoring-receipt.json) records the
+full rescore, question checks, and separate monitoring/test counts.
+
+**Other input format, 11:34 UTC:** That same new model scored **168/500** with
+chat-style input, compared with 154 before training. It did not show the large
+chat-format improvement produced by chat-style training. The complete table is:
+
+| Test input | Starting model | Trained with chat style | Trained with questions alone |
+| --- | ---: | ---: | ---: |
+| Chat style |154|308|168|
+| Question alone |305|317|314|
+
+Each trained column is a separate run starting from the original model, not
+another stage of the same run. All three models use the same 500 questions.
+The new chat comparison has 21 gains and seven losses. Its capped-response count is
+201, versus 205 for the base; question-only training did not fix that pattern.
+We cannot yet identify every cause of the contrast between training formats.
+
+We are repeating the question-only evaluation for starting and final models to measure how
 much answers vary without further training. Those repeats are not independent
-training runs. The question remains whether RL improves beyond the stronger
-305/500 baseline; the new final-test result is pending.
+training runs. A fresh training repeat is being prepared; it will use the same
+settings and questions, with a different learner seed and its own data cache.
+The five-slide deck and learning guide now include both training formats.
 
 **Expanded chat-style check at 10:27 UTC:** On all 500 MATH500 questions, the same models
 scored **154 before training and 308 afterward**. On the 308 additional

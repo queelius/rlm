@@ -1,6 +1,26 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 10:36 UTC, completed four-way prompt comparison.
+Cutoff: 7 October 2026, 11:34 UTC, both training formats evaluated.
+
+## New follow-up: train with the question alone
+
+The [question-only final receipt](../../docs/r1-replication-2026-10-07/question-only-final-scoring-receipt.json)
+records the second training run: 314/500 with question-only input, versus 305
+before training, and 168/500 with chat-style input, versus 154. Root regraded
+all 1,000 new answers and verified prompts/references against the source.
+The raw-input comparison has 24 gains and 15 losses; the chat comparison has 21
+gains and seven losses. These are small one-run changes, not reliable effects yet.
+
+The trained columns on slide 4 are different models, each trained afresh from
+the original base on the same 512 questions for 32 updates. Each model is tested
+in both formats using the same final checkpoint. No checkpoint was selected
+for its score. The new model's capped responses are 19 with questions alone and
+201 in chat style, compared with 15 and 205 in the starting model. Thus this
+training did not produce the large chat-response recovery of chat-style training.
+We have not isolated every cause of the contrast between the training runs.
+
+Fixed-weight question-only evaluation repeats are running, and a fresh training
+repeat is prepared. Neither may replace these first scores with better ones.
 
 ## Main slide result: same weights tested with two prompt formats
 
@@ -21,9 +41,10 @@ separates the corresponding roles for that format.
 
 This shows that prompt choice changes the measured size of the RL gain. It
 does not establish either no learning or newly acquired reasoning skills.
-The question-only training follow-up started at 10:35 UTC and is pending.
-It is exploratory and uses the authors' existing no-template option, not a
-change to their learning algorithm.
+The question-only follow-up is exploratory and uses the authors' existing
+no-template option, not a change to their learning algorithm. Its first attempt
+at 10:35 was rejected for stale cached chat inputs; the valid run started 10:40
+and finished 11:24. Actual training inputs were audited, not just configuration.
 
 ## Main separate test
 

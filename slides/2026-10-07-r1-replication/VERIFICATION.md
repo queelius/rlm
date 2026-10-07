@@ -1,5 +1,27 @@
 # Presentation verification
 
+## Both training formats, 7 October, 11:38 UTC
+
+- Root regraded all 1,000 final answers from the new question-only-trained
+  model and checked every prompt and reference against the official dataset.
+  Scores are 314/500 with questions alone and 168/500 in chat style. The new
+  receipt retains both outcomes, paired changes and data roles.
+- Slide 4 now shows all six model/input combinations. Slide 3 distinguishes
+  the two fresh-base training runs; slide 5 retains its clearly identified
+  actual example and explains the next repeatability check.
+- Tectonic rebuilt five pages with no warnings. An initial slide-3 overflow
+  was corrected by shortening redundant wording, not shrinking the text.
+  Five matching notes pass the 14-line check; PDF text bounds pass.
+- Root visually inspected revised slides 3–5, including the final table.
+  An independent reader inspected all five and found no material layout,
+  audience-clarity or scientific-claim issue.
+- The six-page learning guide was rebuilt without warnings. Its author
+  inspected changed pages; root checked all text bounds, the changed source,
+  and the page showing the full results table.
+- Same-weight evaluation repeats and a further training repeat are not used
+  as completed evidence in this version. No best checkpoint was selected.
+  No live pdfpc GUI was tested; notes were checked structurally.
+
 ## Completed prompt comparison, 7 October, 10:42 UTC
 
 - Both full500 evaluation pairs completed successfully. Root independently
