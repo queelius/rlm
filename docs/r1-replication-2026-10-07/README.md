@@ -4,7 +4,29 @@ Read the [five-slide PDF](../../slides/2026-10-07-r1-replication/research-update
 and [slide-by-slide guide](../../slides/2026-10-07-r1-replication/speaker-guide.md).
 The [four-page learning guide](learning-guide.pdf) explains the learning step,
 the evaluation, and how to interpret the results.
-The larger comparison is still running; pending results are explicitly marked.
+The 512-question training run has finished. Its separate before-and-after test
+is running; pending test results are explicitly marked.
+
+## Latest result, 7 October, 10:12 UTC
+
+The larger run completed all 32 weight updates and saved its final model. On
+the 64 questions used to monitor training, the final score increased from
+**20 to 36 correct** under the authors' full answer checker. Eighteen answers
+became correct and two became incorrect. An earlier evaluation immediately
+after the last update scored 39; we retain the final evaluation, not the higher
+score. There was no additional optimizer update between these evaluations.
+
+This is encouraging progress, but it is a monitoring result, not yet the
+separate test result. We are evaluating the original and final models on the
+128 questions set aside before training. The next planned comparisons expand
+to all 500 questions and test the paper's simpler, question-only prompt. That
+prompt control asks whether apparent training gains partly recover abilities
+that the starting model already has under a better-matched prompt.
+
+The [completed-training receipt](subset512-training-receipt.json) records the
+final checkpoint hash, monitoring scores, and audit of all 4,096 training
+responses. The PDFs still show the earlier pilot cutoff; they will be updated
+together when the separate paired test completes.
 
 ## Why we are doing this
 
@@ -77,8 +99,8 @@ make this GPU run exactly repeatable. The training program's faster checker
 scored 19/64 before and 21/64 at the final evaluation; those are not mixed with
 the standalone-checker counts above.
 
-The 512-question run started at 09:19 UTC. The separate 128-question final
-evaluation is still pending. Its training outputs are in
+The 512-question run started at 09:19 UTC and finished by 10:09 UTC. The separate
+128-question final evaluation is still pending. Its training outputs are in
 `/home/atowell/research-runs/r1-zero-replication-20261007/subset512-attempt1`:
 the project allocation was almost full, whereas the home allocation had room.
 The completed pilot was copied to the same home research store under
