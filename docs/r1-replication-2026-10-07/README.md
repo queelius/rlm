@@ -2,6 +2,8 @@
 
 Read the [five-slide PDF](../../slides/2026-10-07-r1-replication/research-update.pdf)
 and [slide-by-slide guide](../../slides/2026-10-07-r1-replication/speaker-guide.md).
+The [four-page learning guide](learning-guide.pdf) explains the learning step,
+the evaluation, and how to interpret the results.
 The larger comparison is still running; pending results are explicitly marked.
 
 ## Why we are doing this
@@ -112,3 +114,33 @@ training scale and rollout/update schedule.
 Follow-on order: short operational pilot, bounded 512-question training run,
 fixed-checkpoint evaluation. Broader RLM-paper comparisons wait until this
 straightforward reference works.
+
+## Extension before the presentation deadline
+
+The user requests an expanded evaluation if the initial result is ready early.
+We will retain the original 128-question comparison and then evaluate the same
+base and final models on all 500 questions in the authors' MATH500 collection.
+This extension was chosen before the 512-question run's final result was known.
+Both sides will be generated afresh with identical settings. Scores from
+different batches will not be spliced together.
+
+The full set includes the 64 monitoring questions, the original 128 final
+questions, and 308 additional questions. We will identify these roles in the
+analysis. All were excluded from weight training, but the monitoring questions
+were repeatedly inspected. More evaluation questions improve coverage; they
+do not substitute for independent training runs. If time permits, the next
+priority is a fresh training repeat with the same data and settings.
+
+The presentation remains limited to five slides and is due by 13:00 UTC;
+extra experiments must not delay a usable published version.
+
+## Automated continuation
+
+The lightweight observer in `experiments/r1_replication_20261007/review_monitor.py`
+queues reviews into this existing session when evaluations finish or the active
+training process exits, with a periodic fallback. It does not launch GPU jobs
+or interpret results itself. Its current configuration and status are in the
+external experiment store under `reviews/`. It reuses the earlier campaign's
+queue engine at the explicit `ORIGIN` path in the script; this is a cluster-local
+dependency, not a standalone laptop service. The earlier CURL observer remains
+stopped. Dispatch requires more than 12% account allowance to preserve 10%.

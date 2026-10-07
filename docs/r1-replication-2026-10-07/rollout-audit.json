@@ -1,0 +1,33 @@
+{
+  "cutoff": "2026-10-07, first eight complete larger-run buffers",
+  "current_run": "/home/atowell/research-runs/r1-zero-replication-20261007/subset512-attempt1/debug_1007T09:19:27",
+  "buffers": [1, 2, 3, 4, 5, 6, 7, 8],
+  "questions": 128,
+  "responses": 1024,
+  "effective_correct_responses": 261,
+  "raw_actor_correct_responses": 264,
+  "truncated_successes_correctly_zeroed": 3,
+  "mixed_reward_groups": 90,
+  "nonzero_reconstructed_advantages": 720,
+  "length_capped_responses": 88,
+  "all_capped_responses_effective_reward_zero": true,
+  "other_responses_end_with_eos_151643": 936,
+  "finite_saved_token_logprob_count": 1081687,
+  "mean_response_tokens": 1056.3349609375,
+  "median_response_tokens": 719,
+  "empty_responses": 0,
+  "group_size_errors": 0,
+  "length_alignment_errors": 0,
+  "nonterminal_rewards": 0,
+  "nonfinite_reconstructed_advantages": 0,
+  "gradient_norm_flushed_count_at_audit": 7,
+  "all_flushed_gradient_norms_positive_and_finite": true,
+  "completed_update_and_broadcast_count": 8,
+  "pilot_comparison": {
+    "buffers": 4, "questions": 64, "responses": 512,
+    "effective_correct_responses": 106, "mixed_reward_groups": 42,
+    "nonzero_reconstructed_advantages": 336, "length_capped_responses": 70,
+    "finite_saved_token_logprob_count": 582571
+  },
+  "interpretation": "Actual generation, grading, varied within-question reward, finite learning signal and weight broadcasts occurred. Cross-prefix reward rates are not a learning comparison because question sets differ."
+}

@@ -33,14 +33,14 @@ We will compare the base model with the final model after 32 updates on the sepa
 
 \begin{frame}[t]
 \frametitle{First, reproduce learning in a simpler setting.}
-A recursive language model can use code and ask helper models to solve parts of a problem. We eventually want to train those choices.
+A recursive language model (RLM) can use code and ask helper models to solve parts of a problem. We eventually want to train those choices.
 \medskip
 
 \begin{block}{Today's question}
 Can we use a published training recipe to improve a model's math answers on questions excluded from training?
 \end{block}
 \medskip
-We use the authors' code for \textbf{Dr.\ GRPO}, which learns from scores assigned to the model's own answers.
+We use the authors' code for \textbf{Dr.\ GRPO}, a reinforcement learning (RL) method. It learns from scores assigned to the model's own answers.
 \medskip
 
 This is a small reproduction of an existing method. It establishes a reference for future work on recursive models.
@@ -65,7 +65,7 @@ Two end in $x=5$ or $x=6$. & 0 each & Make these less likely. \\
 \end{tabular}
 \end{center}
 \medskip
-Each attempt is compared with the average score for that question. Training changes the model's weights using these differences.
+Each attempt is compared with the average score for that question. These differences guide changes to the model's numerical settings, or \textbf{weights}.
 \medskip
 
 The checker judges the final answer. We do not supply worked solutions for the model to copy.
@@ -74,7 +74,7 @@ The checker judges the final answer. We do not supply worked solutions for the m
 
 \begin{frame}[t]
 \frametitle{We train on math, then test on different questions.}
-We update the full weights of \textbf{Qwen2.5-Math-1.5B}, a pretrained math model, on one 40 GB A100 GPU.
+We train \textbf{Qwen2.5-Math-1.5B}, a relatively small pretrained math model, on one 40 GB A100 GPU.
 \medskip
 
 \begin{center}
@@ -84,7 +84,7 @@ We update the full weights of \textbf{Qwen2.5-Math-1.5B}, a pretrained math mode
 Training run & Questions & Weight updates \\
 \midrule
 Short pilot, completed & 64 & 4 \\
-Larger run, restarted from the base model & 512 & 32 planned \\
+Larger run, now running from the base model & 512 & 32 planned \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -93,7 +93,7 @@ Training questions come from the authors' 12,000-question math collection. Test 
 \smallskip
 
 We use 64 questions to monitor progress and \textbf{128 different questions for the final test}. Neither group is used for training. Evaluation settings stay fixed before and after.
-\aside{Evaluation chooses the most likely next token, up to 3,000 tokens. Exact question-overlap checks passed; pretraining exposure is unknown.}
+\aside{Evaluation settings stay fixed. The questions may have appeared in the model's earlier pretraining; we cannot check that.}
 \end{frame}
 
 \begin{frame}[t]
