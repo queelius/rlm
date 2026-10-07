@@ -1,5 +1,18 @@
 # A small, direct replication of language-model RL
 
+**Progress check, 7 October at 16:36 UTC:** The longer run has completed 22
+learning updates without a reported error, passing the point where attempt 3
+failed. Model and optimizer files have been saved at two checkpoint labels.
+Among 240 newly checked training questions, 172 produced both correct and
+incorrect answers. This gives RL a useful comparison within each question.
+The saved rewards and finite gradients support training health, **not yet
+improved test accuracy**. These collections contain different questions, so
+their reward totals are not a controlled learning curve. See the
+[progress checks and their limits](longer-attempt4-progress-1636.json).
+We are continuing the fixed schedule and all planned final comparisons.
+The learning and slide PDFs remain at their explicitly dated 15:55 snapshot;
+there is no new benchmark result to add to them yet.
+
 **Live update, 7 October at 16:03 UTC:** The fourth fresh-base attempt started
 at 16:02. The isolated GPU check reduced the entropy calculation's additional
 peak allocation from about 3.7 GiB to 0.15 GiB with numerically close outputs;

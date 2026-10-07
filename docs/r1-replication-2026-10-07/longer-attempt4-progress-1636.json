@@ -1,0 +1,60 @@
+{
+  "review": "review-1791390787-884f3098",
+  "checked_at_utc": "2026-10-07T16:36:00Z",
+  "kind": "ongoing training health, not a benchmark endpoint",
+  "run": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4/debug_1007T16:02:41",
+  "log": "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4.log",
+  "completed_learning_calls": 22,
+  "latest_logged_optimizer_counter": 21,
+  "counter_note": "The logged counter lags the completed-call marker until the next collection.",
+  "reported_gradient_norms": {
+    "count": 21,
+    "all_finite_and_positive": true,
+    "minimum": 0.018567604944109917,
+    "maximum": 0.04284188896417618
+  },
+  "native_traceback_or_error_records": 0,
+  "new_training_buffer_audit": {
+    "collections_inclusive": [6, 20],
+    "questions": 240,
+    "responses": 1920,
+    "terminal_rewards_of_one": 548,
+    "questions_with_both_reward_outcomes": 172,
+    "responses_reaching_3000_token_cap": 196,
+    "all_capped_responses_have_effective_zero_reward": true,
+    "empty_responses": 0,
+    "all_prompt_and_reference_membership_checks_pass": true,
+    "all_token_logprob_reward_lengths_match": true,
+    "all_logprobs_and_rewards_finite": true,
+    "all_nonterminal_rewards_zero": true,
+    "all_terminal_rewards_binary": true,
+    "buffer_step00020_sha256": "20760d7083a67b36f5e96338abac4f5d5abf27e49b270d991ffc781bcf18863e",
+    "rewarded_per_collection": [34, 52, 37, 49, 31, 45, 27, 33, 43, 32, 29, 27, 34, 45, 30],
+    "mixed_groups_per_collection": [13, 14, 10, 15, 11, 9, 10, 11, 13, 10, 11, 10, 10, 13, 12],
+    "capped_per_collection": [8, 11, 9, 9, 26, 8, 12, 12, 10, 18, 17, 23, 8, 10, 15]
+  },
+  "independent_full_verifier_spotcheck": {
+    "selection": "first eight responses of collection 20, chosen by position",
+    "checked": 8,
+    "mismatches": 0,
+    "effective_rewards": [1, 1, 0, 1, 1, 1, 0, 1],
+    "response_token_lengths": [259, 290, 614, 276, 395, 516, 256, 789],
+    "example": "Index of the 100th negative partial sum of sin(k), in radians; reference 628. One response drifted to an unrelated trigonometry question and ended in 5; another ended in 627. Both received zero. Six ended in 628 and received one.",
+    "limit": "Only these eight answers were independently regraded in this review. Structural checks cover all 1920. Generated code/output blocks are text, not executed tool calls. Final-answer reward does not certify the reasoning."
+  },
+  "checkpoint_checks": {
+    "labels": ["step_00008", "step_00016"],
+    "each_model_safetensors_bytes": 3087467144,
+    "each_model_tensor_count": 338,
+    "sample_tensor": "model.layers.0.input_layernorm.weight",
+    "sample_finite_in_both": true,
+    "each_optimizer_state_bytes": 18524602816,
+    "each_model_state_bytes": 3087520824,
+    "all_four_state_archive_directories_readable": true,
+    "latest_marker": "step_00016",
+    "limit": "Read safetensors headers and one tensor per checkpoint; inspected state ZIP directories, not every state tensor. Native resume and exact continuation have not been validated."
+  },
+  "interpretation": "Training has passed the prior failure point with useful within-question reward variation and finite gradients. Varying questions across collections prevent treating their raw reward counts as a learning curve. Only the startup monitor exists; no new trained-model benchmark result is available.",
+  "decision": "Continue the sealed 255-update owner unchanged, followed by all six fixed final evaluation conditions. Monitor at update 32 is diagnostic, not checkpoint selection. If the final gain is meaningful, prioritize a fresh training replication; if weak, inspect the fixed-monitor trajectory, truncation and update scale before changing the budget.",
+  "presentation_decision": "Update the public research record and handoff only. No new accuracy claim or PDF rebuild is warranted by training-health evidence. Existing PDFs retain their explicit 15:55 UTC cutoff."
+}

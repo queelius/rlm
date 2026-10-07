@@ -1,5 +1,15 @@
 # Completed short LLM RL reproduction
 
+**Progress check, 16:36 UTC:** The longer run has completed 22 learning calls
+and saved model and optimizer files at `step_00008` and `step_00016`.
+Twenty-one reported gradient norms are finite and positive. An audit of 1,920
+new responses found no prompt/reference or token/reward alignment errors;
+eight position-selected answers were independently regraded, with agreement.
+See the [bounded audit](longer-attempt4-progress-1636.json). No final score
+exists yet. Continue owner exec30612 unchanged through training and its final
+evaluations; do not admit another job at trainer exit. Checkpoints are saved,
+but exact training-resume semantics remain unvalidated.
+
 **Latest operational update, 16:03 UTC:** Attempt 4 started at 16:02 under
 exclusive sequence owner exec30612, with its own training and all six final
 evaluation conditions. The old observer was replaced by `reviews-longer-v4`;
