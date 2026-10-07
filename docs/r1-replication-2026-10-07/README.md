@@ -25,6 +25,23 @@ limitation to discover before making claims about RL for recursive models.
 See the [repeat's checked results](question-only-repeat-scoring-receipt.json)
 and [training audit](question-only-repeat-training-receipt.json).
 
+**Evaluation checks finished at 12:48 UTC:** Five unchanged-model evaluations
+were repeated, and each produced exactly the same saved answers as its first
+evaluation. These checks reproduced 305, 314, and 306 with question-only input,
+and 154 and 308 for the original chat-style comparison. They strengthen our
+confidence in this evaluation setup; they are not five more training runs.
+They also do not remove earlier variation observed when the evaluation batch
+changed. The [repeatability receipt](evaluation-repeatability-receipt.json)
+records the files, hashes, and checks.
+
+**One bounded follow-up is running:** We are comparing the authors' standard
+GRPO option with Dr. GRPO, keeping the model, 512 questions, and 32-update
+budget fixed. This has no result yet. It changes two parts of the objective
+together, so it cannot isolate their individual effects. The
+[pre-result plan](grpo-comparison-plan.md) sets the final checkpoint, tests,
+limitations, and 14:00 UTC stopping time. The five-slide deck is already ready;
+this optional comparison does not delay it.
+
 Latest verified comparison, 7 October at 12:35 UTC:
 
 | Model tested | Chat-style input | Question alone |

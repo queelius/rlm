@@ -2,6 +2,20 @@
 
 Cutoff: 7 October 2026, 12:35 UTC; all three training runs evaluated in both formats.
 
+## Evaluation repeatability update, 12:53 UTC
+
+The [completed repeatability checks](../../docs/r1-replication-2026-10-07/evaluation-repeatability-receipt.json)
+reproduced all five tested conditions byte-for-byte: base/question-only 305,
+first question-only training 314, repeated question-only training 306,
+base/chat-style 154, and chat-style training 308. These are repeated tests of
+unchanged weights, not additional training runs. Earlier variation under
+different evaluation batch composition remains a limitation. No slide score
+or conclusion changes, so the audience PDF retains its 12:35 result cutoff.
+
+The optional [GRPO comparison](../../docs/r1-replication-2026-10-07/grpo-comparison-plan.md)
+began after the slides were published. It is not a completed result and is
+not evidence for an algorithm claim.
+
 ## Fresh training repeat: the smaller gain is not reliable yet
 
 The [repeat result receipt](../../docs/r1-replication-2026-10-07/question-only-repeat-scoring-receipt.json)

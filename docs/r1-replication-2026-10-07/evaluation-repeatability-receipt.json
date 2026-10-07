@@ -1,0 +1,73 @@
+{
+  "verified_utc": "2026-10-07T12:53:36.686517+00:00",
+  "question": "Do unchanged weights reproduce answers under the same full500 batch and settings?",
+  "results": [
+    {
+      "condition": "base question-only",
+      "original": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base-no-template/model_eval_out__project_alex_phd_research-cache_models_Qwen--Qwen2.5-Math-1.5B--4a83ca6e4526a4f2da3aa259ec36c259f66b2ab21791368946_template_no_temp0_topp1_n1.json",
+      "repeat": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base-no-template-repeat1/model_eval_out__project_alex_phd_research-cache_models_Qwen--Qwen2.5-Math-1.5B--4a83ca6e4526a4f2da3aa259ec36c259f66b2ab21791373013_template_no_temp0_topp1_n1.json",
+      "correct": 305,
+      "total": 500,
+      "sha256": "90aa2a7140a9679835dffc3d1bb88e39af180740bf004836b669d5a8f72557dd",
+      "byte_identical": true,
+      "changed_texts": 0,
+      "changed_scores": 0,
+      "mean_output_tokens": 694.31,
+      "traceback": false
+    },
+    {
+      "condition": "first question-only training",
+      "original": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawtrained-final-no-template/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-raw-attempt2_debug_1007T10:40:50_saved_models_step_000331791372480_template_no_temp0_topp1_n1.json",
+      "repeat": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawtrained-final-no-template-repeat1/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-raw-attempt2_debug_1007T10:40:50_saved_models_step_000331791373226_template_no_temp0_topp1_n1.json",
+      "correct": 314,
+      "total": 500,
+      "sha256": "6090f3cc669ae4801e38377f01cd580809721230d82eb6306e228454ca0ceae9",
+      "byte_identical": true,
+      "changed_texts": 0,
+      "changed_scores": 0,
+      "mean_output_tokens": 693.614,
+      "traceback": false
+    },
+    {
+      "condition": "repeated question-only training",
+      "original": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawrepeat43-final-no-template/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-raw-repeat43_debug_1007T11:41:54_saved_models_step_000331791376135_template_no_temp0_topp1_n1.json",
+      "repeat": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawrepeat43-final-no-template-repeat1/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-raw-repeat43_debug_1007T11:41:54_saved_models_step_000331791376716_template_no_temp0_topp1_n1.json",
+      "correct": 306,
+      "total": 500,
+      "sha256": "0dba5b0a5e80f08a8aaf5831cfca009b1783b59d9d5317577c38f9392ba1fa10",
+      "byte_identical": true,
+      "changed_texts": 0,
+      "changed_scores": 0,
+      "mean_output_tokens": 680.152,
+      "traceback": false
+    },
+    {
+      "condition": "base chat-style",
+      "original": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base/model_eval_out__project_alex_phd_research-cache_models_Qwen--Qwen2.5-Math-1.5B--4a83ca6e4526a4f2da3aa259ec36c259f66b2ab21791368509_template_qwen_math_temp0_topp1_n1.json",
+      "repeat": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base-chat-repeat1/model_eval_out__project_alex_phd_research-cache_models_Qwen--Qwen2.5-Math-1.5B--4a83ca6e4526a4f2da3aa259ec36c259f66b2ab21791377042_template_qwen_math_temp0_topp1_n1.json",
+      "correct": 154,
+      "total": 500,
+      "sha256": "6cde24ef420aff35b7621ecea2ff013d6d1bc5faf3694955f85b9e3f02306c59",
+      "byte_identical": true,
+      "changed_texts": 0,
+      "changed_scores": 0,
+      "mean_output_tokens": 1628.044,
+      "traceback": false
+    },
+    {
+      "condition": "chat-style training",
+      "original": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-subset512-final/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-attempt1_debug_1007T09:19:27_saved_models_step_000331791368731_template_qwen_math_temp0_topp1_n1.json",
+      "repeat": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-chat-trained-final-repeat1/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-attempt1_debug_1007T09:19:27_saved_models_step_000331791377257_template_qwen_math_temp0_topp1_n1.json",
+      "correct": 308,
+      "total": 500,
+      "sha256": "a23d9f868b02bea43ee719041f06eb4f12e3ff1851aa5bb8052ca49650869c3b",
+      "byte_identical": true,
+      "changed_texts": 0,
+      "changed_scores": 0,
+      "mean_output_tokens": 753.694,
+      "traceback": false
+    }
+  ],
+  "interpretation": "All five repeated evaluations were byte-identical. These are not additional training replicates. They do not negate earlier variation with changed batch composition.",
+  "verification": "Original answers independently regraded and source checked in the linked original scoring receipts. Identical repeated bytes reuse that verification; no favorable replacement."
+}

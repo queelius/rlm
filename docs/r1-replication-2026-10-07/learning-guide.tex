@@ -23,13 +23,15 @@
 \newcommand{\RepeatChatMonitor}{23}
 \newcommand{\RepeatChatOriginal}{40}
 \newcommand{\RepeatChatAdditional}{103}
-\newcommand{\NextExperimentStatus}{The unchanged-weight evaluations repeated
-  exactly, including the saved answers: 305 for the base and 314 for the first
-  question-trained model. A fresh question-only training run scored 306.
-  A further evaluation of that saved model is planned; no result from it is
-  included here. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 12:35 UTC.
-  Three training runs evaluated in both formats; further evaluation repeat pending.}
+\newcommand{\NextExperimentStatus}{All five fixed-weight checks reproduced
+  byte-identical saved answer files: question-only scores 305 (base), 314
+  (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
+  and 308 (chat-trained). These are evaluation repeats, not additional training
+  replications. A bounded comparison using the authors' standard GRPO option
+  launched at 12:52 UTC; it has no result here. All completed results are retained.}
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 12:53 UTC.
+  Three training runs evaluated in both formats; five fixed-weight repeats
+  completed. Standard GRPO comparison pending.}
 \begin{document}
 \pagetitle{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}
   {Learning language-model RL\\from an official reproduction}
@@ -198,8 +200,8 @@ weight changes. This is a central warning of the paper [1].
 \textbf{Scoring.} The author's training program uses a faster checker. The
 standalone evaluator uses an additional mathematical-equivalence check
 (\code{fast=False}). We apply the same standalone checker to both saved answer
-sets for every reported comparison, including both formats for the newly
-completed question-trained model.
+sets for every reported comparison, including both formats for all three
+completed trained models.
 Source questions and reference answers were checked against the frozen data.
 We never combine scores from different checkers.
 
