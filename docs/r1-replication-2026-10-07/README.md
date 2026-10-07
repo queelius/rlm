@@ -1,5 +1,41 @@
 # A small, direct replication of language-model RL
 
+**Latest check, 7 October at 18:20 UTC:** The longer run has reached 99
+completed learning calls without a logged training error. Its scheduled
+64-question scores are **20, 42, 42, 43** at 0, 32, 64 and 96 updates.
+All 64 answers at the newest point were independently regraded and agree.
+Five answers improved and four became wrong since the previous check: a net
+gain of one, not yet a dependable new improvement. See the
+[complete curve, checks and examples](interim-monitor-1820.json).
+
+One revealing failure: the model wrote code-like text and claimed a pair of
+integers solved an equation, but substituting those integers gives 128 when
+the question requires 100. This experiment does **not** execute generated
+code. A claimed program output is still just model text. The learning guide
+now walks through this and a corrected dice-probability answer.
+
+The five-slide PDF and learning PDF use an 18:20 UTC evidence cutoff. Final
+MATH500, AMC and Minerva scores from the ongoing run remain pending. The
+accepted training and evaluation schedule is unchanged.
+
+### How our improvement compares with the paper
+
+For Qwen2.5-Math-1.5B, the paper reports MATH500 accuracy of 33.0% with the
+chat template before training and 74.2% after RL: a 41.2-percentage-point gain.
+Its stronger question-only base scores 61.8%, so the trained model exceeds
+that starting capability by 12.4 points, with a different input format.
+See [Table 1 and Appendix B, Table 4](https://arxiv.org/html/2503.20783v2#A2).
+
+Our completed short chat-trained run went from 30.8% to 61.6% on all500
+questions in chat style, a 30.8-point gain. Our ongoing run's fixed64 monitor
+went from20/64 (31.25%) to43/64 (67.19%) after96 updates, a35.94-point gain
+under the same chat setup. The latter is not a measured full500 result or
+a reliable prediction of the final score. In our completed full500 tests,
+the stronger question-only base was61.0%; the chat-trained model in that
+same question-only format scored63.4%, a much smaller2.4-point gain.
+We have not yet reproduced the paper's full-benchmark improvement beyond
+the stronger starting setup.
+
 **Training diagnosis, 7 October at 17:45 UTC:** RL still has useful successes
 and failures to compare. Across three fixed windows, all 1,536 checked
 training rewards matched the full answer checker and length-limit rule.
@@ -25,7 +61,7 @@ The [recipe audit and bounded experiment plans](recipe-opportunities-1745.json)
 record their exact budgets and remaining differences from the published work.
 The current run and its six final test conditions stay unchanged.
 
-**Intermediate check, 7 October at 17:37 UTC:** The longer run is still training.
+**Earlier intermediate check, 7 October at 17:37 UTC:** The longer run was still training.
 On the same64 monitoring questions, it scored20 correct before training,
 42 after32 updates, and42 after64 updates. At the last check, five answers
 improved and five became incorrect, so the unchanged total hides some movement.
@@ -33,8 +69,8 @@ Both later sets of64 answers were independently rescored with full agreement.
 These are small, repeatedly observed monitoring results, **not a final MATH500
 score or a replicated training gain**. The fixed training schedule continues.
 See the [intermediate evidence and limits](interim-monitor-1737.json).
-The five-slide PDF and learning PDF now include this curve at a 17:45 UTC
-evidence cutoff. The learning guide's final page explains what it does and
+The five-slide PDF and learning PDF first included this curve at a 17:45 UTC
+evidence cutoff. The learning guide explains what it does and
 does not establish. The planned report around 20:00 UTC can incorporate later
 scheduled checks.
 
@@ -185,7 +221,7 @@ unchanged weights reproduced all 500 saved answers byte-for-byte, including
 [repeatability receipt](grpo-repeatability-receipt.json). The bounded batch is
 complete; the [handoff](HANDOFF.md) records what to retain and what to try next.
 
-The five-slide deck now has a 17:45 cutoff. It retains the central prompt-format
+The five-slide deck now has an 18:20 cutoff. It retains the central prompt-format
 comparison and authors' released-model check, and adds the longer run's
 intermediate learning curve.
 The small GRPO comparison remains in the supporting account, not a claim that

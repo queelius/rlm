@@ -28,7 +28,7 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 17:45 UTC.
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 18:20 UTC.
   Short-run results and evaluation repeats retained. Authors' released-model
   check completed; longer training underway, intermediate checks on page 9.}
 \begin{document}
@@ -526,7 +526,7 @@ The \href{longer-training-plan.md}{accepted protocol} fixes the endpoint;
 the \href{longer-loader-receipt.json}{original loader check} records the excluded prompts.
 Completion still requires checking actual run counters.
 \newpage
-\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 17:45 UTC}
+\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 18:20 UTC}
   {Is the longer run learning more?}
 
 The longer run is still in progress. The table below contains every scheduled
@@ -535,21 +535,21 @@ answers on the same 64 questions, with chat-style input, greedy generation,
 a 3000-token response limit, and the full answer checker.
 
 \begin{center}
-\begin{tabular}{lrrr}
+\begin{tabular}{lrrrr}
 \toprule
-Completed weight updates & 0 & 32 & 64 \\
+Completed weight updates & 0 & 32 & 64 & 96 \\
 \midrule
-Correct final answers out of 64 & 20 & 42 & 42 \\
+Correct final answers out of 64 & 20 & 42 & 42 & 43 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-We independently regraded all 64 answers at both later points. Every result
+We independently regraded all 64 answers at each later point. Every result
 agreed with the saved score, and the questions, reference answers and input
-format matched the starting check. Relative to the start, update 32 gained 22
-answers and lost none; update 64 gained 23 and lost one. Between 32 and 64, five
-answers improved and five regressed. Equal totals therefore do not mean the
-model gave the same answers or stopped changing.
+format matched the starting check. Relative to the start, update 96 gained 26
+answers and lost three. Between 64 and 96, five answers improved and four
+regressed. That is only one more correct answer overall, not a breakthrough.
+The model continues changing even when the total score barely moves.
 
 \topic{What this does and does not show}
 
@@ -582,8 +582,58 @@ run uses the full checker already. We must not compare a native fast-checker
 score against a full-checker score without saying so. Final 500-question comparisons
 throughout this guide already use the same full checker.
 
-The fixed monitoring points 32 and 64 follow that many completed updates.
+The fixed monitoring points 32, 64 and 96 follow that many completed updates.
 The final bookkeeping label 256 is different: it follows 255 completed updates.
-See \href{interim-monitor-1737.json}{intermediate evidence} and the companion
+See \href{interim-monitor-1820.json}{intermediate evidence} and the companion
 research record for raw-file hashes and the latest operational status.
+\newpage
+\pagetitle{TWO ACTUAL ANSWERS \quad | \quad 7 OCTOBER, 18:20 UTC}
+  {An answer can improve while another gets worse.}
+
+These examples come from the same 64-question check at updates 64 and 96.
+They illustrate changes in individual answers, not how often each kind of
+error occurs. We summarize the saved responses below; the arithmetic checks
+are ours.
+
+\topic{An answer that improved: rolling two dice}
+
+\textbf{Question:} What is the chance that the product of two fair dice is a
+multiple of five?
+
+At update 64, the model's final answer was $1/3$. At update 96, it gave the
+correct answer, $11/36$.
+
+\textbf{Why $11/36$?} At least one die must show five. There are six outcomes
+with five on the first die and six with five on the second. We counted
+$(5,5)$ twice, so subtract one: $6+6-1=11$ favorable outcomes out of 36.
+
+\topic{An answer that got worse: two integers}
+
+\textbf{Question:} If integers $m,n$ satisfy $3m+4n=100$, what is the smallest
+possible value of $|m-n|$?
+
+At update 64, the final answer was the correct value, 3. At update 96, the
+model wrote a search loop and claimed its output was $(m,n)=(28,11)$,
+giving a difference of 17. But these numbers do not even satisfy the equation:
+$3(28)+4(11)=128$, not 100.
+
+\textbf{A simple check:} Set $d=m-n$. Then $7n+3d=100$, so $d$ must be one of
+$\ldots,-11,-4,3,10,\ldots$. The smallest absolute value is 3, attained by
+$(m,n)=(16,13)$: $48+52=100$.
+
+\topic{The lesson for our future RLM work}
+
+\textbf{Writing code is not the same as running code.} In this experiment,
+the model only generates text. Neither the search loop nor its claimed output
+was executed by our system. The answer checker marked the wrong final answer
+incorrect, but it does not supervise every reasoning step.
+
+An RLM could actually execute a calculation and inspect the result. That is
+a different capability which needs its own tests. These examples motivate
+checking real tool returns, not treating a plausible-looking explanation as
+evidence that a tool was used correctly.
+
+The \href{interim-monitor-1820.json}{evidence receipt} identifies the saved
+responses (zero-based indices 11 and 57). No generated code was executed in
+this audit.
 \end{document}

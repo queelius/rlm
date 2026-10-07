@@ -1,5 +1,34 @@
 # Completed short LLM RL reproduction
 
+## Latest review, 18:20 UTC
+
+Attempt 4 continues unchanged. At 18:20:58 it had 99 completed learning calls,
+latest printed counter 98, 98 finite positive gradient norms and no logged
+training errors. Saved model labels 88 and 96 were present. Whole owner
+1861599 and observer 1884898 remain authenticated and active.
+
+The complete monitor curve is now **20, 42, 42, 43 out of 64**, at updates
+0, 32, 64, 96. The latest point has five gains and four losses relative to 64;
+all answers independently regrade. Collection 96 also passed a fresh audit:
+128 responses, 71 rewarded, 11 of 16 questions with mixed outcomes, four
+no-EOS answers correctly zeroed, finite aligned logprobs and zero grading
+disagreements. These changing-question rewards are not a test learning curve.
+See [new monitoring and training evidence](interim-monitor-1820.json).
+
+The five-slide and ten-page learning PDFs now have the 18:20 cutoff. A new
+guide page explains a corrected dice answer and a wrong claimed code output,
+with arithmetic anyone can check. No generated code was executed. Full-run
+benchmarks remain pending; no best-checkpoint selection or early stopping.
+
+Future LR5e-6 launchers have passed five scoped CPU cleanup tests under the
+pinned Python environment and independent review with no material blocker.
+The documented launch command preserves any previous owner log. See the
+[readiness receipt](../../experiments/r1_replication_20261007/lr5e6-readiness.json).
+Nothing new has been launched. Current training and four final-evaluation jobs keep their
+owner. Main quota45% at18:22:56; reserve10%, dispatchheadroom12%. The supplied
+allocation epoch1791621574 is **10 October08:39:34UTC**; earlier calendar
+summaries saying9October20:39 were wrong. Observer cutoff is five minutes earlier.
+
 ## Current research decision at 17:55 UTC
 
 Attempt 4 remains healthy and unchanged: 77 completed learning calls at 17:52,

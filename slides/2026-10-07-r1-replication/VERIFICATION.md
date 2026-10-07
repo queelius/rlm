@@ -1,5 +1,23 @@
 # Presentation verification
 
+## Intermediate results at 18:20 UTC on 7 October
+
+- Five-slide PDF and ten-page learning PDF built with Tectonic, with no
+  overfull or underfull boxes reported. Slide titles match all five pdfpc
+  notes, which pass the 14-line / 42-character wrap check. No live GUI test.
+- All text spans fit both PDFs' page bounds. Root visually inspected the
+  changed slide 5 and learning-guide pages 9 and 10: the four-point chart,
+  caveats, arithmetic examples and footer are readable without overlap.
+- New point is 43/64 at 96 completed updates, independently full-regraded
+  with no disagreement. Five gains and four losses since update 64 are
+  retained, not just the net gain. This is not a final MATH500 result.
+- The new guide page contrasts a correct dice answer with an incorrect
+  claimed program output. Both examples come from saved model responses;
+  independent arithmetic checks do not execute generated code. They are
+  illustrations, not a measured frequency of reasoning errors.
+- Source/PDF/notes/speaker guide/evidence cutoff updated together. Current
+  training owner, objective and final-evaluation schedule are unchanged.
+
 ## Intermediate results at 17:45 UTC on 7 October
 
 - Five-slide PDF and nine-page learning PDF built with Tectonic. Final builds

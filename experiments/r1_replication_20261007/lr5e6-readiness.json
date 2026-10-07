@@ -1,0 +1,57 @@
+{
+  "status": "CPU_VERIFIED_INDEPENDENTLY_REVIEWED_READY_AFTER_CURRENT_WHOLE_OWNER_RELEASE_NOT_LAUNCHED",
+  "question": "Does a fivefold learning-rate increase improve the prescribed255-update fresh-base endpoint, holding the original-base/data/Dr.GRPO/reward/sampling recipe fixed?",
+  "approval": "Parent assigned this bounded successor design under the user's autonomous research request; preparation only, no launch or commit.",
+  "scripts": {
+    "run_larger4096_lr5e6.sh": "49bff9ed369325d848affa330a3539c5592ab68f9934f24f3af44f8816ab0afa",
+    "run_larger4096_lr5e6_sequence.sh": "a2fd9db8eb55073c27d13bcc6c43a9db9f9079f68b00e95ca75f77ffbc0eab46",
+    "scoped_session_owner.py": "89c03da19120487d74823686b67cff358d77f39d0e9a491de2dba1d1dde3da5e",
+    "test_scoped_session_owner.py": "d9be45ca38e972fc11423d008997a399cf52c0f5c0727279a3f69a8b7d0b3729"
+  },
+  "input_provenance": {
+    "repo_commit": "dfca49dd460ee7cc8e4a5a162c876a7fd6993b87",
+    "base_revision": "4a83ca6e4526a4f2da3aa259ec36c259f66b2ab2",
+    "selected_data_manifest": "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-data-manifest.json",
+    "selected_data_content_sha256": "34753ee5ac36f7a4023521f70b8763117e749d94ff8ec23e434c6f33fe328cbb",
+    "private_memory_adapter_manifest": "/project/alex_phd/runs/r1-zero-replication-20261007/runtime-memory-v1/manifest.json",
+    "environment": "/project/alex_phd/envs/r1-zero-dfca49d",
+    "seed": 42,
+    "seed_limit": "Learner42; authors' actor retains time-based randomness."
+  },
+  "only_scientific_change": {"learning_rate_before": 0.000001, "learning_rate_after": 0.000005},
+  "fixed_budget": {"collections": 255, "optimizer_updates": 255, "questions": 4080, "responses": 32640, "train_cap_hours": 10, "whole_owner_cap_hours": 13, "save_every_collections": 8, "retain_latest": 2, "natural_terminal_label": "step_00256"},
+  "metrics": "Same six conditions as attempt4: greedy/full-verified MATH500,AMC83,Minerva272, each qwen_math and question-only. Retain all scores, gains/regressions, caps/empties and length evidence; prescribed natural endpoint only.",
+  "outputs": {
+    "project": "/project/alex_phd/runs/r1-zero-replication-20261007/followups/fresh-lr5e6-fixed255",
+    "models_and_optimizer": "/home/atowell/research-runs/r1-zero-replication-20261007/followups/fresh-lr5e6-fixed255",
+    "owner_log": "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-lr5e6-owner.log"
+  },
+  "launch_command_after_owner_review_and_release_only": "( set -o noclobber; bash /project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/r1_replication_20261007/run_larger4096_lr5e6_sequence.sh > /project/alex_phd/runs/r1-zero-replication-20261007/larger4096-lr5e6-owner.log 2>&1 )",
+  "remaining_issue": "No CPU review blocker. Authenticate whole-owner completion, GPU release and sufficient allocation at future admission. GPU runtime integration remains unexecuted.",
+  "independent_review": "lr5e6_launch_review found no critical or important issue; checked exact recipe contrast, endpoint/six conditions, code, tests and hashes. Minor log-overwrite risk in documented command fixed with noclobber. Root reran all five real CPU tests in the pinned environment: PASS in2.677s. No GPU launch or current-source mutation.",
+  "cleanup_repair": {
+    "reproduction": "Isolated CPU fixture: outer GNUtimeout returned124 while inner timeoutPID1900977 and TERM-ignoring worker1900978 survived in PGID1900977/SID1900975. Only fixture-owned sessionPIDs were killed in cleanup.",
+    "design": "Replace only the outer GNUtimeout with scoped_session_owner.py. It creates a fresh child session and preserves nested10h/30m GNUtimeouts and their60s kill-after group cleanup. On46800s whole cap, TERM/INT or normal return, authenticate own session/startticks, signal via libc pidfds across all nested process groups, allow55sTERM grace, thenKILL and verify for at most5s. Any remaining active owned process gives failure125 and a receipt.",
+    "compatibility": "PinnedPython3.10 lacks os.pidfd_open/signal.pidfd_send_signal; libc wrappers provide them and all five real-process fixtures passed under this exact pinned interpreter. No PID-only fallback was introduced.",
+    "containment_limit": "Linux/procfs/libc pidfds required. Cleanup covers the isolated child session, including nestedPGIDs, and intentionally excludes unrelated sessions. Descendants deliberately escaping with setsid and an uncatchableSIGKILL of the owner are outside this contract. Pinned launchpad/Oat source search found no setsid/start_new_session calls; this is not proof against all dependency behavior.",
+    "test_command": "/project/alex_phd/envs/r1-zero-dfca49d/bin/python /project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/r1_replication_20261007/test_scoped_session_owner.py -v",
+    "test_result": "5 passed in2.684s: wholecap nested-group TERM-ignore, innerjobcap, externalTERM, unrelated-session survival, normalreturn orphan cleanup. Initial feature-absent RED witnessed; initial compatibility failure preserved in transcript and fixed at observed libc seam."
+  },
+  "allocation_end_epoch": 1791621574,
+  "allocation_end_utc": "2026-10-10T08:39:34Z",
+  "allocation_provenance": "Root verified authoritative epoch1791621574; prior calendar summaryOct9 20:39 was erroneous. Observer cutoff1791621274=2026-10-10T08:34:34Z.",
+  "launch_gate": "Authenticate completion of the entire attempt4 owner including four final evaluation jobs/six conditions, GPU release and established ownership before issuing command. Script fails immediately while prior owner/trainerPID1861599/1861602 exists, any GPU computePID remains, an output path exists, or less than13h+60s remains before authoritative allocation_end1791621574. Recycled priorPIDs require manual resolution. No waiting GPU process was created.",
+  "verified": {
+    "shell_syntax": "bash -n on both new scripts, exit0",
+    "scoped_cleanup": "Five CPU integration tests passed under pinned r1-zero interpreter; focused Ruff check and format check passed for helper/tests",
+    "allocation_epoch": "Literal1791621574; date -u -d @1791621574 verified2026-10-10T08:39:34Z",
+    "attempt4_unchanged": "git diff --exit-code scoped to both attempt4 scripts, exit0",
+    "exact_training_cli_comparison": "All shlex-parsed CLI tokens equal except learning_rate0.000001->0.000005",
+    "native_endpoint_guard_cpu_fixtures": "Accepts255rounds/255updates/onefinal256/64monitorrows. Rejects254rounds, wrongupdatecount,256rounds, traceback, and ambiguous finalcheckpoints.",
+    "unique_outputs": "Both fixed successor output directories absent at readinesscheck",
+    "gpu_execution": "Not launched or GPU-tested; inherited attempt4 memory adapter/runtime stability is not a guarantee."
+  },
+  "operational_changes": "New unique outputs/logs, fail-fast release/allocation gates, and13h isolated-session owner with CPU-verified cleanup across nestedGNUtimeout groups. Individual10h/30m caps remain unchanged. Existing shared assets, source/environment, attempt4 scripts, owner and observer remain unchanged.",
+  "startup_check": "After future launch promptly verify actual responses/rewards and real finite updates, then maintain lightweight checks under the new authenticated owner. Do not promote a capped/failed partial run as a matched terminal result.",
+  "limitations": "Current attempt4 terminal is pending. LR5e-6 is a hypothesis supported by arXiv2607.01232v1 AppendixA.3, not an optimum established here. Evaluation batch protocols must match. No favorable checkpoint or benchmark selection."
+}

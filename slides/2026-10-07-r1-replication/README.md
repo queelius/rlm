@@ -12,12 +12,12 @@ evidence. The two question-only training runs improved by nine and one answer;
 we have not established a reliable gain beyond that stronger starting setup.
 It is not a reproduction of the paper's full benchmark scores.
 
-At the 17:45 UTC update, a separate check of the authors' released model scored
+At the 18:20 UTC update, a separate check of the authors' released model scored
 366/500 (73.2%), compared with their reported 74.2%. Those are the authors'
 weights, not a model trained by us. Slide 1 identifies that check separately.
-Slide 5 shows the ongoing longer run: 20, 42, and 42 correct out of the same
-64 questions before training, after 32 updates, and after 64 updates.
-Five answers improved and five regressed between the last two points.
+Slide 5 shows the ongoing longer run: 20, 42, 42 and 43 correct out of the same
+64 questions before training and after 32, 64 and 96 updates.
+Five answers improved and four regressed between the last two points.
 These are progress checks, not a final 500-question result.
 The third attempt failed after 12 updates without a saved checkpoint. A fourth
 attempt uses an isolated memory repair and more frequent saving, with the same

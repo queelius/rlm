@@ -1,0 +1,53 @@
+{
+  "checked_at_utc": "2026-10-07T18:20:00Z",
+  "run": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4/debug_1007T16:02:41",
+  "scope": "All scheduled intermediate monitoring points, not a completed endpoint",
+  "evaluation": "Same 64 development-monitor math questions, qwen_math input, one greedy answer, 3000 response-token limit, full math verifier",
+  "points": [
+    {"update": 0, "correct": 20, "n": 64, "file": "eval_results/0_math.json", "sha256": "223106f41ad7eb9e99b4cae0cc8547b5c54512219139c3c0ea3a2bec70004511"},
+    {"update": 32, "correct": 42, "n": 64, "file": "eval_results/32_math.json", "sha256": "7f422ea1e1f9c52e0de494a49389f60a02f999847e9e7dcf62527b7b73b0711f"},
+    {"update": 64, "correct": 42, "n": 64, "file": "eval_results/64_math.json", "sha256": "6a8f50d577f06d61873b9fef3bb96babc78f191b12bd42b95e2df2c409b6d2b7"},
+    {"update": 96, "correct": 43, "n": 64, "file": "eval_results/96_math.json", "sha256": "b7aab639b850dc963d9e3ebedc46f46e0a237afb2d99396d680861d4074c29b5"}
+  ],
+  "checks": "Exact question, reference and formatted-input alignment across all four points. All 64 update96 answers independently regraded with full checker:43 correct, zero mismatches,61 formatted. Previous points independently checked in earlier receipts.",
+  "audit_method_note": "First inline audit incorrectly compared the grader's (metadata, score) tuple with a scalar. Corrected to unpack the tuple; all64 regraded successfully. This was an audit-wrapper error, not a native reward discrepancy.",
+  "paired_changes_to_96": {
+    "from_0": {"gains": [0,4,5,8,11,13,14,15,16,17,22,28,30,31,37,42,45,46,48,49,52,53,54,55,56,60], "losses": [12,34,57], "identical_answer_texts": 3},
+    "from_32": {"gains": [0,4,8,11,48,49,53,56], "losses": [3,10,12,27,29,34,57], "identical_answer_texts": 7},
+    "from_64": {"gains": [11,37,48,53,56], "losses": [10,12,41,57], "identical_answer_texts": 15}
+  },
+  "illustrative_cases_zero_based": [
+    {"index":11,"question":"Probability that two fair dice have a product divisible by5","at64":"Incorrect1/3, despite code-like text that describes counting11 outcomes","at96":"Correct11/36","manual_check":"Six outcomes with first die5 plus six with second die5, less the duplicated(5,5):11 of36."},
+    {"index":57,"question":"Smallest absolute difference of integers m,n with3m+4n=100","at64":"Correct3","at96":"Incorrect17; claims pair(28,11), which gives128, not100","manual_check":"Let d=m-n;7n+3d=100 implies d=3 mod7. The smallest absolute possible d is3, attained by m16,n13."}
+  ],
+  "example_limit": "Selected illustrations, not an estimate of explanation-error frequency. Generated code and purported program outputs are model text; no generated code was executed.",
+  "interpretation": "Early chat-format gain persists. The latest check adds only one correct answer net; five gains and four losses do not establish a new reliable improvement. A formatted answer or code-like explanation is not proof of valid reasoning or actual tool use.",
+  "limits": ["One training run", "Small repeatedly observed development monitor", "No full500 endpoint for this run", "No demonstrated advantage over stronger question-only base or short runs", "No favorable checkpoint selection"],
+  "latest_training_check": {
+    "checked_at_utc": "2026-10-07T18:20:58Z",
+    "completed_learning_calls": 99,
+    "latest_printed_sgd_counter": 98,
+    "counter_limit": "Log printing can lag completed calls; no final endpoint claimed.",
+    "gradient_norms_checked": 98,
+    "all_finite_positive": true,
+    "last_four_norms": [0.013383474200963974,0.014646430499851704,0.016656598076224327,0.01870446465909481],
+    "reported_errors": [],
+    "saved_model_labels": [88,96]
+  },
+  "new_training_buffer_audit": {
+    "collection":96,
+    "file":"buffer_step00096.pkl",
+    "sha256":"5d0508ad26d5eb3d9ec51c03f69eea9e0ca62366a28d124aad744a161e85725d",
+    "responses":128,
+    "questions":16,
+    "answers_each":8,
+    "rewarded":71,
+    "mixed_success_questions":11,
+    "no_eos_capped_answers":4,
+    "empty_answers":0,
+    "full_regrade_mismatches":0,
+    "checks":"All prompts match buffer references; every decoded token sequence matches stored text; token/logprob/reward lengths align and all values are finite. Intermediate token rewards zero. All128 final effective rewards agree with full checker plus no-EOS zeroing.",
+    "limit":"This collection contains different questions from earlier windows; its reward total is not a controlled learning curve."
+  },
+  "decision": "Continue255 planned updates and all six prescribed final conditions. Prepare stronger-learning-rate contrast separately; prioritize independent fresh training repeat if final gain is meaningful. Preserve unchanged live owner."
+}
