@@ -1,12 +1,12 @@
 # Lessons from math RL for training RLMs
 
-Evidence cutoff: 7 October 2026, 20:22 UTC. Six slides, about six minutes.
+Updated: 7 October 2026, 20:56 UTC. Six slides, about six minutes.
 The reproduction supplies evidence that our learning loop can improve answers.
 The main discussion is what makes that learning possible, and how we could
 create those conditions for recursive language models. The RLM interventions
 below are proposals, not findings from the math experiment.
 
-## 1. A small reproduction gives us a learning signal
+## 1. We reproduced RL-driven improvement at small scale
 
 Say: “We eventually want an RLM to learn when to run code, when to ask a helper,
 and how to divide work. First we practiced with a published RL method on math,
@@ -16,8 +16,10 @@ small-scale reproduction of RL-driven improvement. Now, what made that possible?
 
 We used the authors' Dr. GRPO implementation, Qwen2.5-Math-1.5B, and one A100.
 We added no supervised fine-tuning (SFT): the starting model already had math
-skills. The ongoing run uses 4,080 training questions, eight responses per
-question, and a fixed 255-update budget. All seven scheduled monitoring points
+skills. The longer run planned 4,080 training questions, eight responses per
+question, and 255 updates. We stopped it after 219 completed updates to focus
+on the RLM lessons; model and optimizer checkpoints through 216 remain saved.
+All seven completed monitoring points
 are shown: 20, 42, 42, 43, 43, 48, 47 at updates 0, 32, 64, 96, 128, 160, 192.
 The latest comparison contains one newly correct answer and two regressions.
 The sine-product answer recovers, while polygon-perimeter and square-table
@@ -27,8 +29,14 @@ Each score counts final answers accepted by the full mathematical checker.
 Each question gets one greedy answer, the same chat input and a 3,000-token cap.
 The 64 questions were excluded from weight training but repeatedly inspected.
 47/64 is 73.44% on this monitor, not a full MATH500 score.
-The final checkpoint, not the best intermediate one, will receive the planned
-full500 and broader math evaluations. One run does not establish repeatability.
+The planned final MATH500 and broader evaluations were canceled with the run.
+We retain every completed point, not a selected best checkpoint. The score at
+192 is the last measured monitor score, not a test of the last saved weights.
+
+Keep this slide brief: “We successfully reproduced RL-driven improvement at
+small scale using the paper's method. The important question is what this
+teaches us about preparing RLMs to learn.” The claim is qualitative and scoped;
+we are not claiming to match the paper's full training history or benchmark.
 
 If asked about the paper: its 1.5B chat-template result is 33.0% to 74.2%.
 Our evaluator scores the authors' released weights at 73.2% on all500.
@@ -171,9 +179,9 @@ demonstrations of the environment; [DeepSeek-R1](https://arxiv.org/html/2501.129
 uses a supervised cold start before RL, unlike R1-Zero. The proposed contribution
 would have to identify which preparation or ordering matters, and why it transfers.
 
-The current math run continues unchanged. Its fixed final evaluations and ready
-small follow-ups remain under their existing resource owners. These brainstorming
-ideas do not silently replace a live experiment.
+The math replication run, follow-on evaluations and observer are stopped at the
+user's request. Prepared math screens are shelved, not launched. The next work
+is to turn these lessons into small, discriminating RLM experiments.
 
 ## Evidence and further reading
 

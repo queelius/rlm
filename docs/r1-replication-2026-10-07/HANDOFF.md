@@ -1,6 +1,22 @@
 # Completed short LLM RL reproduction
 
-## Updated result and lesson-centered presentation
+## User stopped math training at 20:56 UTC
+
+This overrides the historical continuation instructions below. Training stopped
+after 219 updates; model and optimizer states at 208 and 216 are preserved.
+The last three updates were not saved. The latest measured score is still 47/64
+at update 192, not an evaluation of the last saved checkpoint. No files were deleted.
+The whole training owner and observer have exited; the GPU is released.
+Final evaluations are canceled and prepared math screens are shelved.
+
+The advisor conclusion is a successful small-scale reproduction of RL-driven
+improvement using the paper's method, not a match to its full benchmark score.
+The main story is now the lessons and future RLM experiments: reachable success,
+usable tools, trustworthy feedback, demonstrations, curriculum and exploration.
+See the [stop receipt](user-stop-2056.json). Do not restart this math campaign
+automatically. Checkpoint files remain external; GitHub is not their backup.
+
+## Earlier result and lesson-centered presentation
 
 Latest check, 20:22 UTC, supersedes the result below: after 192 updates the
 monitor score is **47/64**, one gain and two regressions since update 160.

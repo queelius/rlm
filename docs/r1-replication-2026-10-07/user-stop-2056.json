@@ -1,0 +1,71 @@
+{
+  "status": "stopped_by_user",
+  "stopped_at_utc": "2026-10-07T20:56:12.063688Z",
+  "request": "Stop math training and focus the advisor narrative on lessons for future RLM experiments.",
+  "interpretation": "Successful small-scale reproduction of RL-driven improvement using the authors' method; not a match to the paper's full training history or benchmark score.",
+  "run": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4/debug_1007T16:02:41",
+  "completed_learning_calls": 219,
+  "last_printed_optimizer_update": 219,
+  "planned_optimizer_updates": 255,
+  "prescribed_final_checkpoint_reached": false,
+  "last_measured_monitor": {
+    "update": 192,
+    "correct": 47,
+    "total": 64,
+    "baseline_correct": 20,
+    "all_completed_scores": [
+      20,
+      42,
+      42,
+      43,
+      43,
+      48,
+      47
+    ],
+    "not_score_of_last_saved_checkpoint": true
+  },
+  "saved_model_and_optimizer_steps": [
+    208,
+    216
+  ],
+  "last_checkpoint": "step_00216",
+  "updates_after_last_saved_checkpoint": 3,
+  "files_deleted": [],
+  "checkpoint_checks": {
+    "model_safetensors_bytes_each": 3087467144,
+    "readable_model_header_entries_each": 339,
+    "model_state_bytes_each": 3087520824,
+    "optimizer_state_bytes_each": 18524602816,
+    "readable_model_state_zip_entries_each": 6,
+    "readable_optimizer_state_zip_entries_each": 10,
+    "exact_training_resume_validated": false,
+    "github_is_not_weight_backup": true
+  },
+  "shutdown": {
+    "authenticated_session": 1861590,
+    "outer_owner_pid": 1861599,
+    "outer_owner_start_ticks": 1319284714,
+    "mechanism": "TERM sent to authenticated whole owner, then bounded cleanup of authenticated session members through the existing scoped-session helper.",
+    "remaining_session_members": [],
+    "gpu_compute_pids_after_stop": [],
+    "observer_alive": false,
+    "observer_stop_file": "/project/alex_phd/runs/r1-zero-replication-20261007/reviews-longer-v4/STOP",
+    "initial_python_pidfd_attempt": "Unavailable API raised before any signal; existing libc pidfd helper then used successfully."
+  },
+  "canceled": [
+    "MATH500 final chat and raw evaluation",
+    "AMC83 and Minerva272 final chat and raw evaluation",
+    "Automatic research reviews for this math run"
+  ],
+  "shelved_not_queued": [
+    "512-question learning-rate/reuse screen",
+    "Further math training replications"
+  ],
+  "next_priority": "Small RLM experiments on starting competence, observation and interface quality, demonstrations, teaching order, exploration and feedback; separate preparation gains from gains added by RL.",
+  "quota": {
+    "remaining_percent": 33,
+    "checked_utc": "2026-10-07T20:56:28.612743Z",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  }
+}

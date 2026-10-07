@@ -28,9 +28,9 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 20:22 UTC.
-  Short-run results and evaluation repeats retained. Authors' released-model
-  check completed; longer training underway, intermediate checks on page 9.}
+\newcommand{\EvidenceCutoff}{Updated: 7 October 2026, 20:56 UTC.
+  Math training stopped by choice; checkpoints and all completed results retained.
+  Latest progress check: 47/64 at update 192. Lessons for RLMs begin on page 11.}
 \begin{document}
 \pagetitle{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}
   {Learning language-model RL\\from an official reproduction}
@@ -39,8 +39,8 @@ We want to establish that our language-model reinforcement learning pipeline
 does what we think it does: generate answers, assign rewards, change weights,
 and evaluate those changed weights fairly. We start with the authors' code for
 \emph{Understanding R1-Zero-Like Training: A Critical Perspective} [1,2].
-This is a small reproduction of its training method, with a smaller model
-workload and budget. It does not reproduce the paper's published scores.
+We successfully reproduced RL-driven improvement at small scale using its method.
+The purpose is to learn how to teach RLMs, not to match the full published benchmark.
 
 \topic{Why do this before recursive language-model RL?}
 
@@ -84,9 +84,10 @@ Training with the chat prompt improved its full-500 score from \textbf{154 to
 On question-only evaluation, the chat-trained model scored \textbf{317}; two
 fresh question-only training runs scored \textbf{314 and 306}. Against 305,
 their gains of nine and one answer do not demonstrate a stable, material
-improvement. We have validated a working RL pipeline and strong prompt
-sensitivity; dependable learning gains remain uncertain. Pages 4--5 explain
-the comparisons, and page 6 examines individual answers from the pilot.
+improvement. The longer run improved from \textbf{20 to 47 on the same 64-question
+monitor}. We stopped it by choice to focus on RLM teaching experiments. This
+demonstrates improvement in that setup, not a repeatable gain beyond the strong
+question-only baseline. Pages 4--10 preserve the comparisons and examples.
 
 {\small\color{accent}\EvidenceCutoff}
 
@@ -457,7 +458,7 @@ The main lesson remains prompt sensitivity, a functioning training pipeline,
 and uncertainty about dependable gains from this short training budget [2,4].
 
 \newpage
-\pagetitle{APPENDIX / REFERENCE CHECK \quad | \quad 7 OCTOBER, 17:45 UTC}
+\pagetitle{APPENDIX / REFERENCE CHECK \quad | \quad 7 OCTOBER, 20:56 UTC}
   {Testing the authors' model is not reproducing its training}
 
 We evaluated \textbf{the authors' released model},
@@ -481,7 +482,7 @@ model remains at 308/500; the released model's 366 is not our training gain.
 Nor does the checked score validate every reasoning step or prove an exact
 reproduction of the published evaluation. We retain the five-answer difference.
 
-\topic{A larger retry is now running}
+\topic{The larger retry was stopped after the teaching demonstration}
 
 The \href{longer-attempt1-failure.json}{first attempt} ran out of memory before completing a collection;
 inner updates are unconfirmed. The \href{longer-attempt2-failure.json}{second} failed during initialization
@@ -492,9 +493,9 @@ It saved no checkpoint. These are runtime failures, not benchmark results.
 Attempt 4 started at 16:02 UTC. A private copy of the learning package
 computes diagnostic entropy in smaller pieces and releases unused old prediction
 tensors. Three focused CPU tests passed, including matching actual learning-step
-updates in a fixture. A full-shaped GPU check also passed; at least 65 learning
-calls have now completed without a reported error. This does not guarantee all
-later batches will fit. The shared environment and official source are unchanged.
+updates in a fixture. A full-shaped GPU check also passed; 219 learning calls
+completed before the user-requested stop. The shared environment and official
+source are unchanged. Saved model and optimizer states reach update 216.
 
 The retry starts from the original base weights, not a trained checkpoint.
 We selected 4096 of the authors' 8523 MATH level 3--5 questions with a fixed
@@ -508,28 +509,28 @@ The earlier 3968-question/248-update large-collection plan was abandoned.
 These are budgets, not completed results.
 
 Saving occurs every eight updates; training is capped at ten hours and the
-whole sequence at thirteen. The fixed final checkpoint, \code{step\_00256},
-will be tested on MATH500 (500 questions), AMC (83), and Minerva (272), each in
-both input formats. \textbf{All six final results are pending.} Separate base-model
+whole sequence at thirteen. The planned final checkpoint, \code{step\_00256},
+was not reached. MATH500 (500 questions), AMC (83), and Minerva (272) final tests
+in both input formats were canceled. Separate base-model
 and authors' model checks on the broader benchmarks are complete. They validate
 reference comparisons, not our learning; the companion research record keeps
 all four conditions and their counts.
 
-\topic{What this comparison can decide}
+\topic{What remains outside this demonstration}
 
 The question is whether this closer reference recipe improves on the strong
 untrained question-only baseline. Data coverage and difficulty, the verifier,
 and duration change together; a gain could not be attributed to longer training
 alone. MATH500 is now an inspected development benchmark, not independent
 confirmation. Repeated training and broader tests remain important.
-The \href{longer-training-plan.md}{accepted protocol} fixes the endpoint;
+The \href{longer-training-plan.md}{original protocol} fixed the endpoint;
 the \href{longer-loader-receipt.json}{original loader check} records the excluded prompts.
-Completion still requires checking actual run counters.
+The \href{user-stop-2056.json}{stop receipt} records why that endpoint was not reached.
 \newpage
-\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 20:22 UTC}
-  {Is the longer run learning more?}
+\pagetitle{RECORDED PROGRESS \quad | \quad 7 OCTOBER, 20:56 UTC}
+  {A small-scale demonstration of learning}
 
-The longer run is still in progress. The table below contains every scheduled
+The longer run was stopped by choice after 219 updates. The table contains every completed
 monitoring result available at this cutoff. Each score counts correct final
 answers on the same 64 questions, with chat-style input, greedy generation,
 a 3000-token response limit, and the full answer checker.
@@ -561,18 +562,18 @@ questions when generated as part of its 500-question evaluation. The base
 model with questions alone scored 39 on that subset. Those batch settings differ
 from live monitoring, so these numbers are context, not interchangeable tests.
 
-\topic{What would make the next experiment informative?}
+\topic{What we take forward to RLM experiments}
 
-First finish the fixed training budget and evaluate its final model in both
-input formats on MATH500, AMC and Minerva. Do not replace the final model with
-whichever intermediate one looks best. All 128 sampled answers in collection184
-regrade consistently with their effective rewards; 11 of 16 questions have mixed
-outcomes. All 192 logged gradient norms are finite and positive. These checks
-support a functioning learning loop, not a guarantee of further improvement.
-If the final gain is meaningful, prioritize a fresh training repeat. Otherwise,
-the prepared 512-question screen compares the current learning rate, a fivefold
-increase, and two learning passes per batch. Its first two arms make 32 updates;
-the extra-pass arm makes 64 using the same number of sampled answers. None has run.
+The successful small-scale demonstration has served its purpose. Further math
+training and final evaluations are canceled; prepared math screens are shelved.
+Checkpoints and every completed score remain available. We did not select the
+highest-scoring point as a final result.
+
+The next experiments ask whether an RLM can use its tools, produce a useful
+mixture of successful and unsuccessful attempts, and improve beyond its starting
+preparation. Compare prompt examples, verified demonstrations, teaching order,
+and exploration at matched budgets. Test new combinations of skills, not only
+the routines shown during teaching. Pages 11--15 develop these lessons.
 
 \topic{An important scoring distinction}
 
@@ -584,7 +585,7 @@ score against a full-checker score without saying so. Final 500-question compari
 throughout this guide already use the same full checker.
 
 The points 32, 64, 96, 128, 160 and 192 follow that many completed updates.
-The final bookkeeping label 256 is different: it follows 255 completed updates.
+The unreached final label 256 would have followed 255 completed updates.
 See \href{interim-monitor-2022.json}{intermediate evidence} and the companion
 research record for raw-file hashes and the latest operational status.
 \newpage
@@ -726,8 +727,8 @@ If contrast already exists but learning fails, investigate reward quality, credi
 assignment, and update behavior rather than adding SFT indiscriminately.
 
 \textbf{Working idea:} Teach access to useful actions; explore alternatives;
-use verified outcomes to learn better choices. The accepted math run continues
-with its fixed final evaluations while we develop this RLM question.
+use verified outcomes to learn better choices. We have stopped the math run
+to focus on experiments that test this RLM question directly.
 \newpage
 \pagetitle{RELATED WORK}{What the literature suggests we test}
 
@@ -772,8 +773,7 @@ Measure execution failures, reward contrast, and improvement beyond SFT alone.
 Keep a prompt-only baseline and a direct-answer option.
 
 These papers motivate this experiment; they do not establish its outcome.
-The current math run continues under its original budget and final-evaluation
-plan while a broader portfolio of questions is developed.
+The math run is stopped; the broader portfolio now guides our next RLM experiments.
 \newpage
 \pagetitle{POSSIBLE BLIND SPOTS}{What else could be limiting RLM learning?}
 

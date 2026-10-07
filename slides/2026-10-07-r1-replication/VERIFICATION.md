@@ -1,5 +1,24 @@
 # Presentation verification
 
+## User-requested stop and lesson-centered conclusion, 20:56 UTC
+
+- Training and observer stopped; authenticated owner session and GPU compute
+  process lists are empty. Model and optimizer checkpoints 208/216 remain.
+  The run completed 219 updates, not the planned 255; the latest measured
+  monitor remains 47/64 at 192. No score is inferred for the final saved weights.
+- Slide 1 states a successful small-scale reproduction of RL-driven improvement,
+  not a match to the published benchmark. Its seven points and denominator are
+  retained. Five further slides emphasize lessons and concrete RLM questions.
+- Updated notes, speaker guide, evidence, overview, learning guide and research
+  portfolio to remove active-run and pending-evaluation claims. Older dated
+  handoffs remain historical; the user-stop entry overrides their queue.
+- Both PDFs rebuilt with Tectonic. The first slide-2 revision overflowed;
+  shortening its curriculum explanation resolved it without reducing font size.
+  Final builds have no overfull/underfull warnings. Six matching presenter notes
+  pass title and wrap checks; all text fits the six-slide and fifteen-page PDFs.
+- Visually inspected all six slides and changed guide pages. No live presenter
+  GUI test. No new benchmark result, best-checkpoint choice or live-source edit.
+
 ## Scheduled update 192, evidence cutoff 20:22 UTC on 7 October
 
 - Independently regraded all 64 new answers with the full checker: no mismatch.

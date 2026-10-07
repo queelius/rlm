@@ -20,8 +20,8 @@
 \begin{document}
 
 \begin{frame}[t]
-\frametitle{A small reproduction gives us a learning signal.}
-\textbf{Goal:} Train a recursive language model (RLM) to use code and delegate useful subtasks. First, learn reinforcement learning (RL) on checkable math answers.
+\frametitle{We reproduced RL-driven improvement at small scale.}
+\textbf{Why we did this:} Learn how to teach a recursive language model (RLM) to use code and delegate. First, practice reinforcement learning (RL) on checkable math answers.
 \medskip
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
@@ -47,10 +47,10 @@ Authors' \textbf{Dr.\ GRPO} code; pretrained \textbf{Qwen2.5-Math-1.5B}; one A10
 Eight attempts per training question; reward correct final answers. No added supervised fine-tuning (SFT).
 \medskip
 
-\textbf{20 to 47 correct:} improvement persists, with gains and regressions along the way.
+\textbf{20 to 47 correct.} The reproduction served its purpose. Now carry the teaching lessons into RLM experiments.
 \end{column}
 \end{columns}
-\aside{Fixed 64-question progress subset, excluded from weight training; one greedy answer, same chat prompt, full math checker, 3,000-token cap. Not the paper's full benchmark result; final tests pending.\\
+\aside{Same 64-question development subset; one greedy answer, same chat prompt and full answer checker. Training stopped by choice; this reproduces improvement, not the paper's full benchmark score.\\
 Liu et al., \href{https://arxiv.org/abs/2503.20783}{\textit{Understanding R1-Zero-Like Training}} (2025).}
 \end{frame}
 
@@ -72,7 +72,7 @@ All right & Eight ones & None \\
 \end{tabular}
 \end{center}
 \begin{block}{Why curriculum could help}
-Practice problems the model can sometimes solve. As it improves, move toward harder problems that still produce useful contrast.
+Practice problems the model can sometimes solve. Teach missing skills when needed, then increase difficulty as the model improves.
 \end{block}
 \aside{Contrast must occur within a question, not just across easy and hard questions. This concerns binary group-relative rewards, not all RL. Mixed scores do not guarantee learning. Related: \href{https://arxiv.org/html/2503.14476v1}{DAPO's filtering of uniform-reward groups}.}
 \end{frame}
@@ -152,7 +152,7 @@ Curriculum is one promising idea. Missing skills, poor exploration, and misleadi
 \toprule
 Question & Small comparison \\
 \midrule
-Missing tool skills? & Prompt examples vs. protocol vs. linked-call SFT \\
+Missing tool skills? & Prompt examples vs. demonstrations of tool use \\
 Does teaching order help? & Same examples: staged vs. shuffled \\
 Too little exploration? & More attempts or varied plans, same total budget \\
 Can it use feedback? & Successful-only vs. error-and-repair examples \\

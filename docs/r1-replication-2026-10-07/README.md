@@ -8,7 +8,14 @@ notes below provide the supporting detail.
 The updated six-slide deck and fifteen-page learning guide focus on lessons for
 RLM training; curriculum is one hypothesis among several.
 
-**Latest check, 7 October at 20:22 UTC:** The longer run has reached 192
+**Decision, 7 October at 20:56 UTC:** We successfully reproduced RL-driven
+improvement at small scale using the paper's method. We stopped the longer run
+after 219 updates to focus on the teaching lessons and future RLM experiments.
+Saved model and optimizer states reach update 216; no files were deleted.
+Final evaluations are canceled, and the observer is stopped. This is not a
+claim to match the full published benchmark. See the [stop receipt](user-stop-2056.json).
+
+**Last benchmark check, 7 October at 20:22 UTC:** The longer run had reached 192
 completed learning calls without a logged training error. Its scheduled
 64-question scores are **20, 42, 42, 43, 43, 48, 47** at 0, 32, 64, 96, 128, 160 and 192 updates.
 All 64 answers at the newest point were independently regraded and agree.
@@ -30,9 +37,9 @@ now walks through this and a corrected dice-probability answer. That integer
 answer recovered by update 160; the earlier error illustrates why generated
 code-looking text is not an execution trace.
 
-The six-slide PDF and learning PDF use a 20:22 UTC evidence cutoff. Final
-MATH500, AMC and Minerva scores from the ongoing run remain pending. The
-accepted training and evaluation schedule is unchanged.
+The six-slide PDF and learning PDF reflect the 20:56 stop decision, retaining
+the 20:22 benchmark observation. They emphasize lessons and proposed RLM
+experiments; completed short-run scores remain in the supporting record.
 
 ### How our improvement compares with the paper
 
@@ -43,7 +50,7 @@ that starting capability by 12.4 points, with a different input format.
 See [Table 1 and Appendix B, Table 4](https://arxiv.org/html/2503.20783v2#A2).
 
 Our completed short chat-trained run went from 30.8% to 61.6% on all500
-questions in chat style, a 30.8-point gain. Our ongoing run's fixed64 monitor
+questions in chat style, a 30.8-point gain. Our longer run's fixed64 monitor
 went from20/64 (31.25%) to47/64 (73.44%) after192 updates, a42.19-point gain
 under the same chat setup. The latter is not a measured full500 result or
 a reliable prediction of the final score. In our completed full500 tests,
@@ -67,18 +74,19 @@ sampled windows, even after a rough adjustment for problem level and subject,
 but different questions prevent treating that as a controlled learning curve.
 See the [training audit](training-signals-1740.json).
 
-The next comparisons use three fresh starts from the original model on the
+The shelved comparison plan proposed three fresh starts from the original model on the
 same smaller set of 512 training questions: the current learning rate, a rate
 of 0.000005 instead of 0.000001, and two learning passes per batch instead of one.
-Every prescribed final model will be compared with a fresh baseline on the same
-128 evaluation questions in both input formats. The prepared runs have not started.
+Every prescribed final model would be compared with a fresh baseline on the same
+128 evaluation questions in both input formats. The prepared runs did not start.
 The higher rate is motivated by a
 [same-model Dr. GRPO follow-up, Appendix A.3](https://arxiv.org/html/2607.01232v1#A1.SS3),
 not by a search for the best test checkpoint. Neither comparison has run yet.
 The [current smaller-run plan](../../experiments/r1_replication_20261007/quickscreen512-readiness.json)
 records the budgets; the [earlier recipe audit](recipe-opportunities-1745.json)
 explains remaining differences from the published work.
-The current run and its six final test conditions stay unchanged.
+These prepared math comparisons are now shelved; the longer run and its six
+final test conditions were stopped at the user's request.
 
 **Earlier intermediate check, 7 October at 17:37 UTC:** The longer run was still training.
 On the same64 monitoring questions, it scored20 correct before training,
@@ -86,7 +94,7 @@ On the same64 monitoring questions, it scored20 correct before training,
 improved and five became incorrect, so the unchanged total hides some movement.
 Both later sets of64 answers were independently rescored with full agreement.
 These are small, repeatedly observed monitoring results, **not a final MATH500
-score or a replicated training gain**. The fixed training schedule continues.
+score or a replicated training gain**. At that time, the fixed schedule continued.
 See the [intermediate evidence and limits](interim-monitor-1737.json).
 The five-slide PDF and learning PDF first included this curve at a 17:45 UTC
 evidence cutoff. The learning guide explains what it does and
@@ -240,7 +248,7 @@ unchanged weights reproduced all 500 saved answers byte-for-byte, including
 [repeatability receipt](grpo-repeatability-receipt.json). The bounded batch is
 complete; the [handoff](HANDOFF.md) records what to retain and what to try next.
 
-The six-slide deck now has a 20:22 cutoff. One slide presents the reproduction;
+The six-slide deck now includes the 20:56 stop decision. One slide presents the reproduction;
 the other five focus on reward contrast, model/interface fit, a proposed RLM
 curriculum, relevant prior work, and a portfolio of small comparisons. Reference-model
 and additional short-run comparisons remain in the learning guide.

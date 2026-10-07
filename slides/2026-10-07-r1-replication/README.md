@@ -12,9 +12,12 @@ teaching RLM tool use and decomposition, followed by a portfolio of small tests.
 Diagrams and examples distinguish
 observed results from hypotheses.
 
-Scientific cutoff: **7 October 2026, 20:22 UTC**. The fixed 64-question monitor
+Updated: **7 October 2026, 20:56 UTC**. Training was stopped by choice after
+219 updates; checkpoints are retained and final evaluations were canceled.
+The fixed 64-question monitor
 scores 20, 42, 42, 43, 43, 48, 47 through update192. The latest check has one
-gain and two regressions. This is not a full500 result.
+gain and two regressions. This is a successful small-scale reproduction of
+RL-driven improvement, not a match to the paper's full benchmark result.
 The full500 prompt comparison remains 154 to308 for chat input and305 to317
 for questions alone, using the same short-run weight pair. All other outcomes
 and authors' reference scores remain in the learning guide.

@@ -1,7 +1,11 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 20:22 UTC. The fourth longer-training attempt is
-underway. Its final benchmarks are pending; completed short-run scores are unchanged.
+Updated: 7 October 2026, 20:56 UTC. The user stopped the fourth longer attempt
+after 219 completed updates to focus on lessons for RLM training. Model and
+optimizer states through update 216 are preserved. Final evaluations and the
+observer are stopped; no natural-end result is claimed. See the
+[stop receipt](../../docs/r1-replication-2026-10-07/user-stop-2056.json).
+The latest benchmark observation remains 47/64 at update 192, checked at 20:22.
 
 ## Current lesson-centered slide map
 
@@ -15,7 +19,7 @@ underway. Its final benchmarks are pending; completed short-run scores are uncha
 The fifteen-page guide and research portfolio additionally discuss parent/helper
 credit, teacher/student fit, scaffold dependence and transfer to new dependency
 structures. Three CPU agents completed five literature reports; these are primary
-source reviews, not local replications. The ongoing run was not modified.
+source reviews, not local replications. Training source was not modified.
 
 RLM examples and curriculum are proposed, not measured results. The paper and
 related work motivate them; they do not prove that our particular small models
@@ -41,11 +45,11 @@ regrade without a mismatch. Between the last two points, one answer improved
 and two regressed. The new point preserves most of the preceding gain, not a monotonic rise.
 Answer changes alone do not distinguish training effects from generation variability.
 
-This is a repeatedly examined development subset, one ongoing run, and not a
+This is a repeatedly examined development subset, one user-stopped run, and not a
 full500 endpoint. It does not establish improvement beyond the stronger base
 or the short trained models. We retain every scheduled point, not a best point.
 Native labels 32, 64, 96, 128, 160 and 192 follow that many completed updates; the forced final
-label 256 instead follows 255 updates without adding another update.
+label 256 would have followed 255 updates without adding another update; it was not reached.
 
 ## Authors' released model: an evaluation check, not our training result
 
@@ -98,8 +102,8 @@ filtering) was abandoned after the failures, not completed.
 This is a loader-derived budget, not completed training evidence. Training has
 a ten-hour cap and the full sequence a thirteen-hour cap. Checkpoint saving
 occurs every eight updates; progress checks occur every 32. MATH500 (500 questions),
-AMC (83), and Minerva (272) will each be evaluated in both input formats using
-the prescribed final checkpoint. All six final tests remain pending. Separate
+AMC (83), and Minerva (272) were planned in both input formats using
+the prescribed final checkpoint. All six final tests were canceled. Separate
 base-model and authors' released-model checks on the broader benchmarks are
 complete in the [broader reference receipt](../../docs/r1-replication-2026-10-07/broader-reference-receipt.json);
 those scores do not test our training.

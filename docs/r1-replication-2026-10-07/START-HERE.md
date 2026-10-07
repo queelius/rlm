@@ -1,12 +1,12 @@
-# Why we are training a language model to solve math
+# What math reinforcement learning taught us about training RLMs
 
-We ultimately want to train recursive language models to make better decisions: when to solve a problem directly, when to call a helper, and how to divide the work. Before attempting that complicated task again, we are practicing with a simpler, published example of reinforcement learning.
+We ultimately want to train recursive language models to make better decisions: when to solve a problem directly, when to call a helper, and how to divide the work. We practiced with a simpler, published example of reinforcement learning to understand what makes learning possible.
 
 The immediate question is: **Can we take an existing language model, reward its correct math answers, and make it better on other math questions?**
 
-We have a small-scale reproduction of RL-driven improvement: on the ongoing run's fixed 64-question monitor, correct answers rose from 20 to 47. The preceding check scored 48: progress includes regressions as well as gains. The main value is what this teaches us about creating a useful learning signal. The model needs reachable successes, a usable interface, varied attempts, and trustworthy feedback. A separate prompt comparison also shows why we must compare against a capable starting setup. The paper's full benchmark result is not yet reproduced.
+We successfully reproduced RL-driven improvement at small scale: on the same 64-question monitor, correct answers rose from 20 to 47. The main value is what this teaches us about creating a useful learning signal. The model needs reachable successes, a usable interface, varied attempts, and trustworthy feedback. A separate prompt comparison also shows why we must compare against a capable starting setup. This reproduces improvement using the paper's method, not its full benchmark score.
 
-Results below were checked through **7 October 2026, 20:22 UTC**. The smaller follow-up experiments described below are prepared but have not started.
+**Decision, 7 October 2026, 20:56 UTC:** The small-scale reproduction has served its purpose. We stopped training, canceled its final evaluations, and retained the checkpoints and every completed result. The latest score remains the 20:22 check. Further math screens are shelved; the priority is applying the lessons to RLM experiments.
 
 For the next discussion, read the [research questions and possible blind spots](RESEARCH-QUESTIONS.md).
 We are exploring several explanations and interventions, not committing to curriculum as the answer.
@@ -125,9 +125,9 @@ The other training approach also gave small gains: 305 to 314, then 305 to 306 i
 
 ![The same training looks much more effective under the weaker starting prompt. Both lines compare the same two models on the same 500 questions.](figures/prompt-comparison.png)
 
-## What the longer run is showing
+## What the longer run showed
 
-The ongoing run starts from the original model and is scheduled to train on 4,080 usable questions for 255 weight updates. It also uses the full answer checker during training, whereas the earlier short runs used a faster checker. It therefore tests a revised recipe, not training duration alone.
+The longer run started from the original model with a plan for 4,080 usable questions and 255 weight updates. We stopped it after 219 updates; model and optimizer states through 216 are preserved. It used the full answer checker during training, whereas the earlier short runs used a faster checker. It therefore tested a revised recipe, not training duration alone.
 
 Its fixed 64-question progress checks are:
 
@@ -147,13 +147,13 @@ Three earlier attempts failed because of memory or initialization problems. They
 
 For the same 1.5B model size, the paper reports **33.0% before training and 74.2% after training** with the chat template. Its stronger question-only base scores **61.8%**. Thus the trained model exceeds that stronger starting score by 12.4 percentage points, although the input formats differ. [Paper, Tables 1 and 4](https://arxiv.org/html/2503.20783v2#A2).
 
-Our completed short chat-style result is 61.6%; the longer run's full benchmark result is still pending. We also downloaded the authors' already-trained model and obtained **73.2%** in our evaluator. That is close to their 74.2%, with an unexplained five-answer difference. It is a useful check of the evaluator, **not evidence that our training achieved their result**.
+Our completed short chat-style result is 61.6%; the longer run's full benchmark evaluations were canceled. We also downloaded the authors' already-trained model and obtained **73.2%** in our evaluator. That is close to their 74.2%, with an unexplained five-answer difference. It is a useful check of the evaluator, **not evidence that our training achieved their result**.
 
 ## What we will try next and why
 
-The current longer run will finish its fixed budget, then evaluate the final model on all 500 questions and two other math collections: AMC and Minerva. Those additional collections test whether any gain extends beyond MATH500. They do not test RLM delegation.
+The priority is now RLM teaching experiments. First check which skills the model can already perform and where failures occur. Then compare ways to make useful success reachable: better instructions, verified demonstrations, a different teaching order, or more varied attempts. Measure what preparation alone changes, then what RL adds on new tasks.
 
-For subsequent exploration, speed now takes priority. We have prepared three shorter runs on the same 512 training questions, with the same fixed 128-question evaluation:
+The following math comparisons were prepared but are now **shelved, not queued**. Their logic remains useful for designing small RLM comparisons:
 
 | Experiment | What changes | What it can teach us |
 | --- | --- | --- |
@@ -161,7 +161,7 @@ For subsequent exploration, speed now takes priority. We have prepared three sho
 | Larger learning steps | Increase the learning rate fivefold | Are the current updates too cautious to help much within a short run? |
 | More learning from each batch | Make two learning passes instead of one | Can we learn more from the same generated attempts? |
 
-Every run starts from the original model. The first two make 32 weight updates; the extra-pass run makes 64 using the same number of sampled attempts. We will report all three outcomes, not just whichever looks best.
+If revisited, every run would start from the original model. The first two would make 32 weight updates; the extra-pass run would make 64 using the same number of sampled attempts. All outcomes should be retained, not just whichever looks best.
 
 Small tests are noisier, but they let us reject unhelpful ideas sooner. A promising result should earn an independent training repeat and a larger evaluation. We will use each run's prescribed final checkpoint rather than choosing its most favorable intermediate score.
 

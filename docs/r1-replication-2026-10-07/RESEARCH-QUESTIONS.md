@@ -204,10 +204,13 @@ confirmation set when choosing a candidate.
 
 ## What is happening now
 
-The ongoing math run and its fixed final evaluations are unchanged. The reviewed
-512-question math control/learning-rate/rollout-reuse screen remains available after
-the entire current owner releases the GPU; it has not launched. A meaningful final
-math gain can instead prioritize a fresh training repeat. The RLM ideas above need
-task manifests, a selected existing controller/harness, explicit compute caps and
-their own run owners before launch. Literature and CPU preparation do not displace
-the active GPU experiment.
+At 20:56 UTC on 7 October, the user stopped the math run and its final evaluations
+to focus on these RLM questions. Saved model and optimizer states are preserved;
+the prepared 512-question math screen is shelved, not queued. We take forward a
+successful small-scale demonstration of RL-driven improvement and its teaching
+lessons, not a claim to match the paper's full benchmark.
+
+The RLM ideas above need task manifests, a selected existing controller/harness,
+explicit compute caps and their own run owners before launch. The first goal is
+to distinguish missing skills, inaccessible observations, insufficient exploration
+and poor feedback using small comparisons, not to adopt one explanation in advance.
