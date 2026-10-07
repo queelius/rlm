@@ -1,4 +1,29 @@
-# Draft presentation verification
+# Presentation verification
+
+## Completed fixed128 comparison, 7 October, 10:24 UTC
+
+- Tectonic built the updated five-slide PDF successfully, without overfull or
+  underfull boxes. The five matching pdfpc notes pass the 14-line check.
+- Fresh `verify_deck.py` run found five pages, matching titles, and all text
+  within page bounds. Root visually inspected changed slides 3, 4, and 5.
+  An independent reader inspected all five rendered pages and found no clipping,
+  overlap, or important audience/scientific ambiguity.
+- Both standalone evaluations exited successfully. Root matched all 128 paired
+  questions/references against the frozen test and independently regraded all
+  saved scores with the authors' full checker. Result: 41 to 80 correct, 44
+  gains, five losses. Hashes and settings are in fixed128-scoring-receipt.json.
+- Root and independent reader inspected actual test row 5. Its repeated
+  fraction question became a division explanation ending in 0.15, as the slide
+  summarizes. The invented slide-2 example remains clearly labeled.
+- The updated five-page learning PDF passed text-bound checks. Its author
+  inspected its visual layout, and root checked its changed source and counts.
+- No live pdfpc GUI was tested. The saved notes were checked structurally.
+
+The larger evaluation remains explicitly pending. One training run does not
+establish new mathematical knowledge, a Dr. GRPO advantage over another
+algorithm, or successful learning of recursive decisions.
+
+## Earlier pilot package
 
 7 October 2026, pilot final-rescoring version; main 128-question result pending.
 

@@ -16,18 +16,6 @@
 \input{results.tex}
 \setbeamertemplate{footline}{\hspace{9mm}\scriptsize Small-scale reproduction | \EvidenceCutoff\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
 \newcommand{\aside}[1]{\vfill{\footnotesize\color{Gray}#1\par}}
-\newcommand{\FinalPanel}{%
-\iffinalresults
-\textbf{Main test after 32 updates: \FinalBefore/\FinalTotal\ $\rightarrow$ \FinalAfter/\FinalTotal.}
-\smallskip\par
-\FinalNewCorrect\ answers became correct; \FinalNewWrong\ became incorrect.
-\smallskip\par
-\FinalInterpretation
-\else
-\begin{block}{The larger comparison is still pending.}
-We will compare the base model with the final model after 32 updates on the separate 128-question test.
-\end{block}
-\fi}
 \hypersetup{pdftitle={Learning from correct answers: a small R1-Zero-style reproduction},pdfauthor={Alex Towell}}
 \begin{document}
 
@@ -74,64 +62,60 @@ The checker judges the final answer. We do not supply worked solutions for the m
 
 \begin{frame}[t]
 \frametitle{We train on math, then test on different questions.}
-We train \textbf{Qwen2.5-Math-1.5B}, a relatively small pretrained math model, on one 40 GB A100 GPU.
+We trained \textbf{Qwen2.5-Math-1.5B}, a relatively small pretrained math model, on one 40 GB A100 GPU.
 \medskip
 
-\begin{center}
-\renewcommand{\arraystretch}{1.05}
-\begin{tabular}{lrr}
-\toprule
-Training run & Questions & Weight updates \\
-\midrule
-Short pilot, completed & 64 & 4 \\
-Larger run, now running from the base model & 512 & 32 planned \\
-\bottomrule
-\end{tabular}
-\end{center}
+\begin{block}{Training: 512 questions, 32 weight updates.}
+The questions came from the authors' 12,000-question math collection. The model tried eight answers to each question.
+\end{block}
 \medskip
-Training questions come from the authors' 12,000-question math collection. Test questions come from \textbf{MATH500}.
-\smallskip
 
-We use 64 questions to monitor progress and \textbf{128 different questions for the final test}. Neither group is used for training. Evaluation settings stay fixed before and after.
-\aside{Evaluation settings stay fixed. The questions may have appeared in the model's earlier pretraining; we cannot check that.}
+\begin{block}{Testing: 128 questions from MATH500.}
+These questions were excluded from training and progress checks. We tested the starting model and the final trained model on exactly the same questions.
+\end{block}
+\aside{The prompt, answer checker, and response-length limit stayed the same. We cannot rule out exposure to these questions during the model's earlier pretraining.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{What changed on questions excluded from training?}
-\textbf{Pilot: correct answers on \PilotTotal\ monitoring questions, after four updates.}
+\frametitle{Training improved answers on the separate test.}
+\textbf{Correct answers out of \FinalTotal\ MATH500 questions.}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.47\textwidth}
 \begin{block}{Before training}
-\centering\LARGE \PilotBefore\ / \PilotTotal
+\centering\LARGE \FinalBefore\ / \FinalTotal
 \end{block}
 \end{column}
 \begin{column}{.47\textwidth}
 \begin{block}{After training}
-\centering\LARGE \PilotAfter\ / \PilotTotal
+\centering\LARGE \FinalAfter\ / \FinalTotal
 \end{block}
 \end{column}
 \end{columns}
 \smallskip
-\PilotNewCorrect\ answers became correct; \PilotNewWrong\ became incorrect. An earlier evaluation of the same trained weights scored 23/64.
-\smallskip
+\FinalNewCorrect\ answers became correct; \FinalNewWrong\ became incorrect.
+\medskip
 
-\FinalPanel
-\aside{Authors' final checker throughout. This small, variable gain needs replication.}
+The score counts answers accepted by the authors' final-answer checker. A correct answer does not certify every step of the explanation.
+\medskip
+
+\FinalInterpretation
+\aside{Final checkpoint after the planned 32 updates, not the best-scoring checkpoint. A 500-question comparison is now running.}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{A higher score does not always mean a new skill.}
-\textbf{An actual pilot example, shortened:} How much fuel is saved over 12,000 miles by switching from 15 to 48 miles per gallon?
+\textbf{An actual test question:} Write $3/20$ as a decimal.
 \medskip
-\begin{block}{Before: repetition without an answer. After: a completed calculation.}
-\centering $12{,}000/15 - 12{,}000/48 = 800 - 250 = 550$ gallons.
+\begin{block}{The saved responses, summarized}
+\textbf{Before:} The model repeated the question until it hit the length limit.\par\smallskip
+\textbf{After:} It explained the division and answered $0.15$.
 \end{block}
 \medskip
-Two of the pilot's three gains were recoveries from unfinished answers. One previously correct answer stopped finishing, too.
+For 36 of the 44 newly correct answers, the original response had hit the length limit. The gain is useful, but it need not mean newly learned math.
 \medskip
 
-\textbf{The lesson for RLMs:} Check \emph{what} training changes. Does the model merely finish reliably, or does it learn to ask useful subquestions?
-\aside{The immediate next step is to repeat any promising result. This small experiment does not yet establish a reliable gain or reproduce the paper's full results.}
+\textbf{Next:} Test a simpler prompt and repeat training. For RLMs, ask whether rewards teach useful subquestions, not just more usable answers.
+\aside{This reproduces a training recipe at small scale, not the paper's full results or learning to decompose problems.}
 \end{frame}
 
 \end{document}

@@ -19,19 +19,19 @@
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "Both runs start from the pretrained base\nmodel. The second run does not continue\nthe pilot. Held out means excluded from\nthis training. It does not mean unseen in\npretraining. The 128 final questions are\nalso separate from the 64 monitoring\nquestions."
+      "note": "The main run started from the base model:\n512 questions, eight attempts each, 32\nupdates. The 128 test questions were\nexcluded from training and monitoring. We\ncannot rule out earlier pretraining\nexposure. No worked-solution SFT stage was\nadded."
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "Pilot final check: 20 to 22 correct out of\n64. Three answers became correct; one\nbecame wrong. An earlier evaluation of the\nsame trained weights scored 23. All are\nfinal-checker scores. The 128-question\nresult is pending. This is not yet a\nreliable gain."
+      "note": "Fixed test: 41 to 80 correct out of 128.\nThere were 44 gains and five losses. Same\nprompts and checker. We used the final\ncheckpoint, not the best. This is one\ntraining run. More test questions cannot\nreplace an independent training repeat."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "This is a shortened actual pilot example.\nTwo gains escaped repetition; one\ncorrected a final answer. One answer\nregressed into repetition. We did not\nexecute any model-written code. For RLMs,\ndistinguish finishing reliably from\nlearning useful decomposition."
+      "note": "Actual test row 5: repeated fraction\nquestion became a correct 0.15. Responses\nare summarized. Of 44 gains, 36 started as\ncapped responses. That describes the\nchange, not its cause. Prompt controls are\npending. Math gains do not establish\nbetter RLM decomposition."
     }
   ]
 }

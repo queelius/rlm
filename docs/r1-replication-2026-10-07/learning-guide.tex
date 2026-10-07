@@ -18,12 +18,13 @@
   {\LARGE\color{ink}\textbf{#2}}\par\medskip}
 \newcommand{\topic}[1]{\par\smallskip{\large\color{ink}\textbf{#1}}\par}
 \newcommand{\code}[1]{\texttt{#1}}
-% UPDATE POINT: revise these two macros when the fixed final evaluation completes.
-% Also update the corresponding README and advisor slides together.
-\newcommand{\MainRunStatus}{The 512-question run is in progress. Its final
-  128-question comparison is pending; no result from that comparison is claimed here.}
-\newcommand{\EvidenceCutoff}{Pilot evidence: 7 October 2026, final evaluation
-  at approximately 09:17 UTC. Larger-run results pending.}
+% UPDATE POINT: revise the next-evaluation status, cutoff, and page 4 together
+% when the full-500 and raw-question comparisons finish.
+\newcommand{\NextEvaluationStatus}{Full-500 comparisons and raw-question
+  comparisons without the Qwen-Math prompt template are queued or running.
+  Their results are pending.}
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 10:17 UTC.
+  Fixed 128-question comparison complete; expanded evaluations pending.}
 \begin{document}
 \pagetitle{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}
   {Learning language-model RL\\from an official reproduction}
@@ -72,11 +73,13 @@ R1-Zero-like training does not mean beginning with random weights.
 
 \topic{What has been established so far?}
 
-The 64-question pilot completed four finite-gradient optimizer updates.
-Saved weight samples changed, and the learner sent updated weights to the
-generator. The same 64 monitoring questions scored \textbf{20 before and
-22 after} under the same standalone checker. This is a working small RL run
-with an uncertain score increase. Page 4 explains what actually changed.
+After training from the base model on 512 questions, the prescribed final
+checkpoint answered \textbf{80 of 128 fixed test questions correctly, versus
+41 for the base model}. Forty-four answers became correct and five became
+incorrect. The trained model also reached the response limit much less often.
+This is a useful improvement in completed answers in this run. Page 4 explains
+the result and its limits; page 5 uses the smaller pilot to illustrate what
+an individual score change can mean.
 
 {\small\color{accent}\EvidenceCutoff}
 
@@ -136,8 +139,9 @@ takes one optimizer update. It then sends the new weights to vLLM for the next
 collection. We use one pass over each collection, full-model BF16 training,
 learning rate $10^{-6}$, and the author's Adam settings.
 
-The pilot's 64 questions therefore give four updates; the 512-question run gives
-32 updates. Training and generation alternate on one A100 with 40 GB of memory.
+The pilot's 64 questions gave four updates; the completed 512-question run gave
+32 updates from 4096 sampled responses. Training and generation alternate on
+one A100 with 40 GB of memory.
 Putting the generator to sleep frees memory; it does not reset the weights.
 Likewise, switching a model between training and evaluation modes changes its
 execution behavior, not its learned weights. The optimizer performs the update.
@@ -161,7 +165,7 @@ the pilot questions, but training restarts from the base weights. \\
 Monitoring & 64 & Shuffle the author's 500 MATH evaluation rows with seed 142;
 take the first 64. Reused for progress checks. \\
 Final comparison & 128 & Take the next 128 from that evaluation shuffle.
-Disjoint from monitoring; reserved for the larger run's fixed final comparison. \\
+Disjoint from monitoring; used for the larger run's fixed final comparison. \\
 \bottomrule
 \end{tabular}
 
@@ -188,29 +192,96 @@ prompt effects with weight changes. This is a central warning of the paper [1].
 \textbf{Scoring.} The author's training program uses a faster checker. The
 standalone evaluator uses an additional mathematical-equivalence check
 (\code{fast=False}). We apply the same standalone checker to both saved answer
-sets for the reported comparison. Its pilot counts are 20 and 22; the native
-training-checker counts are 19 and 21. Those are two separate comparisons.
+sets for the reported comparisons. The main fixed-test counts are 41 and 80.
+For the pilot, standalone counts were 20 and 22, whereas native training-checker
+counts were 19 and 21. We never combine scores from different checkers.
 
 \topic{Choose the checkpoint before reading the final score}
 
-We retain the prescribed final evaluation, even if an earlier evaluation looks
-better. The same post-training weights scored 23/64 in one evaluation and
-22/64 in the final evaluation; eight answer texts differed. Greedy GPU decoding
-was not exactly repeatable in this run. We report that observed variation
-without attributing it to a specific numerical mechanism.
+We retain the prescribed final checkpoint and evaluation, even if an earlier
+evaluation looks better. On the 64 monitoring questions, the main run's final
+evaluation scored 36, versus 20 at baseline; another evaluation after the same
+32 updates scored 39. The pilot likewise scored 23 and then 22 with identical
+saved weights. Greedy GPU decoding was not exactly repeatable. We report this
+variation without assigning it a specific numerical cause or choosing the
+higher score.
 
 Learner seed 42 is fixed, but the unchanged author actor chooses a time-based
-generation seed. The run is therefore not fully deterministic. A single small
-increase needs both evaluation and training-seed replication before it can
-support a dependable learning claim.
+generation seed. The run is therefore not fully deterministic. The large
+fixed-test gain is meaningful evidence for this run; evaluation repeats and
+independent training runs are still needed to assess its reproducibility.
 
 \newpage
-\pagetitle{3 / READING THE EVIDENCE}{What did the pilot's two extra points mean?}
+\pagetitle{3 / THE COMPLETED MAIN RUN}{More correct answers, fewer unfinished responses}
+
+The 512-question run restarted from the original Qwen2.5-Math-1.5B base weights.
+It completed one training epoch: 4096 sampled responses and 32 optimizer updates.
+We evaluated the prescribed final checkpoint, \code{step\_00033}, on all 128
+fixed test questions. Every prompt and reference answer matched the frozen
+manifest, and both answer sets were checked with the author's full checker [4].
+
+\begin{tabular}{@{}p{0.45\linewidth}rr@{}}
+\toprule
+Fixed 128-question comparison & Base model & Final trained model \\
+\midrule
+Correct final answers & 41/128 & 80/128 \\
+Accuracy & 32.0\% & 62.5\% \\
+Responses at the 3000-token cap & 56/128 & 12/128 \\
+\bottomrule
+\end{tabular}
+
+Paired question-by-question, 36 answers stayed correct, 43 stayed incorrect,
+44 became correct, and five became incorrect. The net gain is
+$39/128$, or \textbf{30.5 percentage points}. These test questions were separate
+from the 64 questions repeatedly used for monitoring. We have observed a
+substantial improvement on this fixed comparison, beyond establishing that
+the software can perform an optimizer update.
+
+\topic{Completion is a material part of the result}
+
+Among the 44 newly correct answers, \textbf{36 had a baseline response that
+reached the token cap}, and \textbf{37 had no parseable baseline answer}.
+These categories can overlap; their counts must not be added. Seven gains
+came from baseline responses that did contain a parseable but incorrect answer.
+
+These observations describe where gains occurred. They do not establish why
+training helped. A missing final answer may reflect repetition, an unfinished
+derivation, a wrong reasoning path, or an answer-format problem. Producing a
+correct completed response can involve changes in several of these behaviors
+at once. The evidence supports more useful answers under this protocol; it
+does not establish that all gains are newly learned mathematics or that
+adding answer formatting alone explains them.
+
+\topic{What this result supports, and what remains open}
+
+The authors' RL recipe can change this base model so that it returns many more
+correct answers on our fixed test questions. The training receipt records
+396 mixed-reward groups out of 512, with 3168 nonzero advantages, and no saved
+token/reward alignment errors [4]. Reward, optimization, saved weights, and
+evaluation now have a concrete working reference.
+
+This remains one training run at reduced scale. It does not isolate the two
+Dr.\ GRPO normalization changes from other training choices, reproduce the
+paper's headline score, or validate credit assignment across RLM tool calls.
+The original question about RLM training therefore becomes more specific:
+can we preserve this verified update path while adding real tool actions,
+their results, and the correct reward boundaries?
+
+\topic{The next comparisons}
+
+\NextEvaluationStatus\ The full set contains the original 128 test questions,
+the 64 monitoring questions, and 308 additional questions; it expands coverage
+but is not a new independent training run. The raw-question comparisons will
+help establish how much the observed behavior depends on the prompt template.
+Both base and trained models must use the same settings within each comparison.
+
+\newpage
+\pagetitle{4 / A SMALL EXAMPLE}{What did the pilot's two extra points mean?}
 
 Under the standalone checker, 19 monitoring answers stayed correct, 41 stayed
 incorrect, three became correct, and one became incorrect. Thus the net change
-is $+2/64$, or 3.125 percentage points. These are \textbf{monitoring results},
-not the pending 128-question final comparison.
+is $+2/64$, or 3.125 percentage points. These are the earlier pilot's
+\textbf{monitoring results}, separate from the larger run's 41-to-80 test result.
 
 \begin{tabular}{@{}p{0.2\linewidth}p{0.71\linewidth}@{}}
 \toprule
@@ -255,10 +326,9 @@ checkpoint tensors changed, and updated weights were sent back to the generator.
 This establishes an operational path from sampled answers to weight updates.
 It does not make the small monitoring gain statistically conclusive.
 
-\textbf{Next result.} \MainRunStatus
-The next decision is whether a larger dose produces a useful change on the
-fixed final questions. A short null result would not refute the paper, and a
-positive math result would still leave RLM-specific credit assignment untested.
+The pilot illustrates why an aggregate score needs accompanying examples.
+The larger run gives stronger evidence of improved answers, but its changed
+responses still need the same care in interpretation.
 
 \smallskip
 {\footnotesize
@@ -271,7 +341,8 @@ positive math result would still leave RLM-specific credit assignment untested.
 [4] Companion \href{README.md}{research record},
 \href{data-manifest.json}{data manifest}, and
 \href{requirements-resolved.txt}{resolved environment};
-\href{pilot-scoring-receipt.json}{pilot scoring receipt} records the
-\code{0\_math.json} versus \code{5\_math.json} comparison.
+\href{subset512-training-receipt.json}{main training receipt};
+\href{pilot-scoring-receipt.json}{pilot scoring receipt}.
+The research record links the main fixed-test answer files and scoring evidence.
 }
 \end{document}

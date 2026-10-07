@@ -1,10 +1,11 @@
 # Five-slide R1-Zero-style reproduction update
 
 `research-update.tex` is the 16:9 Beamer source. `results.tex` holds the numbers
-and the explicit pending/final switch. `speaker-guide.md` explains the ideas
+for the checked final comparison. `speaker-guide.md` explains the ideas
 in plain language; `speaker-notes.json` holds concise laptop presenter notes.
-The draft includes the completed pilot and clearly labels the larger comparison
-as pending. It is not a reproduction of the paper's full benchmark scores.
+The deck reports the completed 128-question comparison: 41 correct before
+training and 80 afterward. The full500 and prompt controls are pending.
+It is not a reproduction of the paper's full benchmark scores.
 
 Build on a laptop with LaTeX installed:
 

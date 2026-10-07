@@ -10,15 +10,15 @@
     },
     {
       "title": "We train on math, then test on different questions.",
-      "notes": "Both runs start from the pretrained base model. The second run does not continue the pilot. Held out means excluded from this training. It does not mean unseen in pretraining. The 128 final questions are also separate from the 64 monitoring questions."
+      "notes": "The main run started from the base model: 512 questions, eight attempts each, 32 updates. The 128 test questions were excluded from training and monitoring. We cannot rule out earlier pretraining exposure. No worked-solution SFT stage was added."
     },
     {
-      "title": "What changed on questions excluded from training?",
-      "notes": "Pilot final check: 20 to 22 correct out of 64. Three answers became correct; one became wrong. An earlier evaluation of the same trained weights scored 23. All are final-checker scores. The 128-question result is pending. This is not yet a reliable gain."
+      "title": "Training improved answers on the separate test.",
+      "notes": "Fixed test: 41 to 80 correct out of 128. There were 44 gains and five losses. Same prompts and checker. We used the final checkpoint, not the best. This is one training run. More test questions cannot replace an independent training repeat."
     },
     {
       "title": "A higher score does not always mean a new skill.",
-      "notes": "This is a shortened actual pilot example. Two gains escaped repetition; one corrected a final answer. One answer regressed into repetition. We did not execute any model-written code. For RLMs, distinguish finishing reliably from learning useful decomposition."
+      "notes": "Actual test row 5: repeated fraction question became a correct 0.15. Responses are summarized. Of 44 gains, 36 started as capped responses. That describes the change, not its cause. Prompt controls are pending. Math gains do not establish better RLM decomposition."
     }
   ]
 }
