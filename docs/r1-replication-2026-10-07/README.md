@@ -8,13 +8,19 @@ notes below provide the supporting detail.
 The updated six-slide deck and fifteen-page learning guide focus on lessons for
 RLM training; curriculum is one hypothesis among several.
 
-**Latest check, 7 October at 19:40 UTC:** The longer run has reached 160
+**Latest check, 7 October at 20:22 UTC:** The longer run has reached 192
 completed learning calls without a logged training error. Its scheduled
-64-question scores are **20, 42, 42, 43, 43, 48** at 0, 32, 64, 96, 128 and 160 updates.
+64-question scores are **20, 42, 42, 43, 43, 48, 47** at 0, 32, 64, 96, 128, 160 and 192 updates.
 All 64 answers at the newest point were independently regraded and agree.
-Six answers improved and one became wrong since the previous check: five more
-correct answers. Improvement resumed after several nearly flat checks. This is
-not a 75% full500 result. See the [complete curve and checks](interim-monitor-1940.json).
+One answer improved and two became wrong since the previous check: one fewer
+correct answer. The broader improvement persists, but is not monotonic. This is
+not a full500 result. See the [complete curve and checks](interim-monitor-2022.json).
+
+The new square-table counting answer incorrectly applies the circular-table
+rule, changing 10,080 to 5,040. Its arithmetic is fine; its symmetry assumption
+is wrong. The recovered sine-product answer also contains a faulty intermediate
+rewrite. These examples distinguish a correct final answer, sound reasoning,
+and actual program execution; they are not a measured rate of reasoning errors.
 
 One revealing failure at update 96: the model wrote code-like text and claimed a pair of
 integers solved an equation, but substituting those integers gives 128 when
@@ -24,7 +30,7 @@ now walks through this and a corrected dice-probability answer. That integer
 answer recovered by update 160; the earlier error illustrates why generated
 code-looking text is not an execution trace.
 
-The six-slide PDF and learning PDF use a 19:40 UTC evidence cutoff. Final
+The six-slide PDF and learning PDF use a 20:22 UTC evidence cutoff. Final
 MATH500, AMC and Minerva scores from the ongoing run remain pending. The
 accepted training and evaluation schedule is unchanged.
 
@@ -38,7 +44,7 @@ See [Table 1 and Appendix B, Table 4](https://arxiv.org/html/2503.20783v2#A2).
 
 Our completed short chat-trained run went from 30.8% to 61.6% on all500
 questions in chat style, a 30.8-point gain. Our ongoing run's fixed64 monitor
-went from20/64 (31.25%) to48/64 (75.0%) after160 updates, a43.75-point gain
+went from20/64 (31.25%) to47/64 (73.44%) after192 updates, a42.19-point gain
 under the same chat setup. The latter is not a measured full500 result or
 a reliable prediction of the final score. In our completed full500 tests,
 the stronger question-only base was61.0%; the chat-trained model in that
@@ -234,7 +240,7 @@ unchanged weights reproduced all 500 saved answers byte-for-byte, including
 [repeatability receipt](grpo-repeatability-receipt.json). The bounded batch is
 complete; the [handoff](HANDOFF.md) records what to retain and what to try next.
 
-The six-slide deck now has a 19:40 cutoff. One slide presents the reproduction;
+The six-slide deck now has a 20:22 cutoff. One slide presents the reproduction;
 the other five focus on reward contrast, model/interface fit, a proposed RLM
 curriculum, relevant prior work, and a portfolio of small comparisons. Reference-model
 and additional short-run comparisons remain in the learning guide.

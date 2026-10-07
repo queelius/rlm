@@ -1,0 +1,223 @@
+{
+  "checked_at_utc": "2026-10-07T20:22:16.646643+00:00",
+  "run": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4/debug_1007T16:02:41",
+  "scope": "Scheduled development-monitor check, not final500 endpoint",
+  "evaluation": "Same64 questions, qwen_math prompt, one greedy answer,3000token cap, full verifier",
+  "points": [
+    {
+      "update": 0,
+      "correct": 20,
+      "n": 64,
+      "file": "eval_results/0_math.json",
+      "sha256": "223106f41ad7eb9e99b4cae0cc8547b5c54512219139c3c0ea3a2bec70004511"
+    },
+    {
+      "update": 32,
+      "correct": 42,
+      "n": 64,
+      "file": "eval_results/32_math.json",
+      "sha256": "7f422ea1e1f9c52e0de494a49389f60a02f999847e9e7dcf62527b7b73b0711f"
+    },
+    {
+      "update": 64,
+      "correct": 42,
+      "n": 64,
+      "file": "eval_results/64_math.json",
+      "sha256": "6a8f50d577f06d61873b9fef3bb96babc78f191b12bd42b95e2df2c409b6d2b7"
+    },
+    {
+      "update": 96,
+      "correct": 43,
+      "n": 64,
+      "file": "eval_results/96_math.json",
+      "sha256": "b7aab639b850dc963d9e3ebedc46f46e0a237afb2d99396d680861d4074c29b5"
+    },
+    {
+      "update": 128,
+      "correct": 43,
+      "n": 64,
+      "file": "eval_results/128_math.json",
+      "sha256": "8622aaf4e2e0a4c77a9bf596cdab4579bf7ee81bca92fec4a60df55e4a35637c"
+    },
+    {
+      "update": 160,
+      "correct": 48,
+      "n": 64,
+      "file": "eval_results/160_math.json",
+      "sha256": "319ed68f57cb93ee8b7ca20b4c44264e78b2ea4b93d219ae3d5c2b6e8d8ade2d"
+    },
+    {
+      "update": 192,
+      "correct": 47,
+      "n": 64,
+      "file": "eval_results/192_math.json",
+      "sha256": "b56acbc4a1828ad007413f21fa4c3e5ae5b97c7c81644d128e88b67ab9f0d613"
+    }
+  ],
+  "independent_regrade_mismatches": [],
+  "source_input_reference_alignment_errors": [],
+  "paired_changes_to_192": {
+    "0": {
+      "gains": [
+        0,
+        3,
+        4,
+        5,
+        8,
+        11,
+        13,
+        14,
+        15,
+        16,
+        17,
+        22,
+        28,
+        30,
+        31,
+        37,
+        41,
+        42,
+        45,
+        46,
+        48,
+        49,
+        52,
+        54,
+        55,
+        56,
+        60
+      ],
+      "losses": []
+    },
+    "32": {
+      "gains": [
+        0,
+        4,
+        8,
+        11,
+        41,
+        48,
+        49,
+        56
+      ],
+      "losses": [
+        10,
+        27,
+        29
+      ]
+    },
+    "64": {
+      "gains": [
+        3,
+        11,
+        34,
+        37,
+        48,
+        56
+      ],
+      "losses": [
+        10
+      ]
+    },
+    "96": {
+      "gains": [
+        3,
+        12,
+        34,
+        41,
+        57
+      ],
+      "losses": [
+        53
+      ]
+    },
+    "128": {
+      "gains": [
+        3,
+        12,
+        31,
+        34,
+        57
+      ],
+      "losses": [
+        53
+      ]
+    },
+    "160": {
+      "gains": [
+        49
+      ],
+      "losses": [
+        39,
+        53
+      ]
+    }
+  },
+  "latest_training_check": {
+    "completed_learning_calls_logged": 192,
+    "gradient_count": 192,
+    "all_finite_positive": true,
+    "last_gradient_norms": [
+      0.018598420545458794,
+      0.018985535949468613,
+      0.013501404784619808
+    ],
+    "tracebacks": 0,
+    "CUDA_OOMs": 0,
+    "saved_model_labels": [
+      "step_00184",
+      "step_00192"
+    ],
+    "saved_optimizer_labels": [
+      "step_00184",
+      "step_00192"
+    ]
+  },
+  "native_buffer_audit": {
+    "file": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4/debug_1007T16:02:41/buffer_step00184.pkl",
+    "sha256": "1ecc7dd503d88969f614601097246a2267400fd28c47f63f0bc229037ca7f412",
+    "questions": 16,
+    "responses": 128,
+    "effective_reward_ones": 82,
+    "mixed_groups": 11,
+    "all_correct_groups": 4,
+    "all_wrong_groups": 1,
+    "capped_no_eos": 2,
+    "empty": 0,
+    "reward_mismatches": [],
+    "nonfinite": [],
+    "length_alignment_errors": [],
+    "decoded_text_mismatches": [],
+    "first_response_reference": "\\frac{1}{2}",
+    "first_response_effective_reward": 0,
+    "generate_seconds": 29.59313201904297,
+    "verify_seconds": 0.7089757919311523,
+    "first_response_summary": "The first training response starts from a rotation/dilation question but ends with unrelated radio signal-to-noise text and -11.51 instead of 1/2; effective reward is correctly zero. Generated code was not executed."
+  },
+  "illustrative_changes": [
+    {
+      "index": 49,
+      "change": "wrong to correct",
+      "summary": "Sine-product final answer returns from1/16 to9/256, but the new text still contains an incorrect intermediate rewrite before the correct identity. Final-answer reward is not proof of every reasoning step."
+    },
+    {
+      "index": 39,
+      "change": "correct to wrong",
+      "summary": "Rounded polygon perimeter regresses from18+2pi to36; generated arithmetic does not correct the geometric model."
+    },
+    {
+      "index": 53,
+      "change": "correct to wrong",
+      "summary": "Square-table seating regresses from8!/4=10080 to7!=5040 by importing a circular-table symmetry assumption."
+    }
+  ],
+  "interpretation": "The monitor falls48to47: one gain and two regressions since160,27gains/no losses versus0. Improvement persists without a monotonic trajectory. A single small decline does not establish collapse or justify favorable checkpoint selection.",
+  "decision": "Continue fixed255 updates and all six final conditions under the unchanged whole owner. If meaningful final gain, fresh training replication first; otherwise retain ready512 control/LR/reuse screen. RLM diagnostic portfolio remains proposed, not launched.",
+  "limits": [
+    "One ongoing training seed",
+    "Small repeatedly observed development monitor",
+    "Full500 and broader prescribed final evaluations pending",
+    "Changing training-batch reward totals are not a learning curve",
+    "Final-answer grading does not certify reasoning or real tool execution"
+  ]
+}

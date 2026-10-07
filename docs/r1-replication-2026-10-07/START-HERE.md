@@ -4,9 +4,9 @@ We ultimately want to train recursive language models to make better decisions: 
 
 The immediate question is: **Can we take an existing language model, reward its correct math answers, and make it better on other math questions?**
 
-We have a small-scale reproduction of RL-driven improvement: on the ongoing run's fixed 64-question monitor, correct answers rose from 20 to 48. The main value is what this teaches us about creating a useful learning signal. The model needs reachable successes, a usable interface, varied attempts, and trustworthy feedback. A separate prompt comparison also shows why we must compare against a capable starting setup. The paper's full benchmark result is not yet reproduced.
+We have a small-scale reproduction of RL-driven improvement: on the ongoing run's fixed 64-question monitor, correct answers rose from 20 to 47. The preceding check scored 48: progress includes regressions as well as gains. The main value is what this teaches us about creating a useful learning signal. The model needs reachable successes, a usable interface, varied attempts, and trustworthy feedback. A separate prompt comparison also shows why we must compare against a capable starting setup. The paper's full benchmark result is not yet reproduced.
 
-Results below were checked through **7 October 2026, 19:40 UTC**. The smaller follow-up experiments described below are prepared but have not started.
+Results below were checked through **7 October 2026, 20:22 UTC**. The smaller follow-up experiments described below are prepared but have not started.
 
 For the next discussion, read the [research questions and possible blind spots](RESEARCH-QUESTIONS.md).
 We are exploring several explanations and interventions, not committing to curriculum as the answer.
@@ -131,15 +131,15 @@ The ongoing run starts from the original model and is scheduled to train on 4,08
 
 Its fixed 64-question progress checks are:
 
-| Completed weight updates | 0 | 32 | 64 | 96 | 128 | 160 |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Correct answers out of 64 | 20 | 42 | 42 | 43 | 43 | 48 |
+| Completed weight updates | 0 | 32 | 64 | 96 | 128 | 160 | 192 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Correct answers out of 64 | 20 | 42 | 42 | 43 | 43 | 48 | 47 |
 
-The early gain persists, and the latest check adds five correct answers after a nearly flat stretch. Six answers improved and one became wrong. This is further improvement on this monitor, although one run and a small set cannot establish how reliably it will repeat. We should not mistake a temporary plateau for a permanent limit.
+The early gain persists, but the latest point falls by one: one answer improved and two became wrong. A sine-product answer recovered; polygon-perimeter and square-table counting answers regressed. The latter incorrectly used a circular-table formula. This illustrates why we retain the entire curve instead of selecting its highest point. One small decline does not establish a worsening trend, just as a flat stretch did not establish a permanent limit.
 
-The latest 48/64 is 75%. **It is not a measured score of 75% on all 500 questions**, and matching or exceeding the paper's percentage on this smaller set is not reproducing its benchmark result.
+The latest 47/64 is 73.44%. **It is not a full 500-question score**, and approaching the paper's percentage on this smaller set is not reproducing its benchmark result.
 
-![All scheduled checks of the longer run: an early gain, a nearly flat stretch, then a further rise. This is a separate 64-question monitoring set, not the full benchmark.](figures/training-progress.png)
+![All scheduled checks: an early gain, a nearly flat stretch, a rise to 48 and a small decline to 47. This is a 64-question monitoring subset, not the full benchmark.](figures/training-progress.png)
 
 Three earlier attempts failed because of memory or initialization problems. They remain failures, not benchmark scores. The current attempt uses an isolated memory-saving repair and saves model and optimizer checkpoints frequently. At the latest check, training rewards agreed with independent grading and the numerical updates were finite. Those checks support training correctness, but do not themselves establish improved math ability.
 
@@ -177,7 +177,7 @@ The goal is to return to RLM training with a clearer understanding of useful rew
 
 ## Where to read next
 
-- [Five-slide overview](../../slides/2026-10-07-r1-replication/research-update.pdf): the motivation and the two central charts.
+- [Six-slide overview](../../slides/2026-10-07-r1-replication/research-update.pdf): the reproduction, lessons and proposed RLM experiments.
 - [Detailed learning guide](learning-guide.pdf): worked examples and a fuller explanation of the experiments.
-- [Latest checked evidence](interim-monitor-1940.json): exact counts, saved-result identifiers, checks and limitations.
+- [Latest checked evidence](interim-monitor-2022.json): exact counts, saved-result identifiers, checks and limitations.
 - [Research record](README.md): the chronological account, including unsuccessful attempts and earlier findings.

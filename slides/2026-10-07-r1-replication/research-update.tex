@@ -27,15 +27,15 @@
 \begin{column}{0.52\textwidth}
 {\small Correct final answers / same 64 MATH500 questions}
 \begin{center}
-\begin{tikzpicture}[x=0.032cm,y=0.034cm]
-\draw[Gray] (0,0)--(167,0);
+\begin{tikzpicture}[x=0.027cm,y=0.034cm]
+\draw[Gray] (0,0)--(199,0);
 \draw[Gray] (0,0)--(0,66);
-\foreach \y in {0,32,64} {\draw[Gray!25] (0,\y)--(164,\y);\node[left,font=\small] at(0,\y){\y};}
-\foreach \x in {0,32,64,96,128,160} {\node[below,font=\small] at(\x,0){\x};}
-\draw[Teal,very thick] (0,20)--(32,42)--(64,42)--(96,43)--(128,43)--(160,48);
+\foreach \y in {0,32,64} {\draw[Gray!25] (0,\y)--(196,\y);\node[left,font=\small] at(0,\y){\y};}
+\foreach \x in {0,32,64,96,128,160,192} {\node[below,font=\small] at(\x,0){\x};}
+\draw[Teal,very thick] (0,20)--(32,42)--(64,42)--(96,43)--(128,43)--(160,48)--(192,47);
 \fill[Teal] (0,20) circle(2.5pt);\node[above right,font=\normalsize\bfseries] at(0,20){20};
-\foreach \x/\y in {32/42,64/42,96/43,128/43,160/48} {\fill[Teal] (\x,\y) circle(2.5pt);\node[above,font=\normalsize\bfseries] at(\x,\y){\y};}
-\node[below,font=\small] at(80,-9){Completed weight updates};
+\foreach \x/\y in {32/42,64/42,96/43,128/43,160/48,192/47} {\fill[Teal] (\x,\y) circle(2.5pt);\node[above,font=\normalsize\bfseries] at(\x,\y){\y};}
+\node[below,font=\small] at(96,-9){Completed weight updates};
 \end{tikzpicture}
 \end{center}
 \end{column}
@@ -47,7 +47,7 @@ Authors' \textbf{Dr.\ GRPO} code; pretrained \textbf{Qwen2.5-Math-1.5B}; one A10
 Eight attempts per training question; reward correct final answers. No added supervised fine-tuning (SFT).
 \medskip
 
-\textbf{20 to 48 correct:} small-scale reproduction of RL-driven improvement.
+\textbf{20 to 47 correct:} improvement persists, with gains and regressions along the way.
 \end{column}
 \end{columns}
 \aside{Fixed 64-question progress subset, excluded from weight training; one greedy answer, same chat prompt, full math checker, 3,000-token cap. Not the paper's full benchmark result; final tests pending.\\

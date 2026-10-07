@@ -28,7 +28,7 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 19:40 UTC.
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 20:22 UTC.
   Short-run results and evaluation repeats retained. Authors' released-model
   check completed; longer training underway, intermediate checks on page 9.}
 \begin{document}
@@ -526,7 +526,7 @@ The \href{longer-training-plan.md}{accepted protocol} fixes the endpoint;
 the \href{longer-loader-receipt.json}{original loader check} records the excluded prompts.
 Completion still requires checking actual run counters.
 \newpage
-\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 19:40 UTC}
+\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 20:22 UTC}
   {Is the longer run learning more?}
 
 The longer run is still in progress. The table below contains every scheduled
@@ -535,25 +535,25 @@ answers on the same 64 questions, with chat-style input, greedy generation,
 a 3000-token response limit, and the full answer checker.
 
 \begin{center}
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrrrrrrr}
 \toprule
-Completed weight updates & 0 & 32 & 64 & 96 & 128 & 160 \\
+Completed weight updates & 0 & 32 & 64 & 96 & 128 & 160 & 192 \\
 \midrule
-Correct final answers out of 64 & 20 & 42 & 42 & 43 & 43 & 48 \\
+Correct final answers out of 64 & 20 & 42 & 42 & 43 & 43 & 48 & 47 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 We independently regraded all 64 answers at each later point. Every result
 agreed with the saved score, and the questions, reference answers and input
-format matched the starting check. Relative to the start, update 160 gained 28
-answers and lost none. Between 128 and 160, six answers improved and one
-regressed, raising the score from 43 to 48. Progress resumed after several
-nearly flat checks. This is a measured improvement, not a guaranteed trend.
+format matched the starting check. Relative to the start, update 192 gained 27
+answers and lost none. Between 160 and 192, one answer improved and two regressed,
+lowering the score from 48 to 47. Progress is not monotonic. This small decline
+does not establish a worsening trend; retain every point, not just the best one.
 
 \topic{What this does and does not show}
 
-The latest 48/64 is 75\%, not a measured 75\% on MATH500. This is a small, repeatedly
+The latest 47/64 is 73.44\%, not a full MATH500 score. This is a small, repeatedly
 inspected development set from one training run. It does not yet show a reliable
 gain over the stronger question-only starting setup, a full MATH500 improvement,
 or better recursive reasoning. The old short model also scored 42 on these same
@@ -565,15 +565,14 @@ from live monitoring, so these numbers are context, not interchangeable tests.
 
 First finish the fixed training budget and evaluate its final model in both
 input formats on MATH500, AMC and Minerva. Do not replace the final model with
-whichever intermediate one looks best. An audit of 1,536 sampled answers found
-no disagreement with the saved rewards. Most questions still produced both
-correct and incorrect attempts, and all 67 checked gradient norms were finite.
-In the latest audited window, most failures were well-formed but mathematically
-wrong. Next, we will use 512 training questions and the same 128 test questions
-for faster comparisons: current learning rate, a fivefold increase, and
-separately two learning passes per batch. The first two make 32 weight updates;
-the extra-pass run makes 64 using the same number of sampled answers. These
-are exploratory tests, not proven fixes or changes to the current run.
+whichever intermediate one looks best. All 128 sampled answers in collection184
+regrade consistently with their effective rewards; 11 of 16 questions have mixed
+outcomes. All 192 logged gradient norms are finite and positive. These checks
+support a functioning learning loop, not a guarantee of further improvement.
+If the final gain is meaningful, prioritize a fresh training repeat. Otherwise,
+the prepared 512-question screen compares the current learning rate, a fivefold
+increase, and two learning passes per batch. Its first two arms make 32 updates;
+the extra-pass arm makes 64 using the same number of sampled answers. None has run.
 
 \topic{An important scoring distinction}
 
@@ -584,9 +583,9 @@ run uses the full checker already. We must not compare a native fast-checker
 score against a full-checker score without saying so. Final 500-question comparisons
 throughout this guide already use the same full checker.
 
-The points 32, 64, 96, 128 and 160 follow that many completed updates.
+The points 32, 64, 96, 128, 160 and 192 follow that many completed updates.
 The final bookkeeping label 256 is different: it follows 255 completed updates.
-See \href{interim-monitor-1940.json}{intermediate evidence} and the companion
+See \href{interim-monitor-2022.json}{intermediate evidence} and the companion
 research record for raw-file hashes and the latest operational status.
 \newpage
 \pagetitle{TWO ACTUAL ANSWERS \quad | \quad 7 OCTOBER, 19:40 UTC}
@@ -646,7 +645,7 @@ this audit.
 \pagetitle{LESSONS FOR RLM TRAINING}{Some right, some wrong: why practice must be within reach}
 
 The small reproduction gives us a useful starting result: the same 64 monitoring
-questions improved from 20 correct to 48. Its more important purpose is to help
+questions improved from 20 correct to 47. Its more important purpose is to help
 us design RL for a model that uses Python and delegates subtasks. The following
 ideas are proposed applications, not results of an RLM training experiment.
 

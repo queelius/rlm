@@ -1,6 +1,6 @@
 # Lessons from math RL for training RLMs
 
-Evidence cutoff: 7 October 2026, 19:40 UTC. Six slides, about six minutes.
+Evidence cutoff: 7 October 2026, 20:22 UTC. Six slides, about six minutes.
 The reproduction supplies evidence that our learning loop can improve answers.
 The main discussion is what makes that learning possible, and how we could
 create those conditions for recursive language models. The RLM interventions
@@ -11,20 +11,22 @@ below are proposals, not findings from the math experiment.
 Say: “We eventually want an RLM to learn when to run code, when to ask a helper,
 and how to divide work. First we practiced with a published RL method on math,
 where we can check the final answer. On a fixed set of 64 questions, the score
-rose from 20 to 48. That gives us a small-scale reproduction of RL-driven
-improvement. Now, what made that possible?”
+rose from 20 to 47, with a small decline at the latest check. That gives us a
+small-scale reproduction of RL-driven improvement. Now, what made that possible?”
 
 We used the authors' Dr. GRPO implementation, Qwen2.5-Math-1.5B, and one A100.
 We added no supervised fine-tuning (SFT): the starting model already had math
 skills. The ongoing run uses 4,080 training questions, eight responses per
-question, and a fixed 255-update budget. All six scheduled monitoring points
-are shown: 20, 42, 42, 43, 43, 48 at updates 0, 32, 64, 96, 128, 160.
-The latest comparison contains six newly correct answers and one regression.
+question, and a fixed 255-update budget. All seven scheduled monitoring points
+are shown: 20, 42, 42, 43, 43, 48, 47 at updates 0, 32, 64, 96, 128, 160, 192.
+The latest comparison contains one newly correct answer and two regressions.
+The sine-product answer recovers, while polygon-perimeter and square-table
+counting answers regress. This is not evidence of a persistent decline.
 
 Each score counts final answers accepted by the full mathematical checker.
 Each question gets one greedy answer, the same chat input and a 3,000-token cap.
 The 64 questions were excluded from weight training but repeatedly inspected.
-48/64 is 75% on this monitor, not a measured 75% on MATH500.
+47/64 is 73.44% on this monitor, not a full MATH500 score.
 The final checkpoint, not the best intermediate one, will receive the planned
 full500 and broader math evaluations. One run does not establish repeatability.
 
@@ -177,7 +179,7 @@ ideas do not silently replace a live experiment.
 
 - [Self-contained overview and complete comparisons](../../docs/r1-replication-2026-10-07/START-HERE.md)
 - [Learning guide PDF](../../docs/r1-replication-2026-10-07/learning-guide.pdf)
-- [All six monitoring points and verification receipt](../../docs/r1-replication-2026-10-07/interim-monitor-1940.json)
+- [All seven monitoring points and verification receipt](../../docs/r1-replication-2026-10-07/interim-monitor-2022.json)
 - [Source and score evidence](evidence.md)
 
 The brainstorming structure separates observed math results, the mathematical

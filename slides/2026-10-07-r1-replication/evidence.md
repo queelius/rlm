@@ -1,11 +1,11 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 19:40 UTC. The fourth longer-training attempt is
+Cutoff: 7 October 2026, 20:22 UTC. The fourth longer-training attempt is
 underway. Its final benchmarks are pending; completed short-run scores are unchanged.
 
 ## Current lesson-centered slide map
 
-1. The reproduction occupies one slide: all six monitor points, 20 to 48 of 64.
+1. The reproduction occupies one slide: all seven monitor points, 20 to 47 of 64.
 2. Equal binary rewards give no within-question contrast. Curriculum is a proposal.
 3. A prompt can hide existing ability: matched 500-question before/after results.
 4. A proposed RLM curriculum: execute, call a helper, connect calls, choose a strategy.
@@ -33,18 +33,18 @@ changes, not additional measured gains.
 
 ## Longer training progress
 
-Slide 1 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-1940.json):
+Slide 1 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-2022.json):
 20/64 before training, 42/64 after 32 completed updates, 42/64 after 64,
-43/64 after 96, 43/64 after 128 and 48/64 after 160. Questions, reference answers, chat inputs, full checker and
+43/64 after 96, 43/64 after 128, 48/64 after 160 and 47/64 after 192. Questions, reference answers, chat inputs, full checker and
 response limit are matched. All answers at every later point independently
-regrade without a mismatch. Between the last two points, six answers improved
-and one regressed. The latest point adds five correct answers after a nearly flat stretch.
+regrade without a mismatch. Between the last two points, one answer improved
+and two regressed. The new point preserves most of the preceding gain, not a monotonic rise.
 Answer changes alone do not distinguish training effects from generation variability.
 
 This is a repeatedly examined development subset, one ongoing run, and not a
 full500 endpoint. It does not establish improvement beyond the stronger base
 or the short trained models. We retain every scheduled point, not a best point.
-Native labels 32, 64, 96, 128 and 160 follow that many completed updates; the forced final
+Native labels 32, 64, 96, 128, 160 and 192 follow that many completed updates; the forced final
 label 256 instead follows 255 updates without adding another update.
 
 ## Authors' released model: an evaluation check, not our training result

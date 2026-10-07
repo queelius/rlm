@@ -2,6 +2,23 @@
 
 ## Updated result and lesson-centered presentation
 
+Latest check, 20:22 UTC, supersedes the result below: after 192 updates the
+monitor score is **47/64**, one gain and two regressions since update 160.
+All 64 answers independently regrade; all seven ordered input/reference sets
+align. The full curve is 20/42/42/43/43/48/47. Continue the fixed 255 updates
+and all six final conditions; do not select the highest-scoring checkpoint.
+All 192 logged gradient norms are finite and positive, with no traceback or
+out-of-memory error. Model and optimizer states at 184 and 192 are saved.
+
+Collection 184 contains 128 responses: 82 receive reward 1, eleven question
+groups have mixed outcomes, two answers hit the length cap and none is empty.
+Independent reward, decoded-text and alignment checks agree. Reward counts on
+changing batches are not a controlled learning curve.
+See the [current receipt](interim-monitor-2022.json). The deck, guide and chart
+are updated to 20:22; the lesson-centered narrative and RLM portfolio remain.
+
+Earlier 19:40 result and discussion:
+
 Scientific cutoff: 7 October, 19:40 UTC. The scheduled update-160 monitor is
 **48/64**, following 20, 42, 42, 43, 43. All 64 new outputs independently
 regrade and all ordered questions, references and inputs align. Six gains and

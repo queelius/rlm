@@ -1,5 +1,26 @@
 # Presentation verification
 
+## Scheduled update 192, evidence cutoff 20:22 UTC on 7 October
+
+- Independently regraded all 64 new answers with the full checker: no mismatch.
+  All seven ordered question, reference and formatted-input lists align. The
+  complete curve is 20/42/42/43/43/48/47, including one gain and two regressions
+  since update 160. No favorable checkpoint selection or final score inferred.
+- Audited collection 184: all 128 effective rewards independently agree,
+  response tokens decode to the saved text, and rewards/log probabilities are
+  finite. Eleven of sixteen question groups contain mixed outcomes. All 192
+  logged gradient norms are finite and positive; no traceback or CUDA OOM.
+- Updated slide 1, chart, cutoff, notes, guide, overview and evidence together.
+  The earlier answer examples remain explicitly dated 19:40. Added new failure
+  examples to the supporting documents without presenting them as frequencies.
+- Rebuilt both PDFs with Tectonic, with no overfull or underfull warnings.
+  Six slides, fifteen guide pages and all matching presenter notes pass the
+  bounds/title/wrap checks. Visually inspected changed slide 1, the standalone
+  chart, and guide pages 1, 9 and 11. No live presenter-GUI test was performed.
+- Current training source, owner, fixed endpoint and final evaluation schedule
+  remain unchanged. The one-point decline does not justify stopping or tuning
+  against this repeatedly inspected development monitor.
+
 ## Lesson-centered revision with update160 evidence
 
 - All 64 new monitor outputs independently regrade; ordered question, reference
