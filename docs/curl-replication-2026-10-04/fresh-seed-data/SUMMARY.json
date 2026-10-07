@@ -1,0 +1,135 @@
+{
+  "reviewed_utc": "2026-10-07T08:45:00Z",
+  "completed_utc": "2026-10-05T20:22:17Z",
+  "status": "complete_added_cohort",
+  "task": "cartpole/swingup",
+  "training_steps_per_model": 100000,
+  "score": "mean_total_reward_over_ten_fixed_test_starts",
+  "evaluation_seeds": [
+    10000,
+    10001,
+    10002,
+    10003,
+    10004,
+    10005,
+    10006,
+    10007,
+    10008,
+    10009
+  ],
+  "completed_training_seeds": [
+    234,
+    567,
+    890
+  ],
+  "remaining_training_seeds": [],
+  "runs": [
+    {
+      "arm": "curl",
+      "seed": 234,
+      "final_mean_return": 280.41343059198766,
+      "metrics": "curl-seed234/metrics.jsonl",
+      "metrics_sha256": "3815e75be68ab2ea11cd8e300b58eccbc2a3d8d18c268a03c0f0f0c799d5de2c",
+      "native_wall_seconds": 864.617908000946
+    },
+    {
+      "arm": "single_encoder_curl",
+      "seed": 234,
+      "final_mean_return": 668.2196074808858,
+      "metrics": "single_encoder_curl-seed234/metrics.jsonl",
+      "metrics_sha256": "7ac89472d287fdf9aa233293dfa781ac85a4837bce8cff37e4bd7cece81a93f3",
+      "native_wall_seconds": 880.2307496070862
+    },
+    {
+      "arm": "no_curl",
+      "seed": 234,
+      "final_mean_return": 823.968883937654,
+      "metrics": "no_curl-seed234/metrics.jsonl",
+      "metrics_sha256": "21511006f6ea496fb91a0ab79610e63be4e7c971f9a30f1930e82e72e9acdfcf",
+      "native_wall_seconds": 802.2603302001953
+    },
+    {
+      "arm": "curl",
+      "seed": 567,
+      "final_mean_return": 484.54970982536554,
+      "metrics": "curl-seed567/metrics.jsonl",
+      "metrics_sha256": "8d26d087503ccb5642eda603356ed9976f1743656ac06c9a76fe1bd26fd63ffb",
+      "native_wall_seconds": 874.8346102237701
+    },
+    {
+      "arm": "single_encoder_curl",
+      "seed": 567,
+      "final_mean_return": 366.9691779575198,
+      "metrics": "single_encoder_curl-seed567/metrics.jsonl",
+      "metrics_sha256": "e7137a1f5cdd8851dac4698504719eef5bb633c1e47a10197c8ee2b11ca3b377",
+      "native_wall_seconds": 862.138599395752
+    },
+    {
+      "arm": "no_curl",
+      "seed": 567,
+      "final_mean_return": 114.84934610471369,
+      "metrics": "no_curl-seed567/metrics.jsonl",
+      "metrics_sha256": "d3fc3c99b9781c4b0b91815530d1830ed6d13a4f05868872d0f7f9c592b64bc2",
+      "native_wall_seconds": 796.6246643066406
+    },
+    {
+      "arm": "curl",
+      "seed": 890,
+      "final_mean_return": 592.3442635482124,
+      "metrics": "curl-seed890/metrics.jsonl",
+      "metrics_sha256": "a53ffb9673263713e0725f968e14acf3ffcb99ef9c1040090d7da617a076373d",
+      "native_wall_seconds": 872.1868348121643
+    },
+    {
+      "arm": "single_encoder_curl",
+      "seed": 890,
+      "final_mean_return": 497.73706412742166,
+      "metrics": "single_encoder_curl-seed890/metrics.jsonl",
+      "metrics_sha256": "47c8dd97bf97628f1ef9e33bfc60d02640cf7da770da30e05e014e84ea6bfa6f",
+      "native_wall_seconds": 860.7298707962036
+    },
+    {
+      "arm": "no_curl",
+      "seed": 890,
+      "final_mean_return": 344.7695043631263,
+      "metrics": "no_curl-seed890/metrics.jsonl",
+      "metrics_sha256": "591919a3ce7df60903d22a6f66031d418256152994c34995cc4a36956d82bb22",
+      "native_wall_seconds": 800.9673247337341
+    }
+  ],
+  "contrasts": [
+    {
+      "seed": 234,
+      "original_minus_no_matching": -543.5554533456664,
+      "smaller_minus_no_matching": -155.74927645676826,
+      "smaller_minus_original": 387.8061768888981
+    },
+    {
+      "seed": 567,
+      "original_minus_no_matching": 369.70036372065186,
+      "smaller_minus_no_matching": 252.1198318528061,
+      "smaller_minus_original": -117.58053186784576
+    },
+    {
+      "seed": 890,
+      "original_minus_no_matching": 247.57475918508612,
+      "smaller_minus_no_matching": 152.96755976429534,
+      "smaller_minus_original": -94.60719942079078
+    }
+  ],
+  "cohort_means": {
+    "curl": 452.4358013218552,
+    "single_encoder_curl": 510.97528318860907,
+    "no_curl": 427.86257813516465
+  },
+  "native_wall_seconds_sum": 7614.590892076492,
+  "evaluation_seconds_sum": 3323.5205093007535,
+  "checkpoint_seconds_sum": 58.74564631097019,
+  "limits": [
+    "Three training seeds per method, not thirty independent training replicates.",
+    "Final checkpoints only; no favorable seed or checkpoint selection.",
+    "Adaptively added cohort reported separately from the original seeds.",
+    "Different policies collect different experience; not a fixed-data intervention.",
+    "One task and training budget; not an exact original-stack reproduction or novelty claim."
+  ]
+}

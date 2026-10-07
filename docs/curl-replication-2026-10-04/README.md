@@ -1,13 +1,24 @@
 # Learning RL by reproducing CURL
 
-Start with [the fourteen-page PDF](learning-guide.pdf). The
+Start with [the fifteen-page PDF](learning-guide.pdf). The
 [LaTeX source](learning-guide.tex) and Makefile are next to it.
 
 This edition includes **all three completed pairs at both 100k and 500k**,
 plus all three original walking pairs, their supplemental tests, and all three
 pairs from the new training cohort. It also includes all three wrong-matching
-cartpole models and all six smaller-update follow-ups. Latest cutoff:
-October 5, 18:18 UTC.
+cartpole models, all six smaller-update follow-ups, and all nine fresh-seed
+models. The newest batch finished October 5 at 20:22 UTC and was reviewed
+October 7 at 08:45 UTC.
+
+**Newest lesson:** matching helped in two fresh training seeds and hurt in one,
+under both tested update rules. The smaller update had the highest average,
+but lost to original CURL in two of the three seeds. Page 15 shows every new
+model so those averages do not hide the variation. This is a controlled
+reproduction exercise, not a demonstrated new algorithm or a claim that the
+published method never helps.
+
+## Results in context
+
 It explains the cartpole task,
 reinforcement learning, self-supervised image matching, our comparison, and
 what source review found. CURL scored 678.02 versus 454.47 in the first pair,
@@ -15,8 +26,9 @@ what source review found. CURL scored 678.02 versus 454.47 in the first pair,
 All six models continued to the fixed 500k endpoint. The longer comparisons
 have different winners: **842.74 versus 866.94**, **866.14 versus 810.96**, and
 **855.22 versus 870.53** (CURL first in each).
-The mean advantage shrank from **+184.64 to +5.22**. That is an early benefit
-without a consistent late winner in this small study, not proof of equivalence.
+The mean advantage shrank from **+184.64 to +5.22** in the original group.
+That is an early benefit without a consistent late winner in that small group,
+not proof of equivalence. The first fresh seed reverses the early benefit.
 Page 8 preserves the early comparisons; page 9 shows all three longer pairs
 with limits and recovery cost. The fresh-model walking comparison is also complete:
 **482.83 versus 241.28**, **385.23 versus 360.96**, and **435.83 versus 698.06**,
@@ -48,13 +60,23 @@ and third (531.20 versus 587.99). It is not consistently better. All three
 smaller-update models still beat their no-matching comparisons.
 The smaller-update wrong-matching scores are **138.08, 72.01 and 19.90**, all
 below their no-matching comparisons (454.47, 240.54 and 463.26). Reducing the
-update did not remove wrong-target harm. The final page explains the change
+update did not remove wrong-target harm. Page 14 explains the change
 and shows every score; [exact data](encoder-strength-data/SUMMARY.json) and
 [evidence and limitations](FINDINGS.md) support it. No reliable update ranking
 or general mechanism is established by three seeds. The six new runs took
 86.67 minutes, including testing and checkpoint saves.
-A [nine-model fresh-seed comparison](CARTPOLE_FRESH_SEEDS.md) is now running
-to check reproducibility; it will be reported separately.
+The [nine-model fresh-seed comparison](CARTPOLE_FRESH_SEEDS.md) is complete.
+**Page 15 shows all three new seeds.** Mean scores are **452.44** for original
+CURL, **510.98** for smaller-update CURL, and **427.86** for no matching.
+These average three trained models per method; each model's score averages
+ten fixed test starts after 100k training steps. Both matching methods won
+twice and lost once against no matching. The smaller update beat original
+CURL once and lost twice. In the first fresh seed, no matching beat both:
+823.97 versus 668.22 and 280.41. The original three-seed matching advantage
+therefore did not repeat in every new run. The group is reported separately;
+three seeds do not establish a dependable winner, equivalence or general harm.
+Read the [exact data](fresh-seed-data/SUMMARY.json),
+[native evidence](fresh-seed-data), and [dated interpretation](FINDINGS.md).
 
 All three additional training pairs are complete:
 **502.95 versus 200.43**, **254.63 versus 335.20**, and **436.58 versus 156.22**,
@@ -112,17 +134,19 @@ Keep published reference scores separate from our measurements.
 
 ## Verification of this edition
 
-Compiled with Tectonic 0.17.0 using cached dependencies on October 5, 2026.
-The fourteen-page edition adds the completed update-strength comparison to
-the previously reported wrong-target, walking and separate-cohort results.
-Changed pages 1, 6, 7, 13 and 14 were rendered and visually inspected, including
-the complete fifteen-model table. No TeX overflow warnings or out-of-page text
-were found on any page; unchanged pages retain their earlier inspection. The numerical
+Compiled with Tectonic 0.17.0 using cached dependencies on October 7, 2026.
+The fifteen-page edition adds the complete fresh-seed cohort to
+the previously reported update-strength, wrong-target and walking results.
+Changed pages 1, 7 and 15 were rendered and visually inspected, and page 14
+was rechecked. No TeX overflow warnings or out-of-page text were found on any
+page; unchanged pages retain their earlier inspection. All 234 test means in
+the nine new models were recomputed from 2,340 raw episode rewards.
+The numerical
 teaching example was independently recalculated. The manifest parses as JSON,
 and its decision count times action repeat equals the stated environment budget.
 
 PDF SHA256:
-`0a49687c91b79f7ea4d59d2f62e5a4f85bcd5c617b02c58c71060c6833f2a711`.
+`91d69890c5263cbfe7b20c368aac186b25c00a51a69e90f056fa84e1884ca9ad`.
 An independent CPU audit recomputed all 390 test means from 3,900 episode
 returns across the fifteen models in the update-strength comparison. Every
 table cell in the new page was checked against the native-backed summary.

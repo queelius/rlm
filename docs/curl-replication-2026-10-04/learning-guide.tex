@@ -24,7 +24,7 @@
 \begin{document}
 \begin{frame}[t]
 \vspace*{0.55in}
-{\small\color{accent}\textbf{REPRODUCTION NOTEBOOK \quad | \quad 5 OCTOBER 2026}}
+{\small\color{accent}\textbf{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}}
 
 {\huge\color{ink}\textbf{Learning reinforcement learning\\by reproducing CURL}}
 
@@ -34,7 +34,7 @@
 
 \question{Where are we now?}
 
-\textbf{CURL finished higher in all three short cartpole comparisons.}
+\textbf{CURL finished higher in the original three short cartpole comparisons.}
 After five times as much training, its average advantage became much smaller,
 with different winners across runs. This is an early benefit in a small study,
 not proof of a lasting advantage or equivalence. Pages 8--9 show every pair.
@@ -46,11 +46,11 @@ change the original pair-by-pair winners.
 
 Wrong image matches hurt cartpole learning in every tested seed. Reducing the
 matching update did not remove that harm. With correct matches, the smaller
-update helped once and hurt twice, so it has not shown a dependable improvement.
-Pages 13--14 show every score and explain why harm from wrong targets does not
-by itself explain the benefit of correct targets. Nine fresh-model runs are
-now checking whether the useful effects repeat. Latest evidence:
-5 October, 18:18 UTC.
+update has not shown a dependable improvement. Pages 13--14 show the original
+comparison. \textbf{All nine fresh-seed models have now finished: both matching
+methods won twice and lost once against no matching.} Averages hide large
+differences between runs. Page 15 shows the complete new group and what it
+changes. Results finished on 5 October; reviewed on 7 October, 08:45 UTC.
 
 \question{Why this paper?}
 
@@ -73,7 +73,7 @@ practice, but would not retroactively prove our earlier RLM training correct.
 \question{How to read this guide}
 
 Pages 2--4 explain the task with examples. Pages 5--6 explain the comparison
-and code. Pages 7--14 give next decisions, checks and measured results.
+and code. Pages 7--15 give next decisions, checks and measured results.
 Teaching examples are labeled; published reference scores belong to the authors.
 
 \end{frame}
@@ -359,7 +359,7 @@ The hyperparameters and step terminology are documented in the supplement.\footn
 
 \question{The next useful sequence}
 
-All three cartpole pairs have completed at both 100,000 and 500,000
+All three original cartpole pairs have completed at both 100,000 and 500,000
 training steps. We continued the same saved models to ask whether the early
 advantage lasts with more training. Every original model is included, regardless
 of its score. Resuming a model does not create another independent training run.
@@ -393,17 +393,18 @@ Paper and core source review & Complete for the first task.\\
 Budget and comparison specified & Yes; modern simulator stack recorded.\\
 Training and evaluation & Cartpole, walking and wrong-match tests.\\
 Checkpoint save/reload verification & Next-update and large-array tests passed.\\
-Evidence about the extra matching task & Cartpole: early lead. Walking: mixed.\\
+Evidence about the extra matching task & Cartpole and walking: variable benefits.\\
 \bottomrule
 \end{tabular}
 
-\question{What is running next?}
+\question{What did the fresh models tell us?}
 
-The smaller-update comparison is complete on page 14. We are now training
-nine new cartpole models: original CURL, smaller-update CURL and no matching,
-each with three new training seeds. Do the useful effects repeat? We will
-report this added group separately and keep every outcome. This checks
-variation between trained models, not a new task or the wrong-target effect.
+All nine fresh cartpole models finished: original CURL, smaller-update CURL
+and no matching, each with three new training seeds. Both matching methods
+beat no matching twice and lost once. The smaller update beat original CURL
+once and lost twice, just as in the original group. Page 15 reports every
+new result separately from the old group. The next useful question is why
+the benefit varies, not which single run has the most favorable score.
 
 \takeaway{Our immediate goal is a trustworthy learning example, not a novelty claim. The transferable skills are controlling comparisons, reading the actual update, evaluating fairly, and preserving enough state to explain and resume a run.}
 
@@ -730,13 +731,13 @@ strengths. Making the update smaller was not a dependable rescue or a
 consistent improvement. This is a limit on a proposed explanation, not
 proof that update strength never matters.}
 
-\question{Why are we training more models next?}
+\question{Why did we repeat the comparison?}
 
-Three seeds cannot tell us how repeatable these differences are. Our nine
-fresh-seed runs compare correct matching under both update rules against no
-matching. They do not include new wrong targets. Different policies also
-collect different experience, so this study does not isolate an immediate
-encoder effect on identical data.
+Three seeds could not tell us how repeatable these differences were. We
+therefore repeated both correct-matching rules and no matching on three new
+seeds. Page 15 shows those results; no new wrong-target models were included.
+Different policies collect different experience, so neither comparison
+isolates an immediate encoder effect on identical data.
 
 \small
 \textbf{Evidence and cost.} The six new runs took 86.67 minutes, including
@@ -745,5 +746,78 @@ Native records: \texttt{encoder-strength-data/}, with original
 comparisons in \texttt{data/} and \texttt{correspondence-data/}.
 Details: \texttt{ENCODER\_UPDATE\_CONTROL.md}. Cutoff: 5 October, 18:18 UTC.
 This adaptively chosen, one-task comparison is exploratory.
+\end{frame}
+\begin{frame}[t]
+\vspace*{0.55in}
+\chapterpage{14 / REPEATING THE COMPARISON}{The benefit did not repeat in every run.}
+
+We repeated the comparison with three new training seeds: nine models in total.
+A seed changes random initialization and training choices. Every model starts
+from fresh weights, uses the same random-crop procedure, and receives 100,000
+cartpole training steps. Both CURL versions use correct picture matches.
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=.65cm]
+  \node[anchor=west,font=\small,text=ink] at (0,7.3) {Original CURL};
+  \node[anchor=west,font=\small,text=accent] at (3.1,7.3) {Smaller-update CURL};
+  \node[anchor=west,font=\small,text=orange!75!black] at (7.5,7.3) {No matching};
+  \foreach \y/\v/\label/\shade in {
+    6.2/2.8041343059/280/ink!75,
+    5.65/6.6821960748/668/accent!85,
+    5.1/8.2396888394/824/orange!75!black,
+    3.8/4.8454970983/485/ink!75,
+    3.25/3.6696917796/367/accent!85,
+    2.7/1.1484934610/115/orange!75!black,
+    1.4/5.9234426355/592/ink!75,
+    .85/4.9773706413/498/accent!85,
+    .3/3.4476950436/345/orange!75!black}{
+    \fill[\shade] (0,\y-.18) rectangle (\v,\y+.18);
+    \node[anchor=west,font=\small] at (\v,\y) {\label};
+  }
+  \node[anchor=east,align=right,font=\small] at (-.2,5.65) {Fresh seed 1\\(234)};
+  \node[anchor=east,align=right,font=\small] at (-.2,3.25) {Fresh seed 2\\(567)};
+  \node[anchor=east,align=right,font=\small] at (-.2,.85) {Fresh seed 3\\(890)};
+  \draw[->] (0,-.3)--(10.2,-.3);
+  \foreach \x/\label in {0/0,2/200,4/400,6/600,8/800,10/1000}{
+    \draw (\x,-.3)--(\x,-.5);
+    \node[anchor=north,font=\small] at (\x,-.55) {\label};
+  }
+  \node[font=\small] at (5,-1.5) {Mean test reward (higher is better)};
+\end{tikzpicture}
+\end{center}
+
+Each bar is \textbf{one trained model}, tested on the same ten fixed starts.
+The score is mean total reward for swinging and balancing the pole, not
+percentage correct. We use final checkpoints, not the best point on each curve.
+
+\question{What repeated, and what changed?}
+
+In the original three seeds, both matching methods always beat no matching.
+In this new group, both won twice and lost once. The smaller update improved
+on original CURL once and worsened it twice, as it did in the original group.
+
+\takeaway{Repeating the comparison changed the conclusion: matching helped
+in every original seed, but not every new seed. The benefit depends on the
+training run.}
+
+\question{Why not just report the averages?}
+
+The averages are 452 for original CURL, 511 for the smaller update and 428
+for no matching. The smaller update's one large gain over original CURL
+outweighs two losses. Yet no matching did better still on that first seed.
+Three seeds do not establish a dependable winner.
+
+\question{What is the next useful question?}
+
+Does matching improve the model's visual features, or mainly change which
+experiences it collects while learning? A proposed follow-up would give both
+update rules the same saved experience. That could isolate an immediate update
+effect, but would not by itself show better control. It has not been run yet.
+
+\small
+\textbf{Evidence.} Nine completed runs; no restarts or failures.
+Records: \texttt{fresh-seed-data/}; protocol: \texttt{CARTPOLE\_FRESH\_SEEDS.md}.
+Reviewed: 7 October, 08:45 UTC. This added group is exploratory, chosen after
+earlier results and reported separately. No novelty claim is made.
 \end{frame}
 \end{document}

@@ -1,8 +1,8 @@
 ---
 date: 2026-10-04
-cutoff_utc: 2026-10-05T18:46:00Z
+cutoff_utc: 2026-10-07T08:45:00Z
 original_100k_cohort_cutoff_utc: 2026-10-04T18:37:00Z
-execution_update_utc: 2026-10-05T18:46:00Z
+execution_update_utc: 2026-10-07T08:45:00Z
 stage: exploratory_compatibility_reproduction
 question: Does contrastive learning improve pixel-based control beyond random-crop augmentation?
 primary_endpoint: 100000_training_simulator_steps
@@ -12,10 +12,128 @@ external_runs: /project/alex_phd/runs/curl-replication-20261004
 
 # What we have learned so far
 
-All three cartpole pairs are complete at both budgets. CURL finished higher in every
-100k pair. **The mean advantage shrank from +184.64 at 100k to +5.22 at 500k**,
-with different late winners. This small study shows an early benefit but no
-consistent late winner. It does not establish equivalence or a universal rule.
+## All nine fresh models completed, reviewed October 7 at 08:45 UTC
+
+The full added cohort finished on October 5 at 20:22 UTC. All nine models
+reached their fixed 100k-training-step endpoint without failures or resumes.
+The guide and this report now include every result, not only the first seed.
+
+| Training seed | Original CURL | Smaller-update CURL | No matching |
+|---|---:|---:|---:|
+| 234 | 280.41 | 668.22 | 823.97 |
+| 567 | 484.55 | 366.97 | 114.85 |
+| 890 | 592.34 | 497.74 | 344.77 |
+| Mean across the three trained models | 452.44 | 510.98 | 427.86 |
+
+Scores are average total reward on the same ten fixed cartpole swingup test
+starts. Higher means better swinging and balancing; it is not a percentage.
+Each cell above the mean row is one independently trained model. There are
+three training seeds per method, not thirty training replicates.
+
+**Matching helped twice and hurt once under both update rules.** In the
+original three seeds it helped every time. The added group therefore weakens
+a dependable early-benefit claim without establishing that matching is
+generally harmful or equivalent to no matching.
+
+**The smaller update is not a consistent improvement over original CURL.**
+It gained 387.81 points in seed 234 but lost 117.58 and 94.61 in seeds 567 and
+890. Its higher mean comes from one large gain outweighing two losses. That
+large gain still did not beat the no-matching control on the same seed.
+The direction pattern, one gain and two losses, also occurred in the original
+group. Do not combine the groups selectively or call a favorable mean a
+reliable winner.
+
+| Seed | Original minus no matching | Smaller minus no matching | Smaller minus original |
+|---|---:|---:|---:|
+| 234 | -543.56 | -155.75 | +387.81 |
+| 567 | +369.70 | +252.12 | -117.58 |
+| 890 | +247.57 | +152.97 | -94.61 |
+
+Root checked all nine completion receipts, finite learning records, fresh
+starts, end records, checkpoint sizes and native-copy equality. All **234
+evaluation means were recomputed from 2,340 raw returns**. Each run performed
+11,500 learning updates and 260k additional test interactions. We retained
+the declared final endpoints rather than selecting the highest curve points.
+Native training-process time summed to **126.91 minutes**, including 55.39
+minutes testing and 58.75 seconds saving. That is elapsed process time, not
+a measurement of GPU utilization. The [exact summary](fresh-seed-data/SUMMARY.json)
+links every run to its unchanged native records and metric-file hash.
+
+The next scientific question is why benefit varies: an immediate effect on
+visual features, a change in collected experience, or other optimization
+variation? A fixed-experience comparison is a candidate follow-up, not an
+established explanation or a launched run. A second task or different budget
+would answer a separate scope question. The added cohort was chosen after
+earlier results and is reported separately; no untouched confirmation or
+novel algorithm is claimed. The earlier wrong-target harm remains evidence
+about harmful supervision, not proof that useful matching must help.
+
+**Operations:** this queue ended normally, but the October 5 review remained
+unacknowledged after that session's access restrictions. The observer still
+had that pending request on October 7, so it did not dispatch fresh reviews.
+This research queue has done no further training for about 36 hours. The
+currently allocated GPU was idle when checked. This gap is not research time
+or evidence of ongoing experimentation. Publication is the user's immediate
+request; these results do not imply that a new GPU job has been started.
+
+## Earlier overall assessment, October 5
+
+The original three cartpole pairs are complete at both budgets. CURL finished
+higher in each original 100k pair, but that advantage reversed in the first
+fresh training seed. In the original group, **the mean advantage shrank from
++184.64 at 100k to +5.22 at 500k**, with different late winners. These findings
+show variation across training seeds and budgets, not a dependable winner or
+equivalence.
+
+## The no-matching control changes the interpretation, October 5 at 19:00 UTC
+
+All three methods have now finished on fresh training seed 234:
+
+| Method | Mean reward at the fixed 100k endpoint |
+|---|---:|
+| Original CURL | 280.41 |
+| Smaller-update CURL | 668.22 |
+| No matching, with the same random-crop procedure | 823.97 |
+
+Each score averages total simulator reward over the same ten test starts in
+cartpole swingup. Higher is better. These are three separately trained models,
+not thirty training replicates. All started from fresh weights; we did not
+select their best checkpoints.
+
+**Beating original CURL did not mean that image matching helped.** The smaller
+update gained 387.81 points over original CURL, but still finished 155.75 below
+no matching. Original CURL finished 543.56 below no matching. The missing third
+comparison in the previous review was therefore essential, not a minor detail.
+
+In the original three seeds, both correct-matching update rules beat their
+no-matching controls. This new seed reverses that pattern. It weakens a claim
+that matching reliably helps at this budget, but does not establish general
+harm or a dependable ranking. The competing explanation is ordinary variation
+in learning trajectories and collected experience. All methods use the same
+task, crop procedure and training budget, but their policies collect different
+experience as learning proceeds. This is not a fixed-data encoder experiment.
+
+The control's curve was variable: 506.88 at 60k, 382.37 at 64k, 670.54 at 96k,
+and 823.97 at the declared final endpoint. We did not choose the endpoint after
+looking at that curve. Root recomputed **78 test means from 780 raw returns**
+across the completed triple. Each run has 100 natural training episodes,
+11,500 updates, 100k training steps and 260k additional test steps. Every logged
+learning value was finite; all runs ended normally without resumes or failures.
+The control's checkpoint is 2,354,164,785 bytes. Its native start-to-end time
+was 802.26 seconds, including 370.90 seconds testing and 6.17 seconds saving.
+The native `elapsed_seconds` field excludes that final save.
+
+The [unchanged native files](fresh-seed-data/no_curl-seed234) and
+[three-way summary](fresh-seed-data/SUMMARY.json) support the new figure on
+page 15 of the [learning guide](learning-guide.pdf). The added cohort remains
+separate from the original cohort. Continue the remaining six jobs unchanged,
+with smaller-update seed 567 already learning and five jobs queued. No tuning
+sweep or new method is justified by this one reversal. Finish both remaining
+fresh seeds, retain every result, and then choose whether seed variation or
+an immediate update mechanism is the more informative next question.
+
+Earlier dated sections below preserve what was known at each review. Their
+statements that the control was unfinished no longer describe the current state.
 
 ## A large gain on one fresh seed, October 5 at 18:46 UTC
 

@@ -1,12 +1,65 @@
 ---
 date: 2026-10-04
-status: encoder_strength_complete_fresh_seed_cohort_running
-priority: finish_nine_fixed_fresh_seed_runs_and_report_separately
+status: fresh_seed_cohort_complete_followup_not_launched
+priority: publish_complete_cohort_then_choose_mechanism_or_scope_probe
 ---
 
 # What the next comparisons would establish
 
-## Current decision, October 5 at 18:18 UTC
+## Current decision, October 7 at 08:45 UTC
+
+All nine fresh-seed runs completed normally. Both correct-matching methods
+beat no matching on two seeds and lost on one. The smaller update beat
+original CURL once and lost twice, repeating its mixed direction pattern in
+the original cohort. Neither consistently helps, even though both new-cohort
+means exceed no matching. Retain all results and separate the added cohort.
+
+1. Publish the complete group, the first-seed reversal and all pairwise
+   differences. The user needs the learning guide on GitHub now; a new study
+   must not delay that handoff. Do not call the exhausted queue active.
+2. Prepare a bounded fixed-experience probe to ask whether the matching
+   update changes visual features or reward predictions when starting weights
+   and sampled experience are identical. Compare original, smaller and no
+   matching with prespecified update counts and held-out diagnostics. This
+   would identify immediate update effects, not establish better control or
+   explain all full-training variation. No probe has been launched.
+3. Compare the value of that probe with extending the same three-method
+   comparison to walking. The former investigates a mechanism; the latter
+   tests task specificity. Favor a clear falsifiable comparison over another
+   tuning sweep on the original seeds. Preserve final endpoints and all seeds.
+
+The old review observer still has a pending acknowledgment from the restricted
+October 5 session. Its deadline also refers to the old allocation. Restoring
+autonomous work requires reconciling that state and the current allocation,
+not merely loading a model or leaving the observer process present.
+
+## Earlier decision, October 5 at 19:00 UTC
+
+The first complete fresh-seed comparison favors no matching (823.97), then
+smaller-update CURL (668.22), then original CURL (280.41). Both matching rules
+had beaten no matching in each original seed. The reversal makes training
+variation central to the interpretation. It does not show that matching is
+generally harmful, nor explain why these policies diverged.
+
+1. Finish the six remaining declared runs, including the currently learning
+   smaller-update seed-567 model. Five follow-on jobs are ready. Keep the added
+   cohort separate, show all three contrasts per seed, and retain every result.
+2. After the complete cohort, assess the consistency and size of the matching
+   benefit before another tuning intervention. If reversals remain common,
+   retire a dependable early-benefit claim in favor of a narrower statement
+   about variable outcomes in this task and budget. Do not discard difficult
+   seeds or replace final scores with favorable curve peaks.
+3. Rank a fixed-replay, shared-checkpoint probe against a second-task comparison
+   using the complete evidence. The first asks about immediate update effects
+   on identical experience; the second asks how task-specific the pattern is.
+   Neither is admitted here. Do not let a mechanism story outrun a reproducible
+   performance effect, or mistake wrong-target harm for useful matching.
+
+The learning guide now adds the complete first fresh triple on page 15. It
+explicitly shows why a large gain over original CURL can still lose to the
+no-matching control. This is a reproduction lesson, not a novelty claim.
+
+## Earlier decision, October 5 at 18:18 UTC
 
 The full comparison is complete. Wrong matches remain below no matching at
 both tested update rules, for all three seeds. Correct matching stays above
