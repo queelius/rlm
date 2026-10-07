@@ -3,8 +3,10 @@
 `research-update.tex` is the 16:9 Beamer source. `results.tex` holds the numbers
 for the checked final comparison. `speaker-guide.md` explains the ideas
 in plain language; `speaker-notes.json` holds concise laptop presenter notes.
-The deck reports the completed 128-question comparison: 41 correct before
-training and 80 afterward. The full500 and prompt controls are pending.
+The deck reports the completed 500-question prompt comparison: chat-style scores
+rose from 154 to 308, while question-only scores rose from 305 to 317.
+The original separate 128-question result (41 to 80) remains in the guide and
+evidence. New training with question-only inputs is running; its result is pending.
 It is not a reproduction of the paper's full benchmark scores.
 
 Build on a laptop with LaTeX installed:

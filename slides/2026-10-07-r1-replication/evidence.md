@@ -1,6 +1,29 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 10:17 UTC, completed fixed 128-question comparison.
+Cutoff: 7 October 2026, 10:36 UTC, completed four-way prompt comparison.
+
+## Main slide result: same weights tested with two prompt formats
+
+The [prompt-control receipt](../../docs/r1-replication-2026-10-07/prompt-control-scoring-receipt.json)
+records chat-style scores of 154/500 before and 308/500 after training;
+question-only scores are 305/500 before and 317/500 after the same training.
+Both rows use identical before/after questions, answer checking, and length
+limits. The trained checkpoint is the same in both rows. Raw-question outputs
+were independently rescored and their prompts and references checked against
+the original dataset. That comparison has 18 gains and six losses.
+
+All 500 questions were excluded from weight training. The 64 monitoring
+questions were repeatedly inspected, so they are not an untouched test. Under
+question-only prompting, their scores changed 39 to 37; the original 128 in
+this fresh batch changed 79 to 84; the additional 308 changed 187 to 196.
+The [chat-style receipt](../../docs/r1-replication-2026-10-07/full500-scoring-receipt.json)
+separates the corresponding roles for that format.
+
+This shows that prompt choice changes the measured size of the RL gain. It
+does not establish either no learning or newly acquired reasoning skills.
+The question-only training follow-up started at 10:35 UTC and is pending.
+It is exploratory and uses the authors' existing no-template option, not a
+change to their learning algorithm.
 
 ## Main separate test
 
@@ -21,9 +44,10 @@ responses fell from 56 to 12. These are descriptive measurements, not a causal
 identification of what training learned. Correctness checks final answers,
 not every explanation step. No generated Python code was executed.
 
-Full500 evaluations and raw-question prompt controls are pending. The full
-set contains 64 monitoring questions, the original 128 test questions, and
-308 additional questions. A larger test does not create more training replicates.
+The separate 128 test was generated before the full500 comparison. In the
+fresh full500 batch, those same questions score 41 to 82 under chat prompts.
+Retain 41 to 80 as the original result; do not select the higher repeat.
+A larger test does not create more training replicates.
 
 ## Earlier pilot, retained for context
 
@@ -49,7 +73,7 @@ Base model revision: `4a83ca6e4526a4f2da3aa259ec36c259f66b2ab2`.
 External experiment store:
 `/project/alex_phd/runs/r1-zero-replication-20261007`.
 
-When the broader comparison becomes available, update the visible result,
+When another result becomes available, update the visible result,
 cutoff, concise notes, speaker guide, and learning guide together. Keep the
 original fixed128 result; do not replace it with a favorably selected subset.
 

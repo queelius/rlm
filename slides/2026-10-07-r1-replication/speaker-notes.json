@@ -10,15 +10,15 @@
     },
     {
       "title": "We train on math, then test on different questions.",
-      "notes": "The main run started from the base model: 512 questions, eight attempts each, 32 updates. The 128 test questions were excluded from training and monitoring. We cannot rule out earlier pretraining exposure. No worked-solution SFT stage was added."
+      "notes": "Training used chat style. We tested BOTH models with BOTH formats. All 500 questions were excluded from weight training; 64 were monitored. Earlier pretraining exposure is unknown. No worked-solution SFT was added. The original separate 128 test remains 41 to 80."
     },
     {
-      "title": "Training improved answers on the separate test.",
-      "notes": "Fixed test: 41 to 80 correct out of 128. There were 44 gains and five losses. Same prompts and checker. We used the final checkpoint, not the best. This is one training run. More test questions cannot replace an independent training repeat."
+      "title": "The starting prompt changes the size of the gain.",
+      "notes": "Read across each row: the prompt stays fixed while weights change. Read down each column: weights stay fixed while the prompt changes. Chat gains 154; question-only gains 12, with 18 gains and six losses. This is one training run, not proof of a general effect."
     },
     {
       "title": "A higher score does not always mean a new skill.",
-      "notes": "Actual test row 5: repeated fraction question became a correct 0.15. Responses are summarized. Of 44 gains, 36 started as capped responses. That describes the change, not its cause. Prompt controls are pending. Math gains do not establish better RLM decomposition."
+      "notes": "Actual separate-test row 5, summarized. Of its 44 gains, 36 started as capped responses. No generated code was executed. The new run trains with question-only prompts from the original weights. It tests improvement beyond the stronger baseline. Results are pending."
     }
   ]
 }

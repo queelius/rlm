@@ -1,8 +1,10 @@
 # Learning from correct answers: a small reproduction
 
-Evidence cutoff: 7 October 2026, 10:17 UTC. Aim for about five minutes.
-The fixed test is complete: 41/128 correct before training and 80/128 afterward.
-The broader 500-question comparison and prompt controls are running.
+Evidence cutoff: 7 October 2026, 10:36 UTC. Aim for about five minutes.
+The main lesson is now about the starting prompt: scores improved from 154 to
+308 out of 500 with chat-style input, but from 305 to 317 with the question alone.
+These are the same starting weights and the same trained weights, tested twice.
+New training with question-only inputs is running; its result is pending.
 
 ## 1. Why start with this experiment? (45 seconds)
 
@@ -46,7 +48,7 @@ observed change specifically to that modification.
 
 Say: “We updated the full weights of a 1.5-billion-parameter math model on one
 40-gigabyte A100. The main run used 512 training questions and completed 32
-updates. We tested it on 128 questions excluded from training and progress checks.”
+updates. We tested both models on the same 500 questions, in two input formats.”
 
 The run started from Qwen2.5-Math-1.5B, not an instruction-tuned model. Each training
 question yields eight sampled answers. Sixteen questions produce 128 attempts
@@ -62,16 +64,38 @@ not proven absent from the model's original pretraining. Exact normalized
 question-overlap checks found no overlap between the official training collection
 and MATH500; they cannot rule out paraphrases or pretraining exposure.
 
-Before and after evaluation uses the same questions, Qwen-Math prompt, final
-answer checker, greedy generation, and 3,000-token response cap. Greedy generation
-selects the most likely token at each step. Training instead samples alternatives.
+The expanded 500-question set includes those 64 monitoring questions, the
+original 128 final questions, and 308 additional questions. All were excluded
+from weight training, but the 64 were repeatedly inspected. Do not call the
+whole set an untouched test.
+
+What is a prompt? It is the text supplied to the model. In chat style, the
+authors' code adds conversation markers identifying system, user, and assistant,
+plus an instruction to explain the steps and put the final answer in a box.
+For example, a user question might be “Write 3/20 as a decimal.” In the
+question-only condition, that question is the entire input. Both are existing
+options in the authors' evaluation code, not newly invented methods.
+
+The completed training run used chat style. Testing changes the input format,
+not the weights. For each format, the before/after comparison uses the same
+questions, final-answer checker, greedy generation, and 3,000-token response cap.
+Greedy generation selects the most likely token at each step. Training instead
+samples alternatives. This base model is not the instruction-tuned variant;
+chat formatting is not automatically its best starting interface.
 
 ## 4. What do the results show so far? (60 seconds)
 
-Say: “On the same 128 test questions, the starting model answered 41 correctly
-and the trained model answered 80 correctly. Forty-four answers became correct
-and five became incorrect. We used the planned final model, not whichever
-checkpoint looked best.”
+Say: “With a chat-style prompt, training doubled the number of correct answers,
+from 154 to 308. But the original model could already answer 305 correctly if
+we simply gave it the question. With that stronger starting prompt, the same
+training improved the score to 317. The gain is positive, but much smaller.”
+
+Read across a row to see the effect of training while keeping the prompt fixed.
+Read down a column to see the effect of changing the prompt while keeping the
+model weights fixed. We did not choose a different best model for each cell.
+All four cells use the same 500 questions. In the question-only row, 18 answers
+became correct and six became incorrect. The net change is 12 questions, or
+2.4 percentage points, compared with 30.8 points in the chat-style row.
 
 The score counts final answers accepted by the authors' mathematical answer
 checker. It recognizes mathematically equivalent answers, not just identical
@@ -79,9 +103,18 @@ strings. Both sides use the same full checker. We independently rechecked every
 saved reward and matched all prompts and references to the fixed dataset.
 The faster checker inside training is separate.
 
-The net increase is 39 correct answers, about 30 percentage points. It is large
-in this test, but comes from one training run. Questions are test cases, not
-128 independent training runs. Repeating training remains important.
+This does not prove that all improvement is prompt repair, and it does not
+prove that no useful learning occurred. It shows why a weakly prompted baseline
+can exaggerate the apparent training gain. It qualitatively reproduces a
+warning in the paper, not a new discovery or its full benchmark result.
+Questions are test cases, not 500 independent training runs. Repetition remains
+important, especially for the smaller difference under question-only prompting.
+
+The earlier separate 128-question test scored 41 before and 80 after, with
+44 gains and five losses. We keep that result unchanged. In a new full500
+generation batch, its same 128 questions scored 41 and 82 under chat style.
+That is repeat-generation variation, not a second training run or a reason
+to replace the earlier result with a more favorable number.
 
 The 64-question monitoring set improved from 20 to 36 at the final repeat.
 An earlier evaluation after the same number of updates scored 39. Greedy GPU
@@ -105,13 +138,17 @@ unfinished. These counts describe behavior, not the causal mechanism of every
 improvement. Some model responses contain Python-looking code and claimed
 output. No tools executed that code in this experiment.
 
-The paper motivates a useful control: give the original model just the question,
-without surrounding chat-style text. Perhaps it already answers well under
-that format. We will compare both original and trained weights under both
-formats, rather than choose a favorable prompt for one side. Those results
-are pending. The full500 comparison includes the 64 monitoring questions,
-the original 128 final questions, and 308 additional questions. More evaluation
-questions improve coverage but cannot replace an independent training repeat.
+The prompt control is now complete and appears on slide 4. Total responses
+reaching the limit fell from 205 to 29 in the full500 chat-style comparison.
+With questions alone, they changed from 15 to 17. Thus the large reduction
+in runaway responses is not an equally large effect in both input formats.
+
+The next experiment started at 10:35 UTC: train again from the original model,
+using only the questions, with the same 512 questions and 32 updates. Can RL
+improve beyond the stronger 305/500 baseline? We will test the final model in
+both formats and report both outcomes. This is an exploratory follow-up chosen
+after seeing these results, not a fresh confirmatory experiment. It takes
+priority over immediately repeating the original chat-style training.
 
 Successful optimization, useful answer improvement, and useful recursive
 behavior are three different claims. We verified the first and observed the
@@ -131,4 +168,5 @@ math experiment.
 - [Official source at the pinned commit](https://github.com/sail-sg/understand-r1-zero/tree/dfca49dd460ee7cc8e4a5a162c876a7fd6993b87).
 - [Local protocol](../../docs/r1-replication-2026-10-07/README.md).
 - [Fixed test scoring receipt](../../docs/r1-replication-2026-10-07/fixed128-scoring-receipt.json).
+- [Prompt comparison receipt](../../docs/r1-replication-2026-10-07/prompt-control-scoring-receipt.json).
 - [Evidence and limits](evidence.md).

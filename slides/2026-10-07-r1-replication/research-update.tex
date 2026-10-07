@@ -62,44 +62,41 @@ The checker judges the final answer. We do not supply worked solutions for the m
 
 \begin{frame}[t]
 \frametitle{We train on math, then test on different questions.}
-We trained \textbf{Qwen2.5-Math-1.5B}, a relatively small pretrained math model, on one 40 GB A100 GPU.
+We trained \textbf{Qwen2.5-Math-1.5B} on 512 math questions, with eight attempts per question and 32 weight updates, on one A100 GPU.
 \medskip
 
-\begin{block}{Training: 512 questions, 32 weight updates.}
-The questions came from the authors' 12,000-question math collection. The model tried eight answers to each question.
-\end{block}
+We tested the starting and trained models on the same \textbf{500 MATH500 questions}, all excluded from weight training.
 \medskip
 
-\begin{block}{Testing: 128 questions from MATH500.}
-These questions were excluded from training and progress checks. We tested the starting model and the final trained model on exactly the same questions.
+\begin{block}{We also tested two ways of asking each question.}
+\textbf{Chat style:} Put the question inside a conversation, with an instruction to explain the steps and mark the final answer.\par\smallskip
+\textbf{Question alone:} Supply only the original question, with no added conversation or instruction.
 \end{block}
-\aside{The prompt, answer checker, and response-length limit stayed the same. We cannot rule out exposure to these questions during the model's earlier pretraining.}
+Training used chat style; testing used both formats.
+\aside{Of the 500 questions, 64 were used to monitor progress. We did not choose the best checkpoint. Earlier pretraining exposure is unknown.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Training improved answers on the separate test.}
-\textbf{Correct answers out of \FinalTotal\ MATH500 questions.}
-\begin{columns}[T,onlytextwidth]
-\begin{column}{.47\textwidth}
-\begin{block}{Before training}
-\centering\LARGE \FinalBefore\ / \FinalTotal
-\end{block}
-\end{column}
-\begin{column}{.47\textwidth}
-\begin{block}{After training}
-\centering\LARGE \FinalAfter\ / \FinalTotal
-\end{block}
-\end{column}
-\end{columns}
-\smallskip
-\FinalNewCorrect\ answers became correct; \FinalNewWrong\ became incorrect.
+\frametitle{The starting prompt changes the size of the gain.}
+\textbf{Correct answers out of the same 500 MATH500 questions.}
+\begin{center}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{lrrr}
+\toprule
+How we ask & Before RL & After RL & Change \\
+\midrule
+Chat style & 154 & 308 & $+154$ \\
+Question alone & 305 & 317 & $+12$ \\
+\bottomrule
+\end{tabular}
+\end{center}
 \medskip
 
-The score counts answers accepted by the authors' final-answer checker. A correct answer does not certify every step of the explanation.
+Without any new training, giving only the question nearly matched the trained model's chat-style score.
 \medskip
 
-\FinalInterpretation
-\aside{Final checkpoint after the planned 32 updates, not the best-scoring checkpoint. A 500-question comparison is now running.}
+\textbf{Lesson:} RL improved the score, but the large gain does not by itself show that the model learned new mathematical abilities.
+\aside{One training run; the same final checkpoint, checker, and length limit in both formats. The checker judges final answers, not every reasoning step.}
 \end{frame}
 
 \begin{frame}[t]
@@ -111,11 +108,11 @@ The score counts answers accepted by the authors' final-answer checker. A correc
 \textbf{After:} It explained the division and answered $0.15$.
 \end{block}
 \medskip
-For 36 of the 44 newly correct answers, the original response had hit the length limit. The gain is useful, but it need not mean newly learned math.
+This came from the earlier 128-question chat-style test. Many gains were recoveries from repetitive responses, not necessarily new mathematical knowledge.
 \medskip
 
-\textbf{Next:} Test a simpler prompt and repeat training. For RLMs, ask whether rewards teach useful subquestions, not just more usable answers.
-\aside{This reproduces a training recipe at small scale, not the paper's full results or learning to decompose problems.}
+\textbf{Now running:} Start again from the original model and train with the question alone. Can RL improve on that stronger starting point?
+\aside{For future RLM work: compare against a strong starting setup and inspect what changes. Better math answers do not yet establish better problem decomposition.}
 \end{frame}
 
 \end{document}

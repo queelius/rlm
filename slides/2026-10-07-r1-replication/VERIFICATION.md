@@ -1,5 +1,25 @@
 # Presentation verification
 
+## Completed prompt comparison, 7 October, 10:42 UTC
+
+- Both full500 evaluation pairs completed successfully. Root independently
+  rescored all 1000 question-only outputs with the official full checker and
+  verified source questions and references. The chat pair was checked earlier.
+  The new receipt records all four counts, hashes, length measures and data roles.
+- The deck now presents all four cells: 154 to 308 in chat style, 305 to 317
+  with the question alone. It uses the same final trained checkpoint throughout.
+- Fresh Tectonic builds completed without overfull or underfull boxes. All five
+  slide titles match their notes; notes stay within 14 lines. PDF text bounds pass.
+  Root visually inspected slides 3–5. An independent reader approved the same
+  layout and scientific explanation; its suggested clarification that the
+  fraction example used chat-style input was applied, rebuilt and inspected.
+- The six-page learning guide was rebuilt, its latest table checked, and every
+  text span checked in bounds. Its author visually inspected changed pages.
+- The new training result remains pending. Its first attempt was rejected after
+  saved inputs exposed a stale data cache. The restart isolates that cache without
+  changing the authors' training algorithm. The completed evaluation is unaffected.
+- No live pdfpc GUI was tested; presenter notes were checked structurally.
+
 ## Completed fixed128 comparison, 7 October, 10:24 UTC
 
 - Tectonic built the updated five-slide PDF successfully, without overfull or
@@ -19,7 +39,7 @@
   inspected its visual layout, and root checked its changed source and counts.
 - No live pdfpc GUI was tested. The saved notes were checked structurally.
 
-The larger evaluation remains explicitly pending. One training run does not
+At that earlier cutoff, the larger evaluation was still pending. One training run does not
 establish new mathematical knowledge, a Dr. GRPO advantage over another
 algorithm, or successful learning of recursive decisions.
 

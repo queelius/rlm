@@ -2,20 +2,40 @@
 
 Read the [five-slide PDF](../../slides/2026-10-07-r1-replication/research-update.pdf)
 and [slide-by-slide guide](../../slides/2026-10-07-r1-replication/speaker-guide.md).
-The [five-page learning guide](learning-guide.pdf) explains the learning step,
+The [learning guide](learning-guide.pdf) explains the learning step,
 the evaluation, and how to interpret the results.
 The 512-question training run and its separate 128-question test have finished.
-The expanded evaluation and prompt controls are running.
+The expanded evaluation and both prompt controls have also finished. A new
+training run now tests whether learning improves on the stronger starting prompt.
 
 ## Current results, 7 October
 
-**Expanded check at 10:27 UTC:** On all 500 MATH500 questions, the same models
+**Prompt comparison at 10:36 UTC:** The apparent gain depends strongly on how
+we ask the question. The same final trained model was used throughout:
+
+| Test input | Starting model | After chat-style RL | Change |
+| --- | ---: | ---: | ---: |
+| Chat-style conversation and instructions | 154/500 | 308/500 | +154 |
+| Only the original question | 305/500 | 317/500 | +12 |
+
+With the question alone, 18 answers became correct and six became incorrect.
+Thus the starting model already performed much better under another input
+format. Training helped under both formats, but the large chat-style gain is
+not enough to establish new mathematical abilities. Nor does this prove that
+training learned nothing. It is one training run, and the smaller effect needs
+replication. See the [prompt-control receipt](prompt-control-scoring-receipt.json).
+
+**Now running:** A fresh model is training on the same 512 questions, using
+only the questions rather than chat-style prompts. The question is whether
+RL improves beyond the stronger 305/500 baseline. Results are pending.
+
+**Expanded chat-style check at 10:27 UTC:** On all 500 MATH500 questions, the same models
 scored **154 before training and 308 afterward**. On the 308 additional
 questions outside the earlier monitoring and test samples, scores rose from
 92 to 184. The [expanded-test receipt](full500-scoring-receipt.json) separates
 those data roles. This confirms the direction on a broader set, but it remains
 one training run. The original 128-question result below is retained unchanged.
-Both raw-question prompt controls are still running or queued.
+All 500 were excluded from weight training, but 64 were used to monitor progress.
 
 On the same **128 questions excluded from training and progress checks**, the
 model improved from **41 correct before training to 80 afterward**. Forty-four
@@ -37,15 +57,15 @@ became correct and two became incorrect. An earlier evaluation immediately
 after the last update scored 39; we retain the final evaluation, not the higher
 score. There was no additional optimizer update between these evaluations.
 
-The monitoring result above is separate from the 128-question test. The next
-comparisons expand to all 500 questions and test the paper's simpler,
-question-only prompt. That
-prompt control asks whether apparent training gains partly recover abilities
-that the starting model already has under a better-matched prompt.
+The monitoring result above is separate from the 128-question test. The completed
+prompt controls support the paper's warning that input format can conceal
+existing ability and inflate the apparent size of a training improvement.
+We have not isolated the mechanism behind each changed answer.
 
 The [completed-training receipt](subset512-training-receipt.json) records the
 final checkpoint hash, monitoring scores, and audit of all 4,096 training
-responses. The slide deck and learning guide now include the separate test.
+responses. The slide deck and learning guide include the prompt comparison;
+the original separate test remains in the supporting evidence.
 
 ## Why we are doing this
 
@@ -169,15 +189,42 @@ The full set includes the 64 monitoring questions, the original 128 final
 questions, and 308 additional questions. We will identify these roles in the
 analysis. All were excluded from weight training, but the monitoring questions
 were repeatedly inspected. More evaluation questions improve coverage; they
-do not substitute for independent training runs. If time permits, the next
-priority is a fresh training repeat with the same data and settings.
+do not substitute for independent training runs. The completed prompt control
+changed the next priority, as documented below.
 
 The presentation remains limited to five slides and is due by 13:00 UTC;
 extra experiments must not delay a usable published version.
 
-### Independent repeat prepared at 10:27 UTC
+### Next experiment: train with the question alone (10:35 UTC)
 
-The next training run will restart from the same base weights on the same 512
+The stronger untrained prompt changes the most informative next comparison.
+We launched `run_subset_raw_attempt2.sh`, using the authors' existing `--prompt_template no`
+option. It starts again from the original base weights, uses the same 512
+questions and 32 updates, and has a 90-minute cap. All other scientific training
+settings stay fixed. Checkpoints and optimizer state are saved every eight
+updates, retaining the latest, plus the prescribed final save. Outputs live at
+`/home/atowell/research-runs/r1-zero-replication-20261007/subset512-raw-attempt2`.
+
+The first attempt was stopped after its saved inputs revealed stale chat-style
+questions despite the question-only setting. The dataset library had reused
+an earlier transformed cache. A focused CPU reproduction confirmed the cause:
+an unhashable transform fell back to a random cache key that repeated under
+the same seed. The second attempt uses a separate dataset directory with the
+same questions and references, verified identical, and no old transformed cache.
+We preserved the failed attempt and changed no author algorithm code. This
+is why we inspect real training inputs rather than trust configuration alone.
+
+The primary comparison will be the final model versus the original 305/500
+question-only baseline. We will also test the final model with the chat-style
+prompt. We will report both, regardless of which is better. This follow-up is
+exploratory because the earlier evaluation motivated it; it is not a new,
+untouched confirmatory test. If the stronger-prompt gain is promising, repeat
+that training condition independently. If it is flat or worse, report that
+limitation at this training budget rather than claiming the paper failed.
+
+### Independent chat-style repeat prepared at 10:27 UTC, now second priority
+
+This prepared, not yet launched, run would restart from the same base weights on the same 512
 training questions, with learner seed 43 instead of 42. The authors' actor still
 uses a time-based generation seed. This is a fresh training realization, not a
 fully deterministic seed-controlled comparison. All other scientific settings
@@ -188,9 +235,8 @@ checkpoint, under the separate home-store directory `subset512-repeat43`.
 The question is whether the observed gain survives another short training run.
 The planned final checkpoint will be evaluated with the same 128/500-question
 protocol, not chosen from monitoring scores. Do not replace or average away
-the first run. Launch only after the existing four-evaluation owner finishes,
-and before 11:15 UTC so the capped run leaves time for evaluation before 13:00.
-If it cannot fit, preserve the plan without delaying the already-published deck.
+the first run. The raw-question experiment now takes priority. Reassess this
+repeat after its results; do not delay the usable deck or compete for the GPU.
 
 ## Automated continuation
 

@@ -1,0 +1,27 @@
+{
+  "cutoff_utc": "2026-10-07T10:36:00Z",
+  "dataset": "Official bundled evaluation_suite math split, all 500 MATH500 questions",
+  "design": "Same base and chat-trained final model, each evaluated under qwen_math and no templates. No selection of favorable checkpoint or template.",
+  "prompt_control_planned_at": "2026-10-07T09:46:00Z, before main training completed",
+  "training": "512 questions, 32 updates, qwen_math prompt; prescribed step_00033 final checkpoint",
+  "grader": "Official boxed_reward_fn(fast=False); all 1000 raw-question outputs independently rescored, prompts/references checked against source. Chat pair verified in full500-scoring-receipt.json.",
+  "conditions": {
+    "base_chat": {"correct":154,"n":500,"capped":205,"mean_response_tokens":1628.044},
+    "trained_chat": {"correct":308,"n":500,"capped":29,"mean_response_tokens":753.694},
+    "base_question_only": {"correct":305,"n":500,"capped":15,"mean_response_tokens":694.31},
+    "trained_question_only": {"correct":317,"n":500,"capped":17,"mean_response_tokens":691.1}
+  },
+  "question_only_paired": {"gains":18,"losses":6,"net":12},
+  "question_only_roles": {
+    "monitor64": {"n":64,"before":39,"after":37,"gains":1,"losses":3},
+    "original_test128_in_fresh500_batch": {"n":128,"before":79,"after":84,"gains":6,"losses":1},
+    "additional308": {"n":308,"before":187,"after":196,"gains":11,"losses":2}
+  },
+  "native_base_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base-no-template",
+  "native_trained_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-subset512-final-no-template",
+  "base_sha256": "90aa2a7140a9679835dffc3d1bb88e39af180740bf004836b669d5a8f72557dd",
+  "trained_sha256": "cbb811bac44390ab0ab1b00cbc6adbb2793acdb131309cc8e62961003306a928",
+  "interpretation": "Large improvement under chat-style prompting, modest positive difference under the stronger question-only baseline. Prompt choice materially affects the apparent size of the training gain. This does not establish either zero learning or newly acquired math skills.",
+  "limits": ["One training run, not 500 training replicates", "64 questions were repeatedly monitored", "Greedy generations varied across evaluation batches", "Final-answer correctness does not certify explanation correctness", "No model-generated code was executed", "Pretraining exposure unknown"],
+  "next_decision": "Exploratory fresh-base training using the authors' no-template option, same 512 questions and 32 updates. Started 10:35 UTC; final results pending."
+}

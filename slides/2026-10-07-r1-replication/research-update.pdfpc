@@ -19,19 +19,19 @@
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "The main run started from the base model:\n512 questions, eight attempts each, 32\nupdates. The 128 test questions were\nexcluded from training and monitoring. We\ncannot rule out earlier pretraining\nexposure. No worked-solution SFT stage was\nadded."
+      "note": "Training used chat style. We tested BOTH\nmodels with BOTH formats. All 500\nquestions were excluded from weight\ntraining; 64 were monitored. Earlier\npretraining exposure is unknown. No\nworked-solution SFT was added. The\noriginal separate 128 test remains 41 to\n80."
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "Fixed test: 41 to 80 correct out of 128.\nThere were 44 gains and five losses. Same\nprompts and checker. We used the final\ncheckpoint, not the best. This is one\ntraining run. More test questions cannot\nreplace an independent training repeat."
+      "note": "Read across each row: the prompt stays\nfixed while weights change. Read down each\ncolumn: weights stay fixed while the\nprompt changes. Chat gains 154; question-\nonly gains 12, with 18 gains and six\nlosses. This is one training run, not\nproof of a general effect."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "Actual test row 5: repeated fraction\nquestion became a correct 0.15. Responses\nare summarized. Of 44 gains, 36 started as\ncapped responses. That describes the\nchange, not its cause. Prompt controls are\npending. Math gains do not establish\nbetter RLM decomposition."
+      "note": "Actual separate-test row 5, summarized. Of\nits 44 gains, 36 started as capped\nresponses. No generated code was executed.\nThe new run trains with question-only\nprompts from the original weights. It\ntests improvement beyond the stronger\nbaseline. Results are pending."
     }
   ]
 }
