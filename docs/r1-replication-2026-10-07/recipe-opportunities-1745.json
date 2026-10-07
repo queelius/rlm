@@ -1,0 +1,208 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-07T17:45:00Z",
+  "scope": "CPU/read-only recipe and primary-literature audit; two proposed fixed-endpoint follow-ups. No GPU job, live-source edit, installation, or heavyweight acquisition was performed.",
+  "status": "recommendations_only_not_launched",
+  "current_run": {
+    "official_repo_commit": "dfca49dd460ee7cc8e4a5a162c876a7fd6993b87",
+    "base_revision": "4a83ca6e4526a4f2da3aa259ec36c259f66b2ab2",
+    "selected_data_sha256": "34753ee5ac36f7a4023521f70b8763117e749d94ff8ec23e434c6f33fe328cbb",
+    "seed": 42,
+    "seed_limit": "Learner seed is fixed; the authors' actor has time-based randomness. Equal learner seeds do not imply paired rollout trajectories.",
+    "recipe": "Fresh Qwen2.5-Math-1.5B; 4096 Random(42)-selected official MATH level3-5 rows; 4080 used; qwen_math; full Math-Verify; 16 questions x8 responses per collection; 128-response buffer; trainbatch128/micro1; 255 collections and optimizer updates; LR1e-6 constant; response cap3000; one prompt epoch and one proximal epoch; beta0; private memory-only Oat adapter.",
+    "run_source": "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/r1_replication_20261007/run_larger4096_attempt4.sh",
+    "live_owner_policy": "The existing owner remains unchanged and owns training plus all six final evaluation conditions. Successors must wait for whole-owner completion and authenticated GPU release, not trainer exit.",
+    "endpoint_policy": "Prescribed terminal checkpoint only; retain all failures, partial runs, benchmarks, input formats, and both gains and regressions. Never select a favorable monitor or checkpoint."
+  },
+  "monitor_label_audit": {
+    "periodic": [
+      {
+        "file": "eval_results/0_math.json",
+        "completed_collections": 0,
+        "completed_optimizer_updates": 0,
+        "correct": 20,
+        "n": 64
+      },
+      {
+        "file": "eval_results/32_math.json",
+        "completed_collections": 32,
+        "completed_optimizer_updates": 32,
+        "correct": 42,
+        "n": 64
+      },
+      {
+        "file": "eval_results/64_math.json",
+        "completed_collections": 64,
+        "completed_optimizer_updates": 64,
+        "correct": 42,
+        "n": 64
+      }
+    ],
+    "forced_final": {
+      "checkpoint_label": "step_00256",
+      "completed_collections": 255,
+      "completed_optimizer_updates": 255
+    },
+    "reason": "Learner initializes steps0 for baseline, then steps1 for its collection loop. Each collection calls learn(steps), synchronizes actor weights, then eval_and_log before incrementing steps. Consequently periodic32/64 are after32/64 updates. After collection255, steps increments to256 before forced final eval/save. Subtracting one from every periodic filename is incorrect.",
+    "arithmetic": "Current worldsize1, microbatch1 and global trainbatch128 imply gradacc128. Each learning_step processes128 responses for one proximal epoch, hence one optimizer update per collection.",
+    "log_evidence": "At the periodic32 record, learning_round32, pi_beta_version32 and policy_sgd_step32 coincide with eval accuracy0.65625; the periodic64 record has corresponding64 counters and0.65625. update_interval1. The printed counters can appear later than the learning call because evaluation precedes final logging.",
+    "generalization_warning": "Filenames label collection bookkeeping, not intrinsically optimizer updates. Proposed num_ppo_epochs2 would make periodic32 mean64 updates, periodic64 mean128, and terminal256 mean510.",
+    "sourcepaths": [
+      "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/learners/base.py:331",
+      "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/learners/base.py:384",
+      "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/learners/base.py:402",
+      "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/learners/base.py:518",
+      "/project/alex_phd/research-cache/repos/understand-r1-zero/train_zero_math.py:355",
+      "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4.log:3210",
+      "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4.log:5960"
+    ]
+  },
+  "recipe_findings": [
+    {
+      "id": "normalization_and_adam_match_not_a_demonstrated_scaling_bug",
+      "finding": "Official ZeroMathLearner uses masked token sum divided by generate_max_length3000 and group-mean reward subtraction without std division. Current settings reproduce this. LR1e-6, Adam betas0.9/0.95, weight_decay0, cliprange0.2, maxnorm1, no KL, and one proximal epoch agree with original paper AppendixG.",
+      "interpretation": "A different loss scalar is not evidence of a proportionally different Adam update: adaptive moment normalization partly cancels uniform gradient scaling. Finite small gradient norms alone cannot diagnose an LR too small. Preserve the author's constant normalizer when testing LR.",
+      "sourcepaths": [
+        "/project/alex_phd/research-cache/repos/understand-r1-zero/train_zero_math.py:286",
+        "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/utils/ops.py:26",
+        "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/args.py:206"
+      ],
+      "url": "https://arxiv.org/html/2503.20783v2#A7"
+    },
+    {
+      "id": "exposure_and_rollout_sync_are_material_reductions",
+      "finding": "Pinned example uses 8GPUs, global128 questions, group8, per-GPU128-response buffer, global trainbatch128, and20 prompt epochs. This entails1024 responses and8 optimizer updates per actor synchronization. Current16-question/128-response collection takes one update and synchronizes immediately. It also covers only4080 questions in one pass.",
+      "interpretation": "The current run is substantially shorter in data exposure. Its per-optimizer response batch is already128; it is not simply eight times smaller in gradient batch. The update/sync schedule differs and clipping has much less opportunity to matter. The example's20 epochs and math_12k are not an exact released-model training ledger; the model card instead specifies level3-5.",
+      "sourcepaths": [
+        "/project/alex_phd/research-cache/repos/understand-r1-zero/examples/qwen2.5-math-1.5b.sh:79",
+        "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/utils/deepspeed.py:227",
+        "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/algorithms/ppo.py:464"
+      ],
+      "urls": [
+        "https://github.com/sail-sg/understand-r1-zero/blob/dfca49dd460ee7cc8e4a5a162c876a7fd6993b87/examples/qwen2.5-math-1.5b.sh",
+        "https://huggingface.co/sail/Qwen2.5-Math-1.5B-Oat-Zero/blob/a98e477854071157a450e57dd45fd0684b6fa38a/README.md"
+      ]
+    },
+    {
+      "id": "zero_clip_fraction_does_not_establish_weak_updates",
+      "finding": "Oat recomputes old log probabilities with the learner before optimization. With only128 responses, micro1, gradacc128 and one proximal epoch, every ratio is measured before the sole batch optimizer step. Current logged pg_clipfrac is therefore structurally expected to be zero.",
+      "interpretation": "Do not use zero clip fraction to justify blindly scaling LR. Two proximal epochs would expose the second epoch to actual policy changes and make clipping informative.",
+      "sourcepaths": [
+        "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/algorithms/ppo.py:381",
+        "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/algorithms/ppo.py:464",
+        "/project/alex_phd/envs/r1-zero-dfca49d/lib/python3.10/site-packages/oat/algorithms/ppo.py:572"
+      ]
+    },
+    {
+      "id": "reward_signal_is_available_not_obviously_too_easy_or_too_hard",
+      "cutoff": "First69 logged learning calls, inspected2026-10-07T17:43Z",
+      "observations": {
+        "mixed_groups": 826,
+        "total_groups": 1104,
+        "mixed_group_fraction": 0.7481884057971014,
+        "all_wrong_groups": 239,
+        "all_correct_groups": 39,
+        "capped_responses": 728,
+        "total_responses": 8832,
+        "capped_fraction": 0.08242753623188406,
+        "mean_response_tokens": 989.8872282608696,
+        "mean_policy_gradient_norm": 0.024542472973141983,
+        "max_policy_gradient_norm": 0.04284188896417618,
+        "mean_generate_seconds": 34.308275250421055,
+        "mean_verify_seconds": 0.9560208078743755,
+        "mean_learn_seconds": 39.618700552677765
+      },
+      "interpretation": "About75% of questions supply mixed-success groups. Difficulty-filtering or easy-only resampling is therefore lower priority than exposure/optimization. Cap effects remain relevant at8.2%, but reducing responsecap would alter truncation rewards and Dr.GRPO's fixed normalizer together. Do not use changing-question mean reward as a controlled learning curve.",
+      "count_note": "Actor metrics appear twice per collection; averages remain unchanged. Integer totals above use69 learning-group records and one actor record per collection.",
+      "sourcepath": "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4.log"
+    }
+  ],
+  "literature_prior": {
+    "original": {
+      "url": "https://arxiv.org/html/2503.20783v2",
+      "relevant_sections": "3.2,3.3,AppendicesB,G",
+      "summary": "Dr.GRPO removes response-length and reward-standard-deviation bias. Prompt/data interaction can produce recovery of pretrained reasoning. The strongest untrained format is an essential comparison. Original optimizer uses LR1e-6 and one proximal epoch."
+    },
+    "direct_followup": {
+      "title": "Is One Layer Enough? Training A Single Transformer Layer Can Match Full-Parameter RL Training",
+      "version": "2607.01232v1,2026-07-01",
+      "url": "https://arxiv.org/html/2607.01232v1#A1.SS3",
+      "summary": "AppendixA.3 trains original Qwen2.5-Math1.5B with Oat Dr.GRPO and Math-Verify. A full-model LR sweep1e-6/3e-6/5e-6/1e-5 selects5e-6. Table9 specifies batch128, group8, responsecap3072, no KL, clip0.2, eight epochs.",
+      "limit": "This is a prior for one fixed LR contrast, not an established optimum here. Their best-checkpoint reporting, longer exposure,3072 cap and possibly different MATH collection prevent direct comparison. Do not import favorable checkpoint or benchmark selection. Single-layer training is deliberately deferred because it changes the reproduction target."
+    }
+  },
+  "ranked_followups": [
+    {
+      "rank": 1,
+      "id": "fresh_base_lr5e6_fixed255",
+      "question": "At the same questions, response budget and completed updates, does LR5e-6 achieve learning beyond the strongest original-base input format more efficiently than the authors' LR1e-6?",
+      "minimal_contrast": "Change only learning_rate from1e-6 to5e-6 in a NEW frozen owner. Start from original base again; preserve current memory adapter,4096 selection, qwen_math, full reward, group8, cap3000, sampling, batching, single proximal epoch and255 collections.",
+      "reference": "Current attempt4 prescribed terminal checkpoint after255 completed updates, evaluated with exactly the same final batch and decoding protocol. All intermediate monitors remain diagnostic. Training trajectories are not exactly paired because actor randomness is time-based.",
+      "immutable_inputs": [
+        "Base revision4a83ca6e4526a4f2da3aa259ec36c259f66b2ab2",
+        "Official commitdfca49dd460ee7cc8e4a5a162c876a7fd6993b87",
+        "Existing larger4096 data manifest/contentSHA34753ee5ac36f7a4023521f70b8763117e749d94ff8ec23e434c6f33fe328cbb",
+        "Existing private runtime-memory-v1 manifest",
+        "New exact launcher and protocol manifest fixed before launch"
+      ],
+      "seed": 42,
+      "budget": {
+        "collections": 255,
+        "questions_used": 4080,
+        "sampled_responses": 32640,
+        "optimizer_updates": 255,
+        "train_cap_hours": 10,
+        "whole_owner_cap_hours": 13,
+        "gpu": "one A10040GB",
+        "estimated_train_hours": "5.5-6.5, extrapolated from current collection timing; not a guarantee"
+      },
+      "checkpoint_policy": "Save every8 collections, keep latest2 with optimizer; use natural-end step00256 only. If the compute cap or failure prevents255 completed updates, retain incomplete evidence and do not label it a matched endpoint.",
+      "metrics": "Final greedy/full-verified MATH500,AMC83,Minerva272, each chat and question-only; paired gains/losses per benchmark, caps/empties, completion lengths and first real updates. Main decision is improvement over base-question-only together with broader evidence, not chat recovery alone.",
+      "promotion_rule": "Prescribed endpoint shows useful gain beyond strongest original-base reference across MATH500 and broader checks without damaging completion behavior; then repeat fresh training with a new seed before making a dependable improvement claim.",
+      "revision_or_retirement_rule": "If the fixed endpoint regresses or produces numerical failures/cap inflation, retain it and inspect update scale/exposure rather than selecting an earlier checkpoint or immediately increasing LR again.",
+      "artifact_location": "/project/alex_phd/runs/r1-zero-replication-20261007/followups/fresh-lr5e6-fixed255/",
+      "readiness": "Requires only a new launcher/protocol and exact terminal guard; no new assets or environments. Whole live owner must release first. This audit did not create that launcher."
+    },
+    {
+      "rank": 2,
+      "id": "fresh_base_two_proximal_epochs_fixed_rollouts",
+      "question": "Can two native proximal epochs use the same sampled responses more effectively per GPU-hour while preserving the Dr.GRPO objective and avoiding larger rollout buffers?",
+      "minimal_contrast": "Change only num_ppo_epochs1 to2 in a NEW fresh-base owner at LR1e-6. Keep255 collections,4080 questions,32640 responses, responsebuffer128 and globaltrainbatch128. Compare with current attempt4 terminal after255 collections; the proposed run takes510 optimizer updates.",
+      "rationale": "Authors'8GPU example takes8 minibatch optimizer updates per actor synchronization. Current memory-constrained owner takes one. Native epoch2 adds real post-update clipping opportunities and an extra learning pass without another34s rollout. It is a reuse experiment, not a claim to match the authors' precise schedule or8-20 data epochs.",
+      "immutable_inputs": "Same pinned inputs as rank1; distinct frozen launcher/protocol and distinct artifacts. No LR5e-6 combination in this contrast.",
+      "seed": 42,
+      "budget": {
+        "collections": 255,
+        "questions_used": 4080,
+        "sampled_responses": 32640,
+        "optimizer_updates": 510,
+        "train_cap_hours": 10,
+        "whole_owner_cap_hours": 13,
+        "gpu": "one A10040GB",
+        "estimated_train_hours": "7.5-9; estimate adds one learning pass per collection, retaining one generation and one old-policy prediction. Measure early rather than treating the estimate as a guarantee."
+      },
+      "expected_efficiency": "Conservative upper estimate treats second epoch as another39.6s learner pass:2 updates in about114.5s rather than1 in74.9s, roughly31% more optimizer updates/hour. This is a throughput hypothesis, not evidence of31% more useful learning.",
+      "checkpoint_policy": "Save every8 collections; keep latest2; only natural terminal step00256 after510 optimizer updates is eligible. New endpoint guard must expect510 rather than copied255. Monitors must report both collections and optimizer updates:label32 means64, label64 means128.",
+      "metrics": "Same six fixed endpoint conditions, both gains/losses and lengths, plus measured collections/optimizer updates/GPUhour, second-epoch clipping and logprob changes, nonfinite counts and actual510-step completion.",
+      "promotion_rule": "Meaningful fixed-endpoint gain over one-epoch reference with favorable accuracy per actual GPUhour, broader consistency and stable response completion; then fresh replicate.",
+      "revision_or_retirement_rule": "If reuse causes clipping saturation, entropy collapse, completion damage or no useful gain perGPUhour, retire additional reuse and prioritize fresh on-policy data passes/exposure under a separately fixed budget.",
+      "artifact_location": "/project/alex_phd/runs/r1-zero-replication-20261007/followups/fresh-ppoepochs2-fixed255collections/",
+      "readiness": "Native flag exists and tensor batch shape stays128. Runtime stability beyond firstepoch remains unproven. Requires fresh frozen launcher,510-update guard and a proportional startup check, not a hotpatch."
+    }
+  ],
+  "interpretive_limits": [
+    "No current255-update terminal result exists at audit cutoff. Current42/64 at32 and64 does not show a new advantage over the earlier shortchat endpoint's42/64.",
+    "Parent's aligned full500 extractions arebasechat21/64,baseraw39/64,authorschat41/64,shortchatfinal42/64. These use a different evaluation batch protocol from native monitor64; avoid treating differences of one or a few answers as controlled training effects.",
+    "MATH500 is already a repeatedly examined development benchmark. AMC and Minerva also have known reference scores; they are broader checks, not untouched confirmatory tests.",
+    "Eight or20 data passes cannot be compressed into one pass by changing LR alone. Rank1 checks accelerated learning at fixed exposure; rank2 checks rollout reuse. Neither is an exact full-history reproduction.",
+    "Do not alter the live owner, change its declared endpoint, select a winning checkpoint, conflate released-model evaluation with our training, or launch a competitor before its complete six-condition sequence ends.",
+    "External source licenses: official cloneApache2.0; originalpaperCC-BY4.0; follow-upCC-BY-NC-ND4.0. Existing dataset manifest lacks a bundled license declaration; preserve attribution and do not republish rawquestions. No new assets were downloaded."
+  ],
+  "local_references": [
+    "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/docs/r1-replication-2026-10-07/longer-training-plan.md",
+    "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/docs/r1-replication-2026-10-07/README.md",
+    "/project/alex_phd/runs/r1-zero-replication-20261007/SESSION_CHECKPOINT.md",
+    "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-data-manifest.json",
+    "/project/alex_phd/runs/r1-zero-replication-20261007/runtime-memory-v1/manifest.json"
+  ]
+}

@@ -1,0 +1,1463 @@
+{
+  "completed_rounds": 67,
+  "last_completed_round": 67,
+  "log_snapshot_bytes": 2845371,
+  "entropy_log_limitation": "Round13 entropy line is corrupted by interleaved actor CUDA graph output;66 of67 completed-round entropy scalars were parseable. No explicit nonfinite entropy or policy-gradient-norm scalar was found.",
+  "metrics": {
+    "all": {
+      "actor/no_eos_count": {
+        "max": 26,
+        "mean": 10.701492537313433,
+        "median": 10,
+        "min": 2,
+        "n": 67
+      },
+      "actor/response_tok_len": {
+        "max": 1289.515625,
+        "mean": 994.4604710820895,
+        "median": 986.6875,
+        "min": 684.0078125,
+        "n": 67
+      },
+      "actor/rewards": {
+        "max": 0.6328125,
+        "mean": 0.3830457089552239,
+        "median": 0.3671875,
+        "min": 0.2109375,
+        "n": 67
+      },
+      "actor/total_time": {
+        "max": 43.7231330871582,
+        "mean": 35.418489143029966,
+        "median": 35.318138122558594,
+        "min": 28.29991340637207,
+        "n": 67
+      },
+      "misc/lr": {
+        "max": 9.999999974752427e-7,
+        "mean": 9.999999974752427e-7,
+        "median": 9.999999974752427e-7,
+        "min": 9.999999974752427e-7,
+        "n": 67
+      },
+      "train/all_one_rewards_count": {
+        "max": 4,
+        "mean": 0.5522388059701493,
+        "median": 0,
+        "min": 0,
+        "n": 67
+      },
+      "train/all_zero_rewards_count": {
+        "max": 7,
+        "mean": 3.462686567164179,
+        "median": 3,
+        "min": 1,
+        "n": 67
+      },
+      "train/entropy": {
+        "max": 6.566143035888672,
+        "mean": 0.6410640655367663,
+        "median": 0.3018093556165695,
+        "min": 0.07105398923158646,
+        "n": 66
+      },
+      "train/logprobs_diff_max": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 67
+      },
+      "train/logprobs_diff_min": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 67
+      },
+      "train/pg_clipfrac": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 67
+      },
+      "train/policy_grad_norm": {
+        "max": 0.04284188896417618,
+        "mean": 0.02463178262948545,
+        "median": 0.02448522299528122,
+        "min": 0.013437910936772823,
+        "n": 67
+      },
+      "train/total_time": {
+        "max": 43.03245544433594,
+        "mean": 39.683204764750464,
+        "median": 39.75440216064453,
+        "min": 36.44981002807617,
+        "n": 67
+      }
+    },
+    "early": {
+      "actor/no_eos_count": {
+        "max": 19,
+        "mean": 13.75,
+        "median": 12.5,
+        "min": 11,
+        "n": 4
+      },
+      "actor/response_tok_len": {
+        "max": 1083.0078125,
+        "mean": 1032.64453125,
+        "median": 1040.2265625,
+        "min": 967.1171875,
+        "n": 4
+      },
+      "actor/rewards": {
+        "max": 0.3828125,
+        "mean": 0.31640625,
+        "median": 0.3125,
+        "min": 0.2578125,
+        "n": 4
+      },
+      "actor/total_time": {
+        "max": 36.852508544921875,
+        "mean": 36.08247756958008,
+        "median": 36.294538497924805,
+        "min": 34.88832473754883,
+        "n": 4
+      },
+      "misc/lr": {
+        "max": 9.999999974752427e-7,
+        "mean": 9.999999974752427e-7,
+        "median": 9.999999974752427e-7,
+        "min": 9.999999974752427e-7,
+        "n": 4
+      },
+      "train/all_one_rewards_count": {
+        "max": 1,
+        "mean": 0.25,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/all_zero_rewards_count": {
+        "max": 5,
+        "mean": 4,
+        "median": 4,
+        "min": 3,
+        "n": 4
+      },
+      "train/entropy": {
+        "max": 1.5592882633209229,
+        "mean": 0.7605478912591934,
+        "median": 0.6158475279808044,
+        "min": 0.25120824575424194,
+        "n": 4
+      },
+      "train/logprobs_diff_max": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/logprobs_diff_min": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/pg_clipfrac": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/policy_grad_norm": {
+        "max": 0.03539753705263138,
+        "mean": 0.026035568676888943,
+        "median": 0.024215567857027054,
+        "min": 0.020313601940870285,
+        "n": 4
+      },
+      "train/total_time": {
+        "max": 40.85335922241211,
+        "mean": 40.44274044036865,
+        "median": 40.41129493713379,
+        "min": 40.09501266479492,
+        "n": 4
+      }
+    },
+    "late": {
+      "actor/no_eos_count": {
+        "max": 10,
+        "mean": 8,
+        "median": 9,
+        "min": 4,
+        "n": 4
+      },
+      "actor/response_tok_len": {
+        "max": 981.125,
+        "mean": 918.68359375,
+        "median": 937.8828125,
+        "min": 817.84375,
+        "n": 4
+      },
+      "actor/rewards": {
+        "max": 0.578125,
+        "mean": 0.515625,
+        "median": 0.5078125,
+        "min": 0.46875,
+        "n": 4
+      },
+      "actor/total_time": {
+        "max": 34.78388214111328,
+        "mean": 33.52819538116455,
+        "median": 33.81089401245117,
+        "min": 31.707111358642578,
+        "n": 4
+      },
+      "misc/lr": {
+        "max": 9.999999974752427e-7,
+        "mean": 9.999999974752427e-7,
+        "median": 9.999999974752427e-7,
+        "min": 9.999999974752427e-7,
+        "n": 4
+      },
+      "train/all_one_rewards_count": {
+        "max": 3,
+        "mean": 1.25,
+        "median": 1,
+        "min": 0,
+        "n": 4
+      },
+      "train/all_zero_rewards_count": {
+        "max": 3,
+        "mean": 1.5,
+        "median": 1,
+        "min": 1,
+        "n": 4
+      },
+      "train/entropy": {
+        "max": 0.1806485503911972,
+        "mean": 0.16323615238070488,
+        "median": 0.15930157154798508,
+        "min": 0.15369291603565216,
+        "n": 4
+      },
+      "train/logprobs_diff_max": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/logprobs_diff_min": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/pg_clipfrac": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/policy_grad_norm": {
+        "max": 0.026809263974428177,
+        "mean": 0.021482931217178702,
+        "median": 0.022842274978756905,
+        "min": 0.013437910936772823,
+        "n": 4
+      },
+      "train/total_time": {
+        "max": 39.407432556152344,
+        "mean": 38.6285400390625,
+        "median": 38.671260833740234,
+        "min": 37.76420593261719,
+        "n": 4
+      }
+    },
+    "middle": {
+      "actor/no_eos_count": {
+        "max": 17,
+        "mean": 14,
+        "median": 13.5,
+        "min": 12,
+        "n": 4
+      },
+      "actor/response_tok_len": {
+        "max": 1153.25,
+        "mean": 1079.2265625,
+        "median": 1078.171875,
+        "min": 1007.3125,
+        "n": 4
+      },
+      "actor/rewards": {
+        "max": 0.390625,
+        "mean": 0.33203125,
+        "median": 0.33203125,
+        "min": 0.2734375,
+        "n": 4
+      },
+      "actor/total_time": {
+        "max": 39.14107894897461,
+        "mean": 37.3402624130249,
+        "median": 37.31188774108887,
+        "min": 35.596195220947266,
+        "n": 4
+      },
+      "misc/lr": {
+        "max": 9.999999974752427e-7,
+        "mean": 9.999999974752427e-7,
+        "median": 9.999999974752427e-7,
+        "min": 9.999999974752427e-7,
+        "n": 4
+      },
+      "train/all_one_rewards_count": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/all_zero_rewards_count": {
+        "max": 4,
+        "mean": 3.25,
+        "median": 3.5,
+        "min": 2,
+        "n": 4
+      },
+      "train/entropy": {
+        "max": 3.6308374404907227,
+        "mean": 1.0947767831385136,
+        "median": 0.29253412038087845,
+        "min": 0.1632014513015747,
+        "n": 4
+      },
+      "train/logprobs_diff_max": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/logprobs_diff_min": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/pg_clipfrac": {
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "n": 4
+      },
+      "train/policy_grad_norm": {
+        "max": 0.02681092917919159,
+        "mean": 0.025117759592831135,
+        "median": 0.02507481351494789,
+        "min": 0.023510482162237167,
+        "n": 4
+      },
+      "train/total_time": {
+        "max": 41.558799743652344,
+        "mean": 40.85825538635254,
+        "median": 40.984466552734375,
+        "min": 39.90528869628906,
+        "n": 4
+      }
+    }
+  },
+  "nonfinite_counter_totals": {
+    "train/get_grad_norm_time_inf": 0,
+    "train/get_grad_norm_time_nan": 0,
+    "train/logprobs_diff_max_inf": 0,
+    "train/logprobs_diff_max_nan": 0,
+    "train/logprobs_diff_min_inf": 0,
+    "train/logprobs_diff_min_nan": 0,
+    "train/pg_clipfrac_inf": 0,
+    "train/pg_clipfrac_nan": 0,
+    "train/policy_grad_norm_inf": 0,
+    "train/policy_grad_norm_nan": 0,
+    "train/zero_pg_loss_count_inf": 0,
+    "train/zero_pg_loss_count_nan": 0
+  },
+  "pairwise_shared_prompts": {
+    "early_late": 0,
+    "early_middle": 0,
+    "middle_late": 0
+  },
+  "windows": {
+    "early": {
+      "by_level": {
+        "3": {
+          "all_response_logprobs_finite": true,
+          "answer_chars": {
+            "max": 121,
+            "mean": 6.203125,
+            "median": 3,
+            "min": 0,
+            "n": 192
+          },
+          "cap_raw_correct": 1,
+          "caps": 20,
+          "failed_length_mean": 1262.837606837607,
+          "formatted": 146,
+          "length": {
+            "max": 3000,
+            "mean": 1011.1041666666666,
+            "median": 617,
+            "min": 21,
+            "n": 192
+          },
+          "mean_sampled_nll": 0.7674017521793851,
+          "n": 192,
+          "raw_score_mean": 0.3958333333333333,
+          "reward_mean": 0.390625,
+          "successful_length_mean": 618.4
+        },
+        "4": {
+          "all_response_logprobs_finite": true,
+          "answer_chars": {
+            "max": 116,
+            "mean": 7.8875,
+            "median": 1,
+            "min": 0,
+            "n": 160
+          },
+          "cap_raw_correct": 0,
+          "caps": 17,
+          "failed_length_mean": 1094.6964285714287,
+          "formatted": 114,
+          "length": {
+            "max": 3000,
+            "mean": 936.50625,
+            "median": 614.5,
+            "min": 24,
+            "n": 160
+          },
+          "mean_sampled_nll": 0.82001874103713,
+          "n": 160,
+          "raw_score_mean": 0.3,
+          "reward_mean": 0.3,
+          "successful_length_mean": 567.3958333333334
+        },
+        "5": {
+          "all_response_logprobs_finite": true,
+          "answer_chars": {
+            "max": 129,
+            "mean": 5.7625,
+            "median": 2,
+            "min": 0,
+            "n": 160
+          },
+          "cap_raw_correct": 1,
+          "caps": 18,
+          "failed_length_mean": 1313.861788617886,
+          "formatted": 126,
+          "length": {
+            "max": 3000,
+            "mean": 1154.63125,
+            "median": 858,
+            "min": 9,
+            "n": 160
+          },
+          "mean_sampled_nll": 0.8203693768483779,
+          "n": 160,
+          "raw_score_mean": 0.2375,
+          "reward_mean": 0.23125,
+          "successful_length_mean": 625.2972972972973
+        }
+      },
+      "fullchecker_effective_reward_mismatches": 0,
+      "groups": {
+        "all_one": 1,
+        "all_zero": 16,
+        "mixed_reward": 47,
+        "n": 64,
+        "subjects": {
+          "Algebra": 12,
+          "Counting & Probability": 8,
+          "Geometry": 6,
+          "Intermediate Algebra": 16,
+          "Number Theory": 8,
+          "Prealgebra": 7,
+          "Precalculus": 7
+        },
+        "success_histogram": {
+          "0.0": 16,
+          "1.0": 12,
+          "2.0": 9,
+          "3.0": 6,
+          "4.0": 6,
+          "5.0": 7,
+          "6.0": 4,
+          "7.0": 3,
+          "8.0": 1
+        },
+        "unique_answers": {
+          "max": 8,
+          "mean": 4.8125,
+          "median": 5,
+          "min": 1,
+          "n": 64
+        },
+        "unique_responses": {
+          "max": 8,
+          "mean": 8,
+          "median": 8,
+          "min": 8,
+          "n": 64
+        }
+      },
+      "input_files": [
+        {
+          "bytes": 2210945,
+          "sha256": "c20b6d86ab37458a5c535da823ccdb9c4b395e461903544861b4bdbb41f02d61",
+          "step": 1
+        },
+        {
+          "bytes": 2354630,
+          "sha256": "114f293dcebebf8bb2dff06ce76c9f4b6e4e8225ae32e287efb0256a2f16c7e7",
+          "step": 2
+        },
+        {
+          "bytes": 2338689,
+          "sha256": "86e3cba9fdae78292fddfa2c6dc08f1a67241fd3c693290a69a5ecf095ac8ac3",
+          "step": 3
+        },
+        {
+          "bytes": 2079154,
+          "sha256": "5afd89e56ea51298fc5bd4477e4808b04516f97baf9f9743d434e0783e593283",
+          "step": 4
+        }
+      ],
+      "steps": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "summary": {
+        "all_response_logprobs_finite": true,
+        "answer_chars": {
+          "max": 129,
+          "mean": 6.591796875,
+          "median": 2,
+          "min": 0,
+          "n": 512
+        },
+        "cap_raw_correct": 2,
+        "caps": 55,
+        "failed_length_mean": 1227.1676136363637,
+        "formatted": 386,
+        "length": {
+          "max": 3000,
+          "mean": 1032.64453125,
+          "median": 685.5,
+          "min": 9,
+          "n": 512
+        },
+        "mean_sampled_nll": 0.8003969439064906,
+        "n": 512,
+        "raw_score_mean": 0.31640625,
+        "reward_mean": 0.3125,
+        "successful_length_mean": 604.69375
+      }
+    },
+    "late": {
+      "by_level": {
+        "3": {
+          "all_response_logprobs_finite": true,
+          "answer_chars": {
+            "max": 127,
+            "mean": 4.951086956521739,
+            "median": 2,
+            "min": 0,
+            "n": 184
+          },
+          "cap_raw_correct": 0,
+          "caps": 10,
+          "failed_length_mean": 1327.2608695652175,
+          "formatted": 179,
+          "length": {
+            "max": 3000,
+            "mean": 828.2173913043479,
+            "median": 548,
+            "min": 81,
+            "n": 184
+          },
+          "mean_sampled_nll": 0.24694484895969251,
+          "n": 184,
+          "raw_score_mean": 0.625,
+          "reward_mean": 0.625,
+          "successful_length_mean": 528.7913043478261
+        },
+        "4": {
+          "all_response_logprobs_finite": true,
+          "answer_chars": {
+            "max": 85,
+            "mean": 7.611111111111111,
+            "median": 3,
+            "min": 0,
+            "n": 144
+          },
+          "cap_raw_correct": 0,
+          "caps": 12,
+          "failed_length_mean": 1177.0886075949368,
+          "formatted": 135,
+          "length": {
+            "max": 3000,
+            "mean": 911.4375,
+            "median": 652,
+            "min": 67,
+            "n": 144
+          },
+          "mean_sampled_nll": 0.36247789773170475,
+          "n": 144,
+          "raw_score_mean": 0.4513888888888889,
+          "reward_mean": 0.4513888888888889,
+          "successful_length_mean": 588.5692307692308
+        },
+        "5": {
+          "all_response_logprobs_finite": true,
+          "answer_chars": {
+            "max": 89,
+            "mean": 10.21195652173913,
+            "median": 2,
+            "min": 0,
+            "n": 184
+          },
+          "cap_raw_correct": 0,
+          "caps": 10,
+          "failed_length_mean": 1263.07,
+          "formatted": 179,
+          "length": {
+            "max": 3000,
+            "mean": 1014.820652173913,
+            "median": 795.5,
+            "min": 89,
+            "n": 184
+          },
+          "mean_sampled_nll": 0.2316576342781534,
+          "n": 184,
+          "raw_score_mean": 0.45652173913043476,
+          "reward_mean": 0.45652173913043476,
+          "successful_length_mean": 719.2857142857143
+        }
+      },
+      "fullchecker_effective_reward_mismatches": 0,
+      "groups": {
+        "all_one": 5,
+        "all_zero": 6,
+        "mixed_reward": 53,
+        "n": 64,
+        "subjects": {
+          "Algebra": 12,
+          "Counting & Probability": 6,
+          "Geometry": 8,
+          "Intermediate Algebra": 17,
+          "Number Theory": 8,
+          "Prealgebra": 5,
+          "Precalculus": 8
+        },
+        "success_histogram": {
+          "0.0": 6,
+          "1.0": 9,
+          "2.0": 3,
+          "3.0": 7,
+          "4.0": 7,
+          "5.0": 11,
+          "6.0": 7,
+          "7.0": 9,
+          "8.0": 5
+        },
+        "unique_answers": {
+          "max": 8,
+          "mean": 4.25,
+          "median": 4,
+          "min": 1,
+          "n": 64
+        },
+        "unique_responses": {
+          "max": 8,
+          "mean": 8,
+          "median": 8,
+          "min": 8,
+          "n": 64
+        }
+      },
+      "input_files": [
+        {
+          "bytes": 1769814,
+          "sha256": "0be99d4412d64610d5bd529ca5b77c11761f3817f6aa6ab6276e681c50042669",
+          "step": 61
+        },
+        {
+          "bytes": 2066037,
+          "sha256": "ee6d5a62e6f4ce2c3637f4d6bea5460ac3ce92a6a1f6f8b64816fc338523bfea",
+          "step": 62
+        },
+        {
+          "bytes": 1944844,
+          "sha256": "659b1bc31283a1e606c97aafb8ee2a3c99a633f601ecb0b6b42526cbfedd6c55",
+          "step": 63
+        },
+        {
+          "bytes": 2090364,
+          "sha256": "09e90ed1ec0f4836fab13871011630e1e2669237da3e959968138a2cd67b3799",
+          "step": 64
+        }
+      ],
+      "steps": [
+        61,
+        62,
+        63,
+        64
+      ],
+      "summary": {
+        "all_response_logprobs_finite": true,
+        "answer_chars": {
+          "max": 127,
+          "mean": 7.58984375,
+          "median": 2,
+          "min": 0,
+          "n": 512
+        },
+        "cap_raw_correct": 0,
+        "caps": 32,
+        "failed_length_mean": 1253.5403225806451,
+        "formatted": 493,
+        "length": {
+          "max": 3000,
+          "mean": 918.68359375,
+          "median": 644.5,
+          "min": 67,
+          "n": 512
+        },
+        "mean_sampled_nll": 0.27394467615064283,
+        "n": 512,
+        "raw_score_mean": 0.515625,
+        "reward_mean": 0.515625,
+        "successful_length_mean": 604.1212121212121
+      }
+    },
+    "middle": {
+      "by_level": {
+        "3": {
+          "all_response_logprobs_finite": true,
+          "answer_chars": {
+            "max": 69,
+            "mean": 5.125,
+            "median": 3,
+            "min": 0,
+            "n": 128
+          },
+          "cap_raw_correct": 0,
+          "caps": 9,
+          "failed_length_mean": 1271.7837837837837,
+          "formatted": 109,
+          "length": {
+            "max": 3000,
+            "mean": 991.640625,
+            "median": 662,
+            "min": 101,
+            "n": 128
+          },
+          "mean_sampled_nll": 0.6056083776690091,
+          "n": 128,
+          "raw_score_mean": 0.421875,
+          "reward_mean": 0.421875,
+          "successful_length_mean": 607.7407407407408
+        },
+        "4": {
+          "all_response_logprobs_finite": true,
+          "answer_chars": {
+            "max": 275,
+            "mean": 8.166666666666666,
+            "median": 3,
+            "min": 0,
+            "n": 168
+          },
+          "cap_raw_correct": 1,
+          "caps": 18,
+          "failed_length_mean": 1204.2574257425742,
+          "formatted": 141,
+          "length": {
+            "max": 3000,
+            "mean": 971.6607142857143,
+            "median": 626.5,
+            "min": 3,
+            "n": 168
+          },
+          "mean_sampled_nll": 0.681629046849171,
+          "n": 168,
+          "raw_score_mean": 0.40476190476190477,
+          "reward_mean": 0.39880952380952384,
+          "successful_length_mean": 621.0298507462686
+        },
+        "5": {
+          "all_response_logprobs_finite": true,
+          "answer_chars": {
+            "max": 101,
+            "mean": 6.152777777777778,
+            "median": 2,
+            "min": 0,
+            "n": 216
+          },
+          "cap_raw_correct": 0,
+          "caps": 29,
+          "failed_length_mean": 1351.357142857143,
+          "formatted": 186,
+          "length": {
+            "max": 3000,
+            "mean": 1214.7916666666667,
+            "median": 828.5,
+            "min": 12,
+            "n": 216
+          },
+          "mean_sampled_nll": 0.5667161664109926,
+          "n": 216,
+          "raw_score_mean": 0.2222222222222222,
+          "reward_mean": 0.2222222222222222,
+          "successful_length_mean": 736.8125
+        }
+      },
+      "fullchecker_effective_reward_mismatches": 0,
+      "groups": {
+        "all_one": 0,
+        "all_zero": 13,
+        "mixed_reward": 51,
+        "n": 64,
+        "subjects": {
+          "Algebra": 10,
+          "Counting & Probability": 14,
+          "Geometry": 3,
+          "Intermediate Algebra": 15,
+          "Number Theory": 10,
+          "Prealgebra": 7,
+          "Precalculus": 5
+        },
+        "success_histogram": {
+          "0.0": 13,
+          "1.0": 9,
+          "2.0": 7,
+          "3.0": 16,
+          "4.0": 4,
+          "5.0": 10,
+          "6.0": 3,
+          "7.0": 2
+        },
+        "unique_answers": {
+          "max": 8,
+          "mean": 5.5,
+          "median": 6,
+          "min": 2,
+          "n": 64
+        },
+        "unique_responses": {
+          "max": 8,
+          "mean": 8,
+          "median": 8,
+          "min": 8,
+          "n": 64
+        }
+      },
+      "input_files": [
+        {
+          "bytes": 2486530,
+          "sha256": "ae22131e1a87a523929135ec2d079788b35c1bce0fbcfab17c8acec08b480ed3",
+          "step": 29
+        },
+        {
+          "bytes": 2182593,
+          "sha256": "2b1767abbf7aea62b9c41b2348f96d928e3f4227af16ab1644e5aac0cadd71cb",
+          "step": 30
+        },
+        {
+          "bytes": 2183734,
+          "sha256": "a0ec7c6bcaf2df8aac2095085528a38854d311aa4395de508c3dad19f60e39f8",
+          "step": 31
+        },
+        {
+          "bytes": 2465314,
+          "sha256": "8bf2979be0efd4ecce86c962457510ff60a9442aabf9a5fc90964b5b6628f291",
+          "step": 32
+        }
+      ],
+      "steps": [
+        29,
+        30,
+        31,
+        32
+      ],
+      "summary": {
+        "all_response_logprobs_finite": true,
+        "answer_chars": {
+          "max": 275,
+          "mean": 6.556640625,
+          "median": 2,
+          "min": 0,
+          "n": 512
+        },
+        "cap_raw_correct": 1,
+        "caps": 56,
+        "failed_length_mean": 1290.8746355685132,
+        "formatted": 436,
+        "length": {
+          "max": 3000,
+          "mean": 1079.2265625,
+          "median": 750,
+          "min": 3,
+          "n": 512
+        },
+        "mean_sampled_nll": 0.6141450081192741,
+        "n": 512,
+        "raw_score_mean": 0.33203125,
+        "reward_mean": 0.330078125,
+        "successful_length_mean": 649.6686390532544
+      }
+    }
+  },
+  "level_standardization": {
+    "method": "Common pooled level distribution from all 192 sampled prompt groups; no within-level subject/problem matching",
+    "weights": {
+      "3": 0.328125,
+      "4": 0.3072916666666667,
+      "5": 0.3645833333333333
+    },
+    "effective_reward": {
+      "early": 0.3046712239583333,
+      "late": 0.5102263863727858,
+      "middle": 0.34199709614748675
+    }
+  },
+  "joint_level_subject_standardization": {
+    "effective_reward": {
+      "early": 0.3072214419475655,
+      "late": 0.5136110553772071,
+      "middle": 0.3494315141787051
+    },
+    "method": "Common strata observed in all three fixed windows; weights equal pooled group frequency among those strata; different problems remain",
+    "retained_prompt_groups": {
+      "early": 61,
+      "late": 60,
+      "middle": 57
+    },
+    "shared_strata": 18,
+    "weights": {
+      "3|Algebra": 0.06179775280898876,
+      "3|Counting & Probability": 0.056179775280898875,
+      "3|Intermediate Algebra": 0.10674157303370786,
+      "3|Number Theory": 0.03932584269662921,
+      "3|Prealgebra": 0.02247191011235955,
+      "3|Precalculus": 0.056179775280898875,
+      "4|Algebra": 0.056179775280898875,
+      "4|Counting & Probability": 0.056179775280898875,
+      "4|Geometry": 0.02247191011235955,
+      "4|Intermediate Algebra": 0.07865168539325842,
+      "4|Number Theory": 0.03932584269662921,
+      "4|Prealgebra": 0.056179775280898875,
+      "5|Algebra": 0.07303370786516854,
+      "5|Geometry": 0.06179775280898876,
+      "5|Intermediate Algebra": 0.08426966292134831,
+      "5|Number Theory": 0.06741573033707865,
+      "5|Prealgebra": 0.028089887640449437,
+      "5|Precalculus": 0.033707865168539325
+    }
+  },
+  "window_additional": {
+    "early": {
+      "cells": {
+        "3|Algebra": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.15625
+        },
+        "3|Counting & Probability": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.25
+        },
+        "3|Intermediate Algebra": {
+          "groups": 8,
+          "responses": 64,
+          "reward_mean": 0.53125
+        },
+        "3|Number Theory": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.25
+        },
+        "3|Prealgebra": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.3125
+        },
+        "3|Precalculus": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.59375
+        },
+        "4|Algebra": {
+          "groups": 5,
+          "responses": 40,
+          "reward_mean": 0.25
+        },
+        "4|Counting & Probability": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.125
+        },
+        "4|Geometry": {
+          "groups": 1,
+          "responses": 8,
+          "reward_mean": 0.625
+        },
+        "4|Intermediate Algebra": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.375
+        },
+        "4|Number Theory": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.5625
+        },
+        "4|Prealgebra": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.16666666666666666
+        },
+        "4|Precalculus": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.3125
+        },
+        "5|Algebra": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.375
+        },
+        "5|Counting & Probability": {
+          "groups": 1,
+          "responses": 8,
+          "reward_mean": 0.125
+        },
+        "5|Geometry": {
+          "groups": 5,
+          "responses": 40,
+          "reward_mean": 0.175
+        },
+        "5|Intermediate Algebra": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.03125
+        },
+        "5|Number Theory": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.34375
+        },
+        "5|Prealgebra": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.4375
+        },
+        "5|Precalculus": {
+          "groups": 1,
+          "responses": 8,
+          "reward_mean": 0.125
+        }
+      },
+      "exclusive_categories": {
+        "cap": 55,
+        "formatted_wrong_uncapped": 190,
+        "success": 160,
+        "unformatted_uncapped": 107
+      },
+      "sampled_nll_by_category": {
+        "cap": 0.35412039841808524,
+        "formatted_wrong_uncapped": 0.6550509446822858,
+        "success": 0.2879429107850218,
+        "unformatted_uncapped": 2.0541688612326237
+      }
+    },
+    "late": {
+      "cells": {
+        "3|Algebra": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.8125
+        },
+        "3|Counting & Probability": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.75
+        },
+        "3|Geometry": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.5
+        },
+        "3|Intermediate Algebra": {
+          "groups": 8,
+          "responses": 64,
+          "reward_mean": 0.640625
+        },
+        "3|Number Theory": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.5416666666666666
+        },
+        "3|Prealgebra": {
+          "groups": 1,
+          "responses": 8,
+          "reward_mean": 0.875
+        },
+        "3|Precalculus": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.3333333333333333
+        },
+        "4|Algebra": {
+          "groups": 1,
+          "responses": 8,
+          "reward_mean": 0.375
+        },
+        "4|Counting & Probability": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.46875
+        },
+        "4|Geometry": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.4375
+        },
+        "4|Intermediate Algebra": {
+          "groups": 5,
+          "responses": 40,
+          "reward_mean": 0.325
+        },
+        "4|Number Theory": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.8125
+        },
+        "4|Prealgebra": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.6875
+        },
+        "4|Precalculus": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.1875
+        },
+        "5|Algebra": {
+          "groups": 7,
+          "responses": 56,
+          "reward_mean": 0.6428571428571429
+        },
+        "5|Geometry": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.53125
+        },
+        "5|Intermediate Algebra": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.125
+        },
+        "5|Number Theory": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.25
+        },
+        "5|Prealgebra": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.5625
+        },
+        "5|Precalculus": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.5
+        }
+      },
+      "exclusive_categories": {
+        "cap": 32,
+        "formatted_wrong_uncapped": 204,
+        "success": 264,
+        "unformatted_uncapped": 12
+      },
+      "sampled_nll_by_category": {
+        "cap": 0.27847149650909125,
+        "formatted_wrong_uncapped": 0.3098880839723676,
+        "success": 0.19787542576025619,
+        "unformatted_uncapped": 1.3243587308139655
+      }
+    },
+    "middle": {
+      "cells": {
+        "3|Algebra": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.375
+        },
+        "3|Counting & Probability": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.40625
+        },
+        "3|Intermediate Algebra": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.25
+        },
+        "3|Number Theory": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.5
+        },
+        "3|Prealgebra": {
+          "groups": 1,
+          "responses": 8,
+          "reward_mean": 0.125
+        },
+        "3|Precalculus": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.7083333333333334
+        },
+        "4|Algebra": {
+          "groups": 4,
+          "responses": 32,
+          "reward_mean": 0.4375
+        },
+        "4|Counting & Probability": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.5
+        },
+        "4|Geometry": {
+          "groups": 1,
+          "responses": 8,
+          "reward_mean": 0.375
+        },
+        "4|Intermediate Algebra": {
+          "groups": 5,
+          "responses": 40,
+          "reward_mean": 0.45
+        },
+        "4|Number Theory": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.25
+        },
+        "4|Prealgebra": {
+          "groups": 5,
+          "responses": 40,
+          "reward_mean": 0.35
+        },
+        "5|Algebra": {
+          "groups": 3,
+          "responses": 24,
+          "reward_mean": 0.4583333333333333
+        },
+        "5|Counting & Probability": {
+          "groups": 7,
+          "responses": 56,
+          "reward_mean": 0.17857142857142858
+        },
+        "5|Geometry": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.1875
+        },
+        "5|Intermediate Algebra": {
+          "groups": 7,
+          "responses": 56,
+          "reward_mean": 0.10714285714285714
+        },
+        "5|Number Theory": {
+          "groups": 5,
+          "responses": 40,
+          "reward_mean": 0.375
+        },
+        "5|Prealgebra": {
+          "groups": 1,
+          "responses": 8,
+          "reward_mean": 0.25
+        },
+        "5|Precalculus": {
+          "groups": 2,
+          "responses": 16,
+          "reward_mean": 0.0625
+        }
+      },
+      "exclusive_categories": {
+        "cap": 56,
+        "formatted_wrong_uncapped": 228,
+        "success": 169,
+        "unformatted_uncapped": 59
+      },
+      "sampled_nll_by_category": {
+        "cap": 0.4904948961530689,
+        "formatted_wrong_uncapped": 0.5907669806151575,
+        "success": 0.24023310066012035,
+        "unformatted_uncapped": 1.8928858369606811
+      }
+    }
+  },
+  "level5_intermediate_algebra_group_diagnostic": {
+    "early": {
+      "groups": 4,
+      "successes_per_group": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "caps": 5,
+      "mixed": 1,
+      "all_zero": 3
+    },
+    "middle": {
+      "groups": 7,
+      "successes_per_group": [
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        3
+      ],
+      "caps": 6,
+      "all_zero": 5,
+      "mixed": 2
+    },
+    "late": {
+      "groups": 4,
+      "successes_per_group": [
+        3,
+        0,
+        1,
+        0
+      ],
+      "caps": 5,
+      "mixed": 2,
+      "all_zero": 2
+    }
+  },
+  "generated_at_utc": "2026-10-07T17:42:00Z",
+  "run": {
+    "root": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4/debug_1007T16:02:41",
+    "log": "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4.log",
+    "analysis_environment": "/project/alex_phd/envs/r1-zero-dfca49d/bin/python",
+    "analysis_device": "CPU; CUDA_VISIBLE_DEVICES empty",
+    "omp_threads": 2,
+    "openblas_threads": 2,
+    "seed": 42,
+    "learning_rate": 0.000001,
+    "beta": 0,
+    "kl_penalty_coef": 0,
+    "num_ppo_epochs": 1,
+    "rollout_prompts": 16,
+    "responses_per_prompt": 8,
+    "train_batch_size": 128,
+    "train_batch_size_per_device": 1,
+    "max_response_tokens": 3000
+  },
+  "checks": {
+    "responses_fullchecked": 1536,
+    "fullchecker": "understand_r1_zero.math_grader.boxed_reward_fn(response, reference, fast=False)",
+    "effective_reward_rule": "Zero reward for response token length >=3000, otherwise fullchecker score",
+    "fullchecker_effective_mismatch_total": 0,
+    "all_recorded_gradient_norms_finite": true,
+    "all_sampled_response_logprobs_finite": true,
+    "all_sampled_groups_have_exactly_eight_distinct_response_texts": true,
+    "no_shared_prompts_between_windows": true,
+    "live_source_or_gpu_process_modified": false,
+    "checkpoint_or_test_score_selection": false
+  },
+  "interpretations": [
+    {
+      "claim": "The sampled run has useful within-prompt reward variation and no observed reward decoding/grading seam.",
+      "status": "Direct check",
+      "evidence": "47/51/53 of64groups mixed;1536 fullchecker effective rewards match saved rewards; all8 response texts distinct pergroup."
+    },
+    {
+      "claim": "Truncation is present but direct correct-answer suppression by cap is small in these windows.",
+      "status": "Direct check with sampling limits",
+      "evidence": "55/56/32 of512 responses capped;2/1/0 capped responses raw correct. This does not measure whether extra tokens would solve a currently incorrect capped response."
+    },
+    {
+      "claim": "No numerical gradient failure observed; tiny parameter updates cannot be inferred from gradient norm alone.",
+      "status": "Direct gradient check plus limitation",
+      "evidence": "67 logged gradient norms finite0.0134–0.0428; all reported nan/inf counters zero; actual parameter-delta/post-update policy drift not saved."
+    },
+    {
+      "claim": "Zero clipfraction and logprob drift do not establish ineffective learning.",
+      "status": "Code-based interpretation",
+      "evidence": "One PPO epoch and one128-response accumulated optimizer update per rollout. New/old training-policy logprobs are compared before update; PPO code computes statistics before optimizer_step. No reference KL logged because beta=0 and kl_penalty_coef=0."
+    },
+    {
+      "claim": "Observed reward rise survives broad difficulty adjustment but is not a paired learning-effect estimate.",
+      "status": "Adjusted descriptive check",
+      "evidence": "Pooled level-standardized0.305/0.342/0.510; shared joint level-subject standardized0.307/0.349/0.514. Different problems, sparse subject-level cells and no same-prompt baseline prohibit causal attribution or simplistic raw rewardtrend claims."
+    },
+    {
+      "claim": "Lower overall sampled NLL largely reflects fewer unformatted outputs and some sharpening, not demonstrated exploration collapse.",
+      "status": "Inference constrained by checks",
+      "evidence": "Unformatted uncapped107/59/12 of512; successful-output NLL0.288/0.240/0.198; formatted-wrong NLL0.655/0.591/0.310; late mixedgroups53/64. Logged entropy is minibatch/batch-mix sensitive, with large outliers, and does not alone prove collapse."
+    },
+    {
+      "claim": "Remaining late failures are dominated by mathematical mistakes after valid formatting.",
+      "status": "Direct exclusive classification",
+      "evidence": "Late248 failures =204 formatted-wrong uncapped +32 capped +12 unformatted uncapped."
+    },
+    {
+      "claim": "Level5 Intermediate Algebra remains a candidate skill bottleneck, but an aggressive hard-only curriculum would risk weak reward signal.",
+      "status": "Small-sample inference",
+      "evidence": "11 successes of120responses across15groups;5 mixed/10 allzero groups; distinctproblems and sparsegroups. Late2 of4 mixed."
+    }
+  ],
+  "recommendations": {
+    "immediate": {
+      "action": "Preserve current owner and continue unchanged to a predeclared fixed training endpoint; diagnose heldout correctness and formatting at that fixed endpoint.",
+      "why": "No transport, numerical, reward-diversity or dominant truncation fault justifies interrupting the healthy run. Current sampled training behavior improves."
+    },
+    "next_informative_intervention": {
+      "question": "Does extra optimization of the same rollout improve mathematical correctness per generated token, or only sharpen existing behavior?",
+      "action": "New bounded owner, fixed source checkpoint chosen by step/time; compare one versus two PPO epochs with all other settings identical. Use eight rollout rounds perarm first; retain everyattempt and choose final checkpoints by fixed step, never testscore.",
+      "metrics": [
+        "Independent frozen training-validation correctness and formatting",
+        "Mixed-reward group fraction and unique extracted answers",
+        "Actual post-update logprob drift on a fixed saved training batch",
+        "GPUminutes and generated tokens"
+      ],
+      "seed": 42,
+      "compute": "Single40GBGPU; baseline8rounds~10minutes, twoepoch8rounds~15minutes (observed actor35s plus learner40s perfirstepoch); paired~25minutes plus two owner startups and validation, cap45minutes total. Estimate assumes second epoch similar learnercost, not measured.",
+      "checkpoint_policy": "Fixed initial checkpoint by chronology and fixed final8round checkpoint perarm; no testscore selection; separate owners/sealed inputs.",
+      "limits": "Hypothesis, not a demonstrated tiny-update diagnosis. Extra epochs can overfit sharper wrong answers; retire if frozen validation fails to improve or mixed rewards collapse."
+    },
+    "alternative": {
+      "question": "Would slightly more sampling exploration recover new correct answers on remaining mathematical failures?",
+      "action": "New bounded owner with temperature1.2 versus1.0, otherwise unchanged one PPOepoch; eight rounds perarm and identical fixed initial checkpoint. Prefer this after extra-epoch pilot if drift is healthy but diversity falls.",
+      "compute": "Single40GBGPU; paired8round arms~20minutes plus owner startups/validation;cap40minutes. Higher-temperature response lengths may increase runtime.",
+      "limits": "Current mixedgroups53/64 do not indicate reward starvation, so expected benefit is less strongly supported. Preserve3000-token cap and fullchecker; never choose checkpoints from testscore."
+    }
+  }
+}

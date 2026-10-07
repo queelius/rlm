@@ -28,9 +28,9 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 15:55 UTC.
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 17:45 UTC.
   Short-run results and evaluation repeats retained. Authors' released-model
-  check completed; larger retry prepared, not launched (page 8).}
+  check completed; longer training underway, intermediate checks on page 9.}
 \begin{document}
 \pagetitle{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}
   {Learning language-model RL\\from an official reproduction}
@@ -457,7 +457,7 @@ The main lesson remains prompt sensitivity, a functioning training pipeline,
 and uncertainty about dependable gains from this short training budget [2,4].
 
 \newpage
-\pagetitle{APPENDIX / REFERENCE CHECK \quad | \quad 7 OCTOBER, 15:55 UTC}
+\pagetitle{APPENDIX / REFERENCE CHECK \quad | \quad 7 OCTOBER, 17:45 UTC}
   {Testing the authors' model is not reproducing its training}
 
 We evaluated \textbf{the authors' released model},
@@ -481,7 +481,7 @@ model remains at 308/500; the released model's 366 is not our training gain.
 Nor does the checked score validate every reasoning step or prove an exact
 reproduction of the published evaluation. We retain the five-answer difference.
 
-\topic{A larger retry is prepared, not yet running}
+\topic{A larger retry is now running}
 
 The \href{longer-attempt1-failure.json}{first attempt} ran out of memory before completing a collection;
 inner updates are unconfirmed. The \href{longer-attempt2-failure.json}{second} failed during initialization
@@ -489,11 +489,12 @@ with an incompatible allocator. The \href{longer-attempt3-failure.json}{third} c
 sampled 13 collections, then ran out of memory computing a diagnostic statistic.
 It saved no checkpoint. These are runtime failures, not benchmark results.
 
-Attempt 4 is prepared at this cutoff. A private copy of the learning package
+Attempt 4 started at 16:02 UTC. A private copy of the learning package
 computes diagnostic entropy in smaller pieces and releases unused old prediction
 tensors. Three focused CPU tests passed, including matching actual learning-step
-updates in a fixture. GPU stability remains unproven; the shared environment and
-official source are unchanged.
+updates in a fixture. A full-shaped GPU check also passed; at least 65 learning
+calls have now completed without a reported error. This does not guarantee all
+later batches will fit. The shared environment and official source are unchanged.
 
 The retry starts from the original base weights, not a trained checkpoint.
 We selected 4096 of the authors' 8523 MATH level 3--5 questions with a fixed
@@ -506,12 +507,13 @@ batch gives \textbf{255 updates, 4080 questions, and 32,640 responses}.
 The earlier 3968-question/248-update large-collection plan was abandoned.
 These are budgets, not completed results.
 
-Saving is planned every eight updates; training is capped at ten hours and the
+Saving occurs every eight updates; training is capped at ten hours and the
 whole sequence at thirteen. The fixed final checkpoint, \code{step\_00256},
 will be tested on MATH500 (500 questions), AMC (83), and Minerva (272), each in
-both input formats. \textbf{All six results are pending.} Separate base-model
-and authors' model checks on the broader benchmarks are underway, not our
-learning results. No partial scores are promoted here.
+both input formats. \textbf{All six final results are pending.} Separate base-model
+and authors' model checks on the broader benchmarks are complete. They validate
+reference comparisons, not our learning; the companion research record keeps
+all four conditions and their counts.
 
 \topic{What this comparison can decide}
 
@@ -523,4 +525,65 @@ confirmation. Repeated training and broader tests remain important.
 The \href{longer-training-plan.md}{accepted protocol} fixes the endpoint;
 the \href{longer-loader-receipt.json}{original loader check} records the excluded prompts.
 Completion still requires checking actual run counters.
+\newpage
+\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 17:45 UTC}
+  {Is the longer run learning more?}
+
+The longer run is still in progress. The table below contains every scheduled
+monitoring result available at this cutoff. Each score counts correct final
+answers on the same 64 questions, with chat-style input, greedy generation,
+a 3000-token response limit, and the full answer checker.
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Completed weight updates & 0 & 32 & 64 \\
+\midrule
+Correct final answers out of 64 & 20 & 42 & 42 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+We independently regraded all 64 answers at both later points. Every result
+agreed with the saved score, and the questions, reference answers and input
+format matched the starting check. Relative to the start, update 32 gained 22
+answers and lost none; update 64 gained 23 and lost one. Between 32 and 64, five
+answers improved and five regressed. Equal totals therefore do not mean the
+model gave the same answers or stopped changing.
+
+\topic{What this does and does not show}
+
+The early gain under chat-style testing persists. But this is a small, repeatedly
+inspected development set from one training run. It does not yet show a reliable
+gain over the stronger question-only starting setup, a full MATH500 improvement,
+or better recursive reasoning. The old short model also scored 42 on these same
+questions when generated as part of its 500-question evaluation. The base
+model with questions alone scored 39 on that subset. Those batch settings differ
+from live monitoring, so these numbers are context, not interchangeable tests.
+
+\topic{What would make the next experiment informative?}
+
+First finish the fixed training budget and evaluate its final model in both
+input formats on MATH500, AMC and Minerva. Do not replace the final model with
+whichever intermediate one looks best. An audit of 1,536 sampled answers found
+no disagreement with the saved rewards. Most questions still produced both
+correct and incorrect attempts, and all 67 checked gradient norms were finite.
+In the latest audited window, most failures were well-formed but mathematically
+wrong. Next, we will test stronger learning steps and learning twice from each
+batch of sampled answers. These are separate proposed comparisons, not proven
+fixes or changes to the current run.
+
+\topic{An important scoring distinction}
+
+The earlier short-run native monitor used the faster training checker. Its
+native scores at baseline, update 32 and final bookkeeping step 33 were 19, 38, 35;
+rescoring those same answers with the full checker gives 20, 39, 36. The longer
+run uses the full checker already. We must not compare a native fast-checker
+score against a full-checker score without saying so. Final 500-question comparisons
+throughout this guide already use the same full checker.
+
+The fixed monitoring points 32 and 64 follow that many completed updates.
+The final bookkeeping label 256 is different: it follows 255 completed updates.
+See \href{interim-monitor-1737.json}{intermediate evidence} and the companion
+research record for raw-file hashes and the latest operational status.
 \end{document}

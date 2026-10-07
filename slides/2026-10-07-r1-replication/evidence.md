@@ -1,7 +1,22 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 15:55 UTC; authors' released-model check completed,
-fourth larger-training attempt prepared, not launched. The short-run comparisons remain unchanged.
+Cutoff: 7 October 2026, 17:45 UTC. The fourth longer-training attempt is
+underway. Its final benchmarks are pending; completed short-run scores are unchanged.
+
+## Longer training progress
+
+Slide 5 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-1737.json):
+20/64 before training, 42/64 after 32 completed optimizer updates, and 42/64
+after 64. Questions, reference answers, chat inputs, full checker, and response
+limit are matched. All answers at the last two points independently regrade
+without a mismatch. Between those points, five answers improved and five
+regressed. The count is level, not the individual answers.
+
+This is a repeatedly examined development subset, one ongoing run, and not a
+full500 endpoint. It does not establish improvement beyond the stronger base
+or the short trained models. We retain every scheduled point, not a best point.
+Native labels 32 and 64 really follow 32 and 64 updates; the forced final
+label 256 instead follows 255 updates without adding another update.
 
 ## Authors' released model: an evaluation check, not our training result
 
@@ -32,11 +47,13 @@ computing the diagnostic entropy statistic. No checkpoint was saved. All three
 failures are retained, not completed benchmark results. The earlier successful
 startup checks did not establish stability across later variable-length batches.
 
-Attempt 4 is prepared, not launched at this cutoff. It uses a private copy of
+Attempt 4 started at 16:02 UTC. It uses a private copy of
 Oat with diagnostic entropy computed in 128-token pieces and unused old-policy
 logits released. Three focused CPU tests passed, including a fixture with
-identical actual learning-step updates; this is not proof of GPU memory
-stability. The shared environment and official clone remain unchanged.
+identical actual learning-step updates. An isolated A100 test reduced extra
+entropy-allocation peak from about 3.7 GiB to 0.15 GiB, with close numerical
+agreement. This is not proof all future batches fit. The shared environment
+and official clone remain unchanged.
 
 The retry starts from the original base model, using the default allocator and
 16-question collections. It retains the 4,096
@@ -55,7 +72,8 @@ occurs every eight updates; progress checks occur every 32. MATH500 (500 questio
 AMC (83), and Minerva (272) will each be evaluated in both input formats using
 the prescribed final checkpoint. All six final tests remain pending. Separate
 base-model and authors' released-model checks on the broader benchmarks are
-underway; partial scores are not promoted here and do not test our training.
+complete in the [broader reference receipt](../../docs/r1-replication-2026-10-07/broader-reference-receipt.json);
+those scores do not test our training.
 Data, verifier, and duration change
 together, while the smaller collection size matches the short runs. This is
 not an isolated test of training length. The
@@ -67,8 +85,8 @@ also points to the external plan at
 `/project/alex_phd/runs/r1-zero-replication-20261007/LARGER4096_PLAN.md`.
 
 The learning-guide appendix explains the distinction. The five-slide deck
-retains the completed short-run table and identifies the reference model
-separately on slide 5.
+retains the completed short-run table, identifies the reference model on
+slide 1, and shows the current monitor on slide 5.
 
 ## Evaluation repeatability update, 12:53 UTC
 

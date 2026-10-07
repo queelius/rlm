@@ -1,5 +1,25 @@
 # Presentation verification
 
+## Intermediate results at 17:45 UTC on 7 October
+
+- Five-slide PDF and nine-page learning PDF built with Tectonic. Final builds
+  contain no overfull boxes; an initial slide 3 footer overlap was fixed by
+  removing a redundant sentence, not shrinking the text.
+- Five PDF titles match their presenter notes; each note fits the 14-line,
+  42-character wrap check. All text spans fit both PDFs' page bounds. Root
+  visually inspected revised slides 1, 3, and 5 and guide pages 8 and 9.
+  No live pdfpc GUI was tested.
+- Slide 5 labels its 64-question denominator and interim status. It shows all
+  scheduled points, 20/42/42 at 0/32/64 completed updates. Full regrading of
+  both later answer sets agrees; five gains and five losses explain the flat
+  last segment. The short-run 500-question table remains unchanged.
+- The guide distinguishes earlier fast-checker monitoring scores from full
+  regrading, keeps batch-composition limits, and does not claim a new advantage
+  beyond the stronger starting prompt or the completed short training.
+- CPU audits retain 1,536 regraded responses, finite-gradient checks,
+  failure classifications, and ranked fixed-endpoint follow-ups. New settings
+  are proposals, not training results. The live training owner was untouched.
+
 ## Memory-repair handoff, evidence cutoff 7 October, 15:55 UTC
 
 - The third larger attempt failed after 12 updates with no saved checkpoint.

@@ -1,5 +1,43 @@
 # A small, direct replication of language-model RL
 
+**Training diagnosis, 7 October at 17:45 UTC:** RL still has useful successes
+and failures to compare. Across three fixed windows, all 1,536 checked
+training rewards matched the full answer checker and length-limit rule.
+The latest window contained 204 mathematically wrong answers with valid
+formatting, 32 answers stopped by the length limit, and 12 uncapped answers
+without the expected final-answer format. Most remaining mistakes in that
+window were therefore not just formatting failures.
+
+All 67 checked gradient norms were finite and nonzero. Zero reported clipping
+does not mean the updates are too small: the current implementation measures
+the ratios before its single optimizer update. Training reward rises over the
+sampled windows, even after a rough adjustment for problem level and subject,
+but different questions prevent treating that as a controlled learning curve.
+See the [training audit](training-signals-1740.json).
+
+The next ranked comparisons keep the original base model, data, checker,
+and prescribed endpoint: first a learning rate of 0.000005 instead of 0.000001;
+then, separately, two learning passes per sampled batch instead of one.
+The higher rate is motivated by a
+[same-model Dr. GRPO follow-up, Appendix A.3](https://arxiv.org/html/2607.01232v1#A1.SS3),
+not by a search for the best test checkpoint. Neither comparison has run yet.
+The [recipe audit and bounded experiment plans](recipe-opportunities-1745.json)
+record their exact budgets and remaining differences from the published work.
+The current run and its six final test conditions stay unchanged.
+
+**Intermediate check, 7 October at 17:37 UTC:** The longer run is still training.
+On the same64 monitoring questions, it scored20 correct before training,
+42 after32 updates, and42 after64 updates. At the last check, five answers
+improved and five became incorrect, so the unchanged total hides some movement.
+Both later sets of64 answers were independently rescored with full agreement.
+These are small, repeatedly observed monitoring results, **not a final MATH500
+score or a replicated training gain**. The fixed training schedule continues.
+See the [intermediate evidence and limits](interim-monitor-1737.json).
+The five-slide PDF and learning PDF now include this curve at a 17:45 UTC
+evidence cutoff. The learning guide's final page explains what it does and
+does not establish. The planned report around 20:00 UTC can incorporate later
+scheduled checks.
+
 **Progress check, 7 October at 16:36 UTC:** The longer run has completed 22
 learning updates without a reported error, passing the point where attempt 3
 failed. Model and optimizer files have been saved at two checkpoint labels.
@@ -10,16 +48,14 @@ improved test accuracy**. These collections contain different questions, so
 their reward totals are not a controlled learning curve. See the
 [progress checks and their limits](longer-attempt4-progress-1636.json).
 We are continuing the fixed schedule and all planned final comparisons.
-The learning and slide PDFs remain at their explicitly dated 15:55 snapshot;
-there is no new benchmark result to add to them yet.
+At this earlier check, the PDFs still showed the 15:55 snapshot.
 
 **Live update, 7 October at 16:03 UTC:** The fourth fresh-base attempt started
 at 16:02. The isolated GPU check reduced the entropy calculation's additional
 peak allocation from about 3.7 GiB to 0.15 GiB with numerically close outputs;
 see the [memory-repair receipt](memory-repair-receipt.json). That checks the
 observed failure point, not the stability of the entire training run. Final
-trained-model results are still pending. The PDFs below retain their explicit
-15:55 evidence cutoff.
+trained-model results were still pending at this earlier check.
 
 By 16:07, two optimizer updates were confirmed with finite, nonzero gradients.
 An independent review found no material issue in the memory-only changes or
@@ -149,8 +185,9 @@ unchanged weights reproduced all 500 saved answers byte-for-byte, including
 [repeatability receipt](grpo-repeatability-receipt.json). The bounded batch is
 complete; the [handoff](HANDOFF.md) records what to retain and what to try next.
 
-The five-slide deck now has a 15:55 cutoff. It retains the central prompt-format
-comparison and adds the authors' released-model check and prepared longer retry.
+The five-slide deck now has a 17:45 cutoff. It retains the central prompt-format
+comparison and authors' released-model check, and adds the longer run's
+intermediate learning curve.
 The small GRPO comparison remains in the supporting account, not a claim that
 we have found the best algorithm.
 

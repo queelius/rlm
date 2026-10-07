@@ -1,6 +1,6 @@
 # Learning from correct answers: a small reproduction
 
-Evidence cutoff: 7 October 2026, 15:55 UTC. Aim for about five minutes.
+Evidence cutoff: 7 October 2026, 17:45 UTC. Aim for about five minutes.
 The main lesson is about the starting prompt and the format used in training.
 Chat-style training raised scores from 154 to 308 out of 500 with chat input,
 but from 305 to 317 with the question alone. A second run trained on questions
@@ -12,8 +12,9 @@ starting setup. The repeated question-only run's near-zero change is an importan
 one to hide behind the first run's better score. A separate evaluation of the
 authors' released model now scores 366/500 (73.2%), close to their reported
 74.2%. That checks our evaluation on their weights; it is not our training
-result. A larger training retry is prepared but has not launched at this cutoff;
-final results remain pending.
+result. A larger run is now training. On the same 64 progress-check questions,
+it scored 20 before training, 42 after 32 updates, and 42 after 64 updates.
+Those are intermediate checks, not a completed 500-question test.
 
 ## 1. Why start with this experiment? (45 seconds)
 
@@ -50,15 +51,18 @@ reasoning step. If all eight attempts receive the same reward, the mean-subtract
 signal for that question is zero.
 
 Dr. GRPO modifies how the training objective is normalized to remove biases
-identified in GRPO. We did not compare those algorithms, so do not attribute our
-observed change specifically to that modification.
+identified in GRPO. An additional small GRPO run scored 318/500 with questions
+alone. That single exploratory run and the two Dr. GRPO results of 314 and 306
+do not establish which algorithm is better.
 
 ## 3. What exactly did we run? (60 seconds)
 
 Say: “We ran three short training experiments on one A100. Each started with the
 same model, used the same 512 math questions, and completed 32 weight updates.
 One trained on chat-style inputs. Two received only the questions.
-We tested the starting model and each trained model in both formats.”
+We tested the starting model and each trained model in both formats.
+The longer run now underway uses 4,080 training questions and has a fixed
+budget of 255 weight updates.”
 
 The short runs started from Qwen2.5-Math-1.5B, not an instruction-tuned model. Each training
 question yields eight sampled answers. Sixteen questions produce 128 attempts
@@ -151,13 +155,42 @@ An earlier evaluation after the same number of updates scored 39. Greedy GPU
 generation was not exactly repeatable in our observations; we have not
 established its cause. We did not use this variation to select a model.
 
-## 5. What actually improved, and what follows? (60 seconds)
+## 5. What does the longer run show so far? (60 seconds)
 
-Say: “The fraction example changed from repetition to a correct 0.15. That need
-not mean learning division from scratch. We also checked the authors' released
-model: 73.2%, versus their reported 74.2%. Those are their trained weights,
-not ours. A larger retry from the original model is prepared, not yet running;
-its results are pending.”
+Say: “We are now training longer on more math questions. On the same 64
+progress-check questions, the score rose from 20 correct to 42 and then stayed
+at 42. That does not mean nothing changed: five answers improved and five
+became wrong between the last two checks. We will finish the planned training
+budget and test its final model on the full 500 questions and two other math
+collections. We have not yet shown a dependable improvement over the stronger
+starting setup.”
+
+The horizontal axis counts completed changes to the model's weights. The
+vertical axis counts correct final answers, out of 64. Every point uses the
+same questions, chat-style input, full answer checker, and response limit.
+The curve shows all scheduled checks available at this cutoff. It does not
+select the most favorable checkpoint.
+
+Why not call 42/64 a new breakthrough? It is a small set inspected repeatedly.
+The earlier short model also answered 42 of these questions correctly when
+they were generated as part of a full500 batch. The original model given
+questions alone answered 39 of them correctly in its full500 batch.
+Generation batch composition differs from live monitoring, so those numbers
+are context rather than exactly interchangeable tests.
+
+The next final evaluations include AMC, a collection of competition math
+problems, and Minerva, mathematical and scientific problems. Their reference
+scores are already saved. They help test whether improvement extends beyond
+MATH500, though all three remain math evaluations, not recursive-agent tasks.
+
+Our training checks suggest the model still has useful successes and failures
+to learn from. The sampled rewards match the checker, and gradients are
+finite. In the latest audited window, most failures were well-formed but
+mathematically wrong, not missing final answers. After this run, the leading
+comparisons are larger learning steps and two learning passes per batch of
+sampled answers. Neither has produced a result yet.
+
+## Optional discussion and concrete examples
 
 The released checkpoint is `sail/Qwen2.5-Math-1.5B-Oat-Zero`, pinned to revision
 `a98e477854071157a450e57dd45fd0684b6fa38a`. Independent regrading confirms
@@ -243,7 +276,7 @@ entropy statistic during its thirteenth sampled collection. No checkpoint was
 saved. These are retained runtime failures, not completed benchmark results.
 Early successful updates did not establish memory stability on later batches.
 
-The fourth attempt is prepared, not launched as of 15:55 UTC. A private copy
+The fourth attempt started at 16:02 UTC. A private copy
 of the learning package computes that statistic in smaller pieces and releases
 unused old prediction tensors. Three focused CPU tests passed, including a
 fixture with identical learning-step updates. This does not prove that all GPU
@@ -257,8 +290,8 @@ transfer to the generator. Filtering two overlong prompts leaves 4,094 eligible
 questions; dropping the incomplete final batch gives 255 collections:
 4,080 questions, 32,640 sampled responses, and 255 planned optimizer updates.
 The earlier 3,968-question/248-update plan applied to the abandoned larger
-collections. The slide's roughly 4,000 questions and about 250 updates remain
-accurate. These are budgets, not completed results.
+collections. Slide 3 gives the current exact planned figures. These are
+budgets, not completed results.
 
 Training has a ten-hour cap and the full sequence a thirteen-hour cap. The final
 checkpoint is prescribed as `step_00256`; saving occurs every eight updates,
@@ -266,7 +299,8 @@ with progress checks every 32. The same final checkpoint will be evaluated on
 MATH500 (500 questions), AMC (83), and Minerva (272), each in both input formats
 with the same checker and response limit. All six final tests remain pending.
 Separate broader checks of the untrained and authors' released models are
-underway; no partial scores are promoted here. Those checks do not test our learning.
+complete; the [broader reference receipt](../../docs/r1-replication-2026-10-07/broader-reference-receipt.json)
+records them. Those checks do not test our learning.
 
 This is a more closely aligned reference recipe, not an isolated test of
 training duration. Data coverage and difficulty, verifier, and update budget

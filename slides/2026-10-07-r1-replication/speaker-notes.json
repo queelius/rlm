@@ -2,7 +2,7 @@
   "slides": [
     {
       "title": "First, reproduce learning in a simpler setting.",
-      "notes": "The immediate aim is to reproduce a known language-model learning recipe. Math gives us an answer we can check. Recursive choices come later. This is a small reproduction, not a new method or a reproduction of the paper's headline scores."
+      "notes": "Math gives us checkable answers before tackling recursive choices. We use the authors' training code. Their released weights score 366/500 here, versus 371/500 reported. Those are their weights, not our learning gain. The five-answer gap is unexplained."
     },
     {
       "title": "Reward correct attempts, then change the model.",
@@ -10,15 +10,15 @@
     },
     {
       "title": "We train on math, then test on different questions.",
-      "notes": "Three runs started from the original weights: one chat-style, two question-only. Each used the same 512 training questions. All 500 test questions were excluded from weight training; 64 were monitored. No SFT stage was added. We used the final model from every run."
+      "notes": "Short runs use 512 questions and 32 updates. The ongoing run uses 4080 level3-5 questions and plans 255 updates. It also changes the training checker, so this is not duration alone. No added SFT. Monitoring reuses 64 of the 500 test questions."
     },
     {
       "title": "The input format changes the size of the gain.",
       "notes": "Across a row, weights stay fixed. Down a column, test input stays fixed. The question-only runs gain nine and one over the stronger base. The repeat has 18 gains and 17 losses. We have not established a reliable gain beyond that starting setup."
     },
     {
-      "title": "A higher score does not always mean a new skill.",
-      "notes": "The example is from our earlier chat-style test. The AUTHORS' released model scored 366/500, or 73.2%, versus 74.2% reported. We evaluated their weights; we did not train them. After three retained failures, a fresh-base retry is prepared: roughly 4,000 questions, about 250 planned updates. It has not launched at this cutoff. Results are pending; several settings change together."
+      "title": "Longer training: an early gain, then a level score.",
+      "notes": "All scheduled points: 20, 42, 42 out of 64. Both later sets were regraded. Equal totals hide five gains and five losses. Keep the fixed endpoint, not the best checkpoint. AMC has 83 questions; Minerva has 272. No final longer-run score yet."
     }
   ]
 }

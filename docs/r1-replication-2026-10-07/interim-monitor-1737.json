@@ -1,0 +1,21 @@
+{
+  "checked_at_utc": "2026-10-07T17:37:00Z",
+  "run": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4/debug_1007T16:02:41",
+  "scope": "Scheduled intermediate monitoring, not a completed training endpoint",
+  "evaluation": "Same 64 development-monitor math questions, qwen_math input, one greedy answer per question, 3000 response-token limit, full math verifier",
+  "points": [
+    {"update": 0, "correct": 20, "n": 64, "file": "eval_results/0_math.json", "sha256": "223106f41ad7eb9e99b4cae0cc8547b5c54512219139c3c0ea3a2bec70004511"},
+    {"update": 32, "correct": 42, "n": 64, "file": "eval_results/32_math.json", "sha256": "7f422ea1e1f9c52e0de494a49389f60a02f999847e9e7dcf62527b7b73b0711f"},
+    {"update": 64, "correct": 42, "n": 64, "file": "eval_results/64_math.json", "sha256": "6a8f50d577f06d61873b9fef3bb96babc78f191b12bd42b95e2df2c409b6d2b7"}
+  ],
+  "checks": "Exact question, reference, and formatted-input alignment across all points. All 64 responses at both updates32 and64 independently regraded with no mismatch. Baseline previously audited.",
+  "paired_changes": {
+    "0_to_32": {"improvements": 22, "regressions": 0},
+    "0_to_64": {"improvements": 23, "regressions": 1},
+    "32_to_64": {"improvements": 5, "regressions": 5}
+  },
+  "interpretation": "Early improvement over the same chat-style starting condition persists, but total accuracy has not increased between the last two scheduled points. Equal totals do not mean identical behavior.",
+  "limits": ["One training run", "Small, repeatedly observed development monitor", "Not a final full500 benchmark", "Does not establish improvement over the stronger question-only base", "No favorable checkpoint or input-format selection"],
+  "decision": "Continue the accepted255-update training schedule and all final evaluations; report the complete intermediate curve by about20:00UTC, explicitly labeled.",
+  "access_recovery": "Full access restored in-place. Training owner unchanged; exited observer restarted with unchanged source/config/state and successfully queued its next review. Cause of prior observer exit unknown."
+}

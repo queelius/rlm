@@ -7,7 +7,7 @@
       "idx": 0,
       "label": "1",
       "overlay": 0,
-      "note": "The immediate aim is to reproduce a known\nlanguage-model learning recipe. Math gives\nus an answer we can check. Recursive\nchoices come later. This is a small\nreproduction, not a new method or a\nreproduction of the paper's headline\nscores."
+      "note": "Math gives us checkable answers before\ntackling recursive choices. We use the\nauthors' training code. Their released\nweights score 366/500 here, versus 371/500\nreported. Those are their weights, not our\nlearning gain. The five-answer gap is\nunexplained."
     },
     {
       "idx": 1,
@@ -19,7 +19,7 @@
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "Three runs started from the original\nweights: one chat-style, two question-\nonly. Each used the same 512 training\nquestions. All 500 test questions were\nexcluded from weight training; 64 were\nmonitored. No SFT stage was added. We used\nthe final model from every run."
+      "note": "Short runs use 512 questions and 32\nupdates. The ongoing run uses 4080\nlevel3-5 questions and plans 255 updates.\nIt also changes the training checker, so\nthis is not duration alone. No added SFT.\nMonitoring reuses 64 of the 500 test\nquestions."
     },
     {
       "idx": 3,
@@ -31,7 +31,7 @@
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "The example is from our earlier chat-style\ntest. The AUTHORS' released model scored\n366/500, or 73.2%, versus 74.2% reported.\nWe evaluated their weights; we did not\ntrain them. After three retained failures,\na fresh-base retry is prepared: roughly\n4,000 questions, about 250 planned\nupdates. It has not launched at this\ncutoff. Results are pending; several\nsettings change together."
+      "note": "All scheduled points: 20, 42, 42 out of\n64. Both later sets were regraded. Equal\ntotals hide five gains and five losses.\nKeep the fixed endpoint, not the best\ncheckpoint. AMC has 83 questions; Minerva\nhas 272. No final longer-run score yet."
     }
   ]
 }
