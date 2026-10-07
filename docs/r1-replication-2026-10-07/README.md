@@ -7,7 +7,15 @@ the evaluation, and how to interpret the results.
 The 512-question training run and its separate 128-question test have finished.
 The expanded evaluation and prompt controls are running.
 
-## Latest result, 7 October, 10:17 UTC
+## Current results, 7 October
+
+**Expanded check at 10:27 UTC:** On all 500 MATH500 questions, the same models
+scored **154 before training and 308 afterward**. On the 308 additional
+questions outside the earlier monitoring and test samples, scores rose from
+92 to 184. The [expanded-test receipt](full500-scoring-receipt.json) separates
+those data roles. This confirms the direction on a broader set, but it remains
+one training run. The original 128-question result below is retained unchanged.
+Both raw-question prompt controls are still running or queued.
 
 On the same **128 questions excluded from training and progress checks**, the
 model improved from **41 correct before training to 80 afterward**. Forty-four
@@ -166,6 +174,23 @@ priority is a fresh training repeat with the same data and settings.
 
 The presentation remains limited to five slides and is due by 13:00 UTC;
 extra experiments must not delay a usable published version.
+
+### Independent repeat prepared at 10:27 UTC
+
+The next training run will restart from the same base weights on the same 512
+training questions, with learner seed 43 instead of 42. The authors' actor still
+uses a time-based generation seed. This is a fresh training realization, not a
+fully deterministic seed-controlled comparison. All other scientific settings
+stay fixed: 32 updates, eight attempts per question, and the same prompt/reward.
+It has a 90-minute cap and saves every eight updates plus the prescribed final
+checkpoint, under the separate home-store directory `subset512-repeat43`.
+
+The question is whether the observed gain survives another short training run.
+The planned final checkpoint will be evaluated with the same 128/500-question
+protocol, not chosen from monitoring scores. Do not replace or average away
+the first run. Launch only after the existing four-evaluation owner finishes,
+and before 11:15 UTC so the capped run leaves time for evaluation before 13:00.
+If it cannot fit, preserve the plan without delaying the already-published deck.
 
 ## Automated continuation
 

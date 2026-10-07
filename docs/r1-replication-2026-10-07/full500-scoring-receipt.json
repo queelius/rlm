@@ -1,0 +1,22 @@
+{
+  "cutoff_utc": "2026-10-07T10:27:00Z",
+  "dataset": "Official bundled evaluation_suite math split (MATH500)",
+  "generation": "Fresh full500 generation on each side; not spliced from earlier128 outputs.",
+  "checkpoint": "Same prescribed step_00033 final model after32 updates",
+  "prompt_template": "qwen_math",
+  "grader": "Official boxed_reward_fn(fast=False); all1000 saved answers independently rescored",
+  "all_prompts_and_references_match_fixed_source": true,
+  "all500": {"n":500,"before":154,"after":308,"gains":164,"losses":10,"before_capped":205,"after_capped":29,"gains_before_capped":140},
+  "roles": {
+    "monitor64": {"n":64,"before":21,"after":42,"gains":22,"losses":1,"before_capped":24,"after_capped":5,"gains_before_capped":17},
+    "original_test128": {"n":128,"before":41,"after":82,"gains":43,"losses":2,"before_capped":58,"after_capped":9,"gains_before_capped":39},
+    "additional308": {"n":308,"before":92,"after":184,"gains":99,"losses":7,"before_capped":123,"after_capped":15,"gains_before_capped":84}
+  },
+  "roles_reconstructed_from": "source_row_index in data-oat/monitor64 and heldout128; remaining official row indices form additional308",
+  "base_answer_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base",
+  "trained_answer_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-subset512-final",
+  "base_answer_sha256": "6cde24ef420aff35b7621ecea2ff013d6d1bc5faf3694955f85b9e3f02306c59",
+  "trained_answer_sha256": "a23d9f868b02bea43ee719041f06eb4f12e3ff1851aa5bb8052ca49650869c3b",
+  "original128_comparison_retained": "41->80. In this fresh500 batch those same128 questions score41->82. Do not replace the original result with the higher repeat.",
+  "limitation": "All500 excluded from weight training, but64 monitored repeatedly. One training run, not500 training replicates. Prompt controls pending; cap-related counts are descriptive, not causal."
+}
