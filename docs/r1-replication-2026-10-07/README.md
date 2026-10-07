@@ -6,7 +6,8 @@ The [learning guide](learning-guide.pdf) explains the learning step,
 the evaluation, and how to interpret the results.
 The 512-question training run and its separate 128-question test have finished.
 The expanded evaluation and both prompt controls have also finished. A new
-training run now tests whether learning improves on the stronger starting prompt.
+question-only training run has also finished; its final evaluations now test
+whether learning improves on the stronger starting prompt.
 
 ## Current results, 7 October
 
@@ -25,9 +26,17 @@ not enough to establish new mathematical abilities. Nor does this prove that
 training learned nothing. It is one training run, and the smaller effect needs
 replication. See the [prompt-control receipt](prompt-control-scoring-receipt.json).
 
-**Now running:** A fresh model is training on the same 512 questions, using
-only the questions rather than chat-style prompts. The question is whether
-RL improves beyond the stronger 305/500 baseline. Results are pending.
+**Follow-up at 11:25 UTC:** Training with the question alone completed all
+32 updates and saved the final model. Its final monitoring score is 39/64,
+versus 38/64 before training. That small change is not the final test result.
+The [training receipt](question-only-training-receipt.json) records all 4,096
+attempts, including one empty response, and the verified checkpoint.
+
+Full500 evaluations are now running in both formats. We will also repeat the
+question-only evaluation for both starting and final models to measure how
+much answers vary without further training. Those repeats are not independent
+training runs. The question remains whether RL improves beyond the stronger
+305/500 baseline; the new final-test result is pending.
 
 **Expanded chat-style check at 10:27 UTC:** On all 500 MATH500 questions, the same models
 scored **154 before training and 308 afterward**. On the 308 additional
