@@ -1,6 +1,6 @@
 # Lessons from math RL for training RLMs
 
-Read the [six-slide PDF](research-update.pdf), the
+Read the [seven-slide PDF](research-update.pdf), the
 [speaker guide](speaker-guide.md), or the
 [self-contained overview](../../docs/r1-replication-2026-10-07/START-HERE.md).
 The [learning guide PDF](../../docs/r1-replication-2026-10-07/learning-guide.pdf)
@@ -34,7 +34,7 @@ Install pdfpc once if it is missing: on Ubuntu/Debian,
 for other systems. The launch targets do not install software automatically.
 
 Use the arrow keys to change slides, `+`/`-` to adjust note size, and
-`Ctrl+Q` to quit. The six-minute timer is only a guide; it does not advance
+`Ctrl+Q` to quit. The eight-minute timer is only a guide; it does not advance
 slides. These controls and launch options are documented in the
 [pdfpc manual](https://github.com/pdfpc/pdfpc/blob/master/man/pdfpc.in).
 The [speaker guide](speaker-guide.md) has longer explanations for preparation.
@@ -46,11 +46,17 @@ keep any personal edits before pulling later updates.
 
 ## Research summary
 
-The small-scale reproduction occupies one slide. The rest explains useful
-reward variation, curriculum, model/interface fit, and a proposed sequence for
-teaching RLM tool use and decomposition, followed by a portfolio of small tests.
-Diagrams and examples distinguish
-observed results from hypotheses.
+The story is about preparing a model to learn: math RL starts with relevant
+prior competence, while RLM use may require unfamiliar combinations of skills.
+The small-scale reproduction occupies one slide. Human-learning analogies and
+two concrete examples explain reachable practice, teaching missing skills,
+exploring alternatives, and testing independence after removing help.
+
+We are in an exploratory phase. Curriculum, clearer prompts, demonstrations,
+more varied attempts, repair examples and better feedback are possibilities to
+investigate, not a settled recipe or a diagnosis already proved. The final slide
+offers small comparisons as examples of an open research agenda. Algorithm and
+paper details are in the speaker guide rather than on the audience slides.
 
 Updated: **7 October 2026, 20:56 UTC**. Training was stopped by choice after
 219 updates; checkpoints are retained and final evaluations were canceled.
@@ -94,5 +100,5 @@ For CPU rendering and text-bound checks with the existing presentation environme
 /project/alex_phd/envs/rlm-advisor-figures-20260911/bin/python verify_deck.py
 ```
 
-Inspect all six PNGs in `rendered/` after rebuilding. This checker does not
+Inspect all seven PNGs in `rendered/` after rebuilding. This checker does not
 establish scientific validity and does not replace visual inspection.

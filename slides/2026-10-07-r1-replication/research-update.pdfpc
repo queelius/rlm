@@ -7,37 +7,43 @@
       "idx": 0,
       "label": "1",
       "overlay": 0,
-      "note": "We practiced a published RL method on math\nbefore applying it to RLMs. On the same 64\nquestions, correct answers rose from 20 to\n47. The chart keeps every check, including\nthe last dip.\n\nThis reproduces improvement at small\nscale, not the full benchmark result.\nTraining is stopped; checkpoints are\nsaved.\n\nNext: what made learning possible?"
+      "note": "Our goal is not just a higher math score.\nWe want a model to learn when to use code,\nask helpers, and combine their results.\n\nWorking explanation: math starts with\nrelevant skills; our RLM asks for\nunfamiliar combinations. We should examine\nreadiness to learn, not only the RL\nalgorithm.\n\nNext: what did the math model bring with\nit?"
     },
     {
       "idx": 1,
       "label": "2",
       "overlay": 0,
-      "note": "Walk through x = 4 versus x = 5. We\ncompare attempts on the SAME question. All\nwrong or all right gives this method no\nrelative reward signal. A mix gives it a\nuseful contrast.\n\nA curriculum could keep practice within\nreach, then raise the difficulty. Mixing\neasy and impossible questions is not\nenough.\n\nNext: can the model use its existing\nskills?"
+      "note": "Pretraining supplied mathematical\nknowledge and examples. We added practice\nwith checked answers, not mathematics from\nscratch. The same 64 questions improved\nfrom 20 to 47 correct.\n\nThis is a small-scale reproduction, not\nthe full paper score. Prompt choice also\nmatters: the base already solved 305 of\n500 with questions alone.\n\nNext: why is RLM use harder?"
     },
     {
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "Point to the starting scores: 154 versus\n305 out of 500. Same model, different way\nof asking. A poor interface can hide\nability and make the training gain look\nlarger.\n\nKnowing Python is not the same as knowing\nour RLM tool interface or choosing useful\nsubtasks. Demonstrations may help; SFT is\nnot always needed.\n\nNext: what should we teach first?"
+      "note": "Tell the Mira example. The second helper\nneeds Aster Lab, not an unexplained\nrequest for a city. Knowing Python does\nnot ensure useful delegation.\n\nEarlier training did improve some\nroutines. The gap was reliable transfer\nand coordination, not zero learning.\nDistribution shift is a plausible\nexplanation, not a proven cause.\n\nNext: what practice can help?"
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "Tell the invented example: Mira works at\nAster Lab; Aster Lab is in Oxford. The\nsecond lookup needs the employer's name.\nCalling a helper is not enough: it needs\nuseful context.\n\nTeach missing skills, then practice\nlinking them. More attempts may reveal\nrare successes, but can repeat the same\nmistake.\n\nThis sequence is a hypothesis to test."
+      "note": "A child without algebra needs more than a\ncalculus test marked wrong. The analogy\nsuggests teaching prerequisites; it does\nnot prove models learn like children.\n\nWalk through x = 4 versus x = 5. Our\nreward comparison needs contrast within\none question. All right or all wrong gives\nzero relative signal.\n\nNext: connect teaching to independent\npractice."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "These ingredients have precedents. DAPO\nkeeps informative reward groups. RLM work\nuses demonstrations. R1 adds supervised\npreparation; R1-Zero shows it is not\nalways required.\n\nNone establishes our proposed teaching\norder. Our question is which preparation\nhelps RLMs learn and combine skills on new\ntasks.\n\nNext: small experiments to distinguish\nideas."
+      "note": "Start with a skill check, not an\nassumption that everything is missing.\nShow only what is needed, practise\nchoices, then remove help.\n\nIn the example, first show the employer\nname being passed. Later ask the model to\nchoose what information and helpers it\nneeds.\n\nThe question is transfer, not copying a\nroutine. This sequence still needs\ntesting."
     },
     {
       "idx": 5,
       "label": "6",
       "overlay": 0,
-      "note": "Start by locating the failure: tool use,\npassing context, choosing a plan, or using\nfeedback. Each suggests a different small\ntest.\n\nCompare staged versus shuffled examples;\nmore attempts at the same total cost;\nsuccess-only versus repair demonstrations.\nKeep helper models fixed and test new\ncombinations.\n\nClose: prepare learnable tasks, then test\nwhat helps."
+      "note": "Separate three cases. No successes: teach,\nsimplify, improve the prompt, or try a\nstronger model. Rare successes: explore\nmore varied attempts. Mixed outcomes but\nno gain: inspect feedback and updates.\n\nMore temperature may produce broken calls,\nnot better plans. More retries cost\ncompute.\n\nCurriculum is one hypothesis among\nseveral."
+    },
+    {
+      "idx": 6,
+      "label": "7",
+      "overlay": 0,
+      "note": "These are examples, not a fixed queue or\nan exhaustive list. We can also explore\nrepair, stronger models, feedback, and\nhelper roles. Let small tests change our\nideas.\n\nMeasure after preparation AND after RL. If\ndemonstrations help but RL adds nothing,\nthat is a teaching result.\n\nClose: we have a direction for\nexploration, not a settled recipe."
     }
   ]
 }

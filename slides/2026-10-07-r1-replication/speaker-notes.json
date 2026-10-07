@@ -1,28 +1,32 @@
 {
   "slides": [
     {
-      "title": "We reproduced RL-driven improvement at small scale.",
-      "notes": "We practiced a published RL method on math before applying it to RLMs. On the same 64 questions, correct answers rose from 20 to 47. The chart keeps every check, including the last dip.\n\nThis reproduces improvement at small scale, not the full benchmark result. Training is stopped; checkpoints are saved.\n\nNext: what made learning possible?"
+      "title": "Before rewarding success, make success reachable.",
+      "notes": "Our goal is not just a higher math score. We want a model to learn when to use code, ask helpers, and combine their results.\n\nWorking explanation: math starts with relevant skills; our RLM asks for unfamiliar combinations. We should examine readiness to learn, not only the RL algorithm.\n\nNext: what did the math model bring with it?"
     },
     {
-      "title": "Useful practice is neither all wrong nor all right.",
-      "notes": "Walk through x = 4 versus x = 5. We compare attempts on the SAME question. All wrong or all right gives this method no relative reward signal. A mix gives it a useful contrast.\n\nA curriculum could keep practice within reach, then raise the difficulty. Mixing easy and impossible questions is not enough.\n\nNext: can the model use its existing skills?"
+      "title": "Math RL builds on a strong head start.",
+      "notes": "Pretraining supplied mathematical knowledge and examples. We added practice with checked answers, not mathematics from scratch. The same 64 questions improved from 20 to 47 correct.\n\nThis is a small-scale reproduction, not the full paper score. Prompt choice also matters: the base already solved 305 of 500 with questions alone.\n\nNext: why is RLM use harder?"
     },
     {
-      "title": "Existing skill needs a usable interface.",
-      "notes": "Point to the starting scores: 154 versus 305 out of 500. Same model, different way of asking. A poor interface can hide ability and make the training gain look larger.\n\nKnowing Python is not the same as knowing our RLM tool interface or choosing useful subtasks. Demonstrations may help; SFT is not always needed.\n\nNext: what should we teach first?"
+      "title": "An RLM must combine skills in a new setting.",
+      "notes": "Tell the Mira example. The second helper needs Aster Lab, not an unexplained request for a city. Knowing Python does not ensure useful delegation.\n\nEarlier training did improve some routines. The gap was reliable transfer and coordination, not zero learning. Distribution shift is a plausible explanation, not a proven cause.\n\nNext: what practice can help?"
     },
     {
-      "title": "Teach the interface, then practice useful choices.",
-      "notes": "Tell the invented example: Mira works at Aster Lab; Aster Lab is in Oxford. The second lookup needs the employer's name. Calling a helper is not enough: it needs useful context.\n\nTeach missing skills, then practice linking them. More attempts may reveal rare successes, but can repeat the same mistake.\n\nThis sequence is a hypothesis to test."
+      "title": "Useful practice is challenging, but within reach.",
+      "notes": "A child without algebra needs more than a calculus test marked wrong. The analogy suggests teaching prerequisites; it does not prove models learn like children.\n\nWalk through x = 4 versus x = 5. Our reward comparison needs contrast within one question. All right or all wrong gives zero relative signal.\n\nNext: connect teaching to independent practice."
     },
     {
-      "title": "Prior work supports the ingredients, not our sequence.",
-      "notes": "These ingredients have precedents. DAPO keeps informative reward groups. RLM work uses demonstrations. R1 adds supervised preparation; R1-Zero shows it is not always required.\n\nNone establishes our proposed teaching order. Our question is which preparation helps RLMs learn and combine skills on new tasks.\n\nNext: small experiments to distinguish ideas."
+      "title": "Teach, practise, remove help, then test transfer.",
+      "notes": "Start with a skill check, not an assumption that everything is missing. Show only what is needed, practise choices, then remove help.\n\nIn the example, first show the employer name being passed. Later ask the model to choose what information and helpers it needs.\n\nThe question is transfer, not copying a routine. This sequence still needs testing."
     },
     {
-      "title": "A portfolio of small experiments, not one settled story.",
-      "notes": "Start by locating the failure: tool use, passing context, choosing a plan, or using feedback. Each suggests a different small test.\n\nCompare staged versus shuffled examples; more attempts at the same total cost; success-only versus repair demonstrations. Keep helper models fixed and test new combinations.\n\nClose: prepare learnable tasks, then test what helps."
+      "title": "Different failures need different interventions.",
+      "notes": "Separate three cases. No successes: teach, simplify, improve the prompt, or try a stronger model. Rare successes: explore more varied attempts. Mixed outcomes but no gain: inspect feedback and updates.\n\nMore temperature may produce broken calls, not better plans. More retries cost compute.\n\nCurriculum is one hypothesis among several."
+    },
+    {
+      "title": "An open agenda of small experiments.",
+      "notes": "These are examples, not a fixed queue or an exhaustive list. We can also explore repair, stronger models, feedback, and helper roles. Let small tests change our ideas.\n\nMeasure after preparation AND after RL. If demonstrations help but RL adds nothing, that is a teaching result.\n\nClose: we have a direction for exploration, not a settled recipe."
     }
   ]
 }

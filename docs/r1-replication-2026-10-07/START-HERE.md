@@ -2,7 +2,7 @@
 
 We ultimately want to train recursive language models to make better decisions: when to solve a problem directly, when to call a helper, and how to divide the work. We practiced with a simpler, published example of reinforcement learning to understand what makes learning possible.
 
-The immediate question is: **Can we take an existing language model, reward its correct math answers, and make it better on other math questions?**
+Our method check asked: **Can we take an existing language model, reward its correct math answers, and make it better on other math questions?**
 
 We successfully reproduced RL-driven improvement at small scale: on the same 64-question monitor, correct answers rose from 20 to 47. The main value is what this teaches us about creating a useful learning signal. The model needs reachable successes, a usable interface, varied attempts, and trustworthy feedback. A separate prompt comparison also shows why we must compare against a capable starting setup. This reproduces improvement using the paper's method, not its full benchmark score.
 
@@ -10,7 +10,47 @@ We successfully reproduced RL-driven improvement at small scale: on the same 64-
 
 For the next discussion, read the [research questions and possible blind spots](RESEARCH-QUESTIONS.md).
 We are exploring several explanations and interventions, not committing to curriculum as the answer.
-That portfolio distinguishes ready math follow-ups from RLM experiments that still need preparation.
+It retains earlier math follow-up ideas for reference; those runs are now shelved.
+
+## The big picture behind the next experiments
+
+**Math RL did not start from an unprepared learner.** Our math model had already
+learned from extensive mathematical material, including worked examples. Some
+successful solutions were within reach before our RL began. Sampling attempts
+and checking their answers gave training useful successes to reinforce. The
+[model authors describe this mathematical preparation](https://qwenlm.github.io/blog/qwen2.5-math/).
+
+**RLM use may ask for unfamiliar combinations of familiar skills.** Knowing
+Python or answering questions does not guarantee knowing our tool interface,
+what a helper needs to know, or when to delegate. Think of an experienced
+programmer learning an unfamiliar software interface: relevant ability is not
+the same as immediate fluency in the new setting. This is a possible explanation
+to test, not proof that the earlier RLM difficulties had one cause. Some of our
+earlier routines did improve; combining them and transferring them reliably was
+harder.
+
+**The teaching analogy suggests possibilities.** Giving a child calculus
+problems and only saying “wrong” does not supply missing algebra skills. Showing
+a worked example, offering reachable practice, and gradually removing help
+suggest a possible model-training approach. The analogy is useful for proposing
+experiments; it does not establish a shared human/model learning mechanism.
+
+**We have an open research agenda, not a chosen recipe.** We can vary a prompt,
+teach one helper routine, compare teaching orders, explore more varied attempts,
+try error-and-repair examples, examine feedback, or change the starting model.
+Each small intervention asks what was blocking progress. If no successes appear,
+preparation may help. If successes appear but training does not improve, feedback
+and the learning procedure deserve attention too.
+
+The central test is independence: can the model solve new combinations after
+help is removed? Measure the original model, the prepared model, and the model
+after RL separately. That tells us whether a change improves the interface,
+teaches a routine, or enables additional learning from practice. Small tests
+should refine our ideas, including showing when an attractive idea does not help.
+
+The [revised seven-slide deck](../../slides/2026-10-07-r1-replication/research-update.pdf)
+and [speaker guide](../../slides/2026-10-07-r1-replication/speaker-guide.md)
+follow this story; the experimental details below remain available for questions.
 
 ## How this connects to our RLM research
 

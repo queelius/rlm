@@ -9,12 +9,31 @@ The latest benchmark observation remains 47/64 at update 192, checked at 20:22.
 
 ## Current lesson-centered slide map
 
-1. The reproduction occupies one slide: all seven monitor points, 20 to 47 of 64.
-2. Equal binary rewards give no within-question contrast. Curriculum is a proposal.
-3. A prompt can hide existing ability: matched 500-question before/after results.
-4. A proposed RLM curriculum: execute, call a helper, connect calls, choose a strategy.
-5. Prior work supports the ingredients, not our particular curriculum.
-6. A portfolio: missing skills, teaching order, exploration and recovery.
+1. Motivation: make successful attempts reachable before expecting reward to help.
+2. Math has a head start: prior mathematical competence, exploration and checked
+   answers. All seven monitor points remain visible, from 20 to 47 of 64.
+3. RLMs must combine skills in an unfamiliar workflow. The Mira example is
+   invented. The earlier audit records local gains with weaker transfer; it
+   does not establish distribution shift as the sole cause.
+4. Reachable practice: an algebra example and a child/calculus analogy explain
+   why mixed outcomes can help our reward comparison. The analogy is motivation,
+   not a claim that human and model learning mechanisms are identical.
+5. One possible teaching sequence: assess skills, demonstrate, practise, remove
+   help and test new combinations. It is not an established best curriculum.
+6. Different failures motivate preparation, exploration or feedback checks.
+7. An open agenda: small interventions can test several explanations. Examples
+   are not an exhaustive plan; preparation gains are separated from RL gains.
+
+The pretraining description is supported by the model authors' account of the
+[Qwen2.5-Math base-model training](https://qwenlm.github.io/blog/qwen2.5-math/#qwen25-math-base-models).
+It includes mathematical data and generated worked examples. Our measured base
+performance establishes useful starting ability; this experiment did not ablate
+pretraining or isolate its contribution relative to other differences from RLMs.
+Algorithm and related-paper details now sit in the speaker guide. The paired
+500-question prompt comparison is retained there and in the research overview;
+slide 2 visibly notes that the size of the gain depends on the starting prompt.
+No score, checkpoint choice, or scientific evidence cutoff changed in this
+narrative revision. The research run remains stopped.
 
 The fifteen-page guide and research portfolio additionally discuss parent/helper
 credit, teacher/student fit, scaffold dependence and transfer to new dependency
@@ -37,7 +56,7 @@ changes, not additional measured gains.
 
 ## Longer training progress
 
-Slide 1 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-2022.json):
+Slide 2 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-2022.json):
 20/64 before training, 42/64 after 32 completed updates, 42/64 after 64,
 43/64 after 96, 43/64 after 128, 48/64 after 160 and 47/64 after 192. Questions, reference answers, chat inputs, full checker and
 response limit are matched. All answers at every later point independently
@@ -118,8 +137,8 @@ also points to the external plan at
 `/project/alex_phd/runs/r1-zero-replication-20261007/LARGER4096_PLAN.md`.
 
 The learning-guide appendix explains the distinction. The current deck uses the
-monitor on slide 1 and the prompt-control table on slide 3; reference-model and
-additional training comparisons remain in the guide.
+monitor on slide 2; the prompt-control table, reference-model checks and additional
+training comparisons remain in the speaker and learning guides.
 
 ## Evaluation repeatability update, 12:53 UTC
 

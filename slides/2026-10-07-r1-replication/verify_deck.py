@@ -1,4 +1,4 @@
-"""Check this six-slide PDF and render its pages for visual review."""
+"""Check this seven-slide PDF and render its pages for visual review."""
 
 import json
 import unicodedata
@@ -9,7 +9,7 @@ import fitz
 root = Path(__file__).resolve().parent
 document = fitz.open(root / "research-update.pdf")
 notes = json.loads((root / "speaker-notes.json").read_text())["slides"]
-assert len(document) == len(notes) == 6
+assert len(document) == len(notes) == 7
 output = root / "rendered"
 output.mkdir(exist_ok=True)
 problems = []
@@ -26,5 +26,5 @@ for index, page in enumerate(document):
                     problems.append({"page": index + 1, "text": span["text"]})
     page.get_pixmap(matrix=fitz.Matrix(2, 2)).save(output / f"slide-{index + 1:02d}.png")
 assert not problems, problems
-print("Six slides; titles match notes; all text lies within the page bounds.")
+print("Seven slides; titles match notes; all text lies within the page bounds.")
 print("Rendered all pages. Visual inspection is still required.")

@@ -16,12 +16,27 @@
 \input{results.tex}
 \setbeamertemplate{footline}{\hspace{9mm}\scriptsize Lessons from math RL for RLMs | \EvidenceCutoff\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
 \newcommand{\aside}[1]{\vfill{\footnotesize\color{Gray}#1\par}}
-\hypersetup{pdftitle={What a small math RL reproduction teaches us about training RLMs},pdfauthor={Alex Towell}}
+\hypersetup{pdftitle={Preparing language models to learn from practice},pdfauthor={Alex Towell}}
 \begin{document}
 
 \begin{frame}[t]
-\frametitle{We reproduced RL-driven improvement at small scale.}
-\textbf{Why we did this:} Learn how to teach a recursive language model (RLM) to use code and delegate. First, practice reinforcement learning (RL) on checkable math answers.
+\frametitle{Before rewarding success, make success reachable.}
+\textbf{Our goal:} Teach a recursive language model (RLM) to solve problems by using Python, asking helpers, and combining their results.
+\medskip
+\begin{block}{The question behind our experiments}
+Why can reinforcement learning (RL) improve a math model, while our RLM training has struggled to produce reliable gains on new tasks?
+\end{block}
+\medskip
+\textbf{Working explanation:} Math training builds on relevant prior competence. An RLM may need help applying familiar skills in an unfamiliar workflow.
+\medskip
+
+\textbf{Teaching implication:} Check what the learner can already do, teach the missing pieces, then give it useful practice and feedback.
+\aside{RL learns from scored attempts. An RLM combines language-model calls with a code workspace. We are exploring what preparation makes this learning effective.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Math RL builds on a strong head start.}
+\textbf{Pretraining did much of the preparation:} our starting model had already learned from extensive mathematical text and worked solutions.
 \medskip
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
@@ -41,126 +56,113 @@
 \end{column}
 \begin{column}{0.44\textwidth}
 \small
-Authors' \textbf{Dr.\ GRPO} code; pretrained \textbf{Qwen2.5-Math-1.5B}; one A100.
+\textbf{Prior skill:} it can already solve some problems.
 \medskip
 
-Eight attempts per training question; reward correct final answers. No added supervised fine-tuning (SFT).
+\textbf{Exploration:} multiple attempts reveal successes and mistakes.
 \medskip
 
-\textbf{20 to 47 correct.} The reproduction served its purpose. Now carry the teaching lessons into RLM experiments.
+\textbf{Feedback:} an answer checker distinguishes them, giving training something useful to reinforce.
 \end{column}
 \end{columns}
-\aside{Same 64-question development subset; one greedy answer, same chat prompt and full answer checker. Training stopped by choice; this reproduces improvement, not the paper's full benchmark score.\\
-Liu et al., \href{https://arxiv.org/abs/2503.20783}{\textit{Understanding R1-Zero-Like Training}} (2025).}
+\aside{One greedy answer per question, fixed prompt and checker; repeatedly inspected development set. Small-scale improvement, not a full-benchmark replication. Prompt choice matters.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Useful practice is neither all wrong nor all right.}
-\textbf{Example:} Solve $3x+2=14$. Answer $x=4$ earns 1; $x=5$ earns 0.\\
-Dr.\ GRPO compares rewards with their \textbf{same-question average}.
+\frametitle{An RLM must combine skills in a new setting.}
+Knowing Python or answering questions does not guarantee knowing \textbf{our tool interface}, \textbf{what to delegate}, or \textbf{what a helper needs to know}.
+\medskip
+\begin{block}{Invented example: which city does Mira work in?}
+One document says ``Mira works at Aster Lab.'' Another says ``Aster Lab is in Oxford.'' To find the city, the second helper needs \emph{Aster Lab}, not just ``find the city.''
+\end{block}
+\medskip
+An attempt can fail through a bad call, missing context, a mistaken helper, or a bad plan. A final ``wrong'' score does not say which one to repair.
+
+\medskip
+\textbf{Our history:} some routines improved; reliable transfer to new combinations remained limited.
+\aside{An unfamiliar workflow is a possible distribution shift, not a measured explanation of every earlier failure.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Useful practice is challenging, but within reach.}
+\textbf{Human analogy:} a child missing algebra needs more than a calculus test marked ``wrong.'' A simpler exercise and a worked example give a place to start.
+
+\medskip
+\textbf{Model example:} Solve $3x+2=14$. An attempt answering $x=4$ succeeds; one answering $x=5$ fails.
 \smallskip
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
-\begin{tabular}{lll}
+\begin{tabular}{ll}
 \toprule
-Eight attempts on one problem & Scores & Relative signal \\
+Attempts on the same problem & What the reward comparison offers \\
 \midrule
-All wrong & Eight zeros & None \\
-Some right, some wrong & A mix of 1 and 0 & Learn from the contrast \\
-All right & Eight ones & None \\
+All wrong & No successful example to favor \\
+Some right, some wrong & A contrast to learn from \\
+All right & No distinction between attempts \\
 \bottomrule
 \end{tabular}
 \end{center}
-\begin{block}{Why curriculum could help}
-Practice problems the model can sometimes solve. Teach missing skills when needed, then increase difficulty as the model improves.
-\end{block}
-\aside{Contrast must occur within a question, not just across easy and hard questions. This concerns binary group-relative rewards, not all RL. Mixed scores do not guarantee learning. Related: \href{https://arxiv.org/html/2503.14476v1}{DAPO's filtering of uniform-reward groups}.}
+\textbf{Curriculum idea:} choose reachable challenges and increase difficulty as skills develop.
+\aside{Human learning is an analogy. The reward comparison here is specific to our method; other kinds of RL can learn from other feedback.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Existing skill needs a usable interface.}
-\textbf{Our prompt check:} same two models, same 500 MATH500 questions.
-\smallskip
-\begin{center}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lrr}
-\toprule
-How we ask & Before RL & After short chat-style RL \\
-\midrule
-Chat instructions & 154 / 500 & 308 / 500 \\
-Question alone & 305 / 500 & 317 / 500 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\smallskip
-\textbf{Lesson:} A poor interface can hide ability and inflate the apparent training gain. Test a capable starting setup.
-\medskip
-
-\textbf{RLM implication:} Before expecting good decomposition, show how to run Python, call a helper, pass the needed context, and read its real return.
-\aside{SFT means learning by copying demonstrations; it is optional before RL. Our earlier RLM work already learned some executable routines, with limited transfer. The open question is what preparation enables flexible combinations, not whether we ever taught tool use.}
-\end{frame}
-
-\begin{frame}[t]
-\frametitle{Teach the interface, then practice useful choices.}
-\textbf{Proposed curriculum:} build on skills the model can already demonstrate.
+\frametitle{Teach, practise, remove help, then test transfer.}
+\textbf{One possible approach, inspired by teaching:} watch a worked example, solve with hints, then solve a new problem independently.
 \medskip
 \begin{center}
 \begin{tikzpicture}
 \tikzset{skill/.style={draw=Teal,fill=Soft,rounded corners,align=center,text width=2.65cm,minimum height=1.75cm,font=\small}}
-\node[skill] (a) at(0,0) {\textbf{1. Use Python}\\Read real\\code results.};
-\node[skill] (b) at(3.45,0) {\textbf{2. Call a helper}\\Include the\\needed context.};
-\node[skill] (c) at(6.90,0) {\textbf{3. Link calls}\\Pass facts to\\the next call.};
-\node[skill] (d) at(10.35,0) {\textbf{4. Choose a plan}\\Decide when\\to delegate.};
+\node[skill] (a) at(0,0) {\textbf{Check skills}\\Use code.\\Read its output.};
+\node[skill] (b) at(3.45,0) {\textbf{Show examples}\\Pass facts\\to a helper.};
+\node[skill] (c) at(6.90,0) {\textbf{Practise choices}\\Try plans.\\Reward success.};
+\node[skill] (d) at(10.35,0) {\textbf{Remove help}\\Solve new tasks\\without hints.};
 \draw[->,Teal,thick] (a)--(b);
 \draw[->,Teal,thick] (b)--(c);
 \draw[->,Teal,thick] (c)--(d);
 \end{tikzpicture}
 \end{center}
 \medskip
-\textbf{Invented example:} Document 1 says ``Mira works at Aster Lab.'' Document 2 says ``Aster Lab is in Oxford.'' To find Mira's work city, pass \emph{Aster Lab} to the next lookup, then use its returned city: \emph{Oxford}.
+\textbf{For the RLM:} first demonstrate passing an employer's name to a helper. Later, omit that hint and ask it to decide which facts and helpers it needs.
 \medskip
 
-Use demonstrations or SFT where needed; then let RL practice alternatives. More attempts and modest temperature changes may reveal rare successes.
-\aside{Hypothesis, not an established curriculum. Progressively remove help, but keep some earlier skills in practice. Verify actual tool returns; reward task success, not extra calls. Related: \href{https://arxiv.org/html/2512.24601v3}{RLM training}, \href{https://arxiv.org/html/2501.12948v1}{DeepSeek-R1 cold start}.}
+\textbf{The real test:} can it use the skills in a new situation, rather than repeat a taught routine?
+\aside{One hypothesis to test. Examples can be shown in a prompt or learned through supervised fine-tuning (SFT). Teach missing skills, not everything from scratch.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Prior work supports the ingredients, not our sequence.}
-\begin{block}{DAPO: spend updates on informative attempts}
-Its dynamic sampling removes groups that are all correct or all wrong. This directly connects to our reward-contrast lesson.
+\frametitle{Different failures need different interventions.}
+\begin{block}{It cannot produce a successful attempt}
+Clarify the interface, show a verified example, simplify the task, or try a more capable starting model. More retries alone may repeat the same failure.
 \end{block}
-\smallskip
-\textbf{Recursive Language Models:} The authors train a smaller model on filtered demonstrations of environment use and recursive calls.
-\medskip
-
-\textbf{DeepSeek-R1:} Uses supervised preparation before RL; R1-Zero does not. Preparation is a design choice, not a universal requirement.
-\medskip
-
-\textbf{Our next questions:} Which skills, teaching examples, exploration choices, and feedback make RLM learning work?
-\aside{Sources: \href{https://arxiv.org/html/2503.14476v1}{DAPO \S3.2}; \href{https://arxiv.org/html/2512.24601v3}{RLM v3 \S3.2 and Appendix A}; \href{https://arxiv.org/html/2501.12948v1}{DeepSeek-R1 \S2.3.1}. These motivate an experiment; they do not establish our curriculum or its novelty.}
+\begin{block}{It succeeds occasionally}
+More attempts or more varied plans may expose successes that RL can reinforce. Higher sampling temperature can add variety, but also invalid calls.
+\end{block}
+\begin{block}{It has successes and failures, but does not improve}
+Check the feedback and weight updates. Does the score reward actual success? Can training identify which earlier decisions helped?
+\end{block}
+\aside{Possible remedies, not established diagnoses. More attempts cost compute; more randomness is not necessarily more useful exploration.}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{A portfolio of small experiments, not one settled story.}
-\begin{block}{First locate the failure; then change one thing.}
-Curriculum is one promising idea. Missing skills, poor exploration, and misleading feedback need different remedies.
-\end{block}
-\smallskip
+\frametitle{An open agenda of small experiments.}
+\textbf{We are exploring, not choosing a final recipe.} These are examples of questions we can test, not an exhaustive plan.
+\medskip
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{p{0.32\textwidth}p{0.59\textwidth}}
+\begin{tabular}{p{0.30\textwidth}p{0.61\textwidth}}
 \toprule
-Question & Small comparison \\
+Possible explanation & Small comparison \\
 \midrule
-Missing tool skills? & Prompt examples vs. demonstrations of tool use \\
-Does teaching order help? & Same examples: staged vs. shuffled \\
-Too little exploration? & More attempts or varied plans, same total budget \\
-Can it use feedback? & Successful-only vs. error-and-repair examples \\
+Ability is hidden & Same weights; clearer prompt or tool example. \\
+A skill is missing & Teach one verified helper routine; test a new case. \\
+Teaching order matters & Same examples and budget; staged vs. shuffled. \\
+Successes are too rare & Vary attempts or plans; keep total cost comparable. \\
 \bottomrule
 \end{tabular}
 \end{center}
-\smallskip
-\textbf{For each:} Check before/after RL; test new combinations, not just longer inputs.
-\aside{Proposals, not results. Match compute and helper models. Track real execution, correct information passing, and final answers. Replicate promising effects; keep failures.}
+\medskip
+\textbf{For each:} measure after preparation, then after RL. Remove hints and test new combinations. Preparation working is not yet evidence that RL helped.
+\aside{Other possibilities: error-and-repair examples, stronger starting models, better feedback, and different helper roles. Change one factor; use what we learn to refine, expand or retire ideas.}
 \end{frame}
 \end{document}

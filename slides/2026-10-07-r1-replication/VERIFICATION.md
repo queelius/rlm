@@ -1,5 +1,28 @@
 # Presentation verification
 
+## Big picture and exploratory research agenda
+
+- Rebuilt the deck as seven slides about prior competence, unfamiliar RLM
+  workflows, reachable practice, teaching, exploration and transfer. Kept the
+  unchanged seven-point math curve on one slide. Replaced the algorithm/paper
+  survey with an open set of possible interventions and small comparisons.
+- Retained the distinctions that affect the story: earlier RLM routines did
+  improve; distribution shift is a possible explanation, not an isolated cause;
+  preparation gains must be separated from subsequent RL gains. The human
+  learning examples are analogies, not evidence of identical mechanisms.
+- Read the model authors' pretraining description and the reproduction paper's
+  competence/template discussion. Technical details and source links are in the
+  rewritten speaker guide; the overview and evidence map match the new narrative.
+  Scientific results and the 20:56 UTC evidence cutoff are unchanged.
+- Tectonic build passed without overfull or underfull boxes. Seven PDF titles
+  match seven notes; all text is within page bounds. Notes have 12, 12, 12, 12,
+  13, 12 and 12 lines, each at most 42 characters. Read back the wrapped notes.
+- Visually inspected all seven slides. Added paragraph separation to the
+  examples and shortened diagram labels to remove awkward word breaks, rebuilt,
+  and visually rechecked slides 3–5. Both Make launch modes retain the correct
+  notes file and now use an advisory eight-minute timer. No live GUI test on
+  this headless server. Training remains stopped.
+
 ## Local pdfpc presentation setup
 
 - Kept the existing `make present` and `make rehearse` launch commands and
