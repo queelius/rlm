@@ -6,7 +6,7 @@ The immediate question is: **Can we take an existing language model, reward its 
 
 So far, we can run the training and obtain a large improvement when testing with one particular kind of prompt. But a better prompt already gets much of that performance from the untrained starting model. We have not yet reproduced the paper's substantial improvement beyond that stronger starting point. That distinction is the central lesson so far.
 
-Results below were checked through **7 October 2026, 18:20 UTC**. The smaller follow-up experiments described below are being prepared; they have not produced results yet.
+Results below were checked through **7 October 2026, 19:00 UTC**. The smaller follow-up experiments described below are prepared but have not started.
 
 ## How this connects to our RLM research
 
@@ -77,11 +77,11 @@ The ongoing run starts from the original model and is scheduled to train on 4,08
 
 Its fixed 64-question progress checks are:
 
-| Completed weight updates | 0 | 32 | 64 | 96 |
-| --- | ---: | ---: | ---: | ---: |
-| Correct answers out of 64 | 20 | 42 | 42 | 43 |
+| Completed weight updates | 0 | 32 | 64 | 96 | 128 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Correct answers out of 64 | 20 | 42 | 42 | 43 | 43 |
 
-The early gain persists, but the score has changed little since update 32. At the latest check, five answers improved and four became wrong. A nearly flat total does not mean the model stopped changing.
+The early gain persists, but the score has changed little since update 32. At the latest check, one answer improved and one became wrong. A flat total does not mean every answer stayed the same. We have not separated the effects of training from variation in generation.
 
 The latest 43/64 is 67.2%. **It is not a measured score of 67.2% on all 500 questions**, and it is not a prediction of the final model's score.
 
@@ -99,7 +99,7 @@ Our completed short chat-style result is 61.6%; the longer run's full benchmark 
 
 The current longer run will finish its fixed budget, then evaluate the final model on all 500 questions and two other math collections: AMC and Minerva. Those additional collections test whether any gain extends beyond MATH500. They do not test RLM delegation.
 
-For subsequent exploration, speed now takes priority. We are preparing three shorter runs on the same 512 training questions, with the same fixed 128-question evaluation:
+For subsequent exploration, speed now takes priority. We have prepared three shorter runs on the same 512 training questions, with the same fixed 128-question evaluation:
 
 | Experiment | What changes | What it can teach us |
 | --- | --- | --- |
@@ -125,5 +125,5 @@ The goal is to return to RLM training with a clearer understanding of useful rew
 
 - [Five-slide overview](../../slides/2026-10-07-r1-replication/research-update.pdf): the motivation and the two central charts.
 - [Detailed learning guide](learning-guide.pdf): worked examples and a fuller explanation of the experiments.
-- [Latest checked evidence](interim-monitor-1820.json): exact counts, saved-result identifiers, checks and limitations.
+- [Latest checked evidence](interim-monitor-1900.json): exact counts, saved-result identifiers, checks and limitations.
 - [Research record](README.md): the chronological account, including unsuccessful attempts and earlier findings.

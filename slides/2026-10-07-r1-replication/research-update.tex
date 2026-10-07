@@ -120,15 +120,15 @@ We test on \textbf{MATH500: 500 math questions excluded from our weight training
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
 \begin{center}
-\begin{tikzpicture}[x=0.052cm,y=0.040cm]
-\draw[Gray] (0,0)--(102,0);
+\begin{tikzpicture}[x=0.040cm,y=0.040cm]
+\draw[Gray] (0,0)--(134,0);
 \draw[Gray] (0,0)--(0,66);
-\foreach \y in {0,32,64} {\draw[Gray!25] (0,\y)--(99,\y);\node[left,font=\small] at(0,\y){\y};}
-\foreach \x in {0,32,64,96} {\node[below,font=\small] at(\x,0){\x};}
-\draw[Teal,very thick] (0,20)--(32,42)--(64,42)--(96,43);
+\foreach \y in {0,32,64} {\draw[Gray!25] (0,\y)--(132,\y);\node[left,font=\small] at(0,\y){\y};}
+\foreach \x in {0,32,64,96,128} {\node[below,font=\small] at(\x,0){\x};}
+\draw[Teal,very thick] (0,20)--(32,42)--(64,42)--(96,43)--(128,43);
 \fill[Teal] (0,20) circle(2.5pt);\node[above right,font=\normalsize\bfseries] at(0,20){20};
-\foreach \x/\y in {32/42,64/42,96/43} {\fill[Teal] (\x,\y) circle(2.5pt);\node[above,font=\normalsize\bfseries] at(\x,\y){\y};}
-\node[below,font=\small] at(49,-9){Completed weight updates};
+\foreach \x/\y in {32/42,64/42,96/43,128/43} {\fill[Teal] (\x,\y) circle(2.5pt);\node[above,font=\normalsize\bfseries] at(\x,\y){\y};}
+\node[below,font=\small] at(64,-9){Completed weight updates};
 \end{tikzpicture}
 \end{center}
 \end{column}
@@ -137,7 +137,7 @@ We test on \textbf{MATH500: 500 math questions excluded from our weight training
 One training run, with the same questions, chat-style input, checker, and answer-length limit.
 \medskip
 
-At the last check, five answers improved and four became wrong. The total rose by just one.
+At the last check, one answer improved and one became wrong. The total stayed at 43.
 \end{column}
 \end{columns}
 \medskip

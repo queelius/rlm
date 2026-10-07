@@ -1,5 +1,20 @@
 # Completed short LLM RL reproduction
 
+## New monitor point, 19:00 UTC
+
+The update-128 check is **43/64**, unchanged from update 96. One question improved
+and one regressed. All 64 answers independently regrade; question, reference and
+formatted-input checks agree across all five points: **20, 42, 42, 43, 43**.
+The longer run's early gain persists but further monitored improvement is small.
+This is not a final MATH500 score or a demonstrated gain over the stronger base.
+See [the new receipt](interim-monitor-1900.json).
+
+At the cutoff, training had completed 129 learning calls, with 129 finite positive
+gradient norms and no logged training traceback or CUDA OOM. Model and optimizer
+checkpoint labels 120 and 128 were present. Continue the existing whole owner,
+its four final-evaluation jobs, and the prepared smaller-run queue below.
+The overview, chart, slides, notes and learning guide now use the 19:00 cutoff.
+
 ## Reading package and next experiments, 18:40 UTC
 
 Start with [the self-contained overview](START-HERE.md). It explains our longer-term

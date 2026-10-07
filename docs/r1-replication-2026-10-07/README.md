@@ -4,13 +4,13 @@
 This self-contained overview is the recommended first read. The chronological
 notes below provide the supporting detail.
 
-**Latest check, 7 October at 18:20 UTC:** The longer run has reached 99
+**Latest check, 7 October at 19:00 UTC:** The longer run has reached 129
 completed learning calls without a logged training error. Its scheduled
-64-question scores are **20, 42, 42, 43** at 0, 32, 64 and 96 updates.
+64-question scores are **20, 42, 42, 43, 43** at 0, 32, 64, 96 and 128 updates.
 All 64 answers at the newest point were independently regraded and agree.
-Five answers improved and four became wrong since the previous check: a net
-gain of one, not yet a dependable new improvement. See the
-[complete curve, checks and examples](interim-monitor-1820.json).
+One answer improved and one became wrong since the previous check: no net
+gain. The early gain persists, but the small monitoring score has barely
+changed since update 32. See the [complete curve and checks](interim-monitor-1900.json).
 
 One revealing failure: the model wrote code-like text and claimed a pair of
 integers solved an equation, but substituting those integers gives 128 when
@@ -18,7 +18,7 @@ the question requires 100. This experiment does **not** execute generated
 code. A claimed program output is still just model text. The learning guide
 now walks through this and a corrected dice-probability answer.
 
-The five-slide PDF and learning PDF use an 18:20 UTC evidence cutoff. Final
+The five-slide PDF and learning PDF use a 19:00 UTC evidence cutoff. Final
 MATH500, AMC and Minerva scores from the ongoing run remain pending. The
 accepted training and evaluation schedule is unchanged.
 
@@ -32,7 +32,7 @@ See [Table 1 and Appendix B, Table 4](https://arxiv.org/html/2503.20783v2#A2).
 
 Our completed short chat-trained run went from 30.8% to 61.6% on all500
 questions in chat style, a 30.8-point gain. Our ongoing run's fixed64 monitor
-went from20/64 (31.25%) to43/64 (67.19%) after96 updates, a35.94-point gain
+went from20/64 (31.25%) to43/64 (67.19%) after128 updates, a35.94-point gain
 under the same chat setup. The latter is not a measured full500 result or
 a reliable prediction of the final score. In our completed full500 tests,
 the stronger question-only base was61.0%; the chat-trained model in that
@@ -55,14 +55,17 @@ sampled windows, even after a rough adjustment for problem level and subject,
 but different questions prevent treating that as a controlled learning curve.
 See the [training audit](training-signals-1740.json).
 
-The next ranked comparisons keep the original base model, data, checker,
-and prescribed endpoint: first a learning rate of 0.000005 instead of 0.000001;
-then, separately, two learning passes per sampled batch instead of one.
+The next comparisons use three fresh starts from the original model on the
+same smaller set of 512 training questions: the current learning rate, a rate
+of 0.000005 instead of 0.000001, and two learning passes per batch instead of one.
+Every prescribed final model will be compared with a fresh baseline on the same
+128 evaluation questions in both input formats. The prepared runs have not started.
 The higher rate is motivated by a
 [same-model Dr. GRPO follow-up, Appendix A.3](https://arxiv.org/html/2607.01232v1#A1.SS3),
 not by a search for the best test checkpoint. Neither comparison has run yet.
-The [recipe audit and bounded experiment plans](recipe-opportunities-1745.json)
-record their exact budgets and remaining differences from the published work.
+The [current smaller-run plan](../../experiments/r1_replication_20261007/quickscreen512-readiness.json)
+records the budgets; the [earlier recipe audit](recipe-opportunities-1745.json)
+explains remaining differences from the published work.
 The current run and its six final test conditions stay unchanged.
 
 **Earlier intermediate check, 7 October at 17:37 UTC:** The longer run was still training.
@@ -225,7 +228,7 @@ unchanged weights reproduced all 500 saved answers byte-for-byte, including
 [repeatability receipt](grpo-repeatability-receipt.json). The bounded batch is
 complete; the [handoff](HANDOFF.md) records what to retain and what to try next.
 
-The five-slide deck now has an 18:20 cutoff. It retains the central prompt-format
+The five-slide deck now has a 19:00 cutoff. It retains the central prompt-format
 comparison and authors' released-model check, and adds the longer run's
 intermediate learning curve.
 The small GRPO comparison remains in the supporting account, not a claim that

@@ -28,7 +28,7 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 18:20 UTC.
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 19:00 UTC.
   Short-run results and evaluation repeats retained. Authors' released-model
   check completed; longer training underway, intermediate checks on page 9.}
 \begin{document}
@@ -526,7 +526,7 @@ The \href{longer-training-plan.md}{accepted protocol} fixes the endpoint;
 the \href{longer-loader-receipt.json}{original loader check} records the excluded prompts.
 Completion still requires checking actual run counters.
 \newpage
-\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 18:20 UTC}
+\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 19:00 UTC}
   {Is the longer run learning more?}
 
 The longer run is still in progress. The table below contains every scheduled
@@ -535,21 +535,21 @@ answers on the same 64 questions, with chat-style input, greedy generation,
 a 3000-token response limit, and the full answer checker.
 
 \begin{center}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrrrr}
 \toprule
-Completed weight updates & 0 & 32 & 64 & 96 \\
+Completed weight updates & 0 & 32 & 64 & 96 & 128 \\
 \midrule
-Correct final answers out of 64 & 20 & 42 & 42 & 43 \\
+Correct final answers out of 64 & 20 & 42 & 42 & 43 & 43 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 We independently regraded all 64 answers at each later point. Every result
 agreed with the saved score, and the questions, reference answers and input
-format matched the starting check. Relative to the start, update 96 gained 26
-answers and lost three. Between 64 and 96, five answers improved and four
-regressed. That is only one more correct answer overall, not a breakthrough.
-The model continues changing even when the total score barely moves.
+format matched the starting check. Relative to the start, update 128 gained 26
+answers and lost three. Between 96 and 128, one answer improved and one
+regressed. The total stayed at 43. A flat score does not mean identical answers;
+we have not separated effects of training from variation in generation.
 
 \topic{What this does and does not show}
 
@@ -584,9 +584,9 @@ run uses the full checker already. We must not compare a native fast-checker
 score against a full-checker score without saying so. Final 500-question comparisons
 throughout this guide already use the same full checker.
 
-The fixed monitoring points 32, 64 and 96 follow that many completed updates.
+The monitoring points 32, 64, 96 and 128 follow that many completed updates.
 The final bookkeeping label 256 is different: it follows 255 completed updates.
-See \href{interim-monitor-1820.json}{intermediate evidence} and the companion
+See \href{interim-monitor-1900.json}{intermediate evidence} and the companion
 research record for raw-file hashes and the latest operational status.
 \newpage
 \pagetitle{TWO ACTUAL ANSWERS \quad | \quad 7 OCTOBER, 18:20 UTC}

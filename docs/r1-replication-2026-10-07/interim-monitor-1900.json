@@ -1,0 +1,177 @@
+{
+  "checked_at_utc": "2026-10-07T19:00:35.979505+00:00",
+  "run": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4/debug_1007T16:02:41",
+  "scope": "Scheduled development-monitor check, not final500 endpoint",
+  "evaluation": "Same64 questions, qwen_math input, one greedy answer,3000token cap, full verifier",
+  "points": [
+    {
+      "update": 0,
+      "correct": 20,
+      "n": 64,
+      "file": "eval_results/0_math.json",
+      "sha256": "223106f41ad7eb9e99b4cae0cc8547b5c54512219139c3c0ea3a2bec70004511"
+    },
+    {
+      "update": 32,
+      "correct": 42,
+      "n": 64,
+      "file": "eval_results/32_math.json",
+      "sha256": "7f422ea1e1f9c52e0de494a49389f60a02f999847e9e7dcf62527b7b73b0711f"
+    },
+    {
+      "update": 64,
+      "correct": 42,
+      "n": 64,
+      "file": "eval_results/64_math.json",
+      "sha256": "6a8f50d577f06d61873b9fef3bb96babc78f191b12bd42b95e2df2c409b6d2b7"
+    },
+    {
+      "update": 96,
+      "correct": 43,
+      "n": 64,
+      "file": "eval_results/96_math.json",
+      "sha256": "b7aab639b850dc963d9e3ebedc46f46e0a237afb2d99396d680861d4074c29b5"
+    },
+    {
+      "update": 128,
+      "correct": 43,
+      "n": 64,
+      "file": "eval_results/128_math.json",
+      "sha256": "8622aaf4e2e0a4c77a9bf596cdab4579bf7ee81bca92fec4a60df55e4a35637c"
+    }
+  ],
+  "independent_regrade_mismatches": [],
+  "formatted_answers": 60,
+  "source_input_reference_alignment_errors": [],
+  "paired_changes_to_128": {
+    "0": {
+      "gains": [
+        0,
+        4,
+        5,
+        8,
+        11,
+        13,
+        14,
+        15,
+        16,
+        17,
+        22,
+        28,
+        30,
+        37,
+        41,
+        42,
+        45,
+        46,
+        48,
+        49,
+        52,
+        53,
+        54,
+        55,
+        56,
+        60
+      ],
+      "losses": [
+        12,
+        34,
+        57
+      ],
+      "identical_answers": 1
+    },
+    "32": {
+      "gains": [
+        0,
+        4,
+        8,
+        11,
+        41,
+        48,
+        49,
+        53,
+        56
+      ],
+      "losses": [
+        3,
+        10,
+        12,
+        27,
+        29,
+        31,
+        34,
+        57
+      ],
+      "identical_answers": 5
+    },
+    "64": {
+      "gains": [
+        11,
+        37,
+        48,
+        53,
+        56
+      ],
+      "losses": [
+        10,
+        12,
+        31,
+        57
+      ],
+      "identical_answers": 16
+    },
+    "96": {
+      "gains": [
+        41
+      ],
+      "losses": [
+        31
+      ],
+      "identical_answers": 23
+    }
+  },
+  "latest_training_check": {
+    "completed_learning_calls": 129,
+    "last_printed_sgd": 129,
+    "gradient_count": 129,
+    "all_gradients_finite_positive": true,
+    "last_gradient_norms": [
+      0.012964637950062752,
+      0.014854162000119686,
+      0.01601403020322323,
+      0.021247239783406258
+    ],
+    "tracebacks": 0,
+    "CUDA_OOMs": 0,
+    "saved_model_labels": [
+      "step_00128",
+      "step_00120"
+    ],
+    "saved_optimizer_labels": [
+      "step_00128",
+      "step_00120"
+    ]
+  },
+  "illustrative_changes": [
+    {
+      "index": 41,
+      "change": "wrong to correct",
+      "summary": "An equal-grouping problem changes from an incorrect perfect-square test to the relevant prime-number test."
+    },
+    {
+      "index": 31,
+      "change": "correct to wrong",
+      "summary": "A symmetric-polynomial problem changes from6 to7 after an incorrect algebraic setup."
+    }
+  ],
+  "interpretation": "The large early chat-format gain persists, but additional scheduled training has barely changed this small monitor since update32. Between96 and128 one question improves and one regresses; this is not a new net gain.",
+  "limits": [
+    "One ongoing training run",
+    "Small repeatedly observed development monitor",
+    "No current full500 endpoint",
+    "Not proof of superiority over the stronger question-only base",
+    "Answer changes can reflect training and generation variability; this audit does not isolate their causes"
+  ],
+  "decision": "Continue the fixed255-update owner and all six final conditions. Keep the three-arm512 training/128-evaluation screen ready after the whole owner releases; test learning rate and response-batch reuse, retaining all arms.",
+  "prior_training_audit": "/project/alex_phd/runs/r1-zero-replication-20261007/reviews-longer-v4/review-1791398772-48d84fa2-decision.json"
+}

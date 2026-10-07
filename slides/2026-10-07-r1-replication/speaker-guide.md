@@ -1,6 +1,6 @@
 # Learning from correct answers: a small reproduction
 
-Evidence cutoff: 7 October 2026, 18:20 UTC. Aim for about five minutes.
+Evidence cutoff: 7 October 2026, 19:00 UTC. Aim for about five minutes.
 The main lesson is about the starting prompt and the format used in training.
 Chat-style training raised scores from 154 to 308 out of 500 with chat input,
 but from 305 to 317 with the question alone. A second run trained on questions
@@ -13,7 +13,7 @@ one to hide behind the first run's better score. A separate evaluation of the
 authors' released model now scores 366/500 (73.2%), close to their reported
 74.2%. That checks our evaluation on their weights; it is not our training
 result. A larger run is now training. On the same 64 progress-check questions,
-it scored 20 before training, then 42, 42 and 43 after 32, 64 and 96 updates.
+it scored 20 before training, then 42, 42, 43 and 43 after 32, 64, 96 and 128 updates.
 Those are intermediate checks, not a completed 500-question test.
 
 ## 1. Why start with this experiment? (45 seconds)
@@ -160,9 +160,9 @@ established its cause. We did not use this variation to select a model.
 ## 5. What does the longer run show so far? (60 seconds)
 
 Say: “We are now training longer on more math questions. On the same 64
-progress-check questions, the scores were 20, 42, 42 and 43. The latest gain
-is small: five answers improved and four became wrong between the last two
-checks. We will finish the planned training
+progress-check questions, the scores were 20, 42, 42, 43 and 43. At the latest
+check, one answer improved and one became wrong. There was no net gain.
+We will finish the planned training
 budget and test its final model on the full 500 questions and two other math
 collections. We have not yet shown a dependable improvement over the stronger
 starting setup.”
@@ -173,7 +173,9 @@ same questions, chat-style input, full answer checker, and response limit.
 The curve shows all scheduled checks available at this cutoff. It does not
 select the most favorable checkpoint.
 
-Why not call 43/64 a new breakthrough? It is a small set inspected repeatedly.
+Why not call 43/64 a breakthrough? It is a small set inspected repeatedly,
+with little further improvement since the early gain. Changed answers can
+reflect both training and generation variability; we have not isolated those causes.
 The earlier short model also answered 42 of these questions correctly when
 they were generated as part of a full500 batch. The original model given
 questions alone answered 39 of them correctly in its full500 batch.

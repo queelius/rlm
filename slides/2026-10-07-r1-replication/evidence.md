@@ -1,9 +1,9 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 18:20 UTC. The fourth longer-training attempt is
+Cutoff: 7 October 2026, 19:00 UTC. The fourth longer-training attempt is
 underway. Its final benchmarks are pending; completed short-run scores are unchanged.
 
-Presentation revision at 18:30 UTC, without changing the evidence cutoff:
+Earlier presentation revision at 18:30 UTC, then using the 18:20 cutoff:
 slide 4 now plots the same two models in both input formats, 154 to 308 and
 305 to 317 correct out of 500. Both lines use the same original and final
 chat-trained weights. Separate question-only runs' gains of 9 and 1 remain
@@ -13,17 +13,18 @@ changes, not additional measured gains.
 
 ## Longer training progress
 
-Slide 5 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-1820.json):
-20/64 before training, 42/64 after 32 completed updates, 42/64 after 64 and
-43/64 after 96. Questions, reference answers, chat inputs, full checker and
+Slide 5 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-1900.json):
+20/64 before training, 42/64 after 32 completed updates, 42/64 after 64,
+43/64 after 96 and 43/64 after 128. Questions, reference answers, chat inputs, full checker and
 response limit are matched. All answers at every later point independently
-regrade without a mismatch. Between the last two points, five answers improved
-and four regressed. A net gain of one is not yet a reliable new improvement.
+regrade without a mismatch. Between the last two points, one answer improved
+and one regressed. There is no new net gain, and little change since update 32.
+Answer changes alone do not distinguish training effects from generation variability.
 
 This is a repeatedly examined development subset, one ongoing run, and not a
 full500 endpoint. It does not establish improvement beyond the stronger base
 or the short trained models. We retain every scheduled point, not a best point.
-Native labels 32, 64 and 96 follow that many completed updates; the forced final
+Native labels 32, 64, 96 and 128 follow that many completed updates; the forced final
 label 256 instead follows 255 updates without adding another update.
 
 ## Authors' released model: an evaluation check, not our training result

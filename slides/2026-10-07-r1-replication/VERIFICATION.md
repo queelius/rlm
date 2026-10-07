@@ -1,5 +1,20 @@
 # Presentation verification
 
+## Scheduled update 128, 19:00 UTC on 7 October
+
+- All 64 new answers independently regrade, with exact question, reference and
+  formatted-input alignment across all five scheduled checks. Scores are
+  20, 42, 42, 43, 43. The last comparison has one gain and one loss; no net gain.
+- Updated slide 5's curve and explanation, visible cutoff, concise notes,
+  speaker guide, evidence, overview and learning guide together. The examples
+  from updates 64 and 96 remain explicitly identified as earlier examples.
+- Both PDFs compile with no overfull or underfull warnings. The deck contains
+  five slides, with matching titles and notes; notes pass the 14-line and
+  42-character wrap check. All text spans fit the five-slide and ten-page PDFs.
+- Visually inspected changed slide 5 and learning-guide page 9 after rendering.
+  Regenerated both GitHub overview chart PNGs from the revised PDF. No live
+  presenter-GUI test. The small monitor remains separate from full500 results.
+
 ## Chart and overview revision at 18:30 UTC
 
 - Kept the 18:20 scientific cutoff. Converted slide 4's main comparison to
