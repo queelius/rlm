@@ -19,8 +19,10 @@ for its score. The new model's capped responses are 19 with questions alone and
 training did not produce the large chat-response recovery of chat-style training.
 We have not isolated every cause of the contrast between the training runs.
 
-Fixed-weight question-only evaluation repeats are running, and a fresh training
-repeat is prepared. Neither may replace these first scores with better ones.
+Update at 11:42 UTC: both fixed-weight question-only evaluations repeated
+byte-for-byte, retaining scores of 305 and 314. All repeated answers were
+regraded and source-checked. A fresh training repeat started at 11:41 and has
+no result yet. Neither check may replace the first scores with better ones.
 
 ## Main slide result: same weights tested with two prompt formats
 

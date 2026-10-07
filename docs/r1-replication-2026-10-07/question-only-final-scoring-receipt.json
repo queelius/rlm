@@ -1,6 +1,6 @@
 {
   "cutoff_utc": "2026-10-07T11:34:00Z",
-  "status": "Both first final evaluations complete; fixed-weight repeats pending",
+  "status": "Both first final evaluations complete; fixed-weight repeats also verified at11:41UTC",
   "question": "Does the same short RL recipe improve on the stronger question-only starting format?",
   "training": "Fresh original base, same 512 questions, 32 updates, learner seed42, official no-template option. Independent of the earlier chat-trained model.",
   "training_receipt": "question-only-training-receipt.json",
@@ -32,7 +32,18 @@
       "additional308": {"n":308,"before":92,"after":99,"gains":12,"losses":5}
     }
   },
+  "fixed_weight_repeats": {
+    "planned_before_final_results_utc": "2026-10-07T11:14:00Z",
+    "verified_utc": "2026-10-07T11:41:00Z",
+    "base_native_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base-no-template-repeat1",
+    "final_native_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawtrained-final-no-template-repeat1",
+    "base_correct":305,"final_correct":314,"n":500,
+    "base_changed_texts":0,"base_changed_scores":0,
+    "final_changed_texts":0,"final_changed_scores":0,
+    "verification": "Both saved JSON files are byte-identical to their respective first evaluations; all1000 repeated answers were also regraded and source-checked",
+    "interpretation": "Exact repeatability in these identical full500 batches. These are not additional training seeds and do not negate earlier variation when evaluation batch composition changed."
+  },
   "interpretation": "A small positive difference in one short training run. This does not yet establish a reliable benefit. Unlike the original chat-format comparison, there is no reduction in capped-response count.",
   "limits": ["One training run", "64 questions were used for monitoring", "Greedy generations were not exactly repeatable in earlier checks", "Correct final answers do not verify every reasoning step", "No model-generated code was executed", "Pretraining exposure unknown"],
-  "next_decision": "Finish both prompt formats and the preplanned fixed-weight repeats. Prepare a fresh seed43 training repeat with isolated input cache, rather than choose a favorable checkpoint or change hyperparameters. Publish the completed comparison before13UTC."
+  "next_decision": "Both prompt formats and fixed-weight repeats finished. A fresh seed43 training repeat with isolated input cache launched11:41UTC, followed automatically by both full500 evaluations. Do not choose a favorable checkpoint or change hyperparameters. The completed five-slide comparison is already published before13UTC."
 }

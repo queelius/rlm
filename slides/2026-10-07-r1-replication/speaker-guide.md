@@ -165,11 +165,14 @@ questions alone, versus 305 before training. Capped responses increased from
 input, it scored 168 and still had 201 capped responses, compared with 205
 before training. We report both outcomes, not just its better input format.
 
-We are repeating the evaluation of the same weights to measure variation in
-generated answers. A fresh training repeat, with the same settings and a
-different learner seed, is prepared. These answer different questions: rerunning
+Update at 11:42 UTC: repeating evaluation of the same weights produced exactly
+the same saved answers and scores, 305 and 314. A fresh training repeat, with
+the same settings and a different learner seed, started at 11:41. Its result
+is pending. These answer different questions: rerunning
 evaluation checks scoring/generation repeatability; rerunning training checks
-whether another set of learning updates produces a similar result.
+whether another set of learning updates produces a similar result. Exact
+repeatability in these identical batches does not invalidate the variation
+observed earlier when the evaluation batch composition changed.
 
 These are exploratory follow-ups chosen after inspecting the earlier results,
 not independent confirmation on a new test set. The first raw-training attempt

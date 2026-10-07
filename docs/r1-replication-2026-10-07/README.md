@@ -54,10 +54,12 @@ The new chat comparison has 21 gains and seven losses. Its capped-response count
 201, versus 205 for the base; question-only training did not fix that pattern.
 We cannot yet identify every cause of the contrast between training formats.
 
-We are repeating the question-only evaluation for starting and final models to measure how
-much answers vary without further training. Those repeats are not independent
-training runs. A fresh training repeat is being prepared; it will use the same
-settings and questions, with a different learner seed and its own data cache.
+**Repeatability check, 11:41 UTC:** Both question-only evaluations produced
+exactly the same saved answers when repeated: 305 for the starting model and
+314 for the final model. These are repeats of evaluation, not independent
+training runs. They do not erase the variation observed earlier when batch
+composition changed. A fresh training repeat started at 11:41 with the same
+settings and questions, a different learner seed, and its own data cache.
 The five-slide deck and learning guide now include both training formats.
 
 **Expanded chat-style check at 10:27 UTC:** On all 500 MATH500 questions, the same models
