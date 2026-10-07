@@ -1,0 +1,137 @@
+\documentclass[aspectratio=169,12pt]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,booktabs,array}
+\definecolor{Ink}{HTML}{17324D}
+\definecolor{Teal}{HTML}{007F7B}
+\definecolor{Gray}{HTML}{657483}
+\definecolor{Soft}{HTML}{EEF3F6}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=Teal}
+\setbeamercolor{block title}{fg=white,bg=Teal}
+\setbeamercolor{block body}{fg=Ink,bg=Soft}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=9mm,text margin right=9mm}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\input{results.tex}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Small-scale reproduction | \EvidenceCutoff\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\newcommand{\aside}[1]{\vfill{\footnotesize\color{Gray}#1\par}}
+\newcommand{\FinalPanel}{%
+\iffinalresults
+\textbf{Main test after 32 updates: \FinalBefore/\FinalTotal\ $\rightarrow$ \FinalAfter/\FinalTotal.}
+\smallskip\par
+\FinalNewCorrect\ answers became correct; \FinalNewWrong\ became incorrect.
+\smallskip\par
+\FinalInterpretation
+\else
+\begin{block}{The larger comparison is still pending.}
+We will compare the base model with the final model after 32 updates on the separate 128-question test.
+\end{block}
+\fi}
+\hypersetup{pdftitle={Learning from correct answers: a small R1-Zero-style reproduction},pdfauthor={Alex Towell}}
+\begin{document}
+
+\begin{frame}[t]
+\frametitle{First, reproduce learning in a simpler setting.}
+A recursive language model can use code and ask helper models to solve parts of a problem. We eventually want to train those choices.
+\medskip
+
+\begin{block}{Today's question}
+Can we use a published training recipe to improve a model's math answers on questions excluded from training?
+\end{block}
+\medskip
+We use the authors' code for \textbf{Dr.\ GRPO}, which learns from scores assigned to the model's own answers.
+\medskip
+
+This is a small reproduction of an existing method. It establishes a reference for future work on recursive models.
+\aside{Liu et al., \href{https://arxiv.org/abs/2503.20783}{\textit{Understanding R1-Zero-Like Training: A Critical Perspective}} (2025).\newline
+\href{https://github.com/sail-sg/understand-r1-zero/tree/dfca49dd460ee7cc8e4a5a162c876a7fd6993b87}{Official code}; our run is much smaller than the paper's experiments.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Reward correct attempts, then change the model.}
+\textbf{Illustrative question:} Solve $3x+2=14$. The correct answer is $x=4$.
+\medskip
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{lll}
+\toprule
+The model's attempts & Checker score & Learning direction \\
+\midrule
+Two answers end in $x=4$. & 1 each & Make these more likely. \\
+Two end in $x=5$ or $x=6$. & 0 each & Make these less likely. \\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+Each attempt is compared with the average score for that question. Training changes the model's weights using these differences.
+\medskip
+
+The checker judges the final answer. We do not supply worked solutions for the model to copy.
+\aside{Simplified illustration with four attempts; our runs use eight. If every attempt receives the same score, this question supplies no relative learning signal.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{We train on math, then test on different questions.}
+We update the full weights of \textbf{Qwen2.5-Math-1.5B}, a pretrained math model, on one 40 GB A100 GPU.
+\medskip
+
+\begin{center}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{lrr}
+\toprule
+Training run & Questions & Weight updates \\
+\midrule
+Short pilot, completed & 64 & 4 \\
+Larger run, restarted from the base model & 512 & 32 planned \\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+Training questions come from the authors' 12,000-question math collection. Test questions come from \textbf{MATH500}.
+\smallskip
+
+We use 64 questions to monitor progress and \textbf{128 different questions for the final test}. Neither group is used for training. Evaluation settings stay fixed before and after.
+\aside{Evaluation chooses the most likely next token, up to 3,000 tokens. Exact question-overlap checks passed; pretraining exposure is unknown.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{What changed on questions excluded from training?}
+\textbf{Pilot: correct answers on \PilotTotal\ monitoring questions, after four updates.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\begin{block}{Before training}
+\centering\LARGE \PilotBefore\ / \PilotTotal
+\end{block}
+\end{column}
+\begin{column}{.47\textwidth}
+\begin{block}{After training}
+\centering\LARGE \PilotAfter\ / \PilotTotal
+\end{block}
+\end{column}
+\end{columns}
+\smallskip
+\PilotNewCorrect\ answers became correct; \PilotNewWrong\ became incorrect. An earlier evaluation of the same trained weights scored 23/64.
+\smallskip
+
+\FinalPanel
+\aside{Authors' final checker throughout. This small, variable gain needs replication.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{A higher score does not always mean a new skill.}
+\textbf{An actual pilot example, shortened:} How much fuel is saved over 12,000 miles by switching from 15 to 48 miles per gallon?
+\medskip
+\begin{block}{Before: repetition without an answer. After: a completed calculation.}
+\centering $12{,}000/15 - 12{,}000/48 = 800 - 250 = 550$ gallons.
+\end{block}
+\medskip
+Two of the pilot's three gains were recoveries from unfinished answers. One previously correct answer stopped finishing, too.
+\medskip
+
+\textbf{The lesson for RLMs:} Check \emph{what} training changes. Does the model merely finish reliably, or does it learn to ask useful subquestions?
+\aside{The immediate next step is to repeat any promising result. This small experiment does not yet establish a reliable gain or reproduce the paper's full results.}
+\end{frame}
+
+\end{document}

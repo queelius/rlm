@@ -21,8 +21,8 @@ exec timeout --signal=TERM --kill-after=60s 4h "$P" "$S/train_zero_math.py" \
   --prompt_data "$R/data-oat/train512" --train_split train --input_key problem --output_key answer \
   --max-train 9999999 --max-queries 4096 --num_prompt_epoch 1 --prompt_max_length 1024 \
   --num_samples 8 --temperature 1 --top_p 1 --generate_max_length 3000 \
-  --save_steps 8 --save-ckpt --max_save_num 2 --train_batch_size 128 \
+  --save_steps 8 --save-ckpt --max_save_num 1 --train_batch_size 128 \
   --train_batch_size_per_device 1 --rollout_batch_size 16 --rollout_batch_size_per_device 16 \
   --pi_buffer_maxlen_per_device 128 --eval_batch_size 64 --eval_steps 8 \
   --eval_temperature 0 --eval_generate_max_length 3000 --eval_data "$R/data-oat/monitor64" \
-  --eval_input_key input --save_path "$R/subset512-attempt1" --dump_replay_every 1
+  --eval_input_key input --save_path /home/atowell/research-runs/r1-zero-replication-20261007/subset512-attempt1 --dump_replay_every 1

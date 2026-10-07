@@ -1,0 +1,37 @@
+{
+  "pdfpcFormat": 2,
+  "disableMarkdown": true,
+  "noteFontSize": 16,
+  "pages": [
+    {
+      "idx": 0,
+      "label": "1",
+      "overlay": 0,
+      "note": "The immediate aim is to reproduce a known\nlanguage-model learning recipe. Math gives\nus an answer we can check. Recursive\nchoices come later. This is a small\nreproduction, not a new method or a\nreproduction of the paper's headline\nscores."
+    },
+    {
+      "idx": 1,
+      "label": "2",
+      "overlay": 0,
+      "note": "This example is invented. The model\ngenerates its own attempts. The checker\nsupplies only final-answer scores.\nRelative scores guide weight updates. We\nuse eight attempts per question. If all\neight scores agree, there is no within-\nquestion learning signal."
+    },
+    {
+      "idx": 2,
+      "label": "3",
+      "overlay": 0,
+      "note": "Both runs start from the pretrained base\nmodel. The second run does not continue\nthe pilot. Held out means excluded from\nthis training. It does not mean unseen in\npretraining. The 128 final questions are\nalso separate from the 64 monitoring\nquestions."
+    },
+    {
+      "idx": 3,
+      "label": "4",
+      "overlay": 0,
+      "note": "Pilot final check: 20 to 22 correct out of\n64. Three answers became correct; one\nbecame wrong. An earlier evaluation of the\nsame trained weights scored 23. All are\nfinal-checker scores. The 128-question\nresult is pending. This is not yet a\nreliable gain."
+    },
+    {
+      "idx": 4,
+      "label": "5",
+      "overlay": 0,
+      "note": "This is a shortened actual pilot example.\nTwo gains escaped repetition; one\ncorrected a final answer. One answer\nregressed into repetition. We did not\nexecute any model-written code. For RLMs,\ndistinguish finishing reliably from\nlearning useful decomposition."
+    }
+  ]
+}

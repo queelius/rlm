@@ -1,5 +1,9 @@
 # A small, direct replication of language-model RL
 
+Read the [five-slide PDF](../../slides/2026-10-07-r1-replication/research-update.pdf)
+and [slide-by-slide guide](../../slides/2026-10-07-r1-replication/speaker-guide.md).
+The larger comparison is still running; pending results are explicitly marked.
+
 ## Why we are doing this
 
 Before proposing more RL methods for recursive language models, we want to run
@@ -56,12 +60,38 @@ External runs and data: `/project/alex_phd/runs/r1-zero-replication-20261007`.
 Official clone: `/project/alex_phd/research-cache/repos/understand-r1-zero`.
 Isolated Python 3.10 environment: `/project/alex_phd/envs/r1-zero-dfca49d`.
 
-The pilot is running. Its starting-model evaluation scored **19/64** on the
-fixed monitoring set using the training program's checker. Actual saved answers
-and scores were inspected. This is a baseline, not an RL improvement; the
-separate 128-question final evaluation has not been run yet.
+The pilot completed successfully. With the paper's standalone checker applied
+to both sets of saved answers, the fixed monitoring score was **20/64 before
+training and 22/64 at the final evaluation**. Three answers became correct and
+one became incorrect. Four nonzero, finite-gradient optimizer updates completed;
+sampled saved weight tensors changed, and the updated model was broadcast to
+the generator after each update.
 
-No training improvement has been measured yet. The first package installation
+This is an operational success and a small, uncertain score increase, not a
+confirmed improvement. The first post-training check gave 23/64; a second check
+of the same weights gave 22/64, with eight answer texts changing. We retain the
+final result rather than selecting the better score. Greedy decoding did not
+make this GPU run exactly repeatable. The training program's faster checker
+scored 19/64 before and 21/64 at the final evaluation; those are not mixed with
+the standalone-checker counts above.
+
+The 512-question run started at 09:19 UTC. The separate 128-question final
+evaluation is still pending. Its training outputs are in
+`/home/atowell/research-runs/r1-zero-replication-20261007/subset512-attempt1`:
+the project allocation was almost full, whereas the home allocation had room.
+The completed pilot was copied to the same home research store under
+`archive/pilot-attempt2`, verified byte-for-byte and hashed. Its original path
+remains a symlink, so earlier evidence links still work. Only the verified
+duplicate was removed from project storage; all pilot artifacts are retained.
+
+An answer-level audit of the pilot found two recoveries from repetitive
+noncompletion, one corrected final answer, and one regression into repetition.
+For example, a fuel-saving problem went from repeating the question to finishing
+the correct calculation, 12,000/15 - 12,000/48 = 550 gallons. This does not show
+that the model learned a new mathematical method. See the
+[scoring receipt](pilot-scoring-receipt.json) for exact saved-answer hashes.
+
+The first package installation
 failed because FlashAttention's build script requires Torch at build time;
 we installed its official prebuilt wheel matching Torch 2.6 and Python 3.10.
 We also pinned fsspec 2023.6.0 for the old dataset library and recreated the

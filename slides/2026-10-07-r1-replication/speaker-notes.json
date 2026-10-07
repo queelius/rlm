@@ -1,0 +1,24 @@
+{
+  "slides": [
+    {
+      "title": "First, reproduce learning in a simpler setting.",
+      "notes": "The immediate aim is to reproduce a known language-model learning recipe. Math gives us an answer we can check. Recursive choices come later. This is a small reproduction, not a new method or a reproduction of the paper's headline scores."
+    },
+    {
+      "title": "Reward correct attempts, then change the model.",
+      "notes": "This example is invented. The model generates its own attempts. The checker supplies only final-answer scores. Relative scores guide weight updates. We use eight attempts per question. If all eight scores agree, there is no within-question learning signal."
+    },
+    {
+      "title": "We train on math, then test on different questions.",
+      "notes": "Both runs start from the pretrained base model. The second run does not continue the pilot. Held out means excluded from this training. It does not mean unseen in pretraining. The 128 final questions are also separate from the 64 monitoring questions."
+    },
+    {
+      "title": "What changed on questions excluded from training?",
+      "notes": "Pilot final check: 20 to 22 correct out of 64. Three answers became correct; one became wrong. An earlier evaluation of the same trained weights scored 23. All are final-checker scores. The 128-question result is pending. This is not yet a reliable gain."
+    },
+    {
+      "title": "A higher score does not always mean a new skill.",
+      "notes": "This is a shortened actual pilot example. Two gains escaped repetition; one corrected a final answer. One answer regressed into repetition. We did not execute any model-written code. For RLMs, distinguish finishing reliably from learning useful decomposition."
+    }
+  ]
+}

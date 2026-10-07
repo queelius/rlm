@@ -1,0 +1,24 @@
+{
+  "source_repo": "https://github.com/sail-sg/understand-r1-zero",
+  "source_commit": "dfca49dd460ee7cc8e4a5a162c876a7fd6993b87",
+  "retrieved_utc_date": "2026-10-07",
+  "training_source": "datasets/train/math_12k/train",
+  "evaluation_source": "datasets/evaluation_suite/math",
+  "training_selection": "random.Random(42).shuffle(range(12000)); first64/512",
+  "evaluation_selection": "random.Random(142).shuffle(range(500)); monitor first64, final next128",
+  "saved_with": "datasets==2.14.4",
+  "subset_root": "/project/alex_phd/runs/r1-zero-replication-20261007/data-oat",
+  "content_digest_method": "sha256(json.dumps(dataset.to_dict(),sort_keys=True).encode())",
+  "content_sha256": {
+    "train64": "85dd4c699d391125174078c2696eea9421662cd5f3823ee7fa06519254520303",
+    "train512": "42970b135e07d8294b8fb030b10197b442ea70970b3ae62d5744a6e97782611b",
+    "monitor64": "7a351d77d4b89df264f796eaafa5b6719bd64a99cf3b210cd66cbcc2ed9c79ef",
+    "heldout128": "9b35981999394d8d533005090b79c9dc44b68b21d197e4d8041f57fa64a2719e"
+  },
+  "checks": {
+    "exact_whitespace_normalized_training_vs_math500_overlap": 0,
+    "monitor_vs_final_row_overlap": 0,
+    "pretraining_contamination_assessed": false
+  },
+  "license_note": "Official package declares MIT; individual source files include Apache-2.0 headers. Bundled dataset metadata has empty license fields; no separate dataset redistribution license inferred. Preserve source links; do not republish raw question collections."
+}
