@@ -1,26 +1,84 @@
 # A small, direct replication of language-model RL
 
-**Research resumed; current attempt began on 7 October at 15:24 UTC.** A longer fresh-base training run
-is active: roughly 4,000 questions and 250 weight updates, followed by both
-final MATH500 evaluations. The native loader reduces the originally intended
+**Live update, 7 October at 16:03 UTC:** The fourth fresh-base attempt started
+at 16:02. The isolated GPU check reduced the entropy calculation's additional
+peak allocation from about 3.7 GiB to 0.15 GiB with numerically close outputs;
+see the [memory-repair receipt](memory-repair-receipt.json). That checks the
+observed failure point, not the stability of the entire training run. Final
+trained-model results are still pending. The PDFs below retain their explicit
+15:55 evidence cutoff.
+
+By 16:07, two optimizer updates were confirmed with finite, nonzero gradients.
+An independent review found no material issue in the memory-only changes or
+the fixed-endpoint evaluation sequence. Those are startup checks, not a new
+accuracy result or proof the whole run will finish.
+The [startup receipt](longer-attempt4-startup-receipt.json) independently checks
+the baseline's 20/64 answers and all 128 responses in the first training
+collection. Twelve of its 16 questions produced both successful and
+unsuccessful answers, so they supply a relative learning signal. Every checked
+reward, source prompt, and token/log-probability alignment agrees.
+
+The broader reference evaluations are now complete. These are counts of
+correct final answers, with one generated answer per question:
+
+| Model and test input | AMC, out of 83 | Minerva, out of 272 |
+| --- | ---: | ---: |
+| Starting model, chat style | 26 | 32 |
+| Starting model, question alone | 32 | 40 |
+| Authors' released model, chat style | 41 | 66 |
+| Authors' released model, question alone | 35 | 48 |
+
+AMC contains competition math problems; Minerva contains mathematical and
+scientific problems. All 1,420 saved answers were checked against their source
+questions and rescored with the full answer checker. The released model
+improves on the base in both formats, but more in chat style. Changing only
+the base model's input format also changes its scores. We therefore need
+both input formats in our own final comparisons, not just the one that looks
+better. These are **not gains from our training**.
+
+The [broader-reference receipt](broader-reference-receipt.json) retains all
+four conditions, individual improvements and regressions, empty responses,
+length limits, and concrete examples. None of these evaluation questions
+exactly matches our selected training questions after whitespace normalization.
+Paraphrases and earlier pretraining exposure remain unknown.
+
+**Earlier snapshot, 7 October at 15:55 UTC:** A longer fresh-base training retry
+is prepared, not yet launched: roughly 4,000 questions and 250 weight updates,
+followed by final tests in both input formats. The native loader reduces the originally intended
 4,096/256 budget to 4,080 questions and 255 updates with the current small collections; see the
 [accepted plan and accounting correction](longer-training-plan.md).
 The earlier presentation batch is complete, but the research has not stopped.
 The first larger attempt hit GPU memory exhaustion before completing a
 collection; a memory-allocation retry then failed during model initialization.
-The current attempt uses the smaller collection size that worked in our short runs.
-No larger-run score is available yet. The [failure record](longer-attempt1-failure.json)
-is retained alongside the successful short runs.
+The third attempt completed 12 updates, then ran out of memory while computing
+a diagnostic statistic during its thirteenth sampled collection. It saved no
+checkpoint; see the [failure record](longer-attempt3-failure.json).
+No larger-run score is available yet. These runtime failures are retained,
+not counted as completed training results.
+
+The prepared fourth attempt keeps the same training recipe and uses a private
+copy of the learning package with bounded-memory diagnostic calculations and
+earlier release of unused tensors. Three focused CPU tests passed, including
+identical actual learning-step updates in a fixture; later GPU stability is
+not yet established. The shared environment and official source are unchanged.
+It will save every eight updates, with a ten-hour training cap and thirteen-hour
+whole-sequence cap. Its prescribed final model will be tested on MATH500
+(500 questions), AMC (83), and Minerva (272), each in both input formats.
+Separate broader checks of the original and authors' released models are
+underway. No partial scores are promoted here; these are not our training results.
+
 The authors' released model scored 73.2% in our evaluator, close to their
 reported 74.2%. That is an evaluation check of their weights, not our own
 training improvement; see the [reference-model receipt](author-reference-receipt.json).
 
-**Early training check at 15:31 UTC:** The current run has completed learning
+**Historical startup check at 15:31 UTC:** Attempt 3 had completed learning
 updates with finite, nonzero reported gradients. Of the first 32 questions,
 23 had a mixture of correct and incorrect sampled answers. All 256 checked
 rewards agreed with independent rescoring using the same full checker and
-length-limit rule. This supports continuing the run, not a claim of improved
-test performance; see the [startup check](longer-attempt3-startup-receipt.json).
+length-limit rule. That supported continuing at the time, not a claim of improved
+test performance or proof of later memory stability. The run subsequently
+failed as described above; the [startup check](longer-attempt3-startup-receipt.json)
+is retained unchanged.
 
 Read the [five-slide PDF](../../slides/2026-10-07-r1-replication/research-update.pdf)
 and [slide-by-slide guide](../../slides/2026-10-07-r1-replication/speaker-guide.md).
@@ -78,8 +136,8 @@ unchanged weights reproduced all 500 saved answers byte-for-byte, including
 [repeatability receipt](grpo-repeatability-receipt.json). The bounded batch is
 complete; the [handoff](HANDOFF.md) records what to retain and what to try next.
 
-The five-slide deck now has a 15:25 cutoff. It retains the central prompt-format
-comparison and adds the authors' released-model check and pending longer run.
+The five-slide deck now has a 15:55 cutoff. It retains the central prompt-format
+comparison and adds the authors' released-model check and prepared longer retry.
 The small GRPO comparison remains in the supporting account, not a claim that
 we have found the best algorithm.
 

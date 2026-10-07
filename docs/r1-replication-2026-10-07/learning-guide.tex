@@ -28,9 +28,9 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 15:25 UTC.
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 15:55 UTC.
   Short-run results and evaluation repeats retained. Authors' released-model
-  check completed; larger training pending (page 8).}
+  check completed; larger retry prepared, not launched (page 8).}
 \begin{document}
 \pagetitle{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}
   {Learning language-model RL\\from an official reproduction}
@@ -457,7 +457,7 @@ The main lesson remains prompt sensitivity, a functioning training pipeline,
 and uncertainty about dependable gains from this short training budget [2,4].
 
 \newpage
-\pagetitle{APPENDIX / REFERENCE CHECK \quad | \quad 7 OCTOBER, 15:25 UTC}
+\pagetitle{APPENDIX / REFERENCE CHECK \quad | \quad 7 OCTOBER, 15:55 UTC}
   {Testing the authors' model is not reproducing its training}
 
 We evaluated \textbf{the authors' released model},
@@ -481,46 +481,46 @@ model remains at 308/500; the released model's 366 is not our training gain.
 Nor does the checked score validate every reasoning step or prove an exact
 reproduction of the published evaluation. We retain the five-answer difference.
 
-\topic{A larger training experiment is underway, not complete}
+\topic{A larger retry is prepared, not yet running}
 
-The \href{longer-attempt1-failure.json}{first attempt} ran out of GPU memory during its first collection's
-optimization. No collection completed; inner optimizer updates are unconfirmed.
-The \href{longer-attempt2-failure.json}{second attempt} failed during initialization because expandable memory
-segments were incompatible with the generator's memory pool. Both failures
-are retained, not scored as training results. A third fresh-base attempt
-started at 15:24 UTC with smaller collections and the default allocator.
-The authors' source was not patched.
+The \href{longer-attempt1-failure.json}{first attempt} ran out of memory before completing a collection;
+inner updates are unconfirmed. The \href{longer-attempt2-failure.json}{second} failed during initialization
+with an incompatible allocator. The \href{longer-attempt3-failure.json}{third} completed 12 updates and
+sampled 13 collections, then ran out of memory computing a diagnostic statistic.
+It saved no checkpoint. These are runtime failures, not benchmark results.
 
-The new run starts from the original Qwen2.5-Math-1.5B base weights, not from
-the authors' released model or one of our trained checkpoints. We selected 4096
-questions with a fixed shuffle from the authors' 8523 MATH level
-3--5 questions, matching the difficulty range named in the released-model
-recipe. Exact whitespace-normalized overlap checks against MATH500 passed;
+Attempt 4 is prepared at this cutoff. A private copy of the learning package
+computes diagnostic entropy in smaller pieces and releases unused old prediction
+tensors. Three focused CPU tests passed, including matching actual learning-step
+updates in a fixture. GPU stability remains unproven; the shared environment and
+official source are unchanged.
+
+The retry starts from the original base weights, not a trained checkpoint.
+We selected 4096 of the authors' 8523 MATH level 3--5 questions with a fixed
+shuffle. No exact normalized question overlaps with MATH500 were found;
 paraphrases and pretraining exposure remain unassessed.
+It uses the authors' \code{math\_verify} training verifier and chat prompt.
+Each collection has 16 questions and eight answers each, then one update and
+a weight transfer. Excluding two overlong prompts and dropping the incomplete
+batch gives \textbf{255 updates, 4080 questions, and 32,640 responses}.
+The earlier 3968-question/248-update large-collection plan was abandoned.
+These are budgets, not completed results.
 
-The run uses the authors' \code{math\_verify} training verifier and chat prompt.
-Each collection now contains 16 questions and eight answers each: 128 responses
-and one optimizer update. Updated weights return to the generator after every
-update, as in the short runs. Two overlong prompts are excluded, leaving 4094
-eligible questions; the incomplete final batch is dropped. The effective budget
-is \textbf{255 collections and updates, 4080 questions, and 32,640 responses}.
-The earlier 128-question collection plan (3968 questions and 248 updates) was
-abandoned after the failures. These counts are budgets, not completed results.
-
-Training is capped at ten hours. The prescribed final checkpoint,
-\code{step\_00256}, will be evaluated on all 500 questions in both input
-formats with the same checker and response limit. \textbf{Both results are pending.}
+Saving is planned every eight updates; training is capped at ten hours and the
+whole sequence at thirteen. The fixed final checkpoint, \code{step\_00256},
+will be tested on MATH500 (500 questions), AMC (83), and Minerva (272), each in
+both input formats. \textbf{All six results are pending.} Separate base-model
+and authors' model checks on the broader benchmarks are underway, not our
+learning results. No partial scores are promoted here.
 
 \topic{What this comparison can decide}
 
-The question is whether a larger, more closely aligned reference recipe
-produces useful gains beyond our short runs and the strong untrained
-question-only baseline. It changes data coverage and difficulty, the training
-verifier, and duration together, while retaining the short runs' collection
-size to fit memory. A future gain could not be
-attributed to extra training alone. MATH500 is now an inspected development
-benchmark; repeated training and another benchmark are needed before broader
-confirmation claims. The \href{longer-training-plan.md}{accepted protocol}
-records the current endpoint; the \href{longer-loader-receipt.json}{original loader check}
-records the two excluded prompts. Completion still requires checking actual run counters.
+The question is whether this closer reference recipe improves on the strong
+untrained question-only baseline. Data coverage and difficulty, the verifier,
+and duration change together; a gain could not be attributed to longer training
+alone. MATH500 is now an inspected development benchmark, not independent
+confirmation. Repeated training and broader tests remain important.
+The \href{longer-training-plan.md}{accepted protocol} fixes the endpoint;
+the \href{longer-loader-receipt.json}{original loader check} records the excluded prompts.
+Completion still requires checking actual run counters.
 \end{document}

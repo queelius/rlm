@@ -1,19 +1,37 @@
 # Completed short LLM RL reproduction
 
-**New phase, 7 October at 15:08 UTC:** The user requested continued work toward
+**Latest operational update, 16:03 UTC:** Attempt 4 started at 16:02 under
+exclusive sequence owner exec30612, with its own training and all six final
+evaluation conditions. The old observer was replaced by `reviews-longer-v4`;
+read external `SESSION_CHECKPOINT.md` for authenticated process identities.
+The small A100 memory check passed; it does not yet establish full-run stability.
+All four broader reference conditions are complete and independently checked;
+see [results](README.md) and [receipt](broader-reference-receipt.json). No
+larger-run trained-model endpoint exists yet. The PDFs remain dated 15:55.
+
+**Earlier phase, 7 October at 15:55 UTC:** The user requested continued work toward
 reproducing the paper's training result. A fresh-base run of roughly 4,000
-questions and 250 weight updates is now active, with fixed final evaluations
-planned after completion. Attempt 1 failed with GPU memory exhaustion; the
-allocator retry failed at model initialization. Current attempt 3 began at
-15:24 using the smaller collection size of our successful short runs. Its
-loader-derived budget is 4,080 questions and 255 updates; its own sequence
-handles both final tests. Read the
+questions and 250 weight updates is prepared, not yet launched, with fixed final
+evaluations planned after completion. Attempt 1 failed with GPU memory exhaustion;
+the allocator retry failed at model initialization. Attempt 3 completed 12 updates
+and sampled 13 collections before another memory failure; it saved no checkpoint.
+The [failure receipt](longer-attempt3-failure.json) is retained, not a benchmark result.
+Prepared attempt 4 uses a private memory adapter with three passing focused CPU
+tests, including matching actual learning-step updates. The shared environment
+and official source remain unchanged; GPU memory stability is not yet established.
+Its loader-derived budget stays at 4,080 questions and 255 updates, with saving
+every eight updates. The owner will handle all six final tests: MATH500, AMC,
+and Minerva in both chat and question-only formats. Its caps are ten hours for
+training and thirteen hours for the whole sequence. Separate broader checks of
+the base and authors' released models are underway, not our training results.
+The authors' MATH500 score is 366/500 (73.2%), versus 74.2% reported; those are
+their released weights, not a model we trained. Read the
 [longer-run plan](longer-training-plan.md) and current
 external `SESSION_CHECKPOINT.md` before touching GPU processes. The completion
 notice below describes only the earlier presentation batch. Actual allocation
 ends 9 October at 20:39 UTC; the 14:00 window below is historical.
 
-Status: 7 October 2026, 13:51 UTC. The requested five-slide presentation was
+Historical batch status: 7 October 2026, 13:51 UTC. The requested five-slide presentation was
 published before 13:00 UTC. The optional experiment batch is complete before
 14:00 UTC. No training or evaluation job remains active from this batch.
 
@@ -55,9 +73,9 @@ do not claim that all greedy GPU generation is deterministic.
    rewards and learned behavior; distinguish a stronger starting setup from
    a training gain; grade tool execution separately from plausible code text.
 
-These are ranked future experiments, not running jobs or claims of success.
-No extra repeat or rushed new direction is needed to fill the remaining
-minutes of the presentation window.
+The longer retry is prepared and broader reference checks are underway, as
+recorded above. The remaining items are ranked future experiments, not claims
+of success. The earlier presentation window is no longer the research deadline.
 
 ## Preserve and resume
 

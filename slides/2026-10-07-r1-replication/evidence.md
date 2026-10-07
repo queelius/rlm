@@ -1,7 +1,7 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 15:25 UTC; authors' released-model check completed,
-third larger-training attempt underway. The short-run comparisons remain unchanged.
+Cutoff: 7 October 2026, 15:55 UTC; authors' released-model check completed,
+fourth larger-training attempt prepared, not launched. The short-run comparisons remain unchanged.
 
 ## Authors' released model: an evaluation check, not our training result
 
@@ -25,11 +25,21 @@ ran out of GPU memory during the first collection's
 optimization. No collection completed; inner optimizer-update count is unknown.
 The [second attempt](../../docs/r1-replication-2026-10-07/longer-attempt2-failure.json)
 failed during initialization with "Expandable segments are
-not compatible with memory pool" in vLLM. Both failures are retained, not
-training results; the authors' source was not patched.
+not compatible with memory pool" in vLLM. The
+[third attempt](../../docs/r1-replication-2026-10-07/longer-attempt3-failure.json)
+completed 12 updates and sampled 13 collections, then ran out of memory while
+computing the diagnostic entropy statistic. No checkpoint was saved. All three
+failures are retained, not completed benchmark results. The earlier successful
+startup checks did not establish stability across later variable-length batches.
 
-The third attempt started at 15:24:43 UTC from the original base model,
-using the default allocator and 16-question collections. It retains the 4,096
+Attempt 4 is prepared, not launched at this cutoff. It uses a private copy of
+Oat with diagnostic entropy computed in 128-token pieces and unused old-policy
+logits released. Three focused CPU tests passed, including a fixture with
+identical actual learning-step updates; this is not proof of GPU memory
+stability. The shared environment and official clone remain unchanged.
+
+The retry starts from the original base model, using the default allocator and
+16-question collections. It retains the 4,096
 selected MATH level 3–5 questions, `math_verify` training verifier, chat prompt,
 and learning rate. Eight answers per question give 128 responses and one
 optimizer update per collection; weights transfer after each update.
@@ -40,9 +50,13 @@ The former 128-question collection plan (3,968 questions and 248 updates after
 filtering) was abandoned after the failures, not completed.
 
 This is a loader-derived budget, not completed training evidence. Training has
-a ten-hour cap and the full sequence an eleven-hour cap. Checkpoint saving and
-progress checks occur every 32 updates. Both final MATH500 input formats will
-be evaluated; results remain pending. Data, verifier, and duration change
+a ten-hour cap and the full sequence a thirteen-hour cap. Checkpoint saving
+occurs every eight updates; progress checks occur every 32. MATH500 (500 questions),
+AMC (83), and Minerva (272) will each be evaluated in both input formats using
+the prescribed final checkpoint. All six final tests remain pending. Separate
+base-model and authors' released-model checks on the broader benchmarks are
+underway; partial scores are not promoted here and do not test our training.
+Data, verifier, and duration change
 together, while the smaller collection size matches the short runs. This is
 not an isolated test of training length. The
 [original loader receipt](../../docs/r1-replication-2026-10-07/longer-loader-receipt.json)

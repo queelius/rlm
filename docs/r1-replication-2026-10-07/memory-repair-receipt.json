@@ -1,0 +1,36 @@
+{
+  "checked_utc": "2026-10-07T16:02:00Z",
+  "trigger": "Attempt3 entropy CUDA OOM after12updates; see longer-attempt3-failure.json",
+  "changes": ["Delete old-policy logits after copying their extracted log-probabilities", "Compute diagnostic entropy in chunks of128tokens with the original per-token formula"],
+  "shared_environment_modified": false,
+  "private_package_files": 63,
+  "changed_package_files": ["algorithms/ppo.py"],
+  "adapter_sha256": "5374276d82c7ac62fbb5b4e1da25b515ff4726affb14036170d73097cc620c3a",
+  "private_ppo_sha256": "f8441325b72936c2aa38a608448bc94269eddb27c63619280cfa74d5f9df2298",
+  "original_ops_sha256": "8983141f9afa6c02764994d85e9ca013874579f07846c037b3383cab32555601",
+  "private_manifest": "/project/alex_phd/runs/r1-zero-replication-20261007/runtime-memory-v1/manifest.json",
+  "private_manifest_sha256": "db120b67b82b8e2edfa81c1e4523a2fa0e63ddc9973a46505959506ddfd3b420",
+  "cpu_checks": "Three focused unittest cases passed independently in agent and root: entropy values/gradients including noncontiguous tail; actual original/patched learning_step fixture with identical parameter updates; source drift rejection and private child import without CUDA initialization. Root additionally verified all63copy hashes and actual child import from prepared directory.",
+  "gpu_fixture": {
+    "owner_exec": 6292,
+    "exit_code": 0,
+    "cap_seconds": 90,
+    "device": "A10040GB",
+    "seed": 42,
+    "input_shape": [1,3245,151936],
+    "input_dtype": "float32",
+    "entropy_input": "logits[:, :-1], matching original call",
+    "original_additional_peak_allocated_bytes": 3943069696,
+    "chunked_additional_peak_allocated_bytes": 155598336,
+    "original_seconds": 0.27379437908530235,
+    "chunked_seconds": 0.023961031809449196,
+    "max_absolute_entropy_error": 0.00000286102294921875,
+    "assertion": "Both finite; torch.testing.assert_close rtol1e-6/atol1e-6 passed",
+    "limit": "Isolated entropy temporaries, not full training peak. Timings are one diagnostic measurement, not a performance benchmark. Tiny FP32 entropy differences concern logging, not the policy loss. Future full training memory stability remains to be checked."
+  },
+  "decision": "Fresh-base attempt4, same255update objective/data/sampling plan; saveevery8 ratherthan32. Do not evaluate failedattempt3 as a finalmodel.",
+  "launchers": {
+    "run_larger4096_attempt4.sh_sha256": "2f5a177e804f6715628c7d23fe6fcf339c14f87c5784db17285276fb0cc88143",
+    "run_larger4096_attempt4_sequence.sh_sha256": "9c3f7f5d633cf11516a849f49552a0a3e4575ac44b07c305f8bbb1e5613f158e"
+  }
+}

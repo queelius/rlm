@@ -1,0 +1,29 @@
+{
+  "status": "failed_after_12_completed_updates_without_saved_checkpoint",
+  "started_utc": "2026-10-07T15:24:43Z",
+  "last_collection_started_utc": "2026-10-07T15:43:14Z",
+  "review_detected_utc": "2026-10-07T15:44:00Z",
+  "owner_exec": 19169,
+  "owner_exit_code_after_authenticated_shutdown": 1,
+  "shutdown": "Authenticated training timeout1833052 (parent1833051,session1833043) received TERM; entire session and GPU processes verified quiescent before reference evaluation owner launched",
+  "confirmed_optimizer_updates": 12,
+  "completed_collections": 12,
+  "sampled_collections": 13,
+  "saved_final_or_intermediate_model": null,
+  "sampled_artifact_summary": {
+    "responses": 1664, "questions": 208, "rewarded": 472,
+    "mixed_success_groups": 149, "at_response_cap": 198, "empty": 0,
+    "all_token_logprob_reward_lengths_aligned_and_values_finite": true,
+    "collection13_buffer_sha256": "0597dcf5bfa0dd6dade3157bd26e8b9fbb98f8de95da77fd98f4e4d2267eb42a",
+    "limit": "Includes collection13 sampled but not successfully learned. Different questions across collections prevent reading the raw reward sequence as a controlled learning curve."
+  },
+  "log": "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt3.log",
+  "log_sha256": "7c83c12b0bd89e652b1a6c25de84083130214d736d5d6aa61f020467d6566e0d",
+  "error": "CUDA OOM in oat/algorithms/ppo.py:558 calling entropy_from_logits, then oat/utils/ops.py:84 while multiplying softmax probabilities by logits",
+  "collection_input_shape": [128, 3245],
+  "oom_memory_gib": {"attempted_allocation": 1.77, "free": 1.19, "torch_allocated": 30.34, "torch_reserved_unallocated": 6.60, "process_total": 37.60},
+  "interpretation": "The previous early checks were valid but did not establish memory stability over later variable-length batches. This is a runtime failure, not a negative benchmark result. No final evaluations are admitted for this failed attempt.",
+  "observed_source_lifetimes": "Entropy is a no-grad logging statistic computed while the current policy backward graph remains live. Its implementation creates vocabulary-wide softmax and product temporaries. The last old-policy batch_logits is also retained throughout the learning loop despite being unused after its log-probabilities are copied.",
+  "next": "CPU-test an isolated memory adapter that chunks only the entropy calculation and releases unused old-policy logits. Preserve objective, rewards, temperature, token limits and optimizer. Run ranked AMC/Minerva reference controls on the GPU while preparing the repair; use a new fresh-base attempt only after focused checks.",
+  "cost": "About19minutes from launch to failure recognition, with12completed updates but no saved checkpoint. Roughly2minutes from recognition to launching useful reference evaluations. Save more frequently in the next attempt; do not describe failed-run weights as recoverable."
+}

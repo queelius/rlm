@@ -1,0 +1,493 @@
+{
+  "updated_utc": "2026-10-07T16:01:34.562766+00:00",
+  "status": "complete",
+  "purpose": "Published-checkpoint and base-model reference evaluation beyond MATH500, not local training gain",
+  "plan_path": "/project/alex_phd/runs/r1-zero-replication-20261007/BROADER_REFERENCE_PLAN.json",
+  "author_commit": "dfca49dd460ee7cc8e4a5a162c876a7fd6993b87",
+  "models": {
+    "base": {
+      "repo_id": "Qwen/Qwen2.5-Math-1.5B",
+      "revision": "4a83ca6e4526a4f2da3aa259ec36c259f66b2ab2"
+    },
+    "author": {
+      "repo_id": "sail/Qwen2.5-Math-1.5B-Oat-Zero",
+      "revision": "a98e477854071157a450e57dd45fd0684b6fa38a"
+    }
+  },
+  "source_dataset": "/project/alex_phd/research-cache/repos/understand-r1-zero/datasets/evaluation_suite",
+  "source_sha256": {
+    "evaluate_model.py": "ea785b1d9ae6bfbc3b7c4a586e7d90389d61c0e42ce3c91fdd68a7648663fa5f",
+    "math_grader.py": "eae505bc232c5c2f8495e2bb3b5ab80d4e475502f501864c378d09ce5dab72ee",
+    "amc_arrow": "5e16d28683b95782686413eadd12560d051b2d4ac8aef456b500891ccabd5233",
+    "minerva_arrow": "23d05849fd365b9dae2ce5f6c4b6af3baecbbd0a88623abec3f0692d346bae2a"
+  },
+  "decoding": {
+    "temperature": 0,
+    "top_p": 1,
+    "n_samples": 1,
+    "max_tokens": 3000,
+    "max_model_len": 4096,
+    "chat_template": "Exact official apply_qwen_math_template",
+    "raw_template": "Exact source question alone",
+    "seed": "Official time_ns seed, unchanged; greedy generation is not assumed universally bitwise deterministic"
+  },
+  "audit": {
+    "grader": "understand_r1_zero.math_grader.boxed_reward_fn(fast=False)",
+    "python": "/project/alex_phd/envs/r1-zero-dfca49d/bin/python",
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": 2,
+    "one_answer_each": true,
+    "source_order_checked": true,
+    "total_answers_independently_regraded": 1420,
+    "source_files_match_pinned_commit": true
+  },
+  "conditions": {
+    "base-chat": {
+      "audited_utc": "2026-10-07T15:54:08.901868+00:00",
+      "output_path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval-broader-reference-base-chat-attempt1/model_eval_out__project_alex_phd_research-cache_models_Qwen--Qwen2.5-Math-1.5B--4a83ca6e4526a4f2da3aa259ec36c259f66b2ab21791388190_template_qwen_math_temp0_topp1_n1.json",
+      "output_sha256": "15c85c74b6b1c4cc34c06abd72f65a6875b5b6d62a8c4ffe106d0bb9b1df8968",
+      "rows": 355,
+      "prompt_template": "qwen_math",
+      "all_ordered_questions_references_templates_and_scalar_rewards_match": true,
+      "mismatches": [],
+      "tasks": {
+        "amc": {
+          "n": 83,
+          "native_correct": 26,
+          "regraded_correct": 26,
+          "formatted": 65,
+          "empty": 0,
+          "at_cap": 14,
+          "capped_correct": 0,
+          "capped_unformatted": 13,
+          "accuracy_percent": 31.325301,
+          "unformatted": 18,
+          "length_tokens": {
+            "min": 263,
+            "median": 910,
+            "mean": 1267.3493975903614,
+            "max": 3000,
+            "total": 105190
+          },
+          "above_cap": 0
+        },
+        "minerva": {
+          "n": 272,
+          "native_correct": 32,
+          "regraded_correct": 32,
+          "formatted": 151,
+          "empty": 0,
+          "at_cap": 149,
+          "capped_correct": 15,
+          "capped_unformatted": 99,
+          "accuracy_percent": 11.764706,
+          "unformatted": 121,
+          "length_tokens": {
+            "min": 97,
+            "median": 3000,
+            "mean": 1962.7941176470588,
+            "max": 3000,
+            "total": 533880
+          },
+          "above_cap": 0
+        }
+      }
+    },
+    "base-raw": {
+      "audited_utc": "2026-10-07T15:55:00.809870+00:00",
+      "output_path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval-broader-reference-base-raw-attempt1/model_eval_out__project_alex_phd_research-cache_models_Qwen--Qwen2.5-Math-1.5B--4a83ca6e4526a4f2da3aa259ec36c259f66b2ab21791388423_template_no_temp0_topp1_n1.json",
+      "output_sha256": "3288f91d57ab51f33e1b0c951f2e1ddb7406da2a2845e17b3c8f0208bb10e8fb",
+      "rows": 355,
+      "prompt_template": "no",
+      "all_ordered_questions_references_templates_and_scalar_rewards_match": true,
+      "mismatches": [],
+      "tasks": {
+        "amc": {
+          "n": 83,
+          "native_correct": 32,
+          "regraded_correct": 32,
+          "formatted": 70,
+          "empty": 0,
+          "at_cap": 6,
+          "capped_correct": 0,
+          "capped_unformatted": 6,
+          "accuracy_percent": 38.554217,
+          "unformatted": 13,
+          "length_tokens": {
+            "min": 201,
+            "median": 761,
+            "mean": 939.4698795180723,
+            "max": 3000,
+            "total": 77976
+          },
+          "above_cap": 0
+        },
+        "minerva": {
+          "n": 272,
+          "native_correct": 40,
+          "regraded_correct": 40,
+          "formatted": 203,
+          "empty": 3,
+          "at_cap": 58,
+          "capped_correct": 4,
+          "capped_unformatted": 25,
+          "accuracy_percent": 14.705882,
+          "unformatted": 69,
+          "length_tokens": {
+            "min": 1,
+            "median": 689,
+            "mean": 1152.797794117647,
+            "max": 3000,
+            "total": 313561
+          },
+          "above_cap": 0
+        }
+      }
+    },
+    "author-chat": {
+      "audited_utc": "2026-10-07T15:58:25.510802+00:00",
+      "output_path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval-broader-reference-author-chat-attempt1/model_eval_out__home_atowell_research-cache_store_models_sail--Qwen2.5-Math-1.5B-Oat-Zero--a98e477854071157a450e57dd45fd0684b6fa38a1791388626_template_qwen_math_temp0_topp1_n1.json",
+      "output_sha256": "4371a7f9a118534201df0330b0e7f0ba8c737079d7a9cafbb2ffaefbfc52c258",
+      "rows": 355,
+      "prompt_template": "qwen_math",
+      "all_ordered_questions_references_templates_and_scalar_rewards_match": true,
+      "mismatches": [],
+      "tasks": {
+        "amc": {
+          "n": 83,
+          "native_correct": 41,
+          "regraded_correct": 41,
+          "formatted": 83,
+          "empty": 0,
+          "at_cap": 0,
+          "capped_correct": 0,
+          "capped_unformatted": 0,
+          "accuracy_percent": 49.39759,
+          "unformatted": 0,
+          "length_tokens": {
+            "min": 283,
+            "median": 770,
+            "mean": 852.1927710843373,
+            "max": 2329,
+            "total": 70732
+          },
+          "above_cap": 0
+        },
+        "minerva": {
+          "n": 272,
+          "native_correct": 66,
+          "regraded_correct": 66,
+          "formatted": 262,
+          "empty": 0,
+          "at_cap": 6,
+          "capped_correct": 0,
+          "capped_unformatted": 6,
+          "accuracy_percent": 24.264706,
+          "unformatted": 10,
+          "length_tokens": {
+            "min": 140,
+            "median": 568,
+            "mean": 676.0073529411765,
+            "max": 3000,
+            "total": 183874
+          },
+          "above_cap": 0
+        }
+      }
+    },
+    "author-raw": {
+      "audited_utc": "2026-10-07T16:01:34.562766+00:00",
+      "output_path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval-broader-reference-author-raw-attempt1/model_eval_out__home_atowell_research-cache_store_models_sail--Qwen2.5-Math-1.5B-Oat-Zero--a98e477854071157a450e57dd45fd0684b6fa38a1791388851_template_no_temp0_topp1_n1.json",
+      "output_sha256": "72a6ce3e7aaaabc372e0c96f90454a913f124d638b63d961eb86ea48caf20136",
+      "rows": 355,
+      "prompt_template": "no",
+      "all_ordered_questions_references_templates_and_scalar_rewards_match": true,
+      "mismatches": [],
+      "tasks": {
+        "amc": {
+          "n": 83,
+          "native_correct": 35,
+          "regraded_correct": 35,
+          "formatted": 74,
+          "empty": 0,
+          "at_cap": 3,
+          "capped_correct": 0,
+          "capped_unformatted": 3,
+          "accuracy_percent": 42.168675,
+          "unformatted": 9,
+          "length_tokens": {
+            "min": 224,
+            "median": 746,
+            "mean": 885.7590361445783,
+            "max": 3000,
+            "total": 73518
+          },
+          "above_cap": 0
+        },
+        "minerva": {
+          "n": 272,
+          "native_correct": 48,
+          "regraded_correct": 48,
+          "formatted": 221,
+          "empty": 2,
+          "at_cap": 45,
+          "capped_correct": 3,
+          "capped_unformatted": 19,
+          "accuracy_percent": 17.647059,
+          "unformatted": 51,
+          "length_tokens": {
+            "min": 1,
+            "median": 694,
+            "mean": 1065.1617647058824,
+            "max": 3000,
+            "total": 289724
+          },
+          "above_cap": 0
+        }
+      }
+    }
+  },
+  "pending_conditions": [],
+  "manually_inspected_examples": [
+    {
+      "condition": "base-chat",
+      "task": "amc",
+      "source_row_index_zero_based": 0,
+      "result": "Correct 142",
+      "observation": "The nested fraction equals 109/33, so numerator plus denominator is 142. Saved answer agrees. Its Python/output block is generated text, not executed."
+    },
+    {
+      "condition": "base-chat",
+      "task": "amc",
+      "source_row_index_zero_based": 4,
+      "result": "Wrong 12; reference 13",
+      "observation": "The response treats the unit-radius thickening of the segment from 3 to 4i as a rectangle. The segment has length 5; its stadium-shaped thickening has area 2*5+pi, whose nearest integer is 13."
+    },
+    {
+      "condition": "base-chat",
+      "task": "minerva",
+      "source_row_index_zero_based": 6,
+      "result": "Correct 0.006",
+      "observation": "The response evaluates GM/r^2 at one AU as approximately 0.00593 m/s^2 and rounds correctly to one significant figure."
+    },
+    {
+      "condition": "base-chat",
+      "task": "minerva",
+      "source_row_index_zero_based": 3,
+      "result": "Wrong 20; reference 10",
+      "observation": "The response uses a single star's absolute magnitude and ignores the combined brightness of 10^4 stars. Combined absolute magnitude is -5-2.5*log10(10^4)=-15; distance modulus at 1 Mpc is 25, giving apparent magnitude 10."
+    },
+    {
+      "condition": "base-raw",
+      "task": "minerva",
+      "source_row_index_zero_based": 0,
+      "result": "Wrong boxed 100 Angstroms; reference 9.6",
+      "observation": "The answer contains mutually inconsistent wavelength values, including a generated output block claiming 0.00010 Angstroms and then a boxed 100 Angstroms. No code was executed."
+    },
+    {
+      "condition": "author-chat",
+      "task": "amc",
+      "source_row_index_zero_based": 4,
+      "result": "Correct 13; base-chat gave12",
+      "observation": "Author response identifies the unit-radius thickening of a length5 segment as a rectangle plus two semicircles, computes10+pi and rounds to13. This is a concrete mathematically correct response change under matched chat prompts, not proof of newly acquired knowledge."
+    },
+    {
+      "condition": "author-chat",
+      "task": "minerva",
+      "source_row_index_zero_based": 3,
+      "result": "Wrong40; base-chat gave20;reference10",
+      "observation": "Author response changes the cluster-brightness calculation but incorrectly adds5*log10(10^4). More stars should reduce magnitude by2.5*log10(10^4); the correct apparent magnitude is10."
+    },
+    {
+      "condition": "author-raw",
+      "task": "minerva",
+      "source_row_index_zero_based": 6,
+      "result": "Correct boxed0.006 with units",
+      "observation": "The final gravitational acceleration is correct, but a generated Python-output block claims5.93 instead. This was not executed; correct final-answer grading does not validate every intermediate statement."
+    }
+  ],
+  "limitations": [
+    "These are base and publicly released author-model evaluations, not our trained model or evidence of our training improvement.",
+    "Report per-task counts; no principal cross-task average.",
+    "All outputs are retained. No favorable prompt or checkpoint is selected after inspecting scores.",
+    "No generated code was executed. Full final-answer checking does not certify reasoning steps or tool use.",
+    "Saved files contain no stop reason; at_cap means exactly 3000 saved output token IDs. Official evaluation can credit a capped answer, unlike the training actor's truncation penalty.",
+    "Prior pretraining exposure to these benchmarks is unknown; these are reference diagnostics, not untouched confirmatory test sets.",
+    "Examples are illustrative manual inspections, not a representative sample or causal explanation of aggregate changes."
+  ],
+  "training_overlap_check": {
+    "training_path": "/project/alex_phd/runs/r1-zero-replication-20261007/data-oat/train4096-lvl3to5-chat-drgrpo42/train",
+    "training_rows": 4096,
+    "unique_normalized_training_questions": 4096,
+    "training_arrow_sha256": "236c5778aa2702263a07e91e911040ba08c18b230283991f1e611171c78e0f99",
+    "normalization": "Python str.split() followed by single-space join; strip leading/trailing whitespace and collapse whitespace runs; no semantic normalization",
+    "compared_field": "problem (raw question, not templated input)",
+    "tasks": {
+      "amc": {
+        "evaluation_rows": 83,
+        "overlapping_evaluation_rows": 0,
+        "matches": []
+      },
+      "minerva": {
+        "evaluation_rows": 272,
+        "overlapping_evaluation_rows": 0,
+        "matches": []
+      }
+    },
+    "limitation": "Zero exact normalized overlaps does not exclude paraphrases, related questions, or base/author pretraining exposure."
+  },
+  "paired_comparisons": {
+    "base-chat__vs__base-raw": {
+      "left": "base-chat",
+      "right": "base-raw",
+      "tasks": {
+        "amc": {
+          "n": 83,
+          "left_correct": 26,
+          "right_correct": 32,
+          "right_correct_left_wrong": 11,
+          "right_wrong_left_correct": 5,
+          "both_correct": 21,
+          "both_wrong": 46,
+          "right_minus_left": 6
+        },
+        "minerva": {
+          "n": 272,
+          "left_correct": 32,
+          "right_correct": 40,
+          "right_correct_left_wrong": 30,
+          "right_wrong_left_correct": 22,
+          "both_correct": 10,
+          "both_wrong": 210,
+          "right_minus_left": 8
+        }
+      }
+    },
+    "author-chat__vs__author-raw": {
+      "left": "author-chat",
+      "right": "author-raw",
+      "tasks": {
+        "amc": {
+          "n": 83,
+          "left_correct": 41,
+          "right_correct": 35,
+          "right_correct_left_wrong": 7,
+          "right_wrong_left_correct": 13,
+          "both_correct": 28,
+          "both_wrong": 35,
+          "right_minus_left": -6
+        },
+        "minerva": {
+          "n": 272,
+          "left_correct": 66,
+          "right_correct": 48,
+          "right_correct_left_wrong": 11,
+          "right_wrong_left_correct": 29,
+          "both_correct": 37,
+          "both_wrong": 195,
+          "right_minus_left": -18
+        }
+      }
+    },
+    "base-chat__vs__author-chat": {
+      "left": "base-chat",
+      "right": "author-chat",
+      "tasks": {
+        "amc": {
+          "n": 83,
+          "left_correct": 26,
+          "right_correct": 41,
+          "right_correct_left_wrong": 18,
+          "right_wrong_left_correct": 3,
+          "both_correct": 23,
+          "both_wrong": 39,
+          "right_minus_left": 15
+        },
+        "minerva": {
+          "n": 272,
+          "left_correct": 32,
+          "right_correct": 66,
+          "right_correct_left_wrong": 53,
+          "right_wrong_left_correct": 19,
+          "both_correct": 13,
+          "both_wrong": 187,
+          "right_minus_left": 34
+        }
+      }
+    },
+    "base-raw__vs__author-raw": {
+      "left": "base-raw",
+      "right": "author-raw",
+      "tasks": {
+        "amc": {
+          "n": 83,
+          "left_correct": 32,
+          "right_correct": 35,
+          "right_correct_left_wrong": 9,
+          "right_wrong_left_correct": 6,
+          "both_correct": 26,
+          "both_wrong": 42,
+          "right_minus_left": 3
+        },
+        "minerva": {
+          "n": 272,
+          "left_correct": 40,
+          "right_correct": 48,
+          "right_correct_left_wrong": 16,
+          "right_wrong_left_correct": 8,
+          "both_correct": 32,
+          "both_wrong": 216,
+          "right_minus_left": 8
+        }
+      }
+    }
+  },
+  "empty_answer_details": [
+    {
+      "condition": "base-raw",
+      "task": "minerva",
+      "source_row_index_zero_based": 206,
+      "saved_token_ids": [
+        151643
+      ],
+      "saved_reward": 0
+    },
+    {
+      "condition": "base-raw",
+      "task": "minerva",
+      "source_row_index_zero_based": 231,
+      "saved_token_ids": [
+        151643
+      ],
+      "saved_reward": 0
+    },
+    {
+      "condition": "base-raw",
+      "task": "minerva",
+      "source_row_index_zero_based": 233,
+      "saved_token_ids": [
+        151643
+      ],
+      "saved_reward": 0
+    },
+    {
+      "condition": "author-raw",
+      "task": "minerva",
+      "source_row_index_zero_based": 206,
+      "saved_token_ids": [
+        151643
+      ],
+      "saved_reward": 0
+    },
+    {
+      "condition": "author-raw",
+      "task": "minerva",
+      "source_row_index_zero_based": 231,
+      "saved_token_ids": [
+        151643
+      ],
+      "saved_reward": 0
+    }
+  ],
+  "observation": "The released author checkpoint outperforms the base under both matched input formats on both datasets. The difference is larger with chat prompts. Question-only input helps the base but hurts the author checkpoint relative to chat. These are reference observations, not local training gains."
+}

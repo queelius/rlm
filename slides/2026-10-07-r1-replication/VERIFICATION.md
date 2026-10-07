@@ -1,5 +1,19 @@
 # Presentation verification
 
+## Memory-repair handoff, evidence cutoff 7 October, 15:55 UTC
+
+- The third larger attempt failed after 12 updates with no saved checkpoint.
+  The five-slide PDF and eight-page learning PDF distinguish that failure from
+  completed short-run results and from the authors' released-model reference.
+  Attempt 4 is explicitly prepared, not launched at this cutoff.
+- Fresh Tectonic builds passed. Root reran the five-page/title/bounds check and
+  matching pdfpc-note check; all notes fit within 14 lines. The documentation
+  agent checked both PDFs' text bounds and visually inspected revised pages;
+  root additionally inspected slide 5. No live pdfpc GUI was tested.
+- No partial broader-benchmark scores were promoted into this dated PDF. Its
+  supporting research record can carry later verified results without implying
+  that they were known at 15:55.
+
 ## Smaller-collection retry, evidence cutoff 7 October, 15:25 UTC
 
 - Current guide, notes, speaker guide, and evidence distinguish two retained

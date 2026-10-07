@@ -1,6 +1,6 @@
 # Learning from correct answers: a small reproduction
 
-Evidence cutoff: 7 October 2026, 15:25 UTC. Aim for about five minutes.
+Evidence cutoff: 7 October 2026, 15:55 UTC. Aim for about five minutes.
 The main lesson is about the starting prompt and the format used in training.
 Chat-style training raised scores from 154 to 308 out of 500 with chat input,
 but from 305 to 317 with the question alone. A second run trained on questions
@@ -12,7 +12,8 @@ starting setup. The repeated question-only run's near-zero change is an importan
 one to hide behind the first run's better score. A separate evaluation of the
 authors' released model now scores 366/500 (73.2%), close to their reported
 74.2%. That checks our evaluation on their weights; it is not our training
-result. A larger training recipe is now underway, with final results pending.
+result. A larger training retry is prepared but has not launched at this cutoff;
+final results remain pending.
 
 ## 1. Why start with this experiment? (45 seconds)
 
@@ -155,7 +156,8 @@ established its cause. We did not use this variation to select a model.
 Say: “The fraction example changed from repetition to a correct 0.15. That need
 not mean learning division from scratch. We also checked the authors' released
 model: 73.2%, versus their reported 74.2%. Those are their trained weights,
-not ours. A larger run from the original model is underway; its results are pending.”
+not ours. A larger retry from the original model is prepared, not yet running;
+its results are pending.”
 
 The released checkpoint is `sail/Qwen2.5-Math-1.5B-Oat-Zero`, pinned to revision
 `a98e477854071157a450e57dd45fd0684b6fa38a`. Independent regrading confirms
@@ -235,13 +237,20 @@ math experiment.
 The larger run's first attempt ran out of GPU memory during its first
 collection's optimization. No collection completed, and the number of inner
 optimizer updates is unconfirmed. The second attempt failed during initialization:
-expandable memory segments were incompatible with vLLM's memory pool. Both
-attempts are retained as failures, not learning results. No authors' source
-was patched.
+expandable memory segments were incompatible with vLLM's memory pool. The third
+attempt completed 12 updates, then ran out of memory computing a diagnostic
+entropy statistic during its thirteenth sampled collection. No checkpoint was
+saved. These are retained runtime failures, not completed benchmark results.
+Early successful updates did not establish memory stability on later batches.
 
-The third attempt started at 15:24 UTC from the original base weights, using
-the default allocator and the short runs' known-fitting collection size. It
-keeps the 4,096 selected MATH level 3–5 questions, authors' chat prompt,
+The fourth attempt is prepared, not launched as of 15:55 UTC. A private copy
+of the learning package computes that statistic in smaller pieces and releases
+unused old prediction tensors. Three focused CPU tests passed, including a
+fixture with identical learning-step updates. This does not prove that all GPU
+batches will fit. The shared environment and official source remain unchanged.
+
+The retry starts from the original base weights. It keeps the default allocator,
+4,096 selected MATH level 3–5 questions, authors' chat prompt,
 `math_verify` training verifier, and learning rate. Each collection now has
 16 questions with eight answers each, followed by one update and a weight
 transfer to the generator. Filtering two overlong prompts leaves 4,094 eligible
@@ -251,11 +260,13 @@ The earlier 3,968-question/248-update plan applied to the abandoned larger
 collections. The slide's roughly 4,000 questions and about 250 updates remain
 accurate. These are budgets, not completed results.
 
-Training has a ten-hour cap and the full sequence an eleven-hour cap. The final
-checkpoint is prescribed as `step_00256`; checkpoint saving and progress checks
-occur every 32 updates. Both final 500-question tests remain pending. We will
-test both input formats using the same final checkpoint, checker, and response
-limit, retaining failures separately.
+Training has a ten-hour cap and the full sequence a thirteen-hour cap. The final
+checkpoint is prescribed as `step_00256`; saving occurs every eight updates,
+with progress checks every 32. The same final checkpoint will be evaluated on
+MATH500 (500 questions), AMC (83), and Minerva (272), each in both input formats
+with the same checker and response limit. All six final tests remain pending.
+Separate broader checks of the untrained and authors' released models are
+underway; no partial scores are promoted here. Those checks do not test our learning.
 
 This is a more closely aligned reference recipe, not an isolated test of
 training duration. Data coverage and difficulty, verifier, and update budget
@@ -276,5 +287,6 @@ is not the current stopping condition.
 - [Prompt comparison receipt](../../docs/r1-replication-2026-10-07/prompt-control-scoring-receipt.json).
 - [Authors' released-model check](../../docs/r1-replication-2026-10-07/author-reference-receipt.json).
 - [Current larger training protocol](../../docs/r1-replication-2026-10-07/longer-training-plan.md) and [original prompt-filter check](../../docs/r1-replication-2026-10-07/longer-loader-receipt.json).
+- [Third attempt's retained failure](../../docs/r1-replication-2026-10-07/longer-attempt3-failure.json).
 - [Pinned released model](https://huggingface.co/sail/Qwen2.5-Math-1.5B-Oat-Zero/tree/a98e477854071157a450e57dd45fd0684b6fa38a).
 - [Evidence and limits](evidence.md).
