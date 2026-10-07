@@ -1,9 +1,18 @@
 # Five-slide R1-Zero-style reproduction update
 
+For a self-contained introduction before the slides, read
+[Why we are training a language model to solve math](../../docs/r1-replication-2026-10-07/START-HERE.md).
+The deck now uses two charts: the prompt-dependent gain on all 500 questions,
+then the complete 64-question learning curve of the separate ongoing run.
+The visible denominators keep those comparisons separate. The final slide
+introduces faster 512-question training / 128-question evaluation screens;
+these are planned experiments, not new results.
+
 `research-update.tex` is the 16:9 Beamer source. `results.tex` holds the numbers
 for the checked final comparison. `speaker-guide.md` explains the ideas
 in plain language; `speaker-notes.json` holds concise laptop presenter notes.
-The deck reports three short training runs and all eight model/input combinations.
+The deck highlights the chat-trained comparison and summarizes two question-only runs;
+the learning guide retains all eight model/input combinations.
 Chat-style training scored 308/500 in chat style and 317 with questions alone;
 question-only training scored 168 and 314. A fresh repeat scored 166 and 306.
 The starting model scored 154 and 305.

@@ -1,5 +1,19 @@
 # Presentation verification
 
+## Chart and overview revision at 18:30 UTC
+
+- Kept the 18:20 scientific cutoff. Converted slide 4's main comparison to
+  a paired-dot chart: same two models, two input formats, all 500 questions.
+  The separate question-only training outcomes remain visible and in the guide.
+- Root rebuilt both PDFs, checked all text bounds and five presenter notes,
+  and visually inspected slides 4 and 5. No overflow appeared. Five slides
+  and ten learning-guide pages retained; no live pdfpc GUI test.
+- Exported both chart slides as PNGs for the new START-HERE overview on GitHub.
+  The overview explains weights, RL, SFT, the score, baseline choice,
+  small-sample limits, failures and proposed faster comparisons.
+- Faster experiments are explicitly prepared/planned, not results. Current
+  GPU training remains unchanged. No new score or improved checkpoint claimed.
+
 ## Intermediate results at 18:20 UTC on 7 October
 
 - Five-slide PDF and ten-page learning PDF built with Tectonic, with no

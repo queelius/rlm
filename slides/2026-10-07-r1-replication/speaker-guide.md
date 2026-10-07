@@ -108,11 +108,13 @@ training improved the score to 317. Training on questions alone instead gave
 314. A repeat of that training gave 306. We cannot yet claim a reliable
 improvement beyond the stronger starting setup.”
 
-Read down a column to see the effect of training while keeping the prompt fixed.
-Read across a row to see the effect of changing the prompt while keeping the
-model weights fixed. The three trained rows are three separate training runs,
-not different checkpoints chosen for different tests. All eight cells use the
-same 500 questions and the prescribed final models.
+The chart has two lines. Each compares the original model (gray) with the
+same final chat-trained model (teal). The upper line asks the questions in
+chat style; the lower gives each question alone. The training gain is 154
+correct answers on the upper line, but only 12 on the lower. That difference
+is the lesson: our choice of starting prompt changes how impressive RL looks.
+The full eight-cell table remains in the learning guide, including both
+question-only training runs; no result has been discarded.
 
 Chat-style training improved question-only answers by 12: 18 became correct
 and six became incorrect. Question-only training improved them by nine: 24
@@ -188,7 +190,14 @@ to learn from. The sampled rewards match the checker, and gradients are
 finite. In the latest audited window, most failures were well-formed but
 mathematically wrong, not missing final answers. After this run, the leading
 comparisons are larger learning steps and two learning passes per batch of
-sampled answers. Neither has produced a result yet.
+sampled answers. The user now prioritizes faster iteration. We will use 512
+training questions for three fresh-base screens: the current learning rate,
+five times that rate, and separately two learning passes at the current rate.
+Each uses the same fixed 128-question final test in both input formats.
+The first two have 32 updates; the extra-pass run has 64 from the same number
+of sampled answers. These small screens help choose what to try next; they do
+not make the 128 questions an untouched confirmation set. No screen has run yet.
+The current longer run and its full evaluations are not interrupted.
 
 ## Optional discussion and concrete examples
 

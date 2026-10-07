@@ -3,6 +3,14 @@
 Cutoff: 7 October 2026, 18:20 UTC. The fourth longer-training attempt is
 underway. Its final benchmarks are pending; completed short-run scores are unchanged.
 
+Presentation revision at 18:30 UTC, without changing the evidence cutoff:
+slide 4 now plots the same two models in both input formats, 154 to 308 and
+305 to 317 correct out of 500. Both lines use the same original and final
+chat-trained weights. Separate question-only runs' gains of 9 and 1 remain
+visible below; their complete results remain in the guide. Slide 5 proposes
+small fixed-endpoint screens; none has run. These are design/communication
+changes, not additional measured gains.
+
 ## Longer training progress
 
 Slide 5 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-1820.json):

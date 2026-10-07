@@ -1,5 +1,9 @@
 # A small, direct replication of language-model RL
 
+**Start here:** [The big picture, experiments, lessons and next steps](START-HERE.md).
+This self-contained overview is the recommended first read. The chronological
+notes below provide the supporting detail.
+
 **Latest check, 7 October at 18:20 UTC:** The longer run has reached 99
 completed learning calls without a logged training error. Its scheduled
 64-question scores are **20, 42, 42, 43** at 0, 32, 64 and 96 updates.

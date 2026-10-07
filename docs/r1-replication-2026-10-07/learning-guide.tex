@@ -569,9 +569,11 @@ whichever intermediate one looks best. An audit of 1,536 sampled answers found
 no disagreement with the saved rewards. Most questions still produced both
 correct and incorrect attempts, and all 67 checked gradient norms were finite.
 In the latest audited window, most failures were well-formed but mathematically
-wrong. Next, we will test stronger learning steps and learning twice from each
-batch of sampled answers. These are separate proposed comparisons, not proven
-fixes or changes to the current run.
+wrong. Next, we will use 512 training questions and the same 128 test questions
+for faster comparisons: current learning rate, a fivefold increase, and
+separately two learning passes per batch. The first two make 32 weight updates;
+the extra-pass run makes 64 using the same number of sampled answers. These
+are exploratory tests, not proven fixes or changes to the current run.
 
 \topic{An important scoring distinction}
 
