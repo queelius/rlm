@@ -6,6 +6,12 @@ The main discussion is what makes that learning possible, and how we could
 create those conditions for recursive language models. The RLM interventions
 below are proposals, not findings from the math experiment.
 
+For the live speaker view, run `make present` in this slide directory on your
+laptop. Each slide has concise talking points and a transition to the next idea.
+Use `make rehearse` to review just the presenter view; see the
+[setup instructions](README.md#open-the-speaker-and-audience-views-on-your-laptop).
+The audience sees only the slides, provided you share only the audience window.
+
 ## 1. We reproduced RL-driven improvement at small scale
 
 Say: “We eventually want an RLM to learn when to run code, when to ask a helper,

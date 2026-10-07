@@ -1,5 +1,21 @@
 # Presentation verification
 
+## Local pdfpc presentation setup
+
+- Kept the existing `make present` and `make rehearse` launch commands and
+  documented how to invoke them from the local repository root. Neither target
+  rebuilds the PDF or installs dependencies. Checked their exact argument lists
+  with Make dry runs against the official pdfpc manual.
+- Rewrote all six speaker notes as readable talking points, examples and
+  transitions. Regenerated the committed `.pdfpc` file; `make notes-check`
+  confirms exact source/title alignment. Notes contain 12, 13, 12, 12, 13 and
+  13 lines, each at most 42 characters. Read back every wrapped note.
+- Reran `verify_deck.py`: six slides, matching titles and all PDF text within
+  page bounds. Audience PDF and scientific results are unchanged, so the
+  previous visual inspection remains applicable. No training was restarted.
+- No live GUI test: this server has neither pdfpc nor a graphical display.
+  The README directs the user to run locally and share only the audience window.
+
 ## User-requested stop and lesson-centered conclusion, 20:56 UTC
 
 - Training and observer stopped; authenticated owner session and GPU compute

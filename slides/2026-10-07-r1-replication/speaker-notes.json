@@ -2,27 +2,27 @@
   "slides": [
     {
       "title": "We reproduced RL-driven improvement at small scale.",
-      "notes": "Successful small-scale reproduction of RL-driven improvement using the authors' method. Same 64 questions: 20 to 47 correct; all checks shown. Not the full published benchmark result. Stopped by choice; checkpoints retained. The main contribution here is lessons for RLM experiments."
+      "notes": "We practiced a published RL method on math before applying it to RLMs. On the same 64 questions, correct answers rose from 20 to 47. The chart keeps every check, including the last dip.\n\nThis reproduces improvement at small scale, not the full benchmark result. Training is stopped; checkpoints are saved.\n\nNext: what made learning possible?"
     },
     {
       "title": "Useful practice is neither all wrong nor all right.",
-      "notes": "Rewards minus their question's mean: allzero and allone groups give zero. Mixing easy and impossible questions does not fix that. Curriculum could keep practice within reach. Do not claim50percent success is always optimal or mixed rewards guarantee learning."
+      "notes": "Walk through x = 4 versus x = 5. We compare attempts on the SAME question. All wrong or all right gives this method no relative reward signal. A mix gives it a useful contrast.\n\nA curriculum could keep practice within reach, then raise the difficulty. Mixing easy and impossible questions is not enough.\n\nNext: can the model use its existing skills?"
     },
     {
       "title": "Existing skill needs a usable interface.",
-      "notes": "Same base and short chat-trained weights in both rows; test prompt alone changes. Full500 checker and3000token cap match. No-template training repeats added9 and1. SFT is optional. For RLMs distinguish knowing Python from knowing our API and choosing useful subtasks."
+      "notes": "Point to the starting scores: 154 versus 305 out of 500. Same model, different way of asking. A poor interface can hide ability and make the training gain look larger.\n\nKnowing Python is not the same as knowing our RLM tool interface or choosing useful subtasks. Demonstrations may help; SFT is not always needed.\n\nNext: what should we teach first?"
     },
     {
       "title": "Teach the interface, then practice useful choices.",
-      "notes": "Proposed sequence, not established fact. Measure skills first; do not assume the model lacks Python. Example: pass employer name to the next lookup. Gradually remove hints; retain some earlier practice. Related RLM work already trains on demonstrations; novelty needs a sharper test."
+      "notes": "Tell the invented example: Mira works at Aster Lab; Aster Lab is in Oxford. The second lookup needs the employer's name. Calling a helper is not enough: it needs useful context.\n\nTeach missing skills, then practice linking them. More attempts may reveal rare successes, but can repeat the same mistake.\n\nThis sequence is a hypothesis to test."
     },
     {
       "title": "Prior work supports the ingredients, not our sequence.",
-      "notes": "DAPO is adaptive filtering, not proof of an easy-to-hard curriculum. RLMs already have demonstration training and a separate RL transfer result. R1 cold start is optional, as R1-Zero shows. Our possible contribution is which skills, order, and transfer, not SFT before RL itself."
+      "notes": "These ingredients have precedents. DAPO keeps informative reward groups. RLM work uses demonstrations. R1 adds supervised preparation; R1-Zero shows it is not always required.\n\nNone establishes our proposed teaching order. Our question is which preparation helps RLMs learn and combine skills on new tasks.\n\nNext: small experiments to distinguish ideas."
     },
     {
       "title": "A portfolio of small experiments, not one settled story.",
-      "notes": "User favors breadth. Curriculum is one hypothesis, not the conclusion. Separate missing skills, teaching order, exploration and repair. Freeze helpers for early comparisons. Measure each setup before and after RL at matched budgets. Small screens guide independent repeats; retain failures."
+      "notes": "Start by locating the failure: tool use, passing context, choosing a plan, or using feedback. Each suggests a different small test.\n\nCompare staged versus shuffled examples; more attempts at the same total cost; success-only versus repair demonstrations. Keep helper models fixed and test new combinations.\n\nClose: prepare learnable tasks, then test what helps."
     }
   ]
 }

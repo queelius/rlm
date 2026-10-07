@@ -7,37 +7,37 @@
       "idx": 0,
       "label": "1",
       "overlay": 0,
-      "note": "Successful small-scale reproduction of RL-\ndriven improvement using the authors'\nmethod. Same 64 questions: 20 to 47\ncorrect; all checks shown. Not the full\npublished benchmark result. Stopped by\nchoice; checkpoints retained. The main\ncontribution here is lessons for RLM\nexperiments."
+      "note": "We practiced a published RL method on math\nbefore applying it to RLMs. On the same 64\nquestions, correct answers rose from 20 to\n47. The chart keeps every check, including\nthe last dip.\n\nThis reproduces improvement at small\nscale, not the full benchmark result.\nTraining is stopped; checkpoints are\nsaved.\n\nNext: what made learning possible?"
     },
     {
       "idx": 1,
       "label": "2",
       "overlay": 0,
-      "note": "Rewards minus their question's mean:\nallzero and allone groups give zero.\nMixing easy and impossible questions does\nnot fix that. Curriculum could keep\npractice within reach. Do not\nclaim50percent success is always optimal\nor mixed rewards guarantee learning."
+      "note": "Walk through x = 4 versus x = 5. We\ncompare attempts on the SAME question. All\nwrong or all right gives this method no\nrelative reward signal. A mix gives it a\nuseful contrast.\n\nA curriculum could keep practice within\nreach, then raise the difficulty. Mixing\neasy and impossible questions is not\nenough.\n\nNext: can the model use its existing\nskills?"
     },
     {
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "Same base and short chat-trained weights\nin both rows; test prompt alone changes.\nFull500 checker and3000token cap match.\nNo-template training repeats added9 and1.\nSFT is optional. For RLMs distinguish\nknowing Python from knowing our API and\nchoosing useful subtasks."
+      "note": "Point to the starting scores: 154 versus\n305 out of 500. Same model, different way\nof asking. A poor interface can hide\nability and make the training gain look\nlarger.\n\nKnowing Python is not the same as knowing\nour RLM tool interface or choosing useful\nsubtasks. Demonstrations may help; SFT is\nnot always needed.\n\nNext: what should we teach first?"
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "Proposed sequence, not established fact.\nMeasure skills first; do not assume the\nmodel lacks Python. Example: pass employer\nname to the next lookup. Gradually remove\nhints; retain some earlier practice.\nRelated RLM work already trains on\ndemonstrations; novelty needs a sharper\ntest."
+      "note": "Tell the invented example: Mira works at\nAster Lab; Aster Lab is in Oxford. The\nsecond lookup needs the employer's name.\nCalling a helper is not enough: it needs\nuseful context.\n\nTeach missing skills, then practice\nlinking them. More attempts may reveal\nrare successes, but can repeat the same\nmistake.\n\nThis sequence is a hypothesis to test."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "DAPO is adaptive filtering, not proof of\nan easy-to-hard curriculum. RLMs already\nhave demonstration training and a separate\nRL transfer result. R1 cold start is\noptional, as R1-Zero shows. Our possible\ncontribution is which skills, order, and\ntransfer, not SFT before RL itself."
+      "note": "These ingredients have precedents. DAPO\nkeeps informative reward groups. RLM work\nuses demonstrations. R1 adds supervised\npreparation; R1-Zero shows it is not\nalways required.\n\nNone establishes our proposed teaching\norder. Our question is which preparation\nhelps RLMs learn and combine skills on new\ntasks.\n\nNext: small experiments to distinguish\nideas."
     },
     {
       "idx": 5,
       "label": "6",
       "overlay": 0,
-      "note": "User favors breadth. Curriculum is one\nhypothesis, not the conclusion. Separate\nmissing skills, teaching order,\nexploration and repair. Freeze helpers for\nearly comparisons. Measure each setup\nbefore and after RL at matched budgets.\nSmall screens guide independent repeats;\nretain failures."
+      "note": "Start by locating the failure: tool use,\npassing context, choosing a plan, or using\nfeedback. Each suggests a different small\ntest.\n\nCompare staged versus shuffled examples;\nmore attempts at the same total cost;\nsuccess-only versus repair demonstrations.\nKeep helper models fixed and test new\ncombinations.\n\nClose: prepare learnable tasks, then test\nwhat helps."
     }
   ]
 }

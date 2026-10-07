@@ -6,6 +6,46 @@ Read the [six-slide PDF](research-update.pdf), the
 The [learning guide PDF](../../docs/r1-replication-2026-10-07/learning-guide.pdf)
 retains the detailed experiments and adds the RLM research discussion.
 
+## Open the speaker and audience views on your laptop
+
+Run these commands **locally, not inside the SSH session**, from your local
+`rlm` repository. The PDF and slide-by-slide notes are already included;
+you do not need LaTeX, Python, or the research environment to present.
+
+```sh
+git pull --ff-only origin main
+make -C slides/2026-10-07-r1-replication present
+```
+
+The Makefile launches **pdfpc** with two movable windows: audience slides,
+and your presenter view with talking points, slide previews, and a timer.
+Share only the audience window in a video meeting. With a projector, use
+extended displays rather than mirroring, and move the audience window onto it.
+
+For private rehearsal with just the presenter view:
+
+```sh
+make -C slides/2026-10-07-r1-replication rehearse
+```
+
+Install pdfpc once if it is missing: on Ubuntu/Debian,
+`sudo apt-get install pdf-presenter-console`; on macOS with Homebrew,
+`brew install pdfpc`. See the [official installation instructions](https://github.com/pdfpc/pdfpc#installation)
+for other systems. The launch targets do not install software automatically.
+
+Use the arrow keys to change slides, `+`/`-` to adjust note size, and
+`Ctrl+Q` to quit. The six-minute timer is only a guide; it does not advance
+slides. These controls and launch options are documented in the
+[pdfpc manual](https://github.com/pdfpc/pdfpc/blob/master/man/pdfpc.in).
+The [speaker guide](speaker-guide.md) has longer explanations for preparation.
+
+Keep `research-update.pdf` and `research-update.pdfpc` together. The latter
+contains the private notes; opening the PDF in an ordinary viewer shows only
+the audience slides. pdfpc may save local note/settings changes to that file;
+keep any personal edits before pulling later updates.
+
+## Research summary
+
 The small-scale reproduction occupies one slide. The rest explains useful
 reward variation, curriculum, model/interface fit, and a proposed sequence for
 teaching RLM tool use and decomposition, followed by a portfolio of small tests.
@@ -23,10 +63,12 @@ for questions alone, using the same short-run weight pair. All other outcomes
 and authors' reference scores remain in the learning guide.
 
 `research-update.tex` is the 16:9 Beamer source. `speaker-notes.json` supplies
-concise laptop presenter notes. The longer training run and its fixed final
-evaluations are unchanged; the RLM curriculum is a proposed follow-up.
+concise laptop presenter notes. The RLM curriculum is a proposed follow-up,
+not a result of the stopped math training run.
 
-Build on a laptop with LaTeX installed:
+## Rebuild after editing
+
+From this slide directory, build on a laptop with LaTeX installed:
 
 ```sh
 make
@@ -40,9 +82,8 @@ make tectonic TECTONIC=/project/alex_phd/research-cache/tools/tectonic-0.17.0-mu
 make notes notes-check
 ```
 
-`make present` opens pdfpc audience and presenter windows; share only the audience
-window. `make rehearse` uses a single-screen presenter view. The six-minute timer
-is advisory. Rebuild notes after changing their text or slide titles.
+Rebuild notes after changing their text or slide titles. Presenting the committed
+files does not require any of these build commands.
 
 Result updates must follow `evidence.md`; change visible slides, notes, guide,
 evidence, and cutoff together. No result should be inferred from a running job.
