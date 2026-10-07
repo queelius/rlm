@@ -1,5 +1,44 @@
 # Completed short LLM RL reproduction
 
+## Updated result and lesson-centered presentation
+
+Scientific cutoff: 7 October, 19:40 UTC. The scheduled update-160 monitor is
+**48/64**, following 20, 42, 42, 43, 43. All 64 new outputs independently
+regrade and all ordered questions, references and inputs align. Six gains and
+one regression since128; 28 gains and no losses versus the initial monitor.
+See [the receipt](interim-monitor-1940.json). No final500 result is inferred.
+Training health was checked at160 learning calls, with finite gradients and
+saved model/optimizer labels152/160. Current owner continues unchanged.
+
+The user now prioritizes lessons and an RLM research direction over an exact
+paper-score chase. The six-slide deck gives the reproduction one slide, then
+explains reward contrast, prompt/interface fit, a four-stage curriculum diagram, relevant prior work,
+and a portfolio of small controlled experiments rather than one settled question.
+The fifteen-page learning PDF adds lessons, concrete examples, related work,
+possible blind spots and the experiment portfolio. Read
+[RESEARCH-QUESTIONS.md](RESEARCH-QUESTIONS.md) for the broader discussion.
+
+The hypothesis is not that we never taught RLM basics: the earlier audit already
+records SFT learning executable routines with limited flexible transfer. Test
+which prerequisites are missing, whether teaching order matters beyond the
+same examples shuffled, and whether RL adds gains beyond SFT alone. DAPO,
+RLM training, DeepSeek-R1 cold start and STaR are linked primary precedents.
+No new RLM experiment or live source change was made for this discussion.
+
+Three CPU literature agents completed five scoped reports: RLM training,
+curriculum, competence/exploration, parent/helper credit, and teaching/repair.
+The synthesis distinguishes protocol from dependent composition, example order
+from information availability, reward from observations, and teacher correctness
+from student learnability. Reports remain in the external brainstorm-20261007
+folder; public prose links the primary sources directly. These findings support
+experiments, not a claim that curriculum explains all earlier failures.
+
+Continue the fixed255 training and six final conditions under the same owner.
+If the final endpoint confirms meaningful gains, fresh training replication
+outranks blind budget expansion. The smaller learning-rate/reuse screen remains
+ready for diagnosis after whole-owner release. RLM curriculum experiments remain
+proposed and require a bounded protocol before launch.
+
 ## New monitor point, 19:00 UTC
 
 The update-128 check is **43/64**, unchanged from update 96. One question improved

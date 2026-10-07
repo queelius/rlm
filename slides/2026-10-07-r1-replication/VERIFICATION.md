@@ -1,5 +1,31 @@
 # Presentation verification
 
+## Lesson-centered revision with update160 evidence
+
+- All 64 new monitor outputs independently regrade; ordered question, reference
+  and input alignment agrees across all six points. Full curve20/42/42/43/43/48;
+  six gains and one regression since128. Scientific cutoff remains19:40 UTC.
+- At the user's request, the reproduction occupies one slide. Five slides focus
+  on group-relative contrast, interface competence, curriculum, prior work and a testable
+  RLM experiment portfolio. Teaching order is one candidate, not our conclusion.
+  Invented examples and proposals are labeled.
+- Read the primary Dr. GRPO, DAPO, RLM v3, DeepSeek-R1 v1 and STaR sources.
+  Related-work links support the motivating ideas, not an untested RLM result.
+  The prior RLM audit's positive SFT routines and limited transfer are preserved.
+- Rebuilt both PDFs with Tectonic. No final overfull/underfull warnings.
+  Six slides and fifteen guide pages have all text within page bounds.
+  All six matching presenter notes pass14-line/42-character-wrap checks.
+- Visually inspected all six rendered slides and changed guide pages9--15.
+  Simplified the curriculum diagram to remove awkward word splits and checked
+  the final revised example slides and final two slides again. No live presenter-GUI test was performed.
+- Updated source, PDF, notes, guide, overview, evidence and handoff together.
+  Retained the standalone19:40 overview charts; their data are unchanged by the
+  new slide order. No live training source or GPU ownership changes.
+- Added the public research-question portfolio after five CPU literature reviews.
+  Root checked primary sources for the promoted claims. Separate branches and
+  falsifying outcomes preserve experimental breadth and distinguish observed
+  gains from proposed RLM mechanisms.
+
 ## Scheduled update 128, 19:00 UTC on 7 October
 
 - All 64 new answers independently regrade, with exact question, reference and

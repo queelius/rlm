@@ -1,0 +1,202 @@
+{
+  "checked_at_utc": "2026-10-07T19:39:32.259890+00:00",
+  "run": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt4/debug_1007T16:02:41",
+  "scope": "Scheduled development-monitor check, not final500 endpoint",
+  "evaluation": "Same64 questions, qwen_math input, one greedy answer,3000token cap, full verifier",
+  "points": [
+    {
+      "update": 0,
+      "correct": 20,
+      "n": 64,
+      "file": "eval_results/0_math.json",
+      "sha256": "223106f41ad7eb9e99b4cae0cc8547b5c54512219139c3c0ea3a2bec70004511"
+    },
+    {
+      "update": 32,
+      "correct": 42,
+      "n": 64,
+      "file": "eval_results/32_math.json",
+      "sha256": "7f422ea1e1f9c52e0de494a49389f60a02f999847e9e7dcf62527b7b73b0711f"
+    },
+    {
+      "update": 64,
+      "correct": 42,
+      "n": 64,
+      "file": "eval_results/64_math.json",
+      "sha256": "6a8f50d577f06d61873b9fef3bb96babc78f191b12bd42b95e2df2c409b6d2b7"
+    },
+    {
+      "update": 96,
+      "correct": 43,
+      "n": 64,
+      "file": "eval_results/96_math.json",
+      "sha256": "b7aab639b850dc963d9e3ebedc46f46e0a237afb2d99396d680861d4074c29b5"
+    },
+    {
+      "update": 128,
+      "correct": 43,
+      "n": 64,
+      "file": "eval_results/128_math.json",
+      "sha256": "8622aaf4e2e0a4c77a9bf596cdab4579bf7ee81bca92fec4a60df55e4a35637c"
+    },
+    {
+      "update": 160,
+      "correct": 48,
+      "n": 64,
+      "file": "eval_results/160_math.json",
+      "sha256": "319ed68f57cb93ee8b7ca20b4c44264e78b2ea4b93d219ae3d5c2b6e8d8ade2d"
+    }
+  ],
+  "independent_regrade_mismatches": [],
+  "formatted_answers": 62,
+  "source_input_reference_alignment_errors": [],
+  "paired_changes_to_160": {
+    "0": {
+      "gains": [
+        0,
+        3,
+        4,
+        5,
+        8,
+        11,
+        13,
+        14,
+        15,
+        16,
+        17,
+        22,
+        28,
+        30,
+        31,
+        37,
+        39,
+        41,
+        42,
+        45,
+        46,
+        48,
+        52,
+        53,
+        54,
+        55,
+        56,
+        60
+      ],
+      "losses": [],
+      "identical_answers": 3
+    },
+    "32": {
+      "gains": [
+        0,
+        4,
+        8,
+        11,
+        39,
+        41,
+        48,
+        53,
+        56
+      ],
+      "losses": [
+        10,
+        27,
+        29
+      ],
+      "identical_answers": 6
+    },
+    "64": {
+      "gains": [
+        3,
+        11,
+        34,
+        37,
+        39,
+        48,
+        53,
+        56
+      ],
+      "losses": [
+        10,
+        49
+      ],
+      "identical_answers": 11
+    },
+    "96": {
+      "gains": [
+        3,
+        12,
+        34,
+        39,
+        41,
+        57
+      ],
+      "losses": [
+        49
+      ],
+      "identical_answers": 19
+    },
+    "128": {
+      "gains": [
+        3,
+        12,
+        31,
+        34,
+        39,
+        57
+      ],
+      "losses": [
+        49
+      ],
+      "identical_answers": 21
+    }
+  },
+  "latest_training_check": {
+    "completed_learning_calls": 160,
+    "last_printed_sgd": 159,
+    "gradient_count": 160,
+    "all_gradients_finite_positive": true,
+    "last_gradient_norms": [
+      0.01585221104323864,
+      0.015007560141384602,
+      0.013242519460618496,
+      0.012436235323548317
+    ],
+    "tracebacks": 0,
+    "CUDA_OOMs": 0,
+    "saved_model_labels": [
+      "step_00160",
+      "step_00152"
+    ],
+    "saved_optimizer_labels": [
+      "step_00160",
+      "step_00152"
+    ]
+  },
+  "illustrative_changes": [
+    {
+      "index": 57,
+      "change": "wrong to correct",
+      "summary": "The earlier invented code-output example now gives the correct integer difference3; it remains text generation, not actual tool execution."
+    },
+    {
+      "index": 39,
+      "change": "wrong to correct",
+      "summary": "The polygon-offset perimeter answer now includes the curved-corner contribution."
+    },
+    {
+      "index": 49,
+      "change": "correct to wrong",
+      "summary": "The trigonometric product answer regresses; retained alongside the gains."
+    }
+  ],
+  "interpretation": "The monitor rises from43to48of64 after a near-flat stretch: six gains and one loss since128. This is observed further improvement in the same chat-style monitoring setup, not a75percent full500 result or a complete paper reproduction. Continue the prescribed budget rather than infer a ceiling from early flat points.",
+  "decision": "Continue fixed255 and all six final conditions. If the prescribed endpoint confirms meaningful gains, prioritize fresh training replication; retain the reviewed smaller learning-rate/reuse screen for efficient diagnosis.",
+  "rlm_lessons_for_discussion": "User emphasizes reward contrast, curriculum, model/prompt fit, and teaching RLM competencies. Presentation now centers those lessons and a proposed staged-versus-shuffled SFT comparison followed by matched RL. No new RLM training launched; current owner and ready math queue preserved. Prior RLM routine-learning successes and limited flexible transfer are retained, not rewritten as an absence of SFT.",
+  "limits": [
+    "One ongoing training run",
+    "Small repeatedly observed development monitor",
+    "Final500/broader scores pending",
+    "Parameter/reward health is not a generalization result",
+    "No favorable checkpoint or paper-score stopping target"
+  ]
+}

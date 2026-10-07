@@ -1,7 +1,27 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 19:00 UTC. The fourth longer-training attempt is
+Cutoff: 7 October 2026, 19:40 UTC. The fourth longer-training attempt is
 underway. Its final benchmarks are pending; completed short-run scores are unchanged.
+
+## Current lesson-centered slide map
+
+1. The reproduction occupies one slide: all six monitor points, 20 to 48 of 64.
+2. Equal binary rewards give no within-question contrast. Curriculum is a proposal.
+3. A prompt can hide existing ability: matched 500-question before/after results.
+4. A proposed RLM curriculum: execute, call a helper, connect calls, choose a strategy.
+5. Prior work supports the ingredients, not our particular curriculum.
+6. A portfolio: missing skills, teaching order, exploration and recovery.
+
+The fifteen-page guide and research portfolio additionally discuss parent/helper
+credit, teacher/student fit, scaffold dependence and transfer to new dependency
+structures. Three CPU agents completed five literature reports; these are primary
+source reviews, not local replications. The ongoing run was not modified.
+
+RLM examples and curriculum are proposed, not measured results. The paper and
+related work motivate them; they do not prove that our particular small models
+need extra SFT. Source links and distinctions appear in the overview and guide.
+Dated entries below preserve historical results and sometimes describe previous
+slide layouts.
 
 Earlier presentation revision at 18:30 UTC, then using the 18:20 cutoff:
 slide 4 now plots the same two models in both input formats, 154 to 308 and
@@ -13,18 +33,18 @@ changes, not additional measured gains.
 
 ## Longer training progress
 
-Slide 5 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-1900.json):
+Slide 1 uses the [intermediate receipt](../../docs/r1-replication-2026-10-07/interim-monitor-1940.json):
 20/64 before training, 42/64 after 32 completed updates, 42/64 after 64,
-43/64 after 96 and 43/64 after 128. Questions, reference answers, chat inputs, full checker and
+43/64 after 96, 43/64 after 128 and 48/64 after 160. Questions, reference answers, chat inputs, full checker and
 response limit are matched. All answers at every later point independently
-regrade without a mismatch. Between the last two points, one answer improved
-and one regressed. There is no new net gain, and little change since update 32.
+regrade without a mismatch. Between the last two points, six answers improved
+and one regressed. The latest point adds five correct answers after a nearly flat stretch.
 Answer changes alone do not distinguish training effects from generation variability.
 
 This is a repeatedly examined development subset, one ongoing run, and not a
 full500 endpoint. It does not establish improvement beyond the stronger base
 or the short trained models. We retain every scheduled point, not a best point.
-Native labels 32, 64, 96 and 128 follow that many completed updates; the forced final
+Native labels 32, 64, 96, 128 and 160 follow that many completed updates; the forced final
 label 256 instead follows 255 updates without adding another update.
 
 ## Authors' released model: an evaluation check, not our training result
@@ -93,9 +113,9 @@ Actual completion must still be checked. The current
 also points to the external plan at
 `/project/alex_phd/runs/r1-zero-replication-20261007/LARGER4096_PLAN.md`.
 
-The learning-guide appendix explains the distinction. The five-slide deck
-retains the completed short-run table, identifies the reference model on
-slide 1, and shows the current monitor on slide 5.
+The learning-guide appendix explains the distinction. The current deck uses the
+monitor on slide 1 and the prompt-control table on slide 3; reference-model and
+additional training comparisons remain in the guide.
 
 ## Evaluation repeatability update, 12:53 UTC
 
@@ -269,9 +289,7 @@ When another result becomes available, update the visible result,
 cutoff, concise notes, speaker guide, and learning guide together. Keep the
 original fixed128 result; do not replace it with a favorably selected subset.
 
-Slide 2 is an invented learning illustration. Slide 5 uses the actual separate
-test question “Write 3/20 as a decimal” (row 5), with responses summarized.
-Its arithmetic
-is independently checkable; it is not a verbatim transcript. No fabricated model
-output appears as experimental evidence. The paper and official code were checked read-only on
+The current slide 2 illustrates reward groups and slide 4 uses an invented
+two-document task. Actual arithmetic-response examples remain in the learning
+guide. Invented teaching examples are not presented as measured model responses. The paper and official code were checked read-only on
 7 October 2026; the deck does not reproduce the paper's numerical results.

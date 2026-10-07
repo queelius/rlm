@@ -4,9 +4,13 @@ We ultimately want to train recursive language models to make better decisions: 
 
 The immediate question is: **Can we take an existing language model, reward its correct math answers, and make it better on other math questions?**
 
-So far, we can run the training and obtain a large improvement when testing with one particular kind of prompt. But a better prompt already gets much of that performance from the untrained starting model. We have not yet reproduced the paper's substantial improvement beyond that stronger starting point. That distinction is the central lesson so far.
+We have a small-scale reproduction of RL-driven improvement: on the ongoing run's fixed 64-question monitor, correct answers rose from 20 to 48. The main value is what this teaches us about creating a useful learning signal. The model needs reachable successes, a usable interface, varied attempts, and trustworthy feedback. A separate prompt comparison also shows why we must compare against a capable starting setup. The paper's full benchmark result is not yet reproduced.
 
-Results below were checked through **7 October 2026, 19:00 UTC**. The smaller follow-up experiments described below are prepared but have not started.
+Results below were checked through **7 October 2026, 19:40 UTC**. The smaller follow-up experiments described below are prepared but have not started.
+
+For the next discussion, read the [research questions and possible blind spots](RESEARCH-QUESTIONS.md).
+We are exploring several explanations and interventions, not committing to curriculum as the answer.
+That portfolio distinguishes ready math follow-ups from RLM experiments that still need preparation.
 
 ## How this connects to our RLM research
 
@@ -34,6 +38,56 @@ Here is the learning loop:
 For a simple illustration, suppose a question asks `3x + 2 = 14`. If some attempts answer `x = 4` and others answer `x = 5`, the scores distinguish success from failure. If all eight attempts get the same score, that question supplies no relative learning signal in this method.
 
 We do not add a stage of **supervised fine-tuning (SFT)** in which the model copies worked solutions. It generates its own attempts and learns from their scores. It does, however, bring substantial knowledge from pretraining.
+
+## Why curriculum and exploration might help
+
+For this group-relative method, useful contrast occurs **within the attempts on one question**. Eight wrong answers give eight zeros; eight correct answers give eight ones. In both cases, subtracting the group's average leaves zero. Mixing always-solved easy questions with never-solved hard questions does not fix this, even if overall accuracy is 50%.
+
+This motivates a curriculum: practice tasks the current model can sometimes solve, then adjust difficulty as its ability changes. That is a proposed training strategy, not something our math experiment has tested. Mixed rewards make learning possible; they do not guarantee correct credit assignment or useful generalization. Other RL objectives can obtain signals in other ways.
+
+More attempts may reveal rare successes. If independent attempts each succeeded 1% of the time, eight would give about a 7.7% chance of finding any success, versus 27.5% with 32. Actual attempts may be highly similar. Increasing temperature can produce alternative approaches but also invalid code. More attempts also leave less compute for other training questions. Keep evaluation attempts fixed when measuring training gains.
+
+For an RLM, diagnose the obstacle before choosing the intervention:
+
+| Observed behavior | Candidate intervention |
+| --- | --- |
+| Tool calls do not execute | Clear API examples or SFT on verified tool use |
+| Calls work but all answers fail | Easier tasks, better context passing, teacher demonstrations, or a stronger model |
+| Occasional successes appear | More attempts or a modest sampling change to expose useful alternatives |
+| Both successes and failures appear, but RL does not improve | Audit rewards, credit assignment, and updates |
+| Nearly every attempt succeeds | Harder tasks or gradually remove assistance |
+
+Imagine a biography names a scientist's employer and another document gives its city. Correct syntax is only the first step: the model must pass the employer's name to the next lookup. This separates learning **how to use the tools** from learning **what useful work to assign**. Demonstrations could help with both; RL would then need to improve beyond the demonstrations alone. A direct answer remains appropriate when delegation is unnecessary.
+
+Our next RLM question is: **Does teaching basic skills in sequence make subsequent RL of decomposition more effective?** Compare prompt examples alone, staged SFT on verified RLM demonstrations, and SFT on the same examples shuffled. Match exposure across the two SFT arms, keep helper models fixed, and compare each setup before and after the same RL budget. This separates the value of demonstrations from the value of their order.
+
+The proposed sequence is **read a real Python result → make one valid helper call → connect dependent calls → choose a strategy without hints**. Measure existing skills first, gradually remove assistance, and retain some earlier practice. Test new combinations of skills, not merely longer documents of one familiar kind. These are proposed experiments, not RLM results already established by the math reproduction.
+
+## Closely related ideas from the literature
+
+The human-learning analogy suggests a hypothesis, not proof that models need a particular teaching order. Several primary sources offer more direct motivation:
+
+- **Useful reward contrast:** [DAPO, section 3.2](https://arxiv.org/html/2503.14476v1) filters out response groups that are all correct or all wrong. That is a direct connection to our observation. It is adaptive selection, not evidence that our proposed skill sequence is best; discarded generations still cost compute.
+- **Learning the RLM interface:** [Recursive Language Models, version 3](https://arxiv.org/html/2512.24601v3) describes fine-tuning Qwen3-8B on 1,000 filtered RLM demonstrations, focusing on the root model's environment use and recursive calls. Its separate RL experiment also reports transfer from shorter to longer retrieval tasks. The broad idea of training an RLM is therefore already established; our question must be narrower.
+- **Supervised preparation before RL:** [DeepSeek-R1, section 2.3.1](https://arxiv.org/html/2501.12948v1) uses a small cold-start dataset before RL. R1-Zero omits that stage. This motivates comparing preparation choices rather than declaring SFT universally necessary.
+- **Bootstrapping successful demonstrations:** [STaR](https://arxiv.org/abs/2203.14465) iteratively generates and filters solution rationales for fine-tuning. For us, an analogous idea would collect verified RLM trajectories. That adaptation would require checking actual execution and useful behavior, not trusting plausible-looking traces.
+
+The potential research contribution is not “SFT then RL” by itself. It is evidence about **which skills, which teaching order, and which readiness measurements lead to better RL and transfer to new task combinations**. This targeted literature check motivates the experiment; it is not an exhaustive novelty review.
+
+## How this builds on our earlier experiments
+
+Our [earlier research audit](../research-audit-2026-09-29/early-history.md) already
+records successful SFT of executable routines, alongside weaker transfer to
+flexible orchestration. We should not rewrite that history as “we never taught
+the basics.” The stronger hypothesis is that we did not reliably bridge the
+gap between local skills and choosing, combining, and recovering those skills
+in whole tasks. These are historical audited findings, not new remeasurements.
+
+The curriculum should therefore begin with a skill check. Skip abilities the
+model already has; concentrate teaching on demonstrated gaps. Compare staged
+and shuffled exposure to the same examples, and include a test where familiar
+skills must be combined in an unfamiliar way. A fixed data mix may work just as
+well; that outcome would favor simpler training over a complex curriculum.
 
 ## How we tell whether it improved
 
@@ -77,15 +131,15 @@ The ongoing run starts from the original model and is scheduled to train on 4,08
 
 Its fixed 64-question progress checks are:
 
-| Completed weight updates | 0 | 32 | 64 | 96 | 128 |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Correct answers out of 64 | 20 | 42 | 42 | 43 | 43 |
+| Completed weight updates | 0 | 32 | 64 | 96 | 128 | 160 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Correct answers out of 64 | 20 | 42 | 42 | 43 | 43 | 48 |
 
-The early gain persists, but the score has changed little since update 32. At the latest check, one answer improved and one became wrong. A flat total does not mean every answer stayed the same. We have not separated the effects of training from variation in generation.
+The early gain persists, and the latest check adds five correct answers after a nearly flat stretch. Six answers improved and one became wrong. This is further improvement on this monitor, although one run and a small set cannot establish how reliably it will repeat. We should not mistake a temporary plateau for a permanent limit.
 
-The latest 43/64 is 67.2%. **It is not a measured score of 67.2% on all 500 questions**, and it is not a prediction of the final model's score.
+The latest 48/64 is 75%. **It is not a measured score of 75% on all 500 questions**, and matching or exceeding the paper's percentage on this smaller set is not reproducing its benchmark result.
 
-![All scheduled checks of the longer run: a large early gain followed by little change. This is a separate 64-question monitoring set, not the full benchmark.](figures/training-progress.png)
+![All scheduled checks of the longer run: an early gain, a nearly flat stretch, then a further rise. This is a separate 64-question monitoring set, not the full benchmark.](figures/training-progress.png)
 
 Three earlier attempts failed because of memory or initialization problems. They remain failures, not benchmark scores. The current attempt uses an isolated memory-saving repair and saves model and optimizer checkpoints frequently. At the latest check, training rewards agreed with independent grading and the numerical updates were finite. Those checks support training correctness, but do not themselves establish improved math ability.
 
@@ -125,5 +179,5 @@ The goal is to return to RLM training with a clearer understanding of useful rew
 
 - [Five-slide overview](../../slides/2026-10-07-r1-replication/research-update.pdf): the motivation and the two central charts.
 - [Detailed learning guide](learning-guide.pdf): worked examples and a fuller explanation of the experiments.
-- [Latest checked evidence](interim-monitor-1900.json): exact counts, saved-result identifiers, checks and limitations.
+- [Latest checked evidence](interim-monitor-1940.json): exact counts, saved-result identifiers, checks and limitations.
 - [Research record](README.md): the chronological account, including unsuccessful attempts and earlier findings.

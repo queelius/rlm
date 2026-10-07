@@ -1,38 +1,26 @@
-# Five-slide R1-Zero-style reproduction update
+# Lessons from math RL for training RLMs
 
-For a self-contained introduction before the slides, read
-[Why we are training a language model to solve math](../../docs/r1-replication-2026-10-07/START-HERE.md).
-The deck now uses two charts: the prompt-dependent gain on all 500 questions,
-then the complete 64-question learning curve of the separate ongoing run.
-The visible denominators keep those comparisons separate. The final slide
-introduces faster 512-question training / 128-question evaluation screens;
-these are planned experiments, not new results.
+Read the [six-slide PDF](research-update.pdf), the
+[speaker guide](speaker-guide.md), or the
+[self-contained overview](../../docs/r1-replication-2026-10-07/START-HERE.md).
+The [learning guide PDF](../../docs/r1-replication-2026-10-07/learning-guide.pdf)
+retains the detailed experiments and adds the RLM research discussion.
 
-`research-update.tex` is the 16:9 Beamer source. `results.tex` holds the numbers
-for the checked final comparison. `speaker-guide.md` explains the ideas
-in plain language; `speaker-notes.json` holds concise laptop presenter notes.
-The deck highlights the chat-trained comparison and summarizes two question-only runs;
-the learning guide retains all eight model/input combinations.
-Chat-style training scored 308/500 in chat style and 317 with questions alone;
-question-only training scored 168 and 314. A fresh repeat scored 166 and 306.
-The starting model scored 154 and 305.
-The original separate 128-question result (41 to 80) remains in the guide and
-evidence. The two question-only training runs improved by nine and one answer;
-we have not established a reliable gain beyond that stronger starting setup.
-It is not a reproduction of the paper's full benchmark scores.
+The small-scale reproduction occupies one slide. The rest explains useful
+reward variation, curriculum, model/interface fit, and a proposed sequence for
+teaching RLM tool use and decomposition, followed by a portfolio of small tests.
+Diagrams and examples distinguish
+observed results from hypotheses.
 
-At the 19:00 UTC cutoff, the separate check of the authors' released model remains
-366/500 (73.2%), compared with their reported 74.2%. Those are the authors'
-weights, not a model trained by us. Slide 1 identifies that check separately.
-Slide 5 shows the ongoing longer run: 20, 42, 42, 43 and 43 correct out of the same
-64 questions before training and after 32, 64, 96 and 128 updates.
-One answer improved and one regressed between the last two points.
-These are progress checks, not a final 500-question result.
-The third attempt failed after 12 updates without a saved checkpoint. A fourth
-attempt uses an isolated memory repair and more frequent saving, with the same
-4,080-question and 255-update budget. Slide 3 states those planned figures. The
-short-run table is unchanged. Read the linked research record for later live
-status rather than treating this dated PDF as a process monitor.
+Scientific cutoff: **7 October 2026, 19:40 UTC**. The fixed 64-question monitor
+scores 20, 42, 42, 43, 43, 48 through update160. This is not a full500 result.
+The full500 prompt comparison remains 154 to308 for chat input and305 to317
+for questions alone, using the same short-run weight pair. All other outcomes
+and authors' reference scores remain in the learning guide.
+
+`research-update.tex` is the 16:9 Beamer source. `speaker-notes.json` supplies
+concise laptop presenter notes. The longer training run and its fixed final
+evaluations are unchanged; the RLM curriculum is a proposed follow-up.
 
 Build on a laptop with LaTeX installed:
 
@@ -49,7 +37,7 @@ make notes notes-check
 ```
 
 `make present` opens pdfpc audience and presenter windows; share only the audience
-window. `make rehearse` uses a single-screen presenter view. The five-minute timer
+window. `make rehearse` uses a single-screen presenter view. The six-minute timer
 is advisory. Rebuild notes after changing their text or slide titles.
 
 Result updates must follow `evidence.md`; change visible slides, notes, guide,
@@ -61,5 +49,5 @@ For CPU rendering and text-bound checks with the existing presentation environme
 /project/alex_phd/envs/rlm-advisor-figures-20260911/bin/python verify_deck.py
 ```
 
-Inspect all five PNGs in `rendered/` after rebuilding. This checker does not
+Inspect all six PNGs in `rendered/` after rebuilding. This checker does not
 establish scientific validity and does not replace visual inspection.

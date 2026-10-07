@@ -28,7 +28,7 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 19:00 UTC.
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 19:40 UTC.
   Short-run results and evaluation repeats retained. Authors' released-model
   check completed; longer training underway, intermediate checks on page 9.}
 \begin{document}
@@ -526,7 +526,7 @@ The \href{longer-training-plan.md}{accepted protocol} fixes the endpoint;
 the \href{longer-loader-receipt.json}{original loader check} records the excluded prompts.
 Completion still requires checking actual run counters.
 \newpage
-\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 19:00 UTC}
+\pagetitle{INTERMEDIATE RESULTS \quad | \quad 7 OCTOBER, 19:40 UTC}
   {Is the longer run learning more?}
 
 The longer run is still in progress. The table below contains every scheduled
@@ -535,25 +535,25 @@ answers on the same 64 questions, with chat-style input, greedy generation,
 a 3000-token response limit, and the full answer checker.
 
 \begin{center}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrrrrr}
 \toprule
-Completed weight updates & 0 & 32 & 64 & 96 & 128 \\
+Completed weight updates & 0 & 32 & 64 & 96 & 128 & 160 \\
 \midrule
-Correct final answers out of 64 & 20 & 42 & 42 & 43 & 43 \\
+Correct final answers out of 64 & 20 & 42 & 42 & 43 & 43 & 48 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 We independently regraded all 64 answers at each later point. Every result
 agreed with the saved score, and the questions, reference answers and input
-format matched the starting check. Relative to the start, update 128 gained 26
-answers and lost three. Between 96 and 128, one answer improved and one
-regressed. The total stayed at 43. A flat score does not mean identical answers;
-we have not separated effects of training from variation in generation.
+format matched the starting check. Relative to the start, update 160 gained 28
+answers and lost none. Between 128 and 160, six answers improved and one
+regressed, raising the score from 43 to 48. Progress resumed after several
+nearly flat checks. This is a measured improvement, not a guaranteed trend.
 
 \topic{What this does and does not show}
 
-The early gain under chat-style testing persists. But this is a small, repeatedly
+The latest 48/64 is 75\%, not a measured 75\% on MATH500. This is a small, repeatedly
 inspected development set from one training run. It does not yet show a reliable
 gain over the stronger question-only starting setup, a full MATH500 improvement,
 or better recursive reasoning. The old short model also scored 42 on these same
@@ -584,12 +584,12 @@ run uses the full checker already. We must not compare a native fast-checker
 score against a full-checker score without saying so. Final 500-question comparisons
 throughout this guide already use the same full checker.
 
-The monitoring points 32, 64, 96 and 128 follow that many completed updates.
+The points 32, 64, 96, 128 and 160 follow that many completed updates.
 The final bookkeeping label 256 is different: it follows 255 completed updates.
-See \href{interim-monitor-1900.json}{intermediate evidence} and the companion
+See \href{interim-monitor-1940.json}{intermediate evidence} and the companion
 research record for raw-file hashes and the latest operational status.
 \newpage
-\pagetitle{TWO ACTUAL ANSWERS \quad | \quad 7 OCTOBER, 18:20 UTC}
+\pagetitle{TWO ACTUAL ANSWERS \quad | \quad 7 OCTOBER, 19:40 UTC}
   {An answer can improve while another gets worse.}
 
 These examples come from the same 64-question check at updates 64 and 96.
@@ -619,6 +619,10 @@ model wrote a search loop and claimed its output was $(m,n)=(28,11)$,
 giving a difference of 17. But these numbers do not even satisfy the equation:
 $3(28)+4(11)=128$, not 100.
 
+At update 160, this answer recovered to the correct value, 3. The earlier
+failure remains useful evidence; individual answers can improve, regress,
+and recover during training.
+
 \textbf{A simple check:} Set $d=m-n$. Then $7n+3d=100$, so $d$ must be one of
 $\ldots,-11,-4,3,10,\ldots$. The smallest absolute value is 3, attained by
 $(m,n)=(16,13)$: $48+52=100$.
@@ -638,4 +642,220 @@ evidence that a tool was used correctly.
 The \href{interim-monitor-1820.json}{evidence receipt} identifies the saved
 responses (zero-based indices 11 and 57). No generated code was executed in
 this audit.
+\newpage
+\pagetitle{LESSONS FOR RLM TRAINING}{Some right, some wrong: why practice must be within reach}
+
+The small reproduction gives us a useful starting result: the same 64 monitoring
+questions improved from 20 correct to 48. Its more important purpose is to help
+us design RL for a model that uses Python and delegates subtasks. The following
+ideas are proposed applications, not results of an RLM training experiment.
+
+\topic{The contrast is within one question}
+
+Dr.\ GRPO subtracts the average reward for a question from each attempt's reward.
+If four attempts score $1,1,0,0$, the average is $0.5$, and their relative signals
+are $+0.5,+0.5,-0.5,-0.5$. If all eight attempts fail, or all eight succeed,
+every relative signal is zero. This refers to the binary group-relative reward
+term, not every possible RL algorithm or auxiliary loss.
+
+An always-solved easy question and an always-failed hard question do not provide
+this contrast just because their combined accuracy is 50\%. \textbf{Each question
+needs its own useful variation.} Nor does mixed success guarantee learning:
+the checker may be wrong, an answer may be lucky, or the update may assign credit
+to unhelpful parts of a long response.
+
+\topic{Curriculum is a plausible way to keep practice useful}
+
+A curriculum could start with tasks the model sometimes solves, then gradually
+increase difficulty as those tasks become reliable. For an RLM, one progression
+might be reading a real Python result, making one valid helper call, passing a
+fact between two dependent calls, then choosing a decomposition without hints.
+This is a candidate curriculum; our math experiment has not tested it.
+
+\topic{Pretraining and SFT are ways to supply a starting skill}
+
+We did not add SFT before math RL. The math-pretrained model could already
+produce correct answers. An RLM may know Python but not our interface: what
+arguments a helper accepts, what information it needs, and how results return.
+Clear examples might suffice. If not, SFT on verified demonstrations could teach
+those actions. A stronger model or teacher-generated examples are alternatives.
+
+The goal is not to hand-code every solution. It is to make successful actions
+reachable so that training can improve choices among them. Keep a direct-answer
+option: unnecessary delegation should not count as success.
+
+\newpage
+\pagetitle{ONE CANDIDATE EXPERIMENT}{Can preparation unlock RL of useful decomposition?}
+
+\topic{An example separates interface use from strategy}
+
+Suppose a biography names a scientist's employer, and another document gives
+the employer's city. A model might call a nonexistent helper function; that is
+an interface failure. It might make a valid call but omit the employer's name;
+that is a context-passing failure. A useful strategy identifies the employer,
+passes that name to the next lookup, and combines the returned evidence.
+This is an illustrative task, not a measured result from our current run.
+
+\topic{More attempts and temperature are levers, not guarantees}
+
+Extra attempts can expose rare successes. With independent attempts each having
+a 1\% success probability, the chance of any success is about 7.7\% for eight
+attempts and 27.5\% for 32. Real attempts may repeat the same error. Increasing
+temperature can diversify strategies but can also break syntax or tool calls.
+Spending more on one question leaves less compute for other questions.
+
+Measure valid execution, final correctness, and the fractions of all-fail,
+mixed-success, and all-success groups. Do not confuse more evaluation attempts
+with a better trained model: keep the evaluation attempt budget fixed.
+If using partial rewards, verify that a model cannot earn them while avoiding
+the real task. More code, text, or helper calls are not achievements by themselves.
+
+\topic{A small comparison before a large training campaign}
+
+Use the same model and tasks with three preparations: prompt examples alone,
+staged SFT on verified RLM demonstrations, and SFT on the same examples shuffled.
+Match SFT exposure and keep helper models fixed. This separates the value of
+demonstrations from their order. Sample eight attempts per training problem and diagnose
+where failures occur. Then give each setup the same RL budget and measure its
+own before/after gain on separate questions under the same tool and answer budget.
+Record preparation cost too; tune the design using training or development tasks.
+
+If preparation helps but RL adds nothing, we have learned about instruction or
+SFT, not shown RL learning useful decomposition. If preparation creates useful
+alternatives and RL improves beyond it on new tasks, that supports the hypothesis.
+If contrast already exists but learning fails, investigate reward quality, credit
+assignment, and update behavior rather than adding SFT indiscriminately.
+
+\textbf{Working idea:} Teach access to useful actions; explore alternatives;
+use verified outcomes to learn better choices. The accepted math run continues
+with its fixed final evaluations while we develop this RLM question.
+\newpage
+\pagetitle{RELATED WORK}{What the literature suggests we test}
+
+The human-learning analogy helps us imagine a curriculum, but does not establish
+which order works for a language model. These primary sources motivate narrower,
+testable questions. This is a targeted reading list, not an exhaustive novelty review.
+
+\topic{DAPO: keep useful reward contrast}
+\href{https://arxiv.org/html/2503.14476v1}{DAPO, section 3.2} filters all-correct
+and all-wrong response groups. It is a direct precedent for focusing updates on
+mixed outcomes. Adaptive filtering is not the same as teaching prerequisites
+in sequence. We should also account for the cost of discarded generations.
+
+\topic{Recursive Language Models: train environment use}
+\href{https://arxiv.org/html/2512.24601v3}{The RLM paper, version 3} describes
+fine-tuning Qwen3-8B on 1,000 filtered RLM demonstrations, with attention to root
+model use of the environment and recursive calls. It separately reports RL
+transfer from shorter to longer retrieval tasks. This directly motivates our
+direction, while ruling out a novelty claim for simply training an RLM.
+
+\topic{DeepSeek-R1: supervised preparation is an option}
+\href{https://arxiv.org/html/2501.12948v1}{DeepSeek-R1, section 2.3.1} adds a
+small supervised cold start before RL; R1-Zero does not. The lesson is to compare
+starting preparations, not assume every RL application requires added SFT.
+
+\topic{STaR: grow a collection of successful examples}
+\href{https://arxiv.org/abs/2203.14465}{STaR} iteratively generates and filters
+solution rationales for fine-tuning. An RLM adaptation could collect successful
+executed trajectories, then use them to improve the next round. Correct final
+answers alone would not certify every tool action or decomposition choice.
+
+\topic{Our proposed contribution must be more specific}
+Our \href{https://github.com/queelius/rlm/blob/main/docs/research-audit-2026-09-29/early-history.md}{earlier research audit}
+already records SFT learning executable routines, with weaker flexible transfer.
+The hypothesis is therefore about bridging local skills to whole-task behavior,
+not that we never taught basic tool use. Check existing competence first.
+
+We could test whether a particular sequence of basic RLM competencies improves
+later RL more than the same examples shuffled, and whether the benefit transfers
+to new combinations of skills. First establish what the model already knows.
+Measure execution failures, reward contrast, and improvement beyond SFT alone.
+Keep a prompt-only baseline and a direct-answer option.
+
+These papers motivate this experiment; they do not establish its outcome.
+The current math run continues under its original budget and final-evaluation
+plan while a broader portfolio of questions is developed.
+\newpage
+\pagetitle{POSSIBLE BLIND SPOTS}{What else could be limiting RLM learning?}
+
+We should not settle too early on ``we started too hard.'' Several explanations
+can produce the same low success rate, and they need different interventions.
+
+\topic{Valid calls are not useful chains of calls}
+If a helper returns ``Aster Lab,'' the next lookup must use that employer, not
+a memorized alternative. Change the returned name and check that the downstream
+query changes. Count correct information passing separately from valid syntax.
+\href{https://arxiv.org/html/2302.04761v1}{Toolformer, section 7} explicitly
+reports that independently generated tool examples did not teach chained use.
+
+\topic{A correct teacher may still be a poor teacher for this student}
+A strong model can produce a correct trajectory that a smaller learner cannot
+yet follow. Check short unaided continuations, not only teacher correctness.
+\href{https://arxiv.org/html/2601.14249v5}{Informative Alignment} finds that
+stronger teachers do not consistently produce better students in its math
+experiments. Applying that lesson to tool trajectories remains a hypothesis.
+
+\topic{Perfect demonstrations do not cover the student's mistakes}
+Teach recovery from errors the learner actually reaches. Measure mistakes fixed
+and correct answers spoiled, with an equally costly independent retry as a control.
+\href{https://arxiv.org/html/2409.12917v1}{SCoRe} identifies this distribution
+mismatch in self-correction training; its result is not proof of RLM recovery.
+
+\topic{A failed team does not identify the failed decision}
+The parent can choose a good subtask and receive a bad helper answer. Keep helpers
+fixed initially; later compare parent and helper snapshots separately. Dropping
+child tokens from the loss does not freeze a helper that shares changing weights.
+Token, turn and child-count weighting also need their own checks: our math run
+does not validate a recursive training objective automatically.
+
+\topic{Feedback, reward and available information are different}
+Showing an error in the next observation helps the model know what happened.
+Scoring that error changes the training objective. Preserving an earlier return
+changes what information remains accessible. Our prior history-repair experiment
+already tested information availability; it was not an example-order curriculum.
+Do not rename a completed intervention as a new research question.
+
+\newpage
+\pagetitle{EXPERIMENT PORTFOLIO}{Breadth with interpretable comparisons}
+
+Curriculum is one promising branch, not our conclusion. We can investigate
+several small questions using shared tasks, budgets, and failure measurements.
+These are proposals; no new RLM run has been launched from this discussion.
+
+\topic{Preparation and practice}
+Compare a clear prompt with demonstrations, then protocol-only with dependent-call
+SFT. Separately compare the same SFT examples staged or shuffled. Before adding RL,
+measure what preparation alone achieved. During RL, compare uniform practice with
+selection of informative reward groups, including discarded generation cost.
+
+\topic{Exploration and assistance}
+Compare more attempts on fewer questions with broader question coverage at the
+same total budget. Vary plans, not just wording. Test removing hints gradually
+against keeping them throughout training, and evaluate without hints. A training
+success supplied by a scaffold is not yet independent student competence.
+
+\topic{Recovery, feedback and division of work}
+Compare successful-only teaching with error-and-repair examples. At saved helper
+boundaries, controlled correct and incorrect returns can diagnose whether the
+parent uses the information. Such oracle interventions are diagnostic conditions,
+not deployable scores. Keep final task success as the main evaluation criterion.
+
+\topic{Generalization and simpler alternatives}
+Test familiar task structures, longer familiar structures, and new arrangements
+of dependent steps separately. Include tasks where direct answering is best.
+Compare a direct model, simple program, fixed decomposition and learned RLM under
+matched budgets. Useful delegation should earn its extra cost.
+
+\topic{How we will use small experiments}
+First screen for informative differences; then train matched comparisons; then
+repeat promising effects independently. Preserve all outcomes, including failures.
+A small development set helps us choose experiments, not certify the best score
+among many trials. No universal optimal difficulty or teaching order is assumed.
+
+Primary curriculum examples include
+\href{https://arxiv.org/html/2506.06632v3}{E2H Reasoner} (scheduling matters) and
+\href{https://arxiv.org/html/2505.14970v4}{Self-Evolving Curriculum}
+(adaptive category selection). These are related evidence, not our results.
+The living \href{https://github.com/queelius/rlm/blob/main/docs/r1-replication-2026-10-07/RESEARCH-QUESTIONS.md}{research portfolio on GitHub}
+records the proposed controls and what would weaken each hypothesis.
 \end{document}

@@ -1,4 +1,4 @@
-\documentclass[aspectratio=169,12pt]{beamer}
+\documentclass[aspectratio=169,11pt]{beamer}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern,booktabs,array,tikz}
 \definecolor{Ink}{HTML}{17324D}
@@ -12,137 +12,155 @@
 \setbeamercolor{block body}{fg=Ink,bg=Soft}
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=9mm,text margin right=9mm}
-\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
 \input{results.tex}
-\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Small-scale reproduction | \EvidenceCutoff\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Lessons from math RL for RLMs | \EvidenceCutoff\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
 \newcommand{\aside}[1]{\vfill{\footnotesize\color{Gray}#1\par}}
-\hypersetup{pdftitle={Learning from correct answers: a small R1-Zero-style reproduction},pdfauthor={Alex Towell}}
+\hypersetup{pdftitle={What a small math RL reproduction teaches us about training RLMs},pdfauthor={Alex Towell}}
 \begin{document}
 
 \begin{frame}[t]
-\frametitle{First, reproduce learning in a simpler setting.}
-A recursive language model (RLM) can use code and ask helper models to solve parts of a problem. We eventually want to train those choices.
+\frametitle{A small reproduction gives us a learning signal.}
+\textbf{Goal:} Train a recursive language model (RLM) to use code and delegate useful subtasks. First, learn reinforcement learning (RL) on checkable math answers.
 \medskip
-
-\begin{block}{Today's question}
-Can we use a published training recipe to improve a model's math answers on questions excluded from training?
-\end{block}
-\medskip
-We use the authors' code for \textbf{Dr.\ GRPO}, a reinforcement learning (RL) method. It learns from scores assigned to the model's own answers.
-\medskip
-
-\textbf{First check:} The authors' released model scored 73.2\% in our test, versus 74.2\% reported. That checks their saved model, not our own training.
-\aside{Liu et al., \href{https://arxiv.org/abs/2503.20783}{\textit{Understanding R1-Zero-Like Training: A Critical Perspective}} (2025).\newline
-\href{https://github.com/sail-sg/understand-r1-zero/tree/dfca49dd460ee7cc8e4a5a162c876a7fd6993b87}{Official code}; our run is much smaller than the paper's experiments.}
-\end{frame}
-
-\begin{frame}[t]
-\frametitle{Reward correct attempts, then change the model.}
-\textbf{Illustrative question:} Solve $3x+2=14$. The correct answer is $x=4$.
-\medskip
-
-\begin{center}
-\renewcommand{\arraystretch}{1.35}
-\begin{tabular}{lll}
-\toprule
-The model's attempts & Checker score & Learning direction \\
-\midrule
-Two answers end in $x=4$. & 1 each & Make these more likely. \\
-Two end in $x=5$ or $x=6$. & 0 each & Make these less likely. \\
-\bottomrule
-\end{tabular}
-\end{center}
-\medskip
-Each attempt is compared with the average score for that question. These differences guide changes to the model's numerical settings, or \textbf{weights}.
-\medskip
-
-The checker judges the final answer. We do not supply worked solutions for the model to copy.
-\aside{Simplified illustration with four attempts; our runs use eight. If every attempt receives the same score, this question supplies no relative learning signal.}
-\end{frame}
-
-\begin{frame}[t]
-\frametitle{We train on math, then test on different questions.}
-We add RL to the pretrained math model \textbf{Qwen2.5-Math-1.5B}.
-\smallskip
-\begin{center}
-\begin{tabular}{lrr}
-\toprule
-Training budget & Questions & Weight updates \\
-\midrule
-Completed short runs & 512 & 32 \\
-Longer run now underway & 4,080 & 255 planned \\
-\bottomrule
-\end{tabular}
-\end{center}
-We test on \textbf{MATH500: 500 math questions excluded from our weight training}. A fixed subset of 64 tracks progress.
-\smallskip
-
-\textbf{Two ways of asking the same question:}\par\smallskip
-\textbf{Chat style:} A conversation with instructions to explain the steps and mark the final answer.\par\smallskip
-\textbf{Question alone:} Give only the original question.
-\aside{Every run starts from the original model; one A100 GPU, eight answers per training question. The 64 monitored questions are not an untouched final test.}
-\end{frame}
-
-\begin{frame}[t]
-\frametitle{The input format changes the size of the gain.}
-\textbf{Correct answers out of the same 500 MATH500 questions.}
-\smallskip
-
-{\small\color{Gray}Gray: starting model.\quad\color{Teal}Teal: after short chat-style training.}
-\begin{center}
-\begin{tikzpicture}[x=0.014cm,y=0.90cm]
-\foreach \x in {0,100,200,300,400,500} {
-  \draw[Gray!20] (\x,0.2)--(\x,2.45);
-  \node[below,font=\small] at(\x,0.2){\x};}
-\node[left,font=\small,align=right] at(-12,2){Chat-style input};
-\node[left,font=\small,align=right] at(-12,0.9){Question alone};
-\draw[Teal,line width=1.7pt] (154,2)--(308,2);
-\draw[Teal,line width=1.7pt] (305,0.9)--(317,0.9);
-\foreach \x/\y in {154/2,305/0.9} {
-  \fill[Gray] (\x,\y) circle(3pt);
-  \node[below left,font=\small\bfseries,Gray] at(\x,\y){\x};}
-\foreach \x/\y in {308/2,317/0.9} {
-  \fill[Teal] (\x,\y) circle(3pt);
-  \node[above right,font=\small\bfseries,Teal] at(\x,\y){\x};}
-\node[right,font=\normalsize\bfseries,Teal] at(520,2){+154};
-\node[right,font=\normalsize\bfseries,Teal] at(520,0.9){+12};
-\node[below,font=\small] at(250,-0.2){Correct final answers};
-\end{tikzpicture}
-\end{center}
-\smallskip
-\textbf{Lesson:} The starting model already solves many more questions with a better prompt. Training must improve beyond that stronger starting point.
-\aside{Separate question-only training runs added 9 and 1 correct answers, versus the same baseline of 305. No reliable gain established yet. Full comparison table is in the guide.}
-\end{frame}
-
-\begin{frame}[t]
-\frametitle{Longer training: an early gain, then little change.}
-\textbf{Correct final answers out of the same 64 monitoring questions.}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.52\textwidth}
+{\small Correct final answers / same 64 MATH500 questions}
 \begin{center}
-\begin{tikzpicture}[x=0.040cm,y=0.040cm]
-\draw[Gray] (0,0)--(134,0);
+\begin{tikzpicture}[x=0.032cm,y=0.034cm]
+\draw[Gray] (0,0)--(167,0);
 \draw[Gray] (0,0)--(0,66);
-\foreach \y in {0,32,64} {\draw[Gray!25] (0,\y)--(132,\y);\node[left,font=\small] at(0,\y){\y};}
-\foreach \x in {0,32,64,96,128} {\node[below,font=\small] at(\x,0){\x};}
-\draw[Teal,very thick] (0,20)--(32,42)--(64,42)--(96,43)--(128,43);
+\foreach \y in {0,32,64} {\draw[Gray!25] (0,\y)--(164,\y);\node[left,font=\small] at(0,\y){\y};}
+\foreach \x in {0,32,64,96,128,160} {\node[below,font=\small] at(\x,0){\x};}
+\draw[Teal,very thick] (0,20)--(32,42)--(64,42)--(96,43)--(128,43)--(160,48);
 \fill[Teal] (0,20) circle(2.5pt);\node[above right,font=\normalsize\bfseries] at(0,20){20};
-\foreach \x/\y in {32/42,64/42,96/43,128/43} {\fill[Teal] (\x,\y) circle(2.5pt);\node[above,font=\normalsize\bfseries] at(\x,\y){\y};}
-\node[below,font=\small] at(64,-9){Completed weight updates};
+\foreach \x/\y in {32/42,64/42,96/43,128/43,160/48} {\fill[Teal] (\x,\y) circle(2.5pt);\node[above,font=\normalsize\bfseries] at(\x,\y){\y};}
+\node[below,font=\small] at(80,-9){Completed weight updates};
 \end{tikzpicture}
 \end{center}
 \end{column}
 \begin{column}{0.44\textwidth}
-\medskip
-One training run, with the same questions, chat-style input, checker, and answer-length limit.
+\small
+Authors' \textbf{Dr.\ GRPO} code; pretrained \textbf{Qwen2.5-Math-1.5B}; one A100.
 \medskip
 
-At the last check, one answer improved and one became wrong. The total stayed at 43.
+Eight attempts per training question; reward correct final answers. No added supervised fine-tuning (SFT).
+\medskip
+
+\textbf{20 to 48 correct:} small-scale reproduction of RL-driven improvement.
 \end{column}
 \end{columns}
-\medskip
-\textbf{Next:} Finish this run. Then use short runs to test larger learning steps and two learning passes per batch, with 128-question checks.
-\aside{Interim result from one ongoing run, not a final benchmark score. We have not yet shown that this longer recipe beats the stronger starting setup or the short runs.}
+\aside{Fixed 64-question progress subset, excluded from weight training; one greedy answer, same chat prompt, full math checker, 3,000-token cap. Not the paper's full benchmark result; final tests pending.\\
+Liu et al., \href{https://arxiv.org/abs/2503.20783}{\textit{Understanding R1-Zero-Like Training}} (2025).}
 \end{frame}
 
+\begin{frame}[t]
+\frametitle{Useful practice is neither all wrong nor all right.}
+\textbf{Example:} Solve $3x+2=14$. Answer $x=4$ earns 1; $x=5$ earns 0.\\
+Dr.\ GRPO compares rewards with their \textbf{same-question average}.
+\smallskip
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\toprule
+Eight attempts on one problem & Scores & Relative signal \\
+\midrule
+All wrong & Eight zeros & None \\
+Some right, some wrong & A mix of 1 and 0 & Learn from the contrast \\
+All right & Eight ones & None \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{block}{Why curriculum could help}
+Practice problems the model can sometimes solve. As it improves, move toward harder problems that still produce useful contrast.
+\end{block}
+\aside{Contrast must occur within a question, not just across easy and hard questions. This concerns binary group-relative rewards, not all RL. Mixed scores do not guarantee learning. Related: \href{https://arxiv.org/html/2503.14476v1}{DAPO's filtering of uniform-reward groups}.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Existing skill needs a usable interface.}
+\textbf{Our prompt check:} same two models, same 500 MATH500 questions.
+\smallskip
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lrr}
+\toprule
+How we ask & Before RL & After short chat-style RL \\
+\midrule
+Chat instructions & 154 / 500 & 308 / 500 \\
+Question alone & 305 / 500 & 317 / 500 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\smallskip
+\textbf{Lesson:} A poor interface can hide ability and inflate the apparent training gain. Test a capable starting setup.
+\medskip
+
+\textbf{RLM implication:} Before expecting good decomposition, show how to run Python, call a helper, pass the needed context, and read its real return.
+\aside{SFT means learning by copying demonstrations; it is optional before RL. Our earlier RLM work already learned some executable routines, with limited transfer. The open question is what preparation enables flexible combinations, not whether we ever taught tool use.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Teach the interface, then practice useful choices.}
+\textbf{Proposed curriculum:} build on skills the model can already demonstrate.
+\medskip
+\begin{center}
+\begin{tikzpicture}
+\tikzset{skill/.style={draw=Teal,fill=Soft,rounded corners,align=center,text width=2.65cm,minimum height=1.75cm,font=\small}}
+\node[skill] (a) at(0,0) {\textbf{1. Use Python}\\Read real\\code results.};
+\node[skill] (b) at(3.45,0) {\textbf{2. Call a helper}\\Include the\\needed context.};
+\node[skill] (c) at(6.90,0) {\textbf{3. Link calls}\\Pass facts to\\the next call.};
+\node[skill] (d) at(10.35,0) {\textbf{4. Choose a plan}\\Decide when\\to delegate.};
+\draw[->,Teal,thick] (a)--(b);
+\draw[->,Teal,thick] (b)--(c);
+\draw[->,Teal,thick] (c)--(d);
+\end{tikzpicture}
+\end{center}
+\medskip
+\textbf{Invented example:} Document 1 says ``Mira works at Aster Lab.'' Document 2 says ``Aster Lab is in Oxford.'' To find Mira's work city, pass \emph{Aster Lab} to the next lookup, then use its returned city: \emph{Oxford}.
+\medskip
+
+Use demonstrations or SFT where needed; then let RL practice alternatives. More attempts and modest temperature changes may reveal rare successes.
+\aside{Hypothesis, not an established curriculum. Progressively remove help, but keep some earlier skills in practice. Verify actual tool returns; reward task success, not extra calls. Related: \href{https://arxiv.org/html/2512.24601v3}{RLM training}, \href{https://arxiv.org/html/2501.12948v1}{DeepSeek-R1 cold start}.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Prior work supports the ingredients, not our sequence.}
+\begin{block}{DAPO: spend updates on informative attempts}
+Its dynamic sampling removes groups that are all correct or all wrong. This directly connects to our reward-contrast lesson.
+\end{block}
+\smallskip
+\textbf{Recursive Language Models:} The authors train a smaller model on filtered demonstrations of environment use and recursive calls.
+\medskip
+
+\textbf{DeepSeek-R1:} Uses supervised preparation before RL; R1-Zero does not. Preparation is a design choice, not a universal requirement.
+\medskip
+
+\textbf{Our next questions:} Which skills, teaching examples, exploration choices, and feedback make RLM learning work?
+\aside{Sources: \href{https://arxiv.org/html/2503.14476v1}{DAPO \S3.2}; \href{https://arxiv.org/html/2512.24601v3}{RLM v3 \S3.2 and Appendix A}; \href{https://arxiv.org/html/2501.12948v1}{DeepSeek-R1 \S2.3.1}. These motivate an experiment; they do not establish our curriculum or its novelty.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{A portfolio of small experiments, not one settled story.}
+\begin{block}{First locate the failure; then change one thing.}
+Curriculum is one promising idea. Missing skills, poor exploration, and misleading feedback need different remedies.
+\end{block}
+\smallskip
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{0.32\textwidth}p{0.59\textwidth}}
+\toprule
+Question & Small comparison \\
+\midrule
+Missing tool skills? & Prompt examples vs. protocol vs. linked-call SFT \\
+Does teaching order help? & Same examples: staged vs. shuffled \\
+Too little exploration? & More attempts or varied plans, same total budget \\
+Can it use feedback? & Successful-only vs. error-and-repair examples \\
+\bottomrule
+\end{tabular}
+\end{center}
+\smallskip
+\textbf{For each:} Check before/after RL; test new combinations, not just longer inputs.
+\aside{Proposals, not results. Match compute and helper models. Track real execution, correct information passing, and final answers. Replicate promising effects; keep failures.}
+\end{frame}
 \end{document}

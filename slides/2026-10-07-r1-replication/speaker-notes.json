@@ -1,24 +1,28 @@
 {
   "slides": [
     {
-      "title": "First, reproduce learning in a simpler setting.",
-      "notes": "Math gives us checkable answers before tackling recursive choices. We use the authors' training code. Their released weights score 366/500 here, versus 371/500 reported. Those are their weights, not our learning gain. The five-answer gap is unexplained."
+      "title": "A small reproduction gives us a learning signal.",
+      "notes": "Use the reproduction as motivation, not the whole talk. Same64 monitor:20,42,42,43,43,48. No added SFT. This is measured improvement, not75percent on500. The fixed255 run and finaltests continue. Our goal is to learn how to train useful recursive decisions."
     },
     {
-      "title": "Reward correct attempts, then change the model.",
-      "notes": "This example is invented. The model generates its own attempts. The checker supplies only final-answer scores. Relative scores guide weight updates. We use eight attempts per question. If all eight scores agree, there is no within-question learning signal."
+      "title": "Useful practice is neither all wrong nor all right.",
+      "notes": "Rewards minus their question's mean: allzero and allone groups give zero. Mixing easy and impossible questions does not fix that. Curriculum could keep practice within reach. Do not claim50percent success is always optimal or mixed rewards guarantee learning."
     },
     {
-      "title": "We train on math, then test on different questions.",
-      "notes": "Short runs use 512 questions and 32 updates. The ongoing run uses 4080 level3-5 questions and plans 255 updates. It also changes the training checker, so this is not duration alone. No added SFT. Monitoring reuses 64 of the 500 test questions."
+      "title": "Existing skill needs a usable interface.",
+      "notes": "Same base and short chat-trained weights in both rows; test prompt alone changes. Full500 checker and3000token cap match. No-template training repeats added9 and1. SFT is optional. For RLMs distinguish knowing Python from knowing our API and choosing useful subtasks."
     },
     {
-      "title": "The input format changes the size of the gain.",
-      "notes": "Each line compares the same two models: original and short chat-trained. Only the test prompt changes between lines. Gains:154 versus12 of500. Separate question-only training adds9 and1. The larger gain is partly prompt-related, not proof all gains are prompt repair."
+      "title": "Teach the interface, then practice useful choices.",
+      "notes": "Proposed sequence, not established fact. Measure skills first; do not assume the model lacks Python. Example: pass employer name to the next lookup. Gradually remove hints; retain some earlier practice. Related RLM work already trains on demonstrations; novelty needs a sharper test."
     },
     {
-      "title": "Longer training: an early gain, then little change.",
-      "notes": "All points:20,42,42,43,43 of64; regraded. Last check:one gain,one loss. Finish255 updates and planned500/AMC/Minerva tests. Next:512-question fresh-base screens, fixed128 test, LR1e-6 versus5e-6, then two learning passes. Small screens guide research, not final claims."
+      "title": "Prior work supports the ingredients, not our sequence.",
+      "notes": "DAPO is adaptive filtering, not proof of an easy-to-hard curriculum. RLMs already have demonstration training and a separate RL transfer result. R1 cold start is optional, as R1-Zero shows. Our possible contribution is which skills, order, and transfer, not SFT before RL itself."
+    },
+    {
+      "title": "A portfolio of small experiments, not one settled story.",
+      "notes": "User favors breadth. Curriculum is one hypothesis, not the conclusion. Separate missing skills, teaching order, exploration and repair. Freeze helpers for early comparisons. Measure each setup before and after RL at matched budgets. Small screens guide independent repeats; retain failures."
     }
   ]
 }

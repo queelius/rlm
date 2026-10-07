@@ -7,31 +7,37 @@
       "idx": 0,
       "label": "1",
       "overlay": 0,
-      "note": "Math gives us checkable answers before\ntackling recursive choices. We use the\nauthors' training code. Their released\nweights score 366/500 here, versus 371/500\nreported. Those are their weights, not our\nlearning gain. The five-answer gap is\nunexplained."
+      "note": "Use the reproduction as motivation, not\nthe whole talk. Same64\nmonitor:20,42,42,43,43,48. No added SFT.\nThis is measured improvement, not75percent\non500. The fixed255 run and finaltests\ncontinue. Our goal is to learn how to\ntrain useful recursive decisions."
     },
     {
       "idx": 1,
       "label": "2",
       "overlay": 0,
-      "note": "This example is invented. The model\ngenerates its own attempts. The checker\nsupplies only final-answer scores.\nRelative scores guide weight updates. We\nuse eight attempts per question. If all\neight scores agree, there is no within-\nquestion learning signal."
+      "note": "Rewards minus their question's mean:\nallzero and allone groups give zero.\nMixing easy and impossible questions does\nnot fix that. Curriculum could keep\npractice within reach. Do not\nclaim50percent success is always optimal\nor mixed rewards guarantee learning."
     },
     {
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "Short runs use 512 questions and 32\nupdates. The ongoing run uses 4080\nlevel3-5 questions and plans 255 updates.\nIt also changes the training checker, so\nthis is not duration alone. No added SFT.\nMonitoring reuses 64 of the 500 test\nquestions."
+      "note": "Same base and short chat-trained weights\nin both rows; test prompt alone changes.\nFull500 checker and3000token cap match.\nNo-template training repeats added9 and1.\nSFT is optional. For RLMs distinguish\nknowing Python from knowing our API and\nchoosing useful subtasks."
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "Each line compares the same two models:\noriginal and short chat-trained. Only the\ntest prompt changes between lines.\nGains:154 versus12 of500. Separate\nquestion-only training adds9 and1. The\nlarger gain is partly prompt-related, not\nproof all gains are prompt repair."
+      "note": "Proposed sequence, not established fact.\nMeasure skills first; do not assume the\nmodel lacks Python. Example: pass employer\nname to the next lookup. Gradually remove\nhints; retain some earlier practice.\nRelated RLM work already trains on\ndemonstrations; novelty needs a sharper\ntest."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "All points:20,42,42,43,43 of64; regraded.\nLast check:one gain,one loss. Finish255\nupdates and planned500/AMC/Minerva tests.\nNext:512-question fresh-base screens,\nfixed128 test, LR1e-6 versus5e-6, then two\nlearning passes. Small screens guide\nresearch, not final claims."
+      "note": "DAPO is adaptive filtering, not proof of\nan easy-to-hard curriculum. RLMs already\nhave demonstration training and a separate\nRL transfer result. R1 cold start is\noptional, as R1-Zero shows. Our possible\ncontribution is which skills, order, and\ntransfer, not SFT before RL itself."
+    },
+    {
+      "idx": 5,
+      "label": "6",
+      "overlay": 0,
+      "note": "User favors breadth. Curriculum is one\nhypothesis, not the conclusion. Separate\nmissing skills, teaching order,\nexploration and repair. Freeze helpers for\nearly comparisons. Measure each setup\nbefore and after RL at matched budgets.\nSmall screens guide independent repeats;\nretain failures."
     }
   ]
 }
