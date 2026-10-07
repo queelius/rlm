@@ -1,5 +1,37 @@
 # Completed short LLM RL reproduction
 
+## Reading package and next experiments, 18:40 UTC
+
+Start with [the self-contained overview](START-HERE.md). It explains our longer-term
+RLM goal, why we are reproducing a math-RL paper first, how the training works,
+what the scores mean, and what we still have not established. The overview and
+five-slide PDF are published on GitHub main at `8292ebe`. The two charts separate
+the prompt-format comparison from the current training-progress curve. Scientific
+results still have the 18:20 cutoff; there is no new final benchmark result.
+
+The user now prioritizes faster, smaller exploratory comparisons. A three-run
+[512-question screen](../../experiments/r1_replication_20261007/quickscreen512-readiness.json)
+is prepared and reviewed, **not launched**. Each run starts from the original model:
+the current learning rate, a five-times-larger rate, and two learning passes over
+each response batch. These make 32, 32, and 64 optimizer updates, respectively.
+All three use the same 512 training questions and 4,096 sampled answers. A fresh
+baseline and every final model will answer the same 128 evaluation questions in
+both input formats. We keep all outcomes, not just the most favorable one.
+
+Eleven focused CPU tests pass. Native data loading confirms 512 usable questions,
+32 complete batches, and no exact overlap with the evaluation questions. Data and
+source hashes are verified. The exact executed preparation script is archived;
+a separate receipt records subsequent source formatting without changing the data.
+This is preparation evidence, not proof that the new training runs will succeed.
+
+Current attempt 4 and its four final-evaluation jobs remain unchanged under whole
+owner PID 1861599. Its native log has advanced beyond update 112 without a training
+traceback. The short screen may start only after that entire owner releases the
+GPU, not merely when training exits. No waiting successor process exists. The older
+255-update learning-rate follow-up remains available but is now lower priority.
+The existing observer continues to request reviews; read the external session
+checkpoint and queue before admitting a successor. Model weights are not in GitHub.
+
 ## Latest review, 18:20 UTC
 
 Attempt 4 continues unchanged. At 18:20:58 it had 99 completed learning calls,

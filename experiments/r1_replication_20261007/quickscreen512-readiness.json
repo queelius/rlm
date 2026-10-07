@@ -1,0 +1,57 @@
+{
+  "status": "REVIEWED_READY_AFTER_CURRENT_WHOLE_OWNER_RELEASE_NOT_LAUNCHED",
+  "root_review_utc": "2026-10-07T18:40:00Z",
+  "root_review": "Independent review found no material blocker; its minor owner-log concern is addressed by the documented noclobber command. Root reran 9 receipt tests and 2 data-selection tests, checked shell syntax, and verified runner/data/provenance hashes. No GPU integration run yet. The existing long-run owner and final evaluations retain priority.",
+  "preparation_source_correction": "/project/alex_phd/runs/r1-zero-replication-20261007/quick512-preparation-source-correction.json",
+  "purpose": "Fast exploratory learning-rate and rollout-reuse screen on a smaller dataset; lower-variance confirmation is deferred by explicit user preference.",
+  "files_sha256": {
+    "run_quickscreen512.sh": "e4182ab699d2e950969f7248a45d99382b5b29a5e5d1173572b70e9b4c0b04e4",
+    "quickscreen_receipt.py": "e98c95891127f7e2836cfd462045cb14d06d7b44ccfcb56531d9c56805fe41fd",
+    "test_quickscreen_receipt.py": "85176cbfecc59981e115367a0f0fef6fce95f8cdfae22eebcedd70d2f14114eb",
+    "scoped_session_owner.py": "89c03da19120487d74823686b67cff358d77f39d0e9a491de2dba1d1dde3da5e"
+  },
+  "immutable_inputs": {
+    "base_revision": "4a83ca6e4526a4f2da3aa259ec36c259f66b2ab2",
+    "official_source_commit": "dfca49dd460ee7cc8e4a5a162c876a7fd6993b87",
+    "environment": "/project/alex_phd/envs/r1-zero-dfca49d",
+    "data": "/project/alex_phd/runs/r1-zero-replication-20261007/data-oat/quick512-lvl3to5-v1",
+    "data_manifest": "/project/alex_phd/runs/r1-zero-replication-20261007/quick512-data-manifest.json",
+    "data_manifest_sha256": "7ae7327441dc09ad557a203dac9de2e8116992c31dbe073212b6f1926102a490",
+    "data_content_sha256": "7f029f42b50939151d519a8ef97cee3815e13cf219565cd2999c2f1873a1c00e",
+    "data_readiness_at_1835": "Separate data agent prepared first512 native qwen_math/tokenizer<=1024 eligible level3-5 rows in existing Random42 order, without rewardselection. NativePromptDataset confirms512used/32fullbatches/0discarded. All4physicalfiles independently match manifestSHA; no exact training/heldout128 overlap or monitor64/heldout128 overlap. Runner verifies pinned smallmanifest/files once before any model/GPU job.",
+    "heldout128": "/project/alex_phd/runs/r1-zero-replication-20261007/data-oat/heldout128",
+    "monitor64": "/project/alex_phd/runs/r1-zero-replication-20261007/data-oat/monitor64",
+    "memory_adapter_manifest": "/project/alex_phd/runs/r1-zero-replication-20261007/runtime-memory-v1/manifest.json"
+  },
+  "arms": [
+    {"id": "control", "learning_rate": 0.000001, "num_ppo_epochs": 1, "collections": 32, "optimizer_updates": 32, "final_label": "step_00033"},
+    {"id": "lr5e6", "learning_rate": 0.000005, "num_ppo_epochs": 1, "collections": 32, "optimizer_updates": 32, "final_label": "step_00033"},
+    {"id": "reuse", "learning_rate": 0.000001, "num_ppo_epochs": 2, "collections": 32, "optimizer_updates": 64, "final_label": "step_00033"}
+  ],
+  "common_recipe": "Fresh originalbase EACH arm; learnerseed42; fullmodelBF16; Dr.GRPO/fullMathVerify/qwen_math;512eligiblequestions/4096sampledresponses;16questionsx8responses;responsebuffer128/trainbatch128/micro1;oneprompt_epoch;temp1/top_p1/responsecap3000;beta0;constantLR;save8/latest2;monitor64every16;same memoryadapter and software.",
+  "counter_semantics": "Source base.py evaluates/saves after learn before incrementing steps. After collection32, steps increments33, query_step4096 exceeds maxqueries4095, and forced finaleval/save uses33. PPO1 gives32actualSGDupdates, PPO2 gives64. Periodicmonitor16/32 represents collections and maps to16/32updates in PPO1,32/64 in PPO2. Native labels are not intrinsically SGD counts.",
+  "future_owner_sequence": "Originalbase heldout128chat/raw baseline first, then explicit control/lr5e6/reuse arms, each prescribed terminal model heldout128chat/raw. Same evaluation inputs/decoding/fullgrader/batching within this future owner. NoMATH500/AMC/Minerva evaluation in this screen.",
+  "caps": {"whole_sequence_seconds": 36000, "per_arm_training_seconds": 7200, "per_evaluation_seconds": 1200, "number_of_evaluation_jobs": 8, "nominal_sum_minutes": 520, "whole_cleanup_grace_seconds": 55, "whole_kill_verification_seconds": 5, "gnu_per_job_kill_after_seconds": 60},
+  "failure_policy": "Fail-fast whole screen on any training/evaluation/endpoint/release failure; terminal result.json records arm/status/phase/exitcode and never presents capped or partial runs as completed scores. Existing scopedowner authenticates and cleans its childsession across nestedPGIDs. Root may review/relaunch an independent fresh attempt only after wholeownercleanup and GPUrelease; no autoscheduler or automatic retries.",
+  "receipts": "New immutable per-subroot result.json for baseline/control/lr5e6/reuse. Completed arms require32 learningcalls, expected32or64 actualSGDcounter, unique step33 weights, final64-row monitor and both complete128-row evaluation files. Failed/capped receipts omit completed scores and preserve rawlogs/outputs.",
+  "outputs": {
+    "project": "/project/alex_phd/runs/r1-zero-replication-20261007/followups/quickscreen512-v1",
+    "native_models": "/home/atowell/research-runs/r1-zero-replication-20261007/followups/quickscreen512-v1",
+    "owner_log": "/project/alex_phd/runs/r1-zero-replication-20261007/quickscreen512-v1-owner.log"
+  },
+  "launch_after_data_verification_owner_review_and_release_only": "( set -o noclobber; exec bash /project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/r1_replication_20261007/run_quickscreen512.sh > /project/alex_phd/runs/r1-zero-replication-20261007/quickscreen512-v1-owner.log 2>&1 )",
+  "gates": "Currentwholeowner/trainerPID1861599/1861602 absent; no GPUcomputePID;10h+60s remaining; unique outputs; ready quick512data/manifest/heldout128/adapter. Release is checked after each evaluation/training job before the next one. Current255owner/source/env/observer are unchanged.",
+  "allocation_end_epoch": 1791621574,
+  "allocation_end_utc": "2026-10-10T08:39:34Z",
+  "verification": {
+    "TDD": "Feature-absent endpoint test failed before helper implementation",
+    "focused_tests": "9 passed under pinned r1zeroPython in0.097s:32/64update terminal semantics, partial/extra collections, wronglastcounter, wronglabel, missingmonitor,128row completeness, completed/capped receipt behavior",
+    "shell_and_style": "bash-n pass; focusedRuffcheck andformat-check pass",
+    "data": "ManifestSHA7ae7327441dc09ad557a203dac9de2e8116992c31dbe073212b6f1926102a490 verified; all4datafileSHAs match;512nativeused/32batches/0discarded",
+    "owner_log_noclobber": "Documentedcommand CPUfixture refuses a preexisting temporarylog and preservesitsbytes; actualrunner notexecuted",
+    "existing_owner": "Scopedgitdiff for attempt4training/sequence is empty; no sharedhelper changes",
+    "gpu": "No GPU launch or GPU integration test performed"
+  },
+  "scientific_limits": "Small previously examined heldout128 panel, three unreplicated training trajectories and time-based actor randomness; arm selection is exploratory development. Keep bothformats and allarm outcomes. A winning terminal arm warrants later replication/generalization, not a claim to reproduce the full paper score. Baseline and all conditions must use the same future evaluator protocol.",
+  "operational_limits": "Existing scopedowner covers Linuxsession-contained descendants with procfs/libcpidfds; deliberate setsid escape or uncatchable ownerSIGKILL is outside its contract. Root should attach its lightweight futureowner observer and promptly verify real scientific outputs/updates after launch. No commit was made."
+}
