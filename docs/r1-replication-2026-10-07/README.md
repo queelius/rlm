@@ -50,6 +50,12 @@ Both final tests are complete and checked. See the
 [training audit](grpo-training-receipt.json), and
 [pre-result plan](grpo-comparison-plan.md).
 
+**Final check at 13:51 UTC:** Repeating the GRPO question-only evaluation with
+unchanged weights reproduced all 500 saved answers byte-for-byte, including
+318 correct. This is an evaluation check, not another training run. See the
+[repeatability receipt](grpo-repeatability-receipt.json). The bounded batch is
+complete; the [handoff](HANDOFF.md) records what to retain and what to try next.
+
 The five-slide deck retains its 12:35 cutoff and central prompt-format
 comparison. This later small result does not overturn that lesson. It belongs
 in the supporting account, not a claim that we have found the best algorithm.
