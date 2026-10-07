@@ -1,0 +1,309 @@
+{
+  "path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawgrpo43-final-no-template/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-raw-grpo43_debug_1007T12:53:06_saved_models_step_000331791380397_template_no_temp0_topp1_n1.json",
+  "sha256": "ef028f0c5b087a4792a95b7f8232305cd3993a00508774a0cddd19bbbb541fae",
+  "n": 500,
+  "correct": 318,
+  "capped": 17,
+  "empty": 0,
+  "mean_tokens": 689.72,
+  "all_full_rewards_regraded": true,
+  "all_source_questions_references_match": true,
+  "comparisons": [
+    {
+      "comparator": "base",
+      "path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base-no-template/model_eval_out__project_alex_phd_research-cache_models_Qwen--Qwen2.5-Math-1.5B--4a83ca6e4526a4f2da3aa259ec36c259f66b2ab21791368946_template_no_temp0_topp1_n1.json",
+      "sha256": "90aa2a7140a9679835dffc3d1bb88e39af180740bf004836b669d5a8f72557dd",
+      "before": 305,
+      "after": 318,
+      "gains": [
+        9,
+        52,
+        66,
+        149,
+        160,
+        167,
+        205,
+        224,
+        231,
+        232,
+        234,
+        236,
+        256,
+        281,
+        296,
+        297,
+        302,
+        304,
+        333,
+        357,
+        409,
+        431,
+        452,
+        480
+      ],
+      "losses": [
+        7,
+        18,
+        19,
+        22,
+        101,
+        123,
+        151,
+        173,
+        335,
+        391,
+        456
+      ],
+      "roles": {
+        "monitor64": {
+          "n": 64,
+          "before": 39,
+          "after": 38,
+          "gains": 2,
+          "losses": 3
+        },
+        "original128": {
+          "n": 128,
+          "before": 79,
+          "after": 83,
+          "gains": 7,
+          "losses": 3
+        },
+        "additional308": {
+          "n": 308,
+          "before": 187,
+          "after": 197,
+          "gains": 15,
+          "losses": 5
+        }
+      }
+    },
+    {
+      "comparator": "drgrpo42",
+      "path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawtrained-final-no-template/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-raw-attempt2_debug_1007T10:40:50_saved_models_step_000331791372480_template_no_temp0_topp1_n1.json",
+      "sha256": "6090f3cc669ae4801e38377f01cd580809721230d82eb6306e228454ca0ceae9",
+      "before": 314,
+      "after": 318,
+      "gains": [
+        27,
+        52,
+        142,
+        143,
+        149,
+        160,
+        201,
+        224,
+        231,
+        234,
+        304,
+        382,
+        431,
+        474,
+        476
+      ],
+      "losses": [
+        50,
+        108,
+        120,
+        151,
+        164,
+        188,
+        335,
+        400,
+        419,
+        434,
+        456
+      ],
+      "roles": {
+        "monitor64": {
+          "n": 64,
+          "before": 39,
+          "after": 38,
+          "gains": 1,
+          "losses": 2
+        },
+        "original128": {
+          "n": 128,
+          "before": 84,
+          "after": 83,
+          "gains": 2,
+          "losses": 3
+        },
+        "additional308": {
+          "n": 308,
+          "before": 191,
+          "after": 197,
+          "gains": 12,
+          "losses": 6
+        }
+      }
+    },
+    {
+      "comparator": "drgrpo43",
+      "path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawrepeat43-final-no-template/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-raw-repeat43_debug_1007T11:41:54_saved_models_step_000331791376135_template_no_temp0_topp1_n1.json",
+      "sha256": "0dba5b0a5e80f08a8aaf5831cfca009b1783b59d9d5317577c38f9392ba1fa10",
+      "before": 306,
+      "after": 318,
+      "gains": [
+        9,
+        27,
+        52,
+        136,
+        142,
+        143,
+        149,
+        160,
+        201,
+        205,
+        231,
+        234,
+        236,
+        256,
+        297,
+        302,
+        304,
+        333,
+        402,
+        476
+      ],
+      "losses": [
+        164,
+        166,
+        179,
+        188,
+        320,
+        391,
+        400,
+        484
+      ],
+      "roles": {
+        "monitor64": {
+          "n": 64,
+          "before": 37,
+          "after": 38,
+          "gains": 1,
+          "losses": 0
+        },
+        "original128": {
+          "n": 128,
+          "before": 81,
+          "after": 83,
+          "gains": 5,
+          "losses": 3
+        },
+        "additional308": {
+          "n": 308,
+          "before": 188,
+          "after": 197,
+          "gains": 14,
+          "losses": 5
+        }
+      }
+    },
+    {
+      "comparator": "chat_trained_raw_test",
+      "path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-subset512-final-no-template/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-attempt1_debug_1007T09:19:27_saved_models_step_000331791369157_template_no_temp0_topp1_n1.json",
+      "sha256": "cbb811bac44390ab0ab1b00cbc6adbb2793acdb131309cc8e62961003306a928",
+      "before": 317,
+      "after": 318,
+      "gains": [
+        27,
+        52,
+        75,
+        149,
+        205,
+        224,
+        231,
+        232,
+        234,
+        236,
+        256,
+        302,
+        304,
+        389,
+        409,
+        431,
+        474
+      ],
+      "losses": [
+        7,
+        19,
+        22,
+        78,
+        101,
+        120,
+        123,
+        151,
+        164,
+        166,
+        179,
+        320,
+        335,
+        391,
+        454,
+        456
+      ],
+      "roles": {
+        "monitor64": {
+          "n": 64,
+          "before": 37,
+          "after": 38,
+          "gains": 3,
+          "losses": 2
+        },
+        "original128": {
+          "n": 128,
+          "before": 84,
+          "after": 83,
+          "gains": 3,
+          "losses": 4
+        },
+        "additional308": {
+          "n": 308,
+          "before": 196,
+          "after": 197,
+          "gains": 11,
+          "losses": 10
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "row": 9,
+      "before": 0,
+      "after": 1,
+      "reference": [
+        "4"
+      ]
+    },
+    {
+      "row": 52,
+      "before": 0,
+      "after": 1,
+      "reference": [
+        "12"
+      ]
+    },
+    {
+      "row": 7,
+      "before": 1,
+      "after": 0,
+      "reference": [
+        "90^\\circ"
+      ]
+    },
+    {
+      "row": 18,
+      "before": 1,
+      "after": 0,
+      "reference": [
+        "28"
+      ]
+    }
+  ],
+  "checked_utc": "2026-10-07T13:42:00Z",
+  "interpretation": "Modest gain in one exploratory GRPO run; not evidence of algorithm superiority. The separately checked chat-format result is 169/500; see grpo-chat-scoring-receipt.json.",
+  "final_checkpoint": "/home/atowell/research-runs/r1-zero-replication-20261007/subset512-raw-grpo43/debug_1007T12:53:06/saved_models/step_00033",
+  "model_sha256": "2b68e9cd7db6e392553037fa428f61031977feaf34d49c6cbf6f5bab076b88fa"
+}

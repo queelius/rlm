@@ -27,11 +27,10 @@
   byte-identical saved answer files: question-only scores 305 (base), 314
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
-  replications. A bounded comparison using the authors' standard GRPO option
-  launched at 12:52 UTC; it has no result here. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 12:53 UTC.
-  Three training runs evaluated in both formats; five fixed-weight repeats
-  completed. Standard GRPO comparison pending.}
+  replications. All completed results are retained.}
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 13:48 UTC.
+  Three Dr.\ GRPO runs evaluated in both formats; five fixed-weight repeats
+  completed. Standard GRPO evaluated in both formats (page 7).}
 \begin{document}
 \pagetitle{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}
   {Learning language-model RL\\from an official reproduction}
@@ -187,7 +186,7 @@ model's pretraining.
 \topic{Keep three kinds of settings separate}
 
 \textbf{Weights.} The baseline uses the original base checkpoint. Each trained
-model uses its prescribed final checkpoint. All three 512-question runs start
+model uses its prescribed final checkpoint. All three Dr.\ GRPO runs start
 separately from the base, not from the pilot or each other's weights.
 
 \textbf{Generation.} Each before/after pair uses the same input format, the same
@@ -200,8 +199,7 @@ weight changes. This is a central warning of the paper [1].
 \textbf{Scoring.} The author's training program uses a faster checker. The
 standalone evaluator uses an additional mathematical-equivalence check
 (\code{fast=False}). We apply the same standalone checker to both saved answer
-sets for every reported comparison, including both formats for all three
-completed trained models.
+sets for every reported comparison, including the separate GRPO follow-up.
 Source questions and reference answers were checked against the frozen data.
 We never combine scores from different checkers.
 
@@ -221,7 +219,7 @@ seed labels do not make the whole run deterministic. Evaluation repeats test
 generation variation; fresh training runs test whether a gain survives retraining.
 
 \newpage
-\pagetitle{3 / THREE COMPLETED TRAINING RUNS}{A large prompt effect, an uncertain learning gain}
+\pagetitle{3 / THREE DR.\ GRPO TRAINING RUNS}{A large prompt effect, an uncertain learning gain}
 
 Three separate runs restarted from the original base weights. Each used the
 same 512 questions, 4096 sampled responses, and 32 full-model BF16 updates in
@@ -424,4 +422,34 @@ the same care in interpretation.
 \href{pilot-scoring-receipt.json}{pilot receipt}.
 The research record links the question-only answer files and scoring evidence.
 }
+\newpage
+\pagetitle{APPENDIX / AN EXPLORATORY FOLLOW-UP}{What if we use standard GRPO?}
+
+A separate fresh-base run using the authors' standard GRPO option scored
+\textbf{318/500} with question-only evaluation, versus \textbf{305/500} for
+the base: 24 answers became correct and 11 became incorrect. The corresponding
+Dr.\ GRPO question-trained models scored 314 and 306. All 500 GRPO answers
+were checked with the same full checker and against the source questions and
+references. The same GRPO weights scored \textbf{169/500} with the chat prompt,
+versus 154 for the base: 22 gains and seven losses. All 500 chat answers were
+likewise regraded and source-checked. There were 189 capped responses and no
+empty responses. Strong input-format dependence remains: 318 with the question
+alone versus 169 with the chat prompt.
+
+This run used the same 512 training questions, eight sampled responses per
+question, 32 full-model BF16 updates, and learner seed 43. It restarted from
+the original base model, not from a Dr.\ GRPO checkpoint. The author actor's
+time-based sampling seed means the training randomness is not fully paired.
+
+Only the official \code{critic\_type} option changed, from \code{drgrpo} to
+\code{grpo}; the authors' source was not modified. That option jointly changes
+response-length averaging and reward-standard-deviation normalization. It also
+changes update scale, even with the same learning rate. This comparison cannot
+isolate either normalization's effect.
+
+The question-only net gain is 13 answers, or 2.6 percentage points. It is an exploratory result
+on the already-inspected 500 questions, not evidence that GRPO is reliably
+better than Dr.\ GRPO. One training run cannot establish that superiority.
+The main lesson remains prompt sensitivity, a functioning training pipeline,
+and uncertainty about dependable gains from this short training budget [2,4].
 \end{document}

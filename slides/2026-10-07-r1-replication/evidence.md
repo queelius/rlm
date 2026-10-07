@@ -12,9 +12,22 @@ unchanged weights, not additional training runs. Earlier variation under
 different evaluation batch composition remains a limitation. No slide score
 or conclusion changes, so the audience PDF retains its 12:35 result cutoff.
 
-The optional [GRPO comparison](../../docs/r1-replication-2026-10-07/grpo-comparison-plan.md)
-began after the slides were published. It is not a completed result and is
-not evidence for an algorithm claim.
+## Later objective comparison, 13:48 UTC
+
+The optional [standard GRPO comparison](../../docs/r1-replication-2026-10-07/grpo-comparison-plan.md)
+finished training and scored **318/500** with questions alone, versus305base.
+There were24 gains and11 losses. All500 answers were independently regraded
+and checked against source questions/references; see the
+[scoring receipt](../../docs/r1-replication-2026-10-07/grpo-final-scoring-receipt.json)
+and [training audit](../../docs/r1-replication-2026-10-07/grpo-training-receipt.json).
+Its chat-format score is **169/500**, versus 154 before training (22 gains,
+7 losses). All 500 chat answers were also regraded and source-checked;
+see the [chat receipt](../../docs/r1-replication-2026-10-07/grpo-chat-scoring-receipt.json).
+This is a modest single-run gain,
+not evidence that GRPO is better than the two Dr. GRPO runs (314 and306).
+The switch changes two objective components together, and randomness is not
+fully matched. The five-slide deck retains its12:35 cutoff and core prompt-
+comparison story; this supporting result does not overturn that lesson.
 
 ## Fresh training repeat: the smaller gain is not reliable yet
 

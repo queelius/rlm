@@ -4,7 +4,7 @@ Read the [five-slide PDF](../../slides/2026-10-07-r1-replication/research-update
 and [slide-by-slide guide](../../slides/2026-10-07-r1-replication/speaker-guide.md).
 The [learning guide](learning-guide.pdf) explains the learning step,
 the evaluation, and how to interpret the results.
-Three short training runs have finished: one trained with chat-style input,
+Three short Dr. GRPO training runs have finished: one with chat-style input,
 and two trained with the question alone. Each started from the original model
 and used the same 512 training questions and 32 weight updates.
 
@@ -34,15 +34,27 @@ They also do not remove earlier variation observed when the evaluation batch
 changed. The [repeatability receipt](evaluation-repeatability-receipt.json)
 records the files, hashes, and checks.
 
-**One bounded follow-up is running:** We are comparing the authors' standard
-GRPO option with Dr. GRPO, keeping the model, 512 questions, and 32-update
-budget fixed. This has no result yet. It changes two parts of the objective
-together, so it cannot isolate their individual effects. The
-[pre-result plan](grpo-comparison-plan.md) sets the final checkpoint, tests,
-limitations, and 14:00 UTC stopping time. The five-slide deck is already ready;
-this optional comparison does not delay it.
+**Additional result at 13:48 UTC:** A fourth training run used the authors'
+standard GRPO option instead of Dr. GRPO, with the same starting model, 512
+questions, and 32 updates. On the question-only test it scored **318/500**,
+versus **305/500** before training: 24 answers improved and 11 regressed.
+That is a modest gain in one exploratory run, not a demonstrated advantage
+over Dr. GRPO's two question-only results of 314 and 306. The switch changes
+two parts of the learning rule together, and training randomness is not fully
+matched. With chat-style input the same final model scored **169/500**, versus
+154 before training (22 gains, 7 losses). The large gap between its 318
+question-only and 169 chat-style scores shows that input format still matters.
+Both final tests are complete and checked. See the
+[checked result](grpo-final-scoring-receipt.json),
+[chat-format result](grpo-chat-scoring-receipt.json),
+[training audit](grpo-training-receipt.json), and
+[pre-result plan](grpo-comparison-plan.md).
 
-Latest verified comparison, 7 October at 12:35 UTC:
+The five-slide deck retains its 12:35 cutoff and central prompt-format
+comparison. This later small result does not overturn that lesson. It belongs
+in the supporting account, not a claim that we have found the best algorithm.
+
+Dr. GRPO comparison, verified on 7 October at 12:35 UTC:
 
 | Model tested | Chat-style input | Question alone |
 | --- | ---: | ---: |

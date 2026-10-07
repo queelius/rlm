@@ -1,0 +1,30 @@
+{
+  "checked_utc": "2026-10-07T13:48:00Z",
+  "path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawgrpo43-final-chat/model_eval_out__home_atowell_research-runs_r1-zero-replication-20261007_subset512-raw-grpo43_debug_1007T12:53:06_saved_models_step_000331791380713_template_qwen_math_temp0_topp1_n1.json",
+  "sha256": "0d06468b91f5ce02eecd4c54e1fe4379080bb46c2ddc4e59f7e04b3380838727",
+  "n": 500,
+  "correct": 169,
+  "capped": 189,
+  "empty": 0,
+  "mean_tokens": 1574.234,
+  "all_full_rewards_regraded": true,
+  "all_source_questions_references_match": true,
+  "grader": "understand_r1_zero.math_grader.boxed_reward_fn, fast=False, dfca49dd460ee7cc8e4a5a162c876a7fd6993b87",
+  "baseline_path": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base/model_eval_out__project_alex_phd_research-cache_models_Qwen--Qwen2.5-Math-1.5B--4a83ca6e4526a4f2da3aa259ec36c259f66b2ab21791368509_template_qwen_math_temp0_topp1_n1.json",
+  "baseline_sha256": "6cde24ef420aff35b7621ecea2ff013d6d1bc5faf3694955f85b9e3f02306c59",
+  "before": 154,
+  "gains": [23, 64, 84, 88, 136, 142, 234, 236, 251, 254, 276, 315, 317, 324, 382, 396, 402, 436, 466, 476, 477, 484],
+  "losses": [28, 116, 248, 296, 323, 389, 434],
+  "roles": {
+    "monitor64": {"n": 64, "before": 21, "after": 22, "gains": 1, "losses": 0},
+    "original128": {"n": 128, "before": 41, "after": 45, "gains": 5, "losses": 1},
+    "additional308": {"n": 308, "before": 92, "after": 102, "gains": 16, "losses": 6}
+  },
+  "final_checkpoint": "/home/atowell/research-runs/r1-zero-replication-20261007/subset512-raw-grpo43/debug_1007T12:53:06/saved_models/step_00033",
+  "model_sha256": "2b68e9cd7db6e392553037fa428f61031977feaf34d49c6cbf6f5bab076b88fa",
+  "examples_inspected": {
+    "first_gain_row23": "Base repeats Highlight until the cap; final solves x=sqrt(11-2x)+4, rejects extraneous x=1, and correctly returns5.",
+    "first_loss_row28": "Base correctly rotates7+2i to -2+7i; final repeats oud until the cap. Generated code/output in the baseline was not executed."
+  },
+  "interpretation": "Input-format sensitivity persists: this same final model scores318 question-only and169 chat-style. One exploratory training run, not an established algorithm advantage."
+}
