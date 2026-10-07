@@ -1,0 +1,46 @@
+{
+  "cutoff_utc": "2026-10-07T12:35:00Z",
+  "status": "Both prescribed final500 evaluations complete and independently verified",
+  "question": "Does another fresh-base question-only training run reproduce a meaningful improvement over the stronger starting setup?",
+  "training": "Fresh original base, identical512 questions/settings,32 updates, learner seed43, authors' time-based actor sampling retained. Same data, not a new training-data sample.",
+  "training_receipt": "question-only-repeat-training-receipt.json",
+  "model_sha256": "6bc64e69314d4fd23b622b141fb277a1418be22d0ce55ca82478914d709d3dfd",
+  "dataset": "Official bundled evaluation_suite math split, all500 MATH500 questions",
+  "evaluation": "Official evaluate_model.py; template no; temperature0; top_p1; one response;3000-token limit; prescribed final checkpoint after32 updates. No checkpoint selection.",
+  "verification": "All500 repeat answers and500 baseline answers independently regraded using boxed_reward_fn(fast=False); all prompts and references matched to the canonical source. No empty repeat responses.",
+  "before": {"correct":305,"n":500,"capped":15,"mean_response_tokens":694.31},
+  "after": {"correct":306,"n":500,"capped":14,"empty":0,"mean_response_tokens":680.152},
+  "paired": {"gains":18,"losses":17,"net":1,"percentage_point_change":0.2},
+  "gained_source_rows": [66,164,166,167,179,188,224,232,281,296,320,357,400,409,431,452,480,484],
+  "lost_source_rows": [7,18,19,22,27,101,123,136,142,143,151,173,201,335,402,456,476],
+  "roles": {
+    "monitor64": {"n":64,"before":39,"after":37,"gains":1,"losses":3},
+    "original_test128_in_fresh500_batch": {"n":128,"before":79,"after":81,"gains":6,"losses":4},
+    "additional308": {"n":308,"before":187,"after":188,"gains":11,"losses":10}
+  },
+  "comparison_with_first_question_only_run": {"first":314,"repeat":306,"gains":9,"losses":17,"net":-8,"note":"Both are retained. This is not a selected checkpoint or new evaluation of the same weights."},
+  "native_base_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-base-no-template",
+  "native_final_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawrepeat43-final-no-template",
+  "base_answers_sha256": "90aa2a7140a9679835dffc3d1bb88e39af180740bf004836b669d5a8f72557dd",
+  "final_answers_sha256": "0dba5b0a5e80f08a8aaf5831cfca009b1783b59d9d5317577c38f9392ba1fa10",
+  "chat_style_cross_prompt": {
+    "native_directory": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-rawrepeat43-final-chat",
+    "answers_sha256": "5aa1bf4d4bdea31a6a4955b9522be0f9bf77b22aa0fe15ec3d67d0162741776d",
+    "verification": "All500 independently regraded with full checker; exact official chat template and references checked against source",
+    "before":154,"after":166,"n":500,"gains":25,"losses":13,
+    "capped":198,"empty":0,"mean_response_tokens":1612.758,
+    "roles": {
+      "monitor64": {"n":64,"before":21,"after":23,"gains":3,"losses":1},
+      "original_test128_in_fresh500_batch": {"n":128,"before":41,"after":40,"gains":3,"losses":4},
+      "additional308": {"n":308,"before":92,"after":103,"gains":19,"losses":8}
+    }
+  },
+  "inspected_examples": [
+    {"source_row":66,"change":"Algebra final answer becomes correct, but a later claimed Python output contradicts its correct manual expansion. No code was executed."},
+    {"source_row":7,"change":"A correct90-degree angle becomes112.62 degrees."},
+    {"source_row":18,"change":"The diagram-angle answer becomes56 rather than28. This same question had been correct in the final64-question monitoring batch; do not substitute that favorable response."}
+  ],
+  "interpretation": "Two question-only training runs give net gains of9 and1 above305. Both are positive, but the small and varying results do not establish a reliable substantial gain. The strong prompt-format effect remains the main reproduction finding.",
+  "limits": ["Only two question-only training realizations", "Same512 training questions and already-inspected test set", "64 evaluation questions were used for monitoring", "Earlier generation varied when batch composition changed", "Final-answer correctness does not certify every explanation step", "No model-generated code was executed", "Pretraining exposure unknown"],
+  "next_decision": "Publish all outcomes in the five-slide package. After the existing owner exits, check the near-null raw score with one fixed-weight identical-batch evaluation repeat. Do not count that as another training run or delay the13UTC package for optional work."
+}

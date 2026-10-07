@@ -1,6 +1,51 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 11:34 UTC, both training formats evaluated.
+Cutoff: 7 October 2026, 12:35 UTC; all three training runs evaluated in both formats.
+
+## Fresh training repeat: the smaller gain is not reliable yet
+
+The [repeat result receipt](../../docs/r1-replication-2026-10-07/question-only-repeat-scoring-receipt.json)
+records 306/500 with questions alone, compared with the fixed starting score
+of 305. Eighteen answers became correct and seventeen became incorrect.
+Root independently regraded all 500 new answers and the baseline and checked
+every question and reference against the official dataset. The
+[training receipt](../../docs/r1-replication-2026-10-07/question-only-repeat-training-receipt.json)
+records the final checkpoint hash and all 4,096 training responses.
+
+The first question-only training run scored 314. Both runs started from the
+same original model and used the same questions, settings and update count.
+Their learner seeds differed; the authors' time-based actor sampling was
+retained. These are two training realizations, not repeated evaluations of one
+model or an isolated test of the effect of one random seed.
+
+The repeat's 308 additional questions scored 188 versus 187 before training.
+Its overall near-zero gain is therefore not only a feature of the 64 monitored
+questions. Results on those 64 change with generation batch composition: the
+final monitor scored 41, whereas their answers in this full500 batch scored 37.
+The corresponding base scores are 38 and 39. We retain each observation in its
+own context; we do not substitute a more favorable response or checkpoint.
+
+The result weakens a claim of stable improvement beyond the stronger starting
+setup. It does not prove that RL cannot help or that a longer run would fail.
+The repeated-training result is exploratory, on an already-inspected test set.
+The slide table now places each model in a row and each input format in a
+column, so both training outcomes remain visible.
+
+The same repeated-training final model scored 166/500 in chat style, against
+154 before training, with 25 gains and 13 losses. All500 saved answers were
+independently regraded and matched to the exact official chat template and
+reference answers. Its capped-response count is198 versus205 before training.
+The receipt retains both input formats, not whichever gives the larger gain.
+
+| Model tested | Chat-style input | Question alone |
+| --- | ---: | ---: |
+| Starting model |154|305|
+| Trained with chat style |308|317|
+| Trained with questions alone |168|314|
+| Repeated question-only training |166|306|
+
+Every entry counts correct answers out of the same500 questions. Each trained
+row is a separate fresh-base run, evaluated at its prescribed final checkpoint.
 
 ## New follow-up: train with the question alone
 
@@ -11,7 +56,7 @@ all 1,000 new answers and verified prompts/references against the source.
 The raw-input comparison has 24 gains and 15 losses; the chat comparison has 21
 gains and seven losses. These are small one-run changes, not reliable effects yet.
 
-The trained columns on slide 4 are different models, each trained afresh from
+The trained rows on slide 4 are different models, each trained afresh from
 the original base on the same 512 questions for 32 updates. Each model is tested
 in both formats using the same final checkpoint. No checkpoint was selected
 for its score. The new model's capped responses are 19 with questions alone and
@@ -19,10 +64,10 @@ for its score. The new model's capped responses are 19 with questions alone and
 training did not produce the large chat-response recovery of chat-style training.
 We have not isolated every cause of the contrast between the training runs.
 
-Update at 11:42 UTC: both fixed-weight question-only evaluations repeated
+Update at 11:42 UTC: both first-run fixed-weight question-only evaluations repeated
 byte-for-byte, retaining scores of 305 and 314. All repeated answers were
-regraded and source-checked. A fresh training repeat started at 11:41 and has
-no result yet. Neither check may replace the first scores with better ones.
+regraded and source-checked. The later fresh training repeat is reported above.
+Neither check may replace the first scores with better ones.
 
 ## Main slide result: same weights tested with two prompt formats
 

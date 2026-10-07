@@ -1,5 +1,32 @@
 # Presentation verification
 
+## Fresh training repeat, 7 October, 12:37 UTC
+
+- Root independently regraded all 1,000 new final answers and matched their
+  prompts and references to the official source. The repeat scored 306/500
+  with questions alone (18 gains, 17 losses) and 166/500 in chat style
+  (25 gains, 13 losses). The prescribed final checkpoint and all 4,096
+  training responses were verified; model and answer hashes are in the two
+  new repeat receipts.
+- The deck remains five slides. Slide 3 describes three fresh-base runs.
+  Slide 4 shows all eight model/input combinations, including both
+  question-only training outcomes. Slide 5 proposes a longer-training check
+  without promising an improvement. The conclusion distinguishes working
+  learning updates from a reliable gain over the stronger starting setup.
+- Tectonic rebuilt the final PDF without warnings. An initial crowded
+  results-slide layout was fixed by shortening redundant prose, not shrinking
+  the font. All five titles match the notes, all notes fit the 14-line limit,
+  and every PDF text span is within page bounds. Root inspected revised
+  slides 3–5; an independent reader reviewed all five and the final result
+  slide, finding no unresolved audience-clarity or layout issue.
+- The six-page learning guide was rebuilt. Its author checked changed pages
+  and all page bounds. Root reviewed its source diff, independently checked
+  all six page bounds and final counts/cutoff, and visually inspected pages
+  1, 4 and 5. The guide retains the earlier separate128 comparison unchanged.
+- The evidence cutoff is 12:35 UTC. A further fixed-weight evaluation repeat
+  is pending and is not counted as a new training run or a completed result.
+  No live pdfpc GUI was tested; presenter notes were checked structurally.
+
 ## Both training formats, 7 October, 11:38 UTC
 
 - Root regraded all 1,000 final answers from the new question-only-trained

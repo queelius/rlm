@@ -4,10 +4,44 @@ Read the [five-slide PDF](../../slides/2026-10-07-r1-replication/research-update
 and [slide-by-slide guide](../../slides/2026-10-07-r1-replication/speaker-guide.md).
 The [learning guide](learning-guide.pdf) explains the learning step,
 the evaluation, and how to interpret the results.
-The 512-question training run and its separate 128-question test have finished.
-The expanded evaluation and both prompt controls have also finished. A new
-question-only training run has also finished; its final evaluations now test
-whether learning improves on the stronger starting prompt.
+Three short training runs have finished: one trained with chat-style input,
+and two trained with the question alone. Each started from the original model
+and used the same 512 training questions and 32 weight updates.
+
+## What we have learned
+
+We can run the authors' language-model RL recipe, verify real weight updates,
+and test the saved models. The clearest finding is that **the starting input
+format matters enormously**. With no additional training, the model answered
+154 of 500 questions correctly in chat style, but 305 when given only the
+question. Chat-style training raised the chat score to 308. That large gain
+does not, by itself, establish newly learned mathematical abilities.
+
+Training on questions alone produced scores of **314 and 306 in two separate
+runs**, compared with 305 before training. The repeat had 18 newly correct
+answers and 17 newly incorrect answers. We have not yet established a reliable,
+substantial improvement beyond the stronger starting setup. This is a useful
+limitation to discover before making claims about RL for recursive models.
+See the [repeat's checked results](question-only-repeat-scoring-receipt.json)
+and [training audit](question-only-repeat-training-receipt.json).
+
+Latest verified comparison, 7 October at 12:35 UTC:
+
+| Model tested | Chat-style input | Question alone |
+| --- | ---: | ---: |
+| Starting model |154/500|305/500|
+| Trained with chat style |308/500|317/500|
+| Trained with questions alone |168/500|314/500|
+| Repeated question-only training |166/500|306/500|
+
+Read down a column to compare training while keeping the input format fixed.
+Read across a row to compare input formats while keeping the model fixed.
+Each trained row uses its prescribed final checkpoint; no best-run or
+best-checkpoint selection is used.
+
+These are small-scale reproductions and exploratory follow-ups, not a new
+algorithm or a reproduction of the paper's full benchmark scores. The original
+results below remain available rather than being replaced with the best run.
 
 ## Current results, 7 October
 
@@ -54,13 +88,16 @@ The new chat comparison has 21 gains and seven losses. Its capped-response count
 201, versus 205 for the base; question-only training did not fix that pattern.
 We cannot yet identify every cause of the contrast between training formats.
 
-**Repeatability check, 11:41 UTC:** Both question-only evaluations produced
+**Repeatability check, 11:41 UTC:** Both first-run question-only evaluations produced
 exactly the same saved answers when repeated: 305 for the starting model and
 314 for the final model. These are repeats of evaluation, not independent
 training runs. They do not erase the variation observed earlier when batch
 composition changed. A fresh training repeat started at 11:41 with the same
 settings and questions, a different learner seed, and its own data cache.
-The five-slide deck and learning guide now include both training formats.
+That fresh training run subsequently scored 306/500 with question-only input,
+as summarized above. Unlike rerunning an evaluation, this repeated the learning
+process from the original weights. Its chat-style test scored166/500, with
+25 gains and13 losses against the original154. Both input formats are retained.
 
 **Expanded chat-style check at 10:27 UTC:** On all 500 MATH500 questions, the same models
 scored **154 before training and 308 afterward**. On the 308 additional

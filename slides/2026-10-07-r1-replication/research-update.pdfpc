@@ -19,19 +19,19 @@
       "idx": 2,
       "label": "3",
       "overlay": 0,
-      "note": "Two runs started from the original\nweights: one chat-style, one question-\nonly. Each used the same 512 training\nquestions. We tested all three models in\nboth formats. All 500 test questions were\nexcluded from weight training; 64 were\nmonitored. No SFT stage was added."
+      "note": "Three runs started from the original\nweights: one chat-style, two question-\nonly. Each used the same 512 training\nquestions. All 500 test questions were\nexcluded from weight training; 64 were\nmonitored. No SFT stage was added. We used\nthe final model from every run."
     },
     {
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "Across a row, test input stays fixed. Down\na column, weights stay fixed. Question-\nonly training gains nine over the stronger\nbase: 24 gains and 15 losses. It does not\nrepair chat performance comparably. One\nrun per format; small gains need\nreplication."
+      "note": "Across a row, weights stay fixed. Down a\ncolumn, test input stays fixed. The\nquestion-only runs gain nine and one over\nthe stronger base. The repeat has 18 gains\nand 17 losses. We have not established a\nreliable gain beyond that starting setup."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "Actual separate-test row 5, summarized. Of\nits 44 gains, 36 started as capped\nresponses. No generated code was executed.\nThis does not prove every gain is format\nrepair. We are checking repeatability\nbefore claiming a reliable gain or moving\nto recursive choices."
+      "note": "Actual separate-test row 5, summarized. Of\nits 44 gains, 36 started as capped\nresponses. No generated code was executed.\nNot every gain is necessarily format\nrepair. More training is a proposed test,\nnot a promised improvement or evidence\nabout recursive choices."
     }
   ]
 }

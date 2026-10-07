@@ -72,7 +72,7 @@ We tested the starting and trained models on the same \textbf{500 MATH500 questi
 \textbf{Chat style:} Put the question inside a conversation, with an instruction to explain the steps and mark the final answer.\par\smallskip
 \textbf{Question alone:} Give only the original question.
 \end{block}
-We trained once in each format, starting from the same original model.
+We trained once with chat-style input and twice with questions alone. Each run started from the original model.
 \aside{Of the 500 questions, 64 were used to monitor progress. We did not choose the best checkpoint. Earlier pretraining exposure is unknown.}
 \end{frame}
 
@@ -80,23 +80,22 @@ We trained once in each format, starting from the same original model.
 \frametitle{The input format changes the size of the gain.}
 \textbf{Correct answers out of the same 500 MATH500 questions.}
 \begin{center}
-\renewcommand{\arraystretch}{1.45}
-\begin{tabular}{lrrr}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lrr}
 \toprule
-How we ask & \shortstack{Starting\\model} & \shortstack{Trained with\\chat style} & \shortstack{Trained with\\questions alone} \\
+Model tested & \shortstack{Chat-style\\input} & \shortstack{Question\\alone} \\
 \midrule
-Chat style & 154 & 308 & 168 \\
-Question alone & 305 & 317 & 314 \\
+Starting model & 154 & 305 \\
+Trained with chat style & 308 & 317 \\
+Trained with questions alone & 168 & 314 \\
+Repeated question-only training & \RepeatChatScore & 306 \\
 \bottomrule
 \end{tabular}
 \end{center}
 \medskip
 
-Chat-style training raised the chat score from 154 to 308. But giving only the question already scored 305, without training.
-\medskip
-
-Training on questions alone raised that stronger starting score to 314. This is a much smaller gain, and it needs replication.
-\aside{Each trained column is one run, evaluated at its final checkpoint. The same checker and length limit apply throughout. Scores judge final answers, not every reasoning step.}
+Question-only training scored 314 and 306, versus 305 before training. We have not established a reliable gain over that stronger starting setup.
+\aside{Each trained row is a separate run at its final checkpoint. The same checker and length limit apply throughout. Scores judge final answers, not every reasoning step.}
 \end{frame}
 
 \begin{frame}[t]
@@ -111,7 +110,7 @@ Training on questions alone raised that stronger starting score to 314. This is 
 This came from the earlier 128-question chat-style test. Many gains were recoveries from repetitive responses, not necessarily new mathematical knowledge.
 \medskip
 
-\textbf{Next:} Repeat the training to check whether the small gain holds up. Then use the same careful comparisons when training an RLM's choices.
+\textbf{Next:} Test whether more training improves on the stronger starting setup. Then apply these checks when training an RLM's choices.
 \aside{For future RLM work: compare against a strong starting setup and inspect what changes. Better math answers do not yet establish better problem decomposition.}
 \end{frame}
 
