@@ -12,6 +12,14 @@ evidence. The two question-only training runs improved by nine and one answer;
 we have not established a reliable gain beyond that stronger starting setup.
 It is not a reproduction of the paper's full benchmark scores.
 
+At the 15:25 UTC update, a separate check of the authors' released model scored
+366/500 (73.2%), compared with their reported 74.2%. Those are the authors'
+weights, not a model trained by us. Slide 5 separates that evaluation check
+from the larger fresh-base training run now underway; its final results are
+pending. The active third attempt uses smaller collections after two retained
+failures; its effective budget is 4,080 questions and 255 updates. The slide
+rounds those figures. The short-run table is unchanged.
+
 Build on a laptop with LaTeX installed:
 
 ```sh

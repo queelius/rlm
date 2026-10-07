@@ -28,9 +28,9 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 13:48 UTC.
-  Three Dr.\ GRPO runs evaluated in both formats; five fixed-weight repeats
-  completed. Standard GRPO evaluated in both formats (page 7).}
+\newcommand{\EvidenceCutoff}{Evidence cutoff: 7 October 2026, 15:25 UTC.
+  Short-run results and evaluation repeats retained. Authors' released-model
+  check completed; larger training pending (page 8).}
 \begin{document}
 \pagetitle{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}
   {Learning language-model RL\\from an official reproduction}
@@ -92,6 +92,9 @@ the comparisons, and page 6 examines individual answers from the pilot.
 
 \newpage
 \pagetitle{1 / THE LEARNING STEP}{How eight answers produce an update}
+
+This page describes the completed short runs. The larger recipe introduced
+on page 8 changes the training verifier and data budget.
 
 For each training question, the generator samples eight responses at
 temperature 1. The author reward function extracts the last boxed answer
@@ -452,4 +455,72 @@ on the already-inspected 500 questions, not evidence that GRPO is reliably
 better than Dr.\ GRPO. One training run cannot establish that superiority.
 The main lesson remains prompt sensitivity, a functioning training pipeline,
 and uncertainty about dependable gains from this short training budget [2,4].
+
+\newpage
+\pagetitle{APPENDIX / REFERENCE CHECK \quad | \quad 7 OCTOBER, 15:25 UTC}
+  {Testing the authors' model is not reproducing its training}
+
+We evaluated \textbf{the authors' released model},
+\href{https://huggingface.co/sail/Qwen2.5-Math-1.5B-Oat-Zero/tree/a98e477854071157a450e57dd45fd0684b6fa38a}{Qwen2.5-Math-1.5B-Oat-Zero},
+at pinned revision \code{a98e47785407} (full identifier in the receipt).
+It answered \textbf{366/500 questions correctly (73.2\%)}. The
+\href{https://arxiv.org/html/2503.20783v1\#A2}{paper reports 74.2\%},
+equivalent to 371 correct answers. Our result is five answers lower, or one
+percentage point. We have not established the reason for that difference.
+
+We used the official Qwen-Math prompt, one greedy answer per question, the
+3000-token response limit, and the full final-answer checker. Independent
+regrading matched every saved reward; all 500 ordered prompts and reference
+answers matched the official data. The
+\href{author-reference-receipt.json}{reference receipt} records the output,
+model and source hashes, generation settings, and inspected examples.
+
+This is useful evidence that our evaluation can reach a similar score on the
+published weights. \textbf{We did not train this model.} Our short chat-trained
+model remains at 308/500; the released model's 366 is not our training gain.
+Nor does the checked score validate every reasoning step or prove an exact
+reproduction of the published evaluation. We retain the five-answer difference.
+
+\topic{A larger training experiment is underway, not complete}
+
+The \href{longer-attempt1-failure.json}{first attempt} ran out of GPU memory during its first collection's
+optimization. No collection completed; inner optimizer updates are unconfirmed.
+The \href{longer-attempt2-failure.json}{second attempt} failed during initialization because expandable memory
+segments were incompatible with the generator's memory pool. Both failures
+are retained, not scored as training results. A third fresh-base attempt
+started at 15:24 UTC with smaller collections and the default allocator.
+The authors' source was not patched.
+
+The new run starts from the original Qwen2.5-Math-1.5B base weights, not from
+the authors' released model or one of our trained checkpoints. We selected 4096
+questions with a fixed shuffle from the authors' 8523 MATH level
+3--5 questions, matching the difficulty range named in the released-model
+recipe. Exact whitespace-normalized overlap checks against MATH500 passed;
+paraphrases and pretraining exposure remain unassessed.
+
+The run uses the authors' \code{math\_verify} training verifier and chat prompt.
+Each collection now contains 16 questions and eight answers each: 128 responses
+and one optimizer update. Updated weights return to the generator after every
+update, as in the short runs. Two overlong prompts are excluded, leaving 4094
+eligible questions; the incomplete final batch is dropped. The effective budget
+is \textbf{255 collections and updates, 4080 questions, and 32,640 responses}.
+The earlier 128-question collection plan (3968 questions and 248 updates) was
+abandoned after the failures. These counts are budgets, not completed results.
+
+Training is capped at ten hours. The prescribed final checkpoint,
+\code{step\_00256}, will be evaluated on all 500 questions in both input
+formats with the same checker and response limit. \textbf{Both results are pending.}
+
+\topic{What this comparison can decide}
+
+The question is whether a larger, more closely aligned reference recipe
+produces useful gains beyond our short runs and the strong untrained
+question-only baseline. It changes data coverage and difficulty, the training
+verifier, and duration together, while retaining the short runs' collection
+size to fit memory. A future gain could not be
+attributed to extra training alone. MATH500 is now an inspected development
+benchmark; repeated training and another benchmark are needed before broader
+confirmation claims. The \href{longer-training-plan.md}{accepted protocol}
+records the current endpoint; the \href{longer-loader-receipt.json}{original loader check}
+records the two excluded prompts. Completion still requires checking actual run counters.
 \end{document}

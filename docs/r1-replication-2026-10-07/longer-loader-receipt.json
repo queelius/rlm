@@ -1,0 +1,31 @@
+{
+  "checked_utc": "2026-10-07T15:14:00Z",
+  "purpose": "Correct fixed endpoint accounting before inspecting any post-training evaluation",
+  "selected_rows": 4096,
+  "prompt_token_limit": 1024,
+  "template": "qwen_math",
+  "tokenizer_revision": "4a83ca6e4526a4f2da3aa259ec36c259f66b2ab2",
+  "excluded_by_native_prompt_length_filter": [
+    {"selection_index": 1371, "source_row_index": 1564, "tokens": 1320},
+    {"selection_index": 3972, "source_row_index": 2905, "tokens": 1055}
+  ],
+  "eligible_rows": 4094,
+  "native_loader_drop_last": true,
+  "questions_per_collection": 128,
+  "full_collections_in_one_epoch": 31,
+  "effective_training_questions": 3968,
+  "eligible_rows_in_dropped_partial_batch": 126,
+  "responses_per_question": 8,
+  "expected_total_responses": 31744,
+  "optimizer_updates_per_full_collection": 8,
+  "expected_final_optimizer_updates": 248,
+  "expected_final_native_step": "step_00032",
+  "status": "Prediction from exact dataset/tokenizer and native loader; verify actual counters and final save on completion",
+  "native_source_sha256": {
+    "oat/utils/data.py": "ed0e4fd6bd45c42b68a9c18c6aa4f5694cfcb751c02a0c9044efba948b191499",
+    "oat/utils/deepspeed.py": "3a42fdc385165c1936b00f03352f812d80177cf86781f8f6912e9f76356cb706",
+    "oat/learners/base.py": "bc2ec4ce83f407f42094043f13a0d49ca9e8b6e6928b31053f93775967b5034e",
+    "oat/algorithms/ppo.py": "e43237dd1f015c54f0a3b417ad94d7d042dd56e23f706116d84033245ce3d132"
+  },
+  "decision": "Keep live training unchanged. Preserve the original sequence, whose 32-collection guard will reject this valid shorter endpoint. Use a separate successor only after full owner exit and actual endpoint validation to perform both fixed final evaluations. No outcome-based checkpoint selection."
+}

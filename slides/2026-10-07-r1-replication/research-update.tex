@@ -62,7 +62,7 @@ The checker judges the final answer. We do not supply worked solutions for the m
 
 \begin{frame}[t]
 \frametitle{We train on math, then test on different questions.}
-Each training run used \textbf{Qwen2.5-Math-1.5B}, the same 512 math questions, eight attempts per question, and 32 weight updates on one A100 GPU.
+Our short runs used \textbf{Qwen2.5-Math-1.5B}, the same 512 math questions, eight attempts per question, and 32 weight updates on one A100 GPU.
 \medskip
 
 We tested the starting and trained models on the same \textbf{500 MATH500 questions}, all excluded from weight training.
@@ -72,7 +72,7 @@ We tested the starting and trained models on the same \textbf{500 MATH500 questi
 \textbf{Chat style:} Put the question inside a conversation, with an instruction to explain the steps and mark the final answer.\par\smallskip
 \textbf{Question alone:} Give only the original question.
 \end{block}
-We trained once with chat-style input and twice with questions alone. Each run started from the original model.
+These three runs started from the original model: one used chat style and two used questions alone.
 \aside{Of the 500 questions, 64 were used to monitor progress. We did not choose the best checkpoint. Earlier pretraining exposure is unknown.}
 \end{frame}
 
@@ -107,11 +107,11 @@ Question-only training scored 314 and 306, versus 305 before training. We have n
 \textbf{After:} It explained the division and answered $0.15$.
 \end{block}
 \medskip
-This came from the earlier 128-question chat-style test. Many gains were recoveries from repetitive responses, not necessarily new mathematical knowledge.
+\textbf{Separate reference check:} The authors' released model scored 366/500 (73.2\%), versus 74.2\% reported. We evaluated their model; we did not train it.
 \medskip
 
-\textbf{Next:} Test whether more training improves on the stronger starting setup. Then apply these checks when training an RLM's choices.
-\aside{For future RLM work: compare against a strong starting setup and inspect what changes. Better math answers do not yet establish better problem decomposition.}
+\textbf{Now running:} A larger recipe from the original model: roughly 4,000 questions and about 250 planned updates. Results are pending.
+\aside{The example is from our earlier 128-question chat-style test. Testing released weights does not reproduce their training or establish better RLM decomposition.}
 \end{frame}
 
 \end{document}

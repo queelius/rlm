@@ -1,5 +1,18 @@
 # Completed short LLM RL reproduction
 
+**New phase, 7 October at 15:08 UTC:** The user requested continued work toward
+reproducing the paper's training result. A fresh-base run of roughly 4,000
+questions and 250 weight updates is now active, with fixed final evaluations
+planned after completion. Attempt 1 failed with GPU memory exhaustion; the
+allocator retry failed at model initialization. Current attempt 3 began at
+15:24 using the smaller collection size of our successful short runs. Its
+loader-derived budget is 4,080 questions and 255 updates; its own sequence
+handles both final tests. Read the
+[longer-run plan](longer-training-plan.md) and current
+external `SESSION_CHECKPOINT.md` before touching GPU processes. The completion
+notice below describes only the earlier presentation batch. Actual allocation
+ends 9 October at 20:39 UTC; the 14:00 window below is historical.
+
 Status: 7 October 2026, 13:51 UTC. The requested five-slide presentation was
 published before 13:00 UTC. The optional experiment batch is complete before
 14:00 UTC. No training or evaluation job remains active from this batch.

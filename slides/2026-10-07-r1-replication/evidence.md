@@ -1,6 +1,60 @@
 # Evidence and result update
 
-Cutoff: 7 October 2026, 12:35 UTC; all three training runs evaluated in both formats.
+Cutoff: 7 October 2026, 15:25 UTC; authors' released-model check completed,
+third larger-training attempt underway. The short-run comparisons remain unchanged.
+
+## Authors' released model: an evaluation check, not our training result
+
+The [independent reference receipt](../../docs/r1-replication-2026-10-07/author-reference-receipt.json)
+records 366/500 (73.2%) for `sail/Qwen2.5-Math-1.5B-Oat-Zero`, revision
+`a98e477854071157a450e57dd45fd0684b6fa38a`. All 500 ordered prompts and references
+match the official evaluation data and Qwen-Math template; all saved rewards
+match independent regrading with the official full checker. Generation used
+one greedy answer per question and the same 3,000-token limit. The saved-answer
+SHA256 is `68ee233dd7b5044030018ad03a8ffed057d8198ba4b2741352bcf731998926d5`.
+
+The paper reports 74.2% for this released model, equivalent to 371/500. Our
+reference evaluation is five answers lower; that discrepancy is unexplained.
+This checks whether our evaluator reaches a similar score on the authors'
+weights. It does not reproduce their training or turn our own 308/500 chat
+result into 366/500. The full checker grades final answers, not each reasoning
+step. No generated code was executed.
+
+The [first larger attempt](../../docs/r1-replication-2026-10-07/longer-attempt1-failure.json)
+ran out of GPU memory during the first collection's
+optimization. No collection completed; inner optimizer-update count is unknown.
+The [second attempt](../../docs/r1-replication-2026-10-07/longer-attempt2-failure.json)
+failed during initialization with "Expandable segments are
+not compatible with memory pool" in vLLM. Both failures are retained, not
+training results; the authors' source was not patched.
+
+The third attempt started at 15:24:43 UTC from the original base model,
+using the default allocator and 16-question collections. It retains the 4,096
+selected MATH level 3–5 questions, `math_verify` training verifier, chat prompt,
+and learning rate. Eight answers per question give 128 responses and one
+optimizer update per collection; weights transfer after each update.
+Filtering two overlong prompts leaves 4,094 eligible questions. The incomplete
+final batch is dropped, giving 255 planned collections and updates, 4,080
+questions and 32,640 responses, with prescribed final checkpoint `step_00256`.
+The former 128-question collection plan (3,968 questions and 248 updates after
+filtering) was abandoned after the failures, not completed.
+
+This is a loader-derived budget, not completed training evidence. Training has
+a ten-hour cap and the full sequence an eleven-hour cap. Checkpoint saving and
+progress checks occur every 32 updates. Both final MATH500 input formats will
+be evaluated; results remain pending. Data, verifier, and duration change
+together, while the smaller collection size matches the short runs. This is
+not an isolated test of training length. The
+[original loader receipt](../../docs/r1-replication-2026-10-07/longer-loader-receipt.json)
+records the two excluded prompts and the abandoned larger-batch accounting.
+Actual completion must still be checked. The current
+[accepted protocol](../../docs/r1-replication-2026-10-07/longer-training-plan.md)
+also points to the external plan at
+`/project/alex_phd/runs/r1-zero-replication-20261007/LARGER4096_PLAN.md`.
+
+The learning-guide appendix explains the distinction. The five-slide deck
+retains the completed short-run table and identifies the reference model
+separately on slide 5.
 
 ## Evaluation repeatability update, 12:53 UTC
 
@@ -10,7 +64,8 @@ first question-only training 314, repeated question-only training 306,
 base/chat-style 154, and chat-style training 308. These are repeated tests of
 unchanged weights, not additional training runs. Earlier variation under
 different evaluation batch composition remains a limitation. No slide score
-or conclusion changes, so the audience PDF retains its 12:35 result cutoff.
+or conclusion changed at that point, so the audience PDF then retained its
+12:35 result cutoff. The later reference check is now identified separately.
 
 ## Later objective comparison, 13:48 UTC
 
@@ -26,8 +81,9 @@ see the [chat receipt](../../docs/r1-replication-2026-10-07/grpo-chat-scoring-re
 This is a modest single-run gain,
 not evidence that GRPO is better than the two Dr. GRPO runs (314 and306).
 The switch changes two objective components together, and randomness is not
-fully matched. The five-slide deck retains its12:35 cutoff and core prompt-
-comparison story; this supporting result does not overturn that lesson.
+fully matched. The five-slide deck retained its 12:35 cutoff and core prompt-
+comparison story at that point; this supporting result did not overturn that
+lesson. The later reference check is now identified separately.
 
 ## Fresh training repeat: the smaller gain is not reliable yet
 

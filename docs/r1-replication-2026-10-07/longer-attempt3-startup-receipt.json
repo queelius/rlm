@@ -1,0 +1,64 @@
+{
+  "checked_utc": "2026-10-07T15:31:00Z",
+  "kind": "early_training_check_not_final_benchmark_result",
+  "run": "/home/atowell/research-runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt3/debug_1007T15:25:03",
+  "owner_exec_session": 19169,
+  "source_unchanged": true,
+  "baseline64": {
+    "correct": 20,
+    "questions": 64,
+    "sha256": "223106f41ad7eb9e99b4cae0cc8547b5c54512219139c3c0ea3a2bec70004511",
+    "all_source_questions_references_and_templates_match": true,
+    "all_rewards_match_full_regrading": true
+  },
+  "checked_buffers": [
+    {
+      "file": "buffer_step00001.pkl",
+      "sha256": "552906cd913cd4598c05676a659e87fb8f70ca2f1dc91675ea5be2745190aabf",
+      "questions": 16,
+      "responses": 128,
+      "rewarded": 34,
+      "mixed_success_groups": 11,
+      "all_wrong_groups": 4,
+      "all_correct_groups": 1,
+      "at_3000_token_cap": 8,
+      "empty": 0,
+      "mean_response_tokens": 996.6171875
+    },
+    {
+      "file": "buffer_step00002.pkl",
+      "sha256": "663cd32953e1646b37e866d1421fa269da55ce1fdf88d0da69ec5c4d92b2c43f",
+      "questions": 16,
+      "responses": 128,
+      "rewarded": 37,
+      "mixed_success_groups": 12,
+      "all_wrong_groups": 4,
+      "all_correct_groups": 0,
+      "at_3000_token_cap": 17,
+      "empty": 0,
+      "mean_response_tokens": 1142.625
+    }
+  ],
+  "buffer_checks": {
+    "all_prompts_match_canonical_training_questions_with_official_template": true,
+    "every_group_has_eight_responses": true,
+    "token_logprob_reward_lengths_aligned": true,
+    "all_logprobs_and_rewards_finite": true,
+    "full_regrading_with_author_cap_zeroing_rule_mismatches": 0,
+    "responses_regraded": 256
+  },
+  "native_learning_snapshot": {
+    "completed_learning_calls": 3,
+    "latest_printed_optimizer_counter": 2,
+    "printed_policy_gradient_norms": [0.024728117510676384, 0.02675844356417656],
+    "traceback_or_out_of_memory_error_count": 0,
+    "limitation": "Buffered logging can lag completion. These are early counters, not a completed run or saved-final-weight verification."
+  },
+  "logging_caveats": {
+    "gradient_update_elapse_nan": "The author PPO learner only fills this timing field when its collection-level global_step is divisible by grad_acc_step (128). It is initialized as NaN and remains unset at these early updates. Finite nonzero policy-gradient norms and separate completed-learn counters were inspected instead; the timer is not a gradient statistic.",
+    "printed_max_steps_31": "The base learner derives scheduler length from question count divided by response train-batch size. This run uses a constant learning-rate scheduler; that printed count is not its training termination condition. The actual loader has 255 collections and completion will be checked explicitly."
+  },
+  "interpretation": "The smaller collection has completed learning calls. Most questions in the two inspected batches have both correct and incorrect responses, so absent reward variation does not explain these early updates. Continue the fixed-budget run; no evidence of a final benchmark gain yet.",
+  "analysis_corrections": "Two initial CPU audit invocations used incorrect monitoring-dataset column names and stopped with KeyError. The source column was inspected as problem; the corrected baseline audit then passed. This was an audit-script error, not a training failure or a changed dataset.",
+  "next": "Retain the fixed 255-update endpoint and both automatic final500 evaluations. Review native checkpoints and model behavior as they arrive without selecting the most favorable checkpoint."
+}

@@ -1,5 +1,45 @@
 # Presentation verification
 
+## Smaller-collection retry, evidence cutoff 7 October, 15:25 UTC
+
+- Current guide, notes, speaker guide, and evidence distinguish two retained
+  failures from the third fresh-base attempt. The first exhausted memory during
+  optimization; completed inner updates are unknown. The second failed during
+  initialization because expandable segments were incompatible with vLLM's pool.
+- Attempt 3's budget is 4,080 questions, 32,640 responses, and 255 updates in
+  16-question collections. The earlier 3,968/248 budget is explicitly historical.
+  Both final scores remain pending. The slide's rounded budget and all existing
+  results remain accurate; its cutoff and the notes were synchronized.
+- Fresh Tectonic builds produced five slides and eight guide pages without
+  warnings. PDF bounds and five matching notes pass; note lengths are
+  7, 7, 7, 6, and 9 lines. Final slide 5 and guide page 8 were visually checked
+  without clipping or overlap. No GPU action or live source edit was performed.
+
+## Authors' released-model reference check, 7 October, 15:15 UTC
+
+- The independent author-reference receipt regrades all 500 saved answers:
+  366 correct, with every ordered prompt and reference matching the official
+  source. Slide 5 labels these as the authors' released weights, not our
+  training result. The five-answer difference from their reported score is
+  retained in the guide and evidence.
+- The deck remains five slides and preserves the completed short-run table.
+  Its 15:14 UTC cutoff includes the reference result and loader correction;
+  speaker guide, notes, README, and evidence agree.
+  The larger run is explicitly pending; the slide rounds its effective budget
+  to roughly 4,000 questions and about 250 planned updates. The guide records
+  the loader-derived 3,968 questions and 248 updates without claiming completion.
+- Fresh Tectonic builds of the deck and eight-page learning guide completed
+  with no engine warnings or overfull/underfull boxes. An initial guide overflow
+  from the full revision string was fixed by displaying the short identifier
+  while retaining the pinned link and full receipt.
+- Five matching presenter notes pass the 14-line check; actual line counts are
+  7, 7, 7, 6, and 9. All PDF text spans are within page bounds in both artifacts.
+  Revised slides 3 and 5 and guide pages 1, 2, and 8 were visually inspected;
+  no clipping or overlap was found. No live pdfpc GUI was run.
+- CPU-only documentation work changed no live owner, training source, GPU
+  process, or experiment output. The result does not reproduce the authors'
+  training or establish a reliable gain from our pending larger recipe.
+
 ## Fresh training repeat, 7 October, 12:37 UTC
 
 - Root independently regraded all 1,000 new final answers and matched their

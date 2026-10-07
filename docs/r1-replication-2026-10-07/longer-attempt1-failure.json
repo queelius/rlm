@@ -1,0 +1,30 @@
+{
+  "status": "failed_without_final_checkpoint_or_completed_collection",
+  "owner_exec": 86017,
+  "owner_exit_code_after_authenticated_shutdown": 1,
+  "started_utc": "2026-10-07T15:08:40Z",
+  "failure_detected_utc": "2026-10-07T15:19:09Z",
+  "shutdown": "TERM to authenticated timeout1819704; original session1819695 and GPU processes quiescent before retry",
+  "log": "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42.log",
+  "log_sha256": "ff41b30669e191a31e23f5f546d866f5814dc1ad2715910e80e739fcca478d24",
+  "error": "CUDA OOM at deepspeed/runtime/zero/stage_1_and_2.py:1903 FP32 gradient allocation during first collection learning pass",
+  "completed_collections": 0,
+  "completed_inner_optimizer_updates": null,
+  "inner_update_limit": "Not logged until collection completion; do not infer zero inner updates",
+  "scientific_endpoint": null,
+  "oom_memory_gib": {"attempted_allocation": 5.75, "gpu_free": 2.70, "pytorch_allocated": 29.52, "pytorch_reserved_unallocated": 5.92},
+  "preserved_observations": {
+    "baseline_full_correct_of64": 20,
+    "buffer_sha256": "05d184d331dd3383b71f64e4bb1a37d103cce1e2ca8e1ea7d04dadcb30bb20d9",
+    "responses": 1024, "rewarded": 286, "zero_reward": 738,
+    "mixed_success_questions_of128": 94, "capped_and_zeroed": 107,
+    "empty": 0, "mean_tokens": 1057.482421875,
+    "all_source_group_alignment_and_finite_logprob_reward_checks": true,
+    "independently_regraded_training_sample": 16
+  },
+  "decision": "One fresh-base retry with identical scientific settings and PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True. Fragmentation is a hypothesis. If unsuccessful, reduce collection size rather than repeat identical retries.",
+  "retry_started_utc": "2026-10-07T15:20:47Z",
+  "retry_owner_exec": 1872,
+  "retry_endpoint": "31 collections,248 updates,3968 questions,finalstep32,then both500 tests",
+  "cost": "About11minutes on failed attempt, including useful sampling and unsuccessful optimization. No completed trained-model result. Detection to relaunch about98seconds."
+}

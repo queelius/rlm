@@ -1,0 +1,165 @@
+{
+  "audited_utc": "2026-10-07T15:10:04.946201+00:00",
+  "kind": "published_author_checkpoint_reference_evaluation_not_local_training",
+  "audit_environment": {
+    "python": "3.10.19",
+    "python_executable": "/project/alex_phd/envs/r1-zero-dfca49d/bin/python",
+    "math-verify": "0.9.0",
+    "datasets": "2.14.4",
+    "sympy": "1.13.1",
+    "vllm": "0.8.4",
+    "oat-llm": "0.1.3.post1",
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "2"
+  },
+  "source_output": "/project/alex_phd/runs/r1-zero-replication-20261007/eval500-author-oat-zero-reference/model_eval_out__home_atowell_research-cache_store_models_sail--Qwen2.5-Math-1.5B-Oat-Zero--a98e477854071157a450e57dd45fd0684b6fa38a1791385582_template_qwen_math_temp0_topp1_n1.json",
+  "source_output_sha256": "68ee233dd7b5044030018ad03a8ffed057d8198ba4b2741352bcf731998926d5",
+  "model": {
+    "repo_id": "sail/Qwen2.5-Math-1.5B-Oat-Zero",
+    "revision": "a98e477854071157a450e57dd45fd0684b6fa38a",
+    "license": "apache-2.0",
+    "weights_sha256_from_verified_acquisition": "52c28c6bfbece78cb3e32267a338f89feb29eb8fa36a54f13b8c30c5aefa609c",
+    "acquisition_manifest": "/home/atowell/research-cache/acquisitions/oat-zero-1p5b-20261007/manifest.json"
+  },
+  "author_code": {
+    "commit": "dfca49dd460ee7cc8e4a5a162c876a7fd6993b87",
+    "evaluator_sha256": "ea785b1d9ae6bfbc3b7c4a586e7d90389d61c0e42ce3c91fdd68a7648663fa5f",
+    "grader_sha256": "eae505bc232c5c2f8495e2bb3b5ab80d4e475502f501864c378d09ce5dab72ee"
+  },
+  "source_dataset": {
+    "path": "/project/alex_phd/research-cache/repos/understand-r1-zero/datasets/evaluation_suite/math",
+    "ordered_rows": 500,
+    "arrow_sha256": "d383d13c807e2904d0db6f8d98496a0574c0a1d51f40331b920c849cf226ef5a",
+    "state_sha256": "588bd2e529028b1e6ba0727e341bf989ef249a73c5cbeffbbce1106e71144cf9"
+  },
+  "checks": {
+    "all_500_ordered_prompts_match_official_qwen_math_template": true,
+    "all_500_references_match_source": true,
+    "one_answer_per_math_row": true,
+    "all_scalar_saved_rewards_match_full_regrading": true,
+    "evaluator_grader_and_source_arrow_unchanged_from_pinned_author_commit": true,
+    "unformatted_and_at_cap_indices_identical": [110, 168, 302, 392, 400, 490],
+    "prompt_mismatch_indices": [],
+    "reference_mismatch_indices": [],
+    "reward_mismatch_indices": [],
+    "structure_mismatch_indices": [],
+    "grading_errors": []
+  },
+  "grading": {
+    "function": "understand_r1_zero.math_grader.boxed_reward_fn",
+    "fast": false,
+    "answers_regraded": 500,
+    "native_correct": 366,
+    "regraded_correct": 366,
+    "accuracy_percent": 73.2,
+    "formatted": 494,
+    "unformatted": 6,
+    "empty_responses": 0
+  },
+  "lengths": {
+    "unit": "saved output token IDs",
+    "response_cap": 3000,
+    "at_cap": 6,
+    "above_cap": 0,
+    "min": 154,
+    "median": 493,
+    "mean": 628.076,
+    "max": 3000,
+    "total": 314038,
+    "capped_correct": 0
+  },
+  "paper_comparison": {
+    "source_url": "https://arxiv.org/html/2503.20783v1#A2",
+    "table": 4,
+    "reported_percent": 74.2,
+    "reported_correct_equivalent": 371,
+    "local_reference_minus_paper_correct": -5,
+    "local_reference_minus_paper_percentage_points": -1
+  },
+  "local_training_comparison": {
+    "our_chat_trained_correct": 308,
+    "our_answer_sha256": "a23d9f868b02bea43ee719041f06eb4f12e3ff1851aa5bb8052ca49650869c3b",
+    "our_grader_evidence": "full500-scoring-receipt.json",
+    "author_minus_our_correct": 58,
+    "author_correct_our_wrong": 83,
+    "author_wrong_our_correct": 25,
+    "paired_prompts_and_references_match": true
+  },
+  "inspected_examples": [
+    {
+      "source_row_index_zero_based": 0,
+      "question": "Convert the point $(0,3)$ in rectangular coordinates to polar coordinates.  Enter your answer in the form $(r,\\theta),$ where $r > 0$ and $0 \\le \\theta < 2 \\pi.$",
+      "reference_answer": "\\left( 3, \\frac{\\pi}{2} \\right)",
+      "parsed_answer": "\\left(3, \\frac{\\pi}{2}\\right)",
+      "score": 1,
+      "tokens": 460,
+      "response_end": "heta\n# Since the point (0,3) lies on the positive y-axis, theta is pi/2\ntheta = math.pi / 2\n\nprint(((r, theta)))\n```\n```output\n(3.0, 1.5707963267948966)\n```\nThe polar coordinates for the point \\((0,3)\\) are \\((3, \\frac{\\pi}{2})\\).\n\nSo, the final answer is:\n\\[\n\\boxed{\\left(3, \\frac{\\pi}{2}\\right)}\n\\]"
+    },
+    {
+      "source_row_index_zero_based": 9,
+      "question": "The expression $2\\cdot 3 \\cdot 4\\cdot 5+1$ is equal to 121, since multiplication is carried out before addition. However, we can obtain values other than 121 for this expression if we are allowed to change it by inserting parentheses. For example, we can obtain 144 by writing \\[\n(2\\cdot (3\\cdot 4)) \\cdot (5+1) = 144.\n\\]In total, how many values can be obtained from the expression $2\\cdot 3\\cdot 4 \\cdot 5 + 1$ by inserting parentheses? (Note that rearranging terms is not allowed, only inserting parentheses).",
+      "reference_answer": "4",
+      "parsed_answer": "2",
+      "score": 0,
+      "tokens": 524,
+      "response_end": "\\cdot (3 \\cdot 4 \\cdot 5)) + 1 = (2 \\cdot 60) + 1 = 120 + 1 = 121\\)\n\nFrom the above evaluations, we can see that the only distinct values obtained are 61 and 144. Therefore, the total number of distinct values that can be obtained by inserting parentheses is 2.\n\nThe final answer is:\n\n\\[\n\\boxed{2}\n\\]"
+    },
+    {
+      "source_row_index_zero_based": 110,
+      "question": "A strictly increasing sequence of positive integers $a_1$, $a_2$, $a_3$, $\\dots$ has the property that for every positive integer $k$, the subsequence $a_{2k-1}$, $a_{2k}$, $a_{2k+1}$ is geometric and the subsequence $a_{2k}$, $a_{2k+1}$, $a_{2k+2}$ is arithmetic. Suppose that $a_{13} = 2016$. Find $a_1$.",
+      "reference_answer": "504",
+      "parsed_answer": null,
+      "score": 0,
+      "tokens": 3000,
+      "response_end": "}{4096} = \\frac{63}{128}\\), which is not an integer.\n\nThe correct value for \\(r\\) must be such that \\(a_1\\) is an integer. Let's assume \\(r = 2\\) and check the value of \\(a_{13}\\) one more time:\n- \\(a_{13} = a_1 \\cdot 2^{12} = 4096a_1\\)\n- Given \\(a_{13} = 2016\\), we have \\(4096a_1 = 2016 \\Rightarrow"
+    },
+    {
+      "source_row_index_zero_based": 7,
+      "question": "The set of points $(x,y,z)$ that satisfy\n\\[2x = 3y = -z\\]is a line.\n\nThe set of points $(x,y,z)$ that satisfy\n\\[6x = -y = -4z\\]is another line.\n\nFind the angle between these lines, in degrees.",
+      "reference_answer": "90^\\circ",
+      "parsed_answer": "90",
+      "score": 1,
+      "tokens": 562,
+      "response_end": "\\(\\langle -\\frac{3}{2}, -6, -1 \\rangle\\) is:\n\\[\n(-2) \\left(-\\frac{3}{2}\\right) + \\left(\\frac{2}{3}\\right)(-6) + (-1)(-1) = 3 - 4 + 1 = 0.\n\\]\nSince the dot product is 0, the vectors are orthogonal, and the angle between them is \\(90^\\circ\\).\n\nSo, the angle between the lines is \\(\\boxed{90}\\) degrees."
+    }
+  ],
+  "limitations": [
+    "This evaluates the authors released model, not our trained checkpoint; it does not demonstrate reproduction of the published training gain.",
+    "Five-answer difference from the paper remains unexplained; no alternative prompt, batch, or checkpoint was selected to improve the score.",
+    "All 500 source questions match in order, but software/hardware/decoding differences can affect outputs; this is one evaluation.",
+    "Saved files lack stop reasons; at_cap counts mean exactly 3000 output token IDs, not independently verified termination causes.",
+    "No generated code was executed; final-answer grading does not verify each reasoning step."
+  ],
+  "generation_settings": {
+    "prompt_template": "qwen_math",
+    "temperature": 0,
+    "top_p": 1,
+    "n_samples": 1,
+    "max_tokens": 3000,
+    "max_model_len": 4096,
+    "dtype": "bfloat16",
+    "enable_prefix_caching": true,
+    "provenance": "Official evaluator defaults and saved file name; every saved prompt exactly matches official template"
+  },
+  "manual_example_inspection": {
+    "selection": "Four illustrative saved rows, not a representative sample or a causal analysis",
+    "observations": [
+      {
+        "source_row_index_zero_based": 0,
+        "observation": "Correct polar coordinates (3, pi/2). Response also includes a Python/output block; it was generated text, not executed."
+      },
+      {
+        "source_row_index_zero_based": 9,
+        "observation": "Incorrect boxed 2 versus reference 4. The response incorrectly writes 2*3*4*5=60, and misses obtainable values 122 and 126; valid distinct values are 121, 122, 126, 144."
+      },
+      {
+        "source_row_index_zero_based": 110,
+        "observation": "3000-token response repeats incompatible ratio assumptions and ends mid-equation without a parseable final answer."
+      },
+      {
+        "source_row_index_zero_based": 7,
+        "observation": "Correct boxed 90 but direction vectors disagree with the response's own parameterizations. Actual directions (1,2/3,-2) and (1,-6,-3/2) do have zero dot product; its incorrect directions also happen to give zero. Answer correctness is not reasoning correctness."
+      }
+    ]
+  }
+}

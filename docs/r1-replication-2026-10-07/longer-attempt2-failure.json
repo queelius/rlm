@@ -1,0 +1,31 @@
+{
+  "status": "failed_model_initialization_no_rollout_or_optimizer_update",
+  "started_utc": "2026-10-07T15:20:47Z",
+  "detected_utc": "2026-10-07T15:23:40Z",
+  "owner_exec": 1872,
+  "owner_exit_code_after_authenticated_shutdown": 1,
+  "error": "Expandable segments are not compatible with memory pool; repeated actor model-load failure, then RuntimeError: vllm cannot load the model",
+  "root_cause_boundary": "PyTorch expandable allocator conflicts with vLLM sleep-mode memory pool in this installed stack",
+  "log": "/project/alex_phd/runs/r1-zero-replication-20261007/larger4096-chat-drgrpo42-attempt2.log",
+  "log_sha256": "c617184b46d97a561c49324e8a66581dcc5bc477587bff7cba30dc1f8f9472a9",
+  "completed_training_result": null,
+  "shutdown": "TERM to authenticated timeout1828961; entire session1828952 and GPU processes checked quiescent before next owner",
+  "cost": "About4minutes failed initialization; no scientific returns. Allocator fragmentation hypothesis was not tested by successful optimization.",
+  "next_attempt": {
+    "started_utc": "2026-10-07T15:24:43Z",
+    "owner_exec": 19169,
+    "allocator": "default; PYTORCH_CUDA_ALLOC_CONF unset",
+    "collection_questions": 16,
+    "collection_responses_and_buffer_size": 128,
+    "selected_questions": 4096,
+    "native_overlength_excluded": 2,
+    "incomplete_batch_dropped": 14,
+    "effective_questions": 4080,
+    "total_responses": 32640,
+    "collections_and_optimizer_updates": 255,
+    "fixed_final_checkpoint": "step_00256",
+    "sampling_and_learning_rule": "unchanged Dr.GRPO, full math_verify,qwen_math,8samples,temperature1,LR1e-6,3000response tokens",
+    "scope_of_runtime_change": "Uses the smaller collection size from prior successful short runs. Weight synchronization now after each update, so not a purely memory implementation change.",
+    "follow_ons": "Same owner validates natural completion and performs final500chat then raw; no best checkpoint selection"
+  }
+}

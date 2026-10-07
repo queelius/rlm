@@ -1,5 +1,27 @@
 # A small, direct replication of language-model RL
 
+**Research resumed; current attempt began on 7 October at 15:24 UTC.** A longer fresh-base training run
+is active: roughly 4,000 questions and 250 weight updates, followed by both
+final MATH500 evaluations. The native loader reduces the originally intended
+4,096/256 budget to 4,080 questions and 255 updates with the current small collections; see the
+[accepted plan and accounting correction](longer-training-plan.md).
+The earlier presentation batch is complete, but the research has not stopped.
+The first larger attempt hit GPU memory exhaustion before completing a
+collection; a memory-allocation retry then failed during model initialization.
+The current attempt uses the smaller collection size that worked in our short runs.
+No larger-run score is available yet. The [failure record](longer-attempt1-failure.json)
+is retained alongside the successful short runs.
+The authors' released model scored 73.2% in our evaluator, close to their
+reported 74.2%. That is an evaluation check of their weights, not our own
+training improvement; see the [reference-model receipt](author-reference-receipt.json).
+
+**Early training check at 15:31 UTC:** The current run has completed learning
+updates with finite, nonzero reported gradients. Of the first 32 questions,
+23 had a mixture of correct and incorrect sampled answers. All 256 checked
+rewards agreed with independent rescoring using the same full checker and
+length-limit rule. This supports continuing the run, not a claim of improved
+test performance; see the [startup check](longer-attempt3-startup-receipt.json).
+
 Read the [five-slide PDF](../../slides/2026-10-07-r1-replication/research-update.pdf)
 and [slide-by-slide guide](../../slides/2026-10-07-r1-replication/speaker-guide.md).
 The [learning guide](learning-guide.pdf) explains the learning step,
@@ -56,9 +78,10 @@ unchanged weights reproduced all 500 saved answers byte-for-byte, including
 [repeatability receipt](grpo-repeatability-receipt.json). The bounded batch is
 complete; the [handoff](HANDOFF.md) records what to retain and what to try next.
 
-The five-slide deck retains its 12:35 cutoff and central prompt-format
-comparison. This later small result does not overturn that lesson. It belongs
-in the supporting account, not a claim that we have found the best algorithm.
+The five-slide deck now has a 15:25 cutoff. It retains the central prompt-format
+comparison and adds the authors' released-model check and pending longer run.
+The small GRPO comparison remains in the supporting account, not a claim that
+we have found the best algorithm.
 
 Dr. GRPO comparison, verified on 7 October at 12:35 UTC:
 

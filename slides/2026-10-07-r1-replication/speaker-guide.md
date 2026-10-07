@@ -1,6 +1,6 @@
 # Learning from correct answers: a small reproduction
 
-Evidence cutoff: 7 October 2026, 12:35 UTC. Aim for about five minutes.
+Evidence cutoff: 7 October 2026, 15:25 UTC. Aim for about five minutes.
 The main lesson is about the starting prompt and the format used in training.
 Chat-style training raised scores from 154 to 308 out of 500 with chat input,
 but from 305 to 317 with the question alone. A second run trained on questions
@@ -9,7 +9,10 @@ A fresh repeat of question-only training scored 306, against the same starting
 score of 305. We have verified the learning pipeline and a strong input-format
 effect. We have not established a reliable improvement beyond the stronger
 starting setup. The repeated question-only run's near-zero change is an important result, not
-one to hide behind the first run's better score.
+one to hide behind the first run's better score. A separate evaluation of the
+authors' released model now scores 366/500 (73.2%), close to their reported
+74.2%. That checks our evaluation on their weights; it is not our training
+result. A larger training recipe is now underway, with final results pending.
 
 ## 1. Why start with this experiment? (45 seconds)
 
@@ -56,7 +59,7 @@ same model, used the same 512 math questions, and completed 32 weight updates.
 One trained on chat-style inputs. Two received only the questions.
 We tested the starting model and each trained model in both formats.”
 
-The run started from Qwen2.5-Math-1.5B, not an instruction-tuned model. Each training
+The short runs started from Qwen2.5-Math-1.5B, not an instruction-tuned model. Each training
 question yields eight sampled answers. Sixteen questions produce 128 attempts
 for one accumulated optimizer update. The main run restarted from the base;
 it did not inherit the pilot's four updates. It took about 50 minutes, including
@@ -149,10 +152,19 @@ established its cause. We did not use this variation to select a model.
 
 ## 5. What actually improved, and what follows? (60 seconds)
 
-Say: “The result is useful, but we need to understand what changed. One question
-asked for three twentieths as a decimal. Before training, the model repeated
-the question until it ran out of space. Afterward, it explained the division
-and answered 0.15. We should not assume that means it learned division from scratch.”
+Say: “The fraction example changed from repetition to a correct 0.15. That need
+not mean learning division from scratch. We also checked the authors' released
+model: 73.2%, versus their reported 74.2%. Those are their trained weights,
+not ours. A larger run from the original model is underway; its results are pending.”
+
+The released checkpoint is `sail/Qwen2.5-Math-1.5B-Oat-Zero`, pinned to revision
+`a98e477854071157a450e57dd45fd0684b6fa38a`. Independent regrading confirms
+366 correct answers out of 500, with all prompts and references matching the
+official Qwen-Math evaluation. We used one greedy answer and the 3,000-token
+limit. The paper's 74.2% corresponds to five more correct answers; we have not
+explained the discrepancy. No alternative checkpoint or favorable output was
+selected. This checks evaluation of a known released model, not reproduction
+of its training. Our short chat-trained result remains 308/500.
 
 This is actual test row 5, with responses summarized rather than quoted.
 The arithmetic is 3/20 = 15/100 = 0.15. Of the 44 newly correct answers, 36 had
@@ -220,11 +232,40 @@ would hold the task, tools, and evaluation budget fixed while comparing trained
 and starting models. This is a proposed next question, not a result of today's
 math experiment.
 
-Before that, a longer run starting from the strong question-only setup could
-test whether our small training budget is the limiting factor. This is a
-proposed comparison, not a promise that more updates will help. Keep the final
-evaluation fixed, report every accepted run, and separate new exploration from
-confirmation on questions not used to make those decisions.
+The larger run's first attempt ran out of GPU memory during its first
+collection's optimization. No collection completed, and the number of inner
+optimizer updates is unconfirmed. The second attempt failed during initialization:
+expandable memory segments were incompatible with vLLM's memory pool. Both
+attempts are retained as failures, not learning results. No authors' source
+was patched.
+
+The third attempt started at 15:24 UTC from the original base weights, using
+the default allocator and the short runs' known-fitting collection size. It
+keeps the 4,096 selected MATH level 3–5 questions, authors' chat prompt,
+`math_verify` training verifier, and learning rate. Each collection now has
+16 questions with eight answers each, followed by one update and a weight
+transfer to the generator. Filtering two overlong prompts leaves 4,094 eligible
+questions; dropping the incomplete final batch gives 255 collections:
+4,080 questions, 32,640 sampled responses, and 255 planned optimizer updates.
+The earlier 3,968-question/248-update plan applied to the abandoned larger
+collections. The slide's roughly 4,000 questions and about 250 updates remain
+accurate. These are budgets, not completed results.
+
+Training has a ten-hour cap and the full sequence an eleven-hour cap. The final
+checkpoint is prescribed as `step_00256`; checkpoint saving and progress checks
+occur every 32 updates. Both final 500-question tests remain pending. We will
+test both input formats using the same final checkpoint, checker, and response
+limit, retaining failures separately.
+
+This is a more closely aligned reference recipe, not an isolated test of
+training duration. Data coverage and difficulty, verifier, and update budget
+change together; the short runs' collection size is retained to fit memory.
+It can show whether this combined recipe
+helps, but not which change caused a gain. MATH500 is now an inspected
+development benchmark; report every accepted run and seek repeated training
+and another benchmark before a broader confirmation claim. The extended
+allocation supports continued research; the earlier 13:00 presentation cutoff
+is not the current stopping condition.
 
 ## Sources and evidence
 
@@ -233,4 +274,7 @@ confirmation on questions not used to make those decisions.
 - [Local protocol](../../docs/r1-replication-2026-10-07/README.md).
 - [Fixed test scoring receipt](../../docs/r1-replication-2026-10-07/fixed128-scoring-receipt.json).
 - [Prompt comparison receipt](../../docs/r1-replication-2026-10-07/prompt-control-scoring-receipt.json).
+- [Authors' released-model check](../../docs/r1-replication-2026-10-07/author-reference-receipt.json).
+- [Current larger training protocol](../../docs/r1-replication-2026-10-07/longer-training-plan.md) and [original prompt-filter check](../../docs/r1-replication-2026-10-07/longer-loader-receipt.json).
+- [Pinned released model](https://huggingface.co/sail/Qwen2.5-Math-1.5B-Oat-Zero/tree/a98e477854071157a450e57dd45fd0684b6fa38a).
 - [Evidence and limits](evidence.md).
