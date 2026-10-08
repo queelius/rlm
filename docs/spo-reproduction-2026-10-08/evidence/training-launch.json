@@ -1,0 +1,92 @@
+{
+  "status": "cpu_prepared_not_launched",
+  "source_repository": "/project/alex_phd/research-cache/repos/SPO",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "cwd": "/project/alex_phd/research-cache/repos/SPO",
+  "source_env_file": "/project/alex_phd/runs/spo-reproduction-20261008/environment.sh",
+  "env_override_after_source": {
+    "PATH": "/project/alex_phd/envs/spo-6c5f947/bin:/usr/local/bin:/usr/bin:/bin",
+    "HF_HOME": "/project/alex_phd/research-cache/spo/hf_home",
+    "HF_HUB_CACHE": "/project/alex_phd/research-cache/spo/models",
+    "HF_DATASETS_CACHE": "/project/alex_phd/research-cache/spo/datasets-cache",
+    "HF_HUB_DISABLE_XET": "1",
+    "XDG_CACHE_HOME": "/project/alex_phd/research-cache/spo/xdg-cache",
+    "TIKTOKEN_CACHE_DIR": "/project/alex_phd/research-cache/spo/tiktoken",
+    "TORCH_EXTENSIONS_DIR": "/project/alex_phd/research-cache/spo/torch-extensions",
+    "TRITON_CACHE_DIR": "/project/alex_phd/research-cache/spo/triton",
+    "WANDB_MODE": "offline",
+    "WANDB_DIR": "/project/alex_phd/runs/spo-reproduction-20261008/wandb",
+    "APP_SEED": "42",
+    "APP_OPENAI_VLLM_API_BASE": "none",
+    "APP_DIRECTORY": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-attempt1",
+    "APP_EXPERIMENT_NAME": "native",
+    "APP_MINIMIZE_STORED_FILES": "False",
+    "OPENAI_API_KEY": "EMPTY",
+    "MASTER_PORT": "51009"
+  },
+  "argv": [
+    "/project/alex_phd/envs/spo-6c5f947/bin/deepspeed",
+    "--master_port",
+    "51009",
+    "--include",
+    "localhost:0",
+    "--no_local_rank",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/main.py",
+    "--configs",
+    "/project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet",
+    "run_iteration_loop"
+  ],
+  "entry_point": "PolicyIterationRuntime.run_iteration_loop(force_rerun=False)",
+  "native_output_directory": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-attempt1/native",
+  "immutable_sft_snapshot": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30",
+  "dataset": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k",
+  "owner_requirements": [
+    "Acquire GPU through existing authenticated owner; do not launch this manifest directly.",
+    "Source environment.sh before applying env_override_after_source; environment.sh otherwise sets APP_MINIMIZE_STORED_FILES=True.",
+    "Set CUDA_VISIBLE_DEVICES according to the owner's GPU reservation; localhost:0 denotes the owner's first visible GPU.",
+    "MASTER_PORT was free at CPU preparation only; owner must recheck or choose another free port and update argv/env consistently.",
+    "Queue owner must create spo-historical-attempt1; do not pre-create that attempt directory. Cap runtime within allocation with checkpoint handoff."
+  ],
+  "schedule": {
+    "num_iterations": 1000,
+    "early_stop_iteration": 690,
+    "epochs_per_iteration": 2,
+    "episodes_per_iteration": 512,
+    "global_batch": 64,
+    "microbatch": 16,
+    "gradient_accumulation_steps": 4,
+    "planned_optimizer_updates": 16000,
+    "warmup_ratio": 0.03,
+    "warmup_updates": 480,
+    "expected_optimizer_updates_at_fixed_comparison": 11040
+  },
+  "comparison": {
+    "checkpoint_iteration": 690,
+    "expected_checkpoint_name": "ckpt--iter_0690--epoch_2.00--step_11040",
+    "metric": "GSM8K test correct_frac (16-sample estimate of pass@1)",
+    "author_target": 0.5672384382107657,
+    "rule": "Prospectively fixed checkpoint690; no local test-based selection. Original author's selection rationale is unresolved.",
+    "final1000_rule": "Separate continuation and separately labeled result only after fixed690 policy/state is preserved and evaluated."
+  },
+  "resume": {
+    "normal": "Relaunch the same argv and native output directory; omit force_rerun or use false. Native automatically selects latest resumable full checkpoint and resumes at its trainer iteration.",
+    "expected_loss_on_interruption": "Up to nine completed iterations after latest permanent10 checkpoint, plus any interrupted iteration; native temporary per-iteration weights do not contain complete cached-engine optimizer state.",
+    "final_marker": "If native/checkpoints/final exists, default loop skips. Do not use force_rerun=True to bypass: it disables checkpoint loading. For a separately authorized1000 continuation, archive690 output under a new owner and copy a full690 checkpoint into a new native/checkpoints directory with no final marker; use a continuation config whose early_stop_iteration is1000 ornull while num_iterations remains1000.",
+    "checkpoint_gap": "Before each permanent save, native cleans previous full optimizer state; interruption during cleanup-before-save can leave no resumable permanent checkpoint. Preserve this observed source limitation; do not claim APP_MINIMIZE_STORED_FILES=False removes it."
+  },
+  "disk_retention": {
+    "native_latest_full_every": 10,
+    "native_retained_model_every": 40,
+    "fixed690_safe": "At early_stop690, last saved permanent checkpoint690 remains full. PPO save_final_checkpoint writes only a text pointer and envFalse prevents end-of-loop stripping.",
+    "continuation_risk": "690 is not divisible by40 and native deletes it before saving700. Copy/hash/preserve complete690 checkpoint outside mutable native/checkpoints before any continuation.",
+    "approximate_model_bytes": 4400193536,
+    "estimate_at690": "About17 retained every40 model snapshots (~75GB at fp32) plus latest full checkpoint (~20–25GB), cached reference/tempweights and episode/evaluation outputs. Filesystem df shows ample global free space but project/account quota was not verified."
+  },
+  "caveats": [
+    "Historical git revision unavailable; current code with recovered configuration is best effort reproduction of recorded recipe, not proven bitwise historical algorithm.",
+    "Current MC subclass bypasses parent multiple-conclusion penalty; recorded true flag may not reproduce historical effect.",
+    "max_step_for_value_estimation25 is currently inactive; all selected cutpoints getMC requests.",
+    "Historical run summaries evaluate validation during training; current runtime evaluates all three configured pipelines every10 iterations. Retained recorded pipeline definitions may increase walltime relative to original chronology.",
+    "Effective historical/native evaluation top_p1.0 despite configured0.9; preserve native template for reference."
+  ]
+}

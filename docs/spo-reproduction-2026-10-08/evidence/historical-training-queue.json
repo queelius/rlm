@@ -1,0 +1,47 @@
+{
+  "root": "/project/alex_phd/runs/spo-reproduction-20261008",
+  "deadline": 1791621274,
+  "cleanup_grace": 55,
+  "scoped_owner": "/project/alex_phd/runs/spo-reproduction-20261008/code-v1/scoped_session_owner.py",
+  "jobs": [
+    {
+      "id": "spo-historical-attempt1",
+      "cwd": "/project/alex_phd/research-cache/repos/SPO",
+      "seconds": 162000,
+      "success_marker": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-attempt1/native/checkpoints/final",
+      "env": {
+        "PATH": "/project/alex_phd/envs/spo-6c5f947/bin:/usr/local/bin:/usr/bin:/bin",
+        "HF_HOME": "/project/alex_phd/research-cache/spo/hf_home",
+        "HF_HUB_CACHE": "/project/alex_phd/research-cache/spo/models",
+        "HF_DATASETS_CACHE": "/project/alex_phd/research-cache/spo/datasets-cache",
+        "HF_HUB_DISABLE_XET": "1",
+        "XDG_CACHE_HOME": "/project/alex_phd/research-cache/spo/xdg-cache",
+        "TIKTOKEN_CACHE_DIR": "/project/alex_phd/research-cache/spo/tiktoken",
+        "TORCH_EXTENSIONS_DIR": "/project/alex_phd/research-cache/spo/torch-extensions",
+        "TRITON_CACHE_DIR": "/project/alex_phd/research-cache/spo/triton",
+        "WANDB_MODE": "offline",
+        "WANDB_DIR": "/project/alex_phd/runs/spo-reproduction-20261008/wandb",
+        "APP_SEED": "42",
+        "APP_OPENAI_VLLM_API_BASE": "none",
+        "APP_DIRECTORY": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-attempt1",
+        "APP_EXPERIMENT_NAME": "native",
+        "APP_MINIMIZE_STORED_FILES": "False",
+        "OPENAI_API_KEY": "EMPTY",
+        "MASTER_PORT": "51009"
+      },
+      "argv": [
+        "/project/alex_phd/envs/spo-6c5f947/bin/deepspeed",
+        "--master_port",
+        "51009",
+        "--include",
+        "localhost:0",
+        "--no_local_rank",
+        "/project/alex_phd/research-cache/repos/SPO/src/treetune/main.py",
+        "--configs",
+        "/project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet",
+        "run_iteration_loop"
+      ]
+    }
+  ],
+  "success_marker_interpretation": "final exists only after normal loop completion but does not independently establish690 iterations or11040 optimizer updates. Independently validate final pointer, trainer state, exact full690 directory, actor optimizer/scheduler and hf weights before scientific success."
+}

@@ -1,0 +1,204 @@
+[
+  {
+    "task": {
+      "type": "gsm8k",
+      "dataset_dict_path": "data/gsm8k",
+      "load_dataset_dict": true,
+      "use_original_format": true,
+      "remove_calculator_expressions": true
+    },
+    "analyzers": [
+      {
+        "type": "task_performance"
+      }
+    ],
+    "dataset_split": "test",
+    "inference_name": "gsm8k_test",
+    "prompt_library": {
+      "tree": {
+        "expansion": {
+          "iid": "{{prefix}}{{gen \"chain_of_thought\" temperature={temperature} max_tokens={max_tokens} logprobs={logprobs} save_stop_text=\"stop_text\" stop={stop} n={num_samples} seed={seed}}}"
+        },
+        "question_template": "[MATH_TASK] Problem:\n{query}\n\nSolution:"
+      }
+    },
+    "dataset_portion": 1,
+    "inference_strategy": {
+      "seed": 42,
+      "type": "cot",
+      "samples": 16,
+      "no_cache": false,
+      "max_depth": 10,
+      "guidance_llm": {
+        "type": "openai_vllm",
+        "model": "realtreetune/rho-1b-sft-GSM8K",
+        "api_key": "EMPTY",
+        "caching": false,
+        "api_base": "none",
+        "max_retries": 10,
+        "tokenizer_name": "realtreetune/rho-1b-sft-GSM8K",
+        "max_calls_per_min": 1000000
+      },
+      "node_expander": {
+        "type": "efficient_iid",
+        "program": "{{prefix}}{{gen \"chain_of_thought\" temperature={temperature} max_tokens={max_tokens} logprobs={logprobs} save_stop_text=\"stop_text\" stop={stop} n={num_samples} seed={seed}}}",
+        "tokenizer": {
+          "type": "pretrained",
+          "hf_model_name": "realtreetune/rho-1b-sft-GSM8K"
+        },
+        "program_kwargs": {
+          "stop": "\"\n\n\nProblem:\"",
+          "top_p": 0.9,
+          "logprobs": 1,
+          "max_tokens": 1024,
+          "temperature": 0.35
+        },
+        "model_context_size": 2047,
+        "node_text_template": "{chain_of_thought}"
+      },
+      "question_field": "query",
+      "answer_extractor": {
+        "type": "identity",
+        "node_key_name": "text"
+      },
+      "question_template": "[MATH_TASK] Problem:\n{query}\n\nSolution:",
+      "max_concurrent_programs": 512,
+      "max_concurrent_generations": 128
+    }
+  },
+  {
+    "task": {
+      "type": "gsm8k",
+      "dataset_dict_path": "data/gsm8k",
+      "load_dataset_dict": true,
+      "use_original_format": true,
+      "remove_calculator_expressions": true
+    },
+    "analyzers": [
+      {
+        "type": "task_performance"
+      }
+    ],
+    "dataset_split": "validation",
+    "inference_name": "gsm8k_validation",
+    "prompt_library": {
+      "tree": {
+        "expansion": {
+          "iid": "{{prefix}}{{gen \"chain_of_thought\" temperature={temperature} max_tokens={max_tokens} logprobs={logprobs} save_stop_text=\"stop_text\" stop={stop} n={num_samples} seed={seed}}}"
+        },
+        "question_template": "[MATH_TASK] Problem:\n{query}\n\nSolution:"
+      }
+    },
+    "dataset_portion": 1,
+    "inference_strategy": {
+      "seed": 42,
+      "type": "cot",
+      "samples": 16,
+      "no_cache": false,
+      "max_depth": 10,
+      "guidance_llm": {
+        "type": "openai_vllm",
+        "model": "realtreetune/rho-1b-sft-GSM8K",
+        "api_key": "EMPTY",
+        "caching": false,
+        "api_base": "none",
+        "max_retries": 10,
+        "tokenizer_name": "realtreetune/rho-1b-sft-GSM8K",
+        "max_calls_per_min": 1000000
+      },
+      "node_expander": {
+        "type": "efficient_iid",
+        "program": "{{prefix}}{{gen \"chain_of_thought\" temperature={temperature} max_tokens={max_tokens} logprobs={logprobs} save_stop_text=\"stop_text\" stop={stop} n={num_samples} seed={seed}}}",
+        "tokenizer": {
+          "type": "pretrained",
+          "hf_model_name": "realtreetune/rho-1b-sft-GSM8K"
+        },
+        "program_kwargs": {
+          "stop": "\"\n\n\nProblem:\"",
+          "top_p": 0.9,
+          "logprobs": 1,
+          "max_tokens": 1024,
+          "temperature": 0.35
+        },
+        "model_context_size": 2047,
+        "node_text_template": "{chain_of_thought}"
+      },
+      "question_field": "query",
+      "answer_extractor": {
+        "type": "identity",
+        "node_key_name": "text"
+      },
+      "question_template": "[MATH_TASK] Problem:\n{query}\n\nSolution:",
+      "max_concurrent_programs": 512,
+      "max_concurrent_generations": 128
+    }
+  },
+  {
+    "task": {
+      "type": "gsm8k",
+      "dataset_dict_path": "data/gsm8k",
+      "load_dataset_dict": true,
+      "use_original_format": true,
+      "remove_calculator_expressions": true
+    },
+    "analyzers": [
+      {
+        "type": "task_performance"
+      }
+    ],
+    "dataset_split": "train",
+    "inference_name": "gsm8k_train",
+    "prompt_library": {
+      "tree": {
+        "expansion": {
+          "iid": "{{prefix}}{{gen \"chain_of_thought\" temperature={temperature} max_tokens={max_tokens} logprobs={logprobs} save_stop_text=\"stop_text\" stop={stop} n={num_samples} seed={seed}}}"
+        },
+        "question_template": "[MATH_TASK] Problem:\n{query}\n\nSolution:"
+      }
+    },
+    "dataset_portion": 0.05253521,
+    "inference_strategy": {
+      "seed": 42,
+      "type": "cot",
+      "samples": 16,
+      "no_cache": false,
+      "max_depth": 10,
+      "guidance_llm": {
+        "type": "openai_vllm",
+        "model": "realtreetune/rho-1b-sft-GSM8K",
+        "api_key": "EMPTY",
+        "caching": false,
+        "api_base": "none",
+        "max_retries": 10,
+        "tokenizer_name": "realtreetune/rho-1b-sft-GSM8K",
+        "max_calls_per_min": 1000000
+      },
+      "node_expander": {
+        "type": "efficient_iid",
+        "program": "{{prefix}}{{gen \"chain_of_thought\" temperature={temperature} max_tokens={max_tokens} logprobs={logprobs} save_stop_text=\"stop_text\" stop={stop} n={num_samples} seed={seed}}}",
+        "tokenizer": {
+          "type": "pretrained",
+          "hf_model_name": "realtreetune/rho-1b-sft-GSM8K"
+        },
+        "program_kwargs": {
+          "stop": "\"\n\n\nProblem:\"",
+          "top_p": 0.9,
+          "logprobs": 1,
+          "max_tokens": 1024,
+          "temperature": 0.35
+        },
+        "model_context_size": 2047,
+        "node_text_template": "{chain_of_thought}"
+      },
+      "question_field": "query",
+      "answer_extractor": {
+        "type": "identity",
+        "node_key_name": "text"
+      },
+      "question_template": "[MATH_TASK] Problem:\n{query}\n\nSolution:",
+      "max_concurrent_programs": 512,
+      "max_concurrent_generations": 128
+    },
+    "dataset_shuffle_before_portion": true
+  }
+]
