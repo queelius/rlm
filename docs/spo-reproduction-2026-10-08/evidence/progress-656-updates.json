@@ -1,0 +1,180 @@
+{
+  "review_id": "review-1791461899-965beb66",
+  "checked_utc": "2026-10-08T12:22:00Z",
+  "attempt": "spo-historical-resume160-attempt3",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "source_worktree_clean": true,
+  "evaluation": {
+    "native_iteration_label": 40,
+    "completed_collections": 41,
+    "optimizer_updates": 656,
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 9331,
+      "metrics": {
+        "once_hit": 0.7475360121304018,
+        "exact_match": 0.7475360121304018,
+        "correct_frac": 0.4421436694465504,
+        "exact_match_frac": 0.4421436694465504,
+        "majority_vote_acc": 0.5170583775587566,
+        "unique_answer_count": 5.384382107657316,
+        "none_answer_extracted_frac_per_problem": 0.0018479909021986353
+      },
+      "all_seven_native_metrics_regraded": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__40/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_40/test__0__1/log.json",
+      "metric_sha256": "1241aa2891727c5577b96e2f0faa01938cbc6b5d888f8ca2aead582910b3429d",
+      "base_delta_pp": 4.43991660348749,
+      "base_question_paired_se_pp": 0.5763114190420643,
+      "previous496_delta_pp": 0.6539044730856709,
+      "previous496_question_paired_se_pp": 0.3952219968755959,
+      "questions_solved_at_least_once": 986
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3401,
+      "metrics": {
+        "once_hit": 0.8579088471849866,
+        "exact_match": 0.8579088471849866,
+        "correct_frac": 0.5698726541554959,
+        "exact_match_frac": 0.5698726541554959,
+        "majority_vote_acc": 0.6648793565683646,
+        "unique_answer_count": 4.18230563002681,
+        "none_answer_extracted_frac_per_problem": 0.0015080428954423592
+      },
+      "all_seven_native_metrics_regraded": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__40/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_40/validation__0__1/log.json",
+      "metric_sha256": "16eb5d64b7d5ee8f9d3dcfd901de672ac5d10e4f179cf9a93f0aa979d9240971"
+    },
+    "train_subset": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3847,
+      "metrics": {
+        "once_hit": 0.9032258064516129,
+        "exact_match": 0.9032258064516129,
+        "correct_frac": 0.6463373655913979,
+        "exact_match_frac": 0.6463373655913979,
+        "majority_vote_acc": 0.75,
+        "unique_answer_count": 3.9274193548387095,
+        "none_answer_extracted_frac_per_problem": 0.0003360215053763441
+      },
+      "all_seven_native_metrics_regraded": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__40/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_40/train__0__1/log.json",
+      "metric_sha256": "39da19843b38e023f8cfaed1e7146bf03945103331bbd1d80e2b737b369ac497",
+      "limit": "Training-split diagnostic, not held-out accuracy."
+    },
+    "method": "All original split question/gold identities checked, unique coverage and16answers each. Tree child answers match candidates. Native GSM8K.evaluate_predictions exactly reproduces all seven metrics for all three splits.",
+    "limits": "One resumed ancestry, not independent seeds. Question-paired SEs are descriptive, not training-seed uncertainty. All scheduled results retained; repeated test exposure is not used to select checkpoint or modify recipe."
+  },
+  "training": {
+    "optimizer_updates": 656,
+    "completed_collections": 41,
+    "new_updates_since_last_review": 96,
+    "latest_loss": -0.0449,
+    "gradient_norm": 10.8,
+    "approximate_kl": 0.265,
+    "policy_kl": 0.117,
+    "clip_fraction": 0.204,
+    "ratio": 1.01,
+    "ref_kl_loss": 0.000513,
+    "kls": 5.13,
+    "lr": 9.89e-7,
+    "loss_nan": 0,
+    "loss_inf": 0,
+    "failure_markers": [],
+    "latest_collection": {
+      "iteration": 40,
+      "episodes": 512,
+      "terminal_rewards": {
+        "1.0": 305,
+        "0.0": 207
+      },
+      "all512_native_rewards_match": true,
+      "finite": {
+        "w_actLogp/advantages": {
+          "count": 46962,
+          "nonfinite": 0
+        },
+        "w_actLogp/actor_shifted_log_probs": {
+          "count": 88274,
+          "nonfinite": 0
+        },
+        "w_actLogp/ref_shifted_log_probs": {
+          "count": 88274,
+          "nonfinite": 0
+        },
+        "w_refLogp/advantages": {
+          "count": 46962,
+          "nonfinite": 0
+        },
+        "w_refLogp/ref_shifted_log_probs": {
+          "count": 88274,
+          "nonfinite": 0
+        }
+      },
+      "example": {
+        "response_text": "\nNate has read 400 x 20/100 = 80 pages.\nSo he still needs to read 400 - 80 = 320 pages to finish the book.\n#### 320\n",
+        "score": 1,
+        "is_unfinished_response": false
+      }
+    },
+    "next_collection": "Iteration41 began; all64question trees returned at12:21 with actual saved answers. Existing owner remains active."
+  },
+  "owner": {
+    "pid": 2089329,
+    "start_ticks": 1325581494,
+    "scoped_pid": 2089332,
+    "trainer_pid": 2089534,
+    "deadline_epoch": 1791608973,
+    "unchanged": true,
+    "result_receipt_absent": true
+  },
+  "quota": {
+    "remaining_percent": 25,
+    "checked_utc": "2026-10-08T12:18:37.202813Z",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "storage": {
+    "home_available_before_copy": 690106239275,
+    "project_available_before_copy": 16628479183,
+    "home_available_after_copy": 672484758171,
+    "source": "ceph subtree quota xattrs, not global df"
+  },
+  "checkpoint": {
+    "updates": 640,
+    "all10_source_backup_sha256_match": true,
+    "manifest": "checkpoint-640-preservation.json",
+    "preserved": "/home/atowell/research-runs/spo-reproduction-20261008/preserved-checkpoints/attempt3/ckpt--iter_0040--epoch_2.00--step_0640",
+    "total_bytes": 17600911843,
+    "trainer_state": {
+      "global_step": 640,
+      "epoch": 2,
+      "iteration": 40
+    },
+    "deepspeed_state": {
+      "global_steps": 640,
+      "skipped_steps": 0,
+      "scheduler": {
+        "last_batch_iteration": 639
+      }
+    },
+    "verified_epoch": 1791462080.3531792,
+    "no_deletions": true,
+    "retention": "Protected160/320/640 currently retained. No copy at every evaluation. Revisit bounded rolling retention and quota at next coarse1280 milestone or earlier interruption risk.",
+    "limits": "Distinct from evaluated656weights. Protected outside native cleaner; not independent disaster backup or proof of exact RNG restoration."
+  },
+  "interpretation": "Scheduled test44.21437%, +4.43992pp over matched base and+0.65390pp over496. Validation56.98727%, only3more correct answers than496, effectively flat. Train subset64.63374% is not held-out. Once-in16 test coverage996->986/1319 and mean unique answers5.66338->5.38438; pass@1 improvement does not imply wider solved-question coverage. Could reflect concentration and/or sampling variation; do not infer lost capability. Modest consecutive increment relative to paired SE0.39522pp; no claim every interval establishes improvement. Still far short of full56.7%author effect and fixed11040updates.",
+  "decision": "Continue unchanged historical recipe and exclusive owner toward fixed690/11040updates. Keep all evaluations and auxiliary metrics; no test-score-driven selection or tuning. Protect verified640fullstate, keep priorcopies. Update publicreport/evidence; no older RLMlesson-deck change.",
+  "ranked_followups": [
+    "Continue next scheduled evaluation; track primary pass@1, once-in16 coverage and KL/clip diagnostics without changing protocol.",
+    "Next coarse recovery protection at1280or interruption risk, check quota and bounded retention first.",
+    "Prepared fixed690 endpoint evaluation only after verified endpoint and complete owner/GPU release.",
+    "Matched GRPO remains behind prior reward/provenance audit; no competing GPU job."
+  ],
+  "presentation_decision": "Update public SPO report and evidence together. No claim of completed reproduction; older RLMlesson deck unchanged."
+}
