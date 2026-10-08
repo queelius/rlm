@@ -1,0 +1,39 @@
+{
+  "checked_utc": "2026-10-08T08:25:00Z",
+  "attempt": "spo-historical-memory03-attempt2",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "completed_collections": 1,
+  "completed_optimizer_updates_at_evaluated_checkpoint": 16,
+  "evaluated_weights": "native/temp_ppo_checkpoints/ckpt--iter_0001--epoch_2.00--step_0016/hf_pretrained",
+  "native_evaluation_directory": "native/evaluation/iteration__0",
+  "method": "Reload original author split; assert all question indices and exact prompt identities; assert 16 answers per question; recompute all seven metrics using native GSM8K.evaluate_predictions with use_original_format=True and explicit dataset_dict_path.",
+  "test": {
+    "questions": 1319,
+    "responses": 21104,
+    "correct_answers": 8444,
+    "correct_frac": 0.4001137225170584,
+    "all_seven_native_metrics_match_exactly": true,
+    "native_metric_sha256": "1103888f46df3d75283f6791b0dda4f1d63432f83bd55a0db65227b06cbe589c"
+  },
+  "matched_base_test": {
+    "questions": 1319,
+    "responses": 21104,
+    "correct_answers": 8394,
+    "correct_frac": 0.3977445034116755,
+    "all_seven_native_metrics_match_exactly": true,
+    "native_metric_sha256": "f5bd5a056be07033baee5da30b7e6d12e0f9c55e38bb416295c8187255a690b0"
+  },
+  "validation": {
+    "questions": 373,
+    "responses": 5968,
+    "correct_answers": 3168,
+    "correct_frac": 0.5308310991957105,
+    "all_seven_native_metrics_match_exactly": true,
+    "native_metric_sha256": "8cb8128e9fde22225b2ff7404f8c71db72cfe15383e524ba3ac757096051aed5"
+  },
+  "own_minus_base_test_percentage_points": 0.23692191053828657,
+  "question_paired_standard_error_percentage_points": 0.1673312935463915,
+  "uncertainty_scope": "Descriptive variation across matched question means; candidates are not paired randomizations and this is not independent training-seed uncertainty.",
+  "interpretation": "Small early movement, not convincing evidence of an RL gain or a completed reproduction. Validation has a different question distribution and no matched base-validation measurement here. Continue unchanged to the prescribed endpoint; no checkpoint selection.",
+  "verification_attempt_note": "Initial standalone regrading invocation omitted the native task constructor's required dataset path and failed before scoring. Explicit dataset_dict_path resolved the checker invocation; training and official source were untouched."
+}
