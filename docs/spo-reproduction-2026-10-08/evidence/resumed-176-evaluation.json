@@ -1,0 +1,122 @@
+{
+  "review_id": "review-1791453369-26e680ce",
+  "checked_utc": "2026-10-08T09:59:00Z",
+  "campaign": "spo-reproduction-20261008",
+  "attempt": "spo-historical-resume160-attempt3",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "source_worktree_clean": true,
+  "evaluation": {
+    "native_label": 10,
+    "completed_collections": 11,
+    "optimizer_updates": 176,
+    "method": "Original author GSM8K splits; verify unique question coverage, original question and gold identities, 16 saved candidates each; invoke native GSM8K.evaluate_predictions and assert all seven metrics exactly.",
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 8704,
+      "correct_frac": 0.41243366186504926,
+      "all_seven_metrics_regraded": true,
+      "metric_sha256": "c0d113ad6166fadeb86b06b20b8a52a5a680a975663d0d8ade5902edf6990a31"
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3226,
+      "correct_frac": 0.5405495978552279,
+      "all_seven_metrics_regraded": true,
+      "metric_sha256": "fa1a78f3410fdad0912dcbefd8c0cd63122c98a0737b2b86b1de2f2a19ed37fc"
+    },
+    "train_subset": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3638,
+      "correct_frac": 0.6112231182795699,
+      "all_seven_metrics_regraded": true,
+      "metric_sha256": "ddc5e7f5041e3e7179041cfd64046271b8396837aa4e13dd29a5923f2e4ee4f1",
+      "limit": "Training-split diagnostic, not held-out accuracy."
+    },
+    "matched_base_correct": 8394,
+    "delta_vs_base_pp": 1.4689158453373767,
+    "question_paired_se_vs_base_pp": 0.32473698291807646,
+    "interrupted_176_correct": 8694,
+    "delta_vs_interrupted176_pp": 0.047384382107657316,
+    "question_paired_se_vs_interrupted176_pp": 0.1685234830188895,
+    "uncertainty_limit": "Question-level descriptive uncertainty, not training-seed uncertainty. Interrupted and resumed branches share the first 160 updates; this is not a fresh independent replication.",
+    "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__10"
+  },
+  "training": {
+    "checked_completed_updates": 208,
+    "completed_collections": 13,
+    "new_updates_beyond_previous176": 32,
+    "repeated_updates_not_double_counted": 16,
+    "log_cutoff_utc": "2026-10-08T09:56:00Z",
+    "native_loss": -0.0326,
+    "gradient_norm": 12.7,
+    "approximate_kl": 0.027,
+    "clip_fraction": 0.107,
+    "lr": 8.65e-7,
+    "reported_loss_nan": 0,
+    "reported_loss_inf": 0,
+    "latest_completed_collection": {
+      "native_iteration": 12,
+      "episodes": 512,
+      "positive_terminal_rewards": 323,
+      "zero_terminal_rewards": 189,
+      "negative_terminal_rewards": 0,
+      "all512_native_rewards_rechecked": true,
+      "finite_advantages": 49577,
+      "finite_actor_logprobs": 91769,
+      "finite_reference_logprobs": 91769,
+      "nonfinite_values": 0,
+      "response_example": "Same rain question: correct 26-(3+6+5)=12 rewarded 1; reversed subtraction yielding -12 rewarded 0. Saved responses inspected; these examples illustrate the reward signal, not independent benchmark evidence."
+    },
+    "next_collection": {
+      "native_iteration": 13,
+      "initial_trajectories": 512,
+      "distinct_mc_requests": 982,
+      "service_http200_observed": 948,
+      "service_http400_observed": 0,
+      "service_http500_observed": 0,
+      "limit": "Partial service counts at review, not a completed collection or score."
+    },
+    "observed_tracebacks_or_ooms": 0,
+    "full_checkpoint_updates": 160,
+    "full_checkpoint_note": "Original, preserved home backup and resumed native state remain available. Previously verified ten-file hashes retained; no redundant large copy this review. Next full save is iteration20/step320."
+  },
+  "owner": {
+    "pid": 2089329,
+    "start_ticks": 1325581494,
+    "scoped_pid": 2089332,
+    "trainer_pid": 2089534,
+    "deadline_epoch": 1791608973,
+    "unchanged": true
+  },
+  "observer": {
+    "pid": 2100371,
+    "unchanged": true
+  },
+  "storage": {
+    "checked_utc": "2026-10-08T09:57:00Z",
+    "home_limit_bytes": 1099511627776,
+    "home_used_bytes": 388922351413,
+    "project_limit_bytes": 1099511627776,
+    "project_used_bytes": 1082313216268,
+    "action": "No new copies or deletions. Keep heavy outputs in home store and check both subtree quotas before future checkpoint preservation."
+  },
+  "quota": {
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "checked_utc": "2026-10-08T09:56:27.844445Z",
+    "remaining_percent": 27,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "interpretation": "Resumed 176-update score is consistent with the interrupted score and retains an early gain over baseline. The ten-answer difference between branches is too small to motivate changing the recipe; shared ancestry and stochastic decoding preclude treating this as independent replication. No claim of reaching the fixed690 paper endpoint.",
+  "decision": "Continue the same owner and unchanged scientific recipe. Retain both176 results, no best-score selection. Review next scheduled evaluation and preserve a complete later recovery state under bounded storage. No additional GPU job.",
+  "ranked_followups": [
+    "Continue original fixed690 run; check learning on the scheduled later evaluation rather than tune on the observed test.",
+    "Protect a later complete optimizer checkpoint after its scheduled save; retain bounded recovery points and original cumulative cap.",
+    "Keep fixed690 evaluation prepared. Prepare the documented GRPO reward-handling fixture on CPUs before any future matched control; historical baseline provenance remains unresolved."
+  ],
+  "presentation_decision": "Update the distinct SPO report and evidence. Do not change the earlier RLM-lesson deck for this tiny same-ancestry restart difference."
+}
