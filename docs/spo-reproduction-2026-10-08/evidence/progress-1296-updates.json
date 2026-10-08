@@ -1,0 +1,198 @@
+{
+  "checked_utc": "2026-10-08T15:34:52.203Z",
+  "review_id": "review-1791473314-2b58b675",
+  "attempt": "spo-historical-resume160-attempt3",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "source_worktree_clean": true,
+  "evaluation": {
+    "test": {
+      "complete": true,
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 9836,
+      "metrics": {
+        "correct_frac": 0.4660727824109174,
+        "exact_match": 0.7717968157695224,
+        "exact_match_frac": 0.4660727824109174,
+        "majority_vote_acc": 0.5382865807429871,
+        "none_answer_extracted_frac_per_problem": 0.0008529188779378317,
+        "once_hit": 0.7717968157695224,
+        "unique_answer_count": 5.25625473843821
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__80/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_80/test__0__1/log.json",
+      "metric_sha256": "638c6529ff9d49467a02afb885c5ae176bba71110b273c4e068a5ddc38d7a49c",
+      "questions_solved_at_least_once": 1018,
+      "base_delta_pp": 6.832827899924185,
+      "base_question_paired_se_pp": 0.6545221603496667,
+      "previous1136_delta_pp": -0.1042456406368461,
+      "previous1136_question_paired_se_pp": 0.3951102995660184
+    },
+    "validation": {
+      "complete": true,
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3621,
+      "metrics": {
+        "correct_frac": 0.6067359249329759,
+        "exact_match": 0.8820375335120644,
+        "exact_match_frac": 0.6067359249329759,
+        "majority_vote_acc": 0.6863270777479893,
+        "none_answer_extracted_frac_per_problem": 0.0011729222520107238,
+        "once_hit": 0.8820375335120644,
+        "unique_answer_count": 3.9571045576407506
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__80/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_80/validation__0__1/log.json",
+      "metric_sha256": "70c6f5d3eb990ccfee40492a6d8123d5320e579e9f09b4cd034dadcffeb9ff21",
+      "questions_solved_at_least_once": 329
+    },
+    "train": {
+      "complete": true,
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4040,
+      "metrics": {
+        "correct_frac": 0.678763440860215,
+        "exact_match": 0.9247311827956989,
+        "exact_match_frac": 0.678763440860215,
+        "majority_vote_acc": 0.7795698924731183,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9247311827956989,
+        "unique_answer_count": 3.7795698924731185
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__80/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_80/train__0__1/log.json",
+      "metric_sha256": "c7c8600242a7b835a4afbd90fd08a05298917e829f978d68495bd0e9e19b2624",
+      "questions_solved_at_least_once": 344,
+      "limit": "Training subset, not held-out accuracy."
+    },
+    "native_iteration_label": 80,
+    "completed_collections": 81,
+    "optimizer_updates": 1296,
+    "method": "Checked original split question/gold identity, unique coverage and 16 saved tree candidates each, then exactly regraded all seven native metrics on all three splits."
+  },
+  "training": {
+    "optimizer_updates": 1312,
+    "completed_collections": 82,
+    "new_updates_since_last_review": 128,
+    "fully_reviewed_collection": {
+      "iteration": 80,
+      "episodes": 512,
+      "terminal_rewards": {
+        "1.0": 334,
+        "0.0": 178
+      },
+      "all512_native_rewards_match": true,
+      "unfinished_responses": 0,
+      "finite": {
+        "w_actLogp/advantages": {
+          "count": 50205,
+          "nonfinite": 0
+        },
+        "w_actLogp/actor_shifted_log_probs": {
+          "count": 90957,
+          "nonfinite": 0
+        },
+        "w_actLogp/ref_shifted_log_probs": {
+          "count": 90957,
+          "nonfinite": 0
+        },
+        "w_refLogp/advantages": {
+          "count": 50205,
+          "nonfinite": 0
+        },
+        "w_refLogp/ref_shifted_log_probs": {
+          "count": 90957,
+          "nonfinite": 0
+        }
+      },
+      "example": {
+        "query_text": "[MATH_TASK] Problem:\nJeffrey owns a poultry farm with 12 hens. For every 3 hens, there is 1 rooster. Each hen has 5 chicks. How many chickens are there in all?\n\nSolution:",
+        "response_text": "\nThere are 12/3 = 4 roosters.\nThere are 12 x 5 = 60 chicks.\nThere are 60 + 4 + 6 = 70 chickens in all.\n#### 70\n",
+        "score": 0,
+        "is_unfinished_response": false
+      },
+      "example_interpretation": "Response correctly derives 4 roosters and 60 chicks, but replaces 12 hens with 6 in the final sum; answer70 instead of76 receives zero."
+    },
+    "log_evidence": "Iteration 81: Training:   8%|▊         | 1312/16000 [00:39<07:18, 33.47it/s, advantages/mean=0.0601, advantages/std=0.347, advantages/close_to_zero_perc=0, rewards/mean=0.00611, num_tokens=1717.5, actor/approx_kl=0.17, actor/policy_kl=0.0716, actor/clip_frac=0.192, actor/ratio=1.05, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=6, actor/pg_losses1_anomalies__total_anomalies=6, actor/ref_kl_loss=0.000743, non_score_rewards=0, kls=7.43, kl_coef=0.0001, actor/loss=-0.0345, actor/grad_norm=11.9, actor/lr=9.46e-7, epoch=2, step=1312, actor/ds_step=1312]",
+    "failure_marker_counts": {
+      "Traceback (most recent": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    },
+    "latest_loss": -0.0345,
+    "gradient_norm": 11.9,
+    "approximate_kl": 0.17,
+    "policy_kl": 0.0716,
+    "clip_fraction": 0.192,
+    "lr": 9.46e-7,
+    "loss_nan": 0,
+    "loss_inf": 0
+  },
+  "checkpoint": {
+    "manifest": "/project/alex_phd/runs/spo-reproduction-20261008/preserved-checkpoints/attempt3/ckpt--iter_0080--epoch_2.00--step_1280.manifest.json",
+    "protected": "/home/atowell/research-runs/spo-reproduction-20261008/preserved-checkpoints/attempt3/ckpt--iter_0080--epoch_2.00--step_1280",
+    "files": 10,
+    "bytes": 17600911844,
+    "trainer_state": {
+      "global_step": 1280,
+      "epoch": 2,
+      "iteration": 80
+    },
+    "deepspeed_state": {
+      "global_steps": 1280,
+      "skipped_steps": 0,
+      "scheduler": {
+        "last_batch_iteration": 1279
+      }
+    },
+    "all_source_backup_hashes_match": true,
+    "source_stable_during_verification": true,
+    "verified_epoch": 1791473699.58637,
+    "home_available_before_copy": 666337160135,
+    "home_available_after_copy": 648667339422,
+    "no_deletion_or_move": true,
+    "decision": "Protected160/320/640/1280 retained; no deletion. Next coarse protection2560 or earlier interruption risk after quota and retention review; do not copy every scheduled state."
+  },
+  "storage_available_bytes": {
+    "/home/atowell": 646464870349,
+    "/project/alex_phd": 16610599339
+  },
+  "result_receipt_absent": true,
+  "owner": {
+    "pid": 2089329,
+    "start_ticks": 1325581494,
+    "scoped_pid": 2089332,
+    "trainer_pid": 2089534,
+    "deadline_epoch": 1791608973,
+    "authenticated": true,
+    "unchanged": true,
+    "new_gpu_job": false
+  },
+  "quota": {
+    "remaining_percent": 24,
+    "checked_utc": "2026-10-08T15:29:18.883831Z",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "interpretation": "Scheduled1296 test9836/21104=46.60728%, +6.83283pp versus matched base, -0.10425pp versus1136 (22 fewer correct). Validation3621/5968=60.67359% rises63correct. Test essentially flat while validation rises; no evidence of a broad reversal or of monotonic improvement. Once-in16 test coverage1025->1018/1319 and uniqueanswers5.30857->5.25625. Early learning retained, not full reproduction or a demonstrated diversity mechanism.",
+  "decision": "Continue same authenticated owner and unchanged recovered recipe toward fixed690/11040. Keep the scheduled dip and all earlier scores; no best-checkpoint selection or test-driven tuning. Full1280 recovery state now separately protected. Publish this intermediate result.",
+  "ranked_followups": [
+    "Review next prescribed evaluation with native reward, gradient and coverage checks; distinguish flat test from rising validation.",
+    "Protect next coarse full2560 state or earlier interruption risk after subtree-quota and retention review; existing160/320/640/1280 retained.",
+    "Prepared fixed690 evaluation after verified endpoint and whole-owner/GPU release.",
+    "Matched GRPO control remains behind its existing reward/provenance fixture; do not compete with current GPU owner."
+  ],
+  "presentation_decision": "Update public SPO report and evidence together, including test dip and recovery backup. Prior RLM-lesson deck unchanged: this intermediate math result establishes neither full reproduction nor RLM transfer.",
+  "limits": "One resumed training ancestry, not independent seeds. Question-paired SEs descriptive, not training-seed uncertainty. Repeated test monitoring is development-exposed. Protected1280 state differs from evaluated1296 weights. Exact RNG continuity, original historical source commit and author checkpoint-selection rationale remain unresolved. Original schedule unchanged; continuation beyond allocation likely.",
+  "observer": {
+    "pid": 2100371,
+    "stop_present": false
+  }
+}
