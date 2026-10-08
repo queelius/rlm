@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-Status: 8 October 2026, 08:11 UTC. **The released author model scored 56.69%, matching the paper's 56.7% to one decimal place. Fresh RL training is retrying after a memory failure; it has not yet produced a learning result.** This campaign follows the request to reproduce a published experiment faithfully, rather than treat an encouraging small pilot as an exact reproduction.
+Status: 8 October 2026, 08:15 UTC. **The released author model scored 56.69%, matching the paper's 56.7% to one decimal place. Our fresh training has completed its first 16 optimizer updates; no benchmark improvement from our own weights has been measured yet.** This campaign follows the request to reproduce a published experiment faithfully, rather than treat an encouraging small pilot as an exact reproduction.
 
 ## What we are trying to reproduce
 
@@ -32,8 +32,8 @@ The possible connection to a recursive language model (RLM) is attractive: a tra
 | --- | ---: | --- |
 | Original starting model, full native test | **39.77%** | Close to the paper's 40.3% starting reference; evaluator and saved answers checked |
 | Authors' released SPO weights, same full test | **56.69%** | Recovers the published 56.7% reference to one decimal place; not our training gain |
-| Fresh SPO training from the original starting model | Attempt 2 launched | Attempt 1 exhausted memory before any optimizer update; no learning result yet |
-| Matched GRPO training control | Planned, provenance audit needed | Later comparison; current repo defaults must not be assumed to be the historical baseline |
+| Fresh SPO training from the original starting model | **16 updates completed** in attempt 2 | Training path works; own-model benchmark improvement not yet measured |
+| Matched GRPO training control | [Provenance audited; further preparation needed](grpo-control-plan.md) | Current repo defaults and reward handling cannot be assumed to reproduce the historical baseline |
 
 The starting-model run saved all **1,319 questions × 16 answers = 21,104 answers**. We checked every question against the original test split and recomputed all seven native metrics exactly. Its launcher returned an error **after** scoring and cleanup because it passed an unsupported command-line argument. That command failure is retained separately; subsequent launches use DeepSpeed's supported `--no_local_rank` option. We did not change model outputs or the grader to make the score look better. See [native metrics](evidence/base-reference-native.json) and [command receipt](evidence/base-reference-command.json).
 
@@ -42,6 +42,8 @@ The released-author evaluation also covered all 21,104 answers, with every quest
 One concrete observation: on the first test question, the starting model gave the correct answer in 4 of 16 attempts. It also made identifiable arithmetic and interpretation mistakes. This illustrates usable variation in outcomes; it is not evidence of an RL improvement, because these are the **starting** weights.
 
 The first training attempt generated 512 responses, then ran out of GPU memory while calculating their model probabilities. The inference server had reserved 26.27 GiB alongside the trainer. We preserved the failure and restarted from the same original weights with the inference-memory reservation limited to 30%. This changes resource allocation, not the dataset, training batch, objective, sampling settings, or learning-rate schedule. Configuration equality was checked after excluding only that memory setting and output paths. It may affect inference scheduling, so it is documented—not presented as bit-for-bit equivalence. See the [failed-attempt receipt](evidence/training-attempt1-command.json) and [single-setting overlay](evidence/train-memory03.jsonnet).
+
+The second attempt passed that failure point. It generated the 512 initial responses, completed 1,066 distinct intermediate-state continuation requests, and finished two training epochs: **16 actual optimizer updates**. The recorded loss and gradient norm were finite, with zero reported NaN/Inf loss anomalies. Updated weights are being saved. This is a successful first training iteration, not a completed 690-iteration experiment or a benchmark gain. See the [first-update receipt](evidence/first-training-iteration.json).
 
 ## What exactly is the score?
 
@@ -59,12 +61,12 @@ The recorded result matching 56.7% comes from checkpoint **690**, after **11,040
 
 The original run segments took about **60 hours** in total. Our current allocation has roughly **47 hours** left at launch. Actual throughput may differ. If time runs out, we will report an incomplete run and preserve available checkpoints for continuation, rather than shorten the learning-rate schedule and call it the same experiment.
 
-Full technical provenance, caveats, and source links are in the [protocol audit](protocol-audit.md). The [environment lock](evidence/environment-lock.txt), [data provenance](evidence/dataset-provenance.json), and [recovered training settings](evidence/author-training-config.json) are available for inspection.
+Full technical provenance, caveats, and source links are in the [protocol audit](protocol-audit.md). The [environment notes](evidence/environment.md), [environment lock](evidence/environment-lock.txt), [data provenance](evidence/dataset-provenance.json), and [recovered training settings](evidence/author-training-config.json) are available for inspection.
 
 ## Unattended operation and the next update
 
 Jobs run serially under detached, time-capped owners. The observer requests a research review when results arrive and approximately hourly otherwise. Reviews examine actual answers, rewards, updates, failures, and checkpoints; useful milestones are documented and pushed to GitHub. Dispatch stops before consuming the reserved account allowance. A failed command stops its queue so that the next review can diagnose it rather than silently change the recipe.
 
-The next milestones are the first verified training updates, measured iteration time, and the first saved optimizer checkpoint. A completed reference check, an intermediate training score, and a completed reproduction will remain clearly distinguished.
+The next milestones are the first own-model evaluation, steady-state iteration time, and the first permanent optimizer checkpoint. A completed reference check, an intermediate training score, and a completed reproduction will remain clearly distinguished.
 
 Cluster resume pointer: `/project/alex_phd/runs/spo-reproduction-20261008/SESSION_CHECKPOINT.md`. GitHub contains source, reports, configuration, and small evidence receipts—not model-weight backups.

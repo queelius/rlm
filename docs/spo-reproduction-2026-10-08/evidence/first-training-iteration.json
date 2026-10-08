@@ -1,0 +1,25 @@
+{
+  "checked_utc": "2026-10-08T08:14:30Z",
+  "attempt": "spo-historical-memory03-attempt2",
+  "native_log": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-memory03-attempt2/command.log",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "configuration_delta": "vLLM memory reservation auto to0.3, output paths only; original microbatch16 preserved",
+  "initial_questions": 64,
+  "initial_trajectories": 512,
+  "unique_mc_requests": 1066,
+  "mc_samples_per_request": 9,
+  "completed_training_epochs": 2,
+  "optimizer_updates": 16,
+  "deepspeed_step": 16,
+  "last_displayed_metrics": {
+    "actor_loss": -0.0144,
+    "actor_grad_norm": 23.5,
+    "actor_lr": 4.49e-7,
+    "actor_approx_kl": 0.0027,
+    "actor_clip_frac": 0.0128,
+    "loss_nan_anomalies": 0,
+    "loss_inf_anomalies": 0
+  },
+  "weights_save_started": "native/temp_ppo_checkpoints/ckpt--iter_0001--epoch_2.00--step_0016/hf_pretrained",
+  "interpretation": "Verified initial training updates. No measured own-model benchmark gain and no completed reproduction. Temporary weights are not a full optimizer checkpoint."
+}
