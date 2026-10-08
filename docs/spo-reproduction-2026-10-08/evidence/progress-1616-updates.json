@@ -1,0 +1,209 @@
+{
+  "evaluation": {
+    "test": {
+      "complete": true,
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 10017,
+      "metrics": {
+        "correct_frac": 0.47464935557240334,
+        "exact_match": 0.7702805155420773,
+        "exact_match_frac": 0.47464935557240334,
+        "majority_vote_acc": 0.5519332827899924,
+        "none_answer_extracted_frac_per_problem": 0.0008055344958301743,
+        "once_hit": 0.7702805155420773,
+        "unique_answer_count": 5.042456406368461
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__100/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_100/test__0__1/log.json",
+      "metric_sha256": "2596f2825cf88574b5abc546aafda45d2d9cce6c83f5c0154e45b9e6e4ad90d0",
+      "questions_solved_at_least_once": 1016,
+      "base_delta_pp": 7.690485216072783,
+      "base_question_paired_se_pp": 0.6845650845292944,
+      "previous1456_delta_pp": 0.1516300227445034,
+      "previous1456_question_paired_se_pp": 0.379610404578489
+    },
+    "validation": {
+      "complete": true,
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3694,
+      "metrics": {
+        "correct_frac": 0.6189678284182306,
+        "exact_match": 0.8873994638069705,
+        "exact_match_frac": 0.6189678284182306,
+        "majority_vote_acc": 0.710455764075067,
+        "none_answer_extracted_frac_per_problem": 0.0006702412868632708,
+        "once_hit": 0.8873994638069705,
+        "unique_answer_count": 3.812332439678284
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__100/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_100/validation__0__1/log.json",
+      "metric_sha256": "f4e719eb6707d97335ad3b6e4894cb1d534d1e6efd41f485ed8d11c20eebc5ad",
+      "questions_solved_at_least_once": 331
+    },
+    "train": {
+      "complete": true,
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4086,
+      "metrics": {
+        "correct_frac": 0.686491935483871,
+        "exact_match": 0.9032258064516129,
+        "exact_match_frac": 0.686491935483871,
+        "majority_vote_acc": 0.782258064516129,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9032258064516129,
+        "unique_answer_count": 3.588709677419355
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__100/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_100/train__0__1/log.json",
+      "metric_sha256": "de69a79bea8a60f9f08df957497acc081d4fe65b615c5b75c911d52f5f59da16",
+      "questions_solved_at_least_once": 336,
+      "limit": "Training subset, not held-out accuracy.",
+      "checked_utc": "2026-10-08T17:03:47.881630+00:00"
+    },
+    "native_iteration_label": 100,
+    "completed_collections": 101,
+    "optimizer_updates": 1616
+  },
+  "training": {
+    "optimizer_updates": 1616,
+    "completed_collections": 101,
+    "new_updates_since_last_review": 96,
+    "latest_collection": {
+      "iteration": 100,
+      "episodes": 512,
+      "terminal_rewards": {
+        "0.0": 157,
+        "1.0": 355
+      },
+      "all512_native_rewards_match": true,
+      "unfinished_responses": 0,
+      "finite": {
+        "w_actLogp/advantages": {
+          "count": 49735,
+          "nonfinite": 0
+        },
+        "w_actLogp/actor_shifted_log_probs": {
+          "count": 90879,
+          "nonfinite": 0
+        },
+        "w_actLogp/ref_shifted_log_probs": {
+          "count": 90879,
+          "nonfinite": 0
+        },
+        "w_refLogp/advantages": {
+          "count": 49735,
+          "nonfinite": 0
+        },
+        "w_refLogp/ref_shifted_log_probs": {
+          "count": 90879,
+          "nonfinite": 0
+        }
+      },
+      "example": {
+        "query_text": "[MATH_TASK] Problem:\nJanice needs to go to watch a movie in 2 hours. before she could leave, she needs to finish her homework which takes 30 minutes; clean her room which takes half as long as her homework; walk the dog which takes 5 minutes more than making homework; take out the trash which takes 1/6 of the time it takes her to do the homework. How many more minutes do Janice have left before the movie starts?\n\nSolution:",
+        "response_text": "\nJanice finishes her homework in 30/2=15 minutes\nIt takes 30+5=35 minutes to clean her room\nIt takes 30/6=5 minutes to take out the trash\nIn total, it will take 30+15+35+5=95 minutes to finish all the tasks\nJanice has 2*60=120 minutes to watch the movie\nJanice will be left with 120-95=25 minutes\n#### 25\n",
+        "score": 0,
+        "is_unfinished_response": false
+      },
+      "example_ground_truth": "35",
+      "example_interpretation": "Response mislabels activities and incorrectly adds 30+15+35+5 as 95 instead of 85; gives 25 instead of 35 remaining minutes and correctly receives zero reward."
+    },
+    "log_evidence": "Iteration 100: Training:  10%|█         | 1616/16000 [00:39<05:48, 41.28it/s, advantages/mean=-0.05, advantages/std=0.353, advantages/close_to_zero_perc=0, rewards/mean=0.0071, num_tokens=1549.75, actor/approx_kl=0.78, actor/policy_kl=0.145, actor/clip_frac=0.179, actor/ratio=1.04, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=4, actor/pg_losses1_anomalies__total_anomalies=4, actor/ref_kl_loss=0.000684, non_score_rewards=0, kls=6.84, kl_coef=0.0001, actor/loss=-0.0145, actor/grad_norm=11.7, actor/lr=9.27e-7, epoch=2, step=1616, actor/ds_step=1616]",
+    "approximate_kl_by_completed_iteration": {
+      "95": 0.194,
+      "96": 0.14,
+      "97": 0.274,
+      "98": 0.143,
+      "99": 0.207,
+      "100": 0.78
+    },
+    "failure_marker_counts": {
+      "Traceback (most recent": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    },
+    "latest_loss": -0.0145,
+    "gradient_norm": 11.7,
+    "approximate_kl": 0.78,
+    "policy_kl": 0.145,
+    "clip_fraction": 0.179,
+    "lr": 9.27e-7,
+    "loss_nan": 0,
+    "loss_inf": 0,
+    "kl_interpretation": "Last completed-batch approximate KL at iteration 100 is 0.78, above iterations 95–99 (0.194, 0.14, 0.274, 0.143, 0.207). Earlier iteration 90 was 0.674 with subsequent lower snapshots. Gradients and log probabilities remain finite. These changing-batch values merit monitoring, not a claim of monotonic drift or a recipe change."
+  },
+  "checkpoint": {
+    "native1600": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0100--epoch_2.00--step_1600",
+      "files": 10,
+      "bytes": 17600911844,
+      "trainer_state": {
+        "global_step": 1600,
+        "epoch": 2,
+        "iteration": 100
+      }
+    },
+    "protected1280_sizes_unchanged": true,
+    "prior_full_hash_verification_epoch": 1791473699.58637,
+    "new_copy_full_hash_or_deletion": false,
+    "decision": "Protected 160/320/640/1280 retained; no copy, move or deletion. Next coarse protection at 2560 or earlier interruption risk after subtree-quota/retention review."
+  },
+  "storage_available_bytes": {
+    "/home/atowell": 644624492893,
+    "/project/alex_phd": 16606624059
+  },
+  "result_receipt_absent": true,
+  "observer_status_checked_at": 1791478872.532935,
+  "checked_utc": "2026-10-08T17:03:47.881630+00:00",
+  "review_id": "review-1791478811-6d80de7d",
+  "attempt": "spo-historical-resume160-attempt3",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "source_worktree_clean": true,
+  "owner": {
+    "pid": 2089329,
+    "start_ticks": 1325581494,
+    "scoped_pid": 2089332,
+    "trainer_pid": 2089534,
+    "authenticated": true,
+    "unchanged": true,
+    "new_gpu_job": false,
+    "deadline_epoch": 1791608973
+  },
+  "observer": {
+    "pid": 2100371,
+    "active": true,
+    "checked_epoch": 1791478872.532935,
+    "stop_present": false
+  },
+  "quota": {
+    "remaining_percent": 23,
+    "checked_utc": "2026-10-08T17:00:29.881191+00:00",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "legacy_sampler_labels_not_policy": true
+  },
+  "interpretation": "Scheduled 1616-update test: 10017/21104 = 47.46494%, +7.69049 pp versus matched base and +0.15163 pp versus 1456. Validation: 3694/5968 = 61.89678%, 32 more correct. Continued early learning in one resumed ancestry, not completed reproduction. The latest test increment is small relative to its descriptive question-paired SE (0.37961 pp), not separate evidence of a reliable improvement or a plateau. Once-in-16 coverage changes 1015 to 1016/1319, distinct answers 5.14102 to 5.04246; no established diversity mechanism.",
+  "decision": "Continue the same exclusive owner and recovered scientific recipe toward fixed 690 collections / 11040 updates. Retain every scheduled score and earlier failures; no favorable checkpoint selection or test-driven tuning. Watch approximate KL across subsequent batches alongside gradients, clipping and prescribed evaluations.",
+  "ranked_followups": [
+    "Review the next prescribed evaluation, native rewards, finite gradients, approximate KL and question coverage without changing the training recipe.",
+    "Keep protected 1280 recovery state. Next coarse full-state protection at 2560 or earlier interruption risk after subtree-quota/retention checks.",
+    "Use prepared fixed-690 evaluation only after the prescribed endpoint and whole-owner/GPU release.",
+    "Prepare matched GRPO only behind its existing reward/provenance fixture; do not displace the live SPO owner."
+  ],
+  "presentation_decision": "Update the public SPO report and evidence with the scheduled 1616-update result. Keep the prior RLM lesson deck unchanged: this incomplete math reproduction establishes neither full paper reproduction nor RLM transfer.",
+  "limits": "One resumed training ancestry, no independent training-seed replication. Question-paired standard errors are descriptive, not training-seed uncertainty. Repeated native test monitoring is development-exposed. Native 1600 full state differs from evaluated 1616 weights; protected 1280 reuses prior full-hash verification plus current size checks. Exact RNG continuity, historical source commit and author selection rationale remain unresolved. Train subset 4086/5952 = 68.64919% is not held-out. Author-weight reference is not our learning gain. GitHub publication is not a model-weight backup.",
+  "preserved_attempts": {
+    "base_reference": "Native evaluation complete; launcher exit 2 after evaluation.",
+    "author_reference": "Complete, exit 0.",
+    "training_attempt1": "OOM before optimizer updates, exit 1, not a score.",
+    "training_attempt2": "Interrupted after 176 updates, exit 143; resumed from protected 160, not an independent seed."
+  }
+}
