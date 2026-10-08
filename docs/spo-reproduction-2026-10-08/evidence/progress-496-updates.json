@@ -1,0 +1,175 @@
+{
+  "review_id": "review-1791459015-d5b79402",
+  "checked_utc": "2026-10-08T11:36:00Z",
+  "attempt": "spo-historical-resume160-attempt3",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "source_worktree_clean": true,
+  "evaluation": {
+    "native_iteration_label": 30,
+    "completed_collections": 31,
+    "optimizer_updates": 496,
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 9193,
+      "metrics": {
+        "once_hit": 0.755117513267627,
+        "exact_match": 0.755117513267627,
+        "correct_frac": 0.4356046247156937,
+        "exact_match_frac": 0.4356046247156937,
+        "majority_vote_acc": 0.5216072782410918,
+        "unique_answer_count": 5.663381349507202,
+        "none_answer_extracted_frac_per_problem": 0.002227065959059894
+      },
+      "all_seven_native_metrics_regraded": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__30/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_30/test__0__1/log.json",
+      "metric_sha256": "56f1769981c5ce903c6bb6fb8c0a7266cc1abebb6062e98814b46d4a6df9ea75",
+      "base_delta_pp": 3.7860121304018195,
+      "base_question_paired_se_pp": 0.5268062377341064,
+      "previous336_delta_pp": 1.1230098559514785,
+      "previous336_question_paired_se_pp": 0.3565720767937401,
+      "questions_solved_at_least_once": 996
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3398,
+      "metrics": {
+        "once_hit": 0.8445040214477212,
+        "exact_match": 0.8445040214477212,
+        "correct_frac": 0.5693699731903485,
+        "exact_match_frac": 0.5693699731903485,
+        "majority_vote_acc": 0.675603217158177,
+        "unique_answer_count": 4.361930294906166,
+        "none_answer_extracted_frac_per_problem": 0.0015080428954423592
+      },
+      "all_seven_native_metrics_regraded": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__30/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_30/validation__0__1/log.json",
+      "metric_sha256": "ff9a9be9b3f1a3b0cb78f82c2514f09664d6ca05abc60990cd4b3afa80b4d373"
+    },
+    "train_subset": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3784,
+      "metrics": {
+        "once_hit": 0.9059139784946236,
+        "exact_match": 0.9059139784946236,
+        "correct_frac": 0.635752688172043,
+        "exact_match_frac": 0.635752688172043,
+        "majority_vote_acc": 0.7419354838709677,
+        "unique_answer_count": 4.239247311827957,
+        "none_answer_extracted_frac_per_problem": 0.0005040322580645161
+      },
+      "all_seven_native_metrics_regraded": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__30/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_30/train__0__1/log.json",
+      "metric_sha256": "80990cee46c750dfbba0626110b3b4ab6c5ac9dfff822cde8f2371ad4f729061",
+      "limit": "Training-split diagnostic, not held-out accuracy."
+    },
+    "method": "Original split question/gold identities and coverage checked, 16 saved responses per question; all seven metrics recomputed with native GSM8K evaluator.",
+    "limits": "One resumed training ancestry, not independent seeds. Paired SEs are descriptive question-level uncertainty, not seed uncertainty. Repeated test exposure is retained; no checkpoint or recipe selection."
+  },
+  "training": {
+    "optimizer_updates": 496,
+    "completed_collections": 31,
+    "latest_loss": -0.0381,
+    "gradient_norm": 13.6,
+    "approximate_kl": 0.181,
+    "policy_kl": 0.107,
+    "clip_fraction": 0.227,
+    "ratio": 1.01,
+    "lr": 9.99e-7,
+    "ref_kl_loss": 0.000393,
+    "kls": 3.93,
+    "loss_nan": 0,
+    "loss_inf": 0,
+    "failure_markers": [],
+    "latest_collection": {
+      "iteration": 30,
+      "episodes": 512,
+      "terminal_rewards": {
+        "1.0": 335,
+        "0.0": 177
+      },
+      "all512_native_rewards_match": true,
+      "finite_values": {
+        "w_actLogp/advantages": {
+          "count": 45461,
+          "nonfinite": 0
+        },
+        "w_actLogp/ref_shifted_log_probs": {
+          "count": 85637,
+          "nonfinite": 0
+        },
+        "w_actLogp/actor_shifted_log_probs": {
+          "count": 85637,
+          "nonfinite": 0
+        },
+        "w_refLogp/advantages": {
+          "count": 45461,
+          "nonfinite": 0
+        },
+        "w_refLogp/ref_shifted_log_probs": {
+          "count": 85637,
+          "nonfinite": 0
+        }
+      },
+      "example": {
+        "response_text": "\nHe has a total of 518 + 476 = 994 questions to complete.\nHe should aim to complete 994 / 7 = 142 questions each day.\n#### 142\n",
+        "score": 1,
+        "is_unfinished_response": false
+      }
+    }
+  },
+  "owner": {
+    "pid": 2089329,
+    "start_ticks": 1325581494,
+    "scoped_pid": 2089332,
+    "trainer_pid": 2089534,
+    "deadline_epoch": 1791608973,
+    "unchanged": true
+  },
+  "quota": {
+    "remaining_percent": 26,
+    "checked_utc": "2026-10-08T11:30:37.853998Z",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "storage_available_bytes": {
+    "/home/atowell": 691096507215,
+    "/project/alex_phd": 16816313285
+  },
+  "checkpoint": {
+    "native480": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0030--epoch_2.00--step_0480",
+      "files": 10,
+      "total_bytes": 17600911843,
+      "trainer_state": {
+        "global_step": 480,
+        "epoch": 2,
+        "iteration": 30
+      },
+      "deepspeed_global_steps": 480,
+      "skipped_steps": 0,
+      "scheduler_last_batch_iteration": 479,
+      "protected320_sizes_unchanged": true,
+      "owner_verified": true,
+      "observer_fresh": true
+    },
+    "external_protected_updates": 320,
+    "external_manifest": "checkpoint-320-preservation.json",
+    "no_copy_or_deletion_this_review": true,
+    "decision": "Keep the already protected160 and320 copies. Inspect/protect a later full640 state outside native cleanup, checking subtree quotas first; avoid unbounded17.6GB copies each scheduled evaluation. Native480 is not separately backed up or fully rehashed in this review.",
+    "limit": "Native cleaner can strip older full state; externally protected320 remains recovery point. Exact RNG continuity is unproven."
+  },
+  "interpretation": "Scheduled496-update test43.56046%, +3.78601pp over matched base and+1.12301pp over336, with validation rising to56.93700%. Supports continued early learning, not full paper replication. Once-in16 coverage dips from1013/1319 to996/1319 and unique answers from5.84989 to5.66338. Concentration or sampling variation are possible; this does not establish lost capability. Pass@1 remains the comparison metric. Changing-question rollout rewards and higher KL/clip snapshots are diagnostics, not matched learning curves.",
+  "decision": "Continue unchanged source, scientific recipe, fixed690/11040 endpoint and exclusive owner. Keep all evaluations. Next review checks real responses, optimizer progress and later scheduled metrics without test-guided recipe changes.",
+  "ranked_followups": [
+    "Continue same owner and prescribed schedule; review next scheduled evaluation and KL/clip trend.",
+    "Inspect and protect later full640 recovery state within actual subtree quotas; existing320 backup remains safe outside cleaner.",
+    "Prepared fixed690 evaluation only after endpoint verification and entire owner/GPU departure.",
+    "Matched GRPO remains behind existing reward/provenance fixture; no competing GPU owner."
+  ],
+  "presentation_decision": "Update public SPO report and evidence, including both accuracy and once-in16 coverage. Older RLM-lesson deck unchanged; no completed reproduction claim."
+}
