@@ -1,0 +1,156 @@
+{
+  "review_id": "review-1791456012-312c9c41",
+  "checked_utc": "2026-10-08T10:44:00Z",
+  "attempt": "spo-historical-resume160-attempt3",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "source_worktree_clean": true,
+  "evaluation": {
+    "native_iteration_label": 20,
+    "completed_collections": 21,
+    "optimizer_updates": 336,
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 8956,
+      "correct_frac": 0.42437452615617893,
+      "all_seven_native_metrics_regraded": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__20/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_20/test__0__1/log.json",
+      "metric_sha256": "e03968c0b9e802b67a96c19fc573e2d3d47d30027d8e243aa91e6ec7b20f83f1",
+      "base_delta_pp": 2.663002274450341,
+      "base_question_paired_se_pp": 0.4608167874027352,
+      "resumed176_delta_pp": 1.1940864291129643,
+      "resumed176_question_paired_se_pp": 0.36600801720501014
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3316,
+      "correct_frac": 0.5556300268096515,
+      "all_seven_native_metrics_regraded": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__20/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_20/validation__0__1/log.json",
+      "metric_sha256": "a3b06d98015934c5d0b4b55ea36a87d41458c2643a2ee19e14849204c86aa60b"
+    },
+    "train_subset": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3741,
+      "correct_frac": 0.6285282258064516,
+      "all_seven_native_metrics_regraded": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__20/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_20/train__0__1/log.json",
+      "metric_sha256": "d622cc2bfe90130295f909c68b65755c88e8359033a353b18f0221d1bbd4980b",
+      "limit": "Training subset, not held-out improvement."
+    },
+    "method": "Verify original split question/gold identity, unique coverage and16 saved answers per question. Invoke native GSM8K.evaluate_predictions; all seven metrics exactly agree. Mean fraction correct, not best of16.",
+    "limits": "One resumed training ancestry, not independent seeds. Question-paired standard errors are descriptive; test has repeated development exposure and is not used for checkpoint or recipe selection."
+  },
+  "training": {
+    "optimizer_updates": 336,
+    "completed_collections": 21,
+    "new_updates_since_last_review208": 128,
+    "latest_iteration": 20,
+    "loss": -0.0307,
+    "gradient_norm": 10.2,
+    "approximate_kl": 0.0387,
+    "clip_fraction": 0.138,
+    "lr": 9.42e-7,
+    "loss_nan": 0,
+    "loss_inf": 0,
+    "latest_collection": {
+      "terminal_rewards": {
+        "0.0": 232,
+        "1.0": 280
+      },
+      "all512_native_rewards_rechecked": true,
+      "nonfinite": {
+        "w_actLogp/advantages": {
+          "count": 50186,
+          "nonfinite": 0
+        },
+        "w_actLogp/ref_shifted_log_probs": {
+          "count": 92194,
+          "nonfinite": 0
+        },
+        "w_actLogp/actor_shifted_log_probs": {
+          "count": 92194,
+          "nonfinite": 0
+        },
+        "w_refLogp/advantages": {
+          "count": 50186,
+          "nonfinite": 0
+        },
+        "w_refLogp/ref_shifted_log_probs": {
+          "count": 92194,
+          "nonfinite": 0
+        }
+      },
+      "example": {
+        "response_text": "\nHe earned $600.00 + $250.00 = $850.00\nHe made $150.00 + $150.00 = $300.00 from selling video games and odd jobs.\nHe will save $850.00 x 40% = $340.00\n#### 340\n",
+        "score": 0,
+        "is_unfinished_response": false
+      }
+    },
+    "failure_markers": [],
+    "log_evidence": "Iteration 20: Training:   2%|▏         | 336/16000 [00:38<29:39,  8.80it/s, advantages/mean=0.0372, advantages/std=0.385, advantages/close_to_zero_perc=0, rewards/mean=0.00615, num_tokens=1421.75, actor/approx_kl=0.0387, actor/policy_kl=0.0241, actor/clip_frac=0.138, actor/ratio=1.01, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2.75, actor/pg_losses1_anomalies__total_anomalies=2.75, actor/ref_kl_loss=0.000174, non_score_rewards=0, kls=1.74, kl_coef=0.0001, actor/loss=-0.0307, actor/grad_norm=10.2, actor/lr=9.42e-7, epoch=2, step=336, actor/ds_step=336]"
+  },
+  "owner": {
+    "pid": 2089329,
+    "start_ticks": 1325581494,
+    "scoped_pid": 2089332,
+    "trainer_pid": 2089534,
+    "deadline_epoch": 1791608973,
+    "unchanged": true
+  },
+  "quota": {
+    "remaining_percent": 26,
+    "checked_utc": "2026-10-08T10:40:30.126470Z",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "storage": {
+    "/home/atowell": {
+      "limit": 1099511627776,
+      "used": 389773517594
+    },
+    "/project/alex_phd": {
+      "limit": 1099511627776,
+      "used": 1082483110779
+    }
+  },
+  "interpretation": "The scheduled336-update test improves to42.43745%, +2.66300pp over matched base and+1.19409pp over resumed176. Validation rises from54.05496% to55.56300%; different split, no matched base validation. Consistent with continued learning, not proof of the full paper effect or a reason to change the recipe. Latest rollout reward is lower than the previously inspected collection because questions change; it is not a matched learning curve.",
+  "decision": "Continue unchanged scientific recipe and same GPU owner toward fixed690/11040updates. Keep all prior evaluations; no favorable selection. Protect complete320 full checkpoint in home store; maintain initial160 plus bounded latest recovery point.",
+  "ranked_followups": [
+    "Next scheduled later evaluation and uninterrupted recipe continuation.",
+    "Verify/protect completed full320 recovery state; quota-aware bounded backup retention.",
+    "Prepared fixed690 evaluation only after endpoint/owner release. GRPO comparison remains behind its existing reward/provenance audit, not ready for an advantage-only claim."
+  ],
+  "presentation_decision": "Update the public SPO report and evidence table. Keep the older RLM-lesson deck unchanged until a completed reproduction or material limitation changes its narrative.",
+  "checkpoint": {
+    "updates": 320,
+    "all10_sha256_verified": true,
+    "manifest": "checkpoint-320-preservation.json",
+    "source": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0020--epoch_2.00--step_0320",
+    "preserved": "/home/atowell/research-runs/spo-reproduction-20261008/preserved-checkpoints/attempt3/ckpt--iter_0020--epoch_2.00--step_0320",
+    "verified_epoch": 1791456180.1032872,
+    "total_bytes": 17600911843,
+    "trainer_state": {
+      "global_step": 320,
+      "epoch": 2,
+      "iteration": 20
+    },
+    "deepspeed_state": {
+      "global_steps": 320,
+      "global_samples": 20480,
+      "skipped_steps": 0,
+      "dp_world_size": 1,
+      "mp_world_size": 1,
+      "ds_version": "0.14.1",
+      "scheduler": {
+        "last_batch_iteration": 319
+      }
+    },
+    "retention": "Keep initial160 and latest320 recovery points; do not accumulate every full checkpoint indefinitely.",
+    "limitations": "Protects from native checkpoint cleaner, not an independent disaster backup or proof of RNG continuity."
+  }
+}

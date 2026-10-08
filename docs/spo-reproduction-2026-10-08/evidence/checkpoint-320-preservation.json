@@ -1,0 +1,78 @@
+{
+  "source": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0020--epoch_2.00--step_0320",
+  "preserved": "/home/atowell/research-runs/spo-reproduction-20261008/preserved-checkpoints/attempt3/ckpt--iter_0020--epoch_2.00--step_0320",
+  "total_bytes": 17600911843,
+  "files": [
+    {
+      "path": "actor/global_step320/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt",
+      "bytes": 13200600768,
+      "sha256": "302cad70cace2e262c4b9981dc552c6402fb4bcd552fdd9f870483b2ae9e54df"
+    },
+    {
+      "path": "actor/global_step320/mp_rank_00_model_states.pt",
+      "bytes": 2200157624,
+      "sha256": "8ec83eafd99a015de79f3e78e1ef7f0e99f9fb06cb276c26e3acddded7bfa1ed"
+    },
+    {
+      "path": "actor/latest",
+      "bytes": 14,
+      "sha256": "289ea83a4422c40497a3e9ea46ce2f5770c6c40a9cf0ee410aebc08d01952b42"
+    },
+    {
+      "path": "actor/zero_to_fp32.py",
+      "bytes": 25314,
+      "sha256": "47e22c3e2e9c55705ff72102ffd1146b607e80880f2011ced5bc969d11ea7b05"
+    },
+    {
+      "path": "custom_checkpoint_0.pkl",
+      "bytes": 976,
+      "sha256": "2c6a96dbeba24f571503428ceb307080b8a0fa34e2568251f64f929dc89d5646"
+    },
+    {
+      "path": "custom_checkpoint_10.pkl",
+      "bytes": 980,
+      "sha256": "aa20a5b959b29a4a53e33f6f7d13092fea8b5a5ef79b8218d989e7b4e25602e2"
+    },
+    {
+      "path": "custom_checkpoint_11.pkl",
+      "bytes": 916,
+      "sha256": "48cbca448331d0383454ff77c31f5693f196fe4961f361ad19cfa5148011461f"
+    },
+    {
+      "path": "hf_pretrained/config.json",
+      "bytes": 792,
+      "sha256": "fa257c0a935dff5c0136479348d593170143e4318cb30638b35206a649d2e0bc"
+    },
+    {
+      "path": "hf_pretrained/generation_config.json",
+      "bytes": 111,
+      "sha256": "8d7242f52ed9f3d40ab624ab7288d1db274f25255bd29571caa4862664d7fc80"
+    },
+    {
+      "path": "hf_pretrained/pytorch_model.bin",
+      "bytes": 2200124348,
+      "sha256": "5e7d6c46eb6e81488c42a262bcd3d1c42ad0c1794295962d950918566f1ae23a"
+    }
+  ],
+  "trainer_state": {
+    "global_step": 320,
+    "epoch": 2,
+    "iteration": 20
+  },
+  "deepspeed_state": {
+    "global_steps": 320,
+    "global_samples": 20480,
+    "skipped_steps": 0,
+    "dp_world_size": 1,
+    "mp_world_size": 1,
+    "ds_version": "0.14.1",
+    "scheduler": {
+      "last_batch_iteration": 319
+    }
+  },
+  "verified_epoch": 1791456180.1032872,
+  "home_quota_free_before_bytes": 709733615328,
+  "method": "Copy only completed full320 state into home research store; source size and mtime stable; all10 source and preserved SHA256 hashes and sizes match; no live files modified.",
+  "retention": "Keep initial160 and latest320 recovery points; do not accumulate every full checkpoint indefinitely.",
+  "limitations": "Protects from native checkpoint cleaner, not an independent disaster backup or proof of RNG continuity."
+}
