@@ -1,0 +1,192 @@
+{
+  "checked_utc": "2026-10-08T16:18:30Z",
+  "evaluation": {
+    "test": {
+      "complete": true,
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 9985,
+      "metrics": {
+        "correct_frac": 0.4731330553449583,
+        "exact_match": 0.7695223654283548,
+        "exact_match_frac": 0.4731330553449583,
+        "majority_vote_acc": 0.5549658832448825,
+        "none_answer_extracted_frac_per_problem": 0.0011846095526914329,
+        "once_hit": 0.7695223654283548,
+        "unique_answer_count": 5.1410159211523885
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__90/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_90/test__0__1/log.json",
+      "metric_sha256": "b119ae860c2752827d74bbccdaa3f8d773e37abc9a848595b0cb46ce2094e0b0",
+      "questions_solved_at_least_once": 1015,
+      "base_delta_pp": 7.5388551933282795,
+      "base_question_paired_se_pp": 0.6578843844092888,
+      "previous1296_delta_pp": 0.706027293404094,
+      "previous1296_question_paired_se_pp": 0.38556995682428635
+    },
+    "validation": {
+      "complete": true,
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3662,
+      "metrics": {
+        "correct_frac": 0.6136058981233244,
+        "exact_match": 0.8820375335120644,
+        "exact_match_frac": 0.6136058981233244,
+        "majority_vote_acc": 0.710455764075067,
+        "none_answer_extracted_frac_per_problem": 0.0013404825737265416,
+        "once_hit": 0.8820375335120644,
+        "unique_answer_count": 3.8900804289544237
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__90/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_90/validation__0__1/log.json",
+      "metric_sha256": "75493fff669f8b6301568d704eef9889a78d94978c4ebaf134609ebb54bf5797",
+      "questions_solved_at_least_once": 329
+    },
+    "train": {
+      "complete": true,
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4084,
+      "metrics": {
+        "correct_frac": 0.6861559139784946,
+        "exact_match": 0.9193548387096774,
+        "exact_match_frac": 0.6861559139784946,
+        "majority_vote_acc": 0.7795698924731183,
+        "none_answer_extracted_frac_per_problem": 0.00016801075268817206,
+        "once_hit": 0.9193548387096774,
+        "unique_answer_count": 3.543010752688172
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__90/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_90/train__0__1/log.json",
+      "metric_sha256": "feb41eded39dfa177911579549eb27c329a13a35d29bd78124055290cc0a2fe2",
+      "questions_solved_at_least_once": 342,
+      "limit": "Training subset, not held-out accuracy."
+    },
+    "native_iteration_label": 90,
+    "completed_collections": 91,
+    "optimizer_updates": 1456
+  },
+  "training": {
+    "optimizer_updates": 1456,
+    "completed_collections": 91,
+    "new_updates_since_last_review": 80,
+    "latest_collection": {
+      "iteration": 90,
+      "episodes": 512,
+      "terminal_rewards": {
+        "1.0": 361,
+        "0.0": 151
+      },
+      "all512_native_rewards_match": true,
+      "unfinished_responses": 0,
+      "finite": {
+        "w_actLogp/advantages": {
+          "count": 49628,
+          "nonfinite": 0
+        },
+        "w_actLogp/actor_shifted_log_probs": {
+          "count": 93780,
+          "nonfinite": 0
+        },
+        "w_actLogp/ref_shifted_log_probs": {
+          "count": 93780,
+          "nonfinite": 0
+        },
+        "w_refLogp/advantages": {
+          "count": 49628,
+          "nonfinite": 0
+        },
+        "w_refLogp/ref_shifted_log_probs": {
+          "count": 93780,
+          "nonfinite": 0
+        }
+      },
+      "example": {
+        "query_text": "[MATH_TASK] Problem:\nVoldemort had his dinner and ate a piece of cake that has 110 calories. He also ate 1 pack of chips that contained 310 calories and drank a 500 ml bottle of coke that has 215 calories. His caloric intake for breakfast and lunch is 560 and 780 calories, respectively. If he has a 2500 calorie intake limit per day, how many calories can he still take?\n\nSolution:",
+        "response_text": "\nThe total calories from the chips and coke is 310 + 215 = 525 calories.\nThe total calories from breakfast and lunch is 560 + 780 = 1340 calories.\nThe total calories he has consumed so far is 525 + 1340 = 1865 calories.\nThe maximum calories he can still consume is 2500 - 1865 = 635 calories.\n#### 635\n",
+        "score": 0,
+        "is_unfinished_response": false
+      },
+      "example_ground_truth": "525",
+      "example_interpretation": "Response omits the110calorie cake; calculates635 instead of525 and correctly receives0."
+    },
+    "log_evidence": "Iteration 90: Training:   9%|▉         | 1456/16000 [00:41<06:54, 35.12it/s, advantages/mean=0.0673, advantages/std=0.344, advantages/close_to_zero_perc=0, rewards/mean=0.00639, num_tokens=1525.0, actor/approx_kl=0.674, actor/policy_kl=0.175, actor/clip_frac=0.218, actor/ratio=1.01, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=3.75, actor/pg_losses1_anomalies__total_anomalies=3.75, actor/ref_kl_loss=0.000719, non_score_rewards=0, kls=7.19, kl_coef=0.0001, actor/loss=-0.0285, actor/grad_norm=13, actor/lr=9.37e-7, epoch=2, step=1456, actor/ds_step=1456]",
+    "failure_marker_counts": {
+      "Traceback (most recent": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    },
+    "latest_loss": -0.0285,
+    "gradient_norm": 13,
+    "approximate_kl": 0.674,
+    "policy_kl": 0.175,
+    "clip_fraction": 0.218,
+    "lr": 9.37e-7,
+    "loss_nan": 0,
+    "loss_inf": 0
+  },
+  "checkpoint": {
+    "native1440": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0090--epoch_2.00--step_1440",
+      "files": 10,
+      "bytes": 17600911844,
+      "trainer_state": {
+        "global_step": 1440,
+        "epoch": 2,
+        "iteration": 90
+      }
+    },
+    "protected1280_sizes_unchanged": true,
+    "prior_full_hash_verification_epoch": 1791473699.58637,
+    "new_copy_full_hash_or_deletion": false,
+    "decision": "Protected160/320/640/1280 retained; no copy, move or deletion. Next coarse protection2560 or earlier interruption risk after quota/retention review."
+  },
+  "storage_available_bytes": {
+    "/home/atowell": 645585180811,
+    "/project/alex_phd": 16608938796
+  },
+  "result_receipt_absent": true,
+  "review_id": "review-1791476047-7dcf10d6",
+  "attempt": "spo-historical-resume160-attempt3",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "source_worktree_clean": true,
+  "owner": {
+    "pid": 2089329,
+    "start_ticks": 1325581494,
+    "scoped_pid": 2089332,
+    "trainer_pid": 2089534,
+    "authenticated": true,
+    "unchanged": true,
+    "new_gpu_job": false,
+    "deadline_epoch": 1791608973
+  },
+  "observer": {
+    "pid": 2100371,
+    "active": true,
+    "checked_epoch": 1791476169.1611602,
+    "stop_present": false
+  },
+  "quota": {
+    "remaining_percent": 23,
+    "checked_utc": "2026-10-08T16:14:25.314519+00:00",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "legacy_sampler_labels_not_policy": true
+  },
+  "interpretation": "Scheduled1456 test9985/21104=47.31331%, +7.53886pp vsbase and+0.70603pp vs1296. Validation3662/5968=61.36059%, +41correct. Continued early learning in one resumed ancestry, not full reproduction. Test once-in16 coverage1018->1015/1319 and distinctanswers5.25625->5.14102; single-answer accuracy gain is not broader question coverage or proof of a diversity mechanism.",
+  "decision": "Continue same exclusive owner and recovered scientific recipe toward fixed690/11040; retain all scheduled scores, including1296dip. No best-checkpoint selection or test-driven tuning. Watch elevated approximateKL across subsequent changing batches alongside gradients/clip and fixed evaluations; do not tune from one batch.",
+  "ranked_followups": [
+    "Inspect next prescribed evaluation and native rewards, finite gradients and coverage; latest approximateKL0.674 is higher but gradient13 finite, clip0.218 and noNaN/Inf/failure markers.",
+    "Keep protected1280 recovery state; next coarse protection2560 or earlier interruption risk after subtree-quota/retention review, no copy1440.",
+    "Prepared fixed690 evaluation only after verified endpoint and whole-owner/GPU release.",
+    "Matched GRPO remains behind its existing reward/provenance fixture; no competing GPU work."
+  ],
+  "presentation_decision": "Update public SPO report/evidence with scheduled test and validation gains. Prior RLM-lesson deck unchanged: incomplete math reproduction does not establish RLM transfer or completed paper reproduction.",
+  "limits": "One resumed training ancestry; no independent training-seed replication. Question-paired SEs descriptive, not training-seed uncertainty. Repeated native test monitoring is development-exposed. Native1440 fullstate differs from evaluated1456 weights; protected1280 reused prior fullhash verification plus current size checks. Exact RNG continuity and historical source/selection rationale unresolved. Train-subset evaluation completed and regraded during this review;68.61559% is not a held-out score."
+}
