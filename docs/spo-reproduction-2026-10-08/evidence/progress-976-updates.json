@@ -1,0 +1,192 @@
+{
+  "review_id": "review-1791467546-a879b003",
+  "checked_utc": "2026-10-08T13:56:00Z",
+  "attempt": "spo-historical-resume160-attempt3",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "source_worktree_clean": true,
+  "evaluation": {
+    "native_iteration_label": 60,
+    "completed_collections": 61,
+    "optimizer_updates": 976,
+    "test": {
+      "complete": true,
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 9674,
+      "metrics": {
+        "once_hit": 0.7740712661106899,
+        "exact_match": 0.7740712661106899,
+        "correct_frac": 0.4583965125094769,
+        "exact_match_frac": 0.4583965125094769,
+        "majority_vote_acc": 0.5451099317664898,
+        "unique_answer_count": 5.395754359363154,
+        "none_answer_extracted_frac_per_problem": 0.000900303260045489
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__60/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_60/test__0__1/log.json",
+      "metric_sha256": "0311151c259c7552da44bda3df6dc9637545ea1995246b5cc87a592c25bc788f",
+      "questions_solved_at_least_once": 1021,
+      "base_delta_pp": 6.0652009097801365,
+      "base_question_paired_se_pp": 0.6068213646897817,
+      "previous816_delta_pp": 0.6870735405610311,
+      "previous816_question_paired_se_pp": 0.384487154190326
+    },
+    "validation": {
+      "complete": true,
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3560,
+      "metrics": {
+        "once_hit": 0.8579088471849866,
+        "exact_match": 0.8579088471849866,
+        "correct_frac": 0.596514745308311,
+        "exact_match_frac": 0.596514745308311,
+        "majority_vote_acc": 0.6836461126005362,
+        "unique_answer_count": 4.037533512064343,
+        "none_answer_extracted_frac_per_problem": 0.0006702412868632708
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__60/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_60/validation__0__1/log.json",
+      "metric_sha256": "408858b870eb650e7004ddb3fd51e15d4df18ebdb993b1c7ca8f7f8fd60a6e53",
+      "questions_solved_at_least_once": 320
+    },
+    "train": {
+      "complete": true,
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3959,
+      "metrics": {
+        "once_hit": 0.9139784946236559,
+        "exact_match": 0.9139784946236559,
+        "correct_frac": 0.6651545698924731,
+        "exact_match_frac": 0.6651545698924731,
+        "majority_vote_acc": 0.7661290322580645,
+        "unique_answer_count": 3.9381720430107525,
+        "none_answer_extracted_frac_per_problem": 0.00016801075268817206
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__60/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_60/train__0__1/log.json",
+      "metric_sha256": "dc8e421696287792977cfedc62c0545831293d84b5d72f10864dd65a735f2e5a",
+      "limit": "Training subset, not held-out performance."
+    },
+    "method": "Original split question/gold identities and unique coverage checked, with 16 saved answers each and exact tree-child/candidate agreement. Native GSM8K.evaluate_predictions reproduces all seven saved metrics on all three splits.",
+    "limits": "One resumed training ancestry, not independent training seeds. Question-paired SEs are descriptive, not seed uncertainty. All scheduled scores retained; no test-driven checkpoint or recipe selection."
+  },
+  "training": {
+    "optimizer_updates": 976,
+    "completed_collections": 61,
+    "new_updates_since_last_review": 96,
+    "latest_loss": -0.0436,
+    "gradient_norm": 14.6,
+    "approximate_kl": 0.154,
+    "policy_kl": 0.0756,
+    "clip_fraction": 0.209,
+    "ratio": 1.01,
+    "ref_kl_loss": 0.000588,
+    "kls": 5.88,
+    "lr": 9.68e-7,
+    "loss_nan": 0,
+    "loss_inf": 0,
+    "failure_markers": [],
+    "latest_collection": {
+      "iteration": 60,
+      "episodes": 512,
+      "terminal_rewards": {
+        "1.0": 345,
+        "0.0": 167
+      },
+      "unfinished_responses": 0,
+      "all512_native_rewards_match": true,
+      "finite": {
+        "w_actLogp/advantages": {
+          "count": 50134,
+          "nonfinite": 0
+        },
+        "w_actLogp/actor_shifted_log_probs": {
+          "count": 92182,
+          "nonfinite": 0
+        },
+        "w_actLogp/ref_shifted_log_probs": {
+          "count": 92182,
+          "nonfinite": 0
+        },
+        "w_refLogp/advantages": {
+          "count": 50134,
+          "nonfinite": 0
+        },
+        "w_refLogp/ref_shifted_log_probs": {
+          "count": 92182,
+          "nonfinite": 0
+        }
+      },
+      "example": {
+        "query_text": "[MATH_TASK] Problem:\nVillage Foods sells good food at a fair price.  Their specialty is fresh vegetables.  If they get 500 customers per month, and each customer purchases 2 heads of lettuce for $1 each and 4 tomatoes for $0.5 apiece, then how much money, in dollars, will the store receive in sales of lettuce and tomatoes per month?\n\nSolution:",
+        "response_text": "\nThe total sales from lettuce will be 500 customers * 2 heads of lettuce * $1 per head of lettuce = $1000\nThe total sales from tomatoes will be 500 customers * 4 tomatoes * $0.50 per tomato = $1000\nThe total sales for the month will be $1000 + $1000 = $2000\n#### 2000\n",
+        "score": 1,
+        "is_unfinished_response": false
+      }
+    },
+    "next_collection": "Native iteration61 generated512 trajectories at13:55:58UTC; evaluations finished and same owner continues.",
+    "log_evidence": "Iteration60, epoch2: step=976, actor/ds_step=976; actor/loss=-0.0436, actor/grad_norm=14.6, actor/approx_kl=0.154, actor/policy_kl=0.0756, actor/clip_frac=0.209, actor/ratio=1.01, actor/lr=9.68e-7, loss NaN/Inf anomalies0."
+  },
+  "owner": {
+    "pid": 2089329,
+    "start_ticks": 1325581494,
+    "scoped_pid": 2089332,
+    "trainer_pid": 2089534,
+    "deadline_epoch": 1791608973,
+    "authenticated": true,
+    "unchanged": true,
+    "result_receipt_absent": true,
+    "new_gpu_job": false
+  },
+  "quota": {
+    "remaining_percent": 24,
+    "checked_utc": "2026-10-08T13:52:45.190634Z",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "storage_available_bytes": {
+    "/home/atowell": 668304442066,
+    "/project/alex_phd": 16614317569
+  },
+  "checkpoint": {
+    "native960": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0060--epoch_2.00--step_0960",
+      "files": 10,
+      "bytes": 17600911843,
+      "trainer_state": {
+        "global_step": 960,
+        "epoch": 2,
+        "iteration": 60
+      }
+    },
+    "protected_updates": 640,
+    "protected640_sizes_unchanged": true,
+    "manifest": "checkpoint-640-preservation.json",
+    "full_hash_verification_epoch": 1791462080.3531792,
+    "new_full_hash_check": false,
+    "no_copy_or_deletion": true,
+    "decision": "Keep protected160/320/640. Next coarse protection1280 or earlier interruption risk after checking subtree quotas and bounded retention.",
+    "limits": "Native960 differs from evaluated976 weights and is subject to native cleanup; protected640 outside cleaner is not proof of exact RNG continuity or independent disaster backup."
+  },
+  "interpretation": "Scheduled test45.83965%, +6.06520pp versus matched base and+0.68707pp versus816; validation59.65147% also rises. Continued early learning, not complete reproduction. Once-in16 test coverage1004->1021/1319 and unique answers5.32070->5.39575 both rise, inconsistent with a simple monotonic diversity-collapse account. Stochastic variation remains possible. Train subset66.51546% is not held-out.",
+  "decision": "Continue unchanged recovered scientific recipe under same exclusive owner toward fixed690/11040. Retain all comparisons without favorable checkpoint selection. Publish verified intermediate results and preserve failures and checkpoints.",
+  "ranked_followups": [
+    "Next prescribed evaluation and native reward/gradient/coverage diagnostics, without recipe changes.",
+    "Protect later full1280 recovery state, or earlier if interruption risk warrants, within actual subtree quotas.",
+    "Prepared fixed690 evaluation only after verified endpoint and whole owner/GPU release.",
+    "Matched GRPO remains behind its existing reward/provenance fixture; no competing GPU dispatch."
+  ],
+  "presentation_decision": "Update public SPO report and evidence together. Earlier RLM-lesson deck unchanged: this intermediate result strengthens learning evidence but does not establish completed reproduction or RLM transfer.",
+  "observer": {
+    "pid": 2100371,
+    "fresh": true,
+    "stop_present": false
+  }
+}
