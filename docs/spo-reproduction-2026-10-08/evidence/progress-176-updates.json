@@ -1,0 +1,119 @@
+{
+  "checked_utc": "2026-10-08T09:39:00Z",
+  "review_id": "review-1791450877-019c8484",
+  "attempt": "spo-historical-memory03-attempt2",
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "completed_collections": 11,
+  "optimizer_updates_at_evaluation": 176,
+  "native_evaluation_iteration_label": 10,
+  "evaluated_weights": "native/temp_ppo_checkpoints/ckpt--iter_0011--epoch_2.00--step_0176/hf_pretrained",
+  "test": {
+    "questions": 1319,
+    "responses": 21104,
+    "correct": 8694,
+    "correct_frac": 0.4119598180439727,
+    "all_seven_native_metrics_regraded": true,
+    "sha256": "4818c99dab8fc6f58388e55ace9688b646fe9b21eac4b5bd9eba84a74efccd37"
+  },
+  "matched_base": {
+    "correct": 8394,
+    "responses": 21104,
+    "correct_frac": 0.3977445034116755,
+    "all_seven_native_metrics_regraded": true
+  },
+  "validation": {
+    "questions": 373,
+    "responses": 5968,
+    "correct": 3247,
+    "correct_frac": 0.5440683646112601,
+    "all_seven_native_metrics_regraded": true,
+    "sha256": "67c067bc887d283e2517db59b46ec36620dc6bd278bbf327212ced88fc386b40"
+  },
+  "regrading_method": "Check original split question identities/gold answers, complete index sets,16saved candidates each; call official GSM8K.evaluate_predictions and assert all7metrics exactly.",
+  "delta_percentage_points": 1.4215314632297196,
+  "question_paired_se_percentage_points": 0.33153758776914377,
+  "uncertainty_scope": "Question-level descriptive uncertainty, not training-seed replication; no favorable checkpoint selection.",
+  "latest_training_metrics": {
+    "loss": -0.0407,
+    "gradient_norm": 13,
+    "approx_kl": 0.0281,
+    "clip_fraction": 0.14,
+    "lr": 8.37e-7,
+    "reported_loss_nan": 0,
+    "reported_loss_inf": 0
+  },
+  "latest_collection": {
+    "episodes": 512,
+    "positive": 299,
+    "zero": 212,
+    "unfinished_minus1": 1,
+    "finite_advantages": 48138,
+    "finite_actor_logprobs": 89362,
+    "finite_reference_logprobs": 89362,
+    "nonfinite_values": 0
+  },
+  "reward_audit_correction": {
+    "observed": "Iteration9 episode366: two #### markers, score-2, not unfinished.",
+    "fixture": "Native MATHRewardFunction.__call__ returned(-2,False) on exact saved response; matches trajectory and episode.",
+    "source": "math_episode_generator.py:53-56",
+    "correction": "The shared reward function applies -2 directly despite MC bypassing the parent generator penalty branch. Earlier audit implication was incomplete; documentation corrected, source untouched."
+  },
+  "non_evaluation_iteration_seconds": [
+    240.301,
+    375.639,
+    215.732,
+    283.342,
+    231.585,
+    277.262,
+    197.804,
+    270.534,
+    244.031
+  ],
+  "mean_seconds": 259.5811111111111,
+  "median_seconds": 244.031,
+  "runtime_inference": "Observed mean implies49.8hours for690collections before periodic evaluation; throughput may change. Original45hcap retained across resume, so continuation likely needed.",
+  "storage_incident": {
+    "project_limit_bytes": 1099511627776,
+    "observed_project_used_bytes": 1099798002779,
+    "trigger": "Root's17.6GBcheckpoint backup filled project quota; global df free space was misleading. Documentation writes failed. Only new backup relocated to home store; no unrelated artifacts deleted.",
+    "post_relocation_project_used_bytes": 1082197093808,
+    "home_limit_bytes": 1099511627776,
+    "home_used_before_migration_bytes": 351096477954
+  },
+  "interruption": {
+    "last_progress_utc": "2026-10-08T09:17:29Z",
+    "observation": "No new trainer updates/logs during evaluation cleanup; main thread waiting with only W&B service child. Quota incident coincident, precise internal stack unavailable because py-spy attach denied.",
+    "action": "Authenticated original queue owner TERM; scoped cleanup complete, exit143,no remaining owned processes or GPU jobs. Preserve as interrupted attempt, not scientific endpoint.",
+    "ended_epoch": 1791451816.7455134,
+    "recovery_interval": "No new training/scientific progress from evaluation cleanup around09:17:29 until resumed collection began09:32:07 (~14.6min), including stalled time, diagnosis, controller cleanup and restart. Old owner ended09:30:16; new launched09:31:44 (~88s between owners). Additional checkpoint reload cost about3min. Exact internal cause remains unproven."
+  },
+  "resume": {
+    "id": "spo-historical-resume160-attempt3",
+    "owner_pid": 2089329,
+    "owner_start_ticks": 1325581494,
+    "scoped_pid": 2089332,
+    "started_epoch": 1791451904.3480217,
+    "checkpoint_updates": 160,
+    "deadline_epoch": 1791608973,
+    "recipe_check": "Compiled configs identical after removing only output directory/experiment paths; same source,LR1000horizon,fixed690. No old evaluation/episode cache copied.",
+    "observer_link": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native",
+    "native_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native",
+    "limit": "Repeat collection10 from160. Interrupted176 result retained separately; neither count16repeated updates twice nor assume bitwise-identical continuation.",
+    "validation": "Native trainer loaded saved optimizer state and completed161–176updates; resumed iteration10 selected the same64question identities/order. Real scientific responses inspected; no new traceback/OOM. Not bitwise continuation: latest gradients/loss differ from interrupted branch.",
+    "latest_metrics": {
+      "optimizer_updates": 176,
+      "loss": -0.0421,
+      "gradient_norm": 12.8,
+      "lr": 8.37e-7,
+      "nan": 0,
+      "inf": 0
+    }
+  },
+  "interpretation": "Early positive benchmark signal, not full reproduction. Continue unchanged scientific recipe from verified full state after operational interruption.",
+  "quota": {
+    "checked_utc": "2026-10-08T09:38:20.829633Z",
+    "remaining_percent": 27,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  }
+}

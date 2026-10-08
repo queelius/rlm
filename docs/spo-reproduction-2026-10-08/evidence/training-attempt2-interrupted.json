@@ -1,0 +1,42 @@
+{
+  "argv": [
+    "/project/alex_phd/envs/spo-6c5f947/bin/deepspeed",
+    "--master_port",
+    "51009",
+    "--include",
+    "localhost:0",
+    "--no_local_rank",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/main.py",
+    "--configs",
+    "/project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-memory03.jsonnet",
+    "run_iteration_loop"
+  ],
+  "complete": false,
+  "cwd": "/project/alex_phd/research-cache/repos/SPO",
+  "deadline": 1791621274,
+  "effective_cap_seconds": 162000,
+  "ended": 1791451816.7455134,
+  "exit_code": 143,
+  "gpu_check_error": null,
+  "gpu_pids_after": [],
+  "id": "spo-historical-memory03-attempt2",
+  "marker_exists": false,
+  "owner_pid": 2049691,
+  "owner_start_ticks": 1325088403,
+  "pid": 2049694,
+  "scoped_cleanup": {
+    "child_returncode": -15,
+    "cleanup_initial_members": 3,
+    "owned_session": 2049695,
+    "remaining_owned_members": [],
+    "signal": 15,
+    "timed_out": false
+  },
+  "scoped_owner": "/project/alex_phd/runs/spo-reproduction-20261008/code-v1/scoped_session_owner.py",
+  "scoped_owner_sha256": "89c03da19120487d74823686b67cff358d77f39d0e9a491de2dba1d1dde3da5e",
+  "seconds": 162000,
+  "start_ticks": 1325088410,
+  "started": 1791446973.4385898,
+  "status": "command_incomplete_or_failed",
+  "success_marker": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-memory03-attempt2/native/checkpoints/final"
+}

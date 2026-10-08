@@ -1,0 +1,78 @@
+{
+  "checked_utc": "2026-10-08T09:20:00Z",
+  "source": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-memory03-attempt2/native/checkpoints/ckpt--iter_0010--epoch_2.00--step_0160",
+  "old_backup_path": "/project/alex_phd/runs/spo-reproduction-20261008/preserved-checkpoints/attempt2/ckpt--iter_0010--epoch_2.00--step_0160",
+  "preserved": "/home/atowell/research-runs/spo-reproduction-20261008/preserved-checkpoints/attempt2/ckpt--iter_0010--epoch_2.00--step_0160",
+  "resume_copy": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0010--epoch_2.00--step_0160",
+  "method": "All10 original and backup files initially SHA256-matched and source size/mtime stable; backup subsequently relocated to home research store after project quota filled. Original live checkpoint never relocated or modified. Full native checkpoint copied into a fresh resume directory.",
+  "total_bytes": 17600911843,
+  "trainer_state": {
+    "global_step": 160,
+    "epoch": 2,
+    "iteration": 10
+  },
+  "deepspeed_state": {
+    "global_steps": 160,
+    "global_samples": 10240,
+    "skipped_steps": 0,
+    "lr_scheduler_last_batch_iteration": 159,
+    "dp_world_size": 1,
+    "mp_world_size": 1,
+    "ds_version": "0.14.1"
+  },
+  "limitations": "Preserves model/optimizer/scheduler from native cleanup; exact RNG/bitwise continuation not established. Backup and source share Ceph infrastructure despite separate quotas. Evaluated176update weights are a different temporary checkpoint.",
+  "files": [
+    {
+      "path": "actor/global_step160/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt",
+      "bytes": 13200600768,
+      "sha256": "7fbe87e9538c35a5c3acace59760cb2893cc24ef141fae7caf60ae9f21f0a546"
+    },
+    {
+      "path": "actor/global_step160/mp_rank_00_model_states.pt",
+      "bytes": 2200157624,
+      "sha256": "ccb868276c139b2c58a16019be85eb7d58d73609d3fd77db22f32ee91331ab58"
+    },
+    {
+      "path": "actor/latest",
+      "bytes": 14,
+      "sha256": "e65b75f6ea73119ce95fa1c31be0f00c1b5460e95633bccb6c40748916cff344"
+    },
+    {
+      "path": "actor/zero_to_fp32.py",
+      "bytes": 25314,
+      "sha256": "47e22c3e2e9c55705ff72102ffd1146b607e80880f2011ced5bc969d11ea7b05"
+    },
+    {
+      "path": "custom_checkpoint_0.pkl",
+      "bytes": 976,
+      "sha256": "33d90bc40ef2619e45c95a928157e920c4e5d1b3e2a4e3dc5c0ed01db5319c6a"
+    },
+    {
+      "path": "custom_checkpoint_10.pkl",
+      "bytes": 980,
+      "sha256": "aa20a5b959b29a4a53e33f6f7d13092fea8b5a5ef79b8218d989e7b4e25602e2"
+    },
+    {
+      "path": "custom_checkpoint_11.pkl",
+      "bytes": 916,
+      "sha256": "48cbca448331d0383454ff77c31f5693f196fe4961f361ad19cfa5148011461f"
+    },
+    {
+      "path": "hf_pretrained/config.json",
+      "bytes": 792,
+      "sha256": "fa257c0a935dff5c0136479348d593170143e4318cb30638b35206a649d2e0bc"
+    },
+    {
+      "path": "hf_pretrained/generation_config.json",
+      "bytes": 111,
+      "sha256": "8d7242f52ed9f3d40ab624ab7288d1db274f25255bd29571caa4862664d7fc80"
+    },
+    {
+      "path": "hf_pretrained/pytorch_model.bin",
+      "bytes": 2200124348,
+      "sha256": "d1831a2303b19debc5c7f6f4cf354145c28a2041b7b45381cfa200d6a3eeda79"
+    }
+  ],
+  "post_relocation_verified_utc": "2026-10-08T09:38:00Z",
+  "post_relocation_all_ten_sha256_match": true
+}
