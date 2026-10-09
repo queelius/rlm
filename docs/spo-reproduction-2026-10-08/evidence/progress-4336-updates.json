@@ -1,0 +1,287 @@
+{
+  "review_id": "review-1791526491-3973670b",
+  "checked_utc": "2026-10-09T06:16:07.838164+00:00",
+  "campaign": "spo-reproduction-20261008",
+  "evaluation": {
+    "native_iteration_label": 270,
+    "completed_collections": 271,
+    "optimizer_updates": 4336,
+    "test": {
+      "complete": true,
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 10662,
+      "metrics": {
+        "correct_frac": 0.5052122820318423,
+        "exact_match": 0.77710386656558,
+        "exact_match_frac": 0.5052122820318423,
+        "majority_vote_acc": 0.5678544351781653,
+        "none_answer_extracted_frac_per_problem": 0.0006633813495072025,
+        "once_hit": 0.77710386656558,
+        "unique_answer_count": 4.605003790750569
+      },
+      "metric_sha256": "7f445ad4ae08b6b4bc7dcd686811d8e9519140538f320303071879f57fdabf7b",
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__270/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_270/test__0__1/log.json",
+      "all_original_identities_tree_candidates_and_seven_metrics_checked": true,
+      "delta_pp_vs4176": -0.5259666413949962,
+      "checked_utc": "2026-10-09T06:16:06.425490+00:00",
+      "base_delta_pp": 10.74677786201668,
+      "coverage": 1025,
+      "previous_question_paired_se_pp": 0.3504460539584339,
+      "question_changes": {
+        "improved": 316,
+        "worsened": 350,
+        "unchanged": 653
+      },
+      "base_question_paired_se_pp": 0.773518838277638
+    },
+    "validation": {
+      "complete": true,
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3819,
+      "metrics": {
+        "correct_frac": 0.6399128686327078,
+        "exact_match": 0.8820375335120644,
+        "exact_match_frac": 0.6399128686327078,
+        "majority_vote_acc": 0.7050938337801609,
+        "none_answer_extracted_frac_per_problem": 0.0005026809651474531,
+        "once_hit": 0.8820375335120644,
+        "unique_answer_count": 3.4128686327077746
+      },
+      "metric_sha256": "b8bd33c4df9ad00b36c3bc08feca7c1858898a9772f8fa06ae361a655a8a6b73",
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__270/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_270/validation__0__1/log.json",
+      "all_original_identities_tree_candidates_and_seven_metrics_checked": true,
+      "delta_pp_vs4176": 0.1675603217158177,
+      "checked_utc": "2026-10-09T06:16:07.641068+00:00"
+    },
+    "train": {
+      "complete": false,
+      "checked_utc": "2026-10-09T06:16:07.641194+00:00"
+    },
+    "checked_utc": "2026-10-09T06:16:07.641198+00:00"
+  },
+  "native_training": {
+    "checked_utc": "2026-10-09T06:16:07.838164+00:00",
+    "iteration": 270,
+    "completed_collections": 271,
+    "optimizer_updates": 4336,
+    "delta_updates": 96,
+    "terminal_rewards": {
+      "1.0": 394,
+      "0.0": 118
+    },
+    "all512_rewards_checked": true,
+    "finite": {
+      "w_actLogp/advantages": {
+        "count": 59837,
+        "nonfinite": 0
+      },
+      "w_actLogp/actor_shifted_log_probs": {
+        "count": 101477,
+        "nonfinite": 0
+      },
+      "w_actLogp/ref_shifted_log_probs": {
+        "count": 101477,
+        "nonfinite": 0
+      },
+      "w_refLogp/advantages": {
+        "count": 59837,
+        "nonfinite": 0
+      },
+      "w_refLogp/ref_shifted_log_probs": {
+        "count": 101477,
+        "nonfinite": 0
+      }
+    },
+    "recent_training_lines": [
+      "Iteration 267: Training:  27%|██▋       | 4288/16000 [00:41<01:52, 103.95it/s, advantages/mean=-0.0486, advantages/std=0.302, advantages/close_to_zero_perc=0, rewards/mean=0.00745, num_tokens=1678.0, actor/approx_kl=0.22, actor/policy_kl=0.087, actor/clip_frac=0.257, actor/ratio=1.05, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=1.5, actor/pg_losses1_anomalies__total_anomalies=1.5, actor/ref_kl_loss=0.00119, non_score_rewards=0, kls=11.9, kl_coef=0.0001, actor/loss=-0.0421, actor/grad_norm=12.3, actor/lr=7.55e-7, epoch=2, step=4288, actor/ds_step=4288]",
+      "Iteration 268: Training:  27%|██▋       | 4304/16000 [00:44<02:00, 96.94it/s, advantages/mean=-0.0236, advantages/std=0.327, advantages/close_to_zero_perc=0, rewards/mean=0.00613, num_tokens=1793.0, actor/approx_kl=0.148, actor/policy_kl=0.0854, actor/clip_frac=0.211, actor/ratio=1.02, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2.25, actor/pg_losses1_anomalies__total_anomalies=2.25, actor/ref_kl_loss=0.00126, non_score_rewards=0, kls=12.6, kl_coef=0.0001, actor/loss=-0.0286, actor/grad_norm=13.1, actor/lr=7.54e-7, epoch=2, step=4304, actor/ds_step=4304]",
+      "Iteration 269: Training:  27%|██▋       | 4320/16000 [00:41<01:52, 103.75it/s, advantages/mean=0.0291, advantages/std=0.315, advantages/close_to_zero_perc=0, rewards/mean=0.00546, num_tokens=2016.0, actor/approx_kl=0.312, actor/policy_kl=0.0936, actor/clip_frac=0.215, actor/ratio=1.07, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2, actor/pg_losses1_anomalies__total_anomalies=2, actor/ref_kl_loss=0.00119, non_score_rewards=0, kls=11.9, kl_coef=0.0001, actor/loss=-0.0077, actor/grad_norm=12.6, actor/lr=7.53e-7, epoch=2, step=4320, actor/ds_step=4320]",
+      "Iteration 270: Training:  27%|██▋       | 4336/16000 [00:41<01:52, 103.66it/s, advantages/mean=-0.0156, advantages/std=0.313, advantages/close_to_zero_perc=0, rewards/mean=0.00663, num_tokens=1885.25, actor/approx_kl=0.221, actor/policy_kl=0.0496, actor/clip_frac=0.242, actor/ratio=1.09, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2, actor/pg_losses1_anomalies__total_anomalies=2, actor/ref_kl_loss=0.00118, non_score_rewards=0, kls=11.8, kl_coef=0.0001, actor/loss=-0.0345, actor/grad_norm=15.1, actor/lr=7.52e-7, epoch=2, step=4336, actor/ds_step=4336]"
+    ],
+    "gradient_followup": {
+      "points_after4240": 96,
+      "max_norm": 6850,
+      "over100": {
+        "4271": 2290,
+        "4272": 6850
+      },
+      "new_ratio_warnings": []
+    },
+    "failure_markers": {
+      "Traceback": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    },
+    "recorded_nonzero_loss_nan_inf": 0,
+    "checkpoint": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0270--epoch_2.00--step_4320",
+      "state": {
+        "global_step": 4320,
+        "epoch": 2,
+        "iteration": 270
+      },
+      "files": 10,
+      "bytes": 17600911844,
+      "protected2560_sizes_unchanged": true
+    },
+    "operations": {
+      "owner_start_ticks": 1325581494,
+      "result_present": false,
+      "observer_age_seconds": 15.695510387420654,
+      "stop_present": false,
+      "storage_available_bytes": {
+        "/home/atowell": 601439591848,
+        "/project/alex_phd": 16571511851
+      },
+      "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+      "source_clean": true
+    },
+    "example": {
+      "summary": "Subtracts32-86, treats magnitude54 as boxes, omits division by9; answers54 instead of(86-32)/9=6. Native zero reward correct.",
+      "gold": "6",
+      "reward": 0
+    }
+  },
+  "diagnostics": {
+    "lines_around_spikes": {
+      "4269": "Iteration 266: Training:  27%|██▋       | 4269/16000 [00:31<01:37, 119.93it/s, advantages/mean=-0.0238, advantages/std=0.3, advantages/close_to_zero_perc=0, rewards/mean=0.00669, num_tokens=1756.75, actor/approx_kl=0.16, actor/policy_kl=0.0283, actor/clip_frac=0.204, actor/ratio=1.11, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2.5, actor/pg_losses1_anomalies__total_anomalies=2.5, actor/ref_kl_loss=0.000959, non_score_rewards=0, kls=9.59, kl_coef=0.0001, actor/loss=-0.045, actor/grad_norm=14.1, actor/lr=7.56e-7, epoch=1.62, step=4269, actor/ds_step=4269]     [2026-10-09 05:51:26,935] [INFO] [logging.py:96:log_dist] [Rank 0] step=4270, skipped=0, lr=[7.558634020618556e-07, 7.558634020618556e-07], mom=[[0.9, 0.999], [0.9, 0.999]]",
+      "4270": "Iteration 266: Training:  27%|██▋       | 4270/16000 [00:34<01:37, 119.93it/s, advantages/mean=0.0498, advantages/std=0.316, advantages/close_to_zero_perc=0, rewards/mean=0.00628, num_tokens=1752.5, actor/approx_kl=0.173, actor/policy_kl=0.063, actor/clip_frac=0.213, actor/ratio=1.04, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2.75, actor/pg_losses1_anomalies__total_anomalies=2.75, actor/ref_kl_loss=0.00113, non_score_rewards=0, kls=11.3, kl_coef=0.0001, actor/loss=-0.0371, actor/grad_norm=16.4, actor/lr=7.56e-7, epoch=1.75, step=4270, actor/ds_step=4270]",
+      "4271": "Iteration 266: Training:  27%|██▋       | 4271/16000 [00:36<01:37, 119.93it/s, advantages/mean=-0.0546, advantages/std=0.311, advantages/close_to_zero_perc=0, rewards/mean=0.00707, num_tokens=1731.75, actor/approx_kl=0.184, actor/policy_kl=0.0636, actor/clip_frac=0.231, actor/ratio=1.31, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=1, actor/pg_losses1_anomalies__total_anomalies=1, actor/ref_kl_loss=0.00102, non_score_rewards=0, kls=10.2, kl_coef=0.0001, actor/loss=0.684, actor/grad_norm=2.29e+3, actor/lr=7.56e-7, epoch=1.88, step=4271, actor/ds_step=4271]  ",
+      "4272": "Iteration 266: Training:  27%|██▋       | 4272/16000 [00:39<01:48, 107.79it/s, advantages/mean=-0.102, advantages/std=0.32, advantages/close_to_zero_perc=0, rewards/mean=0.00716, num_tokens=1641.0, actor/approx_kl=0.517, actor/policy_kl=0.127, actor/clip_frac=0.266, actor/ratio=1.08, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=1.75, actor/pg_losses1_anomalies__total_anomalies=1.75, actor/ref_kl_loss=0.00119, non_score_rewards=0, kls=11.9, kl_coef=0.0001, actor/loss=-0.0445, actor/grad_norm=6.85e+3, actor/lr=7.56e-7, epoch=2, step=4272, actor/ds_step=4272]",
+      "4273": "Iteration 267: Training:  27%|██▋       | 4273/16000 [00:02<00:07, 1621.87it/s, advantages/mean=0.0331, advantages/std=0.315, advantages/close_to_zero_perc=0, rewards/mean=0.00644, num_tokens=1784.75, actor/approx_kl=0.00139, actor/policy_kl=-0.00127, actor/clip_frac=0.0102, actor/ratio=1, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=4, actor/pg_losses1_anomalies__total_anomalies=4, actor/ref_kl_loss=0.000738, non_score_rewards=0, kls=7.38, kl_coef=0.0001, actor/loss=-0.00162, actor/grad_norm=17.5, actor/lr=7.56e-7, epoch=0.125, step=4273, actor/ds_step=4273]",
+      "4274": "Iteration 267: Training:  27%|██▋       | 4274/16000 [00:04<00:07, 1621.87it/s, advantages/mean=-0.0409, advantages/std=0.325, advantages/close_to_zero_perc=0, rewards/mean=0.00779, num_tokens=1605.5, actor/approx_kl=0.00337, actor/policy_kl=-0.00186, actor/clip_frac=0.0194, actor/ratio=1.01, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=4.5, actor/pg_losses1_anomalies__total_anomalies=4.5, actor/ref_kl_loss=0.000989, non_score_rewards=0, kls=9.89, kl_coef=0.0001, actor/loss=0.000849, actor/grad_norm=36.9, actor/lr=7.56e-7, epoch=0.25, step=4274, actor/ds_step=4274]",
+      "4275": "Iteration 267: Training:  27%|██▋       | 4275/16000 [00:07<00:07, 1621.87it/s, advantages/mean=-0.05, advantages/std=0.317, advantages/close_to_zero_perc=0, rewards/mean=0.00614, num_tokens=1750.0, actor/approx_kl=0.00586, actor/policy_kl=0.00568, actor/clip_frac=0.0348, actor/ratio=1, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2.5, actor/pg_losses1_anomalies__total_anomalies=2.5, actor/ref_kl_loss=0.000952, non_score_rewards=0, kls=9.52, kl_coef=0.0001, actor/loss=-0.000446, actor/grad_norm=37.7, actor/lr=7.56e-7, epoch=0.375, step=4275, actor/ds_step=4275]    "
+    },
+    "saved_arrays": {
+      "265/w_actLogp/advantages": {
+        "count": 52573,
+        "nonfinite": 0,
+        "min": -0.8888888888888888,
+        "max": 0.8888888888888888
+      },
+      "265/w_actLogp/actor_shifted_log_probs": {
+        "count": 92933,
+        "nonfinite": 0,
+        "min": -8.541864395141602,
+        "max": 0
+      },
+      "265/w_actLogp/ref_shifted_log_probs": {
+        "count": 92933,
+        "nonfinite": 0,
+        "min": -15.950879096984863,
+        "max": 0
+      },
+      "265/w_refLogp/advantages": {
+        "count": 52573,
+        "nonfinite": 0,
+        "min": -0.8888888888888888,
+        "max": 0.8888888888888888
+      },
+      "265/w_refLogp/ref_shifted_log_probs": {
+        "count": 92933,
+        "nonfinite": 0,
+        "min": -15.950879096984863,
+        "max": 0
+      },
+      "266/w_actLogp/advantages": {
+        "count": 54471,
+        "nonfinite": 0,
+        "min": -1,
+        "max": 1
+      },
+      "266/w_actLogp/actor_shifted_log_probs": {
+        "count": 95039,
+        "nonfinite": 0,
+        "min": -18.125001907348633,
+        "max": 0
+      },
+      "266/w_actLogp/ref_shifted_log_probs": {
+        "count": 95039,
+        "nonfinite": 0,
+        "min": -14.896719932556152,
+        "max": 0
+      },
+      "266/w_refLogp/advantages": {
+        "count": 54471,
+        "nonfinite": 0,
+        "min": -1,
+        "max": 1
+      },
+      "266/w_refLogp/ref_shifted_log_probs": {
+        "count": 95039,
+        "nonfinite": 0,
+        "min": -14.896719932556152,
+        "max": 0
+      },
+      "267/w_actLogp/advantages": {
+        "count": 56281,
+        "nonfinite": 0,
+        "min": -1,
+        "max": 1
+      },
+      "267/w_actLogp/actor_shifted_log_probs": {
+        "count": 98529,
+        "nonfinite": 0,
+        "min": -4.9437103271484375,
+        "max": 0
+      },
+      "267/w_actLogp/ref_shifted_log_probs": {
+        "count": 98529,
+        "nonfinite": 0,
+        "min": -14.167115211486816,
+        "max": 0
+      },
+      "267/w_refLogp/advantages": {
+        "count": 56281,
+        "nonfinite": 0,
+        "min": -1,
+        "max": 1
+      },
+      "267/w_refLogp/ref_shifted_log_probs": {
+        "count": 98529,
+        "nonfinite": 0,
+        "min": -14.167115211486816,
+        "max": 0
+      }
+    },
+    "batch266_all_rewards_regraded": 512,
+    "batch266_rewards": {
+      "1.0": 384,
+      "0.0": 128
+    },
+    "interpretation": "Gradient spikes2290/6850 at4271/4272 return17.5/36.9 at4273/4274; latest15.1. Loss0.684 at4271, negative again at4272. Saved arrays before/during/after finite; affected advantages in[-1,1] and all512 rewards regraded. No native mean-ratio guard fired. Max_grad_norm1 fills DeepSpeed gradient_clipping; reported metric comes from actor.get_global_grad_norm, not measured parameter displacement. Sparse token-level ratio tails or batch-specific gradients remain hypotheses, not proven causes; current saved arrays do not reconstruct new-policy microbatch gradients or causal test impact."
+  },
+  "quota": {
+    "checked_utc": "2026-10-09T06:15:07.072170+00:00",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "remaining_percent": 13,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "resets_epoch": 1791960410,
+    "legacy_sampler_labels_not_policy": true
+  },
+  "interpretation": [
+    "Test10662/21104=50.52123%, -111/-0.52597pp versus4176, +10.74678pp versus matched base. Validation3819/5968=63.99129%, +10/+0.16756pp. Test/validation fully regraded; train subset pending06:16:07UTC. No older-score substitution.",
+    "Second consecutive test decline, but earlier dips recovered and validation edges up; no uniform deterioration, plateau or overfitting established. Coverage1047 to1025, majority59.21152% to56.78544%, distinct4.61031 to4.60500; extraction failures16 to14 do not explain dip. Question-paired SE0.35045pp versus previous/0.77352pp versus base is descriptive, not training-seed replication.",
+    "Renewed, larger finite gradient excursions warrant focused numerical follow-up. Bounded source and saved-data checks rule out nonfinite saved advantages/logprobs and incorrect terminal reward assignment in inspected batch; they do not identify the cause or show clipped update displacement. No demonstrated causal link to score changes.",
+    "One resumed ancestry;690/11040 endpoint unreached. Historical source/selection and exact restart RNG continuity remain reproduction limits. Released author weights are reference checks, not our learning gain."
+  ],
+  "decision": "Continue unchanged owner/recipe/cap because updates resume, real evaluations complete and no sustained/nonfinite failure is established. Rank diagnostic recurrence with next prescribed evaluation; no score-driven settings changes or extra GPU job.",
+  "ranked_followups": [
+    "Complete pending iteration270 train-subset regrade, separate from held-out scores.",
+    "Next prescribed joint evaluation and native gradients/ratio guards; if large excursions recur, inspect saved batch token/advantage tails and replay feasibility in an isolated diagnostic, without modifying live source. Terminal rewards already verified in affected batch266.",
+    "Protect5120 or earlier interruption/allocation risk after both subtree quotas; retain native4320 and protected2560 recovery pointers.",
+    "Fixed690 only after11040 verified updates and whole-owner release; GRPO behind historical reward/provenance fixture."
+  ],
+  "safeguards": {
+    "training_deadline_epoch": 1791608973,
+    "observer_cutoff_epoch": 1791621274,
+    "no_source_config_change": true,
+    "no_new_gpu_job": true,
+    "no_checkpoint_copy_rehash_or_deletion": true
+  },
+  "publication_decision": "Update supporting report headline/table/evidence and enlarged-gradient limitation together. Prior RLM lesson deck unchanged: no new confirmed mechanism or completed reproduction."
+}
