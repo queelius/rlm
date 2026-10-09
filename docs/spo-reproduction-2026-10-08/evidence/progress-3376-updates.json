@@ -1,0 +1,168 @@
+{
+  "review_id": "review-1791509395-aeebacf1",
+  "checked_utc": "2026-10-09T01:32:24.006892+00:00",
+  "attempt": "spo-historical-resume160-attempt3",
+  "evaluation": {
+    "native_iteration_label": 210,
+    "completed_collections": 211,
+    "optimizer_updates": 3376,
+    "test": {
+      "complete": true,
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 10670,
+      "metrics": {
+        "correct_frac": 0.5055913570887035,
+        "exact_match": 0.7915087187263078,
+        "exact_match_frac": 0.5055913570887035,
+        "majority_vote_acc": 0.5769522365428355,
+        "none_answer_extracted_frac_per_problem": 0.00047384382107657316,
+        "once_hit": 0.7915087187263078,
+        "unique_answer_count": 4.6254738438210765
+      },
+      "questions_solved_at_least_once": 1044,
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__210/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_210/test__0__1/log.json",
+      "metric_sha256": "a6272de346c380ac17c0a8788945c2d736ad60d164a46ac92d858956d9d22039",
+      "checked_utc": "2026-10-09T01:30:53.181163+00:00",
+      "base_delta_pp": 10.784685367702805,
+      "base_question_paired_se_pp": 0.7841709060624926,
+      "previous3216_delta_pp": -0.18479909021986354,
+      "previous3216_question_paired_se_pp": 0.3731214802636308
+    },
+    "validation": {
+      "complete": true,
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3912,
+      "metrics": {
+        "correct_frac": 0.6554959785522788,
+        "exact_match": 0.8900804289544236,
+        "exact_match_frac": 0.6554959785522788,
+        "majority_vote_acc": 0.7372654155495979,
+        "none_answer_extracted_frac_per_problem": 0.0005026809651474531,
+        "once_hit": 0.8900804289544236,
+        "unique_answer_count": 3.4959785522788205
+      },
+      "questions_solved_at_least_once": 332,
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__210/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_210/validation__0__1/log.json",
+      "metric_sha256": "ead9dda56373002e7ce3600ee1dc57a72cb6956e6cffa50eab15b419760cba0d",
+      "checked_utc": "2026-10-09T01:31:34.130543+00:00"
+    },
+    "train": {
+      "complete": false,
+      "checked_utc": "2026-10-09T01:32:24.006892+00:00"
+    },
+    "checked_utc": "2026-10-09T01:32:24.006892+00:00"
+  },
+  "training": {
+    "checked_utc": "2026-10-09T01:30:58.145061+00:00",
+    "iteration": 210,
+    "optimizer_updates": 3376,
+    "completed_collections": 211,
+    "episodes": 512,
+    "terminal_rewards": {
+      "1.0": 417,
+      "0.0": 95
+    },
+    "all_native_rewards_match": true,
+    "unfinished": 0,
+    "finite": {
+      "w_actLogp/advantages": {
+        "count": 51695,
+        "nonfinite": 0
+      },
+      "w_actLogp/actor_shifted_log_probs": {
+        "count": 89927,
+        "nonfinite": 0
+      },
+      "w_actLogp/ref_shifted_log_probs": {
+        "count": 89927,
+        "nonfinite": 0
+      },
+      "w_refLogp/advantages": {
+        "count": 51695,
+        "nonfinite": 0
+      },
+      "w_refLogp/ref_shifted_log_probs": {
+        "count": 89927,
+        "nonfinite": 0
+      }
+    },
+    "example": {
+      "query_text": "[MATH_TASK] Problem:\nLola baked 13 mini cupcakes, 10 pop tarts, and 8 blueberry pies. Meanwhile, Lulu made 16 mini cupcakes, 12 pop tarts, and 14 blueberry pies. How many pastries have Lola and Lulu made altogether?\n\nSolution:",
+      "response_text": "\nLola baked a total of 13 + 10 = 23 pastries.\nLulu baked a total of 16 + 12 = 28 pastries.\nTogether, Lola and Lulu baked a total of 23 + 28 = 51 pastries.\n#### 51\n",
+      "scores": 0,
+      "gold": "73"
+    },
+    "checkpoint": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0210--epoch_2.00--step_3360",
+      "state": {
+        "global_step": 3360,
+        "epoch": 2,
+        "iteration": 210
+      },
+      "files": 10,
+      "bytes": 17600911844
+    },
+    "protected2560_sizes_unchanged": true,
+    "prior_full_hash_verification_epoch": 1791495437.7388709,
+    "recent_training_lines": [
+      "Iteration 207: Training:  21%|██        | 3328/16000 [00:41<02:38, 79.71it/s, advantages/mean=-0.0856, advantages/std=0.332, advantages/close_to_zero_perc=0, rewards/mean=0.00729, num_tokens=1681.0, actor/approx_kl=0.0941, actor/policy_kl=0.0544, actor/clip_frac=0.198, actor/ratio=1.01, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=4.5, actor/pg_losses1_anomalies__total_anomalies=4.5, actor/ref_kl_loss=0.000959, non_score_rewards=0, kls=9.59, kl_coef=0.0001, actor/loss=-0.0282, actor/grad_norm=12.9, actor/lr=8.17e-7, epoch=2, step=3328, actor/ds_step=3328]",
+      "Iteration 208: Training:  21%|██        | 3344/16000 [00:42<02:42, 77.95it/s, advantages/mean=-0.0253, advantages/std=0.342, advantages/close_to_zero_perc=0, rewards/mean=0.00582, num_tokens=1891.25, actor/approx_kl=0.167, actor/policy_kl=0.0657, actor/clip_frac=0.221, actor/ratio=1.07, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=1.75, actor/pg_losses1_anomalies__total_anomalies=1.75, actor/ref_kl_loss=0.0013, non_score_rewards=0, kls=13, kl_coef=0.0001, actor/loss=-0.0425, actor/grad_norm=9.95, actor/lr=8.16e-7, epoch=2, step=3344, actor/ds_step=3344]",
+      "Iteration 209: Training:  21%|██        | 3360/16000 [00:45<02:49, 74.64it/s, advantages/mean=-0.0798, advantages/std=0.327, advantages/close_to_zero_perc=0, rewards/mean=0.00704, num_tokens=1740.25, actor/approx_kl=0.0853, actor/policy_kl=0.0255, actor/clip_frac=0.146, actor/ratio=1.04, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=1.75, actor/pg_losses1_anomalies__total_anomalies=1.75, actor/ref_kl_loss=0.000888, non_score_rewards=0, kls=8.88, kl_coef=0.0001, actor/loss=-0.0165, actor/grad_norm=14.4, actor/lr=8.14e-7, epoch=2, step=3360, actor/ds_step=3360]",
+      "Iteration 210: Training:  21%|██        | 3376/16000 [00:38<02:23, 87.82it/s, advantages/mean=0.0624, advantages/std=0.319, advantages/close_to_zero_perc=0, rewards/mean=0.00798, num_tokens=1629.25, actor/approx_kl=0.816, actor/policy_kl=0.19, actor/clip_frac=0.212, actor/ratio=1.02, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=5, actor/pg_losses1_anomalies__total_anomalies=5, actor/ref_kl_loss=0.00109, non_score_rewards=0, kls=10.9, kl_coef=0.0001, actor/loss=-0.0344, actor/grad_norm=12.7, actor/lr=8.13e-7, epoch=2, step=3376, actor/ds_step=3376]"
+    ],
+    "failure_markers": {
+      "Traceback": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    }
+  },
+  "new_updates_since_last_review": 96,
+  "operational_checks": {
+    "checked_utc": "2026-10-09T01:31:09.626554+00:00",
+    "owner_start_ticks": 1325581494,
+    "processes": "    PID    PPID ELAPSED COMMAND\n2089329       1   57565 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/run_queue.py --config /project/alex_phd/runs/spo-reproduction-20261008/historical-resume160-home-queue.json\n2089332 2089329   57565 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/scoped_session_owner.py --seconds 156998.6524579525 --grace 55 -- /project/alex_phd/envs/spo-6c5f947/bin/deepspeed --master_port 51019 --include localhost:0 --no_local_rank /project/alex_phd/research-cache/repos/SPO/src/treetune/main.py --configs /project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-memory03.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-resume160-home.jsonnet run_iteration_loop\n2089534 2089449   57556 /project/alex_phd/envs/spo-6c5f947/bin/python -u /project/alex_phd/research-cache/repos/SPO/src/treetune/main.py --configs /project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-memory03.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-resume160-home.jsonnet run_iteration_loop\n2100371       1   56730 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/review_monitor.py --config /project/alex_phd/runs/spo-reproduction-20261008/reviews/CONFIG.json\n",
+    "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+    "source_clean": true,
+    "result_receipt_absent": true,
+    "observer_status_age_seconds": 13.914302587509155,
+    "stop_present": false,
+    "storage_available_bytes": {
+      "/home/atowell": 609499432478,
+      "/project/alex_phd": 16585048261
+    }
+  },
+  "quota": {
+    "remaining_percent": 17,
+    "checked_utc": "2026-10-09T01:30:15.859437+00:00",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "legacy_sampler_labels_not_policy": true
+  },
+  "interpretation": "Scheduled3376 test10670/21104 =50.55914%, -0.18480pp versus3216 and +10.78469pp versus matched base. Descriptive question-paired SE0.37312pp versus previous /0.78417pp versus base, not seed uncertainty. Validation3912/5968 =65.54960%, up91 correct (+1.52480pp). Split directions again differ: the small test dip does not establish a reversal; validation improvement weakens a general-deterioration account but does not prove uniform progress or a cause. Training-subset evaluation pending at01:32:24UTC. Reproduction incomplete.",
+  "coverage_interpretation": "Test once-in16 coverage1040 to1044 despite lower primary accuracy. Distinct answers4.53829 to4.62547, majority vote57.01289% to57.69522%, missing extracted answers12 to10. Keep meanpass@1 primary; neither extraction failures nor diversity alone explains the dip. No favorable metric substitution.",
+  "training_interpretation": "Batch210:512 native rewards match,417 positive/95 zero, none unfinished. All51,695 advantages and89,927 actor/reference logprobs each finite. Last loss-0.0344, gradient12.7, KL0.816, policyKL0.19, clip0.212, LR8.13e-7, zero lossNaN/Inf and failure markers. RecentKL0.0941/0.167/0.0853/0.816 warrants persistence check, not an established failure or cause of the test dip; ratios1.01/1.07/1.04/1.02. Actual response omits8+14 blueberry pies, answers51 instead of73; correctly rewardedzero. Changing training rewards are not a benchmark learning curve.",
+  "decision": "Continue authenticated owner2089329/start1325581494, unchanged historical recipe/source/config, original deadline1791608973 and fixed690/11040 endpoint. No duplicate GPU job, best-checkpoint selection or test-driven tuning.",
+  "ranked_followups": [
+    "Finish/regrade pending iteration210 training-subset evaluation without treating it as held-out, then next prescribed joint evaluation and native KL/gradient persistence check.",
+    "If weakness or KL escalation persists, inspect saved error/trajectory and update diagnostics on CPUs; no test-driven tuning or causal claim from one batch.",
+    "Retain protected160/320/640/1280/2560; next coarse protection5120 or earlier interruption/allocation risk after subtree-quota checks.",
+    "Prepared fixed690 evaluation only after690collections/11040updates and whole-owner/GPU release; GRPO remains behind reward/provenance fixture."
+  ],
+  "checkpoint_policy": {
+    "new_copy": false,
+    "full_rehash": false,
+    "deletion": false,
+    "protected_manifest": "/project/alex_phd/runs/spo-reproduction-20261008/preserved-checkpoints/attempt3/ckpt--iter_0160--epoch_2.00--step_2560.manifest.json",
+    "retention": "Native3360 fullstate differs from evaluated3376; protected2560 sizes checked against prior full-hash manifest. Next coarse protection5120 or earlier interruption/allocation risk."
+  },
+  "presentation_decision": "Update public SPO report headline, trajectory table, narrative, training diagnostics and evidence together, explicitly mark training-subset pending. Prior RLM lesson deck unchanged; no completed reproduction or RLM transfer claim.",
+  "limits": "One resumed ancestry, development-exposed tests, no independent training seeds. Question-paired SE descriptive, not seed uncertainty or repeated-testing correction. Historical source commit, author selection rationale and exact RNG continuity unresolved. Author score not our training gain. Prescribed endpoint may need another allocation; do not shorten schedule. GitHub is not a model-weight backup."
+}
