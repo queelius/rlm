@@ -1,0 +1,238 @@
+{
+  "review_id": "review-1791523667-8626b010",
+  "checked_utc": "2026-10-09T05:29:56.864434+00:00",
+  "campaign": "spo-reproduction-20261008",
+  "evaluation": {
+    "native_iteration_label": 260,
+    "completed_collections": 261,
+    "optimizer_updates": 4176,
+    "test": {
+      "complete": true,
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 10773,
+      "metrics": {
+        "correct_frac": 0.5104719484457922,
+        "exact_match": 0.7937831690674754,
+        "exact_match_frac": 0.5104719484457922,
+        "majority_vote_acc": 0.5921152388172858,
+        "none_answer_extracted_frac_per_problem": 0.000758150113722517,
+        "once_hit": 0.7937831690674754,
+        "unique_answer_count": 4.610310841546626
+      },
+      "questions_solved_at_least_once": 1047,
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__260/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_260/test__0__1/log.json",
+      "metric_sha256": "503d43c99d320cb289ef36fe0a20739704c41124be280c7e466a25a8082b59ed",
+      "previous4016_delta_pp": -0.10424564063684609,
+      "checked_utc": "2026-10-09T05:28:23.530773+00:00",
+      "previous4016_question_paired_se_pp": 0.3389726782491459,
+      "questions_improved": 352,
+      "questions_worsened": 345,
+      "questions_unchanged": 622,
+      "base_question_paired_se_pp": 0.7771983218074868,
+      "base_delta_pp": 11.272744503411676
+    },
+    "validation": {
+      "complete": true,
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3809,
+      "metrics": {
+        "correct_frac": 0.6382372654155496,
+        "exact_match": 0.8900804289544236,
+        "exact_match_frac": 0.6382372654155496,
+        "majority_vote_acc": 0.7211796246648794,
+        "none_answer_extracted_frac_per_problem": 0.0005026809651474531,
+        "once_hit": 0.8900804289544236,
+        "unique_answer_count": 3.557640750670241
+      },
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__260/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_260/validation__0__1/log.json",
+      "metric_sha256": "9f12b9721601a8ff404ab48f57b70665c0e9197a810f101f38e2b9cf5e608161",
+      "previous4016_delta_pp": -0.6367292225201072,
+      "checked_utc": "2026-10-09T05:29:56.864344+00:00"
+    },
+    "train": {
+      "complete": false,
+      "checked_utc": "2026-10-09T05:29:56.864434+00:00"
+    },
+    "checked_utc": "2026-10-09T05:29:56.864434+00:00"
+  },
+  "native_training": {
+    "checked_utc": "2026-10-09T05:28:52.364344+00:00",
+    "iteration": 260,
+    "completed_collections": 261,
+    "optimizer_updates": 4176,
+    "delta_updates": 112,
+    "all512_native_rewards_match": true,
+    "terminal_rewards": {
+      "1.0": 365,
+      "0.0": 147
+    },
+    "unfinished": 0,
+    "finite": {
+      "w_actLogp/advantages": {
+        "count": 61666,
+        "nonfinite": 0
+      },
+      "w_actLogp/actor_shifted_log_probs": {
+        "count": 107002,
+        "nonfinite": 0
+      },
+      "w_actLogp/ref_shifted_log_probs": {
+        "count": 107002,
+        "nonfinite": 0
+      },
+      "w_refLogp/advantages": {
+        "count": 61666,
+        "nonfinite": 0
+      },
+      "w_refLogp/ref_shifted_log_probs": {
+        "count": 107002,
+        "nonfinite": 0
+      }
+    },
+    "example": {
+      "summary": "Compares one120-second swing wait with the whole90-second slide queue, omitting the three-person swing queue; returns30 rather than360-90=270. Native zero reward correct.",
+      "gold": "270",
+      "reward": 0
+    },
+    "recent_training_lines": [
+      "Iteration 257: Training:  26%|██▌       | 4128/16000 [00:44<02:09, 91.74it/s, advantages/mean=-0.0221, advantages/std=0.299, advantages/close_to_zero_perc=0, rewards/mean=0.00673, num_tokens=1857.25, actor/approx_kl=0.349, actor/policy_kl=0.0888, actor/clip_frac=0.229, actor/ratio=6.84, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=1.5, actor/pg_losses1_anomalies__total_anomalies=1.5, actor/ref_kl_loss=0.0012, non_score_rewards=0, kls=12, kl_coef=0.0001, actor/loss=-0.0161, actor/grad_norm=14.8, actor/lr=7.65e-7, epoch=2, step=4128, actor/ds_step=4128]",
+      "Iteration 258: Training:  26%|██▌       | 4144/16000 [00:42<02:00, 98.55it/s, advantages/mean=-0.0376, advantages/std=0.27, advantages/close_to_zero_perc=0, rewards/mean=0.00605, num_tokens=2026.0, actor/approx_kl=0.543, actor/policy_kl=0.141, actor/clip_frac=0.222, actor/ratio=1.08, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2.75, actor/pg_losses1_anomalies__total_anomalies=2.75, actor/ref_kl_loss=0.000892, non_score_rewards=0, kls=8.92, kl_coef=0.0001, actor/loss=-0.023, actor/grad_norm=14.1, actor/lr=7.64e-7, epoch=2, step=4144, actor/ds_step=4144]",
+      "Iteration 259: Training:  26%|██▌       | 4160/16000 [00:41<01:57, 101.03it/s, advantages/mean=0.0682, advantages/std=0.324, advantages/close_to_zero_perc=0, rewards/mean=0.00705, num_tokens=1.7e+3, actor/approx_kl=0.511, actor/policy_kl=0.159, actor/clip_frac=0.221, actor/ratio=1.04, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2.75, actor/pg_losses1_anomalies__total_anomalies=2.75, actor/ref_kl_loss=0.00129, non_score_rewards=0, kls=12.9, kl_coef=0.0001, actor/loss=-0.0202, actor/grad_norm=35.9, actor/lr=7.63e-7, epoch=2, step=4160, actor/ds_step=4160]",
+      "Iteration 260: Training:  26%|██▌       | 4176/16000 [00:42<01:59, 99.22it/s, advantages/mean=0.0117, advantages/std=0.321, advantages/close_to_zero_perc=0, rewards/mean=0.00584, num_tokens=1.8e+3, actor/approx_kl=0.692, actor/policy_kl=0.135, actor/clip_frac=0.221, actor/ratio=1.05, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=5.5, actor/pg_losses1_anomalies__total_anomalies=5.5, actor/ref_kl_loss=0.00113, non_score_rewards=0, kls=11.3, kl_coef=0.0001, actor/loss=-0.0315, actor/grad_norm=16.2, actor/lr=7.62e-7, epoch=2, step=4176, actor/ds_step=4176]"
+    ],
+    "gradient_followup": {
+      "recorded_points_after4064": 112,
+      "max_norm": 242,
+      "over100": {
+        "4139": 242
+      }
+    },
+    "failure_markers": {
+      "Traceback": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    },
+    "checkpoint": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0260--epoch_2.00--step_4160",
+      "state": {
+        "global_step": 4160,
+        "epoch": 2,
+        "iteration": 260
+      },
+      "files": 10,
+      "bytes": 17600911844,
+      "protected2560_sizes_unchanged": true
+    },
+    "operations": {
+      "owner_start_ticks": 1325581494,
+      "source_clean": true,
+      "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+      "result_receipt_absent": true,
+      "observer_status_age_seconds": 4.98720645904541,
+      "stop_present": false,
+      "storage_available_bytes": {
+        "/home/atowell": 602423839554,
+        "/project/alex_phd": 16574815628
+      }
+    }
+  },
+  "diagnostics": {
+    "high_ratio_warning_count_after4064": 2,
+    "warning_ratios": [
+      24.24,
+      16.28
+    ],
+    "spike_batches_finite_saved_arrays": {
+      "257/w_actLogp/advantages": {
+        "count": 59688,
+        "nonfinite": 0
+      },
+      "257/w_actLogp/actor_shifted_log_probs": {
+        "count": 101320,
+        "nonfinite": 0
+      },
+      "257/w_actLogp/ref_shifted_log_probs": {
+        "count": 101320,
+        "nonfinite": 0
+      },
+      "257/w_refLogp/advantages": {
+        "count": 59688,
+        "nonfinite": 0
+      },
+      "257/w_refLogp/ref_shifted_log_probs": {
+        "count": 101320,
+        "nonfinite": 0
+      },
+      "258/w_actLogp/advantages": {
+        "count": 59875,
+        "nonfinite": 0
+      },
+      "258/w_actLogp/actor_shifted_log_probs": {
+        "count": 101827,
+        "nonfinite": 0
+      },
+      "258/w_actLogp/ref_shifted_log_probs": {
+        "count": 101827,
+        "nonfinite": 0
+      },
+      "258/w_refLogp/advantages": {
+        "count": 59875,
+        "nonfinite": 0
+      },
+      "258/w_refLogp/ref_shifted_log_probs": {
+        "count": 101827,
+        "nonfinite": 0
+      }
+    },
+    "native_guard_config": {
+      "trainer.general_training_args.max_grad_norm": 1
+    },
+    "gradient_spike": {
+      "step": 4139,
+      "norm": 242,
+      "next_step4140_norm": 13.5,
+      "next_step4141_norm": 14.2
+    },
+    "source_interpretation": "Native PPO source clamps log-ratio to[-10,10], computes masked mean ratio, and zeros the current loss above default ratio_threshold10 (ppo_trainer.py1098-1145). Caller still invokes backward/actor.step at868-870; this is not evidence that entire optimizer steps were skipped. Gradient clipping configured1; norm is actor.get_global_grad_norm(), not parameter displacement. No causal link to score change established.",
+    "checker_incident": "One-off warning parser initially captured trailing sentence punctuation in24.24.; tightened numeric regex and reran successfully. No live training failure/source change."
+  },
+  "quota": {
+    "checked_utc": "2026-10-09T05:28:18.965938+00:00",
+    "checked_epoch": 1791523698.9659383,
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "remaining_percent": 13,
+    "used_percent": 87,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "resets_epoch": 1791960409,
+    "legacy_sampler_labels_not_policy": true
+  },
+  "interpretation": [
+    "Test10773/21104 =51.04719%, -22/-0.10425pp versus4016 and +11.27274pp versus matched base: essentially flat near earlier range, not proof of plateau or further improvement. Validation3809/5968 =63.82373%, down38/-0.63673pp. Test/validation fully regraded; train subset pending05:29:56UTC. No previous-score substitution.",
+    "Test coverage1048 to1047/1319, majority58.68082% to59.21152%, distinct4.66035 to4.61031, missing extracted15 to16. Metrics move differently; retain primary meanpass@1. Descriptive question-paired SE0.33897pp versus previous/0.77720pp versus base, not seed uncertainty.",
+    "Renewed gradient excursion242 at4139 returns13.5 at4140 and14.2 at4141; latest16.2. Two native high-ratio warnings24.24/16.28 after4064 zero affected loss contributions under unchanged author safeguard. Saved arrays in both affected collections257/258 and latest260 finite; zero reported loss NaN/Inf. Optimizer counters do not imply every microbatch contributed a nonzero gradient. Cause and relation to benchmark movement unestablished.",
+    "One resumed ancestry, endpoint690/11040 unreached; historical source/selection rationale and exact restart RNG continuity remain limits. Released-author reference not our training gain."
+  ],
+  "decision": "Continue same authenticated owner/recipe/cumulative cap. Monitor recurrence and count native ratio guards with next prescribed joint evaluation; no test-driven tuning, source change or new GPU job. Complete pending training-subset regrade.",
+  "ranked_followups": [
+    "Finish pending iteration260 train-subset review, separately from held-out scores.",
+    "Next prescribed joint evaluation plus native ratio-guard/gradient/KL persistence checks; escalate CPU diagnostics if excursions persist or losses become nonfinite.",
+    "Protect5120 or earlier interruption/allocation risk after subtree quota checks; retain protected checkpoints.",
+    "Fixed690 only after11040 verified updates and whole-owner/GPU release; GRPO remains behind historical reward/provenance fixture."
+  ],
+  "safeguards": {
+    "training_deadline_epoch": 1791608973,
+    "observer_cutoff_epoch": 1791621274,
+    "no_source_config_change": true,
+    "no_new_gpu_job": true,
+    "no_checkpoint_copy_rehash_or_deletion": true
+  },
+  "publication_decision": "Update report headline/table/evidence and technical diagnostic paragraph together; native safeguard caveat explicit. Prior RLM lesson deck unchanged: no completed-reproduction or new main lesson claim."
+}
