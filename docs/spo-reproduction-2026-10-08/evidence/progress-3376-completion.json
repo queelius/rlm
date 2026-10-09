@@ -1,0 +1,147 @@
+{
+  "review_id": "review-1791510267-e204d85b",
+  "checked_utc": "2026-10-09T01:45:45.017193+00:00",
+  "prior_evaluation_receipt": "/project/alex_phd/runs/spo-reproduction-20261008/reviews/reports/review-1791509395-aeebacf1.json",
+  "evaluation": {
+    "optimizer_updates": 3376,
+    "train": {
+      "complete": true,
+      "optimizer_updates": 3376,
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4347,
+      "metrics": {
+        "correct_frac": 0.7303427419354839,
+        "exact_match": 0.9112903225806451,
+        "exact_match_frac": 0.7303427419354839,
+        "majority_vote_acc": 0.8010752688172043,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9112903225806451,
+        "unique_answer_count": 3.196236559139785
+      },
+      "questions_solved_at_least_once": 339,
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__210/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_210/train__0__1/log.json",
+      "metric_sha256": "1fe2b6b7db73772508e263d30506e7e089db409871f94f7175c28e654671bcfb",
+      "checked_utc": "2026-10-09T01:45:39.786085+00:00",
+      "limit": "Training subset, not held-out accuracy.",
+      "test_validation_hashes_unchanged": {
+        "test": "a6272de346c380ac17c0a8788945c2d736ad60d164a46ac92d858956d9d22039",
+        "validation": "ead9dda56373002e7ce3600ee1dc57a72cb6956e6cffa50eab15b419760cba0d"
+      }
+    },
+    "test_validation_unchanged": true,
+    "test_correct": 10670,
+    "test_responses": 21104,
+    "validation_correct": 3912,
+    "validation_responses": 5968
+  },
+  "training": {
+    "checked_utc": "2026-10-09T01:45:45.017193+00:00",
+    "iteration": 213,
+    "optimizer_updates": 3424,
+    "completed_collections": 214,
+    "episodes": 512,
+    "terminal_rewards": {
+      "1.0": 356,
+      "0.0": 156
+    },
+    "all_native_rewards_match": true,
+    "unfinished": 0,
+    "finite": {
+      "w_actLogp/advantages": {
+        "count": 56255,
+        "nonfinite": 0
+      },
+      "w_actLogp/actor_shifted_log_probs": {
+        "count": 97015,
+        "nonfinite": 0
+      },
+      "w_actLogp/ref_shifted_log_probs": {
+        "count": 97015,
+        "nonfinite": 0
+      },
+      "w_refLogp/advantages": {
+        "count": 56255,
+        "nonfinite": 0
+      },
+      "w_refLogp/ref_shifted_log_probs": {
+        "count": 97015,
+        "nonfinite": 0
+      }
+    },
+    "example": {
+      "query_text": "[MATH_TASK] Problem:\nHarry needs to buy 5 spellbooks that each cost 5 gold, three potion kits that each cost 20 silver, and one owl that costs 28 gold. There are 9 silver to a gold. How much will Harry pay total, in silvers?\n\nSolution:",
+      "response_text": "\nFirst find the total cost of the spellbooks: 5 spellbooks * 5 gold/spellbook = 25 gold\nThen find the total cost of the potion kits: 3 potion kits * 20 silver/potion kit = 60 silver\nThen find the total cost of the owl: 28 gold\nThen add the cost of the spellbooks, potion kits, and owl to find the total cost: 25 gold + 60 silver + 28 gold = 113 silver\nThen convert the total cost to silvers: 113 silver * 9 silver/gold = 1017 silvers\n#### 1017\n",
+      "scores": 0,
+      "gold": "537"
+    },
+    "checkpoint": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0210--epoch_2.00--step_3360",
+      "state": {
+        "global_step": 3360,
+        "epoch": 2,
+        "iteration": 210
+      },
+      "files": 10,
+      "bytes": 17600911844
+    },
+    "protected2560_sizes_unchanged": true,
+    "prior_full_hash_verification_epoch": 1791495437.7388709,
+    "recent_training_lines": [
+      "Iteration 209: Training:  21%|██        | 3360/16000 [00:45<02:49, 74.64it/s, advantages/mean=-0.0798, advantages/std=0.327, advantages/close_to_zero_perc=0, rewards/mean=0.00704, num_tokens=1740.25, actor/approx_kl=0.0853, actor/policy_kl=0.0255, actor/clip_frac=0.146, actor/ratio=1.04, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=1.75, actor/pg_losses1_anomalies__total_anomalies=1.75, actor/ref_kl_loss=0.000888, non_score_rewards=0, kls=8.88, kl_coef=0.0001, actor/loss=-0.0165, actor/grad_norm=14.4, actor/lr=8.14e-7, epoch=2, step=3360, actor/ds_step=3360]",
+      "Iteration 210: Training:  21%|██        | 3376/16000 [00:38<02:23, 87.82it/s, advantages/mean=0.0624, advantages/std=0.319, advantages/close_to_zero_perc=0, rewards/mean=0.00798, num_tokens=1629.25, actor/approx_kl=0.816, actor/policy_kl=0.19, actor/clip_frac=0.212, actor/ratio=1.02, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=5, actor/pg_losses1_anomalies__total_anomalies=5, actor/ref_kl_loss=0.00109, non_score_rewards=0, kls=10.9, kl_coef=0.0001, actor/loss=-0.0344, actor/grad_norm=12.7, actor/lr=8.13e-7, epoch=2, step=3376, actor/ds_step=3376]",
+      "Iteration 211: Training:  21%|██        | 3392/16000 [00:43<02:40, 78.41it/s, advantages/mean=-0.0941, advantages/std=0.31, advantages/close_to_zero_perc=0, rewards/mean=0.00624, num_tokens=1843.25, actor/approx_kl=0.106, actor/policy_kl=0.054, actor/clip_frac=0.195, actor/ratio=1.02, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=3.25, actor/pg_losses1_anomalies__total_anomalies=3.25, actor/ref_kl_loss=0.000948, non_score_rewards=0, kls=9.48, kl_coef=0.0001, actor/loss=-0.0355, actor/grad_norm=10.8, actor/lr=8.12e-7, epoch=2, step=3392, actor/ds_step=3392]",
+      "Iteration 212: Training:  21%|██▏       | 3408/16000 [00:41<02:31, 83.11it/s, advantages/mean=0.00554, advantages/std=0.325, advantages/close_to_zero_perc=0, rewards/mean=0.00528, num_tokens=1892.5, actor/approx_kl=0.194, actor/policy_kl=0.0907, actor/clip_frac=0.245, actor/ratio=1.01, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=3.75, actor/pg_losses1_anomalies__total_anomalies=3.75, actor/ref_kl_loss=0.00126, non_score_rewards=0, kls=12.6, kl_coef=0.0001, actor/loss=-0.0477, actor/grad_norm=15.2, actor/lr=8.11e-7, epoch=2, step=3408, actor/ds_step=3408]",
+      "Iteration 213: Training:  21%|██▏       | 3424/16000 [00:39<02:24, 86.89it/s, advantages/mean=0.0738, advantages/std=0.299, advantages/close_to_zero_perc=0, rewards/mean=0.00598, num_tokens=1838.25, actor/approx_kl=0.558, actor/policy_kl=0.145, actor/clip_frac=0.227, actor/ratio=1.07, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=1.5, actor/pg_losses1_anomalies__total_anomalies=1.5, actor/ref_kl_loss=0.0011, non_score_rewards=0, kls=11, kl_coef=0.0001, actor/loss=-0.05, actor/grad_norm=13.1, actor/lr=8.1e-7, epoch=2, step=3424, actor/ds_step=3424]"
+    ],
+    "failure_markers": {
+      "Traceback": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    },
+    "next_service": {
+      "path": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/temp_episodes/iteration__0214/infer_results/process_00/vllm_server.log",
+      "exists": true,
+      "http200": 324,
+      "http400": 0,
+      "http500": 0
+    }
+  },
+  "new_updates_since_last_review": 48,
+  "operational_checks": {
+    "checked_utc": "2026-10-09T01:45:38.630161+00:00",
+    "owner_start_ticks": 1325581494,
+    "processes": "    PID    PPID ELAPSED COMMAND\n2089329       1   58434 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/run_queue.py --config /project/alex_phd/runs/spo-reproduction-20261008/historical-resume160-home-queue.json\n2089332 2089329   58434 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/scoped_session_owner.py --seconds 156998.6524579525 --grace 55 -- /project/alex_phd/envs/spo-6c5f947/bin/deepspeed --master_port 51019 --include localhost:0 --no_local_rank /project/alex_phd/research-cache/repos/SPO/src/treetune/main.py --configs /project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-memory03.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-resume160-home.jsonnet run_iteration_loop\n2089534 2089449   58425 /project/alex_phd/envs/spo-6c5f947/bin/python -u /project/alex_phd/research-cache/repos/SPO/src/treetune/main.py --configs /project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-memory03.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-resume160-home.jsonnet run_iteration_loop\n2100371       1   57599 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/review_monitor.py --config /project/alex_phd/runs/spo-reproduction-20261008/reviews/CONFIG.json\n",
+    "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+    "source_clean": true,
+    "result_receipt_absent": true,
+    "observer_status_age_seconds": 11.477078914642334,
+    "stop_present": false,
+    "storage_available_bytes": {
+      "/home/atowell": 609181350578,
+      "/project/alex_phd": 16584258227
+    }
+  },
+  "quota": {
+    "remaining_percent": 17,
+    "checked_utc": "2026-10-09T01:44:54.581614+00:00",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "legacy_sampler_labels_not_policy": true
+  },
+  "interpretation": "Previously pending3376-update train-subset evaluation complete:4347/5952 =73.03427%, +75 correct (+1.26008pp) versus3216. All372 original question/gold identities,5952 saved tree answers and seven native metrics checked. This is not held-out performance. Test50.55914% (+10.78469pp versus matched base) and validation65.54960% unchanged, hashes confirmed against prior full regrade. Training-subset and validation rise while test edges down: no uniform gain, general reversal or causal mechanism established. Reproduction incomplete.",
+  "training_interpretation": "3424 updates /214 collections (+48). Batch213 all512 native rewards match:356 positive/156 zero, none unfinished. All56,255 advantages and97,015 actor/reference logprobs each finite. Last loss-0.05, gradient13.1, approximateKL0.558, clip0.227, LR8.1e-7, zero lossNaN/Inf/failure markers. KL0.816 followed by0.106/0.194/0.558: spike not persistent, but fluctuation continues; do not claim instability resolved or assign test dip cause. Ratios1.02/1.02/1.01/1.07. Actual response adds gold and silver before conversion, answers1017 instead of537; correctly rewardedzero. Changing batches not a benchmark curve. Iteration214 service324 HTTP200/no HTTP400/500.",
+  "decision": "Continue authenticated owner2089329/start1325581494, unchanged historical recipe/source/config, original cap1791608973 and prescribed690/11040 endpoint. No new GPU job or test-driven tuning.",
+  "ranked_followups": [
+    "Next prescribed joint evaluation and native reward/KL/gradient persistence check; all iteration210 splits now reviewed.",
+    "CPU saved-error/update diagnosis only if weakness or KL escalation persists; separate arithmetic/unit handling from interpretation without altering official scoring.",
+    "Retain protected160/320/640/1280/2560; next coarse protection5120 or earlier interruption/allocation risk after subtree-quota checks. Native3360 tiny state and protected2560 sizes checked, no copy/full rehash/deletion.",
+    "Fixed690 prepared but only after verified endpoint and whole-owner/GPU release; GRPO remains behind reward/provenance fixture."
+  ],
+  "presentation_decision": "Complete public3376-update account with training-subset score and follow-up KL observations, keeping original pending-cutoff receipt intact. Prior RLM lesson deck unchanged; no new held-out test gain claimed.",
+  "limits": "One resumed ancestry, development-exposed tests, no independent training seeds. Historical source commit, author selection rationale and exact RNG continuity unresolved. Evaluated3376 differs from native3360/protected2560. Author reference not own training gain; GitHub not weights backup. Endpoint may need another allocation; do not shorten schedule."
+}
