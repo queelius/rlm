@@ -1,0 +1,186 @@
+{
+  "review_id": "review-1791506450-10afd564",
+  "checked_utc": "2026-10-09T00:44:00.483493+00:00",
+  "attempt": "spo-historical-resume160-attempt3",
+  "evaluation": {
+    "native_iteration_label": 200,
+    "completed_collections": 201,
+    "optimizer_updates": 3216,
+    "test": {
+      "complete": true,
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 10709,
+      "metrics": {
+        "correct_frac": 0.5074393479909022,
+        "exact_match": 0.7884761182714177,
+        "exact_match_frac": 0.5074393479909022,
+        "majority_vote_acc": 0.5701288855193328,
+        "none_answer_extracted_frac_per_problem": 0.0005686125852918878,
+        "once_hit": 0.7884761182714177,
+        "unique_answer_count": 4.538286580742987
+      },
+      "questions_solved_at_least_once": 1040,
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__200/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_200/test__0__1/log.json",
+      "metric_sha256": "637f0c8e588270a6c45378557aab0d8d1bcedd79a8c12fdd91148349c61b32ed",
+      "checked_utc": "2026-10-09T00:43:09.477359+00:00",
+      "base_delta_pp": 10.969484457922668,
+      "base_question_paired_se_pp": 0.7754002766377069,
+      "previous3056_delta_pp": 0.3269522365428355,
+      "previous3056_question_paired_se_pp": 0.3747302424378131
+    },
+    "validation": {
+      "complete": true,
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3821,
+      "metrics": {
+        "correct_frac": 0.6402479892761395,
+        "exact_match": 0.8766756032171582,
+        "exact_match_frac": 0.6402479892761395,
+        "majority_vote_acc": 0.7292225201072386,
+        "none_answer_extracted_frac_per_problem": 0.0001675603217158177,
+        "once_hit": 0.8766756032171582,
+        "unique_answer_count": 3.557640750670241
+      },
+      "questions_solved_at_least_once": 327,
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__200/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_200/validation__0__1/log.json",
+      "metric_sha256": "2616266fdcd09ac45f31e87af5d44ab99c3238ca2bba82ed66f2e548ec910dcb",
+      "checked_utc": "2026-10-09T00:43:10.247965+00:00"
+    },
+    "train": {
+      "complete": true,
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4272,
+      "metrics": {
+        "correct_frac": 0.717741935483871,
+        "exact_match": 0.9139784946236559,
+        "exact_match_frac": 0.717741935483871,
+        "majority_vote_acc": 0.7983870967741935,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9139784946236559,
+        "unique_answer_count": 3.228494623655914
+      },
+      "questions_solved_at_least_once": 340,
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__200/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_200/train__0__1/log.json",
+      "metric_sha256": "c18427bbb81663fb94897db15fb8023728a119a04ebe3ebe90929c5b87e2db30",
+      "checked_utc": "2026-10-09T00:44:00.483493+00:00",
+      "limit": "Training subset, not held-out accuracy."
+    },
+    "checked_utc": "2026-10-09T00:43:10.248079+00:00"
+  },
+  "training": {
+    "checked_utc": "2026-10-09T00:43:14.434501+00:00",
+    "iteration": 200,
+    "optimizer_updates": 3216,
+    "completed_collections": 201,
+    "episodes": 512,
+    "terminal_rewards": {
+      "1.0": 353,
+      "0.0": 159
+    },
+    "all_native_rewards_match": true,
+    "unfinished": 0,
+    "finite": {
+      "w_actLogp/advantages": {
+        "count": 52330,
+        "nonfinite": 0
+      },
+      "w_actLogp/actor_shifted_log_probs": {
+        "count": 93578,
+        "nonfinite": 0
+      },
+      "w_actLogp/ref_shifted_log_probs": {
+        "count": 93578,
+        "nonfinite": 0
+      },
+      "w_refLogp/advantages": {
+        "count": 52330,
+        "nonfinite": 0
+      },
+      "w_refLogp/ref_shifted_log_probs": {
+        "count": 93578,
+        "nonfinite": 0
+      }
+    },
+    "example": {
+      "query_text": "[MATH_TASK] Problem:\nIn a week, Mortdecai collects 8 dozen  eggs every Tuesday and Thursday, and he delivers 3 dozen  eggs to the market and 5 dozen eggs to the mall. He then uses 4 dozen eggs to make a pie every Saturday. Mortdecai donates the remaining eggs to the charity by Sunday. How many  eggs does he donate to the charity?\n\nSolution:",
+      "response_text": "\nMortdecai collects a total of 8 x 2 = 16 dozen eggs every week.\nHe collects a total of 16 x 12 = 192 eggs every week.\nHe delivers a total of 3 x 2 = 6 dozen eggs to the market and the mall.\nSo, he has a total of 192 - 6 = 186 eggs left.\nHe uses a total of 4 x 1 = 4 dozen eggs to make a pie.\nSo, he have a total of 186 - 4 = 182 eggs left.\nMortdecai donates 182 eggs to the charity.\n#### 182\n",
+      "scores": 0,
+      "gold": "48"
+    },
+    "checkpoint": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0200--epoch_2.00--step_3200",
+      "state": {
+        "global_step": 3200,
+        "epoch": 2,
+        "iteration": 200
+      },
+      "files": 10,
+      "bytes": 17600911844
+    },
+    "protected2560_sizes_unchanged": true,
+    "prior_full_hash_verification_epoch": 1791495437.7388709,
+    "recent_training_lines": [
+      "Iteration 197: Training:  20%|█▉        | 3168/16000 [00:39<02:41, 79.52it/s, advantages/mean=0.00163, advantages/std=0.331, advantages/close_to_zero_perc=0, rewards/mean=0.00645, num_tokens=1627.75, actor/approx_kl=0.25, actor/policy_kl=0.101, actor/clip_frac=0.202, actor/ratio=1.04, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2, actor/pg_losses1_anomalies__total_anomalies=2, actor/ref_kl_loss=0.000964, non_score_rewards=0, kls=9.64, kl_coef=0.0001, actor/loss=-0.0349, actor/grad_norm=17.6, actor/lr=8.27e-7, epoch=2, step=3168, actor/ds_step=3168]",
+      "Iteration 198: Training:  20%|█▉        | 3184/16000 [00:40<02:43, 78.27it/s, advantages/mean=-0.0756, advantages/std=0.357, advantages/close_to_zero_perc=0, rewards/mean=0.00631, num_tokens=1861.0, actor/approx_kl=0.224, actor/policy_kl=0.0595, actor/clip_frac=0.217, actor/ratio=1.06, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=3.25, actor/pg_losses1_anomalies__total_anomalies=3.25, actor/ref_kl_loss=0.00113, non_score_rewards=0, kls=11.3, kl_coef=0.0001, actor/loss=-0.037, actor/grad_norm=13.6, actor/lr=8.26e-7, epoch=2, step=3184, actor/ds_step=3184]",
+      "Iteration 199: Training:  20%|██        | 3200/16000 [00:41<02:46, 77.00it/s, advantages/mean=0.0714, advantages/std=0.321, advantages/close_to_zero_perc=0, rewards/mean=0.00625, num_tokens=1800.0, actor/approx_kl=0.172, actor/policy_kl=0.0835, actor/clip_frac=0.222, actor/ratio=1.02, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=4.25, actor/pg_losses1_anomalies__total_anomalies=4.25, actor/ref_kl_loss=0.000988, non_score_rewards=0, kls=9.88, kl_coef=0.0001, actor/loss=-0.028, actor/grad_norm=10.6, actor/lr=8.25e-7, epoch=2, step=3200, actor/ds_step=3200]",
+      "Iteration 200: Training:  20%|██        | 3216/16000 [00:38<02:33, 83.35it/s, advantages/mean=0.0445, advantages/std=0.345, advantages/close_to_zero_perc=0, rewards/mean=0.00614, num_tokens=1587.25, actor/approx_kl=0.291, actor/policy_kl=0.088, actor/clip_frac=0.251, actor/ratio=1.05, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=5, actor/pg_losses1_anomalies__total_anomalies=5, actor/ref_kl_loss=0.00106, non_score_rewards=0, kls=10.6, kl_coef=0.0001, actor/loss=-0.0471, actor/grad_norm=15.3, actor/lr=8.24e-7, epoch=2, step=3216, actor/ds_step=3216]"
+    ],
+    "failure_markers": {
+      "Traceback": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    }
+  },
+  "new_updates_since_last_review": 112,
+  "operational_checks": {
+    "checked_utc": "2026-10-09T00:42:03.155851+00:00",
+    "owner_start_ticks": 1325581494,
+    "processes": "    PID    PPID ELAPSED COMMAND\n2089329       1   54618 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/run_queue.py --config /project/alex_phd/runs/spo-reproduction-20261008/historical-resume160-home-queue.json\n2089332 2089329   54618 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/scoped_session_owner.py --seconds 156998.6524579525 --grace 55 -- /project/alex_phd/envs/spo-6c5f947/bin/deepspeed --master_port 51019 --include localhost:0 --no_local_rank /project/alex_phd/research-cache/repos/SPO/src/treetune/main.py --configs /project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-memory03.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-resume160-home.jsonnet run_iteration_loop\n2089534 2089449   54610 /project/alex_phd/envs/spo-6c5f947/bin/python -u /project/alex_phd/research-cache/repos/SPO/src/treetune/main.py --configs /project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-memory03.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-resume160-home.jsonnet run_iteration_loop\n2100371       1   53783 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/review_monitor.py --config /project/alex_phd/runs/spo-reproduction-20261008/reviews/CONFIG.json\n",
+    "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+    "source_clean": true,
+    "result_receipt_absent": true,
+    "observer_status_age_seconds": 12.120053768157959,
+    "stop_present": false,
+    "storage_available_bytes": {
+      "/home/atowell": 612708421247,
+      "/project/alex_phd": 16587433585
+    }
+  },
+  "quota": {
+    "remaining_percent": 18,
+    "checked_utc": "2026-10-09T00:41:38.269068+00:00",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "legacy_sampler_labels_not_policy": true
+  },
+  "interpretation": "Scheduled3216 test10709/21104 =50.74393%, +0.32695 pp versus3056 and +10.96948 pp versus matched base. Descriptive question-paired SE0.37473 pp versus previous /0.77540 pp versus base, not seed uncertainty. Validation3821/5968 =64.02480%, down16 correct (-0.26810 pp); train subset4272/5952 =71.77419%, down50 (-0.84005 pp), not held-out. Latest split changes are mixed, challenging an uninterrupted joint-improvement account without establishing a reversal, overfitting or its cause. Retain all scheduled results; reproduction incomplete.",
+  "coverage_interpretation": "Once-in16 question coverage1047 to1040 while primary accuracy rises. Distinct answers4.58984 to4.53829, majority vote56.78544% to57.01289%, missing extracted test answers19 to12. Neither diversity change nor coverage change establishes a causal explanation; no favorable metric substitution.",
+  "training_interpretation": "All512 rewards regraded:353 positive/159 zero, none unfinished. All52,330 advantages and93,578 actor/reference logprobs each finite. Last loss-0.0471, gradient15.3, approximateKL0.291, clip0.251, LR8.24e-7, zero lossNaN/Inf. RecentKL0.250/0.224/0.172/0.291 and ratios1.04/1.06/1.02/1.05 show no sustained escalation. Real response confuses dozens and individual eggs and miscounts deliveries, yields182 instead of48; native rewardzero is correct. Changing training batches are not benchmark gains.",
+  "decision": "Continue authenticated owner2089329/start ticks1325581494, unchanged historical recipe and original cap1791608973 toward fixed690/11040 endpoint. No new GPU job, source/config changes, best-checkpoint selection or test-driven tuning.",
+  "ranked_followups": [
+    "Next prescribed joint evaluation and native reward/KL/gradient diagnostics; mixed small split changes do not justify tuning the fixed reproduction recipe.",
+    "Focused CPU saved-error/trajectory comparison if weakness persists across later prescribed observations; separate extraction, answer coverage and confidence from primary accuracy.",
+    "Retain protected160/320/640/1280/2560; next coarse protection5120 or earlier interruption/allocation risk after subtree quota checks.",
+    "Prepared fixed690 evaluation only after verified690collections/11040updates and whole-owner/GPU release; GRPO remains behind reward/provenance fixture."
+  ],
+  "checkpoint_policy": {
+    "new_copy": false,
+    "full_rehash": false,
+    "deletion": false,
+    "protected_manifest": "/project/alex_phd/runs/spo-reproduction-20261008/preserved-checkpoints/attempt3/ckpt--iter_0160--epoch_2.00--step_2560.manifest.json",
+    "retention": "Native3200 state distinct from evaluated3216; protected2560 sizes checked against prior full-hash manifest. Next coarse protection5120 or earlier interruption/allocation risk."
+  },
+  "presentation_decision": "Update SPO report headline, trajectory table, narrative, training example and evidence together; prior RLM lesson deck unchanged. This is an intermediate math-learning milestone, not complete reproduction or RLM transfer.",
+  "limits": "One resumed ancestry, development-exposed tests, no independent training-seed replication. Question-paired SE is descriptive, not seed uncertainty or repeated-testing correction. Historical source commit, author checkpoint selection and exact RNG continuity unresolved. Author reference is not our training gain. Full endpoint may require another allocation; preserve schedule/checkpoints. GitHub publication is not model-weight backup."
+}
