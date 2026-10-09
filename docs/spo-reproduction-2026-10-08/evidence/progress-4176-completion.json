@@ -1,0 +1,178 @@
+{
+  "review_id": "review-1791524688-60ab9b67",
+  "checked_utc": "2026-10-09T05:46:14.137497+00:00",
+  "campaign": "spo-reproduction-20261008",
+  "evaluation": {
+    "native_iteration_label": 260,
+    "completed_collections": 261,
+    "optimizer_updates": 4176,
+    "test": {
+      "metrics": {
+        "correct_frac": 0.5104719484457922,
+        "exact_match": 0.7937831690674754,
+        "exact_match_frac": 0.5104719484457922,
+        "majority_vote_acc": 0.5921152388172858,
+        "none_answer_extracted_frac_per_problem": 0.000758150113722517,
+        "once_hit": 0.7937831690674754,
+        "unique_answer_count": 4.610310841546626
+      },
+      "sha256": "503d43c99d320cb289ef36fe0a20739704c41124be280c7e466a25a8082b59ed",
+      "unchanged_since_full_regrade": true
+    },
+    "validation": {
+      "metrics": {
+        "correct_frac": 0.6382372654155496,
+        "exact_match": 0.8900804289544236,
+        "exact_match_frac": 0.6382372654155496,
+        "majority_vote_acc": 0.7211796246648794,
+        "none_answer_extracted_frac_per_problem": 0.0005026809651474531,
+        "once_hit": 0.8900804289544236,
+        "unique_answer_count": 3.557640750670241
+      },
+      "sha256": "9f12b9721601a8ff404ab48f57b70665c0e9197a810f101f38e2b9cf5e608161",
+      "unchanged_since_full_regrade": true
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4469,
+      "metrics": {
+        "correct_frac": 0.7508400537634409,
+        "exact_match": 0.9193548387096774,
+        "exact_match_frac": 0.7508400537634409,
+        "majority_vote_acc": 0.8225806451612904,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9193548387096774,
+        "unique_answer_count": 3.032258064516129
+      },
+      "sha256": "c14722f48a3baaa9f853ce829fcb9b6c5252a11f8377ee2961f1c4124e8291c6",
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__260/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_260/train__0__1/log.json",
+      "all_original_identities_tree_candidates_and_seven_metrics_checked": true,
+      "delta_pp_vs4016": 1.0080645161290323
+    },
+    "checked_utc": "2026-10-09T05:45:46.460939+00:00"
+  },
+  "native_training": {
+    "checked_utc": "2026-10-09T05:46:14.137497+00:00",
+    "iteration": 264,
+    "completed_collections": 265,
+    "optimizer_updates": 4240,
+    "delta_updates": 64,
+    "terminal_rewards": {
+      "1.0": 360,
+      "0.0": 152
+    },
+    "all512_rewards_checked": true,
+    "finite": {
+      "w_actLogp/advantages": {
+        "count": 57375,
+        "nonfinite": 0
+      },
+      "w_actLogp/actor_shifted_log_probs": {
+        "count": 98463,
+        "nonfinite": 0
+      },
+      "w_actLogp/ref_shifted_log_probs": {
+        "count": 98463,
+        "nonfinite": 0
+      },
+      "w_refLogp/advantages": {
+        "count": 57375,
+        "nonfinite": 0
+      },
+      "w_refLogp/ref_shifted_log_probs": {
+        "count": 98463,
+        "nonfinite": 0
+      }
+    },
+    "recent_training_lines": [
+      "Iteration 261: Training:  26%|██▌       | 4192/16000 [00:39<01:51, 105.99it/s, advantages/mean=-0.00445, advantages/std=0.297, advantages/close_to_zero_perc=0, rewards/mean=0.00784, num_tokens=1690.75, actor/approx_kl=0.174, actor/policy_kl=0.0426, actor/clip_frac=0.222, actor/ratio=1.11, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2.25, actor/pg_losses1_anomalies__total_anomalies=2.25, actor/ref_kl_loss=0.000908, non_score_rewards=0, kls=9.08, kl_coef=0.0001, actor/loss=-0.0333, actor/grad_norm=33.6, actor/lr=7.61e-7, epoch=2, step=4192, actor/ds_step=4192]",
+      "Iteration 262: Training:  26%|██▋       | 4208/16000 [00:41<01:56, 100.85it/s, advantages/mean=0.0602, advantages/std=0.315, advantages/close_to_zero_perc=0, rewards/mean=0.00587, num_tokens=1830.5, actor/approx_kl=0.214, actor/policy_kl=0.105, actor/clip_frac=0.189, actor/ratio=1, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=4.5, actor/pg_losses1_anomalies__total_anomalies=4.5, actor/ref_kl_loss=0.00116, non_score_rewards=0, kls=11.6, kl_coef=0.0001, actor/loss=-0.0356, actor/grad_norm=21, actor/lr=7.6e-7, epoch=2, step=4208, actor/ds_step=4208]",
+      "Iteration 263: Training:  26%|██▋       | 4224/16000 [00:43<02:00, 97.69it/s, advantages/mean=-0.00247, advantages/std=0.313, advantages/close_to_zero_perc=0, rewards/mean=0.00573, num_tokens=1920.0, actor/approx_kl=0.377, actor/policy_kl=0.118, actor/clip_frac=0.256, actor/ratio=1.08, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=3.5, actor/pg_losses1_anomalies__total_anomalies=3.5, actor/ref_kl_loss=0.00129, non_score_rewards=0, kls=12.9, kl_coef=0.0001, actor/loss=-0.0421, actor/grad_norm=13, actor/lr=7.59e-7, epoch=2, step=4224, actor/ds_step=4224]",
+      "Iteration 264: Training:  26%|██▋       | 4240/16000 [00:42<01:57, 99.67it/s, advantages/mean=0.078, advantages/std=0.314, advantages/close_to_zero_perc=0, rewards/mean=0.00568, num_tokens=1892.75, actor/approx_kl=0.632, actor/policy_kl=0.198, actor/clip_frac=0.192, actor/ratio=1.22, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2.75, actor/pg_losses1_anomalies__total_anomalies=2.75, actor/ref_kl_loss=0.00126, non_score_rewards=0, kls=12.6, kl_coef=0.0001, actor/loss=-0.0303, actor/grad_norm=13.5, actor/lr=7.58e-7, epoch=2, step=4240, actor/ds_step=4240]"
+    ],
+    "gradient_followup": {
+      "points_after4176": 64,
+      "max_norm": 51.3,
+      "over100": {},
+      "new_ratio_warnings": []
+    },
+    "failure_markers": {
+      "Traceback": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    },
+    "recorded_nonzero_loss_nan_inf": 0,
+    "checkpoint": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0260--epoch_2.00--step_4160",
+      "state": {
+        "global_step": 4160,
+        "epoch": 2,
+        "iteration": 260
+      },
+      "files": 10,
+      "bytes": 17600911844,
+      "protected2560_sizes_unchanged": true
+    },
+    "operations": {
+      "owner_start_ticks": 1325581494,
+      "result_present": false,
+      "observer_age_seconds": 25.095714807510376,
+      "stop_present": false,
+      "storage_available_bytes": {
+        "/home/atowell": 602044655752,
+        "/project/alex_phd": 16574061372
+      },
+      "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+      "source_clean": true
+    },
+    "example": {
+      "summary": "Correctly computes 240 kg times $20 = $4800, then adds an unwarranted $20 and answers4820; native zero reward is correct.",
+      "gold": "4800",
+      "reward": 0
+    },
+    "service": {
+      "checked_utc": "2026-10-09T05:46:32.227135+00:00",
+      "iteration": 265,
+      "http200": 430,
+      "http400": 0,
+      "http500": 0,
+      "saved_question_rows": 64,
+      "average_generation_tokens_per_second": 5213.1,
+      "actual_response_checked": "Counts1000 people on day1 and500 on day2, answers1500; normal stop. In-progress collection not counted complete."
+    }
+  },
+  "quota": {
+    "checked_utc": "2026-10-09T05:45:00.823436+00:00",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "remaining_percent": 13,
+    "used_percent": 87,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "resets_epoch": 1791960409,
+    "legacy_sampler_labels_not_policy": true
+  },
+  "interpretation": [
+    "Training subset now4469/5952 =75.08401%, +60correct/+1.00806pp versus4016. All372 original identities,16 candidates per question and7 native metrics regraded. This is training accuracy, not held-out gain.",
+    "Test10773/21104 =51.04719%, +11.27274pp versus matched base; validation3809/5968 =63.82373%, unchanged since previous full regrade. Raw metrics hashes/dictionaries verified. Earlier pending-cutoff receipt preserved.",
+    "Training subset rises while validation dips and test stays near earlier range. This is a signal to track joint trajectories, not evidence establishing overfitting, a plateau or a cause. No test-driven tuning.",
+    "64 recorded update points since4176 have maximum gradient51.3 and no new native ratio guards. Current inspected saved advantages/logprobs finite; zero loss NaN/Inf records. Prior excursions remain documented; absence in this interval is not proof of future stability.",
+    "One resumed ancestry; prescribed690/11040 endpoint unreached. Historical source/selection rationale and exact restart RNG continuity remain limits. Author reference weights are not our learning gain."
+  ],
+  "decision": "Continue same authenticated owner/recipe/cumulative cap; no new GPU job or optional fan-out. Complete iteration260 record, track next prescribed joint evaluation and diagnostic recurrence.",
+  "ranked_followups": [
+    "Next prescribed test/validation/train-subset evaluation plus native reward, ratio-guard and gradient/KL persistence checks.",
+    "Targeted CPU diagnosis if joint held-out weakness or diagnostic excursions persist; do not change the live recipe.",
+    "Protect5120 or earlier interruption/allocation risk after both subtree quota checks; retain protected states.",
+    "Fixed690 only after11040 verified updates and whole-owner/GPU release; GRPO behind historical reward/provenance fixture."
+  ],
+  "safeguards": {
+    "training_deadline_epoch": 1791608973,
+    "observer_cutoff_epoch": 1791621274,
+    "no_source_config_change": true,
+    "no_new_gpu_job": true,
+    "no_checkpoint_copy_rehash_or_deletion": true
+  },
+  "publication_decision": "Update supporting report with training-subset completion and bounded native follow-up. Earlier RLM lesson deck unchanged: no new held-out claim or completed reproduction."
+}
