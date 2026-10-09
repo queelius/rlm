@@ -1,0 +1,194 @@
+{
+  "review_id": "review-1791515074-3ead29c0",
+  "checked_utc": "2026-10-09T03:07:04.912186+00:00",
+  "campaign": "spo-reproduction-20261008",
+  "evaluation": {
+    "native_iteration_label": 230,
+    "completed_collections": 231,
+    "optimizer_updates": 3696,
+    "test": {
+      "complete": true,
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 10747,
+      "metrics": {
+        "once_hit": 0.8013646702047005,
+        "exact_match": 0.8013646702047005,
+        "correct_frac": 0.5092399545109931,
+        "exact_match_frac": 0.5092399545109931,
+        "majority_vote_acc": 0.5784685367702805,
+        "unique_answer_count": 4.667172100075815,
+        "none_answer_extracted_frac_per_problem": 0.0008055344958301743
+      },
+      "questions_solved_at_least_once": 1057,
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__230/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_230/test__0__1/log.json",
+      "metric_sha256": "da33cd48078381ef0317ca7ad5c781f6c4b7f62cd1ba81be45869661b5f7a93b",
+      "previous3536_delta_pp": -0.2606141015921153,
+      "checked_utc": "2026-10-09T03:05:48.988960+00:00",
+      "previous3536_question_paired_se_pp": 0.36878625443929774,
+      "base_delta_pp": 11.149545109931767,
+      "base_question_paired_se_pp": 0.7686408252390526
+    },
+    "validation": {
+      "complete": true,
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3824,
+      "metrics": {
+        "once_hit": 0.8873994638069705,
+        "exact_match": 0.8873994638069705,
+        "correct_frac": 0.6407506702412868,
+        "exact_match_frac": 0.6407506702412868,
+        "majority_vote_acc": 0.7184986595174263,
+        "unique_answer_count": 3.525469168900804,
+        "none_answer_extracted_frac_per_problem": 0.0001675603217158177
+      },
+      "questions_solved_at_least_once": 331,
+      "all_seven_native_metrics_regraded": true,
+      "all_original_question_gold_and_tree_candidates_verified": true,
+      "metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__230/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_230/validation__0__1/log.json",
+      "metric_sha256": "e7471ccc42e0f602df4fd5b1bcddd8ea8075a2b6f254b1e9c8683645d0379662",
+      "previous3536_delta_pp": -1.1058981233243967,
+      "checked_utc": "2026-10-09T03:05:49.748542+00:00"
+    },
+    "train": {
+      "complete": false,
+      "checked_utc": "2026-10-09T03:06:41.554120+00:00"
+    },
+    "checked_utc": "2026-10-09T03:06:41.554120+00:00"
+  },
+  "native_training": {
+    "checked_utc": "2026-10-09T03:05:53.983031+00:00",
+    "iteration": 230,
+    "completed_collections": 231,
+    "optimizer_updates": 3696,
+    "delta_updates": 96,
+    "all512_native_rewards_match": true,
+    "terminal_rewards": {
+      "1.0": 383,
+      "0.0": 129
+    },
+    "unfinished": 0,
+    "finite": {
+      "w_actLogp/advantages": {
+        "count": 55209,
+        "nonfinite": 0
+      },
+      "w_actLogp/actor_shifted_log_probs": {
+        "count": 96649,
+        "nonfinite": 0
+      },
+      "w_actLogp/ref_shifted_log_probs": {
+        "count": 96649,
+        "nonfinite": 0
+      },
+      "w_refLogp/advantages": {
+        "count": 55209,
+        "nonfinite": 0
+      },
+      "w_refLogp/ref_shifted_log_probs": {
+        "count": 96649,
+        "nonfinite": 0
+      }
+    },
+    "example": {
+      "summary": "Computes18 and27 minutes correctly, then adds18+5+27 as40 instead of50; response correctly receives zero reward.",
+      "reward": 0,
+      "gold": "50"
+    },
+    "recent_training_lines": [
+      "Iteration 227: Training:  23%|██▎       | 3648/16000 [00:40<02:15, 90.88it/s, advantages/mean=-0.0118, advantages/std=0.288, advantages/close_to_zero_perc=0, rewards/mean=0.00721, num_tokens=1802.5, actor/approx_kl=0.242, actor/policy_kl=0.116, actor/clip_frac=0.202, actor/ratio=1.06, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=4, actor/pg_losses1_anomalies__total_anomalies=4, actor/ref_kl_loss=0.000993, non_score_rewards=0, kls=9.93, kl_coef=0.0001, actor/loss=-0.0422, actor/grad_norm=12.5, actor/lr=7.96e-7, epoch=2, step=3648, actor/ds_step=3648]",
+      "Iteration 228: Training:  23%|██▎       | 3664/16000 [00:42<02:24, 85.44it/s, advantages/mean=0.0257, advantages/std=0.308, advantages/close_to_zero_perc=0, rewards/mean=0.00541, num_tokens=1987.0, actor/approx_kl=0.245, actor/policy_kl=0.107, actor/clip_frac=0.221, actor/ratio=1.02, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=4.75, actor/pg_losses1_anomalies__total_anomalies=4.75, actor/ref_kl_loss=0.00103, non_score_rewards=0, kls=10.3, kl_coef=0.0001, actor/loss=-0.0398, actor/grad_norm=11.7, actor/lr=7.95e-7, epoch=2, step=3664, actor/ds_step=3664]",
+      "Iteration 229: Training:  23%|██▎       | 3680/16000 [00:43<02:27, 83.66it/s, advantages/mean=0.0401, advantages/std=0.293, advantages/close_to_zero_perc=0, rewards/mean=0.00721, num_tokens=1628.75, actor/approx_kl=0.546, actor/policy_kl=0.151, actor/clip_frac=0.261, actor/ratio=1.08, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=2, actor/pg_losses1_anomalies__total_anomalies=2, actor/ref_kl_loss=0.000988, non_score_rewards=0, kls=9.88, kl_coef=0.0001, actor/loss=-0.0295, actor/grad_norm=260, actor/lr=7.94e-7, epoch=2, step=3680, actor/ds_step=3680]",
+      "Iteration 230: Training:  23%|██▎       | 3696/16000 [00:44<02:27, 83.51it/s, advantages/mean=0.0313, advantages/std=0.298, advantages/close_to_zero_perc=0, rewards/mean=0.00873, num_tokens=1488.75, actor/approx_kl=0.156, actor/policy_kl=0.0835, actor/clip_frac=0.222, actor/ratio=1.04, actor/pg_losses1_anomalies__num_nan=0, actor/pg_losses1_anomalies__num_inf=0, actor/pg_losses1_anomalies__num_high_z=3.5, actor/pg_losses1_anomalies__total_anomalies=3.5, actor/ref_kl_loss=0.000791, non_score_rewards=0, kls=7.91, kl_coef=0.0001, actor/loss=-0.0313, actor/grad_norm=16.5, actor/lr=7.93e-7, epoch=2, step=3696, actor/ds_step=3696]"
+    ],
+    "failure_markers": {
+      "Traceback": 0,
+      "CUDA out of memory": 0,
+      "Disk quota exceeded": 0
+    },
+    "checkpoint": {
+      "path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/checkpoints/ckpt--iter_0230--epoch_2.00--step_3680",
+      "state": {
+        "global_step": 3680,
+        "epoch": 2,
+        "iteration": 230
+      },
+      "files": 10,
+      "bytes": 17600911844,
+      "protected2560_sizes_unchanged": true,
+      "prior_full_hash_verification_epoch": 1791495437.7388709
+    },
+    "operations": {
+      "owner_start_ticks": 1325581494,
+      "processes": "    PID    PPID ELAPSED COMMAND\n2089329       1   63249 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/run_queue.py --config /project/alex_phd/runs/spo-reproduction-20261008/historical-resume160-home-queue.json\n2089332 2089329   63249 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/scoped_session_owner.py --seconds 156998.6524579525 --grace 55 -- /project/alex_phd/envs/spo-6c5f947/bin/deepspeed --master_port 51019 --include localhost:0 --no_local_rank /project/alex_phd/research-cache/repos/SPO/src/treetune/main.py --configs /project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-memory03.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-resume160-home.jsonnet run_iteration_loop\n2089534 2089449   63241 /project/alex_phd/envs/spo-6c5f947/bin/python -u /project/alex_phd/research-cache/repos/SPO/src/treetune/main.py --configs /project/alex_phd/runs/spo-reproduction-20261008/train-historical-paths.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-memory03.jsonnet,/project/alex_phd/runs/spo-reproduction-20261008/train-resume160-home.jsonnet run_iteration_loop\n2100371       1   62414 /project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/spo-reproduction-20261008/code-v1/review_monitor.py --config /project/alex_phd/runs/spo-reproduction-20261008/reviews/CONFIG.json\n",
+      "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+      "source_clean": true,
+      "result_receipt_absent": true,
+      "observer_status_age_seconds": 19.609118223190308,
+      "stop_present": false,
+      "storage_available_bytes": {
+        "/home/atowell": 607575265467,
+        "/project/alex_phd": 16580561624
+      }
+    }
+  },
+  "diagnostics": {
+    "checked_utc": "2026-10-09T03:07:04.912186+00:00",
+    "validation_previous3536_question_paired_se_pp": 0.7099367715168681,
+    "validation_questions_improved": 83,
+    "validation_questions_worsened": 98,
+    "validation_questions_unchanged": 192,
+    "validation_correct_delta": -66,
+    "validation_extraction_missing_previous": 2,
+    "validation_extraction_missing_current": 1,
+    "gradient_diagnostic": {
+      "observed_norm_at3680": 260,
+      "following_collection_norm": 16.5,
+      "config_max_grad_norm": 1,
+      "source_config_fill": "deepspeed_policy_trainer.py:276 fills gradient_clipping from max_grad_norm",
+      "source_metric": "ppo_trainer.py:927 actor.get_global_grad_norm()",
+      "interpretation": "Finite diagnostic spike, not measured parameter-displacement magnitude. Following collection returns to16.5. No causal relation to evaluation change established; do not alter live config."
+    }
+  },
+  "quota": {
+    "checked_utc": "2026-10-09T03:04:48.943737+00:00",
+    "checked_epoch": 1791515088.9437373,
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "remaining_percent": 16,
+    "used_percent": 84,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "resets_epoch": 1791960409,
+    "legacy_sampler_labels_not_policy": true
+  },
+  "interpretation": [
+    "Test50.92400% is +11.14955 percentage points versus matched starting weights but -0.26061 points versus3536. Validation64.07507% falls1.10590 points, its second consecutive decline. This challenges uninterrupted progress but does not identify a lasting reversal or a cause.",
+    "Validation comparison:83 questions improve,98 worsen,192 unchanged; missing extracted answers decrease2 to1. Increased extraction failures cannot explain its decline. Descriptive paired SE0.70994pp versus1.10590pp drop is not training-seed uncertainty or proof of deterioration.",
+    "Test coverage1058 to1057/1319 and majority voting58.30174% to57.84685% decline slightly as distinct answers rise4.60879 to4.66717. Keep meanpass@1 primary; no favorable metric or checkpoint selection.",
+    "Gradient norm260 at3680 is followed by16.5 at3696, with finite latest advantages/logprobs and zero reported loss NaN/Inf. Config max_grad_norm1 is filled into DeepSpeed gradient_clipping; the reported norm is not a measured parameter displacement. No cause of benchmark change established.",
+    "Training-subset evaluation was still pending at03:06:41UTC; do not substitute the older score or call training accuracy held-out."
+  ],
+  "decision": "Continue unchanged historical recipe under the same owner and original cumulative cap. Review next prescribed joint evaluation and whether gradient/KL excursions recur; no evidence justifies changing the exact-reproduction recipe.",
+  "ranked_followups": [
+    "Finish/regrade pending iteration230 training subset, separately from held-out evidence.",
+    "Next prescribed joint evaluation plus native reward/gradient/KL persistence checks; retain all scores.",
+    "If joint weakness or gradient excursions recur, compare saved per-question errors and update diagnostics on CPUs before proposing any separate intervention.",
+    "Protect5120 full recovery state or earlier interruption/allocation risk after subtree quota checks; retain protected160/320/640/1280/2560.",
+    "Fixed690 evaluation prepared but gated by11040 updates and whole-owner/GPU release; GRPO remains gated by historical reward/provenance fixture."
+  ],
+  "limits": [
+    "3696 intermediate updates, not prescribed11040 endpoint or completed paper reproduction.",
+    "One resumed ancestry, not independent training seeds; RNG continuity unresolved.",
+    "Historical author source revision and checkpoint-selection rationale unresolved; memory reservation adapter documented.",
+    "Paired question standard errors are descriptive, not seed uncertainty or a stopping rule.",
+    "Author reference is not our training gain; RLM transfer untested.",
+    "Current cumulative cap/allocation may require continuation; do not shorten scientific schedule.",
+    "GitHub is not a checkpoint backup."
+  ],
+  "presentation_decision": "Update SPO report headline/table/evidence and limitation/next-step wording together; prior RLM lesson deck unchanged. Preserve pending training-subset cutoff explicitly.",
+  "checkpoint_policy": "Native3680 fullstate10files17,600,911,844bytes, distinct from evaluated3696; protected2560 sizes match prior full-hash manifest. No copy/full rehash/deletion this review."
+}
