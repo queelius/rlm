@@ -1,0 +1,138 @@
+{
+  "schema": "spo-live-learning-rate-fidelity-audit-v1",
+  "checked_utc": "2026-10-12T19:41:49.161161+00:00",
+  "question": "Do actual logged learning rates preserve the original1000-iteration/16000-update schedule rather than decay over the fixed690-collection comparison endpoint?",
+  "native_log": "/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/command.log",
+  "log_prefix_bytes": 7045106,
+  "log_prefix_sha256": "f32c2025f23abbe83c044f0f48b5afe5a520393e63dc48f9f4d1988fecf758ba",
+  "source_sha256": {
+    "/project/alex_phd/envs/spo-6c5f947/lib/python3.10/site-packages/deepspeed/runtime/lr_schedules.py": "b539b82ffaa795b822ab066653d3e309e5c40fd8fe2345cb63fe4796a82305ae",
+    "/project/alex_phd/envs/spo-6c5f947/lib/python3.10/site-packages/deepspeed/runtime/engine.py": "29105b025c055f1e4b7fd0de905e0ee29146177e0c0bca0f4f7de67f4b10c7c4",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/ppo_trainer.py": "231c8a1456b2b7c5fcda6e8a3f4112f8465d9e401779290c7fe7d4a890dbbd01",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/deepspeed_policy_trainer.py": "7cf1e24baad23a4a80cf9befcaca54f42979702a92b8f26355892cdaa44a9104",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/config.json": "30bdd16637a48a499d84cf2ad528d9ecc0eab25707a20d9d5d2917ce4bb69ebc",
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/code-spo-bos-only-v1/fixed_endpoint.py": "e0c289ea8388477d5b88479010ef95e20b18ced84e0af9ab1eba8118bc902da3"
+  },
+  "configuration": {
+    "num_iterations": 1000,
+    "early_stop_iteration": 690,
+    "responses_per_collection": 512,
+    "epochs_per_collection": 2,
+    "global_batch": 64,
+    "optimizer_updates_per_collection": 16,
+    "total_lr_horizon_updates": 16000,
+    "warmup_steps": 480,
+    "warmup_type": "log (installed native default)",
+    "max_lr": 0.000001
+  },
+  "method": "Execute exact installed WarmupDecayLR._get_gamma AST without imports/model/GPU. For completed step s>=1, scheduler counter=s-1. Compare every contiguous actor/lr display at native3-significant-digit precision and every full-precision DeepSpeed parameter-group record; separately check step0 initialization against configured optimizer LR. No optimizer steps executed.",
+  "progress_bar_updates_checked": 768,
+  "max_logged_update": 768,
+  "rounded_progress_bar_mismatches": [],
+  "full_precision_step_records": 76,
+  "full_precision_parameter_group_values": 152,
+  "full_precision_mismatches": [],
+  "reported_skipped_update_values": [
+    0
+  ],
+  "full_precision_max_absolute_error": 0,
+  "initial_optimizer_records": [
+    {
+      "step": 0,
+      "skipped": 0,
+      "learning_rates": [
+        0.000001,
+        0.000001
+      ],
+      "expected_initial_optimizer_lr": 0.000001,
+      "all_match": true
+    }
+  ],
+  "short690_horizon_recomputed332warmup_display_mismatch_count": 765,
+  "short690_horizon_same480warmup_display_mismatch_count": 271,
+  "anchors": {
+    "1": {
+      "logged_post_update_lr": 0,
+      "expected_post_update_lr": 0,
+      "short690_horizon_and_recomputed_warmup_lr": 0,
+      "short690_horizon_same480warmup_lr": 0
+    },
+    "16": {
+      "logged_post_update_lr": 4.49e-7,
+      "expected_post_update_lr": 4.4909050549831296e-7,
+      "short690_horizon_and_recomputed_warmup_lr": 4.776096916067529e-7,
+      "short690_horizon_same480warmup_lr": 4.4909050549831296e-7
+    },
+    "160": {
+      "logged_post_update_lr": 8.22e-7,
+      "expected_post_update_lr": 8.220520973388163e-7,
+      "short690_horizon_and_recomputed_warmup_lr": 8.742559548414932e-7,
+      "short690_horizon_same480warmup_lr": 8.220520973388163e-7
+    },
+    "320": {
+      "logged_post_update_lr": 9.34e-7,
+      "expected_post_update_lr": 9.343247237133945e-7,
+      "short690_horizon_and_recomputed_warmup_lr": 9.936583777431814e-7,
+      "short690_horizon_same480warmup_lr": 9.343247237133945e-7
+    },
+    "479": {
+      "logged_post_update_lr": 0.000001,
+      "expected_post_update_lr": 9.996621997497283e-7,
+      "short690_horizon_and_recomputed_warmup_lr": 9.863653343294732e-7,
+      "short690_horizon_same480warmup_lr": 9.996621997497283e-7
+    },
+    "480": {
+      "logged_post_update_lr": 0.000001,
+      "expected_post_update_lr": 0.000001,
+      "short690_horizon_and_recomputed_warmup_lr": 9.862719462084422e-7,
+      "short690_horizon_same480warmup_lr": 0.000001
+    },
+    "481": {
+      "logged_post_update_lr": 0.000001,
+      "expected_post_update_lr": 0.000001,
+      "short690_horizon_and_recomputed_warmup_lr": 9.861785580874112e-7,
+      "short690_horizon_same480warmup_lr": 0.000001
+    },
+    "640": {
+      "logged_post_update_lr": 9.9e-7,
+      "expected_post_update_lr": 9.897551546391753e-7,
+      "short690_horizon_and_recomputed_warmup_lr": 9.713298468434815e-7,
+      "short690_horizon_same480warmup_lr": 9.849431818181819e-7
+    },
+    "768": {
+      "logged_post_update_lr": 9.82e-7,
+      "expected_post_update_lr": 9.815077319587628e-7,
+      "short690_horizon_and_recomputed_warmup_lr": 9.593761673515129e-7,
+      "short690_horizon_same480warmup_lr": 9.728219696969696e-7
+    },
+    "11040": {
+      "logged_post_update_lr": null,
+      "expected_post_update_lr": 3.196520618556701e-7,
+      "short690_horizon_and_recomputed_warmup_lr": 9.338812103100486e-11,
+      "short690_horizon_same480warmup_lr": 9.469696969696969e-11
+    }
+  },
+  "checkpoint640_scheduler_counter_receipt": "checkpoint640-metadata-20261012.json",
+  "diagnostic_correction": "Initial read-only attempt called _get_gamma with step0 -> scheduler index-1 and failed log(0). Native engine source shows _report_progress(0) at initialization; scheduler stepping precedes reports of global_steps+1 thereafter. Corrected analysis separates initialization; native training/source unchanged.",
+  "limits": [
+    "Logged learning rates are post-update scheduler values, not an independent numerical audit of every applied parameter delta.",
+    "Display values are rounded; full-precision checks apply only to the recorded interval steps.",
+    "This verifies the recovered schedule in our installed runtime, not the unresolved exact historical author runtime/source or successful benchmark reproduction.",
+    "Counterfactual short schedules are CPU calculations only, not alternate training runs or selected results."
+  ],
+  "independent_verification": {
+    "checked_utc": "2026-10-12T19:47:06+00:00",
+    "method": "Independent hand-written logarithmic-warmup/linear-decay formula; group progress records by actor/ds_step and validate every reprint, separately parse native optimizer reports.",
+    "unique_update_ids": 768,
+    "display_records_including_reprints": 1147,
+    "full_precision_step_records": 76,
+    "full_precision_parameter_group_values": 152,
+    "manual_formula_max_absolute_error": 2.117582368135751e-22,
+    "full_precision_relative_tolerance": 1e-15,
+    "full_precision_absolute_tolerance": 1e-22,
+    "rounded_display_mismatches": 0,
+    "log_prefix_and_all_source_hashes_match": true,
+    "source_and_public_audit_bytes_match_before_annotation": true,
+    "parser_correction": "A first independent cross-check mistakenly counted progress-bar reprints as new updates. A second diagnostic showed the generic step field can be overwritten by an appended optimizer message. The dedicated actor/ds_step IDs cover exactly 1..768; all 1147 displayed learning rates match and repeated values agree. This was a CPU analysis issue, not a native training failure."
+  }
+}

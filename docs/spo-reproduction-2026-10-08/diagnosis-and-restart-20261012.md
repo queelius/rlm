@@ -1,7 +1,8 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 19:11 UTC, after the fifth scheduled restart evaluation.
-The native full checkpoint at 640 updates is also verified.
+Status: October 12, 2026, 19:48 UTC. The fifth scheduled restart evaluation
+remains the latest benchmark. The native full checkpoint at 800 updates is
+verified, and logged learning rates are independently checked through 768 updates.
 Our primary objective is to reproduce the
 paper's **training result** on one A100. It is still unfinished. We have matched
 the authors' released-model evaluation, diagnosed concrete discrepancies in our
@@ -75,6 +76,17 @@ update. We retain the native 1,319 questions × 16 responses, temperature 0.35,
 effective top-p 1.0, and **mean pass@1**, not best-of-16. Every scheduled result
 will remain visible. A 68-hour whole-run cap includes evaluation; full optimizer
 checkpoints are kept for an allocation handoff if needed.
+
+One recipe detail is now verified in the running optimizer: the learning-rate
+schedule still spans **1,000 collections / 16,000 updates**, with 480 warmup
+steps, even though our comparison stops at 690 collections. All 768 contiguous
+audited update displays match that schedule at their displayed precision;
+76 full-precision optimizer reports (152 parameter-group values) match too.
+An independent formula check corroborates this. The initialization report is
+checked separately from post-update values. This rules out an accidentally
+shortened schedule in the audited interval; it does not establish the exact
+historical author runtime or add a new learning result. See the
+[learning-rate audit](evidence/restart-learning-rate-fidelity-20261012.json).
 
 ## Scheduled evaluations so far
 
@@ -180,6 +192,13 @@ Native cleanup still applies, and a separate faithful resume entrypoint remains
 necessary if interrupted. That checkpoint check itself is not a benchmark;
 the subsequent 656-update evaluation is reported above. The fixed endpoint
 remains 11,040 updates.
+
+At 19:47 UTC, the scheduled **800-update full state** passed the same CPU
+metadata check: trainer iteration 50/global step 800, actor and both active
+Adam counters 800, scheduler 799, and zero skipped steps. All ten files were
+stable; the protected 160-update copy retained its recorded sizes. This is
+saved progress, not a tensor scan, new backup, GPU resume, or benchmark. See the
+[800-update receipt](evidence/restart-full800-metadata-20261012.json).
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).

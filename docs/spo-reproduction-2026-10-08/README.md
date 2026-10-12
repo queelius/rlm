@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 19:11 UTC
+## Current status on October 12, 19:48 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -56,16 +56,22 @@ trainer's automatic cleanup directory. All ten files match their originals by
 SHA256; saved update counters and optimizer values passed CPU inspection. This
 protects a recovery point, not a new scientific result or an off-system backup.
 See the [checkpoint receipt](evidence/restart-full160-protection-20261012.json).
-Training has reached **656 updates**, with contiguous finite logged
+Training has reached **800 updates**, with contiguous finite logged
 metrics and no logged traceback. The newer native full checkpoint's counters
-agree at 640 updates, including both active Adam states; the scheduler is at
-639. All ten required files were stable during this
-[CPU metadata check](evidence/restart-full640-metadata-20261012.json).
+agree at 800 updates, including both active Adam states; the scheduler is at
+799. All ten required files were stable during this
+[CPU metadata check](evidence/restart-full800-metadata-20261012.json).
 This is saved progress, not a new evaluation, GPU restoration, or off-system
 backup. The next scheduled evaluation follows 816 updates.
 
 The original 1,000-iteration learning-rate
 schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.
+The schedule is now checked against actual optimizer logs, not just the
+configuration: all 768 audited update displays and 152 full-precision
+parameter-group values match the original 16,000-update horizon. The learning
+rate was not shortened to decay over 11,040 updates. This is
+[runtime fidelity evidence](evidence/restart-learning-rate-fidelity-20261012.json),
+not a new benchmark or proof of the authors' exact historical implementation.
 The corrected run has a 68-hour cap including final evaluation; an interruption
 will remain an incomplete result.
 
