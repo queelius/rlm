@@ -1,7 +1,13 @@
 # Resuming research on teaching RLM competencies
 
-Research resumed on October 12 with a new single A100 allocation. The immediate
-goal is to turn the tentative paper direction into controlled experiments:
+**Priority correction, October 12:** the advisor's primary objective is a
+completed reproduction of an RL paper's training result on our A100. That
+objective remains unfinished. The already-admitted readouts below can finish;
+new RLM teaching fits and exploratory extensions are deferred. The RLM-only
+review observer is stopped so it cannot supersede this human instruction.
+
+Research initially resumed on October 12 with a new single A100 allocation
+and teaching experiments addressing the secondary research question:
 **what preparation helps a model learn useful multi-step behavior, and does
 that behavior carry to different tasks?**
 
@@ -11,29 +17,34 @@ learning to recover after mistakes, and changing the action interface. The
 crafting studies below use flat tool policies; they inform RLM preparation but
 are not themselves evidence of learned recursive decomposition.
 
-## First new result: repair helps beyond the original goals
+## New results show a limited teaching repair benefit
 
-At the October 12, 14:16 UTC cutoff, the first of four prescribed new readouts
-is complete. On panel02/world42, the fixed repaired policy solved 6 of 16
-attempts. All three conditions below have complete native replay audits and
-matched goals, world, starting inventories, rollout seeds and evaluation caps.
+At the October 12, 14:28 UTC cutoff, two of four prescribed new readouts
+are complete. On panel02/world42, the stable and random-order repaired policies
+solved 6 and 7 of 16 attempts respectively. All four conditions below have
+complete native replay audits and matched goals, world, starting inventories,
+rollout seeds and evaluation caps.
 
 | Teaching policy | Whole-task successes | Model calls | Generated tokens |
 |---|---:|---:|---:|
 | Original-known teacher | 0/16 | 568 | 11,394 |
 | Stable-visible repair | 6/16 | 348 | 8,021 |
+| Random-visible repair | 7/16 | 457 | 11,358 |
 | Discovery teacher | 8/16 | 576 | 17,772 |
 
-The repair extends beyond its original evaluation goals, but does **not**
-outperform discovery teaching here: paired against discovery, it gains one
-attempt and loses three. Fewer calls are useful cost evidence, not a substitute
+Repair extends beyond its original evaluation goals, but neither repaired
+policy outperforms discovery teaching here. Paired against discovery, stable
+repair gains one attempt and loses three; random repair gains two and loses
+three. Random order is one success above stable order, so this cell does not
+support a stable-order advantage. Fewer calls are useful cost evidence, not a substitute
 for completing the task. These are eight goals with two draws each, a single
 training seed, and previously exposed baseline results. This is an exploratory
 transfer readout of existing supervised policies, not new RL training or a
-recursive-policy result. The other three prescribed readouts remain running
+recursive-policy result. The other two prescribed readouts remain running
 or queued; retain their results regardless of direction.
 
-[Per-attempt evidence and native hashes](2026-10-12-teaching-panel02-world42.json).
+[First-result paired evidence](2026-10-12-teaching-panel02-world42.json) and
+[updated native review](2026-10-12-teaching-review.json).
 
 ## What the earlier completed runs now tell us
 
@@ -78,16 +89,16 @@ that how we present and teach the action sequence can change which successful
 attempts are available to reinforce. That is a hypothesis to test, not a
 visibility-only or interface-only causal conclusion.
 
-## The next small experiments
+## Secondary teaching experiments
 
-1. **Additional-goal demonstration transfer — one of four new cells complete.**
+1. **Additional-goal demonstration transfer — two of four new cells complete.**
    Evaluate both fixed repaired-teacher policies on the next numbered eight-goal panel, in two
    recipe worlds and with two fixed rollout seeds. Reuse the corresponding
    original-teacher and discovery-teacher controls. All four prescribed cells
    are retained; no checkpoint selection. These goals have prior baseline
    exposure, so this extends the exploratory study rather than creating an
    untouched confirmatory test.
-2. **Recovery examples versus ordinary examples — data ready.** From the same
+2. **Recovery examples versus ordinary examples — data ready, now deferred.** From the same
    warm checkpoint, compare one small supervised update on examples showing
    recovery after errors with one on ordinary examples. Start evaluation from
    the normal task state, not a helpful prefix. First ask whether the model can
@@ -95,7 +106,7 @@ visibility-only or interface-only causal conclusion.
    identical bounded RL. The two prepared arms have 32 rows and 823 target
    tokens each, but histories and eight labels differ. The trainer/readout
    adapter has not yet been implemented or launched.
-3. **Names versus procedures — proposed.** Consistently rename items while
+3. **Names versus procedures — proposed, now deferred.** Consistently rename items while
    leaving recipes and scoring unchanged. This checks whether the repair gain
    depends heavily on familiar names or copying opportunities. It would not,
    by itself, establish generalization to new problem structures.
@@ -108,17 +119,18 @@ no new general-RLM claim or slide headline is justified yet.
 
 The new allocation ends October 15 at 13:00 UTC. Four bounded readouts and
 native audits are admitted; this is not a claim of three days of ready jobs.
-The first readout completed all 16 attempts without transport failures and
-passed its native replay audit. Automatic handoff to the random-visible
-comparison succeeded; by 14:14 UTC it had 133 genuine returned calls and no
-transport failures. Earlier weights, optimizer checkpoints and failed attempts
-remain untouched. Old SPO, DrGRPO and CURL
-campaigns remain stopped.
+Both world42 readouts completed all 16 attempts without transport failures and
+passed native replay. Automatic handoff to stable-visible/world50 succeeded;
+the live check found 85 genuine returned calls and no transport failures,
+including an actual crafting request. Earlier weights, optimizer checkpoints and failed attempts
+remain untouched. No new math GPU job has yet been launched; the paper
+reproduction handoff prioritizes diagnosing the existing SPO failure.
 
 The live checkpoint is
 `/project/alex_phd/runs/rlm-teaching-resume-20261012/SESSION_CHECKPOINT.md`;
-the finite queue is `FOLLOWON-QUEUE.json` in the same directory. The new
-event/20-minute review observer has been started, with a same-session delivery
-probe admitted; its new delivery/acknowledgement cycle still needs to be
-observed. Preserve 10% account allowance with 12% dispatch headroom. Native
+the finite queue is `FOLLOWON-QUEUE.json` in the same directory. Its delivery
+probe and first numbered review reached the session; the RLM-only observer
+has since been stopped because paper reproduction takes priority. Primary
+handoff: `/project/alex_phd/runs/rl-paper-reproduction-20261012/SESSION_CHECKPOINT.md`.
+Preserve 10% account allowance with 12% dispatch headroom. Native
 artifacts and model weights are external; this GitHub update is not their backup.

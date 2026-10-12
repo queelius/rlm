@@ -1,0 +1,154 @@
+{
+  "review_id": "review-1791814241-1ecb04c0",
+  "cells": {
+    "stable_visible-w42": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-stable_visible-s2026092208-p02-w42-raw",
+      "successes": 6,
+      "observed": 16,
+      "calls": 348,
+      "output_tokens": 8021,
+      "failed_calls": 0,
+      "episode_scores": {
+        "t00-r0-flat-original": 0,
+        "t00-r1-flat-original": 1,
+        "t01-r0-flat-original": 1,
+        "t01-r1-flat-original": 1,
+        "t02-r0-flat-original": 1,
+        "t02-r1-flat-original": 0,
+        "t03-r0-flat-original": 1,
+        "t03-r1-flat-original": 0,
+        "t04-r0-flat-original": 1,
+        "t04-r1-flat-original": 0,
+        "t05-r0-flat-original": 0,
+        "t05-r1-flat-original": 0,
+        "t06-r0-flat-original": 0,
+        "t06-r1-flat-original": 0,
+        "t07-r0-flat-original": 0,
+        "t07-r1-flat-original": 0
+      },
+      "hashes": {
+        "PLAN.json": "b09560f4330712d477ef2319f127d05e6b787990200cfe231b1eb50c044a05be",
+        "SUMMARY.json": "82a347fe9cf9b9787b4b3043617bc073349e093c28ef93cff5ccc70ae2448f4d",
+        "NATIVE-AUDIT.json": "403054d6c58cbbc57a0772d090acb38e5c76e4c21cd97d187029945a0ceb2bb4"
+      }
+    },
+    "random_visible-w42": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-random_visible-s2026092208-p02-w42-raw",
+      "successes": 7,
+      "observed": 16,
+      "calls": 457,
+      "output_tokens": 11358,
+      "failed_calls": 0,
+      "episode_scores": {
+        "t00-r0-flat-original": 1,
+        "t00-r1-flat-original": 1,
+        "t01-r0-flat-original": 1,
+        "t01-r1-flat-original": 1,
+        "t02-r0-flat-original": 1,
+        "t02-r1-flat-original": 0,
+        "t03-r0-flat-original": 0,
+        "t03-r1-flat-original": 0,
+        "t04-r0-flat-original": 1,
+        "t04-r1-flat-original": 1,
+        "t05-r0-flat-original": 0,
+        "t05-r1-flat-original": 0,
+        "t06-r0-flat-original": 0,
+        "t06-r1-flat-original": 0,
+        "t07-r0-flat-original": 0,
+        "t07-r1-flat-original": 0
+      },
+      "hashes": {
+        "PLAN.json": "b671d2d0cb2cf1b8ebafda826f40bd661bee7b55a681c35039fd2865b5199514",
+        "SUMMARY.json": "e4308ff2b524b54eb26820e1a01a50c27825eb769461c21feb659e3fe6870cae",
+        "NATIVE-AUDIT.json": "40f02373d861763ed80b58eeceab744527d9050c5ccfe83862e8f0f7bd09a83e"
+      }
+    }
+  },
+  "live": {
+    "stable_visible-w50": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-stable_visible-s2026092208-p02-w50-raw",
+      "status": {
+        "state": "native_calls",
+        "returned": 71,
+        "failed": 0,
+        "last_call": "t03-r0-flat-original-c000",
+        "updated": 1791815315.8764753
+      },
+      "recorded_episodes": 6
+    }
+  },
+  "queue_receipts": {
+    "INVOCATION.json": {
+      "pid": 2789657,
+      "started": 1791813745.9505956
+    },
+    "random_visible-w42-audit.json": {
+      "name": "random_visible-w42-audit",
+      "started": 1791815185.1030474,
+      "returncode": 0,
+      "ended": 1791815195.4838057
+    },
+    "random_visible-w42.json": {
+      "name": "random_visible-w42",
+      "started": 1791814234.868303,
+      "returncode": 0,
+      "ended": 1791815185.1000407
+    },
+    "stable_visible-w42-audit.json": {
+      "name": "stable_visible-w42-audit",
+      "started": 1791814226.139179,
+      "returncode": 0,
+      "ended": 1791814234.868047
+    }
+  },
+  "requested_event_hash_verified": true,
+  "all_four_conditions_pair_checked": true,
+  "paired_contrasts": {
+    "random_vs_known": {
+      "wins": 7,
+      "losses": 0,
+      "ties": 9
+    },
+    "random_vs_discovery": {
+      "wins": 2,
+      "losses": 3,
+      "ties": 11
+    },
+    "random_vs_stable": {
+      "wins": 2,
+      "losses": 1,
+      "ties": 13
+    }
+  },
+  "reviewed_at_utc": "2026-10-12 14:31:11 UTC",
+  "quota": {
+    "checked_at_utc": "2026-10-12T14:27:59Z",
+    "source_bucket": "codex",
+    "remaining_percent": 97,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "interpretation": "Both repaired policies outperform the original-known baseline on this additional exposed panel; neither exceeds discovery teaching. Random order is one success above stable order, so this cell does not support a stable-order advantage.",
+  "limits": [
+    "Eight goal identities with two draws; one fit seed, not sixteen independent training replications.",
+    "Previously exposed controls; exploratory transfer, not an untouched confirmatory test.",
+    "Existing supervised flat tool policies, not a new RL training gain or learned recursive decomposition.",
+    "Two of four prescribed new readout cells complete; no combined-world endpoint yet."
+  ],
+  "decision": "Acknowledge the delivered event after native review; retain every completed endpoint. Allow only the already-admitted finite queue and native audits to finish under unchanged owners. No new RLM training. The human-reaffirmed RL paper reproduction objective takes priority; the RLM-only observer remains STOPped.",
+  "ranked_followups": [
+    "Diagnose and validate a faithful SPO continuation under the new primary paper-reproduction handoff.",
+    "Retain/audit the two already-admitted world50 readouts when their owner finishes; do not expand teaching studies.",
+    "Recovery teaching and permutation proposals deferred until the primary reproduction objective is addressed."
+  ],
+  "advisor_package": "Record the limited teaching transfer in supporting evidence, not a new slide headline. The material priority correction is that full paper reproduction remains incomplete; no successful full-reproduction claim is justified.",
+  "primary_handoff": "/project/alex_phd/runs/rl-paper-reproduction-20261012/SESSION_CHECKPOINT.md",
+  "live_response_check": {
+    "cell": "stable_visible-w50",
+    "returned": 85,
+    "failed": 0,
+    "call_id": "t03-r0-flat-original-c014",
+    "response": "{\"action\":\"craft\",\"ingredients\":{\"t2_i1\":2,\"t5_i1_15\":1},\"target_item\":\"t9_i2_19\",\"output_count\":3}",
+    "scope": "Genuine model return, not proof that this live attempt succeeds."
+  }
+}

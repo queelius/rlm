@@ -1,0 +1,42 @@
+{
+  "checked_at_utc": "2026-10-12T14:32:00Z",
+  "scope": "Native terminal receipt, trainer log and saved metric dictionaries checked; independent late-answer regrading remains pending.",
+  "native_root": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native",
+  "terminal_receipt": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/result.json",
+  "terminal_sha256": "0185c3443dd299551e3644f7bdbd5cb3d44cef3290265dc1150b1b94ef5246ff",
+  "ended_utc": "2026-10-10T00:49:56Z",
+  "exit_code": 1,
+  "timed_out": false,
+  "final_marker_exists": false,
+  "last_logged_optimizer_step": 7995,
+  "prescribed_endpoint_updates": 11040,
+  "last_scheduled_evaluation_iteration": 490,
+  "last_scheduled_evaluation_updates": 7856,
+  "metric_path_template": "evaluation/iteration__490/analysis/TaskPerformanceAnalyzer/gsm8k_{split}/ckpt--iter_490/{split}__0__1/log.json",
+  "metrics": {
+    "test": {
+      "correct_frac": 0.22194844579226686,
+      "implied_correct_count": 4684,
+      "expected_responses": 21104,
+      "sha256": "9319645c541d180ead3deefe1a69b32988abe8f6266aaa14af2a56ba49ae5e67"
+    },
+    "validation": {
+      "correct_frac": 0.22184986595174264,
+      "implied_correct_count": 1324,
+      "expected_responses": 5968,
+      "sha256": "0262f184e715d034ea7051e4a375c820389dbab55b5cdbae3a5bede596ac036c"
+    },
+    "train": {
+      "correct_frac": 0.26814516129032256,
+      "implied_correct_count": 1596,
+      "expected_responses": 5952,
+      "sha256": "32db56e7cbe7b8e06fccd17b9c05265d90038920d6da19bac4c0bd82b16fe055"
+    }
+  },
+  "terminal_assertion": "deepspeed/runtime/bf16_optimizer.py:297: assert all_groups_norm > 0.",
+  "preceding_rejected_microbatch_ratios": [95.34, 36.98, 153.45, 10.01],
+  "failure_hypothesis": "The native high-ratio guard zeroed all four accumulated microbatch losses, potentially producing a zero gradient rejected by the BF16 optimizer assertion. Actual failing norm was not logged; fixture verification is still required.",
+  "causal_limit": "The terminal assertion does not explain the earlier broad accuracy decline. The owner was not timed out, so allocation expiry is not established as the crash cause.",
+  "latest_full_checkpoint": "checkpoints/ckpt--iter_0490--epoch_2.00--step_7840",
+  "decision": "Paper reproduction remains incomplete. Diagnose the native failure and historical-protocol differences; validate any isolated repair and optimizer restore before continuation. Preserve the fixed endpoint and all observed scores, not a favorable earlier checkpoint."
+}

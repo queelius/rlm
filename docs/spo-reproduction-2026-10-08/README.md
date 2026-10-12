@@ -1,5 +1,33 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
+## Current status corrected on October 12
+
+**The own-training reproduction is incomplete, not successful.** The run
+continued after the last written review below, deteriorated, and exited with
+an error on October 10 at 00:49 UTC. Its last logged optimizer step was 7,995,
+short of the prescribed 11,040; no final checkpoint marker exists.
+
+The latest scheduled evaluation, after 7,856 updates, reports **22.19% test,
+22.18% validation and 26.81% training-subset accuracy** in the native metric
+files. These are the latest results, not the earlier 50.52% test score. The
+terminal receipt, metric dictionaries and traceback were checked; independent
+regrading of the late saved answers is still pending. See the
+[terminal audit](evidence/terminal-audit-20261012.json).
+
+The traceback ends at a BF16 optimizer gradient-norm assertion after four
+microbatches were rejected by the PPO ratio guard. The owner did not time out.
+The immediate crash and the preceding accuracy collapse require separate
+diagnosis; neither is established to be caused by allocation expiry.
+
+The advisor's primary objective remains reproducing a published training
+result on our A100. Evaluating the authors' released weights successfully
+recovered 56.69%, but that is not our training reproduction. RLM teaching
+exploration is secondary. Next: verify the failure mechanism and a faithful
+optimizer continuation, preserving the protocol, failed attempt and fixed
+endpoint. No resumed math GPU job has yet been launched.
+
+## Historical progress at the last October 9 review
+
 Status: 9 October 2026, 06:32 UTC. **Our latest evaluated weights scored 50.52% after 4,336 optimizer updates, versus 39.77% before training: +10.75 percentage points.** Test accuracy fell 0.53 points, while validation edged up to 63.99%. The training-subset result is now 75.32%, up 0.24 points; this is not held-out accuracy. Larger finite gradient spikes were followed by lower norms; their cause and effect on test accuracy remain unestablished. We report every scheduled result, not a selected best checkpoint, and the reproduction is incomplete. Training continues with the scientific recipe unchanged toward the prescribed 11,040-update endpoint. The released author model scored 56.69%, matching the paper's 56.7% reference.
 
 ## What we are trying to reproduce
