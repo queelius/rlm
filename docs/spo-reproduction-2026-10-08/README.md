@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 22:27 UTC
+## Current status on October 12, 23:15 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,56 +33,51 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **1,296 optimizer updates**, is **48.50%**, versus
-**39.77%** for the original model: **+8.72 percentage points**. Earlier scheduled
+The latest scheduled test, after **1,456 optimizer updates**, is **48.86%**, versus
+**39.77%** for the original model: **+9.08 percentage points**. Earlier scheduled
 tests were 40.03% after 16 updates, 41.42% after 176, 42.59% after 336, and
 44.93% after 496, followed by 45.56% after 656, 46.39% after 816, 47.64% after 976,
-and 48.25% after 1,136.
+48.25% after 1,136, and 48.50% after 1,296.
 Each evaluation's 33,024
 answers across test, validation, and the training subset independently regrade
-to the native metrics. Test accuracy rose 0.25 points since the previous check;
-validation rose 0.50 points to 60.89%, and the training-subset score
-rose 1.68 points to 67.91% (not held out). This is an early measured test
+to the native metrics. Test accuracy rose 0.36 points since the previous check;
+validation rose 1.66 points to 62.55%, and the training-subset score
+rose 1.56 points to 69.47% (not held out). This is an early measured test
 improvement, **not completed reproduction or proof of lasting recovery**: the previous run also improved
-initially. All first 1,296 update numbers are present and logged numeric values
+initially. All first 1,456 update numbers are present and logged numeric values
 are finite; audited training query tokens match actual generation requests.
-See the [latest audit](evidence/restart-eval80-20261012.json) and
-[interpretation](evidence/restart-eval80-interpretation-20261012.json).
-At the same 1,296 updates, the earlier run scored 46.61%: the fresh run is 1.89
+See the [latest audit](evidence/restart-eval90-20261012.json) and
+[interpretation](evidence/restart-eval90-interpretation-20261012.json).
+At the same 1,456 updates, the earlier run scored 47.31%: the fresh run is 1.54
 points higher, but this is not a clean causal comparison or proof of lasting recovery.
-Test solved-at-least-once coverage over 16 attempts edged up to 77.63%, and
-majority-vote accuracy to 55.80%. Both remain below their 976-update values
-(78.47% and 56.86%); not every metric or individual question improves together.
+Test solved-at-least-once coverage over 16 attempts rose to 78.70%, and
+majority-vote accuracy to 56.03%. Validation coverage, however, fell from 87.94%
+to 86.86% despite its mean accuracy improving. Individual questions also move
+both ways: 359 test questions have more correct samples, 350 fewer, and 610 the same.
 We keep reporting the paper's mean
 single-answer accuracy, without switching metrics or choosing a favorable checkpoint.
 
-**Recovery update, 21:18 UTC:** the complete **960-update checkpoint** is now
+**Recovery update, 23:09 UTC:** the complete **1,440-update checkpoint** is now
 copied outside the trainer's automatic cleanup directory, alongside the earlier
-160-update copy. All ten files (17.60 GB) match their originals by SHA256;
-trainer, actor and both active Adam counters are 960, and the scheduler is 959.
+160- and 960-update copies. All ten files (17.60 GB) match their originals by SHA256;
+trainer, actor and both active Adam counters are 1,440, and the scheduler is 1,439.
 This copy was chosen by completed update count, not test score. It protects a
 newer recovery point, not a new scientific result or an off-system backup.
-See the [new checkpoint receipt](evidence/restart-full960-protection-20261012.json).
-The 960-update check verifies bytes and counters, not every tensor's finiteness
+See the [new checkpoint receipt](evidence/restart-full1440-protection-20261012.json).
+The 1,440-update check verifies bytes and counters, not every tensor's finiteness
 or an end-to-end GPU restore. A separate faithful resume entrypoint is still
 required if interrupted; the live launcher is fresh-start-only.
-Training has reached at least **1,280 updates**, with contiguous finite logged
-metrics and no logged traceback. The newer native full checkpoint's counters
-agree at 1,280 updates, including both active Adam states; the scheduler is at
-1,279. All ten required files were stable during this
-[CPU metadata check](evidence/restart-full1280-metadata-20261012.json).
-A [check of two preselected weight tensors](evidence/restart-parameter-update1280-20261012.json)
-also confirms saved parameter changes from 960 to 1,280 updates, with finite
-values in both tensors. This is not an all-parameter scan or a new accuracy result.
-The 1,280-update state remains subject to native cleanup; the separately
-protected copy is at 960. Neither checkpoint check is a new evaluation or GPU
-restoration. The next scheduled evaluation follows 1,456 updates.
+Training continues under the same owner. A prior
+[check of two preselected weight tensors](evidence/restart-parameter-update1280-20261012.json)
+confirms actual saved changes from 960 to 1,280 updates; it is not an
+all-parameter scan. The protected 1,440-update state is distinct from the
+1,456-update weights evaluated above. The next scheduled test follows 1,616 updates.
 
 **Operational check, 22:45 UTC:** observed training and evaluation timings
 leave an estimated 9–13 hours before the whole-run cap; completion is not
-guaranteed. Home has about 498 GB of directory-quota space remaining, versus
-only 16 GB under project, so full checkpoints stay under home. Protection of
-the next scheduled full 1,440-update state is prepared, not completed.
+guaranteed. Home had about 498 GB of directory-quota space remaining, versus
+only 16 GB under project, so full checkpoints stay under home. After the new
+protected copy, home had about 477 GB available at 23:09 UTC.
 The [headroom analysis](diagnosis-and-restart-20261012.md#time-and-storage-headroom)
 records assumptions and limits. The scientific result above is unchanged.
 
