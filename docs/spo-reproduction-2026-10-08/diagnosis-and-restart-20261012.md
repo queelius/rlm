@@ -1,7 +1,7 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 22:14 UTC. The eighth scheduled restart evaluation
-remains the latest audited benchmark. The native full checkpoint at 1,280 updates is
+Status: October 12, 2026, 22:27 UTC. The ninth scheduled restart evaluation
+is fully regraded at 1,296 updates. The native full checkpoint at 1,280 updates is
 verified, and logged learning rates are independently checked through 768 updates.
 The byte-verified 960-update copy remains protected outside automatic cleanup;
 the scientific recipe and fixed endpoint are unchanged.
@@ -92,7 +92,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, and 1,136 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, and 1,296 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -108,68 +108,67 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 816 | 46.39% | 59.50% | 65.64% |
 | 976 | 47.64% | 60.54% | 66.55% |
 | 1,136 | 48.25% | 60.39% | 66.23% |
+| 1,296 | 48.50% | 60.89% | 67.91% |
 
-The latest test has **10,182 correct answers out of 21,104**, compared with 8,394
-for the original SFT model: **+8.47 percentage points**. It gained 127 correct
-answers, or 0.60 points, since the preceding scheduled test. Validation lost nine
-correct answers (−0.15 points), and the training subset lost 19 (−0.32 points).
+The latest test has **10,235 correct answers out of 21,104**, compared with 8,394
+for the original SFT model: **+8.72 percentage points**. It gained 53 correct
+answers, or 0.25 points, since the preceding scheduled test. Validation gained
+30 correct answers (+0.50 points), and the training subset gained 100 (+1.68 points).
 This is an early measured test improvement in our run, not a completed
 reproduction or evidence that the token repair causes a lasting benefit.
 The previous run also improved initially before
 deteriorating. We retain the native decoding and mean single-answer accuracy;
 solved-at-least-once coverage and majority voting do not replace that metric.
 
-Test extraction failures fell from 26 to 16 and length-limit endings from 29
-to 21. The gain of 127 correct answers is not explained solely by the net
-reduction of ten missing extractions; these diagnostics do not identify a
-learning mechanism. Individual questions move both ways: 373 have more
-correct samples, 344 fewer, and 602 the same count. The first original test
-question rose from 9/16 to 15/16 correct; this is an illustration, not
-a representative performance sample.
+Test extraction failures fell from 16 to 12 and length-limit endings from 21
+to 13. The gain of 53 correct answers is not explained solely by the net
+reduction of four missing extractions; these diagnostics do not identify a
+learning mechanism. Individual questions move both ways: 355 have more
+correct samples, 333 fewer, and 631 the same count. This small checkpoint-to-
+checkpoint increment is descriptive, not a statistical-significance claim.
 
 **Secondary measures can move differently.** Test solved-at-least-once coverage
-over 16 samples fell from 78.47% to 77.56%, and majority voting from 56.86% to
-55.34%, despite higher mean accuracy. Validation coverage and majority voting
-also fell slightly. Training-subset majority voting rose from 74.46% to 75.54%
-despite its lower mean accuracy. The test's average number of distinct parsed
-answers fell from 5.05 to 4.74. These are not uniform gains: neither diversity
-alone nor one improving score establishes beneficial concentration or collapse.
+over 16 samples rebounded from 77.56% to 77.63%, and majority voting from 55.34%
+to 55.80%. Both remain below the 976-update values of 78.47% and 56.86%, despite
+higher mean accuracy. Validation and training-subset coverage and majority
+voting also rose this time. The test's average number of distinct parsed answers
+rose from 4.74 to 4.84. Neither diversity alone nor one improving score
+establishes beneficial concentration or collapse.
 We retain the prescribed mean single-answer metric and every scheduled result.
 This is one training run, not independent replications, a statistical-significance
 claim, or proof of the learning mechanism. See the
-[full audit](evidence/restart-eval70-20261012.json) and
-[interpretation](evidence/restart-eval70-interpretation-20261012.json).
+[full audit](evidence/restart-eval80-20261012.json) and
+[interpretation](evidence/restart-eval80-interpretation-20261012.json).
 
-At the same 1,136 updates, the earlier eventually failed run scored 46.71% test,
-59.62% validation and 66.72% on the training subset. The fresh run is higher
-by 1.54 and 0.77 points on test and validation, but lower by 0.49 points on the
-training subset. Its earlier all-answer audit and
+At the same 1,296 updates, the earlier eventually failed run scored 46.61% test,
+60.67% validation and 67.88% on the training subset. The fresh run is higher
+by 1.89, 0.22 and 0.03 points, respectively. Its earlier all-answer audit and
 unchanged native metric hashes were rechecked. Matching the update count is
 useful context, but the earlier run had a resumed ancestry and other runtime
 differences: this is not an isolated test of the BOS correction. Its later
 collapse is a reason to keep the endpoint fixed, not declare recovery now.
 
-Training completed 1,136 updates before this evaluation. The accompanying
-batch audit, collection 70, contains 364 correct, 147 incorrect responses and
-one unfinished response penalized at -1, with mixed terminal outcomes on 31 of
+Training completed 1,296 updates before this evaluation. The accompanying
+batch audit, collection 80, contains 315 correct and 197 incorrect responses,
+with mixed terminal outcomes on 35 of
 64 questions. All 512 terminal rewards regrade correctly. Its training query
 tokens match the actual generation requests, and saved actor and reference log
-probabilities and advantages are finite. Seventeen groups with uniform terminal
+probabilities and advantages are finite. Ten groups with uniform terminal
 outcomes still have nonzero intermediate advantages: SPO can supply a signal
-within a solution even when the final rewards all agree. All first 1,136 update numbers are
+within a solution even when the final rewards all agree. All first 1,296 update numbers are
 present and logged numeric values are finite. These checks support continuing
 the current run, not declaring learning success; the training batches contain
 different questions and are not a benchmark progress curve.
 
-The latest 160-update diagnostic window has a mean policy ratio of 1.0037,
-approximate KL of 0.0702, clipping fraction of 0.0992, and gradient norm of 19.60.
+The latest 160-update diagnostic window has a mean policy ratio of 1.0031,
+approximate KL of 0.0635, clipping fraction of 0.0983, and gradient norm of 19.10.
 There are no logged high-ratio guard warnings or NaN/Inf loss anomalies through
-1,136 updates. These rounded aggregates are not a guarantee of future numerical
+1,296 updates. These rounded aggregates are not a guarantee of future numerical
 or learning stability. Their definitions and earlier windows are retained in the
-[numerical audit](evidence/restart-training-windows1136-20261012.json).
+[numerical audit](evidence/restart-training-windows1296-20261012.json).
 
 The next decision remains the same: keep the recipe and endpoint fixed, inspect
-subsequent scheduled evaluations (next after 1,296 updates), and preserve complete
+subsequent scheduled evaluations (next after 1,456 updates), and preserve complete
 recovery states. This incremental result stays in the supporting report. The
 synchronized advisor slide, pdfpc notes and learning-guide status page retain
 their 20:53 UTC cutoff: the main story, material limits and next comparison have
