@@ -1,0 +1,256 @@
+{
+  "schema": "spo-scheduled-evaluation-interpretation-v1",
+  "checked_utc": "2026-10-12T20:04:32.560381+00:00",
+  "scheduled_iteration": 50,
+  "completed_collections": 51,
+  "optimizer_updates": 816,
+  "fixed_endpoint": {
+    "collections": 690,
+    "updates": 11040
+  },
+  "source_audit": "eval50-regrade-001/RECEIPT.json",
+  "splits": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 9791,
+      "percent": 46.39404852160728,
+      "correct_delta_from_eval40": 176,
+      "delta_pp_from_eval40": 0.8339651250947687,
+      "questions_more_correct": 413,
+      "questions_fewer_correct": 342,
+      "questions_same": 564,
+      "extraction_failures_previous": 30,
+      "extraction_failures_current": 34,
+      "finish_reasons_previous": {
+        "length": 37,
+        "stop": 21067
+      },
+      "finish_reasons_current": {
+        "length": 38,
+        "stop": 21066
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.7649734647460197,
+          "current": 0.7740712661106899,
+          "delta_pp": 0.9097801364670199
+        },
+        "majority_vote_acc": {
+          "previous": 0.5367702805155421,
+          "current": 0.5451099317664898,
+          "delta_pp": 0.833965125094771
+        }
+      },
+      "mean_distinct_answers_previous": 5.43669446550417,
+      "mean_distinct_answers_current": 5.272175890826384
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3551,
+      "percent": 59.50067024128686,
+      "correct_delta_from_eval40": 81,
+      "delta_pp_from_eval40": 1.3572386058981234,
+      "questions_more_correct": 127,
+      "questions_fewer_correct": 88,
+      "questions_same": 158,
+      "extraction_failures_previous": 7,
+      "extraction_failures_current": 3,
+      "finish_reasons_previous": {
+        "length": 7,
+        "stop": 5961
+      },
+      "finish_reasons_current": {
+        "length": 3,
+        "stop": 5965
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.8659517426273459,
+          "current": 0.871313672922252,
+          "delta_pp": 0.536193029490617
+        },
+        "majority_vote_acc": {
+          "previous": 0.6568364611260054,
+          "current": 0.6836461126005362,
+          "delta_pp": 2.680965147453085
+        }
+      },
+      "mean_distinct_answers_previous": 4.1876675603217155,
+      "mean_distinct_answers_current": 4.10455764075067
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3907,
+      "percent": 65.64180107526882,
+      "correct_delta_from_eval40": 52,
+      "delta_pp_from_eval40": 0.8736559139784946,
+      "questions_more_correct": 118,
+      "questions_fewer_correct": 99,
+      "questions_same": 155,
+      "extraction_failures_previous": 4,
+      "extraction_failures_current": 5,
+      "finish_reasons_previous": {
+        "length": 4,
+        "stop": 5948
+      },
+      "finish_reasons_current": {
+        "length": 5,
+        "stop": 5947
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.9059139784946236,
+          "current": 0.9112903225806451,
+          "delta_pp": 0.5376344086021501
+        },
+        "majority_vote_acc": {
+          "previous": 0.7338709677419355,
+          "current": 0.728494623655914,
+          "delta_pp": -0.5376344086021501
+        }
+      },
+      "mean_distinct_answers_previous": 3.8978494623655915,
+      "mean_distinct_answers_current": 3.825268817204301
+    }
+  },
+  "all33024_counts_and21_metrics_verified": true,
+  "baseline": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 1397,
+    "current_correct": 9791,
+    "delta_percentage_points": 6.619598180439727,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "first816_updates_contiguous_finite": true,
+  "ranges": {
+    "actor/ratio": [
+      0.969,
+      1.05
+    ],
+    "actor/grad_norm": [
+      7.07,
+      40.2
+    ],
+    "actor/approx_kl": [
+      0.000496,
+      0.408
+    ],
+    "actor/clip_frac": [
+      0,
+      0.238
+    ]
+  },
+  "tracebacks": 0,
+  "receipt_sha256": "60e13ed74f20393347afb1f74639cec16ff5deb20a5163ff7fdfc274d35c1343",
+  "question_counts_sha256": "ef9553620b9d97368d7b85f71b1fd956d95a575b5def0df26da8707d5e5d1074",
+  "input_manifest_sha256": "5d956ef960eb4d229b3daaf3c7934784d407898f133566828283dcd719e1e4e9",
+  "previous_receipt_sha256": "0e72582ec3cd6933a706d5b5f69a7f33d1ab1af384eb6c5a6c74e4fead6f9690",
+  "first_test_question": {
+    "index": 0,
+    "gold": "18",
+    "correct_previous": 6,
+    "correct_current": 8,
+    "first_extracted": "18",
+    "first_correct": true
+  },
+  "evaluation_runtime": {
+    "loaded_policy": "native/temp_ppo_checkpoints/ckpt--iter_0051--epoch_2.00--step_0816/hf_pretrained",
+    "native_model_path_matches_logged_816_save": true,
+    "sampling_unique_values": {
+      "n": [
+        "16"
+      ],
+      "temperature": [
+        "0.35"
+      ],
+      "top_p": [
+        "1.0"
+      ],
+      "seed": [
+        "42"
+      ],
+      "max_tokens": [
+        "1024"
+      ]
+    },
+    "scientific_requests": 2064,
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_sha256": "580568bbe94f5507b75083c4202a4c0b21807b28195cb1dc7fc854219bdd21b3"
+  },
+  "runner_sha256": "fe88fb88ca3e988990e91221ce5164075d9761b2fc19ca217ceacf260f971c99",
+  "request_context": "Review review-1791835123-4cea9c56 contains the newly completed evaluation50 test split among24 events. Validation and training-subset outputs completed before the CPU audit; all three splits are included.",
+  "interpretation": "Own test mean pass@1 is 46.3940%, +6.6196 percentage points versus matched original SFT39.7745%, and +0.8340 points versus scheduled evaluation40. Validation rose1.3572 points to59.5007%; training-subset accuracy rose0.8737 points to65.6418% and is not held out. This is measured early improvement in our own run, not completed paper reproduction.",
+  "challenge": "Only816 of11040 prescribed optimizer updates are complete at this evaluation; the previous failed run also improved early. Test coverage and majority voting recover from the preceding small dips, so those dips did not by themselves establish sustained loss of capability. Mean distinct parsed answers declines while correctness and coverage rise; diversity alone is not a quality verdict. Training-subset majority voting falls despite rising mean pass@1. Sixteen responses per question are not independent training-seed replications. No statistical-significance, durable-recovery or causal-BOS claim.",
+  "formatting_diagnostics": "Test extraction failures rose30->34 and length-limit endings37->38 despite the correctness gain. Validation extraction failures fell7->3. These diagnostics do not establish a training mechanism; do not equate parsing changes with newly acquired reasoning.",
+  "scientific_decision": "Continue the same authenticated whole owner, original1000-iteration LR horizon and fixed690collections/11040updates endpoint. Retain every scheduled score and native mean pass@1. Next scheduled evaluation60 follows976 updates; unchanged CPU audit is prepared before outputs. No new GPU job, source change, reward/decoding change or score-based checkpoint selection.",
+  "live_training_checks": {
+    "latest_completed_batch_audit": "training-audit-collection50-20261012.json",
+    "responses": 512,
+    "effective_reward_counts": {
+      "1.0": 331,
+      "0.0": 181
+    },
+    "mixed_terminal_reward_groups": 34,
+    "terminal_uniform_groups_with_nonzero_intermediate_advantages": 17,
+    "nonzero_advantage_tokens": 2836,
+    "reward_regrade_mismatches": 0,
+    "query_token_mismatches": 0,
+    "finite_actor_reference_logprobs_and_advantages": true,
+    "http_successes": 1020,
+    "http_errors": 0,
+    "actual_examples": "First correct saved response returns37 dollars per book. First incorrect response computes150 dollars in application fees but returns150 hours instead of the original gold15, reward0. Illustrative native examples, not a performance sample.",
+    "interpretation": "Original gold identities, saved responses, terminal rewards, and generation/training token bindings agree. Changing training questions are not a benchmark curve; uniform terminal rewards do not rule out SPO intermediate credit.",
+    "window_diagnostic": "training-windows-through816-20261012.json",
+    "window_interpretation": "Logged mean ratio remains near1.00; no ratio-guard warning or NaN/Inf loss anomaly is logged through816. Approximate policy-change, clipping and clipped control-variate penalty increase across selected160-update windows. Continue monitoring; rounded aggregates are not tokenwise maxima, exact KLs, or proof of divergence."
+  },
+  "actual_test_example": {
+    "selection": "Predetermined original test question0; illustrative only, not selected for correctness.",
+    "gold": "18",
+    "candidate_count": 16,
+    "correct_candidates_previous": 6,
+    "correct_candidates_current": 8,
+    "first_response": "Correctly computes16-3-4=9 eggs and9*2=18 dollars.",
+    "second_response": "Also returns18, though its prose calls the four eggs four muffins. The native outcome verifier grades the final answer, not every reasoning statement.",
+    "native_tree": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__50/inference_results/test__0__1/trees/0.json"
+  },
+  "checkpoint": {
+    "latest_native_metadata": "checkpoint800-metadata-20261012.json",
+    "metadata_sha256": "0f454c5e90b99e2c9d00bd482df596bc97f2792861ed2c3879f9072dda19abc4",
+    "trainer_iteration": 50,
+    "trainer_global_step": 800,
+    "actor_global_steps": 800,
+    "scheduler_last_batch_iteration": 799,
+    "active_adam_steps": [
+      800,
+      800
+    ],
+    "complete_files": 10,
+    "protected_recovery_receipt": "checkpoint-protection-160-001/RECEIPT.json",
+    "limits": "CPU metadata/file stability verified; not all tensors scanned, copied, or GPU-restored. Native cleanup applies. Protected160 is outside cleanup on the same filesystem, not an off-system backup. Separate faithful resume entrypoint remains required if interrupted."
+  },
+  "schedule_fidelity": {
+    "receipt": "learning-rate-fidelity-20261012.json",
+    "sha256": "c08d71fd38caeb1dea9d88413a7b8bc744f9ad30db5f0558b4acd808cef77240",
+    "limits": "Logged values through768 match original16000-update schedule, not an exact historical author-runtime audit."
+  },
+  "owner_policy": "Queue2826646/scoped2826649/trainer2826650 and observer2829006 remain authenticated. The whole owner includes training and final evaluation; no successor until the complete scoped owner and GPU processes depart.",
+  "advisor_package_decision": "Publish the sixth scheduled point, rebound of test secondary metrics, and residual limits in the supporting report. Main story remains early own-run improvement with unfinished reproduction, unchanged scientific limits and fixed next comparison. Slides/pdfpc/guide retain their explicit15:28UTC cutoff; no partial presentation update.",
+  "quota": {
+    "checked_utc": "2026-10-12T20:00:43.307966+00:00",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "remaining_percent": 80,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "verification": "Full CPU audit regraded all33024 saved answers against original identities/prompts and tree/Arrow outputs. Root independently summed all question counts, checked original IDs/golds and16-response counts against evaluation40, compared21 native/regraded metrics, inspected actual answers, verified816 contiguous finite update logs and all2064 runtime sampling declarations. Not an all-parameter numerical audit.",
+  "changes": "No live source, environment, model, reward, decoding, scientific recipe, or GPU-owner change. Completed CPU audits and research documentation only."
+}
