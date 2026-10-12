@@ -1,0 +1,163 @@
+{
+  "schema": "spo-scheduled-evaluation-interpretation-v1",
+  "checked_utc": "2026-10-12T17:29:28.871953+00:00",
+  "all33024_counts_and21_metrics_verified": true,
+  "splits": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 8988,
+      "percent": 42.5890826383624,
+      "correct_delta_from_eval10": 247,
+      "delta_pp_from_eval10": 1.1703942380591357,
+      "questions_more_correct": 408,
+      "questions_fewer_correct": 321,
+      "questions_same": 590,
+      "extraction_failures_previous": 75,
+      "extraction_failures_current": 63,
+      "finish_reasons_previous": {
+        "length": 79,
+        "stop": 21025
+      },
+      "finish_reasons_current": {
+        "length": 66,
+        "stop": 21038
+      }
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3285,
+      "percent": 55.043565683646115,
+      "correct_delta_from_eval10": 18,
+      "delta_pp_from_eval10": 0.30160857908847183,
+      "questions_more_correct": 114,
+      "questions_fewer_correct": 102,
+      "questions_same": 157,
+      "extraction_failures_previous": 8,
+      "extraction_failures_current": 13,
+      "finish_reasons_previous": {
+        "length": 8,
+        "stop": 5960
+      },
+      "finish_reasons_current": {
+        "length": 13,
+        "stop": 5955
+      }
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3730,
+      "percent": 62.668010752688176,
+      "correct_delta_from_eval10": 88,
+      "delta_pp_from_eval10": 1.478494623655914,
+      "questions_more_correct": 116,
+      "questions_fewer_correct": 111,
+      "questions_same": 145,
+      "extraction_failures_previous": 12,
+      "extraction_failures_current": 7,
+      "finish_reasons_previous": {
+        "length": 12,
+        "stop": 5940
+      },
+      "finish_reasons_current": {
+        "length": 8,
+        "stop": 5944
+      }
+    }
+  },
+  "baseline": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 594,
+    "current_correct": 8988,
+    "delta_percentage_points": 2.8146322971948448,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "first336_updates_contiguous_finite": true,
+  "ranges": {
+    "actor/ratio": [
+      0.982,
+      1.03
+    ],
+    "actor/grad_norm": [
+      7.07,
+      32.8
+    ],
+    "actor/approx_kl": [
+      0.000496,
+      0.0839
+    ]
+  },
+  "tracebacks": 0,
+  "runner_sha256": "419e0d086cdd820ca8355cd07d54916b36814a8ccec6b3c425fbf8952e71572d",
+  "receipt_sha256": "d87d4ee9227f3cbe87ae95e8d5f0181ff7c36c5624040da15516b81ad1661af1",
+  "question_counts_sha256": "753e0a98554796350129a3c9fd216a46564f1d14dbf863521a88a40003162e62",
+  "scheduled_iteration": 20,
+  "completed_collections": 21,
+  "optimizer_updates": 336,
+  "fixed_endpoint": {
+    "collections": 690,
+    "updates": 11040
+  },
+  "source_audit": "eval20-regrade-001/RECEIPT.json",
+  "request_context": "Review review-1791825900-46aa6712 first contained the completed test split (15 events). Validation and training-subset results completed while the root reviewed; this audit includes all three. The delayed review-1791823045-cf5c2133 message was already acknowledged at16:41:40 and was not re-acknowledged.",
+  "interpretation": "Own test mean pass@1 is42.5891%, +2.8146pp versus matched originalSFT39.7745%, and +1.1704pp versus the preceding scheduled evaluation10. Validation increased only0.3016pp, to55.0436%; training subset62.6680% is not held out. This is another measured early improvement, not the prescribed endpoint or demonstrated lasting recovery.",
+  "challenge": "The previous failed run also improved initially. Only336/11040 prescribed optimizer updates are complete at this evaluation. Sixteen responses per question are not independent training replications, and we have not claimed statistical significance or isolated causal BOS efficacy. The reduced test extraction failures75->63 and length endings79->66 are much smaller changes than the247 additional correct answers; they are not a complete explanation of the gain.",
+  "scientific_decision": "Continue the same authenticated owner, scientific recipe, original1000-iteration LR horizon and prescribed690/11040 endpoint. Regrade completed scheduled evaluations and retain the full series; no favorable test-score or checkpoint selection, and no new GPU job.",
+  "live_training_checks": {
+    "latest_completed_batch_audit": "training-audit-collection16-20261012.json",
+    "responses": 512,
+    "correct": 331,
+    "incorrect": 181,
+    "mixed_terminal_reward_groups": 27,
+    "reward_regrade_mismatches": 0,
+    "query_token_mismatches": 0,
+    "finite_actor_reference_logprobs_and_advantages": true,
+    "nonzero_advantage_tokens": 2408,
+    "terminal_uniform_groups_with_nonzero_intermediate_advantages": 14,
+    "http_successes": 899,
+    "http_errors": 0,
+    "interpretation": "Actual reward and token alignment checks support continuing; changing training questions are not a benchmark curve. Uniform terminal rewards do not rule out SPO intermediate learning signals."
+  },
+  "actual_test_example": {
+    "selection": "Original test question0, inspected without outcome-based question selection; illustrative, not a representative sample.",
+    "gold": "18",
+    "candidate_count": 16,
+    "correct_candidates": 8,
+    "first_response": "Incorrectly calculates16-3-4=11 and answers22.",
+    "candidate5": "Correctly calculates16-3-4=9 and answers18.",
+    "finish_reason": "Both stop; ordinary arithmetic error, not a transport failure.",
+    "native_tree": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__20/inference_results/test__0__1/trees/0.json"
+  },
+  "checkpoint": {
+    "latest_native_metadata": "checkpoint320-metadata-20261012.json",
+    "trainer_iteration": 20,
+    "trainer_global_step": 320,
+    "actor_global_steps": 320,
+    "scheduler_last_batch_iteration": 319,
+    "complete_files": 10,
+    "protected_recovery_receipt": "checkpoint-protection-160-001/RECEIPT.json",
+    "limits": "Full320 metadata and file presence checked, not all tensors scanned or GPU-restored. It remains in native cleanup. Full160 is independently copied and hashed outside cleanup on the same home filesystem, not an off-system backup. Fresh-only entrypoint still needs a separate faithful resume entrypoint if interrupted."
+  },
+  "source_integrity": {
+    "checked_utc": "2026-10-12T17:27:35.051941+00:00",
+    "sealed_files_verified": 7,
+    "official_source_clean_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+    "request_semantic_event_hashes_verified": 15
+  },
+  "owner_policy": "Entire current owner includes training and final evaluation. PIDs2826646/2826649/2826650 and observer2829006 with their recorded startticks revalidated17:28:51. No successor until all scoped and GPU processes depart.",
+  "advisor_package_decision": "Update supporting report, complete early progress table and portable evidence. Main advisor conclusion, material limitations and next experiment remain unchanged; deck, pdfpc notes and guide retain their explicit15:28 cutoff. No new reproduction claim.",
+  "quota": {
+    "checked_utc": "2026-10-12T17:27:23.389650+00:00",
+    "source": "account/rateLimits/read codex bucket",
+    "remaining_percent": 86,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "verification": "All33024 saved answers and21 native metric comparisons passed. Root separately summed every per-question count, checked ID ordering against evaluation10, matched allnative/regraded metric dictionaries, checked the invoked audit-source hash, read actual wrong and correct completions and checked the first336 logged update numbers and finite scalars.",
+  "changes": "CPU-only invocation of the preprepared hash-pinned audit with paths/iteration20; no live source, environment, model, reward, decoding, scientific recipe or GPU ownership change."
+}
