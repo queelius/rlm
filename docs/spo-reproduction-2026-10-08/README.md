@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 20:53 UTC
+## Current status on October 12, 21:40 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,24 +33,25 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **976 optimizer updates**, is **47.64%**, versus
-**39.77%** for the original model: **+7.87 percentage points**. Earlier scheduled
+The latest scheduled test, after **1,136 optimizer updates**, is **48.25%**, versus
+**39.77%** for the original model: **+8.47 percentage points**. Earlier scheduled
 tests were 40.03% after 16 updates, 41.42% after 176, 42.59% after 336, and
-44.93% after 496, followed by 45.56% after 656 and 46.39% after 816.
+44.93% after 496, followed by 45.56% after 656, 46.39% after 816, and 47.64% after 976.
 Each evaluation's 33,024
 answers across test, validation, and the training subset independently regrade
-to the native metrics. Validation is now 60.54%, up 1.04 points since the
-previous check. This is another early measured improvement, **not completed
-reproduction or proof of lasting recovery**: the previous run also improved
-initially. All first 976 update numbers are present and logged numeric values
+to the native metrics. Test accuracy rose 0.60 points since the previous check,
+but validation slipped 0.15 points to 60.39% and the training-subset score
+slipped 0.32 points to 66.23% (not held out). This is an early measured test
+improvement, **not completed reproduction or proof of lasting recovery**: the previous run also improved
+initially. All first 1,136 update numbers are present and logged numeric values
 are finite; audited training query tokens match actual generation requests.
-See the [latest audit](evidence/restart-eval60-20261012.json) and
-[interpretation](evidence/restart-eval60-interpretation-20261012.json).
-At the same 976 updates, the earlier run scored 45.84%: the fresh run is 1.81
+See the [latest audit](evidence/restart-eval70-20261012.json) and
+[interpretation](evidence/restart-eval70-interpretation-20261012.json).
+At the same 1,136 updates, the earlier run scored 46.71%: the fresh run is 1.54
 points higher, but this is not a clean causal comparison or proof of lasting recovery.
-Test solved-at-least-once coverage over 16 attempts rose from 77.41% to 78.47%,
-and majority-vote accuracy from 54.51% to 56.86%. Validation's majority score
-nevertheless fell slightly. We keep reporting the paper's mean
+Test solved-at-least-once coverage over 16 attempts fell from 78.47% to 77.56%,
+and majority-vote accuracy from 56.86% to 55.34%, despite higher mean accuracy.
+That mixed picture matters. We keep reporting the paper's mean
 single-answer accuracy, without switching metrics or choosing a favorable checkpoint.
 
 **Recovery update, 21:18 UTC:** the complete **960-update checkpoint** is now
@@ -63,14 +64,14 @@ See the [new checkpoint receipt](evidence/restart-full960-protection-20261012.js
 The 960-update check verifies bytes and counters, not every tensor's finiteness
 or an end-to-end GPU restore. A separate faithful resume entrypoint is still
 required if interrupted; the live launcher is fresh-start-only.
-Training has reached at least **976 updates**, with contiguous finite logged
+Training has reached at least **1,136 updates**, with contiguous finite logged
 metrics and no logged traceback. The newer native full checkpoint's counters
-agree at 960 updates, including both active Adam states; the scheduler is at
-959. All ten required files were stable during this
-[CPU metadata check](evidence/restart-full960-metadata-20261012.json).
-That earlier metadata check is distinct from the later protected copy above.
-Neither is a new evaluation or GPU restoration. The next scheduled evaluation
-follows 1,136 updates.
+agree at 1,120 updates, including both active Adam states; the scheduler is at
+1,119. All ten required files were stable during this
+[CPU metadata check](evidence/restart-full1120-metadata-20261012.json).
+The 1,120-update state remains subject to native cleanup; the separately
+protected copy is at 960. Neither checkpoint check is a new evaluation or GPU
+restoration. The next scheduled evaluation follows 1,296 updates.
 
 The original 1,000-iteration learning-rate
 schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.

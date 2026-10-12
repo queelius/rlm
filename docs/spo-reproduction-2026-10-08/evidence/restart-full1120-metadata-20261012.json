@@ -1,0 +1,44 @@
+{
+  "schema": "spo-complete-checkpoint-metadata-v2",
+  "checked_utc": "2026-10-12T21:29:52.755068+00:00",
+  "checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0070--epoch_2.00--step_1120",
+  "native_completed_collection": 69,
+  "trainer_state": {
+    "global_step": 1120,
+    "epoch": 2.0,
+    "iteration": 70
+  },
+  "actor_global_steps": 1120,
+  "actor_skipped_steps": 0,
+  "scheduler_last_batch_iteration": 1119,
+  "optimizer_parameter_state_steps": {
+    "0": 1120,
+    "1": 1120
+  },
+  "optimizer_legacy_param_group_steps": [
+    0,
+    0
+  ],
+  "optimizer_step_path": "optimizer_state_dict/base_optimizer_state/state/<parameter-id>/step",
+  "file_bytes": {
+    "custom_checkpoint_0.pkl": 976,
+    "custom_checkpoint_10.pkl": 980,
+    "custom_checkpoint_11.pkl": 916,
+    "actor/latest": 15,
+    "actor/global_step1120/mp_rank_00_model_states.pt": 2200157624,
+    "actor/global_step1120/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": 13200600768,
+    "hf_pretrained/pytorch_model.bin": 2200124348,
+    "hf_pretrained/config.json": 792,
+    "hf_pretrained/generation_config.json": 111,
+    "actor/zero_to_fp32.py": 25314
+  },
+  "files_stable_during_inspection": true,
+  "protected960_files_present_and_size_match": true,
+  "cuda_initialized": false,
+  "selection_rule": "Next scheduled native full state after collection69; not selected by evaluation score.",
+  "limits": [
+    "Read-only CPU metadata/file-presence/stability check only; no full tensor-finiteness scan, bytewise copy or resumed GPU test.",
+    "Native1120 remains subject to owner cleanup; protected960 is retained separately on the same filesystem, not an off-system backup.",
+    "Full checkpoint counters demonstrate saved progress, not successful paper reproduction or a new benchmark result."
+  ]
+}

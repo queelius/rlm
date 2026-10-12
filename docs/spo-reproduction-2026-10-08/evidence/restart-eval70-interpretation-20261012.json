@@ -1,0 +1,211 @@
+{
+  "schema": "spo-scheduled-evaluation-interpretation-v2",
+  "checked_utc": "2026-10-12T21:40:47.155855+00:00",
+  "scheduled_iteration": 70,
+  "completed_collections": 71,
+  "optimizer_updates": 1136,
+  "fixed_endpoint": {
+    "collections": 690,
+    "updates": 11040
+  },
+  "source_audit": "eval70-regrade-001/RECEIPT.json",
+  "splits": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 10182,
+      "percent": 48.24677786201668,
+      "correct_delta_from_eval60": 127,
+      "delta_pp_from_eval60": 0.6017816527672479,
+      "questions_more_correct": 373,
+      "questions_fewer_correct": 344,
+      "questions_same": 602,
+      "extraction_failures_previous": 26,
+      "extraction_failures_current": 16,
+      "finish_reasons_previous": {
+        "length": 29,
+        "stop": 21075
+      },
+      "finish_reasons_current": {
+        "length": 21,
+        "stop": 21083
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.7846853677028052,
+          "current": 0.775587566338135,
+          "delta_pp": -0.9097801364670199
+        },
+        "majority_vote_acc": {
+          "previous": 0.5686125852918877,
+          "current": 0.5534495830174374,
+          "delta_pp": -1.5163002274450332
+        }
+      },
+      "mean_distinct_answers_previous": 5.054586808188021,
+      "mean_distinct_answers_current": 4.740712661106899,
+      "earlier_run_at_same1136updates": {
+        "correct": 9858,
+        "percent": 46.71152388172858,
+        "delta_pp_fresh_minus_earlier": 1.5352539802880971,
+        "native_metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__70/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_70/test__0__1/log.json",
+        "native_metric_sha256": "283749ca8ebf5c654a3716fb4f72dcb1ab94c0bd798e38d5a8930f7bc2c22734"
+      }
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3942,
+      "percent": 66.22983870967742,
+      "correct_delta_from_eval60": -19,
+      "delta_pp_from_eval60": -0.3192204301075269,
+      "questions_more_correct": 92,
+      "questions_fewer_correct": 117,
+      "questions_same": 163,
+      "extraction_failures_previous": 5,
+      "extraction_failures_current": 3,
+      "finish_reasons_previous": {
+        "length": 5,
+        "stop": 5947
+      },
+      "finish_reasons_current": {
+        "length": 3,
+        "stop": 5949
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.9166666666666666,
+          "current": 0.9005376344086021,
+          "delta_pp": -1.6129032258064502
+        },
+        "majority_vote_acc": {
+          "previous": 0.7446236559139785,
+          "current": 0.7553763440860215,
+          "delta_pp": 1.0752688172043001
+        }
+      },
+      "mean_distinct_answers_previous": 3.674731182795699,
+      "mean_distinct_answers_current": 3.577956989247312,
+      "earlier_run_at_same1136updates": {
+        "correct": 3971,
+        "percent": 66.71706989247312,
+        "delta_pp_fresh_minus_earlier": -0.48723118279569894,
+        "native_metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__70/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_70/train__0__1/log.json",
+        "native_metric_sha256": "21edc3e8288ce42c4a53b2868998923d3712519d5d9aefca6303c8fd07b22f6f"
+      }
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3604,
+      "percent": 60.388739946380696,
+      "correct_delta_from_eval60": -9,
+      "delta_pp_from_eval60": -0.15080428954423591,
+      "questions_more_correct": 101,
+      "questions_fewer_correct": 97,
+      "questions_same": 175,
+      "extraction_failures_previous": 2,
+      "extraction_failures_current": 3,
+      "finish_reasons_previous": {
+        "length": 2,
+        "stop": 5966
+      },
+      "finish_reasons_current": {
+        "length": 3,
+        "stop": 5965
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.8766756032171582,
+          "current": 0.868632707774799,
+          "delta_pp": -0.8042895442359255
+        },
+        "majority_vote_acc": {
+          "previous": 0.67828418230563,
+          "current": 0.675603217158177,
+          "delta_pp": -0.2680965147453085
+        }
+      },
+      "mean_distinct_answers_previous": 3.9517426273458445,
+      "mean_distinct_answers_current": 3.689008042895442,
+      "earlier_run_at_same1136updates": {
+        "correct": 3558,
+        "percent": 59.61796246648794,
+        "delta_pp_fresh_minus_earlier": 0.7707774798927614,
+        "native_metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__70/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_70/validation__0__1/log.json",
+        "native_metric_sha256": "2178a545968cf797377dace4c064aecef7c7e9542426eba40b12dd7acbc903ba"
+      }
+    }
+  },
+  "all33024_counts_and21_metrics_verified": true,
+  "baseline": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 1788,
+    "current_correct": 10182,
+    "delta_percentage_points": 8.472327520849127,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "earlier_run_audit": {
+    "path": "/project/alex_phd/runs/spo-reproduction-20261008/reviews/reports/review-1791470520-8e8da726.json",
+    "sha256": "536b5a66a609bb77f2ea7cf79305778392b37410a56eff9944351aa5b23490c8",
+    "limits": "Earlier full-answer audit and unchanged metrics freshly verified, not all historical answers again. Same update count is not an isolated BOS ablation; earlier resumed ancestry differs."
+  },
+  "evaluation_runtime": {
+    "loaded_policy": "ckpt--iter_0071--epoch_2.00--step_1136/hf_pretrained",
+    "sampling_unique_values": {
+      "n": [
+        "16"
+      ],
+      "temperature": [
+        "0.35"
+      ],
+      "top_p": [
+        "1.0"
+      ],
+      "seed": [
+        "42"
+      ],
+      "max_tokens": [
+        "1024"
+      ]
+    },
+    "scientific_requests": 2064,
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_sha256": "6b3af232c9bb3b9ce89a98ec63b399e85a5ed10cef04cb9cb2aae815017e389c"
+  },
+  "artifact_sha256": {
+    "eval70-regrade-001/RECEIPT.json": "7e3a16fb352000c46ac80d5a54060da2b12dff9331a7fe54cf8ed88fd4dd4ea3",
+    "eval70-regrade-001/QUESTION-COUNTS.json": "be169efd92eb054a738ed760b347c9198f8a53068cf63f10715e643710b5b4d1",
+    "eval70-regrade-001/INPUT-MANIFEST.json": "e715f4cc5170d4263168cf64a3feb47be018146e1e36ca9a90deeaafe4d67dfb",
+    "eval70-regrade-001/regrade_eval70.py": "c11d51e7aa3adbb52def8772fdf98feddb568da2cc34455f14c301afd0bd060e",
+    "eval60-regrade-001/RECEIPT.json": "869375e5f43b0575ad7892f2269eb8338c3cb110d51f6bcad5a57f322ad8d0c2",
+    "checkpoint1120-metadata-20261012.json": "919ec81a08fd90b68903672ff116b887799045886b906aca3c7776525fa5e545",
+    "training-audit-collection70-20261012.json": "0f6e76510822331bedf2bc52a35c8e950c4097c6a0304e734b1724a07f2cbac4",
+    "training-windows-through1136-20261012.json": "cc522f920e2624d6752c28956b16ea321718c631f6b494fa3050365561cc8e02"
+  },
+  "first_test_question": {
+    "index": 0,
+    "gold": "18",
+    "correct_previous": 9,
+    "correct_current": 15,
+    "first_extracted": "18",
+    "first_correct": true,
+    "selection": "Predetermined first original test question; illustrative only."
+  },
+  "limits": [
+    "One training ancestry, not independent training-seed replication or a significance claim.",
+    "Prior failed run also improved early; early scores and BOS diagnostics do not establish durable recovery or causality.",
+    "Original historical source/EOS/checkpoint-selection rationale unresolved.",
+    "Mean pass@1 retained; training subset is not held out; every scheduled point retained."
+  ],
+  "scientific_decision": "Continue same authenticated whole owner, original1000-iteration LR horizon and fixed690/11040 endpoint. Next scheduled evaluation80 after1296updates is prepared before outputs. No new GPU job, source/reward/decoding change or favorable checkpoint selection.",
+  "advisor_decision": "Supporting report update only: test gain is incremental and other splits dip slightly. Main story, material limitation and next comparison unchanged; synchronized advisor package retains20:53UTC cutoff.",
+  "interpretation": "After71collections/1136updates, own mean test pass@1 is48.246778%, +8.472328 percentage points versus matched originalSFT39.774450%, and +0.601782pp versus976updates. Validation60.388740% and training subset66.229839% fall slightly. This is an audited intermediate learning result, not completed reproduction.",
+  "challenge": "Mean test accuracy rises while solved-at-least-once coverage falls0.909780pp and majority voting falls1.516300pp. This is not uniform improvement across metrics or splits. Fewer distinct answers alone cannot establish beneficial concentration or harmful collapse; retain all metrics and future fixed-schedule observations. Prior ancestry also improved early before deteriorating.",
+  "formatting_diagnostic": "Test correct responses rise127 while extraction failures fall10 and length endings fall8. The net extraction-count reduction alone cannot explain the full gain. This bookkeeping comparison does not isolate an RL mechanism."
+}
