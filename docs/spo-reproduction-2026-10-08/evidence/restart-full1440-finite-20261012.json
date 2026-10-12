@@ -1,0 +1,118 @@
+{
+  "actor_global_steps": 1440,
+  "actor_skipped_steps": 0,
+  "all_scanned_values_finite": true,
+  "all_ten_protected_file_stats_unchanged": true,
+  "audit_script": "/project/alex_phd/runs/rl-paper-reproduction-20261012/checkpoint-protection-1440-001/audit_finite_state.py",
+  "audit_script_sha256": "59eca8c7efd893fcf7410bcc5eb98116f3c3c2884db0428d7c55fdd920e13ad8",
+  "checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0090--epoch_2.00--step_1440",
+  "chunk_elements": 1048576,
+  "completed_collections": 90,
+  "cpu_threads": 1,
+  "cuda_initialized": false,
+  "elapsed_seconds": 28.126808360219,
+  "file_stats": {
+    "actor/global_step1440/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "inode": 1099979560158,
+      "mtime_ns": "1791845837332574351"
+    },
+    "actor/global_step1440/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "inode": 1099979558310,
+      "mtime_ns": "1791845814020574320"
+    },
+    "actor/latest": {
+      "bytes": 15,
+      "inode": 1099979560156,
+      "mtime_ns": "1791845837334574351"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "inode": 1099979560165,
+      "mtime_ns": "1791845837334574351"
+    },
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "inode": 1099979558303,
+      "mtime_ns": "1791845806287574310"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "inode": 1099979560152,
+      "mtime_ns": "1791845806287574310"
+    },
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "inode": 1099979558302,
+      "mtime_ns": "1791845806287574310"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "inode": 1099979558304,
+      "mtime_ns": "1791845806289574310"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "inode": 1099979560154,
+      "mtime_ns": "1791845806289574310"
+    },
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979558305,
+      "mtime_ns": "1791845810148574315"
+    }
+  },
+  "finite_nonfinite_boundary_fixture_passed": true,
+  "gpu_restore_performed": false,
+  "limits": [
+    "Finiteness at saved step1440 does not establish future numerical stability or endpoint accuracy.",
+    "This is not an end-to-end GPU resume test or off-system checkpoint backup.",
+    "All scientific settings and the running owner are unchanged; the fixed690/11040 reproduction remains unfinished."
+  ],
+  "max_rss_kib": 17595700,
+  "method": "Read-only CPU mmap; visit every element of all six optimizer tensors and all floating actor/HF model tensors in bounded chunks. Reuse prior byte-hash verification only after exact size, inode and nanosecond-mtime checks before and after.",
+  "new_full_file_hash_pass_performed": false,
+  "optimizer_parameter_state_steps": {
+    "0": 1440,
+    "1": 1440
+  },
+  "optimizer_updates": 1440,
+  "protection_receipt": "/project/alex_phd/runs/rl-paper-reproduction-20261012/checkpoint-protection-1440-001/RECEIPT.json",
+  "protection_receipt_sha256": "54f0206da8c7041ef82f7a89c94aca84be6687e29e9ea498b7740ed570c61ee4",
+  "protection_receipt_unchanged": true,
+  "scheduler_last_batch_iteration": 1439,
+  "schema": "spo-protected-checkpoint-full-finite-audit-v1",
+  "started_utc": "2026-10-12T23:28:20.005332+00:00",
+  "tensor_counts": {
+    "actor_model": {
+      "elements": 1100048384,
+      "nonfinite": 0,
+      "tensors": 201
+    },
+    "exp_avg": {
+      "elements": 1100048384,
+      "nonfinite": 0,
+      "tensors": 2
+    },
+    "exp_avg_sq": {
+      "elements": 1100048384,
+      "nonfinite": 0,
+      "tensors": 2
+    },
+    "fp32_master": {
+      "elements": 1100048384,
+      "nonfinite": 0,
+      "tensors": 2
+    },
+    "hf_model": {
+      "elements": 1100048384,
+      "nonfinite": 0,
+      "tensors": 201
+    }
+  },
+  "torch_version": "2.1.2+cu121",
+  "verified_utc": "2026-10-12T23:28:48.132112+00:00",
+  "tool_session": 51746,
+  "exit_code": 0
+}

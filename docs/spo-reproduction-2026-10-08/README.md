@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 23:15 UTC
+## Current status on October 12, 23:29 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -64,9 +64,13 @@ trainer, actor and both active Adam counters are 1,440, and the scheduler is 1,4
 This copy was chosen by completed update count, not test score. It protects a
 newer recovery point, not a new scientific result or an off-system backup.
 See the [new checkpoint receipt](evidence/restart-full1440-protection-20261012.json).
-The 1,440-update check verifies bytes and counters, not every tensor's finiteness
-or an end-to-end GPU restore. A separate faithful resume entrypoint is still
-required if interrupted; the live launcher is fresh-start-only.
+An additional **CPU scan at 23:28 UTC** checked every element of the saved model
+parameters in both exports, the FP32 master weights, and both Adam moments:
+all are finite. The [finite-state receipt](evidence/restart-full1440-finite-20261012.json)
+records the counts and unchanged file identities. This strengthens the recovery
+check; it is not an end-to-end GPU restore or a new accuracy result. A separate
+faithful resume entrypoint is still required if interrupted; the live launcher
+is fresh-start-only.
 Training continues under the same owner. A prior
 [check of two preselected weight tensors](evidence/restart-parameter-update1280-20261012.json)
 confirms actual saved changes from 960 to 1,280 updates; it is not an

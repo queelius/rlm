@@ -1,9 +1,11 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 23:15 UTC. The tenth scheduled restart evaluation
+Status: October 12, 2026, 23:29 UTC. The tenth scheduled restart evaluation
 is fully regraded at 1,456 updates. The complete 1,440-update checkpoint is
 byte-verified outside automatic cleanup, alongside the earlier 160- and
-960-update copies. Logged learning rates are independently checked through 768 updates;
+960-update copies. A further CPU scan finds all saved model parameters,
+FP32 master weights and Adam moments finite at 1,440. Logged learning rates are
+independently checked through 768 updates;
 the scientific recipe and fixed endpoint are unchanged.
 Our primary objective is to reproduce the
 paper's **training result** on one A100. It is still unfinished. We have matched
@@ -326,8 +328,22 @@ JavaScript round-trip rounded nanosecond timestamps. The latter verifier
 stopped before hashing. The exact original metadata and narrow regression
 checks resolved both reporting issues; the full hash/counter verification then
 passed. No model, optimizer, training source or configuration was changed.
-This is not an all-tensor finite scan, a GPU restore, or an off-system backup.
+That byte/counter check was not an all-tensor finite scan, a GPU restore,
+or an off-system backup.
 The separate faithful resume entrypoint remains conditional and unimplemented.
+
+At **23:28 UTC**, a separate read-only CPU scan checked all six optimizer
+tensors: 1,100,048,384 FP32 master-weight elements and the same number in each
+of the two Adam moments. It also checked all 201 model tensors (1,100,048,384
+elements) in each of the actor and Hugging Face exports. **No non-finite values
+were found.** A small injected NaN/positive-infinity/negative-infinity fixture
+checked the scanner across chunk boundaries. All ten protected file identities
+and the earlier protection receipt were unchanged before and after; the scan
+took 28 seconds with one CPU thread and did not initialize CUDA. See the
+[finite-state receipt](evidence/restart-full1440-finite-20261012.json).
+This supports keeping the saved recovery point; it does not prove future
+stability, establish an end-to-end resume, or change the measured learning
+result. Training continued unchanged and had reached 1,536 updates at 23:29 UTC.
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).
