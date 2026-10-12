@@ -76,7 +76,15 @@ also confirms saved parameter changes from 960 to 1,280 updates, with finite
 values in both tensors. This is not an all-parameter scan or a new accuracy result.
 The 1,280-update state remains subject to native cleanup; the separately
 protected copy is at 960. Neither checkpoint check is a new evaluation or GPU
-restoration. The next scheduled evaluation follows 1,296 updates.
+restoration. The next scheduled evaluation follows 1,456 updates.
+
+**Operational check, 22:45 UTC:** observed training and evaluation timings
+leave an estimated 9–13 hours before the whole-run cap; completion is not
+guaranteed. Home has about 498 GB of directory-quota space remaining, versus
+only 16 GB under project, so full checkpoints stay under home. Protection of
+the next scheduled full 1,440-update state is prepared, not completed.
+The [headroom analysis](diagnosis-and-restart-20261012.md#time-and-storage-headroom)
+records assumptions and limits. The scientific result above is unchanged.
 
 The original 1,000-iteration learning-rate
 schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.

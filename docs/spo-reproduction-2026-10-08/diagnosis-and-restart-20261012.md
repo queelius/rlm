@@ -175,6 +175,39 @@ their 20:53 UTC cutoff: the main story, material limits and next comparison have
 not changed. They keep the previous failure visible and the full reproduction
 explicitly unfinished.
 
+## Time and storage headroom
+
+An operational check at **22:40 UTC** used all 85 completed collection timings
+and all nine completed evaluation intervals. At their observed average rates,
+including the remaining scheduled evaluations and fixed final evaluation,
+the run would finish about **9–13 hours before its 68-hour cap**. The wider
+margin uses recent collection timings; the smaller margin uses the whole run.
+No slow intervals were excluded. This is an extrapolation, not a confidence
+interval or completion guarantee: response length, Monte Carlo branching,
+failures and filesystem contention can change the cost. The recipe remains
+unchanged. See the [timing receipt](evidence/restart-pacing85-20261012.json).
+
+Actual directory quotas, rather than the shared filesystem's free-space
+display, showed about **498 GB available under home and only 16 GB under
+project**. Large 17.60 GB full checkpoints must therefore stay under home.
+An observed-rate projection leaves roughly 365 GB there after remaining
+artifacts, retained model files, a transient full state and one additional
+protected full copy. Even twice the observed artifact growth leaves about
+303 GB. File-count limits also matter; the receipt includes a deliberately
+larger stress scenario that exhausts the file quota before the byte quota.
+These are approximate scenarios, not reserved capacity, and other work can
+consume space. See the [storage receipt](evidence/restart-storage-headroom-20261012.json).
+
+Source inspection confirms that native checkpoint cleanup runs **before**
+the next full save. Retaining a model directory does not retain its optimizer
+state. The existing protected 160- and 960-update copies are therefore useful
+even while training is healthy. At 22:45 UTC, protection of the next full state
+at 1,440 updates was prepared, selected before that state or its subsequent
+evaluation exists. It is not yet a completed copy at this cutoff; complete
+file/counter checks and source/destination hash agreement are required first.
+No live source, cleanup policy, training owner or endpoint was changed.
+This operational check does not change the scientific result or advisor story.
+
 ## A protected recovery point
 
 The first full checkpoint finished saving at 16:18 UTC after 160 updates.
