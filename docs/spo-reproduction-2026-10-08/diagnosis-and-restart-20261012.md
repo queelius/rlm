@@ -1,7 +1,7 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 21:40 UTC. The eighth scheduled restart evaluation
-is the latest benchmark. The native full checkpoint at 1,120 updates is
+Status: October 12, 2026, 22:14 UTC. The eighth scheduled restart evaluation
+remains the latest audited benchmark. The native full checkpoint at 1,280 updates is
 verified, and logged learning rates are independently checked through 768 updates.
 The byte-verified 960-update copy remains protected outside automatic cleanup;
 the scientific recipe and fixed endpoint are unchanged.
@@ -256,6 +256,26 @@ stable; protected 960-update file sizes still matched. This does not scan every
 tensor, copy the new state or exercise a GPU restore. The new state remains
 subject to native cleanup. See the
 [1,120-update receipt](evidence/restart-full1120-metadata-20261012.json).
+
+At 22:14 UTC, the **1,280-update full state** passed the same CPU metadata
+check: trainer iteration 80/global step 1,280, actor and both active Adam
+counters 1,280, scheduler 1,279, and no skipped steps. All ten files were stable.
+See the [1,280-update receipt](evidence/restart-full1280-metadata-20261012.json).
+No new protected copy or GPU restore was performed; protected states remain at
+160 and 960 updates.
+
+We also compared the same two layer-zero attention projections used in the
+earlier saved-weight check. Their selection was recorded before the new
+checkpoint existed. Between protected update 960 and native update 1,280,
+1,440,143 of 4,194,304 query-projection elements and 2,207,966 of 4,194,304
+output-projection elements changed. Both saved tensors are finite; the maximum
+absolute difference is 0.00024414 in each. This checks actual stored weight
+updates as well as counters. It does not show that these changes are beneficial,
+scan all parameters or optimizer moments, or establish a new benchmark result.
+The [selection](evidence/restart-parameter-update1280-selection-20261012.json)
+and [CPU comparison](evidence/restart-parameter-update1280-20261012.json)
+retain the fixed tensor identities and exact values. The same training owner
+continues unchanged toward the prescribed endpoint.
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).

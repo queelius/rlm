@@ -1,0 +1,53 @@
+{
+  "schema": "spo-selected-saved-parameter-update-audit-v1",
+  "checked_utc": "2026-10-12T22:14:01.903551+00:00",
+  "selection_receipt": "parameter-update1280-selection-20261012.json",
+  "selection_receipt_sha256": "834c613097cd282a35e74e29b7092be0c3e66ac3edc033ae67456b3f312f336a",
+  "selection_before_current_checkpoint_existed": true,
+  "reference_checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0060--epoch_2.00--step_0960",
+  "current_checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0080--epoch_2.00--step_1280",
+  "reference_updates": 960,
+  "current_updates": 1280,
+  "comparisons": {
+    "model.layers.0.self_attn.q_proj.weight": {
+      "shape": [
+        2048,
+        2048
+      ],
+      "elements": 4194304,
+      "dtype": "torch.bfloat16",
+      "reference_finite": true,
+      "current_finite": true,
+      "changed_elements": 1440143,
+      "max_absolute_change": 0.000244140625,
+      "mean_absolute_change": 0.0000067247992774355225,
+      "rms_change": 0.00001621873161639087,
+      "reference_bf16_tensor_bytes_sha256": "7c37baff17800d71dadb84e5ea17e030a7fdf7bdee0fcceb84bf9de22d5da5d6",
+      "current_bf16_tensor_bytes_sha256": "a6898e712958f3a12f36227abf3401f0d2895190462d7b4de0004cd5cab5bdbd"
+    },
+    "model.layers.0.self_attn.o_proj.weight": {
+      "shape": [
+        2048,
+        2048
+      ],
+      "elements": 4194304,
+      "dtype": "torch.bfloat16",
+      "reference_finite": true,
+      "current_finite": true,
+      "changed_elements": 2207966,
+      "max_absolute_change": 0.000244140625,
+      "mean_absolute_change": 0.000012226564649608918,
+      "rms_change": 0.000020573672372847795,
+      "reference_bf16_tensor_bytes_sha256": "4fc43e3ae57a4799b05010139dbf49575d22cee79390dcd171350fc4a95bb0dc",
+      "current_bf16_tensor_bytes_sha256": "9f2daf2b283eea4ca5d092ca6720b6019d84727c5c842f6e1221d4443be3bfd9"
+    }
+  },
+  "files_stable_during_inspection": true,
+  "cuda_initialized": false,
+  "interpretation": "Checks actual saved BF16 parameter changes at the two predetermined layer-zero projections, in addition to agreeing optimizer counters. Does not by itself measure learning effectiveness.",
+  "limits": [
+    "Only the selected tensors are scanned for numerical finiteness; not an all-parameter/master/moment audit.",
+    "Neither checkpoint is selected by held-out score. No independent seed, clean BOS ablation or completed fixed-endpoint reproduction.",
+    "No source, model, optimizer, environment or GPU owner modified."
+  ]
+}

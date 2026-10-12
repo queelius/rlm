@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 21:40 UTC
+## Current status on October 12, 22:14 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -64,12 +64,15 @@ See the [new checkpoint receipt](evidence/restart-full960-protection-20261012.js
 The 960-update check verifies bytes and counters, not every tensor's finiteness
 or an end-to-end GPU restore. A separate faithful resume entrypoint is still
 required if interrupted; the live launcher is fresh-start-only.
-Training has reached at least **1,136 updates**, with contiguous finite logged
+Training has reached at least **1,280 updates**, with contiguous finite logged
 metrics and no logged traceback. The newer native full checkpoint's counters
-agree at 1,120 updates, including both active Adam states; the scheduler is at
-1,119. All ten required files were stable during this
-[CPU metadata check](evidence/restart-full1120-metadata-20261012.json).
-The 1,120-update state remains subject to native cleanup; the separately
+agree at 1,280 updates, including both active Adam states; the scheduler is at
+1,279. All ten required files were stable during this
+[CPU metadata check](evidence/restart-full1280-metadata-20261012.json).
+A [check of two preselected weight tensors](evidence/restart-parameter-update1280-20261012.json)
+also confirms saved parameter changes from 960 to 1,280 updates, with finite
+values in both tensors. This is not an all-parameter scan or a new accuracy result.
+The 1,280-update state remains subject to native cleanup; the separately
 protected copy is at 960. Neither checkpoint check is a new evaluation or GPU
 restoration. The next scheduled evaluation follows 1,296 updates.
 

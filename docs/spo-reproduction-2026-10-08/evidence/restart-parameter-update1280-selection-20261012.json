@@ -1,0 +1,37 @@
+{
+  "checked_utc": "2026-10-12T22:08:18.403387+00:00",
+  "fixed_tensor_names": {
+    "model.layers.0.self_attn.q_proj.weight": {
+      "shape": [
+        2048,
+        2048
+      ],
+      "elements": 4194304,
+      "dtype": "torch.bfloat16",
+      "finite": true
+    },
+    "model.layers.0.self_attn.o_proj.weight": {
+      "shape": [
+        2048,
+        2048
+      ],
+      "elements": 4194304,
+      "dtype": "torch.bfloat16",
+      "finite": true
+    }
+  },
+  "reference_checkpoint_updates": 960,
+  "comparison_checkpoint_updates": 1280,
+  "comparison_checkpoint_exists_at_selection": false,
+  "selection_rationale": "Same two layer-zero projections used in the prior32-update saved-weight check; positions fixed before the1280 checkpoint exists.",
+  "cuda_initialized": false,
+  "schema": "spo-fixed-parameter-comparison-selection-v1",
+  "reference_receipt": "checkpoint-protection-960-001/RECEIPT.json",
+  "reference_receipt_sha256": "0211851b36af85304228cd94ea4be2293c17018808fa7a282acee50d475d1cfd",
+  "planned_checks": [
+    "Require completed iteration79 and stable ten-file full1280; verify trainer/actor/activeAdam1280 and scheduler1279.",
+    "Read selected BF16 tensors on CPU via memory mapping from protected960 and native1280; finite values, changed element count and absolute differences.",
+    "Report zero differences as observed if present; do not choose different tensors or checkpoint based on result.",
+    "No live source or native artifact writes, full optimizer-tensor scan, new GPU job or end-to-end restore."
+  ]
+}
