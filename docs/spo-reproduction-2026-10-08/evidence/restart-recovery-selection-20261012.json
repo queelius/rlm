@@ -1,0 +1,47 @@
+{
+  "schema": "spo-native-resume-selection-audit-v1",
+  "checked_utc": "2026-10-12T17:42:46.318324+00:00",
+  "source_files_sha256": {
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/deepspeed_policy_trainer.py": "7cf1e24baad23a4a80cf9befcaca54f42979702a92b8f26355892cdaa44a9104",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/ppo_trainer.py": "231c8a1456b2b7c5fcda6e8a3f4112f8465d9e401779290c7fe7d4a890dbbd01"
+  },
+  "method": "Execute exact native AST bodies of parse_checkpoint_name, get_last_checkpoint and is_checkpoint_resumable; no source edits/imported trainer/model/GPU initialization.",
+  "native_selected_full_checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0020--epoch_2.00--step_0320",
+  "native_selected_iteration": 20,
+  "current_full320_all10_file_sizes_match_prior_metadata": true,
+  "fixtures": {
+    "incomplete_actor_latest_only_accepted_by_native": true,
+    "hf_only_rejected_by_native": true,
+    "resumable_selector_picks_incomplete640": true,
+    "unfiltered_selector_picks_hf_only800": true,
+    "strong_handoff_gate_missing_required_files": [
+      "custom_checkpoint_0.pkl",
+      "custom_checkpoint_10.pkl",
+      "custom_checkpoint_11.pkl",
+      "actor/global_step640/mp_rank_00_model_states.pt",
+      "actor/global_step640/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt",
+      "actor/zero_to_fp32.py",
+      "hf_pretrained/pytorch_model.bin",
+      "hf_pretrained/config.json",
+      "hf_pretrained/generation_config.json"
+    ]
+  },
+  "interpretation": "Native resumable predicate tests actor-directory entries, not complete optimizer/trainer state. Therefore a successful native selection alone cannot authorize a faithful resume. Current real selected320 state passes the separately recorded ten-file presence/size check.",
+  "decision": "Retain the stronger existing complete-state/counter/hash gate for a future separately sealed resume entrypoint. Seed only one verified full checkpoint into new native/checkpoints after previous whole owner exits. Do not edit live code or resume now.",
+  "limits": [
+    "Adversarial tiny fixtures are not actual training failures.",
+    "This does not scan320 tensor contents, GPU-restore state, implement the missing resume entrypoint or prove RNG continuity.",
+    "Extraction preserves method bodies but bypasses full trainer construction; current parent training remains untouched."
+  ],
+  "gpu_or_training_started": false,
+  "audit_script": {
+    "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/recovery-selector-audit-001/audit.py",
+    "sha256": "13c25a6fed88e47f2bce1288b437be1a2f14593c5c8153c153d7fe913276b50a"
+  },
+  "root_followup_source_read": {
+    "runtime_resume": "Native run_iteration_loop loads trainer state, starts at its saved iteration and generates using the selected checkpoint HF weights; retains original num_iterations1000/stop690.",
+    "actor_restore_before_MC_likelihood": "MC generator line910 calls trainer.get_episodes_w_actor_logps. Its native body restores checkpoint_path_to_load into the actor before _update_episodes_with_log_probs, then clears the pending path. Source-order inspection, not a new GPU restoration.",
+    "saved_training_state": "Trainer state index0, running scores index10, KL controller index11 all have native load paths. Full numeric restore is covered by the prior7840 A100 probe, not repeated here.",
+    "endpoint_branch": "At full690 with incomplete evaluation, use an independently admitted evaluation-only continuation; fresh-only launcher/endpoint hook must not be blindly reused after final-marker skip."
+  }
+}

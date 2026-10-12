@@ -148,6 +148,13 @@ an end-to-end resumed GPU run or bitwise-identical generation. No resume was
 launched and the live training code was untouched. See the
 [recovery data-order audit](evidence/restart-recovery-data-order-20261012.json).
 
+A further [CPU recovery check](evidence/restart-recovery-selection-20261012.json)
+found that the native "resumable" test can accept a directory containing only
+an actor marker, with no model or optimizer state. Our stronger handoff gate
+requires complete files and matching counters, not that flag alone. The real
+320-update checkpoint passes the recorded file checks. The incomplete example
+was a tiny test fixture, not a live training failure; no resume was launched.
+
 ## What this can and cannot establish
 
 If the run recovers the published improvement, that supports a practical
