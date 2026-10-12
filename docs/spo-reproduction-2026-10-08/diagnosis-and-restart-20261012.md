@@ -1,6 +1,7 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 18:24 UTC, after the fourth scheduled restart evaluation.
+Status: October 12, 2026, 18:58 UTC. The fourth scheduled restart evaluation
+remains the latest score; the native full checkpoint at 640 updates is now verified.
 Our primary objective is to reproduce the
 paper's **training result** on one A100. It is still unfinished. We have matched
 the authors' released-model evaluation, diagnosed concrete discrepancies in our
@@ -105,7 +106,7 @@ the 494 additional correct answers. Individual questions move both ways:
 description of one run, not a claim of independent training replications or
 statistical significance.
 
-Training completed 496 updates before this evaluation. The latest detailed
+Training completed 496 updates before this evaluation. The accompanying
 batch audit, collection 30, contains 332 correct and 180 incorrect responses,
 with mixed terminal outcomes on 38 of
 64 questions. All 512 terminal rewards regrade correctly. Its training query
@@ -142,7 +143,7 @@ and scheduler counters agreed, and all ten required files were present at that c
 [metadata check](evidence/restart-full320-metadata-20261012.json) did not scan
 every tensor or restore it on the GPU.
 
-The latest full checkpoint completed at 480 updates. Trainer and actor counters
+The following full checkpoint completed at 480 updates. Trainer and actor counters
 are 480, the scheduler counter is 479, and both active Adam state counters are
 480. All ten files were stable during CPU inspection. This
 [metadata check](evidence/restart-full480-metadata-20261012.json) did not scan
@@ -152,6 +153,20 @@ An initial inspection mistakenly treated two legacy optimizer group counters
 as active counters; explicit state-path inspection and the installed optimizer
 source resolved this. The inspection failure is preserved in the receipt and
 was not a training failure.
+
+At 18:57 UTC, the next scheduled full checkpoint was verified at **640 updates**:
+trainer iteration 40/global step 640, actor step 640, scheduler counter 639,
+and both active Adam state counters 640. No optimizer steps were skipped.
+All ten required files were present and stable during the CPU check; the
+protected 160-update copy also retained its recorded file sizes. All first
+640 logged updates and numeric values are finite, with no logged traceback.
+The same authenticated owner continued generating collection 40 with no HTTP
+errors at the 18:58 cutoff. See the
+[640-update metadata receipt](evidence/restart-full640-metadata-20261012.json).
+This did not scan every tensor, copy the new checkpoint, or test a GPU resume.
+Native cleanup still applies, and a separate faithful resume entrypoint remains
+necessary if interrupted. There is no new benchmark result: the next scheduled
+evaluation follows 656 updates, and the fixed endpoint remains 11,040.
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).

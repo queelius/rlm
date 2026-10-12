@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 18:24 UTC
+## Current status on October 12, 18:58 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -51,10 +51,13 @@ trainer's automatic cleanup directory. All ten files match their originals by
 SHA256; saved update counters and optimizer values passed CPU inspection. This
 protects a recovery point, not a new scientific result or an off-system backup.
 See the [checkpoint receipt](evidence/restart-full160-protection-20261012.json).
-The newer native full checkpoint's counters agree at 480 updates, including
-both active Adam state counters. This was a
-[metadata check](evidence/restart-full480-metadata-20261012.json), not a new
-GPU restoration or off-system backup.
+Training has since reached **640 updates**, with contiguous finite logged
+metrics and no logged traceback. The newer native full checkpoint's counters
+agree at 640 updates, including both active Adam states; the scheduler is at
+639. All ten required files were stable during this
+[CPU metadata check](evidence/restart-full640-metadata-20261012.json).
+This is saved progress, not a new evaluation, GPU restoration, or off-system
+backup. The next scheduled evaluation follows 656 updates.
 
 The original 1,000-iteration learning-rate
 schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.
