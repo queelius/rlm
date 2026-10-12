@@ -1,0 +1,110 @@
+{
+  "schema": "spo-protected-full-checkpoint-v1",
+  "verified_utc": "2026-10-12T16:21:33.728416+00:00",
+  "source": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0010--epoch_2.00--step_0160",
+  "protected_copy": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0010--epoch_2.00--step_0160",
+  "files": {
+    "actor/global_step160/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "sha256": "0c71aa46b3fabd4c3c99c5964008514e4e3328fda5d5ec00175180eb529c9176"
+    },
+    "actor/global_step160/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "sha256": "11e739c6fa79aee231904bdbe022af5af221b481c17aeaddb35a6cb6ad1bd41c"
+    },
+    "actor/latest": {
+      "bytes": 14,
+      "sha256": "e65b75f6ea73119ce95fa1c31be0f00c1b5460e95633bccb6c40748916cff344"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "sha256": "47e22c3e2e9c55705ff72102ffd1146b607e80880f2011ced5bc969d11ea7b05"
+    },
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "sha256": "33d90bc40ef2619e45c95a928157e920c4e5d1b3e2a4e3dc5c0ed01db5319c6a"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "sha256": "aa20a5b959b29a4a53e33f6f7d13092fea8b5a5ef79b8218d989e7b4e25602e2"
+    },
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "sha256": "48cbca448331d0383454ff77c31f5693f196fe4961f361ad19cfa5148011461f"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "sha256": "fa257c0a935dff5c0136479348d593170143e4318cb30638b35206a649d2e0bc"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "sha256": "8d7242f52ed9f3d40ab624ab7288d1db274f25255bd29571caa4862664d7fc80"
+    },
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "sha256": "6c953e6edab5de1b578bb375ca68d052629de222992c764a4f3712e5456cd028"
+    }
+  },
+  "total_bytes": 17600911843,
+  "all_source_destination_hashes_equal": true,
+  "distinct_file_inodes": true,
+  "source_files_stable_during_verification": true,
+  "home_remaining_quota_bytes": 525822377640,
+  "path_map": {
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0010--epoch_2.00--step_0160": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0010--epoch_2.00--step_0160"
+  },
+  "native_completed_collection": 9,
+  "native_completed_collection_utc": "2026-10-12T16:18:36.887Z",
+  "completed_collections": 10,
+  "optimizer_updates": 160,
+  "selection_rule": "First scheduled complete full-state checkpoint; selected before any efficacy comparison, not by held-out score.",
+  "state_inspection": {
+    "checked_utc": "2026-10-12T16:19:39.042426+00:00",
+    "source": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0010--epoch_2.00--step_0160",
+    "files_bytes": {
+      "actor/global_step160/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": 13200600768,
+      "actor/global_step160/mp_rank_00_model_states.pt": 2200157624,
+      "actor/latest": 14,
+      "actor/zero_to_fp32.py": 25314,
+      "custom_checkpoint_0.pkl": 976,
+      "custom_checkpoint_10.pkl": 980,
+      "custom_checkpoint_11.pkl": 916,
+      "hf_pretrained/config.json": 792,
+      "hf_pretrained/generation_config.json": 111,
+      "hf_pretrained/pytorch_model.bin": 2200124348
+    },
+    "total_bytes": 17600911843,
+    "trainer_state": {
+      "global_step": 160,
+      "epoch": 2,
+      "iteration": 10
+    },
+    "actor_global_steps": 160,
+    "scheduler": {
+      "last_batch_iteration": 159
+    },
+    "optimizer_steps": [
+      160,
+      160
+    ],
+    "all_master_and_moment_values_finite": true,
+    "finite_tensor_elements": {
+      "fp32_master": 1100048384,
+      "exp_avg": 1100048384,
+      "exp_avg_sq": 1100048384
+    },
+    "home_quota_bytes": 1099511627776,
+    "home_used_bytes": 556732898203,
+    "gpu_restore_performed": false
+  },
+  "native_source_unchanged": true,
+  "copied_not_moved": true,
+  "verification_procedure": "After Finished iteration9, load saved trainer/model/optimizer metadata on CPU; verify iteration10/step160/scheduler159 and both Adam steps160; inspect all FP32 master and moment values for finiteness in 1048576-element chunks. Copy all10 files additively, then SHA256 both source and destination in8MiB chunks; verify equal sizes, distinct inodes and stable source/destination size+mtime.",
+  "limits": [
+    "Protected from native checkpoint cleanup, but on the same home filesystem: not an off-system disaster backup.",
+    "This fresh160 state has not been restored to a GPU; native full7840 restore was tested separately.",
+    "Current sealed launcher is fresh-only; an interruption still requires a separately admitted resume entrypoint.",
+    "No learning-gain claim, completed paper reproduction or fixed690 endpoint from this checkpoint.",
+    "GitHub receives the receipt and report only, never model weights."
+  ]
+}

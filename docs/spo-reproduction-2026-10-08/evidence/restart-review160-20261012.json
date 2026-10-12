@@ -1,0 +1,170 @@
+{
+  "schema": "spo-research-review-v1",
+  "review_id": "review-1791821063-68d7e688",
+  "reviewed_utc": "2026-10-12T16:21:48.033737+00:00",
+  "primary_objective": "Reproduce the published SPO training result on one A100; active and unfinished.",
+  "request_change": "Observer newly listed the completed evaluation0 training-subset event. All three splits were already included in the previous independent33024-answer audit. No new benchmark score.",
+  "event_integrity": {
+    "semantic_event_hashes_matched": 11,
+    "prior_metric_dictionaries_unchanged": true,
+    "reviewer_check_failure": "First read-only comparison incorrectly treated event hashes as file-byte hashes. Monitor source hashes sorted JSON payloads. Correct representation matched all11 events; no native source/result changed."
+  },
+  "evidence": [
+    "early-eval0-regrade-001/RECEIPT.json",
+    "training-audit-collection6-20261012.json",
+    "checkpoint-protection-160-001/RECEIPT.json"
+  ],
+  "native_status": {
+    "checked_utc": "2026-10-12T16:21:48.033737+00:00",
+    "completed_iterations": [
+      [
+        "2026-10-12 15:27:46,916",
+        "0"
+      ],
+      [
+        "2026-10-12 15:42:17,392",
+        "1"
+      ],
+      [
+        "2026-10-12 15:49:48,274",
+        "2"
+      ],
+      [
+        "2026-10-12 15:53:35,882",
+        "3"
+      ],
+      [
+        "2026-10-12 15:58:01,798",
+        "4"
+      ],
+      [
+        "2026-10-12 16:01:57,225",
+        "5"
+      ],
+      [
+        "2026-10-12 16:06:20,889",
+        "6"
+      ],
+      [
+        "2026-10-12 16:09:37,994",
+        "7"
+      ],
+      [
+        "2026-10-12 16:14:20,858",
+        "8"
+      ],
+      [
+        "2026-10-12 16:18:36,887",
+        "9"
+      ]
+    ],
+    "inspected_update_range": [
+      1,
+      160
+    ],
+    "contiguous": true,
+    "nonfinite_scalars": [],
+    "ranges": {
+      "actor/ratio": [
+        0.993,
+        1.01
+      ],
+      "actor/grad_norm": [
+        7.07,
+        32.8
+      ],
+      "actor/loss": [
+        -0.0408,
+        0.00531
+      ],
+      "actor/approx_kl": [
+        0.00056,
+        0.0588
+      ],
+      "actor/lr": [
+        0,
+        8.22e-7
+      ]
+    },
+    "max_loss_nan": 0,
+    "max_loss_inf": 0,
+    "tracebacks": 0,
+    "owner_identities": {
+      "2826646": {
+        "state": "S",
+        "start_ticks": 1362248004
+      },
+      "2826649": {
+        "state": "S",
+        "start_ticks": 1362248013
+      },
+      "2826650": {
+        "state": "S",
+        "start_ticks": 1362248017
+      },
+      "2829006": {
+        "state": "S",
+        "start_ticks": 1362275186
+      }
+    },
+    "all_review_events_match_monitor_semantic_hashes": 11,
+    "frozen_source_files_verified_unchanged": 7
+  },
+  "training_collection6": {
+    "responses": 512,
+    "reward_correct": 270,
+    "reward_incorrect": 242,
+    "mixed_groups": 37,
+    "groups": 64,
+    "regrade_mismatches": 0,
+    "query_id_mismatches": 0,
+    "actor_reference_logps_finite": true,
+    "advantages_finite": true,
+    "nonzero_advantage_tokens": 3142
+  },
+  "benchmark": {
+    "checkpoint_updates": 16,
+    "test_correct": 8447,
+    "test_responses": 21104,
+    "test_percent": 40.02558756633813,
+    "starting_sft_correct": 8394,
+    "starting_sft_percent": 39.77445034116755,
+    "difference_pp": 0.2511372251705838,
+    "validation_correct": 3169,
+    "validation_responses": 5968,
+    "train_subset_correct": 3416,
+    "train_subset_responses": 5952,
+    "all_answers_regraded": 33024
+  },
+  "checkpoint_protection": {
+    "receipt": "checkpoint-protection-160-001/RECEIPT.json",
+    "protected_path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0010--epoch_2.00--step_0160",
+    "files": 10,
+    "bytes": 17600911843,
+    "all_hashes_match": true,
+    "trainer_iteration": 10,
+    "optimizer_step": 160,
+    "scheduler_last_batch": 159,
+    "finite_master_and_moment_elements": 3300145152,
+    "gpu_restore_of_this_state": false
+  },
+  "interpretation": "Real responses, usable rewards/advantages, finite logged updates and a complete protected state support continuing this fixed run. The first16-update test changed only+0.2511pp; it establishes neither recovery nor the causal efficacy of BOS alignment nor paper reproduction. Training batches contain different questions and are not a benchmark learning curve.",
+  "next_decision": "Continue the current authenticated whole owner unchanged to prescribed690/11040 and native final evaluation. No competing GPU work, favorable checkpoint selection, recipe change or old-campaign restart.",
+  "ranked_followups": [
+    "Inspect actual returned responses/errors, finite updates and next scheduled native evaluation; independently regrade completed results.",
+    "Retain protected full160 recovery state; near any allocation/owner cutoff, preserve the latest complete full optimizer state before cleanup and prepare faithful resume if needed.",
+    "If exact690/11040 completes but evaluation does not, use separately admitted evaluation-only continuation, never another optimizer update.",
+    "If learning remains poor, investigate remaining EOS/historical-source discrepancies after this fixed comparison; do not silently change the live treatment."
+  ],
+  "advisor_package_decision": "Checkpoint protection and unchanged benchmark do not change the main story, limitations or next experiment. Update supporting report/evidence; retain advisor slides/pdfpc/guide at explicit15:28 cutoff.",
+  "quota": {
+    "checked_utc": "2026-10-12T16:15:29.861482+00:00",
+    "bucket": "codex",
+    "remaining_percent": 89,
+    "method": "account/rateLimits/read",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "waiting_state": "Verified live owned training, not blocked. No pause/STOP.",
+  "changes": "Additive completed-checkpoint copy and documentation only. Live source/environment/config/processes remain unchanged."
+}

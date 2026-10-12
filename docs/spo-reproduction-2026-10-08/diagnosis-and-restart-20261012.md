@@ -1,6 +1,6 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 15:49 UTC, after the first scheduled restart evaluation.
+Status: October 12, 2026, 16:21 UTC, after the first full restart checkpoint.
 Our primary objective is to reproduce the
 paper's **training result** on one A100. It is still unfinished. We have matched
 the authors' released-model evaluation, diagnosed concrete discrepancies in our
@@ -96,18 +96,34 @@ The training subset is not held out. We retain the native metric and decoding
 settings; neither the 74.98% solved-at-least-once coverage nor the 48.67% majority-vote
 score substitutes for the test result above.
 
-Training continued to 32 updates. The second collection contains 296 correct
-and 216 incorrect responses; all 512 terminal rewards regrade correctly. Its
-training query tokens match the actual generation requests, and saved actor and
-reference log probabilities and advantages are finite. The first 32 logged
-updates have no reported loss NaNs, infinities, or high-ratio rejection warnings.
-These checks support continuing the current run, not declaring learning success.
+Training continued to 160 updates. The latest detailed audit, collection 6,
+contains 270 correct and 242 incorrect responses, with mixed outcomes on 37 of
+64 questions. All 512 terminal rewards regrade correctly. Its training query
+tokens match the actual generation requests, and saved actor and reference log
+probabilities and advantages are finite. All first 160 update numbers are
+present and logged numeric values are finite. These checks support continuing
+the current run, not declaring learning success; the training batches contain
+different questions and are not a benchmark progress curve.
 
 The next decision remains the same: keep the recipe and endpoint fixed, inspect
-subsequent scheduled evaluations, and protect the first complete model and
-optimizer checkpoint when it is saved at 160 updates. This early result stays
-in the supporting report; it does not change the advisor deck's main conclusion
-at its explicitly dated 15:28 UTC cutoff.
+subsequent scheduled evaluations, and preserve complete recovery states. This
+early result stays in the supporting report; it does not change the advisor
+deck's main conclusion at its explicitly dated 15:28 UTC cutoff.
+
+## A protected recovery point
+
+The first full checkpoint finished saving at 16:18 UTC after 160 updates.
+Saved trainer, actor, optimizer, and learning-rate counters agree. All saved
+FP32 master parameters and Adam moments are finite. We copied all ten files
+(17.60 GB) outside native checkpoint cleanup, then verified every source and
+destination SHA256. Training continued under the same owner throughout.
+
+This is operational protection, not an accuracy result. The copy is on the
+same home filesystem, so it is not a disaster backup. The live launcher is
+fresh-start-only: an interruption would still require a separately prepared
+resume entrypoint. We inspected this state on CPUs without displacing training;
+we have not claimed a new GPU restoration test of it. The earlier full-state
+restoration test used the previous run's 7,840-update checkpoint.
 
 ## What this can and cannot establish
 
@@ -140,6 +156,8 @@ not evidence yet that an RLM teaching intervention works.
 - [First scheduled evaluation audit](evidence/restart-eval0-20261012.json):
   all three splits, 33,024 saved answers, no scoring discrepancies.
 - [Research review and next decision](evidence/restart-review-20261012.json).
+- [Full 160-update checkpoint protection](evidence/restart-full160-protection-20261012.json)
+  and [second review](evidence/restart-review160-20261012.json).
 - [Experimental adapters and tests](../../experiments/spo_reproduction_20261008/)
 
 The live handoff is

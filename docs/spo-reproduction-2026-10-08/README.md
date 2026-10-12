@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12 after the first restart evaluation
+## Current status on October 12 at the first full restart checkpoint
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -37,10 +37,16 @@ The first scheduled test, after 16 optimizer updates, is **40.03%**, versus
 **39.77%** for the original model: **+0.25 percentage points**. Independent
 regrading of all 33,024 answers across test, validation, and the training subset
 matches every saved native metric. This small early change is **not evidence of
-meaningful recovery or completed reproduction**. By 15:49 UTC, the run had
-completed 32 updates; the checked rewards and log probabilities are finite,
+meaningful recovery or completed reproduction**. By 16:21 UTC, the run had
+completed 160 updates; checked rewards and log probabilities are finite,
 and training query tokens match the actual generation requests. See the
 [first evaluation audit](evidence/restart-eval0-20261012.json).
+
+The first complete model-and-optimizer checkpoint has been copied outside the
+trainer's automatic cleanup directory. All ten files match their originals by
+SHA256; saved update counters and optimizer values passed CPU inspection. This
+protects a recovery point, not a new scientific result or an off-system backup.
+See the [checkpoint receipt](evidence/restart-full160-protection-20261012.json).
 
 The original 1,000-iteration learning-rate
 schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.
