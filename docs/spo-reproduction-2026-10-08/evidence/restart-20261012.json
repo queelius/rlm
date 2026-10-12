@@ -1,0 +1,227 @@
+{
+  "schema": "spo-diagnosis-and-restart-20261012-v1",
+  "cutoff_utc": "2026-10-12T15:28:00Z",
+  "objective": "Reproduce published RL training on single A100; active and unfinished",
+  "prior": {
+    "terminal_exit_code": 1,
+    "timed_out": false,
+    "last_logged_optimizer_step": 7995,
+    "last_complete_collection": 498,
+    "last_complete_collection_updates": 7984,
+    "last_full_checkpoint_updates": 7840,
+    "latest_scheduled_evaluation_loop_index": 490,
+    "evaluated_weight_updates": 7856,
+    "test_correct": 4684,
+    "test_answers": 21104,
+    "test_accuracy": 0.22194844579226686,
+    "validation_correct": 1324,
+    "validation_answers": 5968,
+    "training_subset_correct": 1596,
+    "training_subset_answers": 5952,
+    "regrade": {
+      "answers": 66048,
+      "trees": 4128,
+      "identity_or_metric_mismatches": 0,
+      "test": {
+        "correct_counts": [
+          10662,
+          4684
+        ],
+        "responses_per_iteration": 21104,
+        "difference_percentage_points": -28.326383623957543,
+        "extraction_failures": [
+          14,
+          18
+        ],
+        "length_terminations": [
+          16,
+          19
+        ],
+        "questions_with_any_correct_response": [
+          1025,
+          607
+        ],
+        "questions_with_correct_majority": [
+          749,
+          333
+        ],
+        "question_count": 1319,
+        "questions_improved_worsened_unchanged": [
+          143,
+          840,
+          336
+        ],
+        "formerly_16_of_16_correct_now_0_of_16": 96
+      }
+    }
+  },
+  "token_alignment": {
+    "archived_iterations": [
+      10,
+      100,
+      270,
+      400,
+      490
+    ],
+    "rows": 2560,
+    "all_generation_ids_are_BOS_plus_training_query": true,
+    "BOS_token_id": 1,
+    "EOS_omission_unchanged": true,
+    "source": "/project/alex_phd/runs/rl-paper-reproduction-20261012/fidelity-audit/token-alignment.json"
+  },
+  "likelihood": {
+    "selection": "First16 distinct archived question_idx, first saved late-policy response each, no outcome filtering. One question overlaps prior four-response single-question probe.",
+    "aggregate": {
+      "late": {
+        "ppo_scaled_logps_bos_minus_saved": {
+          "max_sum_nats": 212.13701108408304,
+          "mean_question_mean_nats_per_token": 0.9579882556032789,
+          "mean_sum_nats": 84.84771907857714,
+          "median_sum_nats": 71.28091650910974,
+          "min_sum_nats": 17.32926988275011,
+          "negative_questions": 0,
+          "positive_questions": 16,
+          "questions": 16,
+          "token_weighted_mean_nats": 0.899048678978301
+        },
+        "raw_logps_bos_minus_saved": {
+          "max_sum_nats": 128.4437759707571,
+          "mean_question_mean_nats_per_token": 0.61512315121638,
+          "mean_sum_nats": 53.98129218402385,
+          "median_sum_nats": 46.24836221262444,
+          "min_sum_nats": 14.040983976189182,
+          "negative_questions": 0,
+          "positive_questions": 16,
+          "questions": 16,
+          "token_weighted_mean_nats": 0.5719872019499216
+        }
+      },
+      "sft": {
+        "ppo_scaled_logps_bos_minus_saved": {
+          "max_sum_nats": 2.5355313441930534,
+          "mean_question_mean_nats_per_token": -0.0013180765091560904,
+          "mean_sum_nats": -0.06395246151060663,
+          "median_sum_nats": -0.38851760639320077,
+          "min_sum_nats": -2.0173385157791586,
+          "negative_questions": 10,
+          "positive_questions": 6,
+          "questions": 16,
+          "token_weighted_mean_nats": -0.0006776419762713285
+        },
+        "raw_logps_bos_minus_saved": {
+          "max_sum_nats": 1.2667858542386057,
+          "mean_question_mean_nats_per_token": -0.0013332069154100687,
+          "mean_sum_nats": -0.10386713247153567,
+          "median_sum_nats": -0.27123914701951435,
+          "min_sum_nats": -1.2255077163276837,
+          "negative_questions": 10,
+          "positive_questions": 6,
+          "questions": 16,
+          "token_weighted_mean_nats": -0.0011005788871156098
+        }
+      }
+    },
+    "limits": "Sixteen fixed questions, one saved late-policy response each; one question overlaps the earlier diagnostic. Conditional likelihood sensitivity only, not task accuracy or proof of collapse causation. All selected rows retained.",
+    "source": "/project/alex_phd/runs/rl-paper-reproduction-20261012/bos-breadth-probe/COMPARISON.json"
+  },
+  "optimizer_diagnostic": {
+    "complete": true,
+    "restored_step": 7840,
+    "restored_scheduler": 7839,
+    "restored_finite_tensor_elements_exactly_compared": 3300145152,
+    "optimizer_class": "FusedAdam",
+    "diagnostic_global_step": 7841,
+    "diagnostic_scheduler": 7840,
+    "diagnostic_gradient_norm": 0,
+    "modified_weights_saved": false,
+    "adapter": {
+      "adapter": "spo-bf16-zero-norm-v1",
+      "change": "strict-positive norm assertion accepts finite zero; no other change",
+      "native_file": "/project/alex_phd/envs/spo-6c5f947/lib/python3.10/site-packages/deepspeed/runtime/bf16_optimizer.py",
+      "native_sha256": "dfb712446fb4dd0634b58f3a015eea184998274b74c27d6122eb6a0a6a70d4b4",
+      "original_method_sha256": "29998663a7e459df13af9bf43a9408a6b8eef14fc82e13cc19ad32a52ddfe755",
+      "patched_method_sha256": "c453b10ec98f426da9e3e5eeb351a53becc25098f75513f2f865433168082272"
+    },
+    "limits": "Synthetic rejection fixture reproduces a mechanism; historical failing norm unlogged. No learning score. Exact full restoration was checked before the diagnostic step."
+  },
+  "fresh": {
+    "started_utc": "2026-10-12T15:22:49.463Z",
+    "owner": {
+      "argv": [
+        "/project/alex_phd/envs/spo-6c5f947/bin/python",
+        "/project/alex_phd/runs/rl-paper-reproduction-20261012/code-spo-bos-only-v1/launch_bos_only.py",
+        "--configs",
+        "/project/alex_phd/runs/rl-paper-reproduction-20261012/code-spo-bos-only-v1/fresh_bos_only.jsonnet",
+        "run_iteration_loop"
+      ],
+      "cwd": "/project/alex_phd/research-cache/repos/SPO",
+      "deadline": 1792068616,
+      "effective_cap_seconds": 244800,
+      "id": "spo-bos-only-from-sft-attempt1",
+      "owner_pid": 2826646,
+      "owner_start_ticks": 1362248004,
+      "pid": 2826649,
+      "scoped_owner": "/project/alex_phd/runs/spo-reproduction-20261008/code-v1/scoped_session_owner.py",
+      "scoped_owner_sha256": "89c03da19120487d74823686b67cff358d77f39d0e9a491de2dba1d1dde3da5e",
+      "seconds": 244800,
+      "start_ticks": 1362248013,
+      "started": 1791818569.46362
+    },
+    "frozen_source_hashes": {
+      "bf16_zero_norm.py": "4a42ebf33db7540cb404562da30b2919134d405ff2dd5ca2842c6a0f403d7b84",
+      "bos_only_adapter.py": "50aab2453dc32ce1c4a571d1cbfd8f6986777ede76affbfa91c8df6544e8e809",
+      "fixed_endpoint.py": "e0c289ea8388477d5b88479010ef95e20b18ced84e0af9ab1eba8118bc902da3",
+      "fresh_bos_only.jsonnet": "940a86ece6e6455584c5e306b532a75b6ec7c6c856e370e7fe31327437e6ccc9",
+      "launch_bos_only.py": "83739acf46de88441a4a1b73954c649fc0122f01edb20def7d3409440eb2cce4",
+      "test_bos_alignment.py": "181f7bd64a14859bce4e72a3ed8bc3a4310c03282a0b7228ebd4a3561fa8c942",
+      "test_endpoint.py": "e348aa3f0b32188648e19d870a77f76fda14f4011874eeb229c496cb7dc9bc76"
+    },
+    "author_config_sha256": "894dce29ddf67d09a03e0de8f8f08de16c04f7cc876ded104c4870a21dfb2746",
+    "native_root": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+    "training_queue": "/project/alex_phd/runs/rl-paper-reproduction-20261012/training-queue-bos-only-001.json",
+    "original_sft_revision": "b28fda3216f8178c1f37c3c764196e3ca2439a30",
+    "seed": 42,
+    "lr_iterations": 1000,
+    "lr_update_horizon": 16000,
+    "endpoint_collections": 690,
+    "endpoint_updates": 11040,
+    "first_collection_completed_utc": "2026-10-12T15:27:46Z",
+    "first_collection_optimizer_updates": 16,
+    "first_collection_responses": 512,
+    "first_collection_logged_nan_inf_loss_anomalies": 0,
+    "first_native_evaluation": "started, incomplete at cutoff",
+    "learning_gain": null,
+    "checkpoint_policy": "Native full state every10; fixed690 hook validates then evaluates with no extra update"
+  },
+  "validation": {
+    "published_copy_bos_tests": 4,
+    "published_copy_endpoint_tests": 3,
+    "published_copy_zero_norm_tests": 3,
+    "published_copy_rerun_utc": "2026-10-12T15:30:27Z",
+    "independent_bos_review": "no blocker",
+    "independent_endpoint_review": "no blocker",
+    "repository_regression_prior_in_same_turn": 352,
+    "pytest_in_spo_environment": "unavailable; no package installed; executed supplied unittest fixtures instead",
+    "snapshot_lint": "F-only lint flags the unused pathlib.Path import in frozen fixed_endpoint.py; no runtime defect. Published snapshot retained byte-identical to live sealed source. No claim of clean full lint.",
+    "limits": "CPU fixtures and startup do not establish full-shape long-run success"
+  },
+  "decision": "Continue fresh original SFT with documented BOS-only repair and finite-zero optimizer adapter; preserve failed artifacts, fixed schedule and endpoint. Do not continue collapsed weights or select by favorable test score.",
+  "limits": [
+    "Exact historical author source unknown",
+    "EOS remains omitted as in public source",
+    "New run vs old interrupted ancestry is not a clean one-variable causal ablation",
+    "An allocation/cap interruption is not a completed endpoint",
+    "Author released-model reference match is not our training gain"
+  ],
+  "automation": {
+    "observer": "/project/alex_phd/runs/rl-paper-reproduction-20261012/reviews/CONFIG.json",
+    "observer_pid": 2829006,
+    "exec_session": 11469,
+    "deadline": 1792068616,
+    "delivery_status": "started; first numbered delivery not yet acknowledged at this cutoff",
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12,
+    "codex_quota_remaining_percent": 91,
+    "quota_checked_utc": "2026-10-12T15:27:21Z"
+  }
+}

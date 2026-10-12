@@ -1,0 +1,48 @@
+{
+  "schema": "spo-late-regrade-interpretation-v1",
+  "receipt": "/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/RECEIPT.json",
+  "finding": "Actual sampled-answer correctness deteriorated broadly between scheduled iterations270 and490. All original identities, preprocessed gold answers, exact root prompts, saved tree/Arrow response bindings, and seven official metrics agree in all six cells.",
+  "answers_regraded": 66048,
+  "trees_checked": 4128,
+  "identity_or_metric_mismatches": 0,
+  "test": {
+    "correct_counts": [10662, 4684],
+    "responses_per_iteration": 21104,
+    "difference_percentage_points": -28.326383623957543,
+    "extraction_failures": [14, 18],
+    "length_terminations": [16, 19],
+    "questions_with_any_correct_response": [1025, 607],
+    "questions_with_correct_majority": [749, 333],
+    "question_count": 1319,
+    "questions_improved_worsened_unchanged": [143, 840, 336],
+    "formerly_16_of_16_correct_now_0_of_16": 96
+  },
+  "formatting_diagnostic": "The secondary Decimal-only normalization can rescue59 official test failures at270 and16 at490; the corresponding decline is28.53pp. It does not explain the primary28.33pp decline. Official metrics are unchanged.",
+  "output_behavior": "Mean test response length falls296.75 to272.20 characters. Mean unique response strings per question falls12.29 to10.44, but unique extracted answers rises4.605 to4.665. These counts do not establish entropy collapse or its cause.",
+  "runtime_startup_corroboration": {
+    "source_log_pattern": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__{iteration}/logs/vllm.log",
+    "lines": [2, 3],
+    "iteration270_model": "temp_ppo_checkpoints/ckpt--iter_0271--epoch_2.00--step_4336/hf_pretrained",
+    "iteration490_model": "temp_ppo_checkpoints/ckpt--iter_0491--epoch_2.00--step_7856/hf_pretrained",
+    "both_dtype": "bfloat16",
+    "both_seed": 42,
+    "scope": "Saved startup logs identify the expected actors; this is not a tensor-identity audit or full runtime-configuration equivalence proof. The two evaluations are within the same native run configuration."
+  },
+  "illustrative_examples": {
+    "selection": "EXAMPLES.json uses earliest original IDs among questions changing16/16 to0/16, not random sampling.",
+    "test10": "A60/180/126 downloads problem changes from correct total366 to216, despite the late response computing126 correctly before using an inconsistent final sum.",
+    "test18": "The late response invents60 eggs per dozen and returns140 rather than7 dozen for3 eggs/day over4 weeks.",
+    "test33": "The late response returns110-30=80 gold coins instead of solving the two-category total/difference problem for70.",
+    "train156": "The late response omits the first1/3 consumption and applies2/5 to the original135 stickers, returning81 rather than54.",
+    "gold_caution_train143": "The unchanged author gold41 appears to ignore the question's14-day duration. This preexisting label issue was preserved, not repaired. Do not use this example as a clean correctness witness. It cannot explain the observed identity-constant scoring changes by itself."
+  },
+  "causal_limits": [
+    "This rules out observed metric recomputation, question/gold swaps, tree/Arrow binding mistakes, and an increase in extraction or length failures as explanations of the large measured decline.",
+    "It does not identify the training cause, prove historical implementation equivalence, or exhaust every possible generation/runtime configuration seam.",
+    "The later terminal BF16 assertion all_groups_norm>0, following four high-ratio rejected microbatches, is a separately supported crash mechanism. It does not explain the earlier broad decline.",
+    "Neither outcome is attributed to GPU allocation expiry. The terminal owner receipt reports an early non-timeout failure.",
+    "No checkpoint was selected for efficacy. The train subset is not held-out evidence."
+  ],
+  "executed_command": "CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 /project/alex_phd/envs/spo-6c5f947/bin/python /project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/regrade.py",
+  "artifact_policy": "Additive analysis only. Native failed-run artifacts, source, environment, GPU owners and Git were not modified. The analysis script refuses to overwrite its existing output receipts."
+}

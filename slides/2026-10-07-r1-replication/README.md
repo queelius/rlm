@@ -1,10 +1,11 @@
-# Lessons from math RL for training RLMs
+# RL reproduction status and earlier learning lessons
 
-Read the [seven-slide PDF](research-update.pdf), the
+Read the [eight-slide PDF](research-update.pdf), the
 [speaker guide](speaker-guide.md), or the
 [self-contained overview](../../docs/r1-replication-2026-10-07/START-HERE.md).
 The [learning guide PDF](../../docs/r1-replication-2026-10-07/learning-guide.pdf)
-retains the detailed experiments and adds the RLM research discussion.
+opens with the current SPO status, then retains the detailed historical
+Dr. GRPO experiments and RLM research discussion.
 
 ## Open the speaker and audience views on your laptop
 
@@ -34,7 +35,7 @@ Install pdfpc once if it is missing: on Ubuntu/Debian,
 for other systems. The launch targets do not install software automatically.
 
 Use the arrow keys to change slides, `+`/`-` to adjust note size, and
-`Ctrl+Q` to quit. The eight-minute timer is only a guide; it does not advance
+`Ctrl+Q` to quit. The nine-minute timer is only a guide; it does not advance
 slides. These controls and launch options are documented in the
 [pdfpc manual](https://github.com/pdfpc/pdfpc/blob/master/man/pdfpc.in).
 The [speaker guide](speaker-guide.md) has longer explanations for preparation.
@@ -46,19 +47,29 @@ keep any personal edits before pulling later updates.
 
 ## Research summary
 
-The story is about preparing a model to learn: math RL starts with relevant
+Updated: **12 October 2026, 15:28 UTC**. The primary objective is an end-to-end
+SPO training reproduction on our A100; **it is incomplete**. Evaluating the
+authors' released weights recovered 56.69%, matching 56.7% to one decimal place.
+Our latest scheduled own-training test is 22.19% after 7,856 updates, and the
+prescribed final endpoint was not reached. The new GPU checks identify a
+training/generation start-marker mismatch with much larger likelihood effects
+in late than initial weights. A fresh BOS-consistent run has launched;
+this is not a learning gain or proof of the collapse's cause.
+
+The opening slide separates those findings. The remaining seven slides retain
+the historical teaching story: math RL starts with relevant
 prior competence, while RLM use may require unfamiliar combinations of skills.
-The small-scale reproduction occupies one slide. Human-learning analogies and
+The earlier Dr. GRPO small-scale reproduction occupies one slide. Human-learning analogies and
 two concrete examples explain reachable practice, teaching missing skills,
 exploring alternatives, and testing independence after removing help.
 
-We are in an exploratory phase. Curriculum, clearer prompts, demonstrations,
+The historical RLM agenda is exploratory. Curriculum, clearer prompts, demonstrations,
 more varied attempts, repair examples and better feedback are possibilities to
 investigate, not a settled recipe or a diagnosis already proved. The final slide
 offers small comparisons as examples of an open research agenda. Algorithm and
 paper details are in the speaker guide rather than on the audience slides.
 
-Updated: **7 October 2026, 20:56 UTC**. Training was stopped by choice after
+Historical Dr. GRPO cutoff: **7 October 2026, 20:56 UTC**. That training was stopped by choice after
 219 updates; checkpoints are retained and final evaluations were canceled.
 The fixed 64-question monitor
 scores 20, 42, 42, 43, 43, 48, 47 through update192. The latest check has one
@@ -100,5 +111,5 @@ For CPU rendering and text-bound checks with the existing presentation environme
 /project/alex_phd/envs/rlm-advisor-figures-20260911/bin/python verify_deck.py
 ```
 
-Inspect all seven PNGs in `rendered/` after rebuilding. This checker does not
+Inspect changed PNGs in `rendered/` after rebuilding. This checker does not
 establish scientific validity and does not replace visual inspection.

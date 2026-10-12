@@ -8,7 +8,7 @@
 \usepackage{hyperref}
 \definecolor{ink}{HTML}{18354B}
 \definecolor{accent}{HTML}{267D72}
-\hypersetup{pdftitle={Learning language-model RL from an official reproduction},
+\hypersetup{pdftitle={RL reproduction status and historical learning notebook},
   pdfauthor={RLM research notebook},colorlinks=true,urlcolor=accent,linkcolor=accent}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
@@ -28,10 +28,66 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Updated: 7 October 2026, 20:56 UTC.
+\newcommand{\EvidenceCutoff}{Historical Dr.\ GRPO cutoff: 7 October 2026, 20:56 UTC.
   Math training stopped by choice; checkpoints and all completed results retained.
   Latest progress check: 47/64 at update 192. Lessons for RLMs begin on page 11.}
 \begin{document}
+\pagenumbering{roman}
+\pagetitle{CURRENT STATUS \quad | \quad 12 OCTOBER 2026, 15:28 UTC}
+  {SPO reproduction is still incomplete}
+
+Our primary objective is to reproduce the published \textbf{Segment Policy
+Optimization (SPO)} RL result on our A100, starting from the authors' supervised
+model. Evaluating released trained weights is a useful check, but is not an
+end-to-end training reproduction. The Dr.\ GRPO notebook that follows is a
+\textbf{separate historical experiment}, with a different model and benchmark.
+
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}>{\raggedright\arraybackslash}p{0.31\linewidth}@{}}
+\toprule
+Evidence & Result & Meaning \\
+\midrule
+Released SPO weights & 56.69\%; paper: 56.7\% & Reference evaluator agrees \\
+Our latest scheduled test & 22.19\% at 7,856 updates & Own training remains incomplete \\
+Fixed endpoint & 11,040 updates, not reached & No completed reproduction \\
+\bottomrule
+\end{tabular}
+
+The test result is 4,684 correct of 21,104 sampled answers across all 1,319
+GSM8K test questions, with 16 answers per question. Independent regrading
+matched every late test, validation and training-subset answer. The run later
+exited with an optimizer gradient-norm assertion; its last logged step was
+7,995. It did not time out. The earlier accuracy decline and the terminal
+failure require separate explanations; allocation expiry is not an established
+cause of either.
+
+\topic{A concrete inconsistency, not a demonstrated recovery}
+
+Generation included a start-of-text marker (BOS), but saved training inputs
+omitted it despite the configuration requesting it. Actual GPU checks compare
+the \emph{same saved responses}, with and without that marker, under the
+original SFT model and the latest full checkpoint (7,840 updates).
+Across 16 fixed questions, the late model's probabilities change sharply;
+the original model's change is small. The first response from each of the
+first 16 distinct saved question IDs was retained without reward filtering.
+One question overlaps the earlier diagnostic. HF and vLLM agree closely when
+token IDs and temperature are matched.
+
+These are response-likelihood measurements, \textbf{not accuracy gains}.
+They motivate a fresh run restoring BOS consistency, now launched from the
+original SFT model. Startup is not a new learning result;
+they do not prove why accuracy collapsed or promise that the repair improves
+learning. Exact historical author-code fidelity remains unresolved.
+
+\topic{How to read the historical notebook}
+
+The following numbered pages preserve the 7 October Dr.\ GRPO results and RLM
+teaching hypotheses. Its small-scale improvements are not a claim that the
+full paper or SPO training result was reproduced. Current evidence and native
+receipts are linked from the
+\href{../../slides/2026-10-07-r1-replication/evidence.md}{advisor evidence record}.
+
+\newpage
+\pagenumbering{arabic}
 \pagetitle{REPRODUCTION NOTEBOOK \quad | \quad 7 OCTOBER 2026}
   {Learning language-model RL\\from an official reproduction}
 
@@ -39,8 +95,10 @@ We want to establish that our language-model reinforcement learning pipeline
 does what we think it does: generate answers, assign rewards, change weights,
 and evaluate those changed weights fairly. We start with the authors' code for
 \emph{Understanding R1-Zero-Like Training: A Critical Perspective} [1,2].
-We successfully reproduced RL-driven improvement at small scale using its method.
-The purpose is to learn how to teach RLMs, not to match the full published benchmark.
+These historical runs reproduced RL-driven improvement at small scale using
+its method, not the full published benchmark. Their purpose at the time was
+to learn how to teach RLMs; the current full-reproduction objective is stated
+on the preceding status page.
 
 \topic{Why do this before recursive language-model RL?}
 

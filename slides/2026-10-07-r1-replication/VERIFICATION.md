@@ -1,5 +1,41 @@
 # Presentation verification
 
+## Current SPO status, 12 October 2026, 15:28 UTC
+
+- Added one opening status slide, retaining the seven historical Dr. GRPO/RLM
+  lessons. Released SPO weights at 56.69% are explicitly an evaluation check;
+  own training's latest test is 22.19% after 7,856 updates and the reproduction
+  is incomplete. The fresh BOS-consistent run is labeled launched, with no new
+  learning result. The 7,840-step diagnostic checkpoint is distinguished from
+  the 7,856-update scheduled evaluation in the evidence and speaker guide.
+- Independently recomputed all 16 paired BOS effects from the two native HF
+  result files, checked exact token-sequence identities, and matched the saved
+  comparison. The visible slide discusses conditional probabilities, not
+  accuracy gains or proven collapse causation. Exact values and native paths
+  are retained in `current-status-evidence.json`.
+- Synchronized visible text, scalar cutoff, portable pdfpc notes, speaker
+  guide, README, evidence and the learning-guide front page. The guide has
+  16 physical pages: new current-status page i and preserved historical pages
+  1–15, so existing historical page references remain valid.
+- Rebuilt both PDFs with Tectonic 0.17.0 using `--keep-logs --outdir
+  /project/alex_phd/runs/rl-paper-reproduction-20261012/advisor-verify-fXCXcD`.
+  Both final builds exit 0 with no TeX warnings or overfull/underfull boxes.
+  Initial table-justification warnings were removed with ragged-right cells.
+- `make notes notes-check` and `verify_deck.py` pass: eight matching slide
+  titles, all slide text inside page bounds, and notes of 11, 11, 12, 12, 12,
+  13, 12 and 12 wrapped lines. Read back the notes. A separate literal-phrase
+  assertion initially missed pdfpc's intentional newline in “has launched”;
+  the corrected whitespace-normalized check and the full verification pass.
+- Checked text bounds on all 16 guide pages; visually inspected the new
+  current-status slide, changed historical-context/chart slides, and the new
+  guide frontmatter and historical opening page. No visible clipping or overlap.
+  No pdfpc GUI is installed here, so live presenter-window behavior was not
+  tested; notes were checked structurally and read in their wrapped form.
+- `git diff --check` passes. The pre-existing untracked `learning-guide.log`
+  was fingerprinted before/after and is unchanged; build logs remain in the
+  external verification directory. No root SPO source/docs, unrelated dirty
+  files, GPU ownership, commits or pushes were changed by this update.
+
 ## Big picture and exploratory research agenda
 
 - Rebuilt the deck as seven slides about prior competence, unfamiliar RLM

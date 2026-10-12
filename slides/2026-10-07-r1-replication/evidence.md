@@ -1,5 +1,61 @@
 # Evidence and result update
 
+## Current SPO status: 12 October 2026, 15:28 UTC
+
+The first of eight visible slides reports the current **incomplete** SPO
+reproduction. Slides 2–8 retain the historical Dr. GRPO/RLM lessons; they are
+not evidence that the SPO training target has been recovered.
+
+- Released author weights: **56.68593631539045%**, matching the published
+  **56.7%** to one decimal place. The [checked reference receipt](../../docs/spo-reproduction-2026-10-08/evidence/author-reference-validation.json)
+  validates all 1,319 question identities and 21,104 answers; this is an
+  evaluation check, not our training reproduction.
+- Latest own-training scheduled evaluation: **4,684 / 21,104 = 22.194844579226686%**
+  after **7,856 optimizer updates**. Validation is 1,324/5,968 (22.18499%);
+  the training subset is 1,596/5,952 (26.81452%). The independent
+  [all-split late regrade](/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/RECEIPT.json)
+  checked exact question/response identities, all trees and all seven native
+  metrics for iterations 270 and 490: 66,048 answers, no mismatches. Do not
+  replace this latest result with the earlier 50.52% test checkpoint.
+- The [terminal receipt](/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/result.json)
+  records exit 1, not a timeout, on 10 October at 00:49 UTC. The last logged
+  optimizer count is 7,995, below the fixed 11,040 endpoint; there is no final
+  marker. A gradient-norm assertion after rejected PPO microbatches is the
+  supported immediate failure mechanism, not proof of the accuracy collapse's
+  cause or an allocation-related explanation.
+- The [late exact-ID HF/vLLM check](/project/alex_phd/runs/rl-paper-reproduction-20261012/bos-probe/COMPARISON.json)
+  and [same-response original-SFT check](/project/alex_phd/runs/rl-paper-reproduction-20261012/bos-probe-sft/COMPARISON.json)
+  distinguish a BOS context difference from backend disagreement. The
+  [broader paired HF check](/project/alex_phd/runs/rl-paper-reproduction-20261012/bos-breadth-probe/COMPARISON.json)
+  uses the first response from each of the first 16 distinct saved question IDs,
+  without reward filtering: 1,510 response tokens, 32 sequences per model,
+  one question overlapping the earlier diagnostic. Adding BOS increases late
+  raw-temperature response log likelihood on all 16 examples by 14.04–128.44
+  nats (mean 53.98). For exactly the same answers under original SFT weights,
+  the mean change is −0.104 nats. These are **conditional likelihoods, not
+  accuracy gains**; the sample is drawn from the late policy. Exact values,
+  temperatures, offsets, model bindings and all examples remain in the native
+  inputs/results; the [portable status receipt](current-status-evidence.json)
+  retains the compact summary.
+
+Generation included BOS while saved training inputs omitted it despite the
+configuration requesting it. The measured divergence is a concrete reason
+to test a fresh BOS-consistent run; it does not prove that this mismatch caused
+the decline, guarantee recovery, or establish exact historical author-code
+fidelity. At this cutoff that fresh run **has launched** from original SFT,
+under a 68-hour owner cap and the fixed 690-iteration / 11,040-update endpoint;
+the first 64-question / 512-response generation completed at 15:23:41 UTC,
+but this is startup, not a new learning result. The owning session inspected
+an actual response with leading BOS1, including a legitimately wrong answer;
+it was not a transport placeholder. See its
+[admission receipt](/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/START.json)
+and [sealed queue](/project/alex_phd/runs/rl-paper-reproduction-20261012/training-queue-bos-only-001.json).
+The last scheduled test and the saved full checkpoint used for
+the likelihood probe are different: **7,856 evaluation updates versus 7,840
+checkpoint updates**.
+
+## Historical Dr. GRPO/RLM record (7 October)
+
 Updated: 7 October 2026, 20:56 UTC. The user stopped the fourth longer attempt
 after 219 completed updates to focus on lessons for RLM training. Model and
 optimizer states through update 216 are preserved. Final evaluations and the
@@ -7,7 +63,7 @@ observer are stopped; no natural-end result is claimed. See the
 [stop receipt](../../docs/r1-replication-2026-10-07/user-stop-2056.json).
 The latest benchmark observation remains 47/64 at update 192, checked at 20:22.
 
-## Current lesson-centered slide map
+## Historical seven-slide lesson-centered map (now slides 2–8)
 
 1. Motivation: make successful attempts reachable before expecting reward to help.
 2. Math has a head start: prior mathematical competence, exploration and checked

@@ -1,0 +1,201 @@
+{
+  "admission": "ROOT_DECISION_REQUIRED_NOT_LAUNCHED",
+  "files_sha256": {
+    "bf16_zero_norm.py": "4a42ebf33db7540cb404562da30b2919134d405ff2dd5ca2842c6a0f403d7b84",
+    "bos_only_adapter.py": "50aab2453dc32ce1c4a571d1cbfd8f6986777ede76affbfa91c8df6544e8e809",
+    "fixed_endpoint.py": "e0c289ea8388477d5b88479010ef95e20b18ced84e0af9ab1eba8118bc902da3",
+    "fresh_bos_only.jsonnet": "940a86ece6e6455584c5e306b532a75b6ec7c6c856e370e7fe31327437e6ccc9",
+    "launch_bos_only.py": "83739acf46de88441a4a1b73954c649fc0122f01edb20def7d3409440eb2cce4",
+    "test_bos_alignment.py": "181f7bd64a14859bce4e72a3ed8bc3a4310c03282a0b7228ebd4a3561fa8c942",
+    "test_endpoint.py": "e348aa3f0b32188648e19d870a77f76fda14f4011874eeb229c496cb7dc9bc76"
+  },
+  "author_config_sha256": "894dce29ddf67d09a03e0de8f8f08de16c04f7cc876ded104c4870a21dfb2746",
+  "config_differences": {
+    "analyzers[3].alternative_continuation_inference_strategy.guidance_llm.model": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "inference_pipelines[0].inference_strategy.guidance_llm.tokenizer_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "episode_generator.task.dataset_dict_path": {
+      "author": "data/gsm8k",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k"
+    },
+    "episode_generator.vllm_gpu_memory_utilization": {
+      "author": "auto",
+      "fresh": 0.3
+    },
+    "exp_name": {
+      "author": "polIter_rho1bSft2_vineppo_GSM8K_my_episode_generator",
+      "fresh": "native"
+    },
+    "episode_generator.inference_strategy.node_expander.tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "analyzers[0].task.dataset_dict_path": {
+      "author": "data/gsm8k",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k"
+    },
+    "global_vars.dirs.data": {
+      "author": "data",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002"
+    },
+    "analyzers[3].task.dataset_dict_path": {
+      "author": "data/gsm8k",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k"
+    },
+    "inference_pipelines[0].inference_strategy.guidance_llm.model": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "episode_generator.initial_model_name_or_path": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "analyzers[0].reward_function.math_task.dataset_dict_path": {
+      "author": "data/gsm8k",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k"
+    },
+    "analyzers[3].inference_strategy.guidance_llm.model": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "analyzers[0].inference_strategy.guidance_llm.model": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "inference_pipelines[1].inference_strategy.node_expander.tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "inference_pipelines[2].inference_strategy.node_expander.tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "episode_generator.value_estimation_inference_strategy.node_expander.tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "inference_pipelines[2].inference_strategy.guidance_llm.model": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "analyzers[3].inference_strategy.node_expander.tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "directory": {
+      "author": "/home/guoyiran/data/interval5",
+      "fresh": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1"
+    },
+    "trainer.actor_model.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "early_stop_iteration": {
+      "author": null,
+      "fresh": 690
+    },
+    "inference_pipelines[2].task.dataset_dict_path": {
+      "author": "data/gsm8k",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k"
+    },
+    "episode_generator.value_estimation_inference_strategy.guidance_llm.model": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "episode_generator.reward_function.math_task.dataset_dict_path": {
+      "author": "data/gsm8k",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k"
+    },
+    "inference_pipelines[1].task.dataset_dict_path": {
+      "author": "data/gsm8k",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k"
+    },
+    "analyzers[3].reward_function.math_task.dataset_dict_path": {
+      "author": "data/gsm8k",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k"
+    },
+    "inference_pipelines[0].task.dataset_dict_path": {
+      "author": "data/gsm8k",
+      "fresh": "/project/alex_phd/research-cache/spo/assets/gsm8k-author-20241002/gsm8k"
+    },
+    "inference_pipelines[2].inference_strategy.guidance_llm.tokenizer_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "inference_pipelines[1].inference_strategy.guidance_llm.model": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "analyzers[3].alternative_continuation_inference_strategy.node_expander.tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "episode_generator.inference_strategy.guidance_llm.model": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "trainer.reference_model.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "global_vars.dirs.experiments": {
+      "author": "experiments",
+      "fresh": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1"
+    },
+    "analyzers[0].tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "inference_pipelines[0].inference_strategy.node_expander.tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "inference_pipelines[1].inference_strategy.guidance_llm.tokenizer_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "analyzers[0].inference_strategy.node_expander.tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    },
+    "analyzers[3].tokenizer.hf_model_name": {
+      "author": "realtreetune/rho-1b-sft-GSM8K",
+      "fresh": "/project/alex_phd/research-cache/spo/models/models--realtreetune--rho-1b-sft-GSM8K/snapshots/b28fda3216f8178c1f37c3c764196e3ca2439a30"
+    }
+  },
+  "suggested_output": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+  "suggested_output_exists": false,
+  "source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+  "updates_per_collection": 16,
+  "lr_horizon_updates": 16000,
+  "warmup_updates": 480,
+  "fixed_endpoint_updates": 11040,
+  "seed": 42,
+  "checkpoint_policy": {
+    "save_every_collections": 10,
+    "keep_every_collections": 40,
+    "APP_MINIMIZE_STORED_FILES": "False"
+  },
+  "verification": {
+    "native_BOS_red": "native-red-002.json",
+    "BOS_green": "adapter-green.json",
+    "native_endpoint_red": "endpoint-native-red.json",
+    "endpoint_green": "endpoint-adapter-green-002.json",
+    "full_private_suite": "python -m unittest discover -v: 7 tests passed"
+  },
+  "limits": [
+    "EOS remains absent; its historical flag remains true and ignored.",
+    "Historical author execution predates public source; adapter is not proof of exact historical implementation.",
+    "Model numerical BOS diagnostics and zero-norm optimizer behavior are root-owned separate GPU evidence.",
+    "Endpoint verification reads model metadata via mmap and checks optimizer presence, not every final tensor."
+  ]
+}

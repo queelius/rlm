@@ -1,10 +1,13 @@
-# Preparing language models to learn from practice
+# RL reproduction status and earlier learning lessons
 
-Seven slides, about eight minutes. The central question is how to make RLM
-learning possible, not which RL algorithm wins. We have a promising direction
-for exploration, not a settled curriculum or a single explanation of our results.
+Eight slides, about nine minutes. Current evidence cutoff: **12 October 2026,
+15:28 UTC**. The primary objective is an end-to-end reproduction of the published
+SPO training result on our A100. That objective has **not** been achieved.
+Slide 1 gives the current status; slides 2–8 preserve the historical 7 October
+Dr. GRPO experiment and its RLM teaching discussion. These are separate methods,
+models and benchmarks, not one combined learning curve.
 
-Our small math reproduction supplies one example of learning working. A model
+Our earlier small math reproduction supplies one example of learning working. A model
 with mathematical preparation can generate useful attempts, receive checked
 feedback, and improve. Our RLM experience raises a harder teaching question:
 how do we help a model combine skills in an unfamiliar environment?
@@ -14,7 +17,50 @@ and audience views, or `make rehearse` for private preparation. The short pdfpc
 notes are cues; the material below is optional background, not a script to read
 in full. See the [local setup instructions](README.md).
 
-## 1. Before rewarding success, make success reachable
+## 1. SPO reproduction: not yet an end-to-end success
+
+Say: “We can recover the published score when we evaluate the authors' released
+weights. We have not recovered it by training the model ourselves. Our latest
+scheduled test fell to 22.19%, and the run stopped before the fixed endpoint.”
+
+The released SPO model scored **56.69%**, matching the paper's **56.7%** to one
+decimal place. Our own model scored **22.19% after 7,856 optimizer updates** on
+the latest scheduled GSM8K test: 4,684 correct out of 21,104 sampled answers
+(1,319 questions, 16 answers each). This is mean sampled-answer correctness,
+not greedy accuracy or the chance that at least one answer succeeds.
+Independent regrading matched all late test, validation and training-subset
+answers. Earlier higher checkpoints are not substituted for the latest result.
+
+The run's last logged optimizer step was 7,995, short of the prescribed 11,040.
+Its immediate failure was an optimizer gradient-norm assertion after rejected
+microbatches, not an owner timeout. That terminal failure is distinct from the
+earlier accuracy decline; do not attribute either to allocation expiry.
+
+The new GPU diagnosis found a training/generation inconsistency: generation
+includes a beginning-of-sequence marker (BOS), while saved training inputs omit
+it despite the configuration requesting it. For the **same saved answers**,
+adding that marker barely changes the original SFT model's probability scores
+but changes the late model's scores substantially across 16 fixed questions.
+HF and vLLM closely agree when the same token IDs and temperature are used.
+This supports investigating the mismatch; it does not establish why accuracy
+collapsed or demonstrate that correcting it improves learning.
+
+The 16-question sample uses the first saved response from each of the first
+16 distinct question IDs, without reward filtering. One question overlaps the
+earlier diagnostic. They are late-policy responses, not newly generated SFT
+answers. Exact numbers and input provenance are in [the evidence](evidence.md)
+and [portable status receipt](current-status-evidence.json).
+
+At this cutoff, a fresh run from the original SFT model restoring BOS
+consistency has launched. Its first 64-question / 512-response generation
+completed; startup is not a new learning result.
+No learning gain is measured, and the exact historical author code remains
+unresolved. Do not call this a successful reproduction or promise recovery.
+
+Transition: “The following slides preserve what the earlier, smaller Dr. GRPO
+exercise taught us. Those lessons remain useful, but are not the SPO result.”
+
+## 2. Before rewarding success, make success reachable
 
 Say: “We want a model to decide when to use code, when to ask a helper, and how
 to combine the results. We tried RL on math partly to understand what makes
@@ -34,7 +80,7 @@ math/RLM comparison does not isolate a single cause.
 
 Transition: “Math gives us a useful example of a learner with a head start.”
 
-## 2. Math RL builds on a strong head start
+## 3. Math RL builds on a strong head start
 
 Say: “This model did not begin by discovering mathematics from scratch. It had
 already learned from substantial mathematical material. We asked it to attempt
@@ -63,7 +109,7 @@ gain depends strongly on where the model starts. Details are below if asked.
 
 Transition: “An RLM may have useful knowledge but face a new way of using it.”
 
-## 3. An RLM must combine skills in a new setting
+## 4. An RLM must combine skills in a new setting
 
 Tell the example slowly: “One document tells us Mira works at Aster Lab.
 Another tells us Aster Lab is in Oxford. The second helper needs the name
@@ -90,7 +136,7 @@ old RL experiments unsuccessful.
 
 Transition: “If the whole task is out of reach, what kind of practice helps?”
 
-## 4. Useful practice is challenging, but within reach
+## 5. Useful practice is challenging, but within reach
 
 Say: “A child without algebra is unlikely to learn calculus just by receiving
 a series of wrong marks. A worked example and a simpler exercise give them
@@ -113,7 +159,7 @@ A task might be reachable already but poorly rewarded; that needs a different fi
 
 Transition: “One possible bridge is from examples to independent practice.”
 
-## 5. Teach, practise, remove help, then test transfer
+## 6. Teach, practise, remove help, then test transfer
 
 Say: “First find what the model can do. Show a missing step if needed. Let it
 practise choices. Then remove the help and ask whether it can do something new.”
@@ -134,7 +180,7 @@ curriculum. Check retention of earlier skills as well as the new skill.
 
 Transition: “Not every failure means the learner needs the same help.”
 
-## 6. Different failures need different interventions
+## 7. Different failures need different interventions
 
 Walk through the three cases rather than listing every possible method.
 
@@ -159,7 +205,7 @@ because they look like effort.
 
 Transition: “These explanations suggest a portfolio, not one final recipe.”
 
-## 7. An open agenda of small experiments
+## 8. An open agenda of small experiments
 
 Say: “We are in an exploratory phase. These are examples of questions we can
 test cheaply. Each result should sharpen, expand or retire an idea.”
@@ -183,9 +229,9 @@ Use small panels to learn quickly, retain failures, and repeat promising
 effects. Keep helpers and overall budgets comparable. Retain a direct-answer
 baseline: a useful RLM should learn when delegation helps, not merely do it more.
 
-Close: “The math exercise showed a learning loop we can use. The research now
-is to discover which preparation, practice and feedback help RLMs learn useful
-combinations of skills. We have several promising ideas to explore.”
+Close: “The earlier math exercise suggested several RLM teaching experiments.
+Our immediate priority is now the full SPO training reproduction. The new
+start-marker diagnosis gives us a concrete test, not a successful result yet.”
 
 ## Optional details if someone asks
 
@@ -201,7 +247,7 @@ These details support questions; they need not enter the main presentation.
 - **Stop:** the user stopped training after 219 updates. Model and optimizer
   checkpoints through 216 remain. The chart's last point is a measurement at
   192, not a score for the last saved weights. Final evaluations were canceled.
-  The scientific cutoff remains 7 October 2026, 20:56 UTC.
+  This historical Dr. GRPO result retains its 7 October 2026, 20:56 UTC cutoff.
 - **Prompt comparison:** all values below count accepted answers out of the
   same 500 questions. Each row uses the same weights in both input formats.
   The trained row is the earlier short run, not the stopped longer run.

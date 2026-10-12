@@ -1,0 +1,155 @@
+{
+  "schema": "advisor-spo-current-status-20261012-v1",
+  "cutoff_utc": "2026-10-12T15:28:00Z",
+  "claim": "Own-training reproduction incomplete; BOS consistency is a diagnosis to test, not a demonstrated learning gain.",
+  "released_author_weights": {
+    "accuracy": 0.5668593631539045,
+    "paper_percent": 56.7,
+    "source": "../../docs/spo-reproduction-2026-10-08/evidence/author-reference-validation.json"
+  },
+  "own_training": {
+    "latest_scheduled_eval_updates": 7856,
+    "test_correct": 4684,
+    "test_answers": 21104,
+    "test_questions": 1319,
+    "answers_per_question": 16,
+    "test_accuracy": 0.22194844579226686,
+    "last_logged_optimizer_step": 7995,
+    "fixed_endpoint_updates": 11040,
+    "fixed_endpoint_reached": false,
+    "last_full_checkpoint_step": 7840,
+    "terminal_exit_code": 1,
+    "terminal_timed_out": false,
+    "late_regrade": "/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/RECEIPT.json",
+    "terminal_receipt": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/result.json"
+  },
+  "bos_breadth": {
+    "source": "/project/alex_phd/runs/rl-paper-reproduction-20261012/bos-breadth-probe/COMPARISON.json",
+    "inputs": "/project/alex_phd/runs/rl-paper-reproduction-20261012/bos-breadth-probe/INPUTS.json",
+    "hf_sft": "/project/alex_phd/runs/rl-paper-reproduction-20261012/bos-breadth-probe/hf-sft.json",
+    "hf_late": "/project/alex_phd/runs/rl-paper-reproduction-20261012/bos-breadth-probe/hf-late.json",
+    "selection": "First16 distinct saved question_idx, first response each, no reward filtering; one question overlaps earlier diagnostic.",
+    "response_tokens": 1510,
+    "response_token_positions_per_stage": 3020,
+    "paired_sequence_hashes_match": true,
+    "independent_raw_result_aggregation_matches_saved_comparison": true,
+    "summary": {
+      "sft": {
+        "raw_logps": {
+          "questions": 16,
+          "positive": 6,
+          "negative": 10,
+          "min_nats": -1.2255077163276837,
+          "max_nats": 1.2667858542386057,
+          "mean_nats": -0.10386713247153567,
+          "per_question_nats": [
+            -1.2255077163276837,
+            1.0551444738230202,
+            -0.14760167116583034,
+            -0.4128541312311427,
+            0.14912853003124837,
+            0.04106569542091165,
+            -0.5223306211489671,
+            1.2667858542386057,
+            -0.3583046466301312,
+            0.3731540277312888,
+            0.14347956824190078,
+            -0.4230203436791271,
+            -0.38680824169865247,
+            -0.5176384543924542,
+            -0.18417364740889752,
+            -0.51239279534866
+          ]
+        },
+        "ppo_scaled_logps": {
+          "questions": 16,
+          "positive": 6,
+          "negative": 10,
+          "min_nats": -2.0173385157791586,
+          "max_nats": 2.5355313441930534,
+          "mean_nats": -0.06395246151060663,
+          "per_question_nats": [
+            -2.0173385157791586,
+            1.934003539807236,
+            -0.42638383546868397,
+            -0.9011465051767118,
+            0.27095263619660415,
+            0.18430246083288182,
+            -0.5698228101305816,
+            2.5355313441930534,
+            -0.43452853598275,
+            0.8421447328446092,
+            0.1530673449145965,
+            -0.31013747508442435,
+            -0.6747898517448334,
+            -0.5750466540767363,
+            -0.35065137731771756,
+            -0.6833958821970896
+          ]
+        }
+      },
+      "late": {
+        "raw_logps": {
+          "questions": 16,
+          "positive": 16,
+          "negative": 0,
+          "min_nats": 14.040983976189182,
+          "max_nats": 128.4437759707571,
+          "mean_nats": 53.98129218402385,
+          "per_question_nats": [
+            93.14901805389925,
+            128.4437759707571,
+            45.49195939703663,
+            33.469570853914774,
+            47.00476502821225,
+            96.6788163762921,
+            22.906629550432683,
+            72.76110606699413,
+            17.59310291214618,
+            48.91369614917505,
+            36.06437644760738,
+            28.119563566724423,
+            51.32462608930729,
+            98.45157962880558,
+            14.040983976189182,
+            29.287104876887653
+          ]
+        },
+        "ppo_scaled_logps": {
+          "questions": 16,
+          "positive": 16,
+          "negative": 0,
+          "min_nats": 17.32926988275011,
+          "max_nats": 212.13701108408304,
+          "mean_nats": 84.84771907857714,
+          "per_question_nats": [
+            146.4027064593739,
+            212.13701108408304,
+            67.39564103627521,
+            47.20174816649476,
+            75.16619198194428,
+            157.71888043718954,
+            35.99601315875834,
+            113.90719846395098,
+            28.84051444277769,
+            75.26318643154829,
+            56.0802758032263,
+            41.160594262446544,
+            77.51421137434227,
+            159.8315568885796,
+            17.32926988275011,
+            45.61850538349338
+          ]
+        }
+      }
+    },
+    "limitations": "Fixed late-policy responses; likelihoods are not task accuracy, recovery evidence, or proof of collapse cause."
+  },
+  "next_run_status_at_cutoff": "Fresh BOS-consistent run launched from original SFT; startup is not a new learning result; exact historical author-code fidelity remains unresolved.",
+  "next_run_admission": "/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/START.json",
+  "next_run_queue": "/project/alex_phd/runs/rl-paper-reproduction-20261012/training-queue-bos-only-001.json",
+  "next_run_fixed_updates": 11040,
+  "next_run_owner_cap_hours": 68,
+  "next_run_started_utc": "2026-10-12T15:22:49Z",
+  "next_run_startup_generation": {"completed_utc": "2026-10-12T15:23:41Z", "questions": 64, "responses": 512, "verification": "Owning session inspected actual response with leading BOS1; this is startup evidence, not a new learning score."}
+}

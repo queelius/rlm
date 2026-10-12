@@ -1,0 +1,354 @@
+{
+  "schema": "spo-bos-startup-audit-v1",
+  "created_utc": "2026-10-12T15:32:51.587849+00:00",
+  "native": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+  "owner": {
+    "queue_pid": 2826646,
+    "scoped_pid": 2826649,
+    "trainer_pid": 2826650,
+    "exec_session": 55165
+  },
+  "collection": 0,
+  "sample_scope": "All512 original-SFT trajectories in first64x8 training collection; no evaluation claims.",
+  "dataset_counts": {
+    "merged_trajectories": 512,
+    "trajectory_inference": 64,
+    "actor_episodes": 512,
+    "episodes": 512,
+    "MC_expanded": 1620,
+    "MC_unique": 1080
+  },
+  "processed_trajectories": 512,
+  "reward_categories": {
+    "training_BOS_present": 512,
+    "incorrect": 238,
+    "leaf": 512,
+    "correct": 273,
+    "length_penalty": 1
+  },
+  "effective_reward_counts": {
+    "0.0": 238,
+    "1.0": 273,
+    "-1.0": 1
+  },
+  "mean_effective_training_reward": 0.53125,
+  "question_groups": 64,
+  "group_counts": {
+    "mixed_correct_incorrect": 45,
+    "mixed_effective_reward_groups": 45,
+    "all_correct": 14,
+    "none_correct": 5
+  },
+  "correct_responses_per_eight_histogram": {
+    "0": 5,
+    "1": 10,
+    "2": 7,
+    "3": 6,
+    "4": 7,
+    "5": 5,
+    "6": 4,
+    "7": 6,
+    "8": 14
+  },
+  "token_alignment": {
+    "all512_query_IDs_match_actual_vllm": true,
+    "trajectory_request_count": 64,
+    "MC_request_unique_prompts": 1080,
+    "MC_request_tokenization_issues": 0,
+    "response_tokens": 50165,
+    "response_length_mean": 97.978515625,
+    "response_length_max": 1024,
+    "response_low_probability_tokens": 7092,
+    "all_actor_and_reference_logprobs_finite": true,
+    "actor_reference_max_absolute_difference": 0,
+    "MC_probability_vs_PPO_old_probability_max_absolute_difference": 0,
+    "response_token_logprob_min": -4.052838325500488,
+    "response_token_logprob_max": 0,
+    "nonzero_advantage_tokens": 3660
+  },
+  "MC": {
+    "states": 1620,
+    "continuations_in_expanded_results": 14580,
+    "nine_continuation_states": 1620,
+    "mixed_reward_states": 759,
+    "cutpoints_total": 1620,
+    "cutpoints_mean": 3.1640625,
+    "cutpoints_max": 18,
+    "effective_reward_counts_expanded": {
+      "0.0": 8990,
+      "1.0": 5516,
+      "-1.0": 74
+    },
+    "saved_value_max_absolute_regrade_difference": 0,
+    "saved_std_max_absolute_regrade_difference": 0,
+    "note": "Expanded MC records include deduplicated requests rebound to multiple trajectories; not all continuations are independent generation calls."
+  },
+  "first_optimizer_updates": {
+    "recorded_steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "per_step": {
+      "1": {
+        "actor/ds_step": 1,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00101,
+        "actor/clip_frac": 0.00146,
+        "actor/grad_norm": 7.07,
+        "actor/lr": 0,
+        "actor/loss": 0.00000826,
+        "actor/ref_kl_loss": 0.00000126,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "2": {
+        "actor/ds_step": 2,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00194,
+        "actor/clip_frac": 0.00622,
+        "actor/grad_norm": 29.1,
+        "actor/lr": 1.12e-7,
+        "actor/loss": 0.00133,
+        "actor/ref_kl_loss": 0.00000244,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "3": {
+        "actor/ds_step": 3,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00195,
+        "actor/clip_frac": 0.0112,
+        "actor/grad_norm": 29.4,
+        "actor/lr": 1.78e-7,
+        "actor/loss": 0.000228,
+        "actor/ref_kl_loss": 0.00000252,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "4": {
+        "actor/ds_step": 4,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00161,
+        "actor/clip_frac": 0.00494,
+        "actor/grad_norm": 22.8,
+        "actor/lr": 2.25e-7,
+        "actor/loss": 0.000805,
+        "actor/ref_kl_loss": 0.00000254,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "5": {
+        "actor/ds_step": 5,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00164,
+        "actor/clip_frac": 0.00408,
+        "actor/grad_norm": 22.2,
+        "actor/lr": 2.61e-7,
+        "actor/loss": 0.0000663,
+        "actor/ref_kl_loss": 0.00000255,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "6": {
+        "actor/ds_step": 6,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.0018,
+        "actor/clip_frac": 0.00555,
+        "actor/grad_norm": 21.6,
+        "actor/lr": 2.9e-7,
+        "actor/loss": -0.00542,
+        "actor/ref_kl_loss": 0.00000271,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "7": {
+        "actor/ds_step": 7,
+        "actor/ratio": 0.999,
+        "actor/approx_kl": 0.00145,
+        "actor/clip_frac": 0.00295,
+        "actor/grad_norm": 23.3,
+        "actor/lr": 3.15e-7,
+        "actor/loss": -0.00115,
+        "actor/ref_kl_loss": 0.00000207,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "8": {
+        "actor/ds_step": 8,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00197,
+        "actor/clip_frac": 0.00717,
+        "actor/grad_norm": 22.7,
+        "actor/lr": 3.37e-7,
+        "actor/loss": -0.00424,
+        "actor/ref_kl_loss": 0.00000254,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "9": {
+        "actor/ds_step": 9,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00194,
+        "actor/clip_frac": 0.00886,
+        "actor/grad_norm": 23.2,
+        "actor/lr": 3.56e-7,
+        "actor/loss": -0.0032,
+        "actor/ref_kl_loss": 0.00000228,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "10": {
+        "actor/ds_step": 10,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00194,
+        "actor/clip_frac": 0.0109,
+        "actor/grad_norm": 24.6,
+        "actor/lr": 3.73e-7,
+        "actor/loss": -0.0109,
+        "actor/ref_kl_loss": 0.00000275,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "11": {
+        "actor/ds_step": 11,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00192,
+        "actor/clip_frac": 0.0119,
+        "actor/grad_norm": 22,
+        "actor/lr": 3.88e-7,
+        "actor/loss": -0.00607,
+        "actor/ref_kl_loss": 0.00000301,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "12": {
+        "actor/ds_step": 12,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00204,
+        "actor/clip_frac": 0.0163,
+        "actor/grad_norm": 21.1,
+        "actor/lr": 4.02e-7,
+        "actor/loss": -0.0137,
+        "actor/ref_kl_loss": 0.00000354,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "13": {
+        "actor/ds_step": 13,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.0024,
+        "actor/clip_frac": 0.0126,
+        "actor/grad_norm": 20.9,
+        "actor/lr": 4.15e-7,
+        "actor/loss": -0.00738,
+        "actor/ref_kl_loss": 0.00000323,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "14": {
+        "actor/ds_step": 14,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00201,
+        "actor/clip_frac": 0.00855,
+        "actor/grad_norm": 22.2,
+        "actor/lr": 4.27e-7,
+        "actor/loss": -0.0024,
+        "actor/ref_kl_loss": 0.00000265,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "15": {
+        "actor/ds_step": 15,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00226,
+        "actor/clip_frac": 0.0166,
+        "actor/grad_norm": 19.5,
+        "actor/lr": 4.39e-7,
+        "actor/loss": -0.0151,
+        "actor/ref_kl_loss": 0.00000302,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      },
+      "16": {
+        "actor/ds_step": 16,
+        "actor/ratio": 1,
+        "actor/approx_kl": 0.00277,
+        "actor/clip_frac": 0.0274,
+        "actor/grad_norm": 22.3,
+        "actor/lr": 4.49e-7,
+        "actor/loss": -0.0146,
+        "actor/ref_kl_loss": 0.00000382,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0
+      }
+    },
+    "high_ratio_warnings_in_log_snapshot": 0,
+    "tracebacks_in_log_snapshot": 0,
+    "nonfinite_loss_strings": 0,
+    "finished_collection0_logged": true,
+    "evaluation0_started": true
+  },
+  "full_checkpoints_present_at_cutoff": [],
+  "issues": [],
+  "issue_count": 0,
+  "artifact_hashes": {
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0000/infer_results/process_00/trajectories.pkl": {
+      "bytes": 3845806,
+      "sha256": "192cd9b2701298b2f3e882a3ebf78ed6f9d4259322cbf5bad959ab13ba08f5da"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0000/infer_results/process_00/vllm_server.log": {
+      "bytes": 2525172,
+      "sha256": "a550001b7bd5ad64d3a8baf1aaf96f40dd940a752ab87741a088d09342e89614"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0000/infer_results/merged_trajectories/data-00000-of-00001.arrow": {
+      "bytes": 3912584,
+      "sha256": "7d3af130616ace73fd5c03f1c0e4a5f1c30d963ee706e7b31fe05e085ce0561e"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0000/infer_results/process_00/traj_results_ds/data-00000-of-00001.arrow": {
+      "bytes": 886416,
+      "sha256": "367f61dcee4b459af25a5acb31e5eef851171a1ae01968dfb01e20cb78a7b210"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/episodes__iter0000/w_actLogp/data-00000-of-00001.arrow": {
+      "bytes": 3727344,
+      "sha256": "ceee13fe42a61e27670cb604d7c45bee3b4b7e7ae0245e6e4cfbdef97f487822"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/episodes/episodes_0000/data-00000-of-00001.arrow": {
+      "bytes": 2243248,
+      "sha256": "1299db827645bf9b6ab8016962039576298177834c12a97dce9b94bff7c73be5"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0000/infer_results/process_00/value_estimation_results_ds/data-00000-of-00001.arrow": {
+      "bytes": 29394520,
+      "sha256": "7b7ada75298f47632720bde0741b0b5a543a826b73fa2bd857685d2b25053b70"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0000/infer_results/unique_value_estimation_result_ds/data-00000-of-00001.arrow": {
+      "bytes": 20911424,
+      "sha256": "220c7ed632bd420cf20e79daea20b66c4fca719aaee94581317000c83cd6918a"
+    }
+  },
+  "live_command_log_snapshot": {
+    "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/command.log",
+    "bytes_read": 312133,
+    "sha256_of_read_snapshot": "416f4fded4f853adf44632a56b3aecbec37ac3f98dd8d07052b88b3d2d027f7c",
+    "note": "Live append-only command log; later bytes are outside this audit."
+  },
+  "limits": [
+    "Training reward is neither held-out accuracy nor evidence of improvement.",
+    "Actor/reference equality is expected at the original-SFT preupdate collection; no model forward was rerun.",
+    "Only collection0 completed artifacts and already logged optimizer updates audited. No partial evaluation shard was regraded.",
+    "No shared/live source, configuration, output, environment or process state changed; CPU-only imports with CUDA hidden."
+  ]
+}

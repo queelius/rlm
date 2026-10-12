@@ -14,14 +14,38 @@
 \setbeamersize{text margin left=9mm,text margin right=9mm}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
 \input{results.tex}
-\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Lessons from math RL for RLMs | \EvidenceCutoff\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize RL reproduction status and earlier lessons | \EvidenceCutoff\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
 \newcommand{\aside}[1]{\vfill{\footnotesize\color{Gray}#1\par}}
-\hypersetup{pdftitle={Preparing language models to learn from practice},pdfauthor={Alex Towell}}
+\hypersetup{pdftitle={RL reproduction status and earlier learning lessons},pdfauthor={Alex Towell}}
 \begin{document}
 
 \begin{frame}[t]
+\frametitle{SPO reproduction: not yet an end-to-end success.}
+\textbf{Current objective:} reproduce the published RL result on our A100.
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.29\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}>{\raggedright\arraybackslash}p{0.29\textwidth}@{}}
+\toprule
+What we tested & Latest result & What it establishes \\
+\midrule
+Authors' released weights & \textbf{56.69\%}, paper: 56.7\% & Evaluation check \\
+Our own training & \textbf{22.19\%} after 7,856 updates & Incomplete; target not reached \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{block}{A concrete inconsistency to test}
+Generation includes a start-of-text marker (BOS); training omitted it.
+On 16 fixed answers, this changes probabilities sharply in the late model,
+but barely in the starting model.
+\end{block}
+\textbf{Now:} a fresh BOS-consistent run has launched. No new learning result yet.
+\aside{GSM8K: mean correctness over 16 answers per question. The likelihood check is not an accuracy gain or proof of the collapse's cause. Exact historical-code fidelity remains unresolved.}
+\end{frame}
+
+\begin{frame}[t]
 \frametitle{Before rewarding success, make success reachable.}
-\textbf{Our goal:} Teach a recursive language model (RLM) to solve problems by using Python, asking helpers, and combining their results.
+\textbf{Historical context (7 October):} Teach a recursive language model (RLM) to solve problems by using Python, asking helpers, and combining their results.
 \medskip
 \begin{block}{The question behind our experiments}
 Why can reinforcement learning (RL) improve a math model, while our RLM training has struggled to produce reliable gains on new tasks?
@@ -65,7 +89,7 @@ Why can reinforcement learning (RL) improve a math model, while our RLM training
 \textbf{Feedback:} an answer checker distinguishes them, giving training something useful to reinforce.
 \end{column}
 \end{columns}
-\aside{One greedy answer per question, fixed prompt and checker; repeatedly inspected development set. Small-scale improvement, not a full-benchmark replication. Prompt choice matters.}
+\aside{Historical Dr.\ GRPO run, 7 October: one greedy answer per question; repeatedly inspected development set. Small-scale improvement, not a full-benchmark replication. Prompt choice matters.}
 \end{frame}
 
 \begin{frame}[t]

@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status corrected on October 12
+## Current status on October 12 at 15 28 UTC
 
 **The own-training reproduction is incomplete, not successful.** The run
 continued after the last written review below, deteriorated, and exited with
@@ -10,8 +10,9 @@ short of the prescribed 11,040; no final checkpoint marker exists.
 The latest scheduled evaluation, after 7,856 updates, reports **22.19% test,
 22.18% validation and 26.81% training-subset accuracy** in the native metric
 files. These are the latest results, not the earlier 50.52% test score. The
-terminal receipt, metric dictionaries and traceback were checked; independent
-regrading of the late saved answers is still pending. See the
+terminal receipt, metric dictionaries and traceback were checked. Independent
+regrading now matches all 66,048 saved answers and all seven native metrics
+across the two audited checkpoints and three splits. See the
 [terminal audit](evidence/terminal-audit-20261012.json).
 
 The traceback ends at a BF16 optimizer gradient-norm assertion after four
@@ -22,9 +23,28 @@ diagnosis; neither is established to be caused by allocation expiry.
 The advisor's primary objective remains reproducing a published training
 result on our A100. Evaluating the authors' released weights successfully
 recovered 56.69%, but that is not our training reproduction. RLM teaching
-exploration is secondary. Next: verify the failure mechanism and a faithful
-optimizer continuation, preserving the protocol, failed attempt and fixed
-endpoint. No resumed math GPU job has yet been launched.
+exploration is secondary.
+
+**A fresh training run started at 15:22 UTC from the original SFT model.** We
+found that generation included a beginning-of-sequence token which training
+omitted. Real A100 tests show that this mismatch strongly changes the late
+model's probabilities, although it had little effect on the starting model.
+The new run corrects that mismatch and separately handles a verified
+zero-gradient optimizer boundary. The shared source and environment are
+unchanged; both corrections are isolated and documented.
+
+The first collection produced 512 answers and completed 16 finite optimizer
+updates. Its scheduled native evaluation has started. These are startup checks,
+**not a new measured learning gain**. The original 1,000-iteration learning-rate
+schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.
+The corrected run has a 68-hour cap including final evaluation; an interruption
+will remain an incomplete result.
+
+[Diagnosis, evidence, and restart plan](diagnosis-and-restart-20261012.md)
+explain the decision and remaining limits. In particular, the exact historical
+author implementation remains unavailable, and this restart is not proof that
+the token mismatch caused the decline. We will report the full scheduled series,
+not choose the most favorable test checkpoint.
 
 ## Historical progress at the last October 9 review
 

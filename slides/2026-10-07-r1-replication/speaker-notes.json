@@ -1,8 +1,12 @@
 {
   "slides": [
     {
+      "title": "SPO reproduction: not yet an end-to-end success.",
+      "notes": "Released weights: 56.69%, matching 56.7. Our run: 22.19% at 7,856 updates; incomplete.\n\nA missing start marker changes late-model probabilities across 16 fixed answers. This is not accuracy or causal proof.\n\nFresh BOS-consistent training has launched; no new learning result. Next: historical Dr. GRPO lessons."
+    },
+    {
       "title": "Before rewarding success, make success reachable.",
-      "notes": "Our goal is not just a higher math score. We want a model to learn when to use code, ask helpers, and combine their results.\n\nWorking explanation: math starts with relevant skills; our RLM asks for unfamiliar combinations. We should examine readiness to learn, not only the RL algorithm.\n\nNext: what did the math model bring with it?"
+      "notes": "Historical context from 7 October: we wanted an RLM to learn when to use code, ask helpers, and combine their results.\n\nWorking explanation: math starts with relevant skills; our RLM asks for unfamiliar combinations. Examine readiness to learn, not only the RL algorithm.\n\nNext: what did the math model bring with it?"
     },
     {
       "title": "Math RL builds on a strong head start.",
