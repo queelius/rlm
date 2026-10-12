@@ -53,18 +53,24 @@ and majority-vote accuracy from 54.51% to 56.86%. Validation's majority score
 nevertheless fell slightly. We keep reporting the paper's mean
 single-answer accuracy, without switching metrics or choosing a favorable checkpoint.
 
-The first complete model-and-optimizer checkpoint has been copied outside the
-trainer's automatic cleanup directory. All ten files match their originals by
-SHA256; saved update counters and optimizer values passed CPU inspection. This
-protects a recovery point, not a new scientific result or an off-system backup.
-See the [checkpoint receipt](evidence/restart-full160-protection-20261012.json).
+**Recovery update, 21:18 UTC:** the complete **960-update checkpoint** is now
+copied outside the trainer's automatic cleanup directory, alongside the earlier
+160-update copy. All ten files (17.60 GB) match their originals by SHA256;
+trainer, actor and both active Adam counters are 960, and the scheduler is 959.
+This copy was chosen by completed update count, not test score. It protects a
+newer recovery point, not a new scientific result or an off-system backup.
+See the [new checkpoint receipt](evidence/restart-full960-protection-20261012.json).
+The 960-update check verifies bytes and counters, not every tensor's finiteness
+or an end-to-end GPU restore. A separate faithful resume entrypoint is still
+required if interrupted; the live launcher is fresh-start-only.
 Training has reached at least **976 updates**, with contiguous finite logged
 metrics and no logged traceback. The newer native full checkpoint's counters
 agree at 960 updates, including both active Adam states; the scheduler is at
 959. All ten required files were stable during this
 [CPU metadata check](evidence/restart-full960-metadata-20261012.json).
-This is saved progress, not a new evaluation, GPU restoration, or off-system
-backup. The next scheduled evaluation follows 1,136 updates.
+That earlier metadata check is distinct from the later protected copy above.
+Neither is a new evaluation or GPU restoration. The next scheduled evaluation
+follows 1,136 updates.
 
 The original 1,000-iteration learning-rate
 schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.

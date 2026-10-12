@@ -1,0 +1,83 @@
+{
+  "schema": "spo-protected-full-checkpoint-v2",
+  "verified_utc": "2026-10-12T21:18:35.437516+00:00",
+  "source": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0060--epoch_2.00--step_0960",
+  "protected_copy": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0060--epoch_2.00--step_0960",
+  "files": {
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "sha256": "73e2a1780c5b693ce761f178d0ce738c0dd04f6711d9fcc647b2bf6efd514e8a"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "sha256": "aa20a5b959b29a4a53e33f6f7d13092fea8b5a5ef79b8218d989e7b4e25602e2"
+    },
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "sha256": "48cbca448331d0383454ff77c31f5693f196fe4961f361ad19cfa5148011461f"
+    },
+    "actor/latest": {
+      "bytes": 14,
+      "sha256": "5719bc8c7583fb3a37fe65cf595c84cd8348013d7aa54b48c84dc0866ae478b8"
+    },
+    "actor/global_step960/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "sha256": "5cc33969813ee700e807a60c7d4fa4ced0fa2c8913f9af69af786279d677bce6"
+    },
+    "actor/global_step960/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "sha256": "5432a80dfd5cdde26afe803e4f5393db6bf752044dd9612fe5a91a2a1e972830"
+    },
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "sha256": "880607eac94196d43575dbad0fa534ac9e38ba4fb7ff610b1426e344b80b757d"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "sha256": "fa257c0a935dff5c0136479348d593170143e4318cb30638b35206a649d2e0bc"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "sha256": "8d7242f52ed9f3d40ab624ab7288d1db274f25255bd29571caa4862664d7fc80"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "sha256": "47e22c3e2e9c55705ff72102ffd1146b607e80880f2011ced5bc969d11ea7b05"
+    }
+  },
+  "total_bytes": 17600911843,
+  "all_source_destination_hashes_equal": true,
+  "distinct_file_inodes": true,
+  "source_files_stable_during_verification": true,
+  "preflight_sha256": "e293c09512871dbfdcb9665a3fea7187db3ebad8397a4cca93754727955b1f70",
+  "home_remaining_quota_bytes": 499351149798,
+  "path_map": {
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0060--epoch_2.00--step_0960": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0060--epoch_2.00--step_0960"
+  },
+  "completed_collections": 60,
+  "optimizer_updates": 960,
+  "selection_rule": "Latest completed full state at preparation; by update count before copying, never favorable evaluation score.",
+  "state_inspection": {
+    "trainer_state": {
+      "global_step": 960,
+      "epoch": 2.0,
+      "iteration": 60
+    },
+    "actor_global_steps": 960,
+    "actor_skipped_steps": 0,
+    "scheduler_last_batch_iteration": 959,
+    "active_adam_parameter_steps": {
+      "0": 960,
+      "1": 960
+    },
+    "all_tensors_finiteness_scanned": false,
+    "cuda_initialized": false
+  },
+  "initial_verifier_failure": "INITIAL-VERIFIER-FAILURE.json",
+  "limits": [
+    "Protected from automatic native checkpoint cleanup on the same home filesystem, not off-system disaster recovery.",
+    "All ten files copied and byte-hashed; metadata checked, not a full numerical tensor scan or end-to-end GPU restoration.",
+    "Existing fresh launcher still cannot resume; a separately admitted faithful full-state resume entrypoint is required if interrupted.",
+    "No live source, recipe, owner, model weights or optimizer files were changed or moved."
+  ]
+}

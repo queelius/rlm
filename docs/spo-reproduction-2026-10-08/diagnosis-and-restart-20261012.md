@@ -3,6 +3,8 @@
 Status: October 12, 2026, 20:53 UTC. The seventh scheduled restart evaluation
 is the latest benchmark. The native full checkpoint at 960 updates is
 verified, and logged learning rates are independently checked through 768 updates.
+Recovery update at 21:18 UTC: a byte-verified 960-update copy is now protected
+outside automatic cleanup; scientific scores and the fixed endpoint are unchanged.
 Our primary objective is to reproduce the
 paper's **training result** on one A100. It is still unfinished. We have matched
 the authors' released-model evaluation, diagnosed concrete discrepancies in our
@@ -219,6 +221,20 @@ metadata check: trainer iteration60/global960, actor and active Adam counters960
 scheduler959, skipped0. All ten files were stable and the protected160 copy's
 sizes still matched. This is not a tensor scan, new backup or GPU resume. See
 the [960-update receipt](evidence/restart-full960-metadata-20261012.json).
+
+At 21:18 UTC, all ten files of that **960-update full state** were also copied
+outside the trainer's automatic cleanup directory. Every source/destination
+SHA256 matches, the source files remained stable during verification, and
+trainer/actor/active Adam counters remain 960 with scheduler counter 959.
+The 17.60 GB copy was selected by completed update count, not benchmark score;
+the earlier protected 160-update copy is retained. See the
+[protection receipt](evidence/restart-full960-protection-20261012.json).
+This is same-filesystem recovery protection, not an off-system backup, a full
+numerical tensor scan, or a new GPU restoration test. A separate faithful resume
+entrypoint is still needed if interrupted. An initial CPU metadata check hit
+the installed PyTorch loader's requirement for a string filename with memory
+mapping; a failing/passing saved-state fixture verified that narrow correction,
+and the complete hash/counter check then passed. Training was unaffected.
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).
