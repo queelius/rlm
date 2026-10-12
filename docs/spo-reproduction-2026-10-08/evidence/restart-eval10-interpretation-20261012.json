@@ -1,0 +1,93 @@
+{
+  "schema": "spo-scheduled-evaluation-interpretation-v1",
+  "checked_utc": "2026-10-12T16:35:05.708860+00:00",
+  "all33024_counts_and21_metrics_verified": true,
+  "splits": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 8741,
+      "percent": 41.41868840030326,
+      "correct_delta_from_eval0": 294,
+      "delta_pp_from_eval0": 1.3931008339651252,
+      "questions_more_correct": 409,
+      "questions_fewer_correct": 310,
+      "questions_same": 600
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3642,
+      "percent": 61.189516129032256,
+      "correct_delta_from_eval0": 226,
+      "delta_pp_from_eval0": 3.797043010752688,
+      "questions_more_correct": 131,
+      "questions_fewer_correct": 86,
+      "questions_same": 155
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3267,
+      "percent": 54.74195710455764,
+      "correct_delta_from_eval0": 98,
+      "delta_pp_from_eval0": 1.6420911528150135,
+      "questions_more_correct": 120,
+      "questions_fewer_correct": 83,
+      "questions_same": 170
+    }
+  },
+  "baseline": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 347,
+    "current_correct": 8741,
+    "delta_percentage_points": 1.6442380591357089,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "first176_updates_contiguous_finite": true,
+  "ranges": {
+    "actor/ratio": [
+      0.993,
+      1.01
+    ],
+    "actor/grad_norm": [
+      7.07,
+      32.8
+    ],
+    "actor/approx_kl": [
+      0.00056,
+      0.0588
+    ]
+  },
+  "tracebacks": 0,
+  "last_completed_iteration": 10,
+  "runner_sha256": "46b8211589417e71a42c1c6d0168ebef152cd1afda47614fd821bd848b337e88",
+  "receipt_sha256": "7f0268f7b76554168cdd5103107d1377c165d2c348e9583fb5045ca7338ae8b5",
+  "scheduled_iteration": 10,
+  "completed_collections": 11,
+  "optimizer_updates": 176,
+  "fixed_endpoint": {
+    "collections": 690,
+    "updates": 11040
+  },
+  "source_audit": "eval10-regrade-001/RECEIPT.json",
+  "request_context": "Queued review1791821063 was already genuinely reviewed and acknowledged at16:27:23. Its delayed delivery prompted a live check, which found the newly completed iteration10 test. Original acknowledgment remains unchanged; no duplicate ACK.",
+  "interpretation": "Own test mean pass@1 increased from39.7745% to41.4187% (+1.6442pp), and from40.0256% after16updates (+1.3931pp). Validation also increased after16updates. This is a measured early improvement in this run, not a completed reproduction or established durable/causal BOS benefit.",
+  "challenge": "The previous failed run also improved initially. These early scores cannot distinguish sustained recovery from another early rise followed by deterioration. Sixteen responses per question are not independent training replications.",
+  "scientific_decision": "Continue the same owner, scientific recipe and prescribed690/11040 endpoint. Regrade every completed scheduled evaluation; no favorable test-score or checkpoint selection.",
+  "owner_policy": "Entire current owner includes training and final evaluation; no other GPU work until all scoped processes leave.",
+  "checkpoint": "First full160 state remains protected; receipt checkpoint-protection-160-001/RECEIPT.json. Native GPU restoration of this160 state has not been tested.",
+  "advisor_package_decision": "Update supporting report and early progress table. Main advisor conclusion remains unfinished training reproduction under a fixed corrected run; retain deck/notes/guide's explicit15:28 cutoff until a result changes the main story or next experiment.",
+  "quota": {
+    "checked_utc": "2026-10-12T16:28:49.012450+00:00",
+    "source": "account/rateLimits/read codex bucket",
+    "remaining_percent": 88,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "verification": "Root reran per-question count sums, compared all21 native/regraded metric values, checked original-ID ordering between0/10, read actual correct/incorrect completions, verified first176 update numbers and finite scalars, and verified invoked analysis-source hash in input manifest.",
+  "changes": "CPU-only invocation of the existing hash-pinned answer-audit loop with iteration/path parameters10 and descriptive metadata; no live source, environment, model, grader, scoring rule or GPU ownership changes."
+}

@@ -1,6 +1,6 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 16:21 UTC, after the first full restart checkpoint.
+Status: October 12, 2026, 16:35 UTC, after the second scheduled restart evaluation.
 Our primary objective is to reproduce the
 paper's **training result** on one A100. It is still unfinished. We have matched
 the authors' released-model evaluation, diagnosed concrete discrepancies in our
@@ -75,32 +75,33 @@ effective top-p 1.0, and **mean pass@1**, not best-of-16. Every scheduled result
 will remain visible. A 68-hour whole-run cap includes evaluation; full optimizer
 checkpoints are kept for an allocation handoff if needed.
 
-## First scheduled evaluation
+## Scheduled evaluations so far
 
-The first test measures the model after **16 optimizer updates**, not the
-untrained model. Every saved answer was independently regraded, including
-original question identities, prompts, tree and dataset agreement, and all
-seven native metrics. All 33,024 answers across the three splits passed these
-checks.
+The first test measures the model after **16 optimizer updates**, and the second
+after **176**. Neither is the untrained model or the prescribed final checkpoint.
+Every saved answer was independently regraded, including original question
+identities, prompts, tree and dataset agreement, and all seven native metrics.
+Each evaluation's 33,024 answers across the three splits passed these checks.
 
-| Split | Correct answers | Mean single-answer accuracy |
+| Split | After 16 updates | After 176 updates |
 | --- | ---: | ---: |
-| Test | 8,447 / 21,104 | 40.03% |
-| Validation | 3,169 / 5,968 | 53.10% |
-| Training subset | 3,416 / 5,952 | 57.39% |
+| Test | 40.03% | 41.42% |
+| Validation | 53.10% | 54.74% |
+| Training subset (not held out) | 57.39% | 61.19% |
 
-The test is 53 correct answers above our original-SFT evaluation, or **+0.25
-percentage points**. This is a small descriptive change, not established
-improvement, evidence that the token repair works, or a completed reproduction.
-The training subset is not held out. We retain the native metric and decoding
-settings; neither the 74.98% solved-at-least-once coverage nor the 48.67% majority-vote
-score substitutes for the test result above.
+The latest test has **8,741 correct answers out of 21,104**, compared with 8,394
+for the original SFT model: **+1.64 percentage points**. It gained 294 correct
+answers, or 1.39 points, since the first scheduled test. This is an early measured
+improvement in our run, not a completed reproduction or evidence that the token
+repair causes a lasting benefit. The previous run also improved initially before
+deteriorating. We retain the native decoding and mean single-answer accuracy;
+solved-at-least-once coverage and majority voting do not replace that metric.
 
-Training continued to 160 updates. The latest detailed audit, collection 6,
+Training continued to 176 updates. The latest detailed audit, collection 6,
 contains 270 correct and 242 incorrect responses, with mixed outcomes on 37 of
 64 questions. All 512 terminal rewards regrade correctly. Its training query
 tokens match the actual generation requests, and saved actor and reference log
-probabilities and advantages are finite. All first 160 update numbers are
+probabilities and advantages are finite. All first 176 update numbers are
 present and logged numeric values are finite. These checks support continuing
 the current run, not declaring learning success; the training batches contain
 different questions and are not a benchmark progress curve.
@@ -155,6 +156,9 @@ not evidence yet that an RLM teaching intervention works.
   16 updates completed. Training rewards are not benchmark gains.
 - [First scheduled evaluation audit](evidence/restart-eval0-20261012.json):
   all three splits, 33,024 saved answers, no scoring discrepancies.
+- [Second scheduled evaluation audit](evidence/restart-eval10-20261012.json)
+  and [interpretation](evidence/restart-eval10-interpretation-20261012.json):
+  another 33,024 answers checked; early improvement, not the fixed endpoint.
 - [Research review and next decision](evidence/restart-review-20261012.json).
 - [Full 160-update checkpoint protection](evidence/restart-full160-protection-20261012.json)
   and [second review](evidence/restart-review160-20261012.json).

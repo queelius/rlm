@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12 at the first full restart checkpoint
+## Current status on October 12, 16:35 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,14 +33,16 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The first scheduled test, after 16 optimizer updates, is **40.03%**, versus
-**39.77%** for the original model: **+0.25 percentage points**. Independent
-regrading of all 33,024 answers across test, validation, and the training subset
-matches every saved native metric. This small early change is **not evidence of
-meaningful recovery or completed reproduction**. By 16:21 UTC, the run had
-completed 160 updates; checked rewards and log probabilities are finite,
-and training query tokens match the actual generation requests. See the
-[first evaluation audit](evidence/restart-eval0-20261012.json).
+The latest scheduled test, after **176 optimizer updates**, is **41.42%**, versus
+**39.77%** for the original model: **+1.64 percentage points**. The first test,
+after 16 updates, was 40.03%. Each evaluation's 33,024 answers across test,
+validation, and the training subset independently regrade to the native metrics.
+Validation also rose, from 53.10% to 54.74%. This is an early measured improvement,
+**not completed reproduction or proof of lasting recovery**: the previous run
+also improved initially. The first 176 logged updates are finite, and audited
+training query tokens match actual generation requests. See the
+[latest audit](evidence/restart-eval10-20261012.json) and
+[interpretation](evidence/restart-eval10-interpretation-20261012.json).
 
 The first complete model-and-optimizer checkpoint has been copied outside the
 trainer's automatic cleanup directory. All ten files match their originals by
