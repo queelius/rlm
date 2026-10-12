@@ -11,7 +11,31 @@ learning to recover after mistakes, and changing the action interface. The
 crafting studies below use flat tool policies; they inform RLM preparation but
 are not themselves evidence of learned recursive decomposition.
 
-## What the completed runs now tell us
+## First new result: repair helps beyond the original goals
+
+At the October 12, 14:16 UTC cutoff, the first of four prescribed new readouts
+is complete. On panel02/world42, the fixed repaired policy solved 6 of 16
+attempts. All three conditions below have complete native replay audits and
+matched goals, world, starting inventories, rollout seeds and evaluation caps.
+
+| Teaching policy | Whole-task successes | Model calls | Generated tokens |
+|---|---:|---:|---:|
+| Original-known teacher | 0/16 | 568 | 11,394 |
+| Stable-visible repair | 6/16 | 348 | 8,021 |
+| Discovery teacher | 8/16 | 576 | 17,772 |
+
+The repair extends beyond its original evaluation goals, but does **not**
+outperform discovery teaching here: paired against discovery, it gains one
+attempt and loses three. Fewer calls are useful cost evidence, not a substitute
+for completing the task. These are eight goals with two draws each, a single
+training seed, and previously exposed baseline results. This is an exploratory
+transfer readout of existing supervised policies, not new RL training or a
+recursive-policy result. The other three prescribed readouts remain running
+or queued; retain their results regardless of direction.
+
+[Per-attempt evidence and native hashes](2026-10-12-teaching-panel02-world42.json).
+
+## What the earlier completed runs now tell us
 
 Several September experiments finished after their written summaries. The
 [checked evidence](2026-10-12-teaching-resumption-evidence.json) records their
@@ -56,8 +80,8 @@ visibility-only or interface-only causal conclusion.
 
 ## The next small experiments
 
-1. **Additional-goal demonstration transfer — running.** Evaluate both fixed
-   repaired-teacher policies on the next numbered eight-goal panel, in two
+1. **Additional-goal demonstration transfer — one of four new cells complete.**
+   Evaluate both fixed repaired-teacher policies on the next numbered eight-goal panel, in two
    recipe worlds and with two fixed rollout seeds. Reuse the corresponding
    original-teacher and discovery-teacher controls. All four prescribed cells
    are retained; no checkpoint selection. These goals have prior baseline
@@ -84,9 +108,11 @@ no new general-RLM claim or slide headline is justified yet.
 
 The new allocation ends October 15 at 13:00 UTC. Four bounded readouts and
 native audits are admitted; this is not a claim of three days of ready jobs.
-The first readout returned real recipe-query and crafting actions with no
-transport failures in the initial live check. Earlier weights, optimizer
-checkpoints and failed attempts remain untouched. Old SPO, DrGRPO and CURL
+The first readout completed all 16 attempts without transport failures and
+passed its native replay audit. Automatic handoff to the random-visible
+comparison succeeded; by 14:14 UTC it had 133 genuine returned calls and no
+transport failures. Earlier weights, optimizer checkpoints and failed attempts
+remain untouched. Old SPO, DrGRPO and CURL
 campaigns remain stopped.
 
 The live checkpoint is
