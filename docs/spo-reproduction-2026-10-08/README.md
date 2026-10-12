@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 18:58 UTC
+## Current status on October 12, 19:11 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,31 +33,36 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **496 optimizer updates**, is **44.93%**, versus
-**39.77%** for the original model: **+5.16 percentage points**. Earlier scheduled
-tests were 40.03% after 16 updates, 41.42% after 176, and 42.59% after 336.
+The latest scheduled test, after **656 optimizer updates**, is **45.56%**, versus
+**39.77%** for the original model: **+5.79 percentage points**. Earlier scheduled
+tests were 40.03% after 16 updates, 41.42% after 176, 42.59% after 336, and
+44.93% after 496.
 Each evaluation's 33,024
 answers across test, validation, and the training subset independently regrade
-to the native metrics. Validation is now 56.77%, up 1.73 points since the
+to the native metrics. Validation is now 58.14%, up 1.37 points since the
 previous check. This is another early measured improvement, **not completed
 reproduction or proof of lasting recovery**: the previous run also improved
-initially. All first 496 update numbers are present and logged numeric values
+initially. All first 656 update numbers are present and logged numeric values
 are finite; audited training query tokens match actual generation requests.
-See the [latest audit](evidence/restart-eval30-20261012.json) and
-[interpretation](evidence/restart-eval30-interpretation-20261012.json).
+See the [latest audit](evidence/restart-eval40-20261012.json) and
+[interpretation](evidence/restart-eval40-interpretation-20261012.json).
+The improvement is not uniform across metrics: solved-at-least-once coverage
+over 16 attempts fell from 76.95% to 76.50%, and majority-vote accuracy from
+54.06% to 53.68%. We keep reporting the paper's mean single-answer accuracy;
+we do not switch metrics or choose a checkpoint to favor the result.
 
 The first complete model-and-optimizer checkpoint has been copied outside the
 trainer's automatic cleanup directory. All ten files match their originals by
 SHA256; saved update counters and optimizer values passed CPU inspection. This
 protects a recovery point, not a new scientific result or an off-system backup.
 See the [checkpoint receipt](evidence/restart-full160-protection-20261012.json).
-Training has since reached **640 updates**, with contiguous finite logged
+Training has reached **656 updates**, with contiguous finite logged
 metrics and no logged traceback. The newer native full checkpoint's counters
 agree at 640 updates, including both active Adam states; the scheduler is at
 639. All ten required files were stable during this
 [CPU metadata check](evidence/restart-full640-metadata-20261012.json).
 This is saved progress, not a new evaluation, GPU restoration, or off-system
-backup. The next scheduled evaluation follows 656 updates.
+backup. The next scheduled evaluation follows 816 updates.
 
 The original 1,000-iteration learning-rate
 schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.

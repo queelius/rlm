@@ -1,7 +1,7 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 18:58 UTC. The fourth scheduled restart evaluation
-remains the latest score; the native full checkpoint at 640 updates is now verified.
+Status: October 12, 2026, 19:11 UTC, after the fifth scheduled restart evaluation.
+The native full checkpoint at 640 updates is also verified.
 Our primary objective is to reproduce the
 paper's **training result** on one A100. It is still unfinished. We have matched
 the authors' released-model evaluation, diagnosed concrete discrepancies in our
@@ -78,48 +78,60 @@ checkpoints are kept for an allocation handoff if needed.
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, and 496 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, and 656 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
 Each evaluation's 33,024 answers across the three splits passed these checks.
 
-| Split | After 16 updates | After 176 updates | After 336 updates | After 496 updates |
-| --- | ---: | ---: | ---: | ---: |
-| Test | 40.03% | 41.42% | 42.59% | 44.93% |
-| Validation | 53.10% | 54.74% | 55.04% | 56.77% |
-| Training subset (not held out) | 57.39% | 61.19% | 62.67% | 64.47% |
+| Split | After 16 updates | After 176 updates | After 336 updates | After 496 updates | After 656 updates |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Test | 40.03% | 41.42% | 42.59% | 44.93% | 45.56% |
+| Validation | 53.10% | 54.74% | 55.04% | 56.77% | 58.14% |
+| Training subset (not held out) | 57.39% | 61.19% | 62.67% | 64.47% | 64.77% |
 
-The latest test has **9,482 correct answers out of 21,104**, compared with 8,394
-for the original SFT model: **+5.16 percentage points**. It gained 494 correct
-answers, or 2.34 points, since the preceding scheduled test. Validation rose
-1.73 points in that interval. This is another early measured
+The latest test has **9,615 correct answers out of 21,104**, compared with 8,394
+for the original SFT model: **+5.79 percentage points**. It gained 133 correct
+answers, or 0.63 points, since the preceding scheduled test. Validation rose
+1.37 points in that interval. This is another early measured
 improvement in our run, not a completed reproduction or evidence that the token
 repair causes a lasting benefit. The previous run also improved initially before
 deteriorating. We retain the native decoding and mean single-answer accuracy;
 solved-at-least-once coverage and majority voting do not replace that metric.
 
-The gain is not just fewer malformed outputs: test extraction failures fell
-from 63 to 53 and length-limit endings from 66 to 54, much smaller changes than
-the 494 additional correct answers. Individual questions move both ways:
-441 have more correct samples, 316 fewer, and 562 the same count. This is a
-description of one run, not a claim of independent training replications or
-statistical significance.
+Test extraction failures fell from 53 to 30 and length-limit endings from 54
+to 37. These diagnostics accompany the correctness result; they do not identify
+its learning mechanism. Individual questions move both ways: 406 have more
+correct samples, 340 fewer, and 573 the same count. Even the first original
+test question fell from 10/16 to 6/16 correct despite the overall gain.
 
-Training completed 496 updates before this evaluation. The accompanying
-batch audit, collection 30, contains 332 correct and 180 incorrect responses,
-with mixed terminal outcomes on 38 of
+**Higher single-answer accuracy is not improvement on every measure.** Test
+solved-at-least-once coverage over 16 samples fell from 76.95% to 76.50%;
+majority voting fell from 54.06% to 53.68%. The average number of distinct parsed
+answers also fell, from 5.65 to 5.44. Validation coverage and majority voting
+edged down too. This is consistent with changing how probability is distributed
+among answers, but does not establish that mechanism or a loss of underlying
+capability. We retain the prescribed mean single-answer metric and report the
+other measures alongside it. This is one training run, not independent
+replications or a statistical-significance claim. See the
+[full audit](evidence/restart-eval40-20261012.json) and
+[interpretation](evidence/restart-eval40-interpretation-20261012.json).
+
+Training completed 656 updates before this evaluation. The accompanying
+batch audit, collection 40, contains 328 correct and 184 incorrect responses,
+with mixed terminal outcomes on 31 of
 64 questions. All 512 terminal rewards regrade correctly. Its training query
 tokens match the actual generation requests, and saved actor and reference log
-probabilities and advantages are finite. Twelve groups with uniform terminal
+probabilities and advantages are finite. Fifteen groups with uniform terminal
 outcomes still have nonzero intermediate advantages: SPO can supply a signal
-within a solution even when the final rewards all agree. All first 496 update numbers are
+within a solution even when the final rewards all agree. All first 656 update numbers are
 present and logged numeric values are finite. These checks support continuing
 the current run, not declaring learning success; the training batches contain
 different questions and are not a benchmark progress curve.
 
 The next decision remains the same: keep the recipe and endpoint fixed, inspect
-subsequent scheduled evaluations, and preserve complete recovery states. This
+subsequent scheduled evaluations (next after 816 updates), and preserve complete
+recovery states. This
 early result stays in the supporting report; it does not change the advisor
 deck's main conclusion at its explicitly dated 15:28 UTC cutoff.
 
@@ -165,8 +177,9 @@ errors at the 18:58 cutoff. See the
 [640-update metadata receipt](evidence/restart-full640-metadata-20261012.json).
 This did not scan every tensor, copy the new checkpoint, or test a GPU resume.
 Native cleanup still applies, and a separate faithful resume entrypoint remains
-necessary if interrupted. There is no new benchmark result: the next scheduled
-evaluation follows 656 updates, and the fixed endpoint remains 11,040.
+necessary if interrupted. That checkpoint check itself is not a benchmark;
+the subsequent 656-update evaluation is reported above. The fixed endpoint
+remains 11,040 updates.
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).
