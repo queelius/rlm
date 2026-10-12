@@ -1,6 +1,6 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 17:29 UTC, after the third scheduled restart evaluation.
+Status: October 12, 2026, 18:24 UTC, after the fourth scheduled restart evaluation.
 Our primary objective is to reproduce the
 paper's **training result** on one A100. It is still unfinished. We have matched
 the authors' released-model evaluation, diagnosed concrete discrepancies in our
@@ -77,35 +77,42 @@ checkpoints are kept for an allocation handoff if needed.
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, and 336 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, and 496 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
 Each evaluation's 33,024 answers across the three splits passed these checks.
 
-| Split | After 16 updates | After 176 updates | After 336 updates |
-| --- | ---: | ---: | ---: |
-| Test | 40.03% | 41.42% | 42.59% |
-| Validation | 53.10% | 54.74% | 55.04% |
-| Training subset (not held out) | 57.39% | 61.19% | 62.67% |
+| Split | After 16 updates | After 176 updates | After 336 updates | After 496 updates |
+| --- | ---: | ---: | ---: | ---: |
+| Test | 40.03% | 41.42% | 42.59% | 44.93% |
+| Validation | 53.10% | 54.74% | 55.04% | 56.77% |
+| Training subset (not held out) | 57.39% | 61.19% | 62.67% | 64.47% |
 
-The latest test has **8,988 correct answers out of 21,104**, compared with 8,394
-for the original SFT model: **+2.81 percentage points**. It gained 247 correct
-answers, or 1.17 points, since the preceding scheduled test. Validation rose
-only 0.30 points in that interval. This is another early measured
+The latest test has **9,482 correct answers out of 21,104**, compared with 8,394
+for the original SFT model: **+5.16 percentage points**. It gained 494 correct
+answers, or 2.34 points, since the preceding scheduled test. Validation rose
+1.73 points in that interval. This is another early measured
 improvement in our run, not a completed reproduction or evidence that the token
 repair causes a lasting benefit. The previous run also improved initially before
 deteriorating. We retain the native decoding and mean single-answer accuracy;
 solved-at-least-once coverage and majority voting do not replace that metric.
 
-Training completed 336 updates before this evaluation. The latest detailed
-batch audit, collection 16, contains 331 correct and 181 incorrect responses,
-with mixed terminal outcomes on 27 of
+The gain is not just fewer malformed outputs: test extraction failures fell
+from 63 to 53 and length-limit endings from 66 to 54, much smaller changes than
+the 494 additional correct answers. Individual questions move both ways:
+441 have more correct samples, 316 fewer, and 562 the same count. This is a
+description of one run, not a claim of independent training replications or
+statistical significance.
+
+Training completed 496 updates before this evaluation. The latest detailed
+batch audit, collection 30, contains 332 correct and 180 incorrect responses,
+with mixed terminal outcomes on 38 of
 64 questions. All 512 terminal rewards regrade correctly. Its training query
 tokens match the actual generation requests, and saved actor and reference log
-probabilities and advantages are finite. Fourteen groups with uniform terminal
+probabilities and advantages are finite. Twelve groups with uniform terminal
 outcomes still have nonzero intermediate advantages: SPO can supply a signal
-within a solution even when the final rewards all agree. All first 336 update numbers are
+within a solution even when the final rewards all agree. All first 496 update numbers are
 present and logged numeric values are finite. These checks support continuing
 the current run, not declaring learning success; the training batches contain
 different questions and are not a benchmark progress curve.
@@ -131,10 +138,20 @@ we have not claimed a new GPU restoration test of it. The earlier full-state
 restoration test used the previous run's 7,840-update checkpoint.
 
 The next native full checkpoint completed at 320 updates. Its trainer, actor,
-and scheduler counters agree, and all ten required files are present. This
+and scheduler counters agreed, and all ten required files were present at that check. This
 [metadata check](evidence/restart-full320-metadata-20261012.json) did not scan
-every tensor or restore it on the GPU. It remains subject to native cleanup;
-the separate 160-update copy remains protected.
+every tensor or restore it on the GPU.
+
+The latest full checkpoint completed at 480 updates. Trainer and actor counters
+are 480, the scheduler counter is 479, and both active Adam state counters are
+480. All ten files were stable during CPU inspection. This
+[metadata check](evidence/restart-full480-metadata-20261012.json) did not scan
+every tensor, copy the checkpoint, or restore it on the GPU. Native checkpoints
+remain subject to automatic cleanup; the separate 160-update copy remains protected.
+An initial inspection mistakenly treated two legacy optimizer group counters
+as active counters; explicit state-path inspection and the installed optimizer
+source resolved this. The inspection failure is preserved in the receipt and
+was not a training failure.
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).
@@ -152,7 +169,7 @@ A further [CPU recovery check](evidence/restart-recovery-selection-20261012.json
 found that the native "resumable" test can accept a directory containing only
 an actor marker, with no model or optimizer state. Our stronger handoff gate
 requires complete files and matching counters, not that flag alone. The real
-320-update checkpoint passes the recorded file checks. The incomplete example
+320-update checkpoint passed the recorded file checks at that audit. The incomplete example
 was a tiny test fixture, not a live training failure; no resume was launched.
 
 ## What this can and cannot establish
@@ -190,8 +207,15 @@ not evidence yet that an RLM teaching intervention works.
   another 33,024 answers checked; early improvement, not the fixed endpoint.
 - [Third scheduled evaluation audit](evidence/restart-eval20-20261012.json)
   and [interpretation](evidence/restart-eval20-interpretation-20261012.json):
-  all 33,024 answers and 21 metric comparisons agree; test gain is now 2.81
-  points over the matched starting model, still early in the fixed run.
+  all 33,024 answers and 21 metric comparisons agree; test gain was 2.81
+  points over the matched starting model at 336 updates.
+- [Fourth scheduled evaluation audit](evidence/restart-eval30-20261012.json)
+  and [interpretation](evidence/restart-eval30-interpretation-20261012.json):
+  all 33,024 answers and 21 metric comparisons agree; test gain is now 5.16
+  points at 496 updates, still early in the fixed run. Before executing the
+  audit, a stale descriptive label was corrected from evaluation20 to
+  evaluation30; the actual data bindings and scoring were already correct.
+  The original preparation and regression evidence are preserved externally.
 - [Research review and next decision](evidence/restart-review-20261012.json).
 - [Full 160-update checkpoint protection](evidence/restart-full160-protection-20261012.json)
   and [second review](evidence/restart-review160-20261012.json).

@@ -1,0 +1,181 @@
+{
+  "schema": "spo-scheduled-evaluation-interpretation-v1",
+  "checked_utc": "2026-10-12 18:24:45 UTC",
+  "scheduled_iteration": 30,
+  "completed_collections": 31,
+  "optimizer_updates": 496,
+  "fixed_endpoint": {
+    "collections": 690,
+    "updates": 11040
+  },
+  "source_audit": "eval30-regrade-001/RECEIPT.json",
+  "all33024_counts_and21_metrics_verified": true,
+  "splits": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 9482,
+      "percent": 44.92987111448067,
+      "correct_delta_from_eval20": 494,
+      "delta_pp_from_eval20": 2.3407884761182713,
+      "questions_more_correct": 441,
+      "questions_fewer_correct": 316,
+      "questions_same": 562,
+      "extraction_failures_previous": 63,
+      "extraction_failures_current": 53,
+      "finish_reasons_previous": {
+        "length": 66,
+        "stop": 21038
+      },
+      "finish_reasons_current": {
+        "length": 54,
+        "stop": 21050
+      }
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3388,
+      "percent": 56.76943699731903,
+      "correct_delta_from_eval20": 103,
+      "delta_pp_from_eval20": 1.7258713136729222,
+      "questions_more_correct": 121,
+      "questions_fewer_correct": 92,
+      "questions_same": 160,
+      "extraction_failures_previous": 13,
+      "extraction_failures_current": 6,
+      "finish_reasons_previous": {
+        "length": 13,
+        "stop": 5955
+      },
+      "finish_reasons_current": {
+        "length": 6,
+        "stop": 5962
+      }
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3837,
+      "percent": 64.46572580645162,
+      "correct_delta_from_eval20": 107,
+      "delta_pp_from_eval20": 1.7977150537634408,
+      "questions_more_correct": 134,
+      "questions_fewer_correct": 94,
+      "questions_same": 144,
+      "extraction_failures_previous": 7,
+      "extraction_failures_current": 7,
+      "finish_reasons_previous": {
+        "length": 8,
+        "stop": 5944
+      },
+      "finish_reasons_current": {
+        "length": 7,
+        "stop": 5945
+      }
+    }
+  },
+  "baseline": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 1088,
+    "current_correct": 9482,
+    "delta_percentage_points": 5.155420773313116,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "first496_updates_contiguous_finite": true,
+  "ranges": {
+    "actor/ratio": [
+      0.969,
+      1.04
+    ],
+    "actor/grad_norm": [
+      7.07,
+      36.3
+    ],
+    "actor/approx_kl": [
+      0.000496,
+      0.287
+    ],
+    "actor/clip_frac": [
+      0,
+      0.238
+    ]
+  },
+  "tracebacks": 0,
+  "runner_sha256": "cd41c951cf1dd4e9de9e38dc68cfe153069bee7408667a10e602b67925e6ea9e",
+  "receipt_sha256": "7ea4428310db41d2cbcc7b06e9bb9f29324cfccdd583359a1263ab065314c53e",
+  "question_counts_sha256": "b364adbf28f643928c1319870a40d40402d8d0e3cd5bf652e1f42d968ba5d280",
+  "input_manifest_sha256": "527e7c1fae7e240260d2fdfde069bb77e2129a106db51c359621d44e64f7155e",
+  "request_context": "Review review-1791828964-d32cd625 contained the newly completed evaluation30 test split among 18 events. Validation and training-subset outputs completed before this CPU audit; all three are included. Observer then recorded 20 events.",
+  "interpretation": "Own test mean pass@1 is 44.9299%, +5.1554 percentage points versus matched original SFT 39.7745%, and +2.3408 points versus the preceding scheduled evaluation20. Validation rose 1.7259 points to 56.7694%; training-subset accuracy rose 1.7977 points to 64.4657% and is not held out. This is measured early improvement in our own run, not a completed paper reproduction.",
+  "challenge": "Only 496 of 11040 prescribed optimizer updates are complete at this evaluation. The previous failed run also improved early, so lasting recovery is unestablished. Sixteen responses per question are not independent training replications. We have not claimed statistical significance or isolated causal BOS efficacy. Test extraction failures decreased 63 to 53 and length-limit endings 66 to 54; those small net count changes cannot account for all 494 additional correct responses. Validation also improved, supporting continued observation without changing the recipe.",
+  "scientific_decision": "Continue the same authenticated whole owner, scientific recipe, original 1000-iteration LR horizon and prescribed 690-collection/11040-update endpoint. Regrade every completed scheduled evaluation and retain the complete score history. No favorable score/checkpoint selection, successor, or new GPU job. Next scheduled evaluation40 follows 656 updates.",
+  "live_training_checks": {
+    "latest_completed_batch_audit": "training-audit-collection30-20261012.json",
+    "responses": 512,
+    "correct": 332,
+    "incorrect": 180,
+    "mixed_terminal_reward_groups": 38,
+    "reward_regrade_mismatches": 0,
+    "query_token_mismatches": 0,
+    "finite_actor_reference_logprobs_and_advantages": true,
+    "nonzero_advantage_tokens": 3268,
+    "terminal_uniform_groups_with_nonzero_intermediate_advantages": 12,
+    "http_successes": 923,
+    "http_errors": 0,
+    "interpretation": "All original gold identities, saved responses, terminal rewards and generation/training token bindings agree. Changing training questions are not a benchmark curve. Uniform terminal rewards do not exclude SPO's intermediate signal.",
+    "actual_examples": "First correct training response computes (518+476)/7=142 and receives reward1. First wrong response answers 13 loaves instead of original gold26 and receives reward0. Illustrations, not representative performance samples."
+  },
+  "actual_test_example": {
+    "selection": "Original test question0, inspected without correctness-based question selection; illustrative only.",
+    "gold": "18",
+    "candidate_count": 16,
+    "correct_candidates": 10,
+    "correct_candidates_previous": 8,
+    "first_response": "Incorrectly computes 16-3-4=11, then answers22.",
+    "second_response": "Correctly computes 16-3-4=9, then answers18.",
+    "finish_reason": "Both stop; an ordinary arithmetic error, not a transport failure.",
+    "native_tree": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__30/inference_results/test__0__1/trees/0.json"
+  },
+  "checkpoint": {
+    "latest_native_metadata": "checkpoint480-metadata-20261012.json",
+    "metadata_sha256": "9af98dde56b81d1d1c1021044e43b0cc8936b1729f13d785586d6018a522b8f8",
+    "trainer_iteration": 30,
+    "trainer_global_step": 480,
+    "actor_global_steps": 480,
+    "scheduler_last_batch_iteration": 479,
+    "active_adam_steps": [
+      480,
+      480
+    ],
+    "complete_files": 10,
+    "protected_recovery_receipt": "checkpoint-protection-160-001/RECEIPT.json",
+    "files_and_protected_copy_sizes_rechecked": true,
+    "limits": "Full480 metadata and file presence checked, not all tensors scanned, copied, or GPU-restored. It remains subject to native cleanup. Full160 is separately copied and hashed outside cleanup on the same home filesystem, not an off-system backup. Fresh-only launcher still requires a separate faithful resume entrypoint if interrupted."
+  },
+  "preserved_analysis_corrections": [
+    "Before evaluation30 audit execution, a stale descriptive receipt trigger said evaluation20 even though the actual input bindings correctly targeted30. One label was corrected; scoring and data bindings were unchanged. Original wrapper/preparation, failing then passing metadata regression, and hashes are preserved in eval30-regrade-001/METADATA-CORRECTION.json.",
+    "CPU full480 inspection initially conflated active Adam state step counters with legacy group step0 fields. Explicit state-path inspection and installed source resolved it. The failure and correction are in the metadata receipt; it was not a native training exception."
+  ],
+  "source_integrity": {
+    "checked_utc": "2026-10-12T18:22:35.487464+00:00",
+    "sealed_files_verified": 7,
+    "official_source_clean_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+    "request_semantic_event_hashes_verified": 18
+  },
+  "owner_policy": "Queue2826646/scoped2826649/trainer2826650 and observer2829006 retain their recorded startticks. Entire owner covers training and final evaluation; no successor until all scoped and GPU processes depart.",
+  "advisor_package_decision": "Publish the fourth scheduled point, full score history, interpretation and full480 metadata in the supporting report. This strengthens early improvement evidence but does not change the main incomplete-reproduction conclusion, material limits or next fixed comparison. Slides, pdfpc notes and guide retain their explicit 15:28 UTC cutoff; no partial or undated presentation update.",
+  "quota": {
+    "checked_utc": "2026-10-12T18:21:01.565376+00:00",
+    "method": "account/rateLimits/read",
+    "source_bucket": "codex",
+    "remaining_percent": 84,
+    "reserve_percent": 10,
+    "dispatch_headroom_percent": 12
+  },
+  "verification": "CPU audit checked all 33024 saved answers against original identities, prompts and native trees/Arrow outputs. Root separately summed all question counts, checked same ID/gold/16-response ordering against evaluation20 and all 21 native/regraded metrics, inspected actual wrong/correct completions, and checked the first496 update numbers/scalars. These are scoped checks, not a whole-parameter finiteness scan.",
+  "changes": "No live source, environment, model, reward, decoding, recipe or GPU owner changed. Only completed CPU audits and research documentation."
+}

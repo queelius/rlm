@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 17:29 UTC
+## Current status on October 12, 18:24 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,25 +33,27 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **336 optimizer updates**, is **42.59%**, versus
-**39.77%** for the original model: **+2.81 percentage points**. Earlier scheduled
-tests were 40.03% after 16 updates and 41.42% after 176. Each evaluation's 33,024
+The latest scheduled test, after **496 optimizer updates**, is **44.93%**, versus
+**39.77%** for the original model: **+5.16 percentage points**. Earlier scheduled
+tests were 40.03% after 16 updates, 41.42% after 176, and 42.59% after 336.
+Each evaluation's 33,024
 answers across test, validation, and the training subset independently regrade
-to the native metrics. Validation is now 55.04%, up 0.30 points since the
+to the native metrics. Validation is now 56.77%, up 1.73 points since the
 previous check. This is another early measured improvement, **not completed
 reproduction or proof of lasting recovery**: the previous run also improved
-initially. All first 336 update numbers are present and logged numeric values
+initially. All first 496 update numbers are present and logged numeric values
 are finite; audited training query tokens match actual generation requests.
-See the [latest audit](evidence/restart-eval20-20261012.json) and
-[interpretation](evidence/restart-eval20-interpretation-20261012.json).
+See the [latest audit](evidence/restart-eval30-20261012.json) and
+[interpretation](evidence/restart-eval30-interpretation-20261012.json).
 
 The first complete model-and-optimizer checkpoint has been copied outside the
 trainer's automatic cleanup directory. All ten files match their originals by
 SHA256; saved update counters and optimizer values passed CPU inspection. This
 protects a recovery point, not a new scientific result or an off-system backup.
 See the [checkpoint receipt](evidence/restart-full160-protection-20261012.json).
-The newer native full checkpoint's counters agree at 320 updates; this was a
-[metadata check](evidence/restart-full320-metadata-20261012.json), not a new
+The newer native full checkpoint's counters agree at 480 updates, including
+both active Adam state counters. This was a
+[metadata check](evidence/restart-full480-metadata-20261012.json), not a new
 GPU restoration or off-system backup.
 
 The original 1,000-iteration learning-rate
