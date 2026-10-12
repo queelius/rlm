@@ -1,6 +1,6 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 12, 2026, 20:04 UTC. The sixth scheduled restart evaluation
+Status: October 12, 2026, 20:28 UTC. The sixth scheduled restart evaluation
 remains the latest benchmark. The native full checkpoint at 800 updates is
 verified, and logged learning rates are independently checked through 768 updates.
 Our primary objective is to reproduce the
@@ -220,6 +220,27 @@ an actor marker, with no model or optimizer state. Our stronger handoff gate
 requires complete files and matching counters, not that flag alone. The real
 320-update checkpoint passed the recorded file checks at that audit. The incomplete example
 was a tiny test fixture, not a live training failure; no resume was launched.
+
+At 20:28 UTC, a [native custom-state loading check](evidence/restart-recovery-custom-state-20261012.json)
+used the saved 800-update files on CPUs. The real native loader replaced
+deliberately incorrect trainer counters and running-score statistics with their
+saved values. However, `FixedKLController.load_state_dict` deliberately does
+nothing: an incorrect configured coefficient of 123 stayed 123 despite the
+saved value of `0.0001`. Repeating the check with the original configured
+coefficient of `0.0001` retained the intended value. Thus a faithful resume must
+pin the original configuration, not infer all settings from successful checkpoint
+loading. This did not expose a mismatch in the live run, whose configured and
+saved coefficients agree; the native behavior is left unchanged.
+
+This probe bypassed model/engine construction and initialized only a one-process
+CPU context. It restored the small custom state and registered the deferred
+engine-restoration path, not the model or optimizer on a GPU. Its initial
+CPU fixture lacked the required Accelerate logging context; adding CPU
+`PartialState` resolved that setup failure without changing training. The source
+audit also found that the trainer ignores the engine loader's return value.
+A future separately admitted resume must verify actual engine restoration and
+actor/scheduler/Adam counters before further updates, as well as complete files
+and the original recipe. No resume launcher or new GPU restore was performed.
 
 ## What this can and cannot establish
 

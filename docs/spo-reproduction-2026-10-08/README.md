@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 20:04 UTC
+## Current status on October 12, 20:28 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -75,6 +75,13 @@ rate was not shortened to decay over 11,040 updates. This is
 not a new benchmark or proof of the authors' exact historical implementation.
 The corrected run has a 68-hour cap including final evaluation; an interruption
 will remain an incomplete result.
+
+A CPU recovery check also confirms why the original configuration must travel
+with the checkpoint: the native loader restores training counters and running
+statistics, but its fixed KL controller retains the configured coefficient.
+Our saved and configured coefficient agree at `0.0001`. This is a
+[recovery constraint](evidence/restart-recovery-custom-state-20261012.json),
+not a new accuracy result or proof that a complete GPU resume is ready.
 
 [Diagnosis, evidence, and restart plan](diagnosis-and-restart-20261012.md)
 explain the decision and remaining limits. In particular, the exact historical

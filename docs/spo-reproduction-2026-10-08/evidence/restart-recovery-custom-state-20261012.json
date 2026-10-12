@@ -1,0 +1,78 @@
+{
+  "schema": "spo-native-resume-custom-state-audit-v1",
+  "checked_utc": "2026-10-12T20:28:06.460679+00:00",
+  "checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0050--epoch_2.00--step_0800",
+  "method": "Execute installed native PPOTrainer.load_checkpoint on a CPU-only __new__ container with actual TrainerState, DeepSpeedRunningMoments, FixedKLController, CPU PartialState and saved custom_checkpoint0/10/11 files. No constructor/model/engine initialization or GPU restoration.",
+  "saved_custom_states": {
+    "trainer": {
+      "global_step": 800,
+      "epoch": 2,
+      "iteration": 50
+    },
+    "running_scores": {
+      "mean": 0,
+      "std": 1,
+      "var": 1,
+      "count": 1e-24
+    },
+    "fixed_kl_controller": {
+      "value": 0.0001
+    }
+  },
+  "observations": {
+    "trainer_sentinel_replaced_by_saved800_iteration50": true,
+    "running_scores_sentinel_replaced_by_saved_state": true,
+    "fixed_kl_mismatched_constructor123_remains123_despite_saved0001": true,
+    "matching_constructor0001_matches_saved_kl": true,
+    "native_deferred_engine_restore_path_matches_checkpoint": true,
+    "native_configured_kl_coefficient": 0.0001,
+    "official_source_clean_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+    "checkpoint_files_unchanged": true,
+    "cuda_initialized": false,
+    "gpu_restore_performed": false
+  },
+  "input_file_metadata": {
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0050--epoch_2.00--step_0800/custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "mtime_ns": 1791834407103558977,
+      "sha256": "f644415391ae58a80d7719d2e463aed239eddf512fbe7fb07d6fccc65678b8d2"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0050--epoch_2.00--step_0800/custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "mtime_ns": 1791834407103558977,
+      "sha256": "aa20a5b959b29a4a53e33f6f7d13092fea8b5a5ef79b8218d989e7b4e25602e2"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0050--epoch_2.00--step_0800/custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "mtime_ns": 1791834407103558977,
+      "sha256": "48cbca448331d0383454ff77c31f5693f196fe4961f361ad19cfa5148011461f"
+    }
+  },
+  "source_files_sha256": {
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/ppo_trainer.py": "231c8a1456b2b7c5fcda6e8a3f4112f8465d9e401779290c7fe7d4a890dbbd01",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/deepspeed_policy_trainer.py": "7cf1e24baad23a4a80cf9befcaca54f42979702a92b8f26355892cdaa44a9104",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/policy_trainer.py": "13f1d21abaac4776b0261345d31f1949b8287c08ac410f0e7abb58de0efda53d",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/utils.py": "d0327aaddd988ef1732f8e8616004271b214ebabbb12701b33da87b62e2825f7",
+    "/project/alex_phd/envs/spo-6c5f947/lib/python3.10/site-packages/accelerate/checkpointing.py": "2723f84e64d68d4a8b222c1246d9cec58204560d06b3eb5d21dda8a7bc56c81f",
+    "/project/alex_phd/envs/spo-6c5f947/lib/python3.10/site-packages/deepspeed/runtime/engine.py": "29105b025c055f1e4b7fd0de905e0ee29146177e0c0bca0f4f7de67f4b10c7c4",
+    "/project/alex_phd/envs/spo-6c5f947/lib/python3.10/site-packages/deepspeed/runtime/bf16_optimizer.py": "dfb712446fb4dd0634b58f3a015eea184998274b74c27d6122eb6a0a6a70d4b4",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/config.json": "30bdd16637a48a499d84cf2ad528d9ecc0eab25707a20d9d5d2917ce4bb69ebc"
+  },
+  "initial_probe_failure": {
+    "stage": "CPU fixture setup, before native state loading",
+    "error": "Accelerate logger requires initialized PartialState",
+    "correction": "Initialize PartialState(cpu=True), require one CPU process and absent LOCAL_RANK; rerun real native loader. No training/source change."
+  },
+  "interpretation": "Trainer counters and running-score state load from disk, but native FixedKLController.load_state_dict intentionally returns without changing its constructor coefficient. Faithful resume must independently pin the reconstructed configuration coefficient; possessing custom_checkpoint11 or calling native load_checkpoint does not establish that coefficient was restored. With unchanged coefficient1e-4, this seam matches the current recipe. No evidence of a failure in the live run.",
+  "source_only_followup": "PPOTrainer._load_checkpoint_to_ds_engines ignores the engine load_checkpoint return; installed DeepSpeed can return(None,None) for missing latest tag and can fall back to bit16 masters if a partition load fails. No such failure was observed here. Future admission should require actual successful engine restoration and counter/FP32/Adam checks, not only native method return.",
+  "next_action": "Retain current run. Future separately admitted resume must pin reconstructed config/horizon and fixed KL against original recipe/saved controller, then assert actual engine restore return and actor/scheduler/Adam counters before new optimization. Do not change native KL restore behavior or live sources.",
+  "limits": [
+    "CPU custom-state loading only; not an end-to-end resumed training test or bitwise RNG continuity proof.",
+    "Object deliberately bypasses normal model/engine construction; full optimizer restoration remains distinct evidence.",
+    "Current live owner and recipe unchanged; no new benchmark or completion claim.",
+    "DeepSpeed failure branches were read in installed source, not executed as simulated failed GPU restorations."
+  ],
+  "audit_source_sha256": "00135ad263523e0c82db8f18890756e9f9389930aba621dbbdf4e2221404f9f4",
+  "audit_source": "audit.py",
+  "invocation": "CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/project/alex_phd/research-cache/repos/SPO/src /project/alex_phd/envs/spo-6c5f947/bin/python -B /project/alex_phd/runs/rl-paper-reproduction-20261012/recovery-custom-state-audit-001/audit.py"
+}
