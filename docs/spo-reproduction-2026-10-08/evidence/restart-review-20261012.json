@@ -1,0 +1,168 @@
+{
+  "schema": "spo-research-review-v1",
+  "review_id": "review-1791819441-0b018daa",
+  "reviewed_utc": "2026-10-12T15:49:38Z",
+  "primary_objective": "Reproduce a published LLM RL training result on one A100; active and unfinished",
+  "decision": "Continue the existing fresh-SFT BOS-only owner unchanged. Audit subsequent scheduled evaluations and protect the first complete full checkpoint at160 updates. No successor GPU admission.",
+  "request_events": {
+    "count": 10,
+    "new_completed_evaluations": [
+      "test at iteration0",
+      "validation at iteration0"
+    ],
+    "additionally_completed_since_request": [
+      "training-subset evaluation at iteration0"
+    ],
+    "prior_diagnostic_receipts": 8,
+    "prior_diagnostics_all_exit0_and_empty_cleanup": true,
+    "interpretation": "The eight diagnostic receipts are previously published checks, not new training reproduction outcomes."
+  },
+  "evaluation": {
+    "native_root": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+    "loop_iteration": 0,
+    "completed_collections": 1,
+    "optimizer_updates": 16,
+    "metric": "mean pass@1",
+    "responses_per_question": 16,
+    "temperature": 0.35,
+    "effective_top_p": 1,
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 8447,
+      "accuracy_percent": 40.02558756633813
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3169,
+      "accuracy_percent": 53.09986595174263
+    },
+    "training_subset": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 3416,
+      "accuracy_percent": 57.39247311827957,
+      "held_out": false
+    },
+    "original_sft_test": {
+      "correct": 8394,
+      "responses": 21104,
+      "accuracy_percent": 39.77445034116755
+    },
+    "test_delta_percentage_points": 0.2511372251705838,
+    "total_regraded_responses": 33024,
+    "all_identity_prompt_tree_arrow_checks_pass": true,
+    "all21_native_metric_deltas_zero": true,
+    "receipt": "/project/alex_phd/runs/rl-paper-reproduction-20261012/early-eval0-regrade-001/RECEIPT.json",
+    "receipt_sha256": "9f22bd1b2ea4224dd04378263e651c70cfb9f4e5c79c5ea3d4cb706bd1bc3be9",
+    "input_manifest_sha256": "01dec88ec6cfafcffc52c6e56a021c3007ababcf65879fdc242ac4c4d638dfda",
+    "baseline_audit_scope": "Previously fully regraded baseline; current review rechecks metric/count consistency, not every baseline response.",
+    "interpretation": "Small descriptive early movement; no demonstrated recovery, BOS efficacy, statistical significance or completed reproduction."
+  },
+  "native_training_health": {
+    "audited_optimizer_updates": 32,
+    "contiguous_steps_1_through_32": true,
+    "completed_iterations_at_cutoff": [
+      0,
+      1
+    ],
+    "next_collection": "iteration2 in progress",
+    "all_parsed_update_scalars_finite": true,
+    "gradient_norm_min_max": [
+      7.07,
+      29.4
+    ],
+    "ratio_min_max": [
+      0.998,
+      1.01
+    ],
+    "reported_loss_nan_inf_count": 0,
+    "high_ratio_rejection_warnings": 0,
+    "tracebacks": 0,
+    "fully_reviewed_collection": 1,
+    "responses": 512,
+    "correct_rewards": 296,
+    "incorrect_rewards": 216,
+    "mean_effective_reward": 0.578125,
+    "reward_regrade_mismatches": 0,
+    "mixed_question_groups": 34,
+    "total_question_groups": 64,
+    "actual_generation_query_token_mismatches": 0,
+    "generation_log_distinct_prompts_including_mc": 1071,
+    "http200_count": 1072,
+    "http4xx_5xx_count": 0,
+    "actor_reference_logprobs_and_advantages_finite": true,
+    "actual_wrong_example": "Model answered165 instead of2250 by adding150 to15 when computing150 enemies x10points with50% bonus; native reward0 matches.",
+    "non_evaluation_collection1_elapsed_seconds_from_eval_completion": 261.317,
+    "throughput_limit": "One completed non-evaluation collection is insufficient for a reliable endpoint forecast.",
+    "input_artifacts": [
+      "episodes/episodes_0001",
+      "checkpoints/episodes__iter0001/w_actLogp",
+      "temp_episodes/iteration__0001/infer_results/merged_trajectories",
+      "temp_episodes/iteration__0001/infer_results/process_00/vllm_server.log"
+    ],
+    "selected_saved_parameter_check": {
+      "checkpoint_updates": 32,
+      "scope": "Two predetermined layer-zero projections compared to original SFT; both BF16",
+      "elements_per_tensor": 4194304,
+      "q_proj_changed_elements": 309653,
+      "o_proj_changed_elements": 623478,
+      "max_absolute_change": 0.0000152587890625,
+      "all_finite": true,
+      "interpretation": "Confirms actual saved parameter changes, not learning effectiveness or a resumable full checkpoint."
+    }
+  },
+  "preservation": {
+    "queue_pid": 2826646,
+    "scoped_owner_pid": 2826649,
+    "trainer_pid": 2826650,
+    "exec_session": 55165,
+    "all_seven_sealed_file_hashes_match": true,
+    "official_source_commit": "6c5f94723c20e4de68578545b8bb98186e956797",
+    "official_source_worktree_clean": true,
+    "fixed_endpoint_collections": 690,
+    "fixed_endpoint_updates": 11040,
+    "full_checkpoint_present_at1547": false,
+    "first_expected_full_checkpoint": "ckpt--iter_0010--epoch_2.00--step_0160",
+    "checkpoint_plan": "allocation-handoff-conditional-001.json",
+    "next_checkpoint_action": "Additively protect verified complete160 full state outside native cleanup once available; do not copy an in-progress save or alter live source.",
+    "home_quota_remaining_bytes": 561166060531,
+    "project_quota_remaining_bytes": 16277561540,
+    "owner_cap_seconds": 244800,
+    "allocation_end_epoch": 1792069216,
+    "review_deadline_epoch": 1792068616,
+    "no_source_environment_checkpoint_mutation_or_process_control": true
+  },
+  "verification": {
+    "wrapper_binding_fixture": "1 test passed when rerun by root",
+    "root_checks": "Read wrapper and native scorer; independently summed per-question correct/response counts and compared all native metric dictionaries; independently regraded512training rewards and checked actual generation token IDs; compared selected saved tensors.",
+    "analysis_command_failures": [
+      "getfattr and squeue commands unavailable; storage quotas read via os.getxattr; allocation end remains the admitted receipt, not a fresh scheduler query.",
+      "Initial CPU torch mmap check rejected pathlib.Path; rerun with a string filename passed. No GPU use or live-file change."
+    ],
+    "quota": {
+      "method": "account/rateLimits/read",
+      "bucket": "codex",
+      "checked_utc": "2026-10-12T15:42:18.486364Z",
+      "remaining_percent": 90,
+      "reserve_percent": 10,
+      "dispatch_headroom_percent": 12
+    }
+  },
+  "ranked_followups": [
+    "Continue current fixed-recipe owner and inspect real native returns and finite updates",
+    "Protect first complete full160 optimizer checkpoint, then coarse recovery milestones",
+    "Regrade every completed scheduled evaluation and publish the full series",
+    "Prepare a separately sealed faithful resume or evaluation-only continuation only if interruption requires it"
+  ],
+  "advisor_package_decision": "Supporting report and portable evidence updated. No material change to story, limitation or next experiment; leave audience slides, pdfpc notes and learning guide at their explicit15:28UTC cutoff.",
+  "limits": [
+    "Historical author source and checkpoint-selection rationale unresolved",
+    "BOS-only repair is a documented implementation change, not proof of historical fidelity",
+    "EOS behavior remains native omission",
+    "Fresh repaired run versus interrupted previous run is not a clean causal ablation",
+    "Reference56.69% versus paper56.7% validates evaluation, not own training",
+    "No favorable checkpoint selection; compare prescribed endpoint if reached"
+  ]
+}

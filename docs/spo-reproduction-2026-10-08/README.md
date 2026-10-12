@@ -1,13 +1,13 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12 at 15 28 UTC
+## Current status on October 12 after the first restart evaluation
 
-**The own-training reproduction is incomplete, not successful.** The run
+**The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
 an error on October 10 at 00:49 UTC. Its last logged optimizer step was 7,995,
 short of the prescribed 11,040; no final checkpoint marker exists.
 
-The latest scheduled evaluation, after 7,856 updates, reports **22.19% test,
+The previous run's latest scheduled evaluation, after 7,856 updates, reports **22.19% test,
 22.18% validation and 26.81% training-subset accuracy** in the native metric
 files. These are the latest results, not the earlier 50.52% test score. The
 terminal receipt, metric dictionaries and traceback were checked. Independent
@@ -33,9 +33,16 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The first collection produced 512 answers and completed 16 finite optimizer
-updates. Its scheduled native evaluation has started. These are startup checks,
-**not a new measured learning gain**. The original 1,000-iteration learning-rate
+The first scheduled test, after 16 optimizer updates, is **40.03%**, versus
+**39.77%** for the original model: **+0.25 percentage points**. Independent
+regrading of all 33,024 answers across test, validation, and the training subset
+matches every saved native metric. This small early change is **not evidence of
+meaningful recovery or completed reproduction**. By 15:49 UTC, the run had
+completed 32 updates; the checked rewards and log probabilities are finite,
+and training query tokens match the actual generation requests. See the
+[first evaluation audit](evidence/restart-eval0-20261012.json).
+
+The original 1,000-iteration learning-rate
 schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.
 The corrected run has a 68-hour cap including final evaluation; an interruption
 will remain an incomplete result.
