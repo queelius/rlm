@@ -1,27 +1,11 @@
 {
-  "schema": "advisor-spo-current-status-20261012-v1",
-  "cutoff_utc": "2026-10-12T15:28:00Z",
-  "claim": "Own-training reproduction incomplete; BOS consistency is a diagnosis to test, not a demonstrated learning gain.",
+  "schema": "advisor-spo-current-status-20261012-v2",
+  "cutoff_utc": "2026-10-12T20:53:09.492795+00:00",
+  "claim": "Own-training reproduction incomplete; fresh restart shows measured early learning, not durable recovery or causal proof for BOS.",
   "released_author_weights": {
     "accuracy": 0.5668593631539045,
     "paper_percent": 56.7,
     "source": "../../docs/spo-reproduction-2026-10-08/evidence/author-reference-validation.json"
-  },
-  "own_training": {
-    "latest_scheduled_eval_updates": 7856,
-    "test_correct": 4684,
-    "test_answers": 21104,
-    "test_questions": 1319,
-    "answers_per_question": 16,
-    "test_accuracy": 0.22194844579226686,
-    "last_logged_optimizer_step": 7995,
-    "fixed_endpoint_updates": 11040,
-    "fixed_endpoint_reached": false,
-    "last_full_checkpoint_step": 7840,
-    "terminal_exit_code": 1,
-    "terminal_timed_out": false,
-    "late_regrade": "/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/RECEIPT.json",
-    "terminal_receipt": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/result.json"
   },
   "bos_breadth": {
     "source": "/project/alex_phd/runs/rl-paper-reproduction-20261012/bos-breadth-probe/COMPARISON.json",
@@ -145,11 +129,65 @@
     },
     "limitations": "Fixed late-policy responses; likelihoods are not task accuracy, recovery evidence, or proof of collapse cause."
   },
-  "next_run_status_at_cutoff": "Fresh BOS-consistent run launched from original SFT; startup is not a new learning result; exact historical author-code fidelity remains unresolved.",
+  "next_run_status_at_cutoff": "Fresh BOS-consistent run active; measured early improvement after976 updates, not completed reproduction or proven recovery. Exact historical author-code fidelity remains unresolved.",
   "next_run_admission": "/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/START.json",
   "next_run_queue": "/project/alex_phd/runs/rl-paper-reproduction-20261012/training-queue-bos-only-001.json",
   "next_run_fixed_updates": 11040,
   "next_run_owner_cap_hours": 68,
   "next_run_started_utc": "2026-10-12T15:22:49Z",
-  "next_run_startup_generation": {"completed_utc": "2026-10-12T15:23:41Z", "questions": 64, "responses": 512, "verification": "Owning session inspected actual response with leading BOS1; this is startup evidence, not a new learning score."}
+  "next_run_startup_generation": {
+    "completed_utc": "2026-10-12T15:23:41Z",
+    "questions": 64,
+    "responses": 512,
+    "verification": "Owning session inspected actual response with leading BOS1; this is startup evidence, not a new learning score."
+  },
+  "previous_training_attempt": {
+    "latest_scheduled_eval_updates": 7856,
+    "test_correct": 4684,
+    "test_answers": 21104,
+    "test_questions": 1319,
+    "answers_per_question": 16,
+    "test_accuracy": 0.22194844579226686,
+    "last_logged_optimizer_step": 7995,
+    "fixed_endpoint_updates": 11040,
+    "fixed_endpoint_reached": false,
+    "last_full_checkpoint_step": 7840,
+    "terminal_exit_code": 1,
+    "terminal_timed_out": false,
+    "late_regrade": "/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/RECEIPT.json",
+    "terminal_receipt": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/result.json"
+  },
+  "fresh_training": {
+    "latest_scheduled_eval_updates": 976,
+    "completed_collections": 61,
+    "test_correct": 10055,
+    "test_answers": 21104,
+    "test_questions": 1319,
+    "answers_per_question": 16,
+    "test_accuracy": 0.4764499620924943,
+    "original_sft_correct": 8394,
+    "original_sft_accuracy": 0.3977445034116755,
+    "gain_percentage_points": 7.87054586808188,
+    "previous_scheduled_eval_updates": 816,
+    "previous_scheduled_test_correct": 9791,
+    "validation_correct": 3613,
+    "validation_answers": 5968,
+    "train_subset_correct": 3961,
+    "train_subset_answers": 5952,
+    "train_subset_is_held_out": false,
+    "all33024_answers_and21_metrics_verified": true,
+    "fixed_endpoint_updates": 11040,
+    "fixed_endpoint_reached": false,
+    "last_audited_full_checkpoint_step": 960,
+    "audit": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval60-20261012.json",
+    "audit_sha256": "869375e5f43b0575ad7892f2269eb8338c3cb110d51f6bcad5a57f322ad8d0c2",
+    "interpretation": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval60-interpretation-20261012.json",
+    "earlier_run_same976_update_test_correct": 9674,
+    "limits": [
+      "One training ancestry, not independent training-seed replication; no statistical-significance claim.",
+      "Prior failed run also improved early; neither early accuracy nor BOS likelihood diagnostics prove durable recovery or its cause.",
+      "The complete fixed690/11040 endpoint and exact historical source/selection rationale remain unresolved.",
+      "Mean pass@1 is retained; secondary coverage/majority metrics do not replace it. Training subset is not held out."
+    ]
+  }
 }

@@ -1,5 +1,38 @@
 # Presentation verification
 
+## Fresh SPO learning, 12 October 2026, 20:53 UTC
+
+- Updated the opening slide and guide frontmatter with the fully audited
+  scheduled evaluation after 976 updates: 10,055/21,104 test answers correct
+  (47.644996%), versus original SFT 8,394/21,104 (39.774450%), a gain of
+  7.870546 percentage points. All 33,024 saved answers and 21 native metrics
+  across test, validation and training-subset splits agree. The training
+  subset is not held out; repeated scheduled evaluations are not independent
+  training replications. The fixed 11,040-update endpoint remains unfinished.
+- Preserved the failed earlier attempt, the reference-weight/evaluator
+  distinction and the unresolved historical-code/BOS-causality limits. The
+  same-update earlier result is contextual evidence, not a clean ablation.
+  Retained all seven scheduled fresh-run scores in the supporting report.
+- Synchronized slide source, scalar cutoff, audience PDF, portable pdfpc
+  notes, speaker guide, evidence record, README and the learning-guide front
+  page. Historical slide source 2–8 and historical guide source/pages 1–15
+  are unchanged; the guide still contains 16 physical pages.
+- Rebuilt both PDFs with Tectonic 0.17.0 in the external directory
+  `/project/alex_phd/runs/rl-paper-reproduction-20261012/advisor-eval60-verify-erK0DF`.
+  The first slide build exposed a 4.89885pt vertical overflow after adding
+  the fresh-result row. Reducing that table's row spacing from 1.2 to 1.1
+  resolved it without reducing font size or removing essential limitations.
+  Both final builds exit 0 without overfull/underfull or LaTeX warnings.
+- `make notes notes-check` and `verify_deck.py` pass: eight matching titles,
+  all slide text inside the page, notes of 12, 11, 12, 12, 12, 13, 12 and 12
+  lines, each at most 42 characters. Read back the wrapped opening note.
+  Checked all guide-page text bounds and visually inspected the changed
+  opening slide and guide front page: no clipping or overlap. No pdfpc GUI
+  is installed here; live presenter-window behavior was not tested.
+- The pre-existing untracked guide log and draft test file retain their
+  recorded hashes. No live training source, configuration, owner or scientific
+  recipe was changed by the presentation update.
+
 ## Current SPO status, 12 October 2026, 15:28 UTC
 
 - Added one opening status slide, retaining the seven historical Dr. GRPO/RLM

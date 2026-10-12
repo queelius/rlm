@@ -33,7 +33,7 @@
   Latest progress check: 47/64 at update 192. Lessons for RLMs begin on page 11.}
 \begin{document}
 \pagenumbering{roman}
-\pagetitle{CURRENT STATUS \quad | \quad 12 OCTOBER 2026, 15:28 UTC}
+\pagetitle{CURRENT STATUS \quad | \quad 12 OCTOBER 2026, 20:53 UTC}
   {SPO reproduction is still incomplete}
 
 Our primary objective is to reproduce the published \textbf{Segment Policy
@@ -47,36 +47,34 @@ end-to-end training reproduction. The Dr.\ GRPO notebook that follows is a
 Evidence & Result & Meaning \\
 \midrule
 Released SPO weights & 56.69\%; paper: 56.7\% & Reference evaluator agrees \\
-Our latest scheduled test & 22.19\% at 7,856 updates & Own training remains incomplete \\
+Earlier own run & 22.19\% at 7,856 updates & Failed before endpoint \\
+Fresh restart & 39.77\% $\rightarrow$ 47.64\% at 976 updates & Early gain: +7.87 points \\
 Fixed endpoint & 11,040 updates, not reached & No completed reproduction \\
 \bottomrule
 \end{tabular}
 
-The test result is 4,684 correct of 21,104 sampled answers across all 1,319
-GSM8K test questions, with 16 answers per question. Independent regrading
-matched every late test, validation and training-subset answer. The run later
-exited with an optimizer gradient-norm assertion; its last logged step was
-7,995. It did not time out. The earlier accuracy decline and the terminal
-failure require separate explanations; allocation expiry is not an established
-cause of either.
+The fresh test has 10,055 correct of 21,104 sampled answers across all 1,319
+GSM8K questions, with 16 answers per question. The original model scored 8,394
+correct: the gain is 7.87 percentage points. All 33,024 saved answers across
+test, validation and the training subset independently match the native metrics.
+Validation is 60.54\%; the training subset is not held out.
 
-\topic{A concrete inconsistency, not a demonstrated recovery}
+The earlier run's latest test had 4,684 correct answers. It later failed with
+an optimizer gradient-norm assertion at logged step 7,995, not an allocation
+timeout. That failure and the preceding accuracy decline need separate explanations.
 
-Generation included a start-of-text marker (BOS), but saved training inputs
-omitted it despite the configuration requesting it. Actual GPU checks compare
-the \emph{same saved responses}, with and without that marker, under the
-original SFT model and the latest full checkpoint (7,840 updates).
-Across 16 fixed questions, the late model's probabilities change sharply;
-the original model's change is small. The first response from each of the
-first 16 distinct saved question IDs was retained without reward filtering.
-One question overlaps the earlier diagnostic. HF and vLLM agree closely when
-token IDs and temperature are matched.
+\topic{Early learning, not yet lasting recovery}
 
-These are response-likelihood measurements, \textbf{not accuracy gains}.
-They motivate a fresh run restoring BOS consistency, now launched from the
-original SFT model. Startup is not a new learning result;
-they do not prove why accuracy collapsed or promise that the repair improves
-learning. Exact historical author-code fidelity remains unresolved.
+Generation included a start-of-text marker (BOS), but training inputs omitted
+it. GPU checks found this changes the late model's probabilities strongly.
+The fresh run corrects this inconsistency and separately handles a verified
+zero-gradient optimizer boundary. Those diagnostics are not causal proof.
+
+At the same 976 updates, the earlier run scored 45.84\%. The fresh run is higher,
+but the earlier run also improved before collapsing. We keep every scheduled
+score and the fixed 11,040-update endpoint, rather than choosing a favorable
+checkpoint. Exact historical author-code fidelity remains unresolved. This is
+\textbf{measured early learning}, not a completed reproduction or proof of recovery.
 
 \topic{How to read the historical notebook}
 

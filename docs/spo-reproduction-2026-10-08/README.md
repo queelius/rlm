@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 20:28 UTC
+## Current status on October 12, 20:53 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,23 +33,24 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **816 optimizer updates**, is **46.39%**, versus
-**39.77%** for the original model: **+6.62 percentage points**. Earlier scheduled
+The latest scheduled test, after **976 optimizer updates**, is **47.64%**, versus
+**39.77%** for the original model: **+7.87 percentage points**. Earlier scheduled
 tests were 40.03% after 16 updates, 41.42% after 176, 42.59% after 336, and
-44.93% after 496, followed by 45.56% after 656.
+44.93% after 496, followed by 45.56% after 656 and 46.39% after 816.
 Each evaluation's 33,024
 answers across test, validation, and the training subset independently regrade
-to the native metrics. Validation is now 59.50%, up 1.36 points since the
+to the native metrics. Validation is now 60.54%, up 1.04 points since the
 previous check. This is another early measured improvement, **not completed
 reproduction or proof of lasting recovery**: the previous run also improved
-initially. All first 816 update numbers are present and logged numeric values
+initially. All first 976 update numbers are present and logged numeric values
 are finite; audited training query tokens match actual generation requests.
-See the [latest audit](evidence/restart-eval50-20261012.json) and
-[interpretation](evidence/restart-eval50-interpretation-20261012.json).
-The test's secondary measures recovered from their preceding dips:
-solved-at-least-once coverage over 16 attempts rose from 76.50% to 77.41%,
-and majority-vote accuracy from 53.68% to 54.51%. The training subset's majority
-score nevertheless fell slightly. We keep reporting the paper's mean
+See the [latest audit](evidence/restart-eval60-20261012.json) and
+[interpretation](evidence/restart-eval60-interpretation-20261012.json).
+At the same 976 updates, the earlier run scored 45.84%: the fresh run is 1.81
+points higher, but this is not a clean causal comparison or proof of lasting recovery.
+Test solved-at-least-once coverage over 16 attempts rose from 77.41% to 78.47%,
+and majority-vote accuracy from 54.51% to 56.86%. Validation's majority score
+nevertheless fell slightly. We keep reporting the paper's mean
 single-answer accuracy, without switching metrics or choosing a favorable checkpoint.
 
 The first complete model-and-optimizer checkpoint has been copied outside the
@@ -57,13 +58,13 @@ trainer's automatic cleanup directory. All ten files match their originals by
 SHA256; saved update counters and optimizer values passed CPU inspection. This
 protects a recovery point, not a new scientific result or an off-system backup.
 See the [checkpoint receipt](evidence/restart-full160-protection-20261012.json).
-Training has reached at least **816 updates**, with contiguous finite logged
+Training has reached at least **976 updates**, with contiguous finite logged
 metrics and no logged traceback. The newer native full checkpoint's counters
-agree at 800 updates, including both active Adam states; the scheduler is at
-799. All ten required files were stable during this
-[CPU metadata check](evidence/restart-full800-metadata-20261012.json).
+agree at 960 updates, including both active Adam states; the scheduler is at
+959. All ten required files were stable during this
+[CPU metadata check](evidence/restart-full960-metadata-20261012.json).
 This is saved progress, not a new evaluation, GPU restoration, or off-system
-backup. The next scheduled evaluation follows 976 updates.
+backup. The next scheduled evaluation follows 1,136 updates.
 
 The original 1,000-iteration learning-rate
 schedule and fixed 690-collection / 11,040-update endpoint remain unchanged.

@@ -1,5 +1,12 @@
 # What math reinforcement learning taught us about training RLMs
 
+**Current priority, 12 October 2026, 20:53 UTC:** reproduce the published SPO
+training result on our A100. The fresh run improves from 39.77% to 47.64% after 976
+updates, but the fixed 11,040-update comparison is unfinished. See the
+[current SPO report](../spo-reproduction-2026-10-08/README.md) for its evidence
+and the earlier failed attempt. The discussion below preserves the **separate
+7 October Dr. GRPO experiment and RLM teaching ideas**, not a completed SPO result.
+
 We ultimately want to train recursive language models to make better decisions: when to solve a problem directly, when to call a helper, and how to divide the work. We practiced with a simpler, published example of reinforcement learning to understand what makes learning possible.
 
 Our method check asked: **Can we take an existing language model, reward its correct math answers, and make it better on other math questions?**
@@ -48,7 +55,7 @@ after RL separately. That tells us whether a change improves the interface,
 teaches a routine, or enables additional learning from practice. Small tests
 should refine our ideas, including showing when an attractive idea does not help.
 
-The [revised seven-slide deck](../../slides/2026-10-07-r1-replication/research-update.pdf)
+The [eight-slide deck](../../slides/2026-10-07-r1-replication/research-update.pdf)
 and [speaker guide](../../slides/2026-10-07-r1-replication/speaker-guide.md)
 follow this story; the experimental details below remain available for questions.
 

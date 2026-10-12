@@ -47,14 +47,15 @@ keep any personal edits before pulling later updates.
 
 ## Research summary
 
-Updated: **12 October 2026, 15:28 UTC**. The primary objective is an end-to-end
+Updated: **12 October 2026, 20:53 UTC**. The primary objective is an end-to-end
 SPO training reproduction on our A100; **it is incomplete**. Evaluating the
 authors' released weights recovered 56.69%, matching 56.7% to one decimal place.
-Our latest scheduled own-training test is 22.19% after 7,856 updates, and the
-prescribed final endpoint was not reached. The new GPU checks identify a
-training/generation start-marker mismatch with much larger likelihood effects
-in late than initial weights. A fresh BOS-consistent run has launched;
-this is not a learning gain or proof of the collapse's cause.
+The earlier own-training run fell to 22.19% after 7,856 updates and failed
+before the final endpoint. A fresh BOS-consistent restart now scores **47.64%
+after 976 updates**, versus **39.77%** before training: **+7.87 percentage points**.
+Every saved answer in its scheduled evaluation was checked. This is measured
+early learning, not a completed reproduction or proof that the start-marker
+repair prevents the earlier collapse. The comparison remains fixed at 11,040 updates.
 
 The opening slide separates those findings. The remaining seven slides retain
 the historical teaching story: math RL starts with relevant

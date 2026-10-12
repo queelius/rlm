@@ -1,6 +1,6 @@
 # Evidence and result update
 
-## Current SPO status: 12 October 2026, 15:28 UTC
+## Current SPO status: 12 October 2026, 20:53 UTC
 
 The first of eight visible slides reports the current **incomplete** SPO
 reproduction. Slides 2–8 retain the historical Dr. GRPO/RLM lessons; they are
@@ -10,7 +10,7 @@ not evidence that the SPO training target has been recovered.
   **56.7%** to one decimal place. The [checked reference receipt](../../docs/spo-reproduction-2026-10-08/evidence/author-reference-validation.json)
   validates all 1,319 question identities and 21,104 answers; this is an
   evaluation check, not our training reproduction.
-- Latest own-training scheduled evaluation: **4,684 / 21,104 = 22.194844579226686%**
+- Earlier failed run's latest scheduled evaluation: **4,684 / 21,104 = 22.194844579226686%**
   after **7,856 optimizer updates**. Validation is 1,324/5,968 (22.18499%);
   the training subset is 1,596/5,952 (26.81452%). The independent
   [all-split late regrade](/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/RECEIPT.json)
@@ -39,17 +39,29 @@ not evidence that the SPO training target has been recovered.
   retains the compact summary.
 
 Generation included BOS while saved training inputs omitted it despite the
-configuration requesting it. The measured divergence is a concrete reason
-to test a fresh BOS-consistent run; it does not prove that this mismatch caused
-the decline, guarantee recovery, or establish exact historical author-code
-fidelity. At this cutoff that fresh run **has launched** from original SFT,
-under a 68-hour owner cap and the fixed 690-iteration / 11,040-update endpoint;
-the first 64-question / 512-response generation completed at 15:23:41 UTC,
-but this is startup, not a new learning result. The owning session inspected
-an actual response with leading BOS1, including a legitimately wrong answer;
-it was not a transport placeholder. See its
+configuration requesting it. The measured divergence motivated a fresh
+BOS-consistent run, but does not prove the earlier collapse's cause or establish
+exact historical author-code fidelity. That run retains the 68-hour owner cap,
+original 1,000-iteration learning-rate horizon and fixed 690-collection /
+11,040-update endpoint. See its
 [admission receipt](/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/START.json)
 and [sealed queue](/project/alex_phd/runs/rl-paper-reproduction-20261012/training-queue-bos-only-001.json).
+
+The fresh run now scores **10,055 / 21,104 = 47.644996209249435%** after **976
+updates**, versus original SFT 8,394/21,104 = 39.77445034116755%: **+7.87054586808188
+percentage points**. It gained 264 correct answers since 816 updates. Validation
+is 3,613/5,968 = 60.53954%; training subset 3,961/5,952 = 66.54906% (not held out).
+The [complete evaluation60 audit](../../docs/spo-reproduction-2026-10-08/evidence/restart-eval60-20261012.json)
+checks all 33,024 saved answers, original identities, tree/Arrow bindings and
+all 21 native metric values. The
+[interpretation](../../docs/spo-reproduction-2026-10-08/evidence/restart-eval60-interpretation-20261012.json)
+records the preceding evaluation and the earlier run's stage-matched 45.84%
+result; the supporting report retains the full scheduled score history.
+Only 976/11,040 prescribed updates are evaluated. Early improvement is not
+lasting recovery, a clean causal BOS ablation or an independent-seed replication.
+The first slide, notes and current-status receipt now distinguish this gain
+from both the earlier failure and the authors' released-model evaluation.
+
 The last scheduled test and the saved full checkpoint used for
 the likelihood probe are different: **7,856 evaluation updates versus 7,840
 checkpoint updates**.

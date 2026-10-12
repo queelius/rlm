@@ -1,7 +1,7 @@
 # RL reproduction status and earlier learning lessons
 
 Eight slides, about nine minutes. Current evidence cutoff: **12 October 2026,
-15:28 UTC**. The primary objective is an end-to-end reproduction of the published
+20:53 UTC**. The primary objective is an end-to-end reproduction of the published
 SPO training result on our A100. That objective has **not** been achieved.
 Slide 1 gives the current status; slides 2–8 preserve the historical 7 October
 Dr. GRPO experiment and its RLM teaching discussion. These are separate methods,
@@ -20,12 +20,13 @@ in full. See the [local setup instructions](README.md).
 ## 1. SPO reproduction: not yet an end-to-end success
 
 Say: “We can recover the published score when we evaluate the authors' released
-weights. We have not recovered it by training the model ourselves. Our latest
-scheduled test fell to 22.19%, and the run stopped before the fixed endpoint.”
+weights. We have not recovered it by training the model ourselves. Our earlier
+run fell to 22.19% and stopped before the endpoint. The fresh restart has now
+improved from 39.77% to 47.64%, but its full comparison is still ahead.”
 
 The released SPO model scored **56.69%**, matching the paper's **56.7%** to one
-decimal place. Our own model scored **22.19% after 7,856 optimizer updates** on
-the latest scheduled GSM8K test: 4,684 correct out of 21,104 sampled answers
+decimal place. Our earlier model scored **22.19% after 7,856 optimizer updates** on
+its latest scheduled GSM8K test: 4,684 correct out of 21,104 sampled answers
 (1,319 questions, 16 answers each). This is mean sampled-answer correctness,
 not greedy accuracy or the chance that at least one answer succeeds.
 Independent regrading matched all late test, validation and training-subset
@@ -51,11 +52,18 @@ earlier diagnostic. They are late-policy responses, not newly generated SFT
 answers. Exact numbers and input provenance are in [the evidence](evidence.md)
 and [portable status receipt](current-status-evidence.json).
 
-At this cutoff, a fresh run from the original SFT model restoring BOS
-consistency has launched. Its first 64-question / 512-response generation
-completed; startup is not a new learning result.
-No learning gain is measured, and the exact historical author code remains
-unresolved. Do not call this a successful reproduction or promise recovery.
+The fresh BOS-consistent run now has a measured early gain: **10,055 / 21,104 =
+47.64% after 976 updates**, versus 8,394 / 21,104 = 39.77% before training.
+That is **+7.87 percentage points**, and +1.25 points since the preceding
+scheduled test. Validation is 60.54%. All 33,024 saved answers across test,
+validation and the training subset match the independently recomputed metrics.
+
+At the same 976 updates, the earlier run scored 45.84%. This makes the fresh
+trajectory worth following, but it is not a clean BOS-only ablation and does
+not establish lasting recovery. The previous run improved early too. We keep
+the original schedule and fixed 11,040-update endpoint, retain every result,
+and do not select the most favorable test checkpoint. Exact historical author
+code remains unresolved. Do not call this a completed reproduction.
 
 Transition: “The following slides preserve what the earlier, smaller Dr. GRPO
 exercise taught us. Those lessons remain useful, but are not the SPO result.”
@@ -230,8 +238,8 @@ effects. Keep helpers and overall budgets comparable. Retain a direct-answer
 baseline: a useful RLM should learn when delegation helps, not merely do it more.
 
 Close: “The earlier math exercise suggested several RLM teaching experiments.
-Our immediate priority is now the full SPO training reproduction. The new
-start-marker diagnosis gives us a concrete test, not a successful result yet.”
+Our immediate priority is now the full SPO training reproduction. The fresh
+run shows early learning, but the full result and durable recovery remain unproven.”
 
 ## Optional details if someone asks
 
