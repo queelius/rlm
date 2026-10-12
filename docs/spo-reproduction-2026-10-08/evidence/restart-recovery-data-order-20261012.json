@@ -1,0 +1,163 @@
+{
+  "schema": "spo-cpu-recovery-data-order-audit-v1",
+  "checked_utc": "2026-10-12T16:53:38.198162+00:00",
+  "cuda_initialized": false,
+  "source_train_questions": 7100,
+  "eligible_questions": 7100,
+  "max_prompt_tokens": 256,
+  "cutoff_completed_iterations": [
+    0,
+    13
+  ],
+  "checked_questions": 896,
+  "checked_saved_responses": 7168,
+  "question_sampling": "Each iteration shuffles the same7100 original training questions with seed42+iteration and selects64; questions can recur across collections.",
+  "iteration_checks": [
+    {
+      "iteration": 0,
+      "questions": 64,
+      "question_ids_sha256": "dad1c0b584aba04eed993b43b636f4f70fd28554c38a66aed47eeeb92523aa3a",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 1,
+      "questions": 64,
+      "question_ids_sha256": "dff4a3d86ba2b0d25c025f0f7480b26dd373ad7ed3af1debd9e1d3c014d68c6b",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 2,
+      "questions": 64,
+      "question_ids_sha256": "c5d9f2cf76ca8ebf3c0084dee087ef3d3c60a4b1901fc4a6b115b3b7c9fe3afc",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 3,
+      "questions": 64,
+      "question_ids_sha256": "1d11e1d93a88b513eb6726661eba2a3d506241fbe6fe64bb0ea891cc47848759",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 4,
+      "questions": 64,
+      "question_ids_sha256": "f4545911d14245e90a2cd1dc66e3c3810c15a98c2e89d9e56f9bc3aa1f1daa8e",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 5,
+      "questions": 64,
+      "question_ids_sha256": "3168695a52c900210ab8ab49211340f5fa298a865687ca4efd884b10840da0ad",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 6,
+      "questions": 64,
+      "question_ids_sha256": "61b80f183b4217be190c901172d1c9f78440760f25ab03199751e369d6ae04e1",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 7,
+      "questions": 64,
+      "question_ids_sha256": "7d47c5a528cbee494abeb21977f7f8a3ef78b4463d004ec59a0fc33a1e36ef73",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 8,
+      "questions": 64,
+      "question_ids_sha256": "9919ca6b254de8a6282ff6f9302b841150a40d443e8bdf08e8412f6bb0cd5e9b",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 9,
+      "questions": 64,
+      "question_ids_sha256": "d681be583b9c7e2757fa97e31b76ad06a3e79b532534a8863c140b60540ec401",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 10,
+      "questions": 64,
+      "question_ids_sha256": "c5fbf1a595509dd1a6bbf5450f7212e45fe193ca2fc16533af2c2be355fbaaac",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 11,
+      "questions": 64,
+      "question_ids_sha256": "699c7893f36cca626ae7072e4e461e8072951a0b8ca58ae3705fedf1f54a8d2f",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 12,
+      "questions": 64,
+      "question_ids_sha256": "18900ceb0846c2f4708f48940e1c6e79ddaa6fddc07a322d19cceed0178c66d9",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    },
+    {
+      "iteration": 13,
+      "questions": 64,
+      "question_ids_sha256": "429fa58c56972d61692b22847280f06608b5a47be8a2b94e82afde39dee2a5b7",
+      "ordered_ids_and_queries_match": true,
+      "responses_per_question": 8
+    }
+  ],
+  "checkpoint_trainer_state": {
+    "global_step": 160,
+    "epoch": 2,
+    "iteration": 10
+  },
+  "next_collection_at_checkpoint": 10,
+  "resumed_collection10_ids_match_original": true,
+  "native_minibatch_function_exercised": "/project/alex_phd/research-cache/repos/SPO/src/treetune/common/deepspeed_utils.py::prepare_data_loader_for_training",
+  "minibatch_fixture": {
+    "world_size": 1,
+    "synthetic_episode_ids": 512,
+    "micro_batch": 16,
+    "epochs": 2,
+    "workers": 1,
+    "global_batch": 64,
+    "updates_per_collection": 16,
+    "global_rng_perturbed_between_reconstructions": true,
+    "both_epoch_orders_identical_across_reconstruction": true,
+    "epochs_have_different_permutations": true,
+    "epoch_order_sha256": [
+      "128f8d1b0dc33efc8e3dcc79bde41a76f67193de157aa0f4e854f436d057c433",
+      "1adf7b3560be095af2869a0315630e904b65a231abb14f3672fc365e3b09e0ca"
+    ]
+  },
+  "input_sha256": {
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/config.json": "30bdd16637a48a499d84cf2ad528d9ecc0eab25707a20d9d5d2917ce4bb69ebc",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/runtime/policy_iteration_runtime.py": "c2aa807d4c678bae031b1d5766b9d29071334e7ac3ad95c6532c8e0bb97273c9",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/deepspeed_policy_trainer.py": "7cf1e24baad23a4a80cf9befcaca54f42979702a92b8f26355892cdaa44a9104",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/trainers/ppo_trainer.py": "231c8a1456b2b7c5fcda6e8a3f4112f8465d9e401779290c7fe7d4a890dbbd01",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/on_policy_episode_generator.py": "7962e654157d8616be63f9744eca6fb9d10106cac2e20967816f8d33233a1bc5",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator_with_mc_advantages.py": "e098eee0f10381bb46c66778c20d1a6434b2294ca9db9f059dc435b048054cde",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/common/deepspeed_utils.py": "8abf54c64bd8089eb7dc5771d14b4a422f8544117524b8a5d7d49cc82f26648a",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/tasks/base_task.py": "aa70bea72186d2563ba99d5e318c96c1f1c6bec3c91f8cb3c52bf19250633ce4",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/tasks/gsm8k.py": "ef7cff53cb0e048fbf5671d757199ff6bc01ef0dff465d90270c0e20032a1405"
+  },
+  "limits": [
+    "This is a CPU data-order and sampler fixture, not an end-to-end resumed GPU optimizer test.",
+    "512 artificial episode IDs exercise native minibatch permutation, not token-level forward/backward computations.",
+    "No claim of bitwise full-process RNG or kernel continuity; decoded outputs may still differ.",
+    "The admitted launcher remains fresh-only; a separate sealed resume entrypoint is still required if interrupted.",
+    "No benchmark result, treatment change, live source/config edit, or GPU dispatch."
+  ],
+  "audit_failure_preserved": "An initial read-only lookup assumed a no-replacement cached_dataset; actual frozen config samples with replacement, so no such cache should exist. Inspection used the correct seed42+iteration branch; no training failure.",
+  "audit_script": "/project/alex_phd/runs/rl-paper-reproduction-20261012/recovery-data-order-audit-001/audit.py",
+  "audit_script_sha256": "4a07af505008c2c43cc5a8e4c7806e9417bfc5e04383b038fe184fe5debdf2fb",
+  "response_check_scope": "Only eight saved candidates per question were counted in this recovery audit; answer correctness and token alignment are covered by separate earlier audits.",
+  "decision": "Continue uninterrupted fixed690/11040 owner. If interruption occurs, choose latest complete full state by progress, not score; recreate sampler from the saved iteration without a mutable curriculum cache. Separate resume entrypoint and native GPU restore validation remain required. No resumed run has been launched.",
+  "advisor_package_decision": "No new accuracy result, material change of limitations, or changed scientific comparison. Supporting recovery report only; leave deck, pdfpc notes and guide at their explicit prior cutoff."
+}

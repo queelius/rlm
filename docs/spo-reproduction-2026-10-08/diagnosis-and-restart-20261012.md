@@ -126,6 +126,18 @@ resume entrypoint. We inspected this state on CPUs without displacing training;
 we have not claimed a new GPU restoration test of it. The earlier full-state
 restoration test used the previous run's 7,840-update checkpoint.
 
+A CPU recovery audit at 16:54 UTC independently reconstructed the original
+question order for all 14 checked collections (896 question appearances).
+This recipe selects each collection with seed `42 + iteration`; it does not
+depend on an accumulating question-sampler cache. Starting from the protected
+checkpoint's iteration counter reconstructs the same next 64 questions. A
+focused fixture also ran the native minibatch sampler on 512 synthetic episode
+IDs: both epoch orders matched after perturbing the process RNG. These checks
+reduce data-order uncertainty for a future continuation, but do not demonstrate
+an end-to-end resumed GPU run or bitwise-identical generation. No resume was
+launched and the live training code was untouched. See the
+[recovery data-order audit](evidence/restart-recovery-data-order-20261012.json).
+
 ## What this can and cannot establish
 
 If the run recovers the published improvement, that supports a practical
