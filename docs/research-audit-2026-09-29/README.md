@@ -10,6 +10,11 @@ claim_boundary: "No established general recursive-architecture or broadly transf
 
 # The short answer
 
+Later update: the [October 12 resumption note](../research-checkpoints/2026-10-12-teaching-resumption.md)
+reconciles the completed four-step RL, Phi repair, compact-action and
+complete-goal delegation experiments. It supersedes their pending status in
+this dated retrospective while preserving the original evidence cutoffs below.
+
 Reading note: the numerical retrospective below retains its 14:02 UTC snapshot.
 The [meeting guide](../../slides/2026-09-30-advisor-meeting/READING_GUIDE.md)
 includes later completed results through 18:57 UTC and concrete examples.

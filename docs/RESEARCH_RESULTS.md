@@ -1,5 +1,12 @@
 # Reading the research results
 
+The [October 12 teaching-research resumption](research-checkpoints/2026-10-12-teaching-resumption.md)
+reconciles completed crafting experiments, including a compact-action RL gain
+from 6/16 to 9/16, weaker cross-model teaching transfer, and the lack of a
+sustained ordinary-interface RL gain. It records the running additional-goal
+comparison and the next recovery-teaching experiment, without claiming a
+general recursive-model advantage.
+
 The [broader-data RL result](research-checkpoints/2026-09-12-broader-rl-learning-signal.md)
 now repeats across two training seeds: 437 and 436 correct out of 512 after
 eight RL updates, versus 422 before training and 427 after supervised training.

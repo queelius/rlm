@@ -1,0 +1,346 @@
+{
+  "schema": "rlm-teaching-resumption-evidence-v1",
+  "review_date_utc": "2026-10-12",
+  "native_root": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921",
+  "studies": {
+    "textcraft-phi-repair-20260929-001/PAIRED-REPORT.json": {
+      "source_sha256": "330dbb341e53ef7bdee807eb0158b35bb59ae8c2a31bdf5e7b7673ab2ceb9203",
+      "cells": {
+        "discovery:w42": {
+          "successes": 2,
+          "observed": 8,
+          "unknown": 0,
+          "planned": 8,
+          "calls": 223,
+          "generated_tokens": 6052
+        },
+        "discovery:w50": {
+          "successes": 2,
+          "observed": 8,
+          "unknown": 0,
+          "planned": 8,
+          "calls": 259,
+          "generated_tokens": 6888
+        },
+        "known:w42": {
+          "successes": 0,
+          "observed": 8,
+          "unknown": 0,
+          "planned": 8,
+          "calls": 545,
+          "generated_tokens": 14528
+        },
+        "known:w50": {
+          "successes": 1,
+          "observed": 8,
+          "unknown": 0,
+          "planned": 8,
+          "calls": 565,
+          "generated_tokens": 11635
+        },
+        "stable_visible:w42": {
+          "successes": 2,
+          "observed": 8,
+          "unknown": 0,
+          "planned": 8,
+          "calls": 442,
+          "generated_tokens": 8195
+        },
+        "stable_visible:w50": {
+          "successes": 1,
+          "observed": 8,
+          "unknown": 0,
+          "planned": 8,
+          "calls": 656,
+          "generated_tokens": 12179
+        }
+      }
+    },
+    "textcraft-compact-rl-20260928-001/COMPARISON.json": {
+      "source_sha256": "44764a75fca6bc310b81bf89eec250d60422fa3a936bca6fbb65a87bf3a7fc83",
+      "cells": {
+        "compact_observed_warm": {
+          "successes": 6.0,
+          "observed": 16,
+          "available": true,
+          "calls": 779,
+          "generated_tokens": 14765
+        },
+        "compact_observed_0001": {
+          "successes": 9.0,
+          "observed": 16,
+          "available": true,
+          "calls": 779,
+          "generated_tokens": 14740
+        },
+        "binder_warm": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 673,
+          "generated_tokens": 21759
+        },
+        "binder_0001": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 716,
+          "generated_tokens": 24983
+        }
+      }
+    },
+    "textcraft-rl-payload-mask-20260928-001/COMPARISON.json": {
+      "source_sha256": "2da6182d152e45f38689f799041ed7f672e809ef0b0e48b98b26cf42b6c6a182",
+      "cells": {
+        "warm": {
+          "successes": 14.0,
+          "observed": 16,
+          "calls": 277,
+          "generated_tokens": 8462
+        },
+        "full": {
+          "successes": 16.0,
+          "observed": 16,
+          "calls": 303,
+          "generated_tokens": 10325
+        },
+        "masked": {
+          "successes": 16.0,
+          "observed": 16,
+          "calls": 325,
+          "generated_tokens": 10876
+        }
+      }
+    },
+    "textcraft-delegation-complete-20260929-001/COMPARISON.json": {
+      "source_sha256": "5c6330710c20b06b1de189619db0a1b67e5f83ece9ba057c77a320e74c76925b",
+      "cells": {
+        "flat": {
+          "successes": 2,
+          "observed": 2,
+          "unknown": 0,
+          "available": true,
+          "planned": 2,
+          "calls": 81,
+          "generated_tokens": 2546
+        },
+        "fixed": {
+          "successes": 1,
+          "observed": 1,
+          "unknown": 1,
+          "available": true,
+          "planned": 2,
+          "calls": 80,
+          "generated_tokens": 2326
+        },
+        "adaptive": {
+          "successes": 1,
+          "observed": 2,
+          "unknown": 0,
+          "available": true,
+          "planned": 2,
+          "calls": 156,
+          "generated_tokens": 3433
+        }
+      }
+    },
+    "textcraft-fresh-rl-20260928-002/COMPARISON-0001.json": {
+      "source_sha256": "a8ee1134d05ec5e4e2870582a9badcab439ebcb40aede2b56f76b4964ddf41cb",
+      "cells": {
+        "raw_warm": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 778,
+          "generated_tokens": 23516
+        },
+        "raw_rl": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 825,
+          "generated_tokens": 25919
+        },
+        "raw_sft": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 677,
+          "generated_tokens": 21254
+        },
+        "binder_warm": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 673,
+          "generated_tokens": 21759
+        },
+        "binder_rl": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 716,
+          "generated_tokens": 24983
+        },
+        "binder_sft": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 633,
+          "generated_tokens": 19552
+        }
+      }
+    },
+    "textcraft-fresh-rl-20260928-002/COMPARISON-0002.json": {
+      "source_sha256": "59f0c8f97a4356180c51620e33a802d471d91e350da5af2d84c50739a566cecd",
+      "cells": {
+        "raw_warm": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 778,
+          "generated_tokens": 23516
+        },
+        "raw_rl": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 783,
+          "generated_tokens": 22874
+        },
+        "raw_sft": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 677,
+          "generated_tokens": 21254
+        },
+        "binder_warm": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 673,
+          "generated_tokens": 21759
+        },
+        "binder_rl": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 793,
+          "generated_tokens": 25909
+        },
+        "binder_sft": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 633,
+          "generated_tokens": 19552
+        }
+      }
+    },
+    "textcraft-fresh-rl-20260928-002/COMPARISON-0003.json": {
+      "source_sha256": "1cd25ab06f6230c68f492d2b485599188c5ac47d0393e366942d89bc00b28526",
+      "cells": {
+        "raw_warm": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 778,
+          "generated_tokens": 23516
+        },
+        "raw_rl": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 898,
+          "generated_tokens": 27481
+        },
+        "raw_sft": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 677,
+          "generated_tokens": 21254
+        },
+        "binder_warm": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 673,
+          "generated_tokens": 21759
+        },
+        "binder_rl": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 780,
+          "generated_tokens": 25785
+        },
+        "binder_sft": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 633,
+          "generated_tokens": 19552
+        }
+      }
+    },
+    "textcraft-fresh-rl-20260928-002/COMPARISON-0004.json": {
+      "source_sha256": "9df4296c5852d4dd6edeb346ed0b1f32249f732e186ce998cc0425a9e9becc92",
+      "cells": {
+        "raw_warm": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 778,
+          "generated_tokens": 23516
+        },
+        "raw_rl": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 905,
+          "generated_tokens": 27727
+        },
+        "raw_sft": {
+          "successes": 4.0,
+          "observed": 16,
+          "available": true,
+          "calls": 677,
+          "generated_tokens": 21254
+        },
+        "binder_warm": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 673,
+          "generated_tokens": 21759
+        },
+        "binder_rl": {
+          "available": false,
+          "calls": null,
+          "generated_tokens": null
+        },
+        "binder_sft": {
+          "successes": 5.0,
+          "observed": 16,
+          "available": true,
+          "calls": 633,
+          "generated_tokens": 19552
+        }
+      }
+    }
+  },
+  "all_failure_training_roots": {
+    "task_ids": [
+      "textcraft_synth.train.1051",
+      "textcraft_synth.train.1921",
+      "textcraft_synth.train.2026",
+      "textcraft_synth.train.2338"
+    ],
+    "attempts": 128,
+    "observed": 128,
+    "successes": 0,
+    "scope": "Four repeatedly sampled TRAIN roots across two interfaces and four collections. Not 128 independent problems."
+  }
+}
