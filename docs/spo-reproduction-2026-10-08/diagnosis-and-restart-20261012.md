@@ -1,15 +1,15 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 21:35 UTC; full-audit exit verified at 21:33:22 UTC.
-The thirty-ninth scheduled restart evaluation is fully regraded at 6,096 updates;
-next follows 6,256. Test is 56.719105%, validation 69.738606%, non-held-out
-training 83.333333%. Test rises 0.208491 points, validation rises 0.636729 and
-training falls 0.352823. The test gap below supplied 56.724% is 0.004895 points:
-a close intermediate numerical match, not the fixed-endpoint reproduction.
-All 39 scheduled points remain; no favorable checkpoint or acceptance tolerance.
+Status: October 13, 2026, 22:20 UTC; full-audit exit verified at 22:15:48 UTC.
+The fortieth scheduled restart evaluation is fully regraded at 6,256 updates;
+next follows 6,416. Test is 56.463230%, validation 68.331099%, non-held-out
+training 83.266129%. These fall 0.255876, 1.407507 and 0.067204 percentage points.
+The test gap below supplied 56.724% is 0.260770 points; original-SFT gain is
+16.688779 points. This is the latest intermediate result, not a fixed-endpoint
+reproduction. All 40 scheduled points remain; no favorable checkpoint or tolerance.
 
-Protected5,120 remains the recovery copy. Native6,080 has an inventory only;
-it is not the evaluated6,096 state, decoded-counter audit or protected copy.
+Protected5,120 remains the recovery copy. Native6,240 has an inventory only;
+it is not the evaluated6,256 state, decoded-counter audit or protected copy.
 Native5,920 has stable ten-file
 counter verification and a comparison of the same two predetermined tensors
 against protected5,120; both tensors are finite and changed. It is not separately
@@ -110,7 +110,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, and 6,096 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, and 6,256 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -157,8 +157,53 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 5,776 | 56.46% | 69.96% | 82.90% |
 | 5,936 | 56.51% | 69.10% | 83.69% |
 | 6,096 | 56.72% | 69.74% | 83.33% |
+| 6,256 | 56.46% | 68.33% | 83.27% |
 
-### Latest evaluation: 6,096 updates
+### Latest evaluation: 6,256 updates
+
+The [full audit](evidence/restart-eval390-20261013.json) independently regrades
+all 33,024 saved responses and all 21 native metrics. Test is
+11,916/21,104 = 56.463230%, validation 4,078/5,968 = 68.331099%, and non-held-out
+training 4,956/5,952 = 83.266129%. Compared with 380, these lose 54/84/4 correct
+samples: −0.255876/−1.407507/−0.067204 percentage points.
+
+The original-SFT gain is 16.688779 points; the gap below supplied 56.724 is
+0.260770 points. The preceding 56.719105% result is retained below as history,
+not chosen instead of the latest point or the prescribed endpoint. Preserve
+all 40 scheduled points, fixed 690/11,040 and the original 1,000-collection
+LR horizon. No retrospective acceptance tolerance or statistical-equivalence
+claim is introduced.
+
+Test has 271 improved questions, 326 worsened and 722 unchanged; 633 gains
+offset 687 losses. Its first question remains 14/16. Test majority-vote accuracy
+rises from 61.789234% to 62.926459%, while primary mean pass@1 and once-hit fall.
+Test extraction failures move 2→3; the unchanged secondary numeric-format
+diagnostic counts 90 potential rescues versus 57. None of these diagnostics
+changes the official grader or establishes a causal explanation. All primary
+means fall locally, but these shared-question/checkpoint observations are not
+independent training-seed replications or proof of persistent collapse.
+
+All 2,065 evaluation HTTP returns succeeded, with zero errors or tracebacks.
+Read-only watcher 5799 completed at 22:14:46; audit 83400 ran once after fresh
+owner, sealed/prepared-pin, complete-split and no-overwrite checks, and exited 0.
+Do not resume either handle. The first subsequent training responses 391/392
+matched their gold answers within 42.52/63.77 seconds, with no HTTP errors.
+These first examples are operational checks, not accuracy estimates.
+
+Native 6,240 has ten files totaling 17,600,911,844 bytes: inventory only, not
+counter-decoded, tensor-scanned, protected or GPU-restored. It is distinct from
+evaluated 6,256. Protected 5,120, the 5,920 counter/two-fixed-tensor comparison,
+collection 370 full reward/BOS audit and 1,440 full-tensor scan retain their scopes.
+Prepare 400/6,416 next and retain predetermined 6,400 protection gates.
+No training recipe, source, reward, grader or GPU ownership change is made.
+
+The advisor package retains its earlier explicit cutoff and unchanged central
+incomplete-reproduction claim. See the
+[interpretation](evidence/restart-eval390-interpretation-20261013.json) and
+[preparation/observation evidence](evidence/restart-eval390-preparation-20261013.json).
+
+
+### Previous evaluation: 6,096 updates
 
 The [full audit](evidence/restart-eval380-20261013.json) verifies all 33,024
 saved answers and 21 native metrics, with original identities and prompt/tree/

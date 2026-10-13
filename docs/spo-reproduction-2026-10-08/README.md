@@ -1,6 +1,55 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 21:35 UTC
+## Current status on October 13, 22:20 UTC
+
+Audit completion verified at 22:15:48 UTC. **The fixed-endpoint training
+reproduction is still unfinished.** The fortieth scheduled evaluation, after
+**6,256 optimizer updates**, scores **56.463230% test mean pass@1**.
+This is the latest result, down 0.255876 percentage points from evaluation 380;
+we do not retain the previous close match as the headline result.
+
+| Native mean pass@1 | Latest | Change from 6,096 updates |
+| --- | ---: | ---: |
+| Test | 56.46% | −0.26 percentage points |
+| Validation | 68.33% | −1.41 percentage points |
+| Non-held-out training subset | 83.27% | −0.07 percentage points |
+
+The [full audit](evidence/restart-eval390-20261013.json) verifies all 33,024 saved
+answers, original identities, prompt/tree/Arrow bindings and 21 native metrics.
+Test is 11,916/21,104: **16.69 points above original SFT** and 0.260770 points
+below the supplied 56.724% paper reference. Validation is 4,078/5,968 and
+non-held-out training is 4,956/5,952. Their changes are −54/−84/−4 correct samples.
+
+All three primary means decline at this point, but one local change does not
+establish collapse, overfitting, a causal mechanism or the future trajectory.
+Test has 271 questions improve, 326 worsen and 722 unchanged; 633 gained
+correct samples offset 687 lost. Test majority-vote accuracy rises while
+mean pass@1 and once-hit fall. Neither secondary metric replaces mean pass@1.
+The unchanged numeric-format diagnostic finds 90 potential rescues versus 57
+previously; this is not a reason to alter the official grader.
+
+We retain all **40 scheduled points** and the fixed **690 collections /
+11,040 updates**, with the original **1,000-collection LR horizon**.
+No favorable checkpoint or retrospective acceptance tolerance is selected.
+The authors' released-weight result remains evaluator validation, not our
+training gain; causal BOS attribution and RLM transfer remain unestablished.
+
+All 2,065 evaluation HTTP returns succeeded, with no errors or tracebacks.
+The original GPU owner continues unchanged. Native 6,240 has a ten-file
+inventory, not decoded counters, a tensor scan, protected copy or GPU restore;
+it differs from the evaluated 6,256 weights. Protected 5,120 and preselected
+6,400 protection remain the recovery plan. Next: prepare evaluation 400 /
+6,416 audit and its bounded read-only watcher, without editing completed
+watcher 5799, audit 83400 or any live training source.
+
+See the [interpretation](evidence/restart-eval390-interpretation-20261013.json),
+[all scheduled results](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far)
+and [audit preparation and observation limits](evidence/restart-eval390-preparation-20261013.json).
+The advisor package retains its October 12, 20:53:09 UTC cutoff: the supporting
+dossier changes, but the unfinished-endpoint claim and next decision do not.
+
+
+## Historical status on October 13, 21:35 UTC (superseded above)
 
 Audit completion verified at 21:33:22 UTC. **The fixed-endpoint training
 reproduction is still unfinished**, but the thirty-ninth scheduled evaluation,

@@ -1,0 +1,229 @@
+{
+  "schema": "spo-scheduled-evaluation390-interpretation-v1",
+  "checked_utc": "2026-10-13T22:17:19.590718+00:00",
+  "iteration": 390,
+  "completed_collections": 391,
+  "optimizer_updates": 6256,
+  "receipt": "eval390-regrade-001/RECEIPT.json",
+  "receipt_created_utc": "2026-10-13T22:15:17.478202+00:00",
+  "audit_exit_observed_utc": "2026-10-13T22:15:48+00:00",
+  "rows": {
+    "test": {
+      "questions": 1319,
+      "correct": 11916,
+      "responses": 21104,
+      "percent": 56.46322971948445,
+      "previous_correct": 11970,
+      "delta_correct": -54,
+      "delta_pp": -0.2558756633813495,
+      "metrics": {
+        "correct_frac": 0.5646322971948445,
+        "exact_match": 0.7983320697498104,
+        "exact_match_frac": 0.5646322971948445,
+        "majority_vote_acc": 0.6292645943896892,
+        "none_answer_extracted_frac_per_problem": 0.00014215314632297195,
+        "once_hit": 0.7983320697498104,
+        "unique_answer_count": 3.7278241091736164
+      },
+      "previous_metrics": {
+        "correct_frac": 0.5671910538286581,
+        "exact_match": 0.8104624715693708,
+        "exact_match_frac": 0.5671910538286581,
+        "majority_vote_acc": 0.6178923426838514,
+        "none_answer_extracted_frac_per_problem": 0.00009476876421531463,
+        "once_hit": 0.8104624715693708,
+        "unique_answer_count": 3.673237300985595
+      },
+      "extraction_failures": 3,
+      "previous_extraction_failures": 2,
+      "finish_reasons": {
+        "length": 3,
+        "stop": 21101
+      },
+      "numeric_format_rescues": 90,
+      "previous_numeric_format_rescues": 57
+    },
+    "validation": {
+      "questions": 373,
+      "correct": 4078,
+      "responses": 5968,
+      "percent": 68.33109919571045,
+      "previous_correct": 4162,
+      "delta_correct": -84,
+      "delta_pp": -1.4075067024128687,
+      "metrics": {
+        "correct_frac": 0.6833109919571045,
+        "exact_match": 0.8766756032171582,
+        "exact_match_frac": 0.6833109919571045,
+        "majority_vote_acc": 0.7372654155495979,
+        "none_answer_extracted_frac_per_problem": 0.0001675603217158177,
+        "once_hit": 0.8766756032171582,
+        "unique_answer_count": 2.7319034852546915
+      },
+      "previous_metrics": {
+        "correct_frac": 0.6973860589812333,
+        "exact_match": 0.8820375335120644,
+        "exact_match_frac": 0.6973860589812333,
+        "majority_vote_acc": 0.7426273458445041,
+        "none_answer_extracted_frac_per_problem": 0.0003351206434316354,
+        "once_hit": 0.8820375335120644,
+        "unique_answer_count": 2.6514745308310994
+      },
+      "extraction_failures": 1,
+      "previous_extraction_failures": 2,
+      "finish_reasons": {
+        "length": 1,
+        "stop": 5967
+      },
+      "numeric_format_rescues": 51,
+      "previous_numeric_format_rescues": 49
+    },
+    "train": {
+      "questions": 372,
+      "correct": 4956,
+      "responses": 5952,
+      "percent": 83.26612903225806,
+      "previous_correct": 4960,
+      "delta_correct": -4,
+      "delta_pp": -0.06720430107526883,
+      "metrics": {
+        "correct_frac": 0.8326612903225806,
+        "exact_match": 0.9489247311827957,
+        "exact_match_frac": 0.8326612903225806,
+        "majority_vote_acc": 0.8790322580645161,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9489247311827957,
+        "unique_answer_count": 2.10752688172043
+      },
+      "previous_metrics": {
+        "correct_frac": 0.8333333333333334,
+        "exact_match": 0.9516129032258065,
+        "exact_match_frac": 0.8333333333333334,
+        "majority_vote_acc": 0.8897849462365591,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9516129032258065,
+        "unique_answer_count": 2.1236559139784945
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "finish_reasons": {
+        "stop": 5952
+      },
+      "numeric_format_rescues": 37,
+      "previous_numeric_format_rescues": 36
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "questions": 1319,
+      "better": 271,
+      "worse": 326,
+      "unchanged": 722,
+      "gained_correct_samples": 633,
+      "lost_correct_samples": 687,
+      "net": -54,
+      "first_question_before": 14,
+      "first_question_after": 14
+    },
+    "validation": {
+      "questions": 373,
+      "better": 63,
+      "worse": 88,
+      "unchanged": 222,
+      "gained_correct_samples": 128,
+      "lost_correct_samples": 212,
+      "net": -84,
+      "first_question_before": 16,
+      "first_question_after": 16
+    },
+    "train": {
+      "questions": 372,
+      "better": 62,
+      "worse": 69,
+      "unchanged": 241,
+      "gained_correct_samples": 159,
+      "lost_correct_samples": 163,
+      "net": -4,
+      "first_question_before": 16,
+      "first_question_after": 15
+    }
+  },
+  "receipt_hashes": {
+    "RECEIPT.json": "4feeb206728a36149444582b1b5345600901909db4f4cec74ed0feeeb114e809",
+    "INPUT-MANIFEST.json": "c4aa73a882349afc92ee97614e5bdac3c8fc39394d656b6a93f7985b059c52d0",
+    "QUESTION-COUNTS.json": "2477e2884926c3ecb72dc104991f1f8fefee8675d35d3c2afb54f9cd24d9692c",
+    "EXAMPLES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "all_33024_saved_responses_and_21_metrics_verified": true,
+  "native_metrics_current_recheck": {
+    "test": {
+      "correct_frac": 0.5646322971948445,
+      "exact_match": 0.7983320697498104,
+      "exact_match_frac": 0.5646322971948445,
+      "majority_vote_acc": 0.6292645943896892,
+      "none_answer_extracted_frac_per_problem": 0.00014215314632297195,
+      "once_hit": 0.7983320697498104,
+      "unique_answer_count": 3.7278241091736164
+    },
+    "validation": {
+      "correct_frac": 0.6833109919571045,
+      "exact_match": 0.8766756032171582,
+      "exact_match_frac": 0.6833109919571045,
+      "majority_vote_acc": 0.7372654155495979,
+      "none_answer_extracted_frac_per_problem": 0.0001675603217158177,
+      "once_hit": 0.8766756032171582,
+      "unique_answer_count": 2.7319034852546915
+    },
+    "train": {
+      "correct_frac": 0.8326612903225806,
+      "exact_match": 0.9489247311827957,
+      "exact_match_frac": 0.8326612903225806,
+      "majority_vote_acc": 0.8790322580645161,
+      "none_answer_extracted_frac_per_problem": 0,
+      "once_hit": 0.9489247311827957,
+      "unique_answer_count": 2.10752688172043
+    }
+  },
+  "scheduled_points_retained": 40,
+  "baseline_comparison": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 3522,
+    "current_correct": 11916,
+    "delta_percentage_points": 16.688779378316905,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "paper_reference_percent": 56.724,
+  "paper_reference_gap_pp": 0.2607702805155441,
+  "completed_evaluation_service": {
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__390/logs/vllm.log",
+    "log_prefix_bytes": 3271810,
+    "log_prefix_sha256": "bf00fa443925bc30b9aec9edc5e9aaf6440c09da19fb1c8ced05db9cdae1204f"
+  },
+  "interpretation": [
+    "The latest scheduled test is11916/21104=56.463230%, down54correct samples (-0.255876percentagepoints) from380. It is0.260770points below supplied56.724 and16.688779points above originalSFT. This replaces the previous56.719105 headline; the previous close match remains historical, not a selected endpoint.",
+    "All three primary means decline: validation loses84correct samples (-1.407507points) and non-held-out training loses4 (-0.067204points). This local joint decline is real in the stored samples but does not establish a persistent collapse, overfitting, a causal mechanism or future trajectory.",
+    "Test has271questions with more correct samples,326with fewer and722unchanged;633gained samples offset687lost. Its first question remains14/16. These paired counts are descriptive, not independent training-seed replications.",
+    "Test majority-vote accuracy rises from61.789234% to62.926459% while primary meanpass@1 and once-hit fall. Secondary metrics cannot replace the prescribed native meanpass@1.",
+    "Test extraction failures rise only2to3, while a separate unchanged numeric-format diagnostic counts90potentialrescues versus57. This diagnostic is not the official score and must not be used to switch the grading rule after inspecting outcomes. No causal allocation of the decline is inferred.",
+    "All40scheduled points are retained. No favorablecheckpoint, retrospective acceptance tolerance, shortenedLRhorizon, altered reward or scientific recipe is introduced. Original source/runtime/selection uncertainties and disclosed BOS-only/finite-zeroBF16 adapters remain."
+  ],
+  "decision": "Continue unchanged whole owner to fixed690collections/11040updates, original1000collectionLRhorizon and68-hour whole cap including endpoint evaluation. Nextscheduled CPUaudit400/6416 must be prepared before its outputs, separately bounded read-onlywatch after5799departure. Preserveprotected5120 and preselected6400protectiongates. Audit83400 and watcher5799 completed once; never resume or duplicate. No successorGPUjob before entire owner andGPUchildren depart.",
+  "limits": [
+    "Own fixed-endpoint training reproduction remains unfinished; one intermediate close result or dip cannot substitute.",
+    "No independent-seed confirmation, statistical equivalence, causal BOS attribution or measured RLM transfer.",
+    "Latest full original-gold/reward/BOS batch audit remains370; decoded-counter/two-fixed-tensor comparison5920 and all-tensor finite scan1440 retain their scopes.",
+    "Native6240 ten-file inventory is not decoded counters, a finite-tensor scan, protectedcopy orGPUrestore; protected5120 and earlier states retained.",
+    "Native test1319x16,T0.35,effectivetop_p1.0,meanpass@1 preserved; validation373x16; training372x16 is not held-out."
+  ],
+  "advisor_package": {
+    "changed": false,
+    "retained_cutoff_utc": "2026-10-12T20:53:09.492795+00:00",
+    "reason": "Latest intermediate dip updates the supporting dossier, not the central unfinished-endpoint claim, material limitations or next fixed decision. No slides compiled or altered."
+  }
+}

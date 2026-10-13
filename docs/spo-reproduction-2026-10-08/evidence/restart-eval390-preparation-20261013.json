@@ -1,0 +1,189 @@
+{
+  "schema": "spo-evaluation390-audit-preparation-and-observation-v1",
+  "iteration": 390,
+  "optimizer_updates": 6256,
+  "prepared_before_outputs_utc": "2026-10-13T21:53:23.585945+00:00",
+  "preparation_created_before_native_outputs": true,
+  "wrapper_changed_lines": 5,
+  "watcher_changed_lines": 6,
+  "files": {
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval390-regrade-001/regrade_eval390.py": {
+      "bytes": 2842,
+      "sha256": "37d6e9cda7d96a584a678952bce726c8633484220a92592d662c35d201dca547"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval390-regrade-001/test_regrade_eval390_binding.py": {
+      "bytes": 3253,
+      "sha256": "5e1c8a5e0d253bc515ee5c5fef500c63aad00895c950b86e1587ac68b0d45169"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval390-regrade-001/test_watch390_gate.py": {
+      "bytes": 2671,
+      "sha256": "e9a53fa587f763887c997aa0218870c25b0926d0844e46f21ebca3f10eccd58c"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval390-regrade-001/watch390.py": {
+      "bytes": 5415,
+      "sha256": "f78c97a15d2231cd81f3565e92ebd31a1481a20d6b2889831372064404e9dc3c"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/early-eval0-regrade-001/regrade_eval0.py": {
+      "bytes": 5051,
+      "sha256": "12aab206b6ea7840cf492cf5d2c64dcb1f68812c4df64421961cb9bb254d023f"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/regrade.py": {
+      "bytes": 12722,
+      "sha256": "a79bf7baa576c0a426fc19a20543dc995ed7b7a21511648a7a1acd32228fcf1c"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/completion_probe.py": {
+      "bytes": 1387,
+      "sha256": "4ec273edb21273be69c7992ea05ae931a04616b215860d0c0add0a9a2e5fb760"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/test_completion_probe.py": {
+      "bytes": 2303,
+      "sha256": "b4da6cc16f23c29c8ba928d046679ed7545ab6ba3e5448584d4a9666e19d375d"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval380-regrade-001/regrade_eval380.py": {
+      "bytes": 2842,
+      "sha256": "9c1f17e3bc344a60506b837d7b0ba63117713d7d73c9ea38fcc685bbd603673a"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval380-regrade-001/watch380.py": {
+      "bytes": 5415,
+      "sha256": "8fa306a5a5e6221e539d694af12ef8371804ed6a3d88df12fb34c9003b7db954"
+    }
+  },
+  "tests": {
+    "expected_red_missing_files": 2,
+    "complete390_green": 2,
+    "complete380_green": 2,
+    "generic370_green": 2,
+    "independent_reviewer_reran_all_six": true
+  },
+  "review": {
+    "agent": "/root/eval390_preparation_review",
+    "critical": 0,
+    "important": 0,
+    "minor": 0,
+    "root_rulings": "External eval390-regrade-001/PREPARATION-REVIEW.json preserves all ten declined areas and root decisions."
+  },
+  "admission": {
+    "checked_utc": "2026-10-13T22:15:14.409412+00:00",
+    "owners": {
+      "queue": {
+        "pid": 2826646,
+        "startticks": 1362248004,
+        "state": "S"
+      },
+      "scoped": {
+        "pid": 2826649,
+        "startticks": 1362248013,
+        "state": "S"
+      },
+      "trainer": {
+        "pid": 2826650,
+        "startticks": 1362248017,
+        "state": "S"
+      },
+      "observer": {
+        "pid": 2829006,
+        "startticks": 1362275186,
+        "state": "S"
+      }
+    },
+    "sealed_pins_match": 7,
+    "prepared_pins_match": 10,
+    "gates": {
+      "test": true,
+      "validation": true,
+      "train": true
+    },
+    "outputs_absent": {
+      "RECEIPT.json": true,
+      "INPUT-MANIFEST.json": true,
+      "EXAMPLES.json": true,
+      "QUESTION-COUNTS.json": true,
+      "EXECUTION.json": true
+    },
+    "matching_audit_processes": [],
+    "admitted": true,
+    "scope": "CPU full390 audit only. No GPU dispatch or live-source/config change.",
+    "quota": {
+      "checked_utc": "2026-10-13T22:14:25.974136+00:00",
+      "checked_epoch": 1791929665.9741364,
+      "method": "account/rateLimits/read",
+      "action": "wind_down",
+      "remaining_percent": 17,
+      "windows": [
+        {
+          "name": "primary",
+          "used_percent": 83,
+          "remaining_percent": 17,
+          "window_minutes": 10080,
+          "resets_epoch": 1792472358,
+          "resets_utc": "2026-10-20T04:59:18+00:00"
+        }
+      ],
+      "source_bucket": "codex",
+      "reserve_percent": 10,
+      "pause_at_remaining_percent": 15,
+      "wind_down_at_remaining_percent": 20
+    },
+    "quota_policy": "Preserve10%reserve and12%dispatchheadroom, not legacy20/15labels.",
+    "prior_watch5799_departed": true,
+    "admission": "One CPU full390audit only; no GPUadmission."
+  },
+  "execution": {
+    "audit_tool_session": 83400,
+    "exit_code": 0,
+    "receipt_created_utc": "2026-10-13T22:15:17.478202+00:00",
+    "exit_verified_utc": "2026-10-13T22:15:48+00:00",
+    "all33024_answers_and21_metrics_verified": true
+  },
+  "observation": {
+    "tool_session": 5799,
+    "pid": 4130294,
+    "started_utc": "2026-10-13T21:59:31.867927+00:00",
+    "ended_utc": "2026-10-13T22:14:46.873318+00:00",
+    "exit_code": 0,
+    "reason": "All390 split states/metrics present",
+    "scope": "Read-only CPU, cooperative3600secondcap without strict overshoot bound; never starts audits orcontrolsGPUtraining.",
+    "first_test_answer": "18",
+    "gold": "18",
+    "first_test_response_inspected_after_seconds": 33.265655,
+    "coverage_gaps": {
+      "collection388_seconds": 292.292579,
+      "collection389_seconds": 102.911075,
+      "interpretation": "Delayed root/watcher inspections, not proven service failure or GPU idleness; successful native returns and zeroHTTPerrors observed."
+    }
+  },
+  "completed_service": {
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__390/logs/vllm.log",
+    "log_prefix_bytes": 3271810,
+    "log_prefix_sha256": "bf00fa443925bc30b9aec9edc5e9aaf6440c09da19fb1c8ced05db9cdae1204f"
+  },
+  "post_eval_first_returns": [
+    {
+      "collection": 391,
+      "prediction": "16800",
+      "gold": "16800",
+      "reward": 1,
+      "inspection_seconds": 42.515136,
+      "http_successes": 232,
+      "http_errors": 0
+    },
+    {
+      "collection": 392,
+      "prediction": "200",
+      "gold": "200",
+      "reward": 1,
+      "inspection_seconds": 63.766065,
+      "http_successes": 496,
+      "http_errors": 0
+    }
+  ],
+  "limits": [
+    "Operational first responses are not batch-accuracy estimates or proof of intermediate reasoning.",
+    "All sources, owners, scorer and scientific recipe remain unchanged. No GPU successor admitted.",
+    "Completed watcher5799 and audit83400 must not be resumed or duplicated.",
+    "Native6240 inventory is not a protected copy or GPUrestore. External checkpoints and raw artifacts are not backed up by this GitHub publication."
+  ]
+}
