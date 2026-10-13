@@ -1,0 +1,194 @@
+{
+  "schema": "spo-intermediate-evaluation170-interpretation-v1",
+  "checked_utc": "2026-10-13T05:44:55.191Z",
+  "iteration": 170,
+  "completed_collections": 171,
+  "optimizer_updates": 2736,
+  "full_regrade_tool_session": 65903,
+  "full_regrade_exit_code": 0,
+  "all33024_answers_and21_native_metrics_match": true,
+  "summary": {
+    "checked_utc": "2026-10-13T05:43:33.361042+00:00",
+    "receipt170_sha256": "2d27b1f7c88c19c46dd7ecf09ebcc8626be684b7e2156328125a572b3d859bb9",
+    "all_splits_all_iterations_verified": true,
+    "baseline_comparison": {
+      "baseline_correct": 8394,
+      "baseline_correct_frac": 0.3977445034116755,
+      "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+      "baseline_responses": 21104,
+      "correct_answer_delta": 2819,
+      "current_correct": 11213,
+      "delta_percentage_points": 13.357657316148597,
+      "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+    },
+    "rows": {
+      "test": {
+        "questions": 1319,
+        "responses": 21104,
+        "correct": 11213,
+        "extraction_failures": 14,
+        "finish_reasons": {
+          "length": 18,
+          "stop": 21086
+        },
+        "native_metrics": {
+          "correct_frac": 0.5313210765731615,
+          "exact_match": 0.7937831690674754,
+          "exact_match_frac": 0.5313210765731615,
+          "majority_vote_acc": 0.6148597422289613,
+          "none_answer_extracted_frac_per_problem": 0.0006633813495072025,
+          "once_hit": 0.7937831690674754,
+          "unique_answer_count": 4.344200151630023
+        },
+        "previous_native_metrics": {
+          "correct_frac": 0.5276250947687642,
+          "exact_match": 0.7930250189537529,
+          "exact_match_frac": 0.5276250947687642,
+          "majority_vote_acc": 0.6080363912054587,
+          "none_answer_extracted_frac_per_problem": 0.0007107657316148598,
+          "once_hit": 0.7930250189537529,
+          "unique_answer_count": 4.366186504927976
+        },
+        "correct_delta": 78,
+        "mean_pass1_percent": 53.13210765731615,
+        "mean_pass1_delta_pp": 0.36959818043973414
+      },
+      "validation": {
+        "questions": 373,
+        "responses": 5968,
+        "correct": 4055,
+        "extraction_failures": 1,
+        "finish_reasons": {
+          "length": 2,
+          "stop": 5966
+        },
+        "native_metrics": {
+          "correct_frac": 0.6794571045576407,
+          "exact_match": 0.8793565683646113,
+          "exact_match_frac": 0.6794571045576407,
+          "majority_vote_acc": 0.739946380697051,
+          "none_answer_extracted_frac_per_problem": 0.0001675603217158177,
+          "once_hit": 0.8793565683646113,
+          "unique_answer_count": 3.099195710455764
+        },
+        "previous_native_metrics": {
+          "correct_frac": 0.667225201072386,
+          "exact_match": 0.8927613941018767,
+          "exact_match_frac": 0.667225201072386,
+          "majority_vote_acc": 0.7426273458445041,
+          "none_answer_extracted_frac_per_problem": 0.0003351206434316354,
+          "once_hit": 0.8927613941018767,
+          "unique_answer_count": 3.190348525469169
+        },
+        "correct_delta": 73,
+        "mean_pass1_percent": 67.94571045576407,
+        "mean_pass1_delta_pp": 1.2231903485254714
+      },
+      "train": {
+        "questions": 372,
+        "responses": 5952,
+        "correct": 4309,
+        "extraction_failures": 1,
+        "finish_reasons": {
+          "length": 1,
+          "stop": 5951
+        },
+        "native_metrics": {
+          "correct_frac": 0.7239583333333334,
+          "exact_match": 0.9139784946236559,
+          "exact_match_frac": 0.7239583333333334,
+          "majority_vote_acc": 0.7876344086021505,
+          "none_answer_extracted_frac_per_problem": 0.00016801075268817206,
+          "once_hit": 0.9139784946236559,
+          "unique_answer_count": 3.002688172043011
+        },
+        "previous_native_metrics": {
+          "correct_frac": 0.7224462365591398,
+          "exact_match": 0.9166666666666666,
+          "exact_match_frac": 0.7224462365591398,
+          "majority_vote_acc": 0.8010752688172043,
+          "none_answer_extracted_frac_per_problem": 0,
+          "once_hit": 0.9166666666666666,
+          "unique_answer_count": 3.0806451612903225
+        },
+        "correct_delta": 9,
+        "mean_pass1_percent": 72.39583333333333,
+        "mean_pass1_delta_pp": 0.15120967741936164
+      }
+    }
+  },
+  "paired": {
+    "checked_utc": "2026-10-13T05:43:33.361042+00:00",
+    "paired_counts": {
+      "test": {
+        "questions_more_correct": 372,
+        "questions_fewer_correct": 329,
+        "questions_same": 618,
+        "net_correct_delta": 78,
+        "newly_once_hit": 67,
+        "lost_once_hit": 66,
+        "first_question": {
+          "index": 0,
+          "correct170": 12,
+          "correct160": 9,
+          "first_answer170": "18",
+          "gold": "18"
+        }
+      },
+      "validation": {
+        "questions_more_correct": 94,
+        "questions_fewer_correct": 70,
+        "questions_same": 209,
+        "net_correct_delta": 73,
+        "newly_once_hit": 6,
+        "lost_once_hit": 11,
+        "first_question": {
+          "index": 0,
+          "correct170": 16,
+          "correct160": 16,
+          "first_answer170": "16",
+          "gold": "16"
+        }
+      },
+      "train": {
+        "questions_more_correct": 97,
+        "questions_fewer_correct": 86,
+        "questions_same": 189,
+        "net_correct_delta": 9,
+        "newly_once_hit": 6,
+        "lost_once_hit": 7,
+        "first_question": {
+          "index": 2770,
+          "correct170": 16,
+          "correct160": 16,
+          "first_answer170": "6",
+          "gold": "6"
+        }
+      }
+    },
+    "question_counts_sha256": {
+      "160": "ec49f9a00510e0d129435922cccbb07dcee16dfb627025f724d287ab16a6e15e",
+      "170": "0590c5483a6a693d243091815f5f2bd10a8e3cead143c67f919a28f1e480c743"
+    },
+    "limits": "Question-level descriptive counts, not independent seeds, matched response randomness, uncertainty estimates or a significance test."
+  },
+  "interpretation": "Test mean pass@1 rises by0.369598points to53.132108%, validation by1.223190points to67.945710%, and training-subset mean by0.151210points to72.395833%. Test once-hit/majority rise, but validation once-hit/majority and training-subset once-hit/majority fall. This is further measured intermediate learning, not uniform coverage improvement, lasting recovery, independent replication or completed reproduction.",
+  "decision": "Continue unchanged accepted whole owner and sealed source; next scheduled native evaluation180 after2896updates. Preserve all scheduled points and fixed690/11040 endpoint with original1000collection LR horizon. No favorable checkpoint selection or new GPU job. Protected2560 and native2720 states differ from evaluated2736 weights. Prepare next CPU audit180; full3840 protection remains preselected and prepared.",
+  "limits": [
+    "No independent training-seed replication or uncertainty/significance claim;16responses per question are not16 independent training runs.",
+    "BOS and finite-zero adapters plus unresolved author historical source/EOS/checkpoint choice prevent exact-history or causal-BOS claims.",
+    "Author released56.69% remains evaluator validation, not own training reproduction.",
+    "Latest full reward/token audit remains collection160; detailed numeric receipt through2576. No new full-batch audit for170 is implied.",
+    "Training subset is not held out. Full tensor finiteness at2560/2720 and GPU restoration not tested; saved-state checks remain separate."
+  ],
+  "advisor_decision": "Supporting progress changes; primary advisor objective remains unfinished and next decision unchanged. Keep synchronized advisor bundle's explicitOctober12 20:53UTC cutoff; no partial slide edits. User's broader purpose remains methodological calibration for futureRLM rather than commitment toSPO.",
+  "read_only_summary_check_failure": {
+    "type": "KeyError",
+    "field": "original_SFT_baseline_comparison['170']",
+    "root_cause": "The completed audit uses a flat baseline-comparison dictionary, not a dictionary keyed by iteration. Observed receipt schema was inspected and only the reporting reader was corrected.",
+    "original_full_answer_audit_exit_code": 0,
+    "corrected_comparison_exit_code": 0,
+    "native_or_runtime_source_changed": false
+  },
+  "publication_status": "Prepared for supporting-document publication; no new commit claimed here."
+}

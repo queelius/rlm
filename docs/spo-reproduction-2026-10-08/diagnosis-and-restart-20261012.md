@@ -1,7 +1,7 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 05:29 UTC. The seventeenth scheduled restart evaluation
-is fully regraded at 2,576 updates; the next evaluation follows 2,736 updates.
+Status: October 13, 2026, 05:44 UTC. The eighteenth scheduled restart evaluation
+is fully regraded at 2,736 updates; the next evaluation follows 2,896 updates.
 The complete 2,560-update checkpoint is byte-verified outside automatic cleanup,
 alongside the earlier 160-, 960-, and 1,440-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
@@ -104,7 +104,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, and 2,576 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, and 2,736 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -129,8 +129,38 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 2,256 | 51.37% | 66.86% | 71.72% |
 | 2,416 | 51.81% | 65.48% | 72.06% |
 | 2,576 | 52.76% | 66.72% | 72.24% |
+| 2,736 | 53.13% | 67.95% | 72.40% |
 
-### Latest evaluation: 2,576 updates
+### Latest evaluation: 2,736 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval170-20261013.json). Test has **11,213/21,104 correct
+answers, 53.1321%**, or **+13.3577 percentage points** versus original SFT and
+78 answers (+0.3696 points) versus the preceding scheduled evaluation. Validation
+gains 73 answers (+1.2232 points) to 67.9457%; the training subset gains nine
+(+0.1512 points) to 72.3958%, and is not held out.
+
+The secondary measures are mixed. Test once-hit coverage rises from 79.30% to
+79.38% and majority accuracy from 60.80% to 61.49%. Validation coverage falls
+from 89.28% to 87.94% and majority accuracy from 74.26% to 73.99%; training-subset
+coverage and majority also fall. On test, 372 questions have more correct samples,
+329 fewer and 618 unchanged. There are 67 newly once-hit questions and 66 losing
+all correct samples. Validation has six newly once-hit and eleven losing all
+correct samples despite its higher mean score. These observations do not establish
+the cause of the changes or statistical significance.
+
+The predetermined first test question has 12/16 correct samples, versus 9/16
+previously, and its first response correctly returns 18. Test extraction failures
+fall from 15 to 14 while length-limit endings rise from 15 to 18. These examples
+and aggregates do not replace the native mean pass@1 metric. The result is further
+intermediate learning, not uniform coverage improvement, durable recovery, an
+isolated causal BOS test, or completed reproduction. Keep every scheduled point
+and the fixed 690/11,040 endpoint. See the
+[interpretation and question-level comparisons](evidence/restart-eval170-interpretation-20261013.json).
+The detailed reward/token audit below remains collection 160 and its numerical
+receipt remains through 2,576; neither is being relabeled as a new audit of 170.
+
+### Preceding evaluation: 2,576 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval160-20261013.json). Test has **11,135/21,104 correct
@@ -305,7 +335,7 @@ The checkpoint pair was chosen by availability, not test score; unlike the tenso
 names, this pair was not selected before the checkpoints existed. No GPU was used.
 
 The next decision remains the same: keep the recipe and endpoint fixed, inspect
-subsequent scheduled evaluations (next after 2,736 updates), and
+subsequent scheduled evaluations (next after 2,896 updates), and
 preserve complete recovery states. The preselected 2,560-update protection has
 passed full source/copy hashes and protected-copy counter checks. This mixed
 incremental result and recovery milestone stay in the supporting

@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 04:49 UTC
+## Current status on October 13, 05:44 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,31 +33,33 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **2,576 optimizer updates**, is **52.76%**, versus
-**39.77%** for the original model: **+12.99 percentage points**. Earlier scheduled
+The latest scheduled test, after **2,736 optimizer updates**, is **53.13%**, versus
+**39.77%** for the original model: **+13.36 percentage points**. Earlier scheduled
 tests were 40.03% after 16 updates, 41.42% after 176, 42.59% after 336, and
 44.93% after 496, followed by 45.56% after 656, 46.39% after 816, 47.64% after 976,
 48.25% after 1,136, 48.50% after 1,296, 48.86% after 1,456, 49.39% after 1,616,
 49.88% after 1,776, 50.13% after 1,936, 51.05% after 2,096, 51.37% after 2,256,
-and 51.81% after 2,416.
+51.81% after 2,416, and 52.76% after 2,576.
 Each evaluation's 33,024 answers across test, validation, and the training subset
-independently regrade to the native metrics. Test accuracy rose 0.95 points since
-the previous check; validation rose 1.24 points to 66.72%, and the training subset
-rose 0.18 points to 72.24% (not held out). This strengthens the intermediate
+independently regrade to the native metrics. Test accuracy rose 0.37 points since
+the previous check; validation rose 1.22 points to 67.95%, and the training subset
+rose 0.15 points to 72.40% (not held out). This strengthens the intermediate
 learning evidence, **not completed reproduction or proof of lasting recovery**:
-the previous run also improved initially. All first 2,576 update numbers were
-present and logged numeric values finite. The subsequent full collection 160
+the previous run also improved initially. All first 2,736 update numbers were
+present and logged numeric values finite. The latest full collection 160
 audit verifies all 512 terminal rewards and generation/training token bindings:
 386 correct / 126 incorrect, with finite saved log probabilities and advantages.
 See the [training audit](evidence/restart-training-batch160-20261013.json),
-[latest evaluation audit](evidence/restart-eval160-20261013.json) and
-[interpretation](evidence/restart-eval160-interpretation-20261013.json).
-Test solved-at-least-once coverage over 16 attempts rose from 78.62% to 79.30%,
-and majority-vote accuracy rose from 59.59% to 60.80%. There are 376 test questions
-with more correct samples, 300 with fewer, and 643 unchanged. Validation coverage
-and majority also rise, but this is not uniform improvement or an independent
-training-seed replication. Earlier approximate-KL excursions remain numerical
-watchpoints despite the better score. The new detailed window through 2,576 has
+[latest evaluation audit](evidence/restart-eval170-20261013.json) and
+[interpretation](evidence/restart-eval170-interpretation-20261013.json).
+Test solved-at-least-once coverage over 16 attempts rose from 79.30% to 79.38%,
+and majority-vote accuracy rose from 60.80% to 61.49%. There are 372 test questions
+with more correct samples, 329 with fewer, and 618 unchanged. Validation coverage
+falls from 89.28% to 87.94% and majority from 74.26% to 73.99%, despite its higher
+mean score. Training-subset coverage and majority also fall. This is not uniform
+improvement or an independent training-seed replication. Earlier approximate-KL
+excursions remain numerical watchpoints despite the better score. The latest
+detailed window through 2,576 has
 mean policy ratio 1.0036 and approximate-KL maximum 0.338; earlier larger excursions
 remain in the [numerical audit](evidence/restart-training-windows2576-20261013.json).
 These changing-batch rounded aggregates do not establish future stability.
@@ -91,13 +93,14 @@ confirms actual saved changes from 1,440 to 2,240 updates; both tensors are fini
 This is not an all-parameter scan or a measure of learning effectiveness.
 The [earlier 960-to-1,280 check](evidence/restart-parameter-update1280-20261012.json)
 remains in the record. Protected recovery states are distinct from the
-2,576-update weights evaluated above. The earlier native full 2,400-update state
+2,736-update weights evaluated above. The earlier native full 2,400-update state
 passed a [CPU metadata check](evidence/restart-full2400-metadata-20261013.json);
 it was not separately protected or GPU-restored. Native cleanup has now rotated
 it and the older 2,240-update full state; their receipts remain historical.
-The evaluation after 2,576 updates is complete and independently regraded.
-The next scheduled evaluation follows 2,736 updates. The next coarse recovery
-copy at 3,840 updates is preselected by step; preparation and fresh gates remain.
+The evaluation after 2,736 updates is complete and independently regraded.
+The next scheduled evaluation follows 2,896 updates. The next coarse recovery
+copy at 3,840 updates is preselected and prepared; actual-save and fresh storage
+gates remain.
 
 **Operational check, October 13, 01:15 UTC:** all 119 completed collection
 timings and 12 evaluation intervals leave about 10–12 hours before the whole-run
