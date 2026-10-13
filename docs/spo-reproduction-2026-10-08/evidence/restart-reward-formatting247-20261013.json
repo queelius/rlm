@@ -1,0 +1,65 @@
+{
+  "schema": "spo-predetermined-native-reward-formatting-v1",
+  "checked_utc": "2026-10-13T11:42:49.615388+00:00",
+  "collection": 247,
+  "original_question_id": 1046,
+  "prediction": "1600",
+  "gold": "1,600",
+  "numeric_correct": true,
+  "native_grade": false,
+  "native_rule_reward": 0,
+  "native_source_path": "/project/alex_phd/research-cache/repos/SPO/src/treetune/tasks/gsm8k.py",
+  "native_source_sha256": "ef7cff53cb0e048fbf5671d757199ff6bc01ef0dff465d90270c0e20032a1405",
+  "exact_native_method_executed_on_saved_answer": true,
+  "saved_binding": {
+    "checked_utc": "2026-10-13T11:44:23.245707+00:00",
+    "original_question_id": 1046,
+    "saved_trajectory_and_episode_answer_match": true,
+    "saved_trajectory_score": 0,
+    "saved_episode_reward": 0,
+    "saved_episode_score": 0,
+    "query_and_response_token_ids_agree_between_saved_representations": true,
+    "first_query_token_id": 1,
+    "scope": "One predetermined response, not a full-batch or generation-versus-training alignment audit; original full-batch audit remains collection200.",
+    "files_sha256": {
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0247/infer_results/merged_trajectories/data-00000-of-00001.arrow": "1f3cf72ec48a86777ad106a9b14aadb337dbf40b740887aea52e8fa38b527cdd",
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0247/episodes/merged/data-00000-of-00001.arrow": "87015dcea77046599dc639c1b9e97db9bc6cbb63dcc0f588cc6f7fefc14fecdb"
+    }
+  },
+  "interpretation": "Prediction-only comma removal is native behavior; do not call this an arithmetic failure or silently fix the live grading rule. Existing audits already separate secondary numeric-equivalence diagnostics from native primary scores.",
+  "secondary_format_diagnostic_230_to_240": {
+    "test": {
+      "responses": 21104,
+      "correct230": 11498,
+      "correct240": 11424,
+      "rescues230": 93,
+      "rescues240": 80,
+      "native_delta_pp": -0.35064442759666414,
+      "secondary_decimal_delta_pp": -0.41224412433661867
+    },
+    "validation": {
+      "responses": 5968,
+      "correct230": 4005,
+      "correct240": 3981,
+      "rescues230": 46,
+      "rescues240": 40,
+      "native_delta_pp": -0.40214477211796246,
+      "secondary_decimal_delta_pp": -0.5026809651474531
+    },
+    "train": {
+      "responses": 5952,
+      "correct230": 4495,
+      "correct240": 4532,
+      "rescues230": 33,
+      "rescues240": 39,
+      "native_delta_pp": 0.6216397849462365,
+      "secondary_decimal_delta_pp": 0.7224462365591398
+    }
+  },
+  "native_protocol_unchanged": true,
+  "limits": [
+    "Single predetermined first response, not prevalence estimate or a full batch audit.",
+    "Numeric correctness and native string-grade reward differ; do not change primary scores.",
+    "Useful RLM reward-validation lesson, not demonstrated RLM learning transfer or explanation of accuracy changes."
+  ]
+}

@@ -1,23 +1,22 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 11:21 UTC; recovery-state verification at 11:15 UTC.
-The twenty-fifth scheduled restart evaluation is fully regraded at 3,856 updates;
-the next evaluation follows 4,016 updates.
-Test falls to 54.13%, validation falls to 66.71%, and the non-held-out
-training subset rises to 76.14%. Test coverage and majority also fall;
-validation coverage and majority rise despite its lower mean. This merits
-continued observation, not a lasting-deterioration or overfitting claim.
-Reproduction remains unfinished.
-The complete 3,840-update checkpoint is byte-verified outside automatic cleanup,
+Status: October 13, 2026, 12:06 UTC; native-state check at 11:56 UTC.
+The twenty-sixth scheduled restart evaluation is fully regraded at 4,016 updates;
+the next evaluation follows 4,176 updates.
+Test rises slightly to 54.20%, validation to 67.24%, and the non-held-out training
+subset to 76.39%. Both held-out coverage scores rise, but both majority-vote
+scores fall. This is intermediate learning, not completed reproduction or a
+sustained-trend claim. Native 4,000 counters and ten-file stability are verified;
+that is not a protected copy, full-tensor scan or GPU restoration.
+The complete 3,840-update checkpoint remains byte-verified outside cleanup,
 alongside the earlier 160-, 960-, 1,440- and 2,560-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
-at 1,440; no such full scan is claimed for 2,560 or 3,840. Logged learning rates are
-independently checked through 768 updates;
-the scientific recipe and fixed endpoint are unchanged.
-Our primary objective is to reproduce the
-paper's **training result** on one A100. It is still unfinished. We have matched
-the authors' released-model evaluation, diagnosed concrete discrepancies in our
-training pipeline, and started a fresh run that tests the strongest one.
+at 1,440; no such full scan is claimed for newer states. Logged learning rates are
+independently checked through 768 updates; the scientific recipe and fixed
+endpoint are unchanged. Our primary objective remains reproducing the paper's
+**training result** on one A100. We have matched the authors' released-model
+evaluation, diagnosed concrete discrepancies in our training pipeline, and
+started a fresh run that tests the strongest one.
 
 The broader purpose, reaffirmed by the user, is methodological calibration for
 continuing RLM research: check that our RL implementation, measurement and
@@ -110,7 +109,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, and 3,856 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, and 4,016 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -143,8 +142,71 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 3,536 | 54.02% | 67.59% | 76.43% |
 | 3,696 | 54.48% | 67.11% | 75.52% |
 | 3,856 | 54.13% | 66.71% | 76.14% |
+| 4,016 | 54.20% | 67.24% | 76.39% |
 
-### Latest evaluation: 3,856 updates
+### Latest evaluation: 4,016 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval250-20261013.json). Test has **11,439/21,104 correct
+answers, 54.2030%**, or **+14.4285 percentage points** versus original SFT.
+It gains 15 correct answers (+0.0711 points) since the preceding check.
+Validation gains 32 (+0.5362 points) to **4,013/5,968, 67.2420%**.
+The training subset gains 15 (+0.2520 points) to **4,547/5,952, 76.3945%**
+and is not held out.
+
+The last four scheduled tests are 54.02%, 54.48%, 54.13% and 54.20%.
+This small rebound is not a sustained-trend, lasting-recovery or completed-
+reproduction claim. Test once-hit coverage rises from 79.08% to 79.61%, but
+majority falls from 61.03% to 60.35%. There are 326 questions with more correct
+samples, 318 fewer and 675 unchanged; 57 become once-hit and 50 lose all
+correct samples. Validation coverage rises from 88.47% to 89.28%, while
+majority falls from 73.46% to 72.65%. Training coverage and majority remain
+unchanged despite its higher mean. These metrics are not interchangeable.
+
+Test extraction failures rise from three to four; length-limit endings fall
+from five to four. The predetermined first test question falls from 11/16 to
+9/16 correct samples despite the aggregate gain. Secondary numeric-equivalence
+potential rescues are 88 test, 37 validation and 42 train, versus 80, 40 and 39
+previously; primary scores are unchanged. These descriptive paired counts are
+not independent training replications or significance tests. Keep all 26
+scheduled points, mean pass@1 and the fixed 690/11,040 endpoint; no favorable
+checkpoint, posthoc acceptance tolerance or BOS causal claim.
+See the [interpretation](evidence/restart-eval250-interpretation-20261013.json).
+
+The full reward/token audit remains collection 200. A separate
+[native 4,000-state metadata check](evidence/restart-full4000-metadata-20261013.json)
+verifies all ten stable files, matching trainer/actor/active Adam counters,
+scheduler 3,999 and zero skipped steps. This is not a protected copy,
+all-tensor finite scan or GPU restore. Protected 160/960/1,440/2,560/3,840 remain.
+Native cleanup removed the 3,840 optimizer at 11:48:59 UTC, while retaining its
+HF weights and custom metadata; the protected copy's ten identities still match.
+Periodic directory retention is not optimizer retention. A stale assumption in
+the publication check failed safely and was corrected before publishing; the
+original protection receipt and the failed check are retained. The evaluated
+4,016 weights are distinct. The step-selected 5,120 procedure is prepared but
+not executed; fresh complete-state, owner, stability and byte/file quota
+gates remain mandatory.
+
+All 2,065 evaluation HTTP returns succeeded with no transport errors or
+tracebacks. The first test response was inspected within 29 seconds and
+wrongly answered 2 instead of 18; it does not determine the aggregate result.
+After the completed 250 observer, the initial collection-251 check was late
+at 139 seconds (normal goal 90 seconds), with 779 successful returns and
+zero errors. Record the monitoring gap, not a wasted GPU interval. The new
+read-only observer covers 260/4,176, and checked collection 252 within 38
+seconds. The original whole owner, sealed sources and scientific recipe
+remain unchanged.
+
+A predetermined collection-247 example correctly answers `1600`, but
+native gold `1,600` yields reward zero: the exact native method normalizes
+commas in the prediction only. The saved trajectory and episode agree.
+The [source-bound check](evidence/restart-reward-formatting247-20261013.json)
+is one concrete instance, not a prevalence estimate. Do not silently alter
+the reproduction's reward or inflate its primary score. For later RLM work,
+validate reward formatting independently of mathematical and procedural
+correctness; this is a methodological lesson, not demonstrated transfer.
+
+### Preceding evaluation: 3,856 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval240-20261013.json). Test has **11,424/21,104 correct
