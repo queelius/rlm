@@ -1,0 +1,113 @@
+{
+  "checked_utc": "2026-10-13T20:29:59.718126+00:00",
+  "files": {
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/regrade_eval370.py": {
+      "bytes": 2842,
+      "sha256": "d37823d85bd63f6f9eb0bbcbf8132f1e2ebfc4c60c0e691a53fce4be70ead4ea"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/test_regrade_eval370_binding.py": {
+      "bytes": 3253,
+      "sha256": "455a5dce63157b13e771993cda7cd159247b987ca5d7cea3f76759de3b32f740"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/completion_probe.py": {
+      "bytes": 1387,
+      "sha256": "4ec273edb21273be69c7992ea05ae931a04616b215860d0c0add0a9a2e5fb760"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/test_completion_probe.py": {
+      "bytes": 2303,
+      "sha256": "b4da6cc16f23c29c8ba928d046679ed7545ab6ba3e5448584d4a9666e19d375d"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval360-regrade-001/regrade_eval360.py": {
+      "bytes": 2842,
+      "sha256": "b328c1376ba178ecbd7e0574f0b1c702f5ffbc96454c0d124e766e7401b1facc"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/early-eval0-regrade-001/regrade_eval0.py": {
+      "bytes": 5051,
+      "sha256": "12aab206b6ea7840cf492cf5d2c64dcb1f68812c4df64421961cb9bb254d023f"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/regrade.py": {
+      "bytes": 12722,
+      "sha256": "a79bf7baa576c0a426fc19a20543dc995ed7b7a21511648a7a1acd32228fcf1c"
+    }
+  },
+  "exact_five_target_metadata_bindings_only": true,
+  "prior_source_pins_match": true,
+  "native370_root_absent": true,
+  "audit_outputs_absent": true,
+  "wrapper_creation_mtime_utc": "2026-10-13T20:29:36.384679+00:00",
+  "no_full_regrade_executed": true,
+  "changed_lines": [
+    [
+      "\"\"\"Invoke the existing full-answer audit for scheduled iteration360, CPU only.\"\"\"",
+      "\"\"\"Invoke the existing full-answer audit for scheduled iteration370, CPU only.\"\"\""
+    ],
+    [
+      "ITERATION = 360",
+      "ITERATION = 370"
+    ],
+    [
+      "assert bindings['ITERATIONS'] == (360,)",
+      "assert bindings['ITERATIONS'] == (370,)"
+    ],
+    [
+      "    evaluation_semantics=\"After361 collections /5776 optimizer updates; not a final checkpoint.\",",
+      "    evaluation_semantics=\"After371 collections /5936 optimizer updates; not a final checkpoint.\","
+    ],
+    [
+      "    trigger=\"Scheduled evaluation360 selected before outputs existed; see PREPARATION.json for wrapper creation timing; no favorable checkpoint selection.\",",
+      "    trigger=\"Scheduled evaluation370 selected before outputs existed; see PREPARATION.json for wrapper creation timing; no favorable checkpoint selection.\","
+    ]
+  ],
+  "schema": "spo-evaluation370-preparation-v1",
+  "iteration": 370,
+  "collections_at_evaluation": 371,
+  "optimizer_updates_at_evaluation": 5936,
+  "state": "prepared_not_executed_waiting_for_all_three_native_splits_and_fresh_gates",
+  "source_template": "eval360-regrade-001/regrade_eval360.py",
+  "tests": {
+    "red_missing_wrapper_and_probe": {
+      "chunk_id": "42fcb8",
+      "wall_time_seconds": 0.000011993,
+      "exit_code": 1,
+      "original_token_count": 360,
+      "output": "FF\n======================================================================\nFAIL: test_requires_three_matching_native_split_artifacts (test_completion_probe.CompletionProbeTest.test_requires_three_matching_native_split_artifacts)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/test_completion_probe.py\", line 10, in test_requires_three_matching_native_split_artifacts\n    self.assertTrue(path.is_file(), \"Completion probe is missing\")\nAssertionError: False is not true : Completion probe is missing\n\n======================================================================\nFAIL: test_audit_targets_evaluation370_after5936_updates (test_regrade_eval370_binding.ScheduledAuditBindingTest.test_audit_targets_evaluation370_after5936_updates)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/test_regrade_eval370_binding.py\", line 12, in test_audit_targets_evaluation370_after5936_updates\n    self.assertTrue(wrapper.is_file(), \"Scheduled evaluation370 wrapper is missing\")\nAssertionError: False is not true : Scheduled evaluation370 wrapper is missing\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (failures=2)\n"
+    },
+    "red_legacy_gate_on_actual370_layout_fixture": {
+      "chunk_id": "a7c7c4",
+      "wall_time_seconds": 0.000011302,
+      "exit_code": 1,
+      "original_token_count": 68,
+      "output": "Traceback (most recent call last):\n  File \"<string>\", line 10, in <module>\nAssertionError: Observed stale360 watcher gate fails against complete370 native-layout fixture\n{'legacy_gate_result_on_complete370_fixture': {'test': False, 'validation': False, 'train': False}}\n"
+    },
+    "green370_complete_external_discovery": {
+      "chunk_id": "43d54c",
+      "wall_time_seconds": 0.000011391,
+      "exit_code": 0,
+      "original_token_count": 25,
+      "output": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.012s\n\nOK\n"
+    },
+    "green_prior360_discovery": {
+      "chunk_id": "1278ed",
+      "wall_time_seconds": 0.000009228,
+      "exit_code": 0,
+      "original_token_count": 25,
+      "output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.007s\n\nOK\n"
+    }
+  },
+  "probe": {
+    "checked_utc": "2026-10-13T20:29:36.463139+00:00",
+    "iteration": 370,
+    "gates": {
+      "test": false,
+      "validation": false,
+      "train": false
+    },
+    "all_presence_gates_ready": false,
+    "scope": "File presence only; fresh owner, pins, no-overwrite and full audit still required."
+  },
+  "invocation": "CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 /project/alex_phd/envs/spo-6c5f947/bin/python /project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/regrade_eval370.py",
+  "completion_probe_invocation": "/project/alex_phd/envs/rlm/bin/python /project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/completion_probe.py",
+  "completion_gate": "Run at most once after fresh original owners/startticks, seven sealed source pins, seven prepared source pins, all native split state+metric gates, and no existing outputs. Probe file presence alone grants no authority to run.",
+  "active_watch_limit": "Existing39616 stays untouched and bounded until21:07:23.755UTC; its automatic completion gate is stale. Use independent probe or actual target370 paths, never its all-ready flag.",
+  "scientific_limits": "Preparation is not a new score, training/recipe/scoring/source change or reproduction completion."
+}

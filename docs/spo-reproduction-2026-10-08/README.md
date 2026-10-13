@@ -1,6 +1,66 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 20:11 UTC
+## Current status on October 13, 20:54 UTC
+
+Scientific-result cutoff: 20:50:17 UTC; live log check: 20:51:37 UTC.
+
+**Our training reproduction is still unfinished.** The thirty-eighth scheduled
+evaluation, after **5,936 optimizer updates**, is independently regraded:
+all 33,024 saved answers and all 21 native metrics agree.
+
+| Native mean pass@1 | Latest | Change from 5,776 updates |
+| --- | ---: | ---: |
+| Test | 56.51% | +0.05 percentage points |
+| Validation | 69.10% | −0.85 percentage points |
+| Non-held-out training subset | 83.69% | +0.79 percentage points |
+
+The exact test count is 11,926/21,104, a **16.74-point gain** over the original
+SFT baseline (39.77%). Test is locally almost flat, while validation declines
+and training-subset accuracy rises. This is not broad improvement across splits,
+proof of overfitting, or a guarantee of stability. The intermediate gap to the
+supplied 56.724% paper reference is 0.213 percentage points. We still require
+the fixed **690-collection / 11,040-update endpoint**, retaining the original
+1,000-collection LR horizon and every scheduled result. No acceptance tolerance
+or favorable checkpoint is being chosen from interim scores. The authors'
+released-weight match remains evaluator validation, not our training result.
+
+See the [evaluation audit](evidence/restart-eval370-20261013.json),
+[interpretation](evidence/restart-eval370-interpretation-20261013.json) and
+[full scheduled series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far).
+Test has 304 questions with more correct samples, 327 with fewer and 688
+unchanged: 774 gains offset 763 losses. The first test question falls from
+14/16 to 10/16 despite the slight aggregate rise. These are descriptive
+comparisons, not independent training replications or significance tests.
+
+The [full collection 370 training audit](evidence/restart-training-batch370-20261013.json)
+verifies all 512 answer rewards, original gold/text and generation/episode/actor
+token bindings: 421 reward-one and 91 reward-zero responses, 23 mixed groups
+and 1,338 nonzero advantage tokens. A reward-positive road-trip solution still
+contains incorrect intermediate arithmetic. This repeats the answer-only reward
+limitation below; it is not a frequency estimate or measured transfer to RLM.
+
+The [5,920-update checkpoint/parameter audit](evidence/restart-parameter-update5920-20261013.json)
+checks ten stable native files, trainer/actor/active Adam counters 5,920,
+scheduler 5,919 and zero skipped steps. The same two predetermined projection
+tensors are finite and changed from protected 5,120. This is not an all-tensor
+scan, beneficial-learning proof, protected copy or GPU-restore test; the
+5,920 saved recovery state differs from the evaluated 5,936 weights.
+Protected 5,120 and older copies remain; next protection is preselected at
+6,400 and still gated. Native cleanup removed the 5,760 optimizer files at
+20:36:32; its earlier complete inventory is now historical.
+
+Training resumed under the unchanged whole owner. All 2,065 evaluation HTTP
+returns succeeded, with no errors or tracebacks. Logged updates through 5,936
+are contiguous and all 23 numeric fields finite; the finite gradient peak
+71.1 remains a watchpoint. No live source, grader, optimizer recipe or GPU
+ownership change was made. Next scheduled evaluation follows 6,096 updates.
+
+The advisor package retains its explicit October 12, 20:53:09 UTC cutoff:
+this intermediate result does not change the main story, material limitations
+or next fixed-endpoint decision. The full reproduction, causal attribution to
+BOS, faithful GPU resumption and RLM transfer remain distinct claims.
+
+## Historical status on October 13, 20:11 UTC (superseded above)
 
 Completed scientific-result cutoff: 20:07 UTC. Live-update check: 20:09 UTC;
 protected 5,120-update recovery copy verified at 17:12 UTC.

@@ -1,0 +1,158 @@
+{
+  "schema": "spo-training-collection-audit-v2",
+  "checked_utc": "2026-10-13T20:42:00.447587+00:00",
+  "native_root": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+  "collection": 370,
+  "optimizer_updates_after_collection": 5936,
+  "responses": 512,
+  "question_groups": 64,
+  "effective_reward_counts": {
+    "0.0": 91,
+    "1.0": 421
+  },
+  "mixed_effective_reward_groups": 23,
+  "terminal_uniform_groups_with_nonzero_advantages": 8,
+  "reward_regrade_mismatches": [],
+  "generation_training_query_id_mismatches": 0,
+  "episode_actor_trajectory_token_equality": true,
+  "original_gold_and_saved_response_identity_verified": true,
+  "actor_reference_logprobs_finite": true,
+  "advantages_finite": true,
+  "nonzero_advantage_tokens": 1338,
+  "http_successes": 653,
+  "http_errors": 0,
+  "generation_log_tracebacks": 0,
+  "source_artifacts": [
+    "episodes/episodes_0370",
+    "checkpoints/episodes__iter0370/w_actLogp",
+    "temp_episodes/iteration__0370/infer_results/merged_trajectories",
+    "temp_episodes/iteration__0370/infer_results/process_00/traj_results_ds",
+    "temp_episodes/iteration__0370/infer_results/process_00/vllm_server.log"
+  ],
+  "generation_log_sha256": "dc93ab529c8d5077ae16ad883f93d73e64ec3ba8cccc560f3fa5b63d32c15ee9",
+  "source_hashes": {
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/tasks/gsm8k.py": "ef7cff53cb0e048fbf5671d757199ff6bc01ef0dff465d90270c0e20032a1405",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator.py": "d95c525f5894d45d14fd8c567a695c0bfa4f892a4daaa6bba53358b1c006529a",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator_with_mc_advantages.py": "e098eee0f10381bb46c66778c20d1a6434b2294ca9db9f059dc435b048054cde",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/config.json": "30bdd16637a48a499d84cf2ad528d9ecc0eab25707a20d9d5d2917ce4bb69ebc"
+  },
+  "interpretation": "Reward and token-alignment checks remain consistent in a newer completed batch. Mixed terminal rewards and finite nonzero intermediate advantages provide a usable learning signal. Changing training questions are not a benchmark curve or proof of paper reproduction.",
+  "decision": "Continue same authenticated owner and fixed690/11040 recipe; scheduled evaluation370 follows5936 optimizer updates. No new GPU job, live source change, reward change or checkpoint selection.",
+  "limits": [
+    "Independent string/penalty regrade follows native GSM8K rules, not a new mathematical equivalence verifier.",
+    "Finite saved logprobs/advantages and logged update scalars are not an all-parameter numerical audit.",
+    "No new held-out evaluation or independent training replication."
+  ],
+  "input_files": [
+    {
+      "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/training-audit-collection16-20261012.py",
+      "bytes": 5701,
+      "inode": 1099979490343,
+      "mtime_ns": "1791824622115545815",
+      "sha256": "ca3b4a442701e0cef7e6ae3833d28f00b1db6bd70445b8e2392471a3f7f15d67"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/episodes/episodes_0370/data-00000-of-00001.arrow",
+      "bytes": 2581208,
+      "inode": 1099979762887,
+      "mtime_ns": "1791923946343679416",
+      "sha256": "571901a224fbece5041d40b5ac2bd1e17c4ccfd07db59e1acc1640997e1aa0e1"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/episodes/episodes_0370/dataset_info.json",
+      "bytes": 1206,
+      "inode": 1099979761598,
+      "mtime_ns": "1791923946346679416",
+      "sha256": "2adc92ff6d00622b48197b54c9283fb19632958509cb0c6aa5ceffc99eda1a09"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/episodes/episodes_0370/state.json",
+      "bytes": 440,
+      "inode": 1099979761597,
+      "mtime_ns": "1791923946346679416",
+      "sha256": "852dab5d32acb94524d57486fd4eb79aed75d27d37f967a086c5e66cbf8e7a53"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/episodes__iter0370/w_actLogp/cache-7bfbb90acb883105.arrow",
+      "bytes": 4544,
+      "inode": 1099979761077,
+      "mtime_ns": "1791923865404679307",
+      "sha256": "b2f824a51337f587ce1053bd9d4ee365ada9ba232f020884f008eecd08b83899"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/episodes__iter0370/w_actLogp/data-00000-of-00001.arrow",
+      "bytes": 4214360,
+      "inode": 1099979762867,
+      "mtime_ns": "1791923958098679431",
+      "sha256": "9c686b153a90bf7421ea7a3d4130d819e4f35973f84872d76156c6bb818b55e1"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/episodes__iter0370/w_actLogp/dataset_info.json",
+      "bytes": 1498,
+      "inode": 1099979761076,
+      "mtime_ns": "1791923958102679431",
+      "sha256": "a2840e6a03becf335a878905a66910ff46b926e7aa92b290d2e616570d594ff9"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/episodes__iter0370/w_actLogp/state.json",
+      "bytes": 500,
+      "inode": 1099979761075,
+      "mtime_ns": "1791923958101679431",
+      "sha256": "884d63a9e43107afbfcc948adee7e92c4b1f17fcd1f3926a3697bec6b15ad596"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0370/infer_results/merged_trajectories/data-00000-of-00001.arrow",
+      "bytes": 4172608,
+      "inode": 1099979762864,
+      "mtime_ns": "1791923860506679300",
+      "sha256": "427f9e90e3f0a17e371033187e088c275a520dd17059d122609c6c19526bcfc2"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0370/infer_results/merged_trajectories/dataset_info.json",
+      "bytes": 1794,
+      "inode": 1099979761074,
+      "mtime_ns": "1791923860510679300",
+      "sha256": "395ec7fa4c1dc98f69261608404a26fcaeb8daf550f4df904125d544a6f6a563"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0370/infer_results/merged_trajectories/state.json",
+      "bytes": 470,
+      "inode": 1099979761073,
+      "mtime_ns": "1791923860510679300",
+      "sha256": "a18791c9e0d049af8b1a3574575837147ad7398106b7939d5ebf9691dae18092"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0370/infer_results/process_00/traj_results_ds/data-00000-of-00001.arrow",
+      "bytes": 974128,
+      "inode": 1099979762860,
+      "mtime_ns": "1791923859275679299",
+      "sha256": "1e3f5fab5618f12594d84204786d2b288ab9259c0a135d4cbe886abb090d51c9"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0370/infer_results/process_00/traj_results_ds/dataset_info.json",
+      "bytes": 2206,
+      "inode": 1099979761070,
+      "mtime_ns": "1791923859277679299",
+      "sha256": "b6844bc04b0f690af93385da111dbaa5a947fcbf9cc2c68bca1361272f894b63"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0370/infer_results/process_00/traj_results_ds/state.json",
+      "bytes": 247,
+      "inode": 1099979761069,
+      "mtime_ns": "1791923859276679299",
+      "sha256": "ccb339f2026758a1749695da983874c1adca37d56b879f77cc166b31cc6cd480"
+    },
+    {
+      "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0370/infer_results/process_00/vllm_server.log",
+      "bytes": 1423350,
+      "inode": 1099979762858,
+      "mtime_ns": "1791923938250679405",
+      "sha256": "dc93ab529c8d5077ae16ad883f93d73e64ec3ba8cccc560f3fa5b63d32c15ee9"
+    }
+  ],
+  "input_identities_unchanged_during_audit": true,
+  "audit_source_sha256": "ca3b4a442701e0cef7e6ae3833d28f00b1db6bd70445b8e2392471a3f7f15d67",
+  "parameterized_audit_sha256": "b20eb94763371dcf1a7a84a2599519d39b9f680e5d635769c29c9ed5c8252eb5",
+  "raw_examples": "Preserved externally in training-audit-collection370-20261013.json, not copied into this publication.",
+  "reasoning_limit": "The first reward-positive response (row3) gives50 but states270/60=4 and49+0.5=50. Native answer-only reward matches its correct final label; intermediate arithmetic is not validated. No prevalence or RLM-transfer claim."
+}

@@ -1,0 +1,141 @@
+{
+  "schema": "spo-selected-saved-parameter-update-audit-v1",
+  "checked_utc": "2026-10-13T20:46:46.451251+00:00",
+  "reference_updates": 5120,
+  "current_updates": 5920,
+  "reference_checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0320--epoch_2.00--step_5120",
+  "current_checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0370--epoch_2.00--step_5920",
+  "fixed_tensor_names_receipt": "parameter-update1280-selection-20261012.json",
+  "selection_receipt": "parameter-update5920-selection-20261013.json",
+  "selection_rationale": "Reuse previously fixed tensor names; compare latest complete native save against latest protected recovery copy, selected by availability, not score. Both checkpoints already exist. Native5920 is not the evaluated5936 state.",
+  "comparisons": {
+    "model.layers.0.self_attn.q_proj.weight": {
+      "shape": [
+        2048,
+        2048
+      ],
+      "elements": 4194304,
+      "dtype": "torch.bfloat16",
+      "reference_finite": true,
+      "current_finite": true,
+      "changed_elements": 1564736,
+      "max_absolute_change": 0.00048828125,
+      "mean_absolute_change": 0.00000853529400046682,
+      "rms_change": 0.000020914892957080156,
+      "reference_bf16_tensor_bytes_sha256": "ffe4aaf8241fb3f4a01639a3265c664a8940b3e437e7bd306f1138178b831f6e",
+      "current_bf16_tensor_bytes_sha256": "e56700b37e658fc8f0cb055ae1f46e8932fa7e83872fdf5ca53ec9efb38821fc"
+    },
+    "model.layers.0.self_attn.o_proj.weight": {
+      "shape": [
+        2048,
+        2048
+      ],
+      "elements": 4194304,
+      "dtype": "torch.bfloat16",
+      "reference_finite": true,
+      "current_finite": true,
+      "changed_elements": 2332247,
+      "max_absolute_change": 0.000244140625,
+      "mean_absolute_change": 0.000014057264706934802,
+      "rms_change": 0.000023337379388976842,
+      "reference_bf16_tensor_bytes_sha256": "4c2ce3e1b28285c65ed419ed77362d6e9388184cfbd25dae9de5576b394cd632",
+      "current_bf16_tensor_bytes_sha256": "69ade8c5f8b20c59b578d7016d22a6b5cb5aa01c8a3f280cb15a9d270c5066e2"
+    }
+  },
+  "file_identities": {
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0320--epoch_2.00--step_5120/hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979721216,
+      "mtime_ns": "1791910711728661614"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0370--epoch_2.00--step_5920/hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979762848,
+      "mtime_ns": "1791923796709679214"
+    }
+  },
+  "native_ten_file_identities": {
+    "actor/global_step5920/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "inode": 1099979761061,
+      "mtime_ns": "1791923824197679251"
+    },
+    "actor/global_step5920/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "inode": 1099979762851,
+      "mtime_ns": "1791923800629679220"
+    },
+    "actor/latest": {
+      "bytes": 15,
+      "inode": 1099979761062,
+      "mtime_ns": "1791923824198679251"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "inode": 1099979762852,
+      "mtime_ns": "1791923824198679251"
+    },
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "inode": 1099979762845,
+      "mtime_ns": "1791923792764679209"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "inode": 1099979761058,
+      "mtime_ns": "1791923792764679209"
+    },
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "inode": 1099979761059,
+      "mtime_ns": "1791923792764679209"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "inode": 1099979762847,
+      "mtime_ns": "1791923792766679209"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "inode": 1099979761060,
+      "mtime_ns": "1791923792766679209"
+    },
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979762848,
+      "mtime_ns": "1791923796709679214"
+    }
+  },
+  "trainer_state": {
+    "global_step": 5920,
+    "epoch": 2,
+    "iteration": 370
+  },
+  "actor_global_steps": 5920,
+  "actor_skipped_steps": 0,
+  "scheduler_last_batch_iteration": 5919,
+  "active_adam_state_steps": {
+    "0": 5920,
+    "1": 5920
+  },
+  "legacy_optimizer_group_steps": [
+    0,
+    0
+  ],
+  "latest_tag": "global_step5920",
+  "files_stable_during_inspection": true,
+  "cuda_initialized": false,
+  "interpretation": "Direct change and finite-state check of the same two predetermined saved tensors. Not beneficial learning, all-model/optimizer finiteness, BOS causality or faithful GPU restoration.",
+  "limits": [
+    "Only two tensors checked for finiteness; no full parameter, master-weight or moment scan.",
+    "Native5920 remains subject to automatic rotation, not separately protected.",
+    "Evaluated weights5936 differ from this5920 full-state checkpoint.",
+    "No live source/model/optimizer/owner mutation or GPU job."
+  ],
+  "execution": {
+    "tool_session": 3512,
+    "exit_code": 0,
+    "cuda_visible_devices": "",
+    "omp_num_threads": 1
+  }
+}
