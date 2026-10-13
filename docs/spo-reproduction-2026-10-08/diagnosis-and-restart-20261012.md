@@ -1,19 +1,19 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 18:01 UTC; scientific cutoff18:01, live-update check17:58.
-The thirty-fourth scheduled restart evaluation is fully regraded at5,296 updates;
-next follows5,456. Test is56.22%, validation68.43%, non-held-out training80.02%.
-Both held-out splits rise while training falls. This reverses the preceding
-local pattern, weakening sustained-deterioration concerns without establishing
-a cause or future stability. Improvement remains intermediate, not completed
-reproduction.
+Status: October 13, 2026, 18:46 UTC; scientific cutoff18:39, live-update check18:46.
+The thirty-fifth scheduled restart evaluation is fully regraded at5,456 updates;
+next follows5,616. Test is56.11%, validation69.76%, non-held-out training81.60%.
+Test dips slightly while validation and training rise. The mixed, non-monotonic
+result does not establish uniform deterioration, sustained overfitting, a cause
+or future stability. Improvement remains intermediate, not completed reproduction.
 
-The complete5,120 recovery state remains protected; native5,280 passed a
-CPU metadata/stability check at17:44. Native5,120 optimizer files were removed
+The complete5,120 recovery state remains protected; native5,440 passed a
+CPU metadata/stability check at18:29. Native5,280 was removed entirely by normal
+cleanup18:24:26; its receipt is historical. Native5,120 optimizer files were removed
 by normal cleanup17:40:33; its HF export/empty actor directory do not constitute
 full state. Protected files are separate. No new full-tensor scan or GPU restore.
 Latest full saved-tensor scan remains1,440; latest full reward/BOS batch audit
-is329. The fixed690/11,040 endpoint and original1,000-collection LR horizon
+is340. The fixed690/11,040 endpoint and original1,000-collection LR horizon
 remain unchanged. Our primary objective is the paper's **training result**.
 The broader purpose, reaffirmed by the user, is methodological calibration for
 continuing RLM research: check that our RL implementation, measurement and
@@ -106,7 +106,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, and 5,296 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, and 5,456 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -148,8 +148,75 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 4,976 | 55.55% | 67.81% | 80.19% |
 | 5,136 | 55.61% | 67.54% | 80.63% |
 | 5,296 | 56.22% | 68.43% | 80.02% |
+| 5,456 | 56.11% | 69.76% | 81.60% |
 
-### Latest evaluation: 5,296 updates
+### Latest evaluation: 5,456 updates
+
+The [full audit](evidence/restart-eval340-20261013.json) independently verifies
+all 33,024 saved answers and 21 native metrics. Test is **11,841/21,104 = 56.1078%**
+(−24 correct / −0.1137 points since 330), validation **4,163/5,968 = 69.7554%**
+(+79 / +1.3237 points), and non-held-out training **4,857/5,952 = 81.6028%**
+(+94 / +1.5793 points). All 35 scheduled results remain above.
+
+This is a mixed result, not a uniform decline. Neither this small test dip nor
+the preceding rebound establishes a stable future trend or a mechanism. Gain
+over original SFT is 16.3334 points; the intermediate gap to the supplied 56.724%
+reference is 0.6162 points. Fixed 690/11,040 remains required. No tolerance or
+favorable checkpoint is selected from that gap.
+
+Test has 302 improved / 314 worsened / 703 unchanged question counts, with 731
+correct samples gained and 755 lost. Validation has 95/83/195 (254 gained,
+175 lost); training 85/57/230 (251 gained, 157 lost). The first test question
+rises from 13 to 15 correct out of 16 while aggregate accuracy falls. Test
+once-hit coverage and majority accuracy rise while mean pass@1 falls; validation
+once-hit falls while mean pass@1 rises. Those auxiliary measures cannot replace
+the prescribed metric. Test extraction failures remain three, length endings
+fall from three to two; validation remains zero and training falls from one
+to zero. Numeric-format potential rescues 77/46/43 remain secondary.
+
+The [full batch 340 audit](evidence/restart-training-batch340-20261013.json)
+verifies all 512 rewards, original identities/text and generation/actor/episode
+query/response token bindings. It finds 380 correct / 132 incorrect, 16 mixed
+question groups and 13 terminal-uniform groups with nonzero intermediate
+advantages. Saved actor/reference log probabilities and advantages are finite;
+1,109 advantage tokens are nonzero. This validates a recent pipeline batch,
+not a held-out trend, all-model finite scan or isolated causal BOS effect.
+
+The [native full 5,440 metadata check](evidence/restart-full5440-metadata-20261013.json)
+verifies ten stable files, trainer/actor/active Adam counters 5,440, scheduler
+5,439 and zero skipped steps. It is not separately protected, fully scanned or
+GPU-restored. Native 5,280 was removed entirely by normal cleanup at 18:24:26;
+protected 5,120 remains the recovery point. Evaluated weights at 5,456 are distinct.
+
+The 18:46 live check verifies updates 1–5,488 contiguous, all 23 logged fields
+finite and no guard/traceback/OOM/quota failures. The 5,297–5,488 window has
+ratios 0.972–1.05, gradient maximum 48.8 and approximate KL maximum 0.631.
+The earlier 1.06 at update 5,135 remains recorded; these are rounded scalar
+checks, not a fresh full-model/master/moment scan.
+
+The audit wrapper was created at 18:02:39 before native evaluation; the root
+was absent at 18:03:51. First request was 18:28:53, all split gates 18:37:48,
+and once-only CPU audit 69148 ran 18:39:30–18:39:34 with exit 0. All 2,065 HTTP
+returns succeeded (2,064 completion POSTs and one GET), with no transport errors
+or tracebacks. A one-off derived counter's wrong endpoint path was exposed by
+a failing comparison and corrected against an independent regex. Native scoring,
+training and artifacts were unchanged.
+
+The first test answer 18 was checked within 18.23 seconds with 66 successful
+returns. Successor read-only watcher 2731 began at 18:39:30 and checked collection
+341's first answer 6 within 78.47 seconds: 606 successes, zero errors. This does
+not erase the previously documented collection 331 coverage gap.
+
+Continue the unchanged whole owner to fixed 690/11,040. The next 350/5,616 CPU
+audit was prepared and independently reviewed before its native root existed;
+execute once after fresh all-split/owner/pin/no-overwrite gates. Preselected 6,400
+protection still requires complete state, stability and fresh storage gates.
+No new RLM/CURL/DrGRPO GPU job. The advisor package keeps its explicit October 12
+cutoff: main story, material caveats and next decision are unchanged. These
+results calibrate RL engineering, not measured transfer to RLM. See the
+[interpretation](evidence/restart-eval340-interpretation-20261013.json).
+
+### Preceding evaluation: 5,296 updates
 
 The [full audit](evidence/restart-eval330-20261013.json) independently verifies
 all33,024 saved answers and21metrics: test **11,865/21,104 =56.2216%**

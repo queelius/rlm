@@ -1,0 +1,57 @@
+{
+  "schema": "spo-training-collection-audit-v2",
+  "checked_utc": "2026-10-13T18:29:09.369675+00:00",
+  "native_root": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+  "collection": 340,
+  "optimizer_updates_after_collection": 5456,
+  "responses": 512,
+  "question_groups": 64,
+  "effective_reward_counts": {
+    "1.0": 380,
+    "0.0": 132
+  },
+  "mixed_effective_reward_groups": 16,
+  "terminal_uniform_groups_with_nonzero_advantages": 13,
+  "reward_regrade_mismatches": [],
+  "generation_training_query_id_mismatches": 0,
+  "episode_actor_trajectory_token_equality": true,
+  "original_gold_and_saved_response_identity_verified": true,
+  "actor_reference_logprobs_finite": true,
+  "advantages_finite": true,
+  "nonzero_advantage_tokens": 1109,
+  "http_successes": 678,
+  "http_errors": 0,
+  "generation_log_tracebacks": 0,
+  "source_artifacts": [
+    "episodes/episodes_0340",
+    "checkpoints/episodes__iter0340/w_actLogp",
+    "temp_episodes/iteration__0340/infer_results/merged_trajectories",
+    "temp_episodes/iteration__0340/infer_results/process_00/traj_results_ds",
+    "temp_episodes/iteration__0340/infer_results/process_00/vllm_server.log"
+  ],
+  "generation_log_sha256": "b92be9573e6c0b29dd98d42076acd522c5bedefb4b472b0425e0278fdcdbb6de",
+  "source_hashes": {
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/tasks/gsm8k.py": "ef7cff53cb0e048fbf5671d757199ff6bc01ef0dff465d90270c0e20032a1405",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator.py": "d95c525f5894d45d14fd8c567a695c0bfa4f892a4daaa6bba53358b1c006529a",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator_with_mc_advantages.py": "e098eee0f10381bb46c66778c20d1a6434b2294ca9db9f059dc435b048054cde",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/config.json": "30bdd16637a48a499d84cf2ad528d9ecc0eab25707a20d9d5d2917ce4bb69ebc"
+  },
+  "interpretation": "Reward and token-alignment checks remain consistent in a newer completed batch. Mixed terminal rewards and finite nonzero intermediate advantages provide a usable learning signal. Changing training questions are not a benchmark curve or proof of paper reproduction.",
+  "decision": "Continue same authenticated owner and fixed690/11040 recipe; scheduled evaluation340 follows5456 optimizer updates. No new GPU job, live source change, reward change or checkpoint selection.",
+  "limits": [
+    "Independent string/penalty regrade follows native GSM8K rules, not a new mathematical equivalence verifier.",
+    "Finite saved logprobs/advantages and logged update scalars are not an all-parameter numerical audit.",
+    "No new held-out evaluation or independent training replication."
+  ],
+  "execution": {
+    "tool_session": 50466,
+    "exit_code": 0,
+    "cpu_only": true
+  },
+  "raw_examples_external_only": "training-audit-collection340-20261013.json",
+  "input_manifest": {
+    "path": "training-audit-collection340-inputs-20261013.json",
+    "artifact_count": 14,
+    "checked_utc": "2026-10-13T18:30:41.722346+00:00"
+  }
+}
