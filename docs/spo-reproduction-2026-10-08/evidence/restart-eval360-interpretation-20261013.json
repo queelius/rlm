@@ -1,0 +1,384 @@
+{
+  "checked_utc": "2026-10-13T20:08:20.814727+00:00",
+  "rows": {
+    "test": {
+      "correct": 11915,
+      "responses": 21104,
+      "percent": 56.458491281273695,
+      "previous_correct": 11753,
+      "delta_correct": 162,
+      "delta_pp": 0.7676269901440486,
+      "metrics": {
+        "correct_frac": 0.5645849128127369,
+        "exact_match": 0.8089461713419257,
+        "exact_match_frac": 0.5645849128127369,
+        "majority_vote_acc": 0.6209249431387415,
+        "none_answer_extracted_frac_per_problem": 0.00009476876421531463,
+        "once_hit": 0.8089461713419257,
+        "unique_answer_count": 3.825625473843821
+      },
+      "previous_metrics": {
+        "correct_frac": 0.5569086429112965,
+        "exact_match": 0.7899924184988628,
+        "exact_match_frac": 0.5569086429112965,
+        "majority_vote_acc": 0.6285064442759667,
+        "none_answer_extracted_frac_per_problem": 0.00009476876421531463,
+        "once_hit": 0.7899924184988628,
+        "unique_answer_count": 3.9583017437452614
+      },
+      "extraction_failures": 2,
+      "previous_extraction_failures": 2,
+      "finish_reasons": {
+        "length": 2,
+        "stop": 21102
+      },
+      "previous_finish_reasons": {
+        "length": 2,
+        "stop": 21102
+      },
+      "numeric_format_rescues": 64
+    },
+    "validation": {
+      "correct": 4175,
+      "responses": 5968,
+      "percent": 69.95643431635389,
+      "previous_correct": 4159,
+      "delta_correct": 16,
+      "delta_pp": 0.2680965147453083,
+      "metrics": {
+        "correct_frac": 0.6995643431635389,
+        "exact_match": 0.900804289544236,
+        "exact_match_frac": 0.6995643431635389,
+        "majority_vote_acc": 0.7613941018766756,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.900804289544236,
+        "unique_answer_count": 2.734584450402145
+      },
+      "previous_metrics": {
+        "correct_frac": 0.6968833780160858,
+        "exact_match": 0.8981233243967829,
+        "exact_match_frac": 0.6968833780160858,
+        "majority_vote_acc": 0.7694369973190348,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.8981233243967829,
+        "unique_answer_count": 2.8659517426273458
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "finish_reasons": {
+        "stop": 5968
+      },
+      "previous_finish_reasons": {
+        "stop": 5968
+      },
+      "numeric_format_rescues": 42
+    },
+    "train": {
+      "correct": 4934,
+      "responses": 5952,
+      "percent": 82.89650537634408,
+      "previous_correct": 4830,
+      "delta_correct": 104,
+      "delta_pp": 1.7473118279569892,
+      "metrics": {
+        "correct_frac": 0.8289650537634409,
+        "exact_match": 0.9408602150537635,
+        "exact_match_frac": 0.8289650537634409,
+        "majority_vote_acc": 0.8790322580645161,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9408602150537635,
+        "unique_answer_count": 2.228494623655914
+      },
+      "previous_metrics": {
+        "correct_frac": 0.811491935483871,
+        "exact_match": 0.9381720430107527,
+        "exact_match_frac": 0.811491935483871,
+        "majority_vote_acc": 0.8629032258064516,
+        "none_answer_extracted_frac_per_problem": 0.0005040322580645161,
+        "once_hit": 0.9381720430107527,
+        "unique_answer_count": 2.282258064516129
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 3,
+      "finish_reasons": {
+        "stop": 5952
+      },
+      "previous_finish_reasons": {
+        "length": 3,
+        "stop": 5949
+      },
+      "numeric_format_rescues": 55
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "questions": 1319,
+      "better": 351,
+      "worse": 291,
+      "unchanged": 677,
+      "gained_correct_samples": 828,
+      "lost_correct_samples": 666,
+      "net": 162,
+      "first_question_before": 15,
+      "first_question_after": 14
+    },
+    "validation": {
+      "questions": 373,
+      "better": 89,
+      "worse": 68,
+      "unchanged": 216,
+      "gained_correct_samples": 180,
+      "lost_correct_samples": 164,
+      "net": 16,
+      "first_question_before": 16,
+      "first_question_after": 16
+    },
+    "train": {
+      "questions": 372,
+      "better": 71,
+      "worse": 55,
+      "unchanged": 246,
+      "gained_correct_samples": 209,
+      "lost_correct_samples": 105,
+      "net": 104,
+      "first_question_before": 13,
+      "first_question_after": 16
+    }
+  },
+  "receipt_sha256": "36dcf9cee7095984aee0fdb7e8a24fbeadc278d4f189fee525987e0cd807a979",
+  "question_counts_sha256": "b91f598c8bce3fef47bc11c307566ec1499b1d4b9e00c602f5a0cfbaabff5b76",
+  "input_manifest_sha256": "db764685cef5a007fa6c27156a7d81fb3bcfc439b99a13f1fc6407bc18381c13",
+  "receipt_created_utc": "2026-10-13T20:07:27.152677+00:00",
+  "evaluation_service": {
+    "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__360/logs/vllm.log",
+    "bytes": 3271371,
+    "sha256": "89781cf240c5f37864e1072fcb34f44be3743141c04640392d73ddefc6b3fb88",
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0
+  },
+  "baseline_comparison": {
+    "original_sft_correct": 8394,
+    "responses": 21104,
+    "original_sft_percent": 39.77445034116755,
+    "delta_percentage_points": 16.68404094010614,
+    "intermediate_gap_to_supplied_56_724_reference_pp": 0.2655087187263021
+  },
+  "schema": "spo-scheduled-evaluation-interpretation-v1",
+  "iteration": 360,
+  "completed_collections": 361,
+  "optimizer_updates": 5776,
+  "receipt": "eval360-regrade-001/RECEIPT.json",
+  "all_33024_saved_responses_and_21_metrics_verified": true,
+  "all37_scheduled_points_retained": true,
+  "interpretation": [
+    "All three primary means rebound at scheduled360 after the preceding local decline: test gains162(+0.767627pp), validation16(+0.268097pp), non-held-out train104(+1.747312pp). This contradicts interpreting the preceding local decline as already-established sustained collapse, but does not guarantee future stability or establish a mechanism.",
+    "Test11915/21104=56.458491%, validation4175/5968=69.956434%, train4934/5952=82.896505%. Gain over originalSFT is16.684041pp. Gap to supplied56.724% reference is0.265509pp at this intermediate point; fixed690/11040 remains required and no posthoc equivalence tolerance is chosen.",
+    "Test351 questions improve,291 worsen,677 unchanged (828 correct samples gained666 lost). The first test question drops15to14of16 despite aggregate improvement; predetermined operational examples cannot serve as headline performance.",
+    "Test and validation majority accuracies decline while primary meanpass@1 increases. Preserve the audited primary metric rather than selecting an auxiliary result. Once-hit and majority are secondary, not best-of16 substitution.",
+    "Test extraction failures and length endings remain2; validation remains0; training drops3to0. The test rebound is not explained by fewer extraction failures. Secondary numeric-format rescue counts64/42/55 are not added to native scores.",
+    "All37 scheduled points remain from one training ancestry with disclosed BOS-only/finite-zeroBF16 adaptations. Historical author source and checkpoint-selection rationale remain unresolved; EOS unchanged. No completed reproduction, clean causal BOS ablation, independent training replication or measured RLM transfer."
+  ],
+  "decision": "Continue the unchanged whole owner to fixed690/11040 with the original1000collection LR horizon and68hour whole cap including final evaluation. Prepare scheduled370/5936 CPU audit before native results. Prepared6400 checkpoint protection remains gated; no competing GPU owner, live edit, restart, shortened recipe or favorable checkpoint selection.",
+  "limits": [
+    "16 responses per question are not independent training replications; no significance/equivalence claim.",
+    "Training subset is not held out; no auxiliary-metric substitution.",
+    "Latest full original-gold/BOS/trajectory audit remains350.360 census checks saved episode/actor bindings and finite logprobs/advantages only, not full regrading of training rewards.",
+    "Latest full saved model/master/moment finite scan1440; two-tensor parameter comparison2240. Rounded update logs are not new all-tensor evidence.",
+    "Protected5120 is same-filesystem protection, not off-system backup or faithful GPU resume proof. Native5760 inventory is not counter-decoded/protected and differs from evaluated5776."
+  ],
+  "advisor_package": {
+    "changed": false,
+    "existing_cutoff_utc": "2026-10-12T20:53:09.492795+00:00",
+    "reason": "Rebound and smaller intermediate gap belong in the supporting report. Main story remains promising but incomplete training reproduction with disclosed adapters; fixed-endpoint decision and material caveats are unchanged."
+  },
+  "preparation_timing": {
+    "wrapper_created_utc": "2026-10-13T19:44:46.390675+00:00",
+    "native_absent_verified_utc": "2026-10-13T19:44:46.688471+00:00",
+    "first_native_request_utc": "2026-10-13T19:57:41+00:00",
+    "all_three_ready_utc": "2026-10-13T20:06:50.289770+00:00",
+    "preparation": "eval360-regrade-001/PREPARATION.json",
+    "independent_preparation_review": "eval360-regrade-001/PREPARATION-REVIEW.json"
+  },
+  "execution": {
+    "tool_session": 64572,
+    "exit_code": 0,
+    "exit_observed_before_utc": "2026-10-13T20:08:20.814727+00:00",
+    "receipt_completed_utc": "2026-10-13T20:07:27.152677+00:00",
+    "preflight": {
+      "checked_utc": "2026-10-13T20:07:22.924718+00:00",
+      "all_three_native_splits_complete": true,
+      "original4_owners_match": true,
+      "source7_and_audit5_pins_match": true,
+      "audit360_outputs_absent": true,
+      "previous_watch19111_process_departed": true,
+      "next370_watch_receipt_absent": true,
+      "ready_for_cpu_audit": true
+    },
+    "full_audit_repeated": false,
+    "instruction": "Completed once; do not resume or repeat64572.",
+    "stdout": "{\"iteration\": 360, \"split\": \"test\", \"questions\": 1319, \"responses\": 21104, \"correct\": 11915, \"all_checks_pass\": true, \"extraction_failures\": 2, \"finish_reasons\": {\"stop\": 21102, \"length\": 2}}\n{\"iteration\": 360, \"split\": \"validation\", \"questions\": 373, \"responses\": 5968, \"correct\": 4175, \"all_checks_pass\": true, \"extraction_failures\": 0, \"finish_reasons\": {\"stop\": 5968}}\n{\"iteration\": 360, \"split\": \"train\", \"questions\": 372, \"responses\": 5952, \"correct\": 4934, \"all_checks_pass\": true, \"extraction_failures\": 0, \"finish_reasons\": {\"stop\": 5952}}\n{\"receipt\": \"/project/alex_phd/runs/rl-paper-reproduction-20261012/eval360-regrade-001/RECEIPT.json\", \"all_verified\": true, \"paired_changes\": {}}\n"
+  },
+  "live_update_snapshot": {
+    "checked_utc": "2026-10-13T20:09:34.089463+00:00",
+    "owners": {
+      "queue": {
+        "pid": 2826646,
+        "startticks": 1362248004,
+        "state": "S"
+      },
+      "scoped": {
+        "pid": 2826649,
+        "startticks": 1362248013,
+        "state": "S"
+      },
+      "trainer": {
+        "pid": 2826650,
+        "startticks": 1362248017,
+        "state": "S"
+      },
+      "observer": {
+        "pid": 2829006,
+        "startticks": 1362275186,
+        "state": "S"
+      }
+    },
+    "sealed_source_pin_count": 7,
+    "all_sealed_source_pins_match": true,
+    "log": {
+      "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/command.log",
+      "prefix_bytes": 49265465,
+      "prefix_sha256": "b1188f46dd137f20ebcf2af5694118a22fc169de7002be6a9c74c54d54b3077b",
+      "unique_update_count": 5791,
+      "max_update": 5791,
+      "contiguous": true,
+      "all_23_logged_numeric_fields_finite": true,
+      "latest": {
+        "advantages/mean": 0.166,
+        "advantages/std": 0.295,
+        "advantages/close_to_zero_perc": 0,
+        "rewards/mean": 0.00611,
+        "num_tokens": 1840.25,
+        "actor/approx_kl": 0.184,
+        "actor/policy_kl": 0.0945,
+        "actor/clip_frac": 0.165,
+        "actor/ratio": 0.981,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0,
+        "actor/pg_losses1_anomalies__num_high_z": 5.75,
+        "actor/pg_losses1_anomalies__total_anomalies": 5.75,
+        "actor/ref_kl_loss": 0.00105,
+        "non_score_rewards": 0,
+        "kls": 10.5,
+        "kl_coef": 0.0001,
+        "actor/loss": -0.0313,
+        "actor/grad_norm": 14.1,
+        "actor/lr": 6.58e-7,
+        "epoch": 1.88,
+        "step": 5791,
+        "actor/ds_step": 5791
+      },
+      "new_update_window": [
+        5777,
+        5791
+      ],
+      "new_window_bounds": {
+        "actor/ratio": {
+          "min": 0.981,
+          "max": 1.04,
+          "mean": 1.0016
+        },
+        "actor/approx_kl": {
+          "min": 0.00112,
+          "max": 0.184,
+          "mean": 0.042610666666666665
+        },
+        "actor/clip_frac": {
+          "min": 0.00445,
+          "max": 0.165,
+          "mean": 0.07884533333333334
+        },
+        "actor/grad_norm": {
+          "min": 9.99,
+          "max": 31.3,
+          "mean": 22.479333333333333
+        },
+        "kls": {
+          "min": 6.57,
+          "max": 11.1,
+          "mean": 8.962
+        },
+        "actor/pg_losses1_anomalies__num_nan": {
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "actor/pg_losses1_anomalies__num_inf": {
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "last_completed_collection": 360,
+      "failure_markers": {
+        "High PPO ratio detected:": 0,
+        "Traceback (most recent call last):": 0,
+        "CUDA out of memory": 0,
+        "Disk quota exceeded": 0
+      }
+    },
+    "evaluation370_native_gates": {
+      "test": false,
+      "validation": false,
+      "train": false
+    },
+    "observer_pending_id": null,
+    "observer_last_acknowledgement": "review-1791921043-c7845e82",
+    "stop_exists": false,
+    "limits": [
+      "Rounded logged metrics and contiguous counters, not a new parameter tensor comparison or full batch reward/BOS regrade.",
+      "Separate full reward/BOS audit completed for collection350; this live check does not scan model parameters or change GPU/model/config."
+    ]
+  },
+  "operational_continuity": {
+    "first360_test_gold_correct": true,
+    "first_response_seconds": 31.143406,
+    "first_inspection_http_successes": 121,
+    "first_inspection_http_errors": 0,
+    "completed360_http_successes": 2065,
+    "completed360_http_errors": 0,
+    "completed360_tracebacks": 0,
+    "completed_wait_session": 19111,
+    "new_wait": {
+      "schema": "spo-read-only-wait-start-v1",
+      "tool_session": 39616,
+      "observation_pid": 4059004,
+      "observation_startticks": 1372595363,
+      "started_utc": "2026-10-13T20:07:23.755267+00:00",
+      "deadline_utc": "2026-10-13T21:07:23.755Z",
+      "observation_cap_seconds": 3600,
+      "evaluation": 370,
+      "optimizer_updates": 5936,
+      "scope": "Read-only CPU; timeout never stops training.",
+      "instruction": "Resume only39616.19111 and audit64572 completed; do not resume or repeat.370 CPU wrapper is not yet prepared; prepare before native outputs.",
+      "receipt": "eval370-regrade-001/WAIT-START.json"
+    },
+    "first361_gold_correct": true,
+    "first361_prediction": "45",
+    "first361_gold": "45",
+    "first361_check_seconds": 18.785977,
+    "first361_http_successes": 65,
+    "first361_http_errors": 0
+  },
+  "operational_limits": {
+    "read_only_window_query_failure": {
+      "error": "ValueError: min() arg is an empty sequence",
+      "cause": "Requested logged updates>5776 before the next optimizer update existed; the query assumed a nonempty window.",
+      "evidence": "At20:08:53 native log still reported current global step5776 before training collection361. The same unchanged query passed20:09:34 with5777–5791 available.",
+      "scope": "Analysis-query limitation, not native trainer/evaluator failure. Check window existence before reuse; no source/config/training changes."
+    },
+    "initial_read_path_failure": "One read-only documentation command used a nonexistent worktree path; corrected to the existing20261007 worktree, no mutation.",
+    "oversized_read_failure": "A combined full-document read exceeded output budget; loaded bounded document heads separately. No source/scientific artifact change."
+  },
+  "reporting_boundary": "Completed scheduled intermediate result; goal active and unfinished."
+}

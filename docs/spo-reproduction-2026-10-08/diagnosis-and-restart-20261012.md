@@ -1,22 +1,20 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 19:25 UTC; scientific cutoff 19:24, live-update check 19:16.
-The thirty-sixth scheduled restart evaluation is fully regraded at 5,616 updates;
-next follows 5,776. Test is 55.69%, validation 69.69%, non-held-out training 81.15%.
-All three primary means decline locally, with validation nearly flat. This is
-not monotonic progress and does not establish sustained collapse, overfitting
-or a cause. Improvement remains intermediate, not completed reproduction.
+Status: October 13, 2026, 20:11 UTC; scientific cutoff 20:07, live-update check 20:09.
+The thirty-seventh scheduled restart evaluation is fully regraded at 5,776 updates;
+next follows 5,936. Test is 56.46%, validation 69.96%, non-held-out training 82.90%.
+All three primary means rebound after the preceding local decline. This does
+not guarantee future stability or establish a mechanism. The intermediate gap
+to supplied 56.724% is 0.266 points; reproduction remains unfinished.
 
-The complete 5,120 recovery state remains protected; native 5,600 has a ten-file
-saved inventory, not a new counter decode or protected copy. Native 5,440 was
-removed entirely by cleanup at 19:09:15; its metadata receipt is historical.
-Native5,280 was removed entirely by normal
-cleanup18:24:26; its receipt is historical. Native5,120 optimizer files were removed
-by normal cleanup17:40:33; its HF export/empty actor directory do not constitute
-full state. Protected files are separate. No new full-tensor scan or GPU restore.
-Latest full saved-tensor scan remains1,440; latest full reward/BOS batch audit
-is350. The fixed690/11,040 endpoint and original1,000-collection LR horizon
-remain unchanged. Our primary objective is the paper's **training result**.
+The complete 5,120 recovery state remains protected; native 5,760 has a ten-file
+saved inventory, not a new counter decode or protected copy. Native 5,600 was
+removed entirely by normal cleanup at 19:53:12; its inventory is historical.
+Earlier cleanup receipts remain below. No new full-tensor scan or GPU restore.
+Latest full saved-tensor scan remains 1,440; latest full original-gold/reward/BOS
+audit is 350. A newer 360 saved-batch census has a narrower scope. The fixed
+690/11,040 endpoint and original 1,000-collection LR horizon remain unchanged.
+Our primary objective is the paper's **training result**.
 The broader purpose, reaffirmed by the user, is methodological calibration for
 continuing RLM research: check that our RL implementation, measurement and
 experimental reasoning can recover a published learning result. Success would
@@ -108,7 +106,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, and 5,616 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, and 5,776 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -152,8 +150,70 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 5,296 | 56.22% | 68.43% | 80.02% |
 | 5,456 | 56.11% | 69.76% | 81.60% |
 | 5,616 | 55.69% | 69.69% | 81.15% |
+| 5,776 | 56.46% | 69.96% | 82.90% |
 
-### Latest evaluation: 5,616 updates
+### Latest evaluation: 5,776 updates
+
+The [full audit](evidence/restart-eval360-20261013.json) independently verifies
+all 33,024 saved responses and 21 native metrics after 361 collections:
+
+- Test: 11,915/21,104 = 56.458491%, +162 samples / +0.767627 points versus 350.
+- Validation: 4,175/5,968 = 69.956434%, +16 / +0.268097 points.
+- Non-held-out training: 4,934/5,952 = 82.896505%, +104 / +1.747312 points.
+
+All 37 scheduled points remain. Gain over original SFT is 16.684041 points.
+The intermediate gap to the supplied 56.724% reference is 0.265509 points;
+this is not the fixed-endpoint comparison or a posthoc equivalence judgment.
+The rebound across all primary means does not guarantee continued improvement
+or establish a cause. Preserve the previous decline as well as this result.
+
+Test question changes are 351 better, 291 worse and 677 unchanged: 828 gained
+correct samples, 666 lost. Validation is 89/68/216 (180 gained, 164 lost);
+training is 71/55/246 (209 gained, 105 lost). The first test question falls
+15 to 14 correct out of 16 while aggregate accuracy rises. Test and validation
+majority accuracy fall while native mean pass@1 rises. Do not select an
+auxiliary metric or operational example as the headline. These are descriptive
+paired-question comparisons, not independent training replications.
+
+Test extraction failures and length endings remain two; validation remains
+zero, and training falls three to zero. Fewer extraction failures therefore
+do not explain the test rebound. Numeric-format potential rescues 64/42/55
+remain secondary diagnostics, excluded from primary scores.
+
+The [360 saved-batch census](evidence/restart-training-census360-20261013.json)
+has 426 reward-one/86 reward-zero rows, 18 mixed groups and 1,664 nonzero
+advantage tokens. All 512 episode-to-actor bindings and saved logprobs/
+advantages are finite. It is not a new full original-gold/trajectory/BOS
+audit; the complete 350 audit below remains the latest such evidence.
+At 20:09, logged updates 1–5,791 are contiguous and all 23 fields finite.
+New 5,777–5,791 ratios are 0.981–1.04, gradient maximum 31.3, approximate KL
+maximum 0.184, and no recorded failure markers. A prior analysis-only query
+encountered an empty new-update window before training resumed optimization;
+the same query passed once updates existed. No training/source change.
+
+The [native 5,760 inventory](evidence/restart-full5760-inventory-20261013.json)
+has ten files/17.60 GB and a completed-save log at 19:53:46. It is not counter-
+decoded, protected or GPU-restored, and differs from evaluated 5,776 weights.
+Native 5,600 was removed entirely by unchanged cleanup at 19:53:12.
+Protected 5,120 and earlier copies remain; their same-filesystem limits apply.
+
+The wrapper was prepared at 19:44:46 before native outputs; first request
+19:57:41, all three split gates 20:06:50, once-only CPU receipt 20:07:27.
+All 2,065 HTTP returns succeeded with no errors/tracebacks. First native test
+answer 18 was checked after 31.14 seconds. Watcher 19111 completed and departed;
+successor 39616 began at 20:07:23 and checked collection 361's first answer45
+within18.79 seconds (65 successes, zero errors). Full audit64572 exited0.
+No repeated audit, scoring change, GPU successor or live-source edit.
+
+Continue the original whole owner to fixed690/11,040, unchanged1,000-collection
+LR horizon and whole cap including final evaluation. Prepare370/5,936 CPU
+audit before native outputs; resume only39616. Prepared6,400 protection awaits
+complete-save/state/stability/freshstorage gates. No favorable checkpoint
+selection or shortened recipe. The advisor story and material limitations
+remain unchanged; keep its explicit October12 20:53:09 cutoff. See the
+[interpretation](evidence/restart-eval360-interpretation-20261013.json).
+
+### Preceding evaluation: 5,616 updates
 
 The [full audit](evidence/restart-eval350-20261013.json) independently verifies
 all 33,024 saved answers and 21 native metrics. Test is **11,753/21,104 = 55.6909%**
