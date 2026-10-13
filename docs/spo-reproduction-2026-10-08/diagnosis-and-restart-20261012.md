@@ -1,10 +1,11 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 09:49 UTC. The twenty-third scheduled restart evaluation
-is fully regraded at 3,536 updates; the next evaluation follows 3,696 updates.
-Test rises to 54.02% and validation to 67.59%, while the non-held-out training
-subset is unchanged at 76.43%. This is a modest increase after a roughly flat
-test interval, not evidence of a durable trend. Reproduction remains unfinished.
+Status: October 13, 2026, 10:37 UTC. The twenty-fourth scheduled restart evaluation
+is fully regraded at 3,696 updates; the next evaluation follows 3,856 updates.
+Test rises to 54.48%, while validation falls to 67.11% and the non-held-out
+training subset falls to 75.52%. Test once-hit coverage also falls despite
+its mean accuracy increase. These mixed intermediate results do not establish
+a durable trend. Reproduction remains unfinished.
 The complete 2,560-update checkpoint is byte-verified outside automatic cleanup,
 alongside the earlier 160-, 960-, and 1,440-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
@@ -107,7 +108,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, and 3,536 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, and 3,696 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -138,8 +139,47 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 3,216 | 53.31% | 67.02% | 75.84% |
 | 3,376 | 53.57% | 66.64% | 76.43% |
 | 3,536 | 54.02% | 67.59% | 76.43% |
+| 3,696 | 54.48% | 67.11% | 75.52% |
 
-### Latest evaluation: 3,536 updates
+### Latest evaluation: 3,696 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval230-20261013.json). Test has **11,498/21,104 correct
+answers, 54.4826%**, or **+14.7081 percentage points** versus original SFT.
+It gains 97 correct answers (+0.4596 points) since the preceding check.
+Validation loses 29 (−0.4859 points) to **4,005/5,968, 67.1079%**;
+the training subset loses 54 (−0.9073 points) to **4,495/5,952, 75.5208%**,
+and is not held out.
+
+The last three scheduled tests are 53.57%, 54.02% and 54.48%. Two increases
+do not establish a durable trend, and the directions across splits are mixed.
+Test once-hit coverage falls from 80.29% to 79.83%, while majority rises
+from 60.20% to 61.18%. There are 334 questions with more correct samples,
+312 fewer and 673 unchanged; 50 become once-hit and 56 lose all correct
+samples. Mean sample accuracy improves without covering more questions.
+Validation mean, coverage and majority all fall. Training-subset coverage
+rises while its mean and majority fall. These descriptive comparisons are
+not significance tests or independent training replications.
+
+The predetermined first test question rises from 9/16 to 12/16 correct samples.
+Test extraction failures increase from six to eight and length-limit endings
+from seven to eight. One live example is not an aggregate accuracy estimate.
+Mean pass@1 remains the target, not once-hit or majority voting.
+Continue the unchanged 690/11,040 endpoint; do not select an earlier checkpoint
+or infer BOS causality, overfitting or completed reproduction.
+See the [interpretation and paired counts](evidence/restart-eval230-interpretation-20261013.json).
+
+The full reward/token audit remains collection 200. The
+[native 3,680-state inspection](evidence/restart-full3680-metadata-20261013.json)
+verifies ten stable files and matching trainer/actor/active Adam counters,
+scheduler 3,679 and zero skipped steps. It is not a new protected copy, full
+tensor scan or GPU restoration; evaluated 3,696 weights are distinct.
+Native 3,520 rotated out at 10:19 UTC under existing cleanup; its preceding
+receipt is historical. Protected 160/960/1,440/2,560 remain; next protection
+is preselected at 3,840. No live source, configuration, environment or GPU
+owner changed. The next scheduled evaluation follows 3,856 updates.
+
+### Preceding evaluation: 3,536 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval220-20261013.json). Test has **11,401/21,104 correct
@@ -607,17 +647,29 @@ full reproduction explicitly unfinished.
 
 ## Time and storage headroom
 
-An operational check at **October 13, 01:15 UTC** used all 119 completed collection
-timings and all 12 completed evaluation intervals. Including 58 remaining
-evaluations and the in-flight collection counted in full, all-completed,
-recent-20 and recent-10 rate scenarios leave **10.82, 12.34 and 10.09 hours**
-before the 68-hour whole-owner cap, respectively. Every interval from the earlier
-85-collection analysis reproduces exactly; no slow intervals were excluded.
+An operational check at **October 13, 10:33 UTC** uses all 231 completed
+collection timings and all 24 completed evaluation intervals. Including 46
+remaining evaluations (with the fixed final evaluation) and counting the
+in-flight collection in full, all-completed, recent-20 and recent-10 rate
+scenarios leave **11.02, 13.99 and 13.10 hours** before the 68-hour whole-owner
+cap. Their projected final-evaluation completion times are October 15 00:21,
+October 14 21:23 and October 14 22:16 UTC, respectively. The whole cap remains
+October 15 11:22:49 UTC. Every interval in the prior 119-collection/12-evaluation
+analysis reproduces exactly; no slow intervals were excluded.
+
 These are descriptive extrapolations, not confidence bounds or completion
 guarantees: response length, Monte Carlo branching, failures and filesystem
-contention can change the cost. The recipe remains unchanged. See the
-[updated timing receipt](evidence/restart-pacing119-20261013.json) and
-[earlier receipt](evidence/restart-pacing85-20261012.json).
+contention can change the cost. The final test is conservatively budgeted at
+the mean duration of a full three-split scheduled evaluation. No scientific
+recipe or schedule was shortened. See the
+[latest timing receipt](evidence/restart-pacing231-20261013.json),
+[119-collection receipt](evidence/restart-pacing119-20261013.json) and
+[85-collection receipt](evidence/restart-pacing85-20261012.json).
+
+The following earlier storage scenarios are not fresh capacity guarantees;
+the 05:09 check found about 450 GB available under home and 16 GB under project
+after checkpoint copies and further artifacts. Recheck both byte and file-count
+quotas before the preselected 3,840-update protection.
 
 Actual directory quotas, rather than the shared filesystem's free-space
 display, showed about **498 GB available under home and only 16 GB under
