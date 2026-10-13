@@ -46,10 +46,11 @@ the previous check; validation rose 1.22 points to 67.95%, and the training subs
 rose 0.15 points to 72.40% (not held out). This strengthens the intermediate
 learning evidence, **not completed reproduction or proof of lasting recovery**:
 the previous run also improved initially. All first 2,736 update numbers were
-present and logged numeric values finite. The latest full collection 160
+present and logged numeric values finite. The latest full collection 170
 audit verifies all 512 terminal rewards and generation/training token bindings:
-386 correct / 126 incorrect, with finite saved log probabilities and advantages.
-See the [training audit](evidence/restart-training-batch160-20261013.json),
+387 correct / 125 incorrect, with finite saved log probabilities and advantages.
+These changing training questions do not form a held-out progress curve.
+See the [training audit](evidence/restart-training-batch170-20261013.json),
 [latest evaluation audit](evidence/restart-eval170-20261013.json) and
 [interpretation](evidence/restart-eval170-interpretation-20261013.json).
 Test solved-at-least-once coverage over 16 attempts rose from 79.30% to 79.38%,
@@ -59,9 +60,9 @@ falls from 89.28% to 87.94% and majority from 74.26% to 73.99%, despite its high
 mean score. Training-subset coverage and majority also fall. This is not uniform
 improvement or an independent training-seed replication. Earlier approximate-KL
 excursions remain numerical watchpoints despite the better score. The latest
-detailed window through 2,576 has
-mean policy ratio 1.0036 and approximate-KL maximum 0.338; earlier larger excursions
-remain in the [numerical audit](evidence/restart-training-windows2576-20261013.json).
+detailed window, updates 2,577–2,736, has mean policy ratio 1.0047 and
+approximate-KL maximum 0.416 at update 2,699, followed by 0.0738. Earlier larger
+excursions remain in the [numerical audit](evidence/restart-training-windows2736-20261013.json).
 These changing-batch rounded aggregates do not establish future stability.
 We retain the paper's mean single-answer accuracy, every scheduled comparison,
 and the fixed endpoint.
@@ -75,9 +76,11 @@ copies are retained. This protects a newer recovery point, not a new scientific
 result, full numerical scan, GPU restoration test, or off-system backup.
 See the [new checkpoint receipt](evidence/restart-full2560-protection-20261013.json).
 At 05:21 UTC native cleanup removed its optimizer files; the separately protected
-copy retains all ten recorded file identities. The new native full 2,720 state
-passes [CPU counter and file-stability checks](evidence/restart-full2720-metadata-20261013.json),
-but is not a new protected copy or GPU restoration test.
+copy retains all ten recorded file identities. The latest native full 2,880 state
+passes [CPU counter and file-stability checks](evidence/restart-full2880-metadata-20261013.json),
+but is not a new protected copy, full tensor scan or GPU restoration test.
+The previously inspected native 2,720 optimizer state rotated out at 06:17 UTC;
+its [historical inspection](evidence/restart-full2720-metadata-20261013.json) is retained.
 The [earlier 1,440-update copy](evidence/restart-full1440-protection-20261012.json)
 was verified at 23:09 UTC. Its additional **CPU scan at 23:28 UTC** checked every
 element of the saved model parameters in both exports, the FP32 master weights,

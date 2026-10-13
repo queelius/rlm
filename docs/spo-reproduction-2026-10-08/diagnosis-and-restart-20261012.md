@@ -157,8 +157,8 @@ intermediate learning, not uniform coverage improvement, durable recovery, an
 isolated causal BOS test, or completed reproduction. Keep every scheduled point
 and the fixed 690/11,040 endpoint. See the
 [interpretation and question-level comparisons](evidence/restart-eval170-interpretation-20261013.json).
-The detailed reward/token audit below remains collection 160 and its numerical
-receipt remains through 2,576; neither is being relabeled as a new audit of 170.
+The separately completed collection 170 reward/token audit and numerical window
+through 2,736 are documented below; earlier audits remain available.
 
 ### Preceding evaluation: 2,576 updates
 
@@ -185,7 +185,50 @@ Keep the recipe, all scheduled results and fixed 690/11,040 endpoint unchanged.
 The protected 2,560 recovery state is distinct from the 2,576 evaluated weights.
 See the [interpretation and question-level comparisons](evidence/restart-eval160-interpretation-20261013.json).
 
-### Training audit through 2,576 updates and saved state at 2,720
+### Latest training audit through 2,736 updates and saved state at 2,880
+
+The [collection 170 audit](evidence/restart-training-batch170-20261013.json)
+verifies all 512 terminal rewards, original gold answers, and saved response and
+generation/training token identities. There are 387 correct and 125 incorrect
+responses, without malformed or unfinished penalties; 34 of 64 question groups
+have mixed terminal rewards. Five terminal-uniform groups still have nonzero
+intermediate advantages, and 2,825 advantage tokens are nonzero. Saved actor and
+reference log probabilities and advantages are finite. The completed generation
+log contains 982 HTTP successes, no errors and no tracebacks. Thirteen completed
+dataset files have stable identities and recorded hashes. This checks pipeline
+integrity, not a held-out learning trend: successive training batches differ.
+
+The first correct response computes 112 − 66 = 46. The first wrong response
+misapplies separate child and adult pool admission rates to everyone, producing
+1,154 instead of 588; it also contains an arithmetic error. The zero reward
+agrees with the original gold answer. Raw responses remain external; the public
+receipt retains only their row, prediction, gold answer and native reward.
+
+The [2,577–2,736 numerical window](evidence/restart-training-windows2736-20261013.json)
+has mean policy ratio 1.0047, approximate KL 0.06395, clipping fraction 0.09443,
+and gradient norm 18.7435. Its approximate-KL peak is 0.416 at update 2,699,
+followed by 0.0738. All first 2,736 logged update numbers are contiguous and all
+23 numeric fields are finite; no logged NaN/Inf loss anomaly or ratio-guard
+warning appears. Earlier windows, including the larger 0.736 and 0.541 peaks,
+remain in the receipt. These rounded changing-batch proxies do not establish
+future stability or exact distributional KL.
+
+The [full 2,880-update checkpoint](evidence/restart-full2880-metadata-20261013.json)
+has ten stable files, matching trainer, actor and active Adam counters of 2,880,
+scheduler counter 2,879 and zero skipped steps. This CPU/meta inspection leaves
+CUDA uninitialized. It is not an all-tensor scan, GPU restore or protected copy.
+The earlier native 2,720 optimizer state rotated out at 06:17:48; its inspection
+below is historical. Preserve protected 160/960/1440/2560. The next coarse copy
+remains step-preselected at 3,840, subject to complete-save and storage gates.
+The 2,880 recovery state is distinct from the next scheduled evaluation at 2,896.
+
+Two reporting issues were corrected before publication: CPU-selection log lines
+preceded the otherwise successful checkpoint JSON, and an in-memory numerical
+draft retained the prior window's peak list. Parsing the schema-tagged JSON and
+checking every peak against the new window resolved them. The native checkpoint
+inspection succeeded throughout; neither issue changed training or live sources.
+
+### Preceding training audit through 2,576 updates and saved state at 2,720
 
 The [collection 160 audit](evidence/restart-training-batch160-20261013.json)
 rechecks all 512 rewards and generation/training query-token identities against
@@ -214,7 +257,7 @@ on different batches does not establish lasting stability. Approximate KL and
 the reference penalty are native rounded proxies, not exact distributional KL.
 
 The [full 2,720-update state](evidence/restart-full2720-metadata-20261013.json)
-now has ten stable files and matching trainer/actor/active Adam counters 2,720,
+had ten stable files and matching trainer/actor/active Adam counters 2,720,
 scheduler 2,719 and skipped 0. Native cleanup removed the previous 2,560 optimizer
 files at 05:21:21; the separately protected 2,560 copy retains all ten recorded file
 identities and its prior complete hashes. An old check requiring both source

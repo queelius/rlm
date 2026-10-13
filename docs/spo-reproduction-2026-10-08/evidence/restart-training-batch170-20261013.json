@@ -1,0 +1,147 @@
+{
+  "schema": "spo-training-collection-audit-v2",
+  "checked_utc": "2026-10-13T06:17:25.075758+00:00",
+  "native_root": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+  "collection": 170,
+  "optimizer_updates_after_collection": 2736,
+  "responses": 512,
+  "question_groups": 64,
+  "effective_reward_counts": {
+    "1.0": 387,
+    "0.0": 125
+  },
+  "mixed_effective_reward_groups": 34,
+  "terminal_uniform_groups_with_nonzero_advantages": 5,
+  "reward_regrade_mismatches": [],
+  "generation_training_query_id_mismatches": 0,
+  "episode_actor_trajectory_token_equality": true,
+  "original_gold_and_saved_response_identity_verified": true,
+  "actor_reference_logprobs_finite": true,
+  "advantages_finite": true,
+  "nonzero_advantage_tokens": 2825,
+  "http_successes": 982,
+  "http_errors": 0,
+  "generation_log_tracebacks": 0,
+  "source_artifacts": [
+    "episodes/episodes_0170",
+    "checkpoints/episodes__iter0170/w_actLogp",
+    "temp_episodes/iteration__0170/infer_results/merged_trajectories",
+    "temp_episodes/iteration__0170/infer_results/process_00/traj_results_ds",
+    "temp_episodes/iteration__0170/infer_results/process_00/vllm_server.log"
+  ],
+  "generation_log_sha256": "1d89d1089287971791432cdbbc2a5cf7c465f94342e3c539451eaeeb450c7a18",
+  "source_hashes": {
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/tasks/gsm8k.py": "ef7cff53cb0e048fbf5671d757199ff6bc01ef0dff465d90270c0e20032a1405",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator.py": "d95c525f5894d45d14fd8c567a695c0bfa4f892a4daaa6bba53358b1c006529a",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator_with_mc_advantages.py": "e098eee0f10381bb46c66778c20d1a6434b2294ca9db9f059dc435b048054cde",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/config.json": "30bdd16637a48a499d84cf2ad528d9ecc0eab25707a20d9d5d2917ce4bb69ebc"
+  },
+  "actual_examples": {
+    "correct": {
+      "row": 0,
+      "predicted": "46",
+      "gold": "46",
+      "effective_reward": 1
+    },
+    "wrong": {
+      "row": 16,
+      "predicted": "1154",
+      "gold": "588",
+      "effective_reward": 0
+    }
+  },
+  "interpretation": "Reward and token-alignment checks remain consistent in a newer completed batch. Mixed terminal rewards and finite nonzero intermediate advantages provide a usable learning signal. Changing training questions are not a benchmark curve or proof of paper reproduction.",
+  "decision": "Continue same authenticated owner and fixed690/11040 recipe; next scheduled evaluation180 follows2896 optimizer updates. No new GPU job, live source change, reward change or checkpoint selection.",
+  "limits": [
+    "Independent string/penalty regrade follows native GSM8K rules, not a new mathematical equivalence verifier.",
+    "Finite saved logprobs/advantages and logged update scalars are not an all-parameter numerical audit.",
+    "No new held-out evaluation or independent training replication."
+  ],
+  "audit_template": {
+    "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/training-audit-collection16-20261012.py",
+    "sha256": "ca3b4a442701e0cef7e6ae3833d28f00b1db6bd70445b8e2392471a3f7f15d67",
+    "changes": "Only0170 path,collection170,2736update and descriptive next180/2896 bindings; original reward/token/finite checks unchanged."
+  },
+  "completed_dataset_manifest": {
+    "episodes/episodes_0170/data-00000-of-00001.arrow": {
+      "bytes": 2662976,
+      "inode": 1099979624770,
+      "mtime_ns": "1791869123091605673",
+      "sha256": "d67db339dbc535e44e19f9d286dab0d108db475ce807dd9f455c480a36bbd9b9"
+    },
+    "episodes/episodes_0170/dataset_info.json": {
+      "bytes": 1206,
+      "inode": 1099979619788,
+      "mtime_ns": "1791869123094605673",
+      "sha256": "2adc92ff6d00622b48197b54c9283fb19632958509cb0c6aa5ceffc99eda1a09"
+    },
+    "episodes/episodes_0170/state.json": {
+      "bytes": 440,
+      "inode": 1099979619787,
+      "mtime_ns": "1791869123094605673",
+      "sha256": "4ca06865d36f7ae9e42ce2350b0bf7fbd551f6439a362df3957f08e02eaacd65"
+    },
+    "checkpoints/episodes__iter0170/w_actLogp/cache-4cfc6e4665229918.arrow": {
+      "bytes": 4544,
+      "inode": 1099979619768,
+      "mtime_ns": "1791868956115605448",
+      "sha256": "d9572e6239042e18c68a5effc1f7d52c9ce524926857e1c6a4a33c8b958ddf41"
+    },
+    "checkpoints/episodes__iter0170/w_actLogp/data-00000-of-00001.arrow": {
+      "bytes": 4345168,
+      "inode": 1099979624726,
+      "mtime_ns": "1791869134344605688",
+      "sha256": "22c75983245d8b53577a517de8b7318b0ecab88aa3d9b203417c03ac3b27669d"
+    },
+    "checkpoints/episodes__iter0170/w_actLogp/dataset_info.json": {
+      "bytes": 1498,
+      "inode": 1099979619767,
+      "mtime_ns": "1791869134350605688",
+      "sha256": "a2840e6a03becf335a878905a66910ff46b926e7aa92b290d2e616570d594ff9"
+    },
+    "checkpoints/episodes__iter0170/w_actLogp/state.json": {
+      "bytes": 500,
+      "inode": 1099979619766,
+      "mtime_ns": "1791869134348605688",
+      "sha256": "4606a21e1634291d79f1b0f145412b44ba9e65138c03e6becacbf6b86f6af52e"
+    },
+    "temp_episodes/iteration__0170/infer_results/merged_trajectories/data-00000-of-00001.arrow": {
+      "bytes": 4362376,
+      "inode": 1099979624723,
+      "mtime_ns": "1791868951411605442",
+      "sha256": "b8387a61a3dea26c8d75ceafe29c1d3fd29f99b67cb7200d14ad9c77dc40633a"
+    },
+    "temp_episodes/iteration__0170/infer_results/merged_trajectories/dataset_info.json": {
+      "bytes": 1794,
+      "inode": 1099979619765,
+      "mtime_ns": "1791868951414605442",
+      "sha256": "395ec7fa4c1dc98f69261608404a26fcaeb8daf550f4df904125d544a6f6a563"
+    },
+    "temp_episodes/iteration__0170/infer_results/merged_trajectories/state.json": {
+      "bytes": 470,
+      "inode": 1099979619764,
+      "mtime_ns": "1791868951413605442",
+      "sha256": "141199acae7861c3000b7f0226605c683e9c06d5feca0a29e262d8341eade271"
+    },
+    "temp_episodes/iteration__0170/infer_results/process_00/traj_results_ds/data-00000-of-00001.arrow": {
+      "bytes": 1022880,
+      "inode": 1099979624719,
+      "mtime_ns": "1791868950175605440",
+      "sha256": "fcc6125e28328510392f1c6e28e8cb937dba90c2d93145ab1246f3d1d0765804"
+    },
+    "temp_episodes/iteration__0170/infer_results/process_00/traj_results_ds/dataset_info.json": {
+      "bytes": 2206,
+      "inode": 1099979619761,
+      "mtime_ns": "1791868950177605440",
+      "sha256": "b6844bc04b0f690af93385da111dbaa5a947fcbf9cc2c68bca1361272f894b63"
+    },
+    "temp_episodes/iteration__0170/infer_results/process_00/traj_results_ds/state.json": {
+      "bytes": 247,
+      "inode": 1099979619760,
+      "mtime_ns": "1791868950176605440",
+      "sha256": "5ba83f1fadb9c0b15932c60739db955691570a00b94383bae0e4cfd9c45822a4"
+    }
+  },
+  "manifest_limit": "Completed per-batch dataset files and generation log hashed; no multi-gigabyte model files or live sources edited.",
+  "publication_note": "Exact raw responses remain in the external audit; public examples contain only row, prediction, gold and native reward."
+}
