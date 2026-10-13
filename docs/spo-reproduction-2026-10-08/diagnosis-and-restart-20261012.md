@@ -1,13 +1,14 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 14:20 UTC; scientific cutoff 14:19, native-state check 14:06.
-The twenty-ninth scheduled restart evaluation is fully regraded at 4,496 updates;
-the next evaluation follows 4,656 updates.
-Test falls to 55.09%, validation rises to 68.03%, and the non-held-out training
-subset rises to 78.73%. Test coverage and majority fall while validation's rise.
-This mixed interval is intermediate learning evidence, not completed reproduction
-or proof of lasting stability.
-Native 4,480 counters and ten-file stability are verified; that is not a
+Status: October 13, 2026, 15:05 UTC; scientific cutoff 15:05, native-state check 15:03.
+The thirtieth scheduled restart evaluation is fully regraded at 4,656 updates;
+the next evaluation follows 4,816 updates.
+Test falls to 54.75% and validation to 67.04%, while the non-held-out training
+subset rises to 78.95%. Two successive test declines and this interval's
+held-out/training divergence merit continued attention; they do not establish
+sustained overfitting or renewed collapse. Overall improvement remains
+intermediate learning, not completed reproduction or proof of lasting stability.
+Native 4,640 counters and ten-file stability are verified; that is not a
 protected copy, full-tensor scan or GPU restoration.
 The complete 3,840-update checkpoint remains byte-verified outside cleanup,
 alongside the earlier 160-, 960-, 1,440- and 2,560-update copies. A separate CPU scan
@@ -110,7 +111,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, and 4,496 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, and 4,656 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -147,8 +148,57 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 4,176 | 54.74% | 66.54% | 77.12% |
 | 4,336 | 55.34% | 67.81% | 78.53% |
 | 4,496 | 55.09% | 68.03% | 78.73% |
+| 4,656 | 54.75% | 67.04% | 78.95% |
 
-### Latest evaluation: 4,496 updates
+### Latest evaluation: 4,656 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval290-20261013.json). Test has **11,554/21,104 correct
+answers, 54.7479%**, or **+14.9735 percentage points** versus original SFT.
+It loses 73 correct answers (-0.3459 points) since 280. Validation loses 59
+(-0.9886 points) to **4,001/5,968, 67.0409%**. The training subset gains 13
+(+0.2184 points) to **4,699/5,952, 78.9483%** and is not held out.
+
+The last four tests are 54.74%, 55.34%, 55.09% and 54.75%. Both held-out means
+fall this interval while training rises, after the preceding test decline.
+That is a generalization watchpoint, not yet sustained-overfitting or collapse
+evidence. Test once-hit slips 79.76% to 79.68%, with majority unchanged at 61.26%.
+Test questions 294 improve / 326 worsen / 699 stay the same; 50 become once-hit
+and 51 lose all correct samples. Validation coverage falls 89.54% to 86.33% and
+majority 74.26% to 71.85%; 72 improve / 91 worsen / 210 stay the same, with 6 newly
+once-hit and 18 lost. Training coverage falls 94.62% to 94.35% and majority 84.68%
+to 84.41%, despite its higher mean; 74 improve / 67 worsen / 231 stay the same.
+
+Test extraction failures rise 4 to 7 and length-limit endings 4 to 8.
+Those small count changes alone cannot explain 73 fewer correct answers.
+The predetermined first test question improves 8/16 to 14/16 despite aggregate
+decline. Secondary numeric-equivalence potential rescues are 91/41/50 for
+test/validation/train versus 89/38/44 before; primary scores remain unchanged.
+These paired counts are descriptive, not significance tests or independent
+training replications. Keep all 30 points and fixed 690/11,040; the current
+1.9761-point gap to supplied 56.724% is not the final endpoint comparison.
+No posthoc tolerance, causal BOS effect, lasting stability or RLM transfer is
+established. See the [interpretation](evidence/restart-eval290-interpretation-20261013.json).
+
+The [native 4,640 metadata check](evidence/restart-full4640-metadata-20261013.json)
+verifies ten stable files and matching trainer/actor/active Adam counters,
+scheduler 4,639 and zero skipped steps. It is distinct from evaluated 4,656,
+and is not a protected copy, full finite scan or GPU restore. Native 4,480
+optimizer files rotated at 14:46 UTC; its receipt remains historical. Protected
+160/960/1,440/2,560/3,840 remain; prepared 5,120 protection retains all gates.
+
+All 2,065 evaluation HTTP returns succeeded, including 2,064 generation POSTs;
+no recorded transport errors or tracebacks. The first answer was checked within
+eight seconds. Target 290 was selected earlier, but its wrapper was prepared
+after native generation started. Focused RED/GREEN and independent binding review
+passed; the full CPU audit ran once after all three completed split gates.
+The read-only checkpoint inspection's string-path correction and the successor
+watcher's accidental PID retarget were observation repairs, not training fixes.
+The successor covers 300/4,816. It checked 291's correct first answer 18 after
+113 seconds, with 747 successes and no errors; this missed the 90-second target
+but does not show idle GPU time. Original owners and recipe are unchanged.
+
+### Preceding evaluation: 4,496 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval280-20261013.json). Test has **11,627/21,104 correct

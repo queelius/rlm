@@ -1,0 +1,342 @@
+{
+  "schema": "spo-scheduled-evaluation-interpretation-v1",
+  "created_utc": "2026-10-13T15:03:56.815101+00:00",
+  "checked_utc": "2026-10-13T15:05:01.746066+00:00",
+  "iteration": 290,
+  "completed_collections": 291,
+  "optimizer_updates": 4656,
+  "metric": "Native mean pass@1 over16 responses for each of1319 test questions; not best-of16.",
+  "selection": "All scheduled points retained; target290 fixed before outputs in the280 handoff. Wrapper preparation occurred after290 generation started. Final comparison remains690/11040.",
+  "prior_iteration": 280,
+  "receipt_sha256": "691a3917c1c876c68fc449d5c2b74b0d7d417332833d44c22dda9abcf465c8ea",
+  "rows": {
+    "test": {
+      "correct": 11554,
+      "responses": 21104,
+      "percent": 54.747915087187266,
+      "previous_correct": 11627,
+      "delta_correct": -73,
+      "delta_pp": -0.3459059893858984,
+      "metrics": {
+        "correct_frac": 0.5474791508718726,
+        "exact_match": 0.7968157695223654,
+        "exact_match_frac": 0.5474791508718726,
+        "majority_vote_acc": 0.6125852918877938,
+        "none_answer_extracted_frac_per_problem": 0.00033169067475360124,
+        "once_hit": 0.7968157695223654,
+        "unique_answer_count": 4.002274450341168
+      },
+      "previous_metrics": {
+        "correct_frac": 0.5509382107657316,
+        "exact_match": 0.7975739196360879,
+        "exact_match_frac": 0.5509382107657316,
+        "majority_vote_acc": 0.6125852918877938,
+        "none_answer_extracted_frac_per_problem": 0.00018953752843062926,
+        "once_hit": 0.7975739196360879,
+        "unique_answer_count": 4.0515542077331315
+      },
+      "extraction_failures": 7,
+      "previous_extraction_failures": 4,
+      "length_finishes": 8,
+      "numeric_format_rescues": 91,
+      "previous_numeric_format_rescues": 89
+    },
+    "validation": {
+      "correct": 4001,
+      "responses": 5968,
+      "percent": 67.04088471849866,
+      "previous_correct": 4060,
+      "delta_correct": -59,
+      "delta_pp": -0.9886058981233244,
+      "metrics": {
+        "correct_frac": 0.6704088471849866,
+        "exact_match": 0.8632707774798928,
+        "exact_match_frac": 0.6704088471849866,
+        "majority_vote_acc": 0.7184986595174263,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.8632707774798928,
+        "unique_answer_count": 2.8793565683646114
+      },
+      "previous_metrics": {
+        "correct_frac": 0.6802949061662198,
+        "exact_match": 0.8954423592493298,
+        "exact_match_frac": 0.6802949061662198,
+        "majority_vote_acc": 0.7426273458445041,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.8954423592493298,
+        "unique_answer_count": 2.93029490616622
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "length_finishes": 0,
+      "numeric_format_rescues": 41,
+      "previous_numeric_format_rescues": 38
+    },
+    "train": {
+      "correct": 4699,
+      "responses": 5952,
+      "percent": 78.94825268817205,
+      "previous_correct": 4686,
+      "delta_correct": 13,
+      "delta_pp": 0.21841397849462366,
+      "metrics": {
+        "correct_frac": 0.7894825268817204,
+        "exact_match": 0.9435483870967742,
+        "exact_match_frac": 0.7894825268817204,
+        "majority_vote_acc": 0.8440860215053764,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9435483870967742,
+        "unique_answer_count": 2.4516129032258065
+      },
+      "previous_metrics": {
+        "correct_frac": 0.7872983870967742,
+        "exact_match": 0.946236559139785,
+        "exact_match_frac": 0.7872983870967742,
+        "majority_vote_acc": 0.8467741935483871,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.946236559139785,
+        "unique_answer_count": 2.475806451612903
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "length_finishes": 0,
+      "numeric_format_rescues": 50,
+      "previous_numeric_format_rescues": 44
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "improved": 294,
+      "worsened": 326,
+      "same": 699,
+      "newly_once_hit": 50,
+      "lost_once_hit": 51,
+      "first_question_before": 8,
+      "first_question_now": 14
+    },
+    "validation": {
+      "improved": 72,
+      "worsened": 91,
+      "same": 210,
+      "newly_once_hit": 6,
+      "lost_once_hit": 18,
+      "first_question_before": 16,
+      "first_question_now": 16
+    },
+    "train": {
+      "improved": 74,
+      "worsened": 67,
+      "same": 231,
+      "newly_once_hit": 5,
+      "lost_once_hit": 6,
+      "first_question_before": 11,
+      "first_question_now": 12
+    }
+  },
+  "question_counts_sha256": "b810c1c12cdbd774c3a5c1e6a5e8a637b2af844c43e44e08b0e7db89ae4dc2da",
+  "baseline_comparison": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 3160,
+    "current_correct": 11554,
+    "delta_percentage_points": 14.973464746019712,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "all_33024_saved_responses_and_21_metrics_verified": true,
+  "evaluation_service": {
+    "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__290/logs/vllm.log",
+    "bytes": 3271376,
+    "sha256": "c1a7c6f807538e74588762a3ed97816cb6f345a9f445df3b0ba483a12f80fc73",
+    "http_successes": 2065,
+    "generation_post_successes": 2064,
+    "http_errors": 0,
+    "tracebacks": 0
+  },
+  "interpretation": [
+    "Test11554/21104=54.747915% falls73 correct responses (-0.345906pp); validation4001/5968=67.040885% falls59 (-0.988606pp). Training4699/5952=78.948253% rises13 (+0.218414pp), but is not held out.",
+    "This is a second successive scheduled test decline; test and validation both decline this interval while training mean rises. It strengthens the need to watch generalization, but one seed and two local test intervals do not establish sustained overfitting, renewed collapse or a causal mechanism.",
+    "Test once-hit falls only one question, from79.757392% to79.681577%; majority remains61.258529%. Validation coverage falls89.544236% to86.327078% and majority74.262735% to71.849866%. Training coverage and majority each fall slightly despite higher mean. Auxiliary metrics are not substitutes for meanpass@1.",
+    "Test questions294 improve/326 worsen/699 stay the same;50 become once-hit and51 lose their last correct sample. The first test question improves8/16 to14/16 despite aggregate decline. First-return correctness cannot stand in for completed evaluation.",
+    "Test extraction failures rise4 to7 and length finishes4 to8; these changes alone cannot explain73 fewer correct responses. Secondary numeric-format rescues91/41/50 versus89/38/44 do not alter the primary native scores.",
+    "Overall improvement remains14.973465 percentage points over originalSFT. The intermediate score is1.976085 points below supplied56.724% Figure3 reference, but this is not the prescribed endpoint comparison and no posthoc acceptance tolerance is set.",
+    "Logged finite updates and operational service success do not demonstrate future stability, a causal BOS repair effect or measured RLM transfer. Current recipe, owners and all30 scheduled results remain unchanged."
+  ],
+  "checkpoint_boundary": {
+    "native_full_state_updates": 4640,
+    "metadata": "checkpoint4640-metadata-20261013.json",
+    "all_ten_identities_stable": true,
+    "trainer_actor_activeAdam": 4640,
+    "scheduler": 4639,
+    "skipped_steps": 0,
+    "evaluated_weights_updates": 4656,
+    "protected_updates": 3840,
+    "previous_native4480_optimizer_removed_utc": "2026-10-13T14:46:14.881+00:00",
+    "previous4480_receipt_historical": true,
+    "no_full_tensor_scan_or_copy_or_GPU_restore": true
+  },
+  "preparation_timing": {
+    "selection_before_outputs": true,
+    "wrapper_prepared_before_outputs": false,
+    "wrapper_prepared_utc": "2026-10-13T14:56:12.511652+00:00",
+    "first_native_request_utc": "2026-10-13T14:50:48+00:00",
+    "first_response_inspected_seconds": 7.081672,
+    "binding_test_RED_then_GREEN": true,
+    "independent_review_no_findings": true
+  },
+  "execution": {
+    "tool_session": 45728,
+    "exit_code": 0,
+    "completed_utc": "2026-10-13T14:59:44.685057+00:00",
+    "once_only": true,
+    "completed_read_only_observer": 49966,
+    "observer_exit_code": 0
+  },
+  "live_update_snapshot": {
+    "checked_utc": "2026-10-13T15:05:01.746066+00:00",
+    "owners": {
+      "queue": {
+        "pid": 2826646,
+        "startticks": 1362248004,
+        "state": "S"
+      },
+      "scoped": {
+        "pid": 2826649,
+        "startticks": 1362248013,
+        "state": "S"
+      },
+      "trainer": {
+        "pid": 2826650,
+        "startticks": 1362248017,
+        "state": "R"
+      },
+      "observer": {
+        "pid": 2829006,
+        "startticks": 1362275186,
+        "state": "S"
+      }
+    },
+    "sealed_source_pin_count": 7,
+    "all_sealed_source_pins_match": true,
+    "log": {
+      "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/command.log",
+      "prefix_bytes": 40048944,
+      "prefix_sha256": "3e152ed93a812ef23ef622648acfdc72add1aeba927c70aa641d2fe9105e1dd7",
+      "unique_update_count": 4672,
+      "max_update": 4672,
+      "contiguous": true,
+      "all_23_logged_numeric_fields_finite": true,
+      "latest": {
+        "advantages/mean": 0.0853,
+        "advantages/std": 0.294,
+        "advantages/close_to_zero_perc": 0,
+        "rewards/mean": 0.00544,
+        "num_tokens": 1931.25,
+        "actor/approx_kl": 0.399,
+        "actor/policy_kl": 0.145,
+        "actor/clip_frac": 0.23,
+        "actor/ratio": 0.982,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0,
+        "actor/pg_losses1_anomalies__num_high_z": 2.75,
+        "actor/pg_losses1_anomalies__total_anomalies": 2.75,
+        "actor/ref_kl_loss": 0.00111,
+        "non_score_rewards": 0,
+        "kls": 11.1,
+        "kl_coef": 0.0001,
+        "actor/loss": -0.0345,
+        "actor/grad_norm": 13.9,
+        "actor/lr": 7.3e-7,
+        "epoch": 2,
+        "step": 4672,
+        "actor/ds_step": 4672
+      },
+      "new_update_window": [
+        4625,
+        4672
+      ],
+      "new_window_bounds": {
+        "actor/ratio": {
+          "min": 0.982,
+          "max": 1.03,
+          "mean": 1.0034166666666664
+        },
+        "actor/approx_kl": {
+          "min": 0.000726,
+          "max": 0.399,
+          "mean": 0.0666488125
+        },
+        "actor/clip_frac": {
+          "min": 0,
+          "max": 0.246,
+          "mean": 0.09522208333333333
+        },
+        "actor/grad_norm": {
+          "min": 10.6,
+          "max": 34.7,
+          "mean": 20.660416666666666
+        },
+        "kls": {
+          "min": 6.89,
+          "max": 11.1,
+          "mean": 9.242291666666668
+        },
+        "actor/pg_losses1_anomalies__num_nan": {
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "actor/pg_losses1_anomalies__num_inf": {
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "last_completed_collection": 291,
+      "failure_markers": {
+        "High PPO ratio detected:": 0,
+        "Traceback (most recent call last):": 0,
+        "CUDA out of memory": 0,
+        "Disk quota exceeded": 0
+      }
+    },
+    "evaluation290_native_gates": {
+      "test": true,
+      "validation": true,
+      "train": true
+    },
+    "observer_pending_id": "review-1791903704-9d0144c9",
+    "observer_last_acknowledgement": "review-1791900369-5722ac55",
+    "stop_exists": false,
+    "limits": [
+      "Rounded logged metrics and contiguous counters, not a new parameter tensor comparison or full batch reward/BOS regrade.",
+      "Separate full reward/BOS audit completed for collection200; this live check does not scan model parameters or change GPU/model/config."
+    ]
+  },
+  "decision": "Continue unchanged original whole owner to fixed690/11040, preserving original1000-collection LR horizon. Prepare300/4816 CPU audit before outputs; resume existing read-only52341. Retain prepared step-selected5120 protection and its source/state/owner/storage gates.",
+  "limits": [
+    "Single training seed; sixteen answers per question are not independent training replications.",
+    "Native training subset is not held out. No favorable checkpoint selection or auxiliary metric substitution.",
+    "Historical author implementation and checkpoint-selection rationale remain unresolved; BOS-only and finite-zero BF16 adapters remain disclosed deviations.",
+    "Full saved finite audit remains1440; two-tensor update comparison2240; full batch reward/token audit200."
+  ],
+  "advisor_package": {
+    "changed": false,
+    "cutoff_utc": "2026-10-12T20:53:09.492795+00:00",
+    "reason": "The package already labels reproduction unfinished, causal attribution unproved and fixed endpoint required. Two local declines update supporting evidence without changing that main story, material limitations or next decision."
+  },
+  "observation_failures": {
+    "checkpoint_inspection": "One read-only mmap load rejected a Path object; corrected to string filename against installed PyTorch code. Checkpoint and training unchanged.",
+    "watcher_start": "Overbroad retarget replacement changed an observer PID; failed authentication before observer startup. Exact target-only seams and unchanged owner pins verified before replacement watcher52341 started.",
+    "receipt_display": "Tool-truncated receipt display could not be parsed. The same disk receipt was read via a bounded summary; full audit was not repeated.",
+    "first_post_evaluation_return_checked_seconds": 112.884023,
+    "missed_90_second_target": true,
+    "first_post_evaluation_prediction": "18",
+    "first_post_evaluation_gold": "18",
+    "http_successes_at_that_check": 747,
+    "http_errors": 0,
+    "classification": "Observation errors/delay, not native training or evaluation failure; no GPU idle time inferred.",
+    "external_evidence": "eval290-regrade-001/OBSERVATION-REPAIRS.json"
+  }
+}
