@@ -1,0 +1,117 @@
+{
+  "schema": "spo-native-checkpoint5280-metadata-v1",
+  "checked_utc": "2026-10-13T17:44:08.463482+00:00",
+  "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0330--epoch_2.00--step_5280",
+  "trainer_state": {
+    "global_step": 5280,
+    "epoch": 2,
+    "iteration": 330
+  },
+  "actor_global_steps": 5280,
+  "actor_skipped_steps": 0,
+  "scheduler_last_batch_iteration": 5279,
+  "optimizer_parameter_state_steps": {
+    "0": 5280,
+    "1": 5280
+  },
+  "optimizer_legacy_group_steps": [
+    0,
+    0
+  ],
+  "file_count": 10,
+  "file_identities": {
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979724288,
+      "mtime_ns": "1791913239582665014"
+    },
+    "actor/latest": {
+      "bytes": 15,
+      "inode": 1099979722479,
+      "mtime_ns": "1791913267155665051"
+    },
+    "actor/global_step5280/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "inode": 1099979722478,
+      "mtime_ns": "1791913267153665051"
+    },
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "inode": 1099979724285,
+      "mtime_ns": "1791913235656665009"
+    },
+    "actor/global_step5280/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "inode": 1099979724291,
+      "mtime_ns": "1791913243547665019"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "inode": 1099979724292,
+      "mtime_ns": "1791913267155665051"
+    },
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "inode": 1099979722476,
+      "mtime_ns": "1791913235656665009"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "inode": 1099979722477,
+      "mtime_ns": "1791913235658665009"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "inode": 1099979722475,
+      "mtime_ns": "1791913235656665009"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "inode": 1099979724287,
+      "mtime_ns": "1791913235658665009"
+    }
+  },
+  "source_stable_during_cpu_inspection": true,
+  "cuda_initialized": false,
+  "owners": {
+    "queue": {
+      "pid": 2826646,
+      "startticks": 1362248004,
+      "state": "S"
+    },
+    "scoped": {
+      "pid": 2826649,
+      "startticks": 1362248013,
+      "state": "S"
+    },
+    "trainer": {
+      "pid": 2826650,
+      "startticks": 1362248017,
+      "state": "S"
+    }
+  },
+  "all_seven_sealed_pins_match": true,
+  "prior_native5120_actor_exists": true,
+  "prior_native5120_hf_exists": true,
+  "protected5120_receipt": "checkpoint-protection-5120-001/RECEIPT.json",
+  "limits": [
+    "CPU/meta counters and file identities, not full tensor-finiteness or content-hash audit.",
+    "Native5280 not separately protected or GPU-restored. Protected5120 remains recovery point.",
+    "Native cleanup may rotate5280 later; record immutable receipt, not perpetual source availability."
+  ],
+  "execution": {
+    "tool_session": 11549,
+    "exit_code": 0,
+    "cpu_only": true
+  },
+  "prior_native5120_actual_files": {
+    "checked_utc": "2026-10-13T17:46:18.180971+00:00",
+    "actor_directory_exists": true,
+    "actor_state_exists": false,
+    "optimizer_state_exists": false,
+    "hf_model_exists": true,
+    "remaining_file_count": 6,
+    "cleanup_utc": "2026-10-13T17:40:33.388+00:00",
+    "interpretation": "Native cleanup removed non-model actor/optimizer files; empty actor directory presence is not resumable state. Protected5120 remains complete."
+  }
+}

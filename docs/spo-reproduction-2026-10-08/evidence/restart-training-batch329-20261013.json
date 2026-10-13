@@ -1,0 +1,45 @@
+{
+  "schema": "spo-training-batch329-public-summary-v1",
+  "checked_utc": "2026-10-13T17:42:54.027046+00:00",
+  "native_root": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+  "collection": 329,
+  "optimizer_updates_after_collection": 5280,
+  "responses": 512,
+  "question_groups": 64,
+  "effective_reward_counts": {
+    "1.0": 408,
+    "0.0": 104
+  },
+  "mixed_effective_reward_groups": 23,
+  "terminal_uniform_groups_with_nonzero_advantages": 8,
+  "reward_regrade_mismatches": [],
+  "generation_training_query_id_mismatches": 0,
+  "episode_actor_trajectory_token_equality": true,
+  "original_gold_and_saved_response_identity_verified": true,
+  "actor_reference_logprobs_finite": true,
+  "advantages_finite": true,
+  "nonzero_advantage_tokens": 1575,
+  "http_successes": 730,
+  "http_errors": 0,
+  "generation_log_tracebacks": 0,
+  "generation_log_sha256": "e6e68855d2c47794e69f1db72af3d8a2f2963aa88c9e714d759f181d0090e05c",
+  "source_hashes": {
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/tasks/gsm8k.py": "ef7cff53cb0e048fbf5671d757199ff6bc01ef0dff465d90270c0e20032a1405",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator.py": "d95c525f5894d45d14fd8c567a695c0bfa4f892a4daaa6bba53358b1c006529a",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator_with_mc_advantages.py": "e098eee0f10381bb46c66778c20d1a6434b2294ca9db9f059dc435b048054cde",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/config.json": "30bdd16637a48a499d84cf2ad528d9ecc0eab25707a20d9d5d2917ce4bb69ebc"
+  },
+  "interpretation": "Reward and token-alignment checks remain consistent in a newer completed batch. Mixed terminal rewards and finite nonzero intermediate advantages provide a usable learning signal. Changing training questions are not a benchmark curve or proof of paper reproduction.",
+  "limits": [
+    "Independent string/penalty regrade follows native GSM8K rules, not a new mathematical equivalence verifier.",
+    "Finite saved logprobs/advantages and logged update scalars are not an all-parameter numerical audit.",
+    "No new held-out evaluation or independent training replication."
+  ],
+  "selection": "Most recent completed collection corresponding to predetermined live-return329; audit selected by recency, not reward or evaluation score.",
+  "manifest_scope": "Post-audit exact content binding and per-file read stability; not before-and-after whole-audit identity verification.",
+  "full_external_audit": "/project/alex_phd/runs/rl-paper-reproduction-20261012/training-audit-collection329-20261013.json",
+  "full_external_audit_sha256": "fcf7cb0e4d4daf6f5268651b266e24bfad76157e051657500cdef735efda1027",
+  "completed_manifest_file_count": 13,
+  "publication_scope": "Raw question/response examples remain in external audit; aggregate evidence only. No new benchmark or causal claim.",
+  "decision_at_audit": "Continue same authenticated owner and fixed690/11040 recipe; next scheduled evaluation330 follows5296 optimizer updates. No new GPU job, live source change, reward change or checkpoint selection."
+}

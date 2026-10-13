@@ -1,8 +1,8 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 17:17 UTC
+## Current status on October 13, 18:01 UTC
 
-Completed scientific-result cutoff: 17:17 UTC. Live-update check: 17:16 UTC;
+Completed scientific-result cutoff: 18:01 UTC. Live-update check: 17:58 UTC;
 protected 5,120-update recovery copy verified at 17:12 UTC.
 
 **The own-training reproduction is incomplete, not successful.** The previous run
@@ -36,33 +36,31 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **5,136 optimizer updates**, is **55.61%**, versus
-**39.77%** for the original model: **+15.83 percentage points**. This is the
-thirty-third scheduled evaluation; all 33,024 saved answers and 21 native metrics
+The latest scheduled test, after **5,296 optimizer updates**, is **56.22%**, versus
+**39.77%** for the original model: **+16.45 percentage points**. This is the
+thirty-fourth scheduled evaluation; all 33,024 saved answers and 21 native metrics
 independently agree. The [complete scheduled series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far)
 retains every earlier result.
 
-Test gains 12 correct answers (+0.057 percentage points), validation loses
-16 (−0.268 points) to 67.54%, and the training subset gains 26 (+0.437 points)
-to 80.63%; training is not held out. Recent tests are 55.69%, 55.55% and 55.61%:
-nearly flat while validation falls twice and training rises. Keep this
-generalization watchpoint without claiming sustained overfitting, collapse,
-a renewed upward trend or a cause. Overall improvement is **intermediate
+Test gains 130 correct answers (+0.616 percentage points), validation gains
+53 (+0.888 points) to 68.43%, and the non-held-out training subset loses 36
+(−0.605 points) to 80.02%. This reverses the preceding two-validation-declines /
+rising-training pattern and weakens a sustained-deterioration explanation.
+It does not establish a cause or guarantee later stability. The test score is
+0.502 points below the supplied 56.724% reference, but this remains **intermediate
 learning, not completed reproduction**. The fixed 690-collection /
-11,040-update comparison remains required; no acceptance tolerance is being
+11,040-update comparison is still required; no acceptance tolerance is being
 chosen from interim scores.
 
-There are 326 test questions with more correct samples, 297 with fewer and
-696 unchanged: 760 gained correct answers versus 748 lost. The first test
-question falls from 15/16 to 14/16 despite the aggregate increase. Validation
-once-hit coverage rises from 87.40% to 88.47%, and majority accuracy from
-72.92% to 73.46%, despite lower mean accuracy. These auxiliary scores cannot
-replace native mean pass@1. Test extraction failures and length-limit endings
-fall from four to one; validation has none, so increased extraction failure
-does not explain its decline. These are descriptive comparisons, not
-independent training replications or significance tests. See the
-[latest evaluation audit](evidence/restart-eval320-20261013.json) and
-[interpretation](evidence/restart-eval320-interpretation-20261013.json).
+There are 336 test questions with more correct samples, 290 with fewer and
+693 unchanged: 789 gained correct answers versus 659 lost. The first test
+question falls from 14/16 to 13/16 despite the aggregate increase. Training
+once-hit coverage rises while its mean accuracy falls; auxiliary metrics
+cannot replace native mean pass@1. Test extraction failures and length endings
+rise from one to three; validation remains zero. These descriptive comparisons
+are not independent training replications or significance tests. See the
+[latest evaluation audit](evidence/restart-eval330-20261013.json) and
+[interpretation](evidence/restart-eval330-interpretation-20261013.json).
 
 An additional training observation at 09:50 UTC illustrates a scoring limit:
 the first saved response in collection 222 received the correct-answer reward
@@ -90,28 +88,29 @@ training impact. Preserve the author labels and native scores for reproduction;
 the lesson for later RLM work is to audit reward oracles, not a measured transfer
 effect. See the [label inconsistency evidence](evidence/restart-training-label310-20261013.json).
 
-The separate full collection 200 audit verifies all 512 terminal rewards and
-generation/training token bindings: 354 correct / 158 incorrect, with finite
-saved log probabilities and advantages. Twenty-eight question groups have mixed
-terminal rewards; eleven terminal-uniform groups still have nonzero intermediate
-advantages. These changing training questions do not form a held-out progress
-curve; see the [training audit](evidence/restart-training-batch200-20261013.json).
-The last detailed numerical window, updates 2,577–2,736, remains in the
-[numerical audit](evidence/restart-training-windows2736-20261013.json).
-The live log check at 17:16 UTC verifies contiguous updates through 5,152,
+The newer full collection 329 audit verifies all 512 terminal rewards and
+generation/training token bindings: 408 correct / 104 incorrect, with finite
+saved log probabilities and advantages. Twenty-three question groups have mixed
+terminal rewards; eight terminal-uniform groups still have nonzero intermediate
+advantages (1,575 nonzero advantage tokens in total). Original gold/text and
+episode/actor/trajectory tokens agree. Changing training questions are not a
+held-out learning curve; see the [new audit summary](evidence/restart-training-batch329-20261013.json).
+The [earlier batch200 audit](evidence/restart-training-batch200-20261013.json)
+remains historical evidence. These checks do not isolate a causal BOS effect.
+
+The live log check at 17:58 UTC verifies contiguous updates through 5,312,
 all 23 logged numeric fields finite, and no recorded failure markers.
-In updates 4,977–5,152, ratios span 0.962–1.12 and gradient norms reach 70.5.
-Approximate KL reaches 1.06 at update 5,135; that update's ratio is 0.987
-and gradient norm 11.5. Preserve this finite numerical watchpoint without
-inferring its cause, full-tensor finiteness or future stability. Earlier
-excursions remain recorded.
+New updates 5,297–5,312 have ratios 0.973–1.03, gradient norms up to 48.8,
+and approximate KL up to 0.631. The earlier approximate-KL 1.06 at update
+5,135 remains a finite numerical watchpoint; these rounded logs do not
+establish full-tensor finiteness or future stability.
 
 **Recovery update, October 13, 17:12 UTC:** the complete **5,120-update checkpoint**
 is copied outside native cleanup. All ten files (17.60 GB) match by SHA256;
 trainer, actor and both active Adam counters are 5,120, scheduler 5,119,
 with no skipped steps. This was preselected by training step at 11:55 UTC,
 before it existed. Earlier protected 160/960/1,440/2,560/3,840 states remain.
-The saved recovery point is not the evaluated 5,136-update state.
+The saved recovery point is not the evaluated 5,296-update state.
 See the [checkpoint receipt](evidence/restart-full5120-protection-20261013.json)
 and [storage/state preflight](evidence/restart-full5120-preflight-20261013.json).
 Copy-time home quota and conservative future-growth gates passed. This is
@@ -187,37 +186,43 @@ confirms actual saved changes from 1,440 to 2,240 updates; both tensors are fini
 This is not an all-parameter scan or a measure of learning effectiveness.
 The [earlier 960-to-1,280 check](evidence/restart-parameter-update1280-20261012.json)
 remains in the record. Protected recovery states are distinct from the
-5,136-update weights evaluated above. The earlier native full 2,400-update state
+5,296-update weights evaluated above. The earlier native full 2,400-update state
 passed a [CPU metadata check](evidence/restart-full2400-metadata-20261013.json);
 it was not separately protected or GPU-restored. Native cleanup has now rotated
 it and the older 2,240-update full state; their receipts remain historical.
-Evaluation 320 is complete and independently regraded. All 2,065 evaluation
+Evaluation 330 is complete and independently regraded. All 2,065 evaluation
 HTTP returns succeeded: 2,064 generation POSTs and one model-discovery GET.
 No recorded transport errors or tracebacks occurred. Training resumed under
 the same owner.
 
-The target was fixed earlier. The audit wrapper was created at 17:13:27 UTC,
-after the first model request at 17:03:11 and completion of all three native
-splits at 17:12:05; this was not prospective wrapper preparation. The focused
-binding test and independent review passed, and the CPU audit ran once after
-all three split gates, exiting normally at 17:16:15. The prior observation
-handle also completed normally. No scoring, training or live-source changes
-were made.
+The target was fixed earlier. The audit wrapper was created at 17:58:34 UTC,
+after the first model request at 17:44:52 and all three native split gates at
+17:53:49. This was not prospective wrapper preparation. The new/prior binding
+tests passed after a missing-wrapper RED, and the once-only CPU audit exited
+normally at 17:59:38. No scoring, training or live-source changes were made.
 
-The first evaluation answer was correct (18), checked 17 seconds after the
-first request with 58 successful returns and no errors. The first
-post-evaluation training answer was also correct (39), checked after 78 seconds
-with 572 successful returns and no errors. Both checks meet the 90-second
-operational target. The preceding evaluation 310 handoff's 311-second check
-remains a recorded historical miss, not evidence of GPU idleness or service
-failure. The successor read-only observer was started before publication work.
+The first evaluation answer matched native gold (18), checked 20 seconds after
+the first request with 73 successful returns and no errors. The previous
+watcher exited after all split gates; its successor began at 17:57:44 and first
+observed training collection 332, after 32 seconds with 121 successful returns
+and zero errors. We cannot claim that collection 331's first return was checked
+within 90 seconds. This coverage gap is not evidence of GPU idleness or a
+service failure. Earlier late-inspection misses remain recorded.
 
-The next scheduled evaluation, 330, follows 5,296 updates. Its read-only observer
-is active; prepare the CPU audit from pinned evaluation 320 and run only
-after all three native splits complete. The full 5,120-update recovery state
-is now protected and verified as documented above. The next step-selected
-6,400-update protection procedure is prepared; no copy has started. Require
-complete-save, owner, file-stability and fresh byte/file quota gates.
+A [CPU metadata check of full 5,280](evidence/restart-full5280-metadata-20261013.json)
+at 17:44 UTC verifies ten stable files, trainer/actor/active Adam counters
+5,280, scheduler 5,279 and zero skipped steps. It is not separately protected,
+full-tensor scanned or GPU-restored. Native cleanup removed the 5,120
+optimizer files at 17:40:33; its HF export and an empty actor directory remain.
+The separate protected 5,120 full copy is intact; directory presence alone
+must not be mistaken for complete recovery state.
+
+The next scheduled evaluation, 340, follows 5,456 updates. Its read-only observer
+is active and the exact CPU audit wrapper is now prepared and tested, before
+the native evaluation root existed. Execute it once only after fresh complete
+three-split, owner, pin and no-overwrite gates. The step-selected 6,400 protection
+procedure is also prepared; no copy has started. Require complete-save,
+owner, file-stability and fresh byte/file quota gates.
 
 **Operational check, October 13, 10:33 UTC:** all 231 completed collection
 timings and 24 evaluation intervals leave about 11–14 hours before the whole-run
