@@ -1,0 +1,200 @@
+{
+  "schema": "spo-scheduled-evaluation400-interpretation-v1",
+  "checked_utc": "2026-10-13T23:03:23.668096+00:00",
+  "receipt_created_utc": "2026-10-13T23:02:32.065485+00:00",
+  "rows": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 11949,
+      "percent": 56.61959818043973,
+      "previous_correct": 11916,
+      "delta_correct": 33,
+      "delta_pp": 0.15636846095526916,
+      "metrics": {
+        "correct_frac": 0.5661959818043972,
+        "exact_match": 0.8028809704321456,
+        "exact_match_frac": 0.5661959818043972,
+        "majority_vote_acc": 0.6300227445034117,
+        "none_answer_extracted_frac_per_problem": 0.00018953752843062926,
+        "once_hit": 0.8028809704321456,
+        "unique_answer_count": 3.7680060652009097
+      },
+      "previous_metrics": {
+        "correct_frac": 0.5646322971948445,
+        "exact_match": 0.7983320697498104,
+        "exact_match_frac": 0.5646322971948445,
+        "majority_vote_acc": 0.6292645943896892,
+        "none_answer_extracted_frac_per_problem": 0.00014215314632297195,
+        "once_hit": 0.7983320697498104,
+        "unique_answer_count": 3.7278241091736164
+      },
+      "extraction_failures": 4,
+      "previous_extraction_failures": 3,
+      "finish_reasons": {
+        "length": 4,
+        "stop": 21100
+      },
+      "numeric_format_rescues": 74,
+      "previous_numeric_format_rescues": 90
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4934,
+      "percent": 82.89650537634408,
+      "previous_correct": 4956,
+      "delta_correct": -22,
+      "delta_pp": -0.3696236559139785,
+      "metrics": {
+        "correct_frac": 0.8289650537634409,
+        "exact_match": 0.9489247311827957,
+        "exact_match_frac": 0.8289650537634409,
+        "majority_vote_acc": 0.8844086021505376,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9489247311827957,
+        "unique_answer_count": 2.185483870967742
+      },
+      "previous_metrics": {
+        "correct_frac": 0.8326612903225806,
+        "exact_match": 0.9489247311827957,
+        "exact_match_frac": 0.8326612903225806,
+        "majority_vote_acc": 0.8790322580645161,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9489247311827957,
+        "unique_answer_count": 2.10752688172043
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "finish_reasons": {
+        "stop": 5952
+      },
+      "numeric_format_rescues": 30,
+      "previous_numeric_format_rescues": 37
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 4169,
+      "percent": 69.8558981233244,
+      "previous_correct": 4078,
+      "delta_correct": 91,
+      "delta_pp": 1.524798927613941,
+      "metrics": {
+        "correct_frac": 0.698558981233244,
+        "exact_match": 0.8873994638069705,
+        "exact_match_frac": 0.698558981233244,
+        "majority_vote_acc": 0.7587131367292225,
+        "none_answer_extracted_frac_per_problem": 0.0001675603217158177,
+        "once_hit": 0.8873994638069705,
+        "unique_answer_count": 2.675603217158177
+      },
+      "previous_metrics": {
+        "correct_frac": 0.6833109919571045,
+        "exact_match": 0.8766756032171582,
+        "exact_match_frac": 0.6833109919571045,
+        "majority_vote_acc": 0.7372654155495979,
+        "none_answer_extracted_frac_per_problem": 0.0001675603217158177,
+        "once_hit": 0.8766756032171582,
+        "unique_answer_count": 2.7319034852546915
+      },
+      "extraction_failures": 1,
+      "previous_extraction_failures": 1,
+      "finish_reasons": {
+        "length": 1,
+        "stop": 5967
+      },
+      "numeric_format_rescues": 49,
+      "previous_numeric_format_rescues": 51
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "questions": 1319,
+      "better": 312,
+      "worse": 296,
+      "unchanged": 711,
+      "gained_correct_samples": 754,
+      "lost_correct_samples": 721,
+      "net": 33,
+      "first_question_before": 14,
+      "first_question_after": 16
+    },
+    "train": {
+      "questions": 372,
+      "better": 63,
+      "worse": 69,
+      "unchanged": 240,
+      "gained_correct_samples": 149,
+      "lost_correct_samples": 171,
+      "net": -22,
+      "first_question_before": 15,
+      "first_question_after": 14
+    },
+    "validation": {
+      "questions": 373,
+      "better": 83,
+      "worse": 69,
+      "unchanged": 221,
+      "gained_correct_samples": 234,
+      "lost_correct_samples": 143,
+      "net": 91,
+      "first_question_before": 16,
+      "first_question_after": 16
+    }
+  },
+  "receipt_hashes": {
+    "RECEIPT.json": "30a93c87ad3902adce1c50ff96a5c2b3b9ead6dac0a68b0191155077329c2d86",
+    "INPUT-MANIFEST.json": "98f62e84837acc38a7b5da3878e7365f976b673fe69b1264ad335ddc5d869771",
+    "EXAMPLES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "QUESTION-COUNTS.json": "8f499b511b8559b8b60c160c1b800d91c7685f25fca2b4b82e6b5c8409b3f191"
+  },
+  "all_33024_saved_responses_and_21_metrics_verified": true,
+  "scheduled_points_retained": 41,
+  "baseline_comparison": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 3555,
+    "current_correct": 11949,
+    "delta_percentage_points": 16.845147839272176,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference; this check verifies its saved metric, not all baseline responses again. No uncertainty or causal attribution."
+  },
+  "paper_reference_percent": 56.724,
+  "paper_reference_gap_pp": 0.10440181956026606,
+  "iteration": 400,
+  "completed_collections": 401,
+  "optimizer_updates": 6416,
+  "receipt": "eval400-regrade-001/RECEIPT.json",
+  "audit_exit_observed_utc": "2026-10-13T23:02:42Z",
+  "completed_evaluation_service": {
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_prefix_bytes": 3272488,
+    "log_prefix_sha256": "260f639f2e0cd89a0384adceeafb1ed80463b3a22824a82d13cd1725d169433a"
+  },
+  "interpretation": [
+    "The latest scheduled test is 11949/21104 = 56.619598%, up 33 correct samples (+0.156368 percentage points) from evaluation390. It is 0.104402 points below supplied 56.724 and 16.845148 points above original SFT. This is the latest intermediate result, not a selected favorable checkpoint or fixed endpoint.",
+    "Validation gains 91 correct samples (+1.524799 points), while the non-held-out training subset loses 22 (-0.369624 points). The test/validation rebound weakens a simple continuing all-split-decline reading of390, but does not prove stable learning, eliminate future collapse, establish overfitting or identify a causal mechanism.",
+    "Test has 312 questions with more correct samples, 296 with fewer and 711 unchanged; 754 gained samples offset 721 lost. Its first question rises from14/16 to16/16. Shared questions and evaluation seeds are not independent training replications; no significance or equivalence claim is made.",
+    "Test majority-vote accuracy rises from62.926459% to63.002274% and once-hit rises from79.833207% to80.288097%. These remain secondary diagnostics, not substitutes for the prescribed mean pass@1.",
+    "Test extraction failures and length endings are four each (previously three each); the unchanged numeric-format diagnostic counts74 potential rescues versus90. No grader or reward rule changes. Exact-answer correctness does not validate every intermediate reasoning statement, as the first test response's four-muffins wording illustrates.",
+    "All41 scheduled points are retained. No retrospective acceptance tolerance, favorable checkpoint, shortened LR horizon, altered scientific recipe or claim of historical source/runtime equivalence is introduced. BOS-only and finite-zero BF16 adapters remain disclosed."
+  ],
+  "decision": "Continue the unchanged original whole owner to fixed690 collections/11040 updates with the original1000-collection LR horizon and68-hour cap including endpoint evaluation. Audit18870 and watcher39862 are complete; never resume or repeat them. Next scheduled evaluation410/6576 CPU audit is ranked for preparation, not yet prepared or admitted; preserve full6400 and earlier copies, with7680 coarse protection preselected but not prepared. No successor GPU job before the entire original owner and GPU children depart.",
+  "limits": [
+    "Own fixed-endpoint training reproduction remains unfinished. An intermediate near-match is measured progress, not completion.",
+    "No independent-seed confirmation, statistical equivalence, causal BOS attribution or measured RLM transfer.",
+    "Full original-gold/reward/BOS batch audit remains collection370; two fixed tensor comparison5920 and all-tensor finite scan1440 retain their narrower scopes.",
+    "Protected6400 is distinct from evaluated6416. Full-state protection is not a GPU restore, all-tensor finite scan or off-system backup; faithful resume implementation remains conditional.",
+    "Native test1319x16,T0.35,effective top_p1.0,mean pass@1 preserved; validation373x16; training372x16 is not held out.",
+    "The methodological calibration for future RLM work is promising, not evidence that SPO or these task/reward choices will transfer to RLM."
+  ],
+  "advisor_package": {
+    "changed": false,
+    "retained_cutoff_utc": "2026-10-12T20:53:09.492795+00:00",
+    "reason": "This mixed intermediate rebound changes the supporting dossier, not the central unfinished-endpoint claim, material limitations or fixed next decision. No slides or presenter files changed."
+  }
+}

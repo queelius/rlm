@@ -1,6 +1,47 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current operations on October 13, 22:50 UTC
+## Latest result: October 13, 23:02 UTC
+
+**Our fixed-endpoint training reproduction is still unfinished.** Evaluation
+400, after **6,416 optimizer updates**, is now independently regraded:
+**56.619598% test mean pass@1**, or 11,949/21,104 correct responses.
+That is **16.85 percentage points above original SFT** and 0.104402 points
+below the supplied 56.724% paper reference. This is promising intermediate
+learning, not completion or a retrospectively chosen acceptance threshold.
+
+| Native mean pass@1 | Latest | Change from 6,256 updates |
+| --- | ---: | ---: |
+| Test | 56.62% | +0.16 percentage points |
+| Validation | 69.86% | +1.52 percentage points |
+| Non-held-out training subset | 82.90% | −0.37 percentage points |
+
+The [full audit](evidence/restart-eval400-20261013.json) verifies all 33,024
+saved answers, original identities, prompt/tree/Arrow bindings and 21 native
+metrics. Test and validation rebound while training-subset accuracy falls:
++33/+91/−22 correct samples. This weakens a continuing all-split-decline
+interpretation of the previous point, but does not establish stability,
+statistical equivalence, a causal BOS effect or transfer to RLM.
+
+We retain **all 41 scheduled points**, the original **1,000-collection LR
+horizon**, and the fixed **690 collections / 11,040 updates** plus native
+endpoint evaluation. No favorable checkpoint, reward or grader change.
+The broader aim remains calibration of our RL practice for future RLM work,
+not a commitment to using SPO for RLM.
+
+All 2,065 evaluation HTTP returns succeeded with no errors or tracebacks.
+CPU audit 18870 and watcher 39862 completed once; neither should be resumed.
+The original whole GPU owner continues unchanged. Full 6,400 is protected,
+distinct from evaluated 6,416; earlier copies and failed attempts remain.
+Next are preparation for scheduled 410/6,576 auditing and the preselected
+7,680-update recovery copy; neither successor preparation is complete.
+
+See the [interpretation](evidence/restart-eval400-interpretation-20261013.json),
+[complete scheduled series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far)
+and [6,400 protection receipt](evidence/restart-full6400-protection-20261013.json).
+The advisor package retains its October 12, 20:53:09 UTC cutoff: this result
+updates the supporting dossier, not its unfinished-endpoint claim or next decision.
+
+## Historical operations on October 13, 22:50 UTC (superseded above)
 
 **The fixed-endpoint reproduction is still unfinished.** Latest audited test
 remains **56.463230% at 6,256 updates**, with all 40 scheduled points retained.
@@ -24,7 +65,7 @@ complete splits and fresh admission checks. Original training owner, sealed
 source, 1,000-collection LR horizon and fixed 690/11,040 endpoint are unchanged.
 The advisor package retains its explicit October 12, 20:53:09 UTC cutoff.
 
-## Latest completed evaluation: October 13, 22:20 UTC
+## Historical evaluation: October 13, 22:20 UTC (superseded above)
 
 Audit completion verified at 22:15:48 UTC. **The fixed-endpoint training
 reproduction is still unfinished.** The fortieth scheduled evaluation, after

@@ -1,13 +1,13 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Operations cutoff: October 13, 2026, 22:50 UTC. Latest full-answer audit
-remains evaluation 390, whose exit was verified at 22:15:48 UTC.
-The fortieth scheduled restart evaluation is fully regraded at 6,256 updates;
-next follows 6,416. Test is 56.463230%, validation 68.331099%, non-held-out
-training 83.266129%. These fall 0.255876, 1.407507 and 0.067204 percentage points.
-The test gap below supplied 56.724% is 0.260770 points; original-SFT gain is
-16.688779 points. This is the latest intermediate result, not a fixed-endpoint
-reproduction. All 40 scheduled points remain; no favorable checkpoint or tolerance.
+Scientific-result cutoff: October 13, 2026, 23:02:42 UTC, when evaluation
+400's full-answer audit exit was verified. The forty-first scheduled restart
+evaluation is fully regraded at 6,416 updates; next follows 6,576. Test is
+56.619598%, validation 69.855898%, non-held-out training 82.896505%.
+Changes are +0.156368, +1.524799 and −0.369624 percentage points, respectively.
+The test gap below supplied 56.724% is 0.104402 points; original-SFT gain is
+16.845148 points. This is an intermediate result, not a fixed-endpoint
+reproduction. All 41 scheduled points remain; no favorable checkpoint or tolerance.
 
 Protected 6,400 is now the latest recovery copy, verified at 22:49:51 UTC.
 All ten files (17.60 GB) match source hashes and remain stable. Trainer, actor
@@ -16,9 +16,10 @@ Earlier protected states remain intact.
 This is not an all-tensor scan, GPU restore or off-system backup; see the
 [receipt](evidence/restart-full6400-protection-20261013.json) and
 [fresh preflight](evidence/restart-full6400-preflight-20261013.json).
-Evaluation 400/6,416 is running, distinct from the saved 6,400 state. Its full CPU
-audit is prepared and independently reviewed, but not yet executed. One bounded
-read-only watcher is active. No aggregate 400 score or reproduction claim yet.
+Evaluation 400/6,416 is complete and fully audited, distinct from saved 6,400.
+Prepared CPU audit 18870 and read-only watcher 39862 finished once; do not
+resume or rerun them. Next scheduled 410/6,576 audit and coarse 7,680 recovery
+protection are ranked but not yet prepared. No training-reproduction claim yet.
 Native 6,240 had an inventory-only audit; that remains historical evidence,
 not an audit of evaluated 6,256 weights.
 Native5,920 has stable ten-file
@@ -121,7 +122,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, and 6,256 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, and 6,416 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -169,8 +170,45 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 5,936 | 56.51% | 69.10% | 83.69% |
 | 6,096 | 56.72% | 69.74% | 83.33% |
 | 6,256 | 56.46% | 68.33% | 83.27% |
+| 6,416 | 56.62% | 69.86% | 82.90% |
 
-### Latest evaluation: 6,256 updates
+### Latest evaluation: 6,416 updates
+
+The [full audit](evidence/restart-eval400-20261013.json) verifies all 33,024
+saved answers and 21 native metrics, with original identities and prompt/tree/
+Arrow bindings. Test is 11,949/21,104 = 56.619598%, validation 4,169/5,968 =
+69.855898%, and non-held-out training 4,934/5,952 = 82.896505%. Changes from 390
+are +33/+91/−22 correct samples: +0.156368/+1.524799/−0.369624 points.
+
+The test/validation rebound weakens a continuing across-the-board decline
+reading of 390. It does not establish stability, rule out later collapse or
+identify a causal mechanism. Test has 312 improved questions, 296 worsened
+and 711 unchanged; 754 gains offset 721 losses. The first test question moves
+14/16 to 16/16. Shared-question transitions are descriptive, not independent
+training-seed replications or significance tests.
+
+Test majority vote rises to 63.002274% and once-hit to 80.288097%; neither
+replaces mean pass@1. Extraction failures and length endings number four each,
+versus three each previously. The unchanged secondary numeric-format check
+finds 74 potential rescues versus 90, without changing the official score.
+
+Original-SFT gain is 16.845148 points; gap below supplied 56.724 is 0.104402.
+Retain all 41 scheduled points, original 1,000-collection LR horizon and fixed
+690/11,040 endpoint. No favorable selection, post-hoc acceptance tolerance,
+statistical-equivalence, causal BOS or measured RLM-transfer claim is made.
+
+All 2,065 evaluation HTTP returns succeeded; no errors or tracebacks. Watcher
+39862 and audit 18870 exited 0 once. Original GPU ownership and sealed sources
+remain unchanged. Full 6,400 is protected, but is not the evaluated 6,416 state,
+an all-tensor finite audit, GPU restoration or off-system backup. Previous
+batch 370/BOS, two-fixed-tensor 5,920 and full-tensor 1,440 checks retain their scope.
+
+Next prepare 410/6,576 auditing and the preselected 7,680 recovery copy. See the
+[interpretation](evidence/restart-eval400-interpretation-20261013.json).
+The advisor package keeps its earlier explicit cutoff: this mixed rebound
+updates supporting evidence, not the central incomplete-endpoint claim.
+
+### Previous evaluation: 6,256 updates
 
 The [full audit](evidence/restart-eval390-20261013.json) independently regrades
 all 33,024 saved responses and all 21 native metrics. Test is
