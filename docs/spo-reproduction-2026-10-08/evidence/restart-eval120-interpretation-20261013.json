@@ -1,0 +1,231 @@
+{
+  "schema": "spo-scheduled-evaluation-interpretation-v2",
+  "checked_utc": "2026-10-13T01:31:28.550905+00:00",
+  "scheduled_iteration": 120,
+  "completed_collections": 121,
+  "optimizer_updates": 1936,
+  "fixed_endpoint": {
+    "collections": 690,
+    "updates": 11040
+  },
+  "source_audit": "eval120-regrade-001/RECEIPT.json",
+  "splits": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 10580,
+      "percent": 50.13267626990144,
+      "correct_delta_from_eval110": 53,
+      "delta_pp_from_eval110": 0.2511372251705838,
+      "questions_more_correct": 363,
+      "questions_fewer_correct": 320,
+      "questions_same": 636,
+      "extraction_failures_previous": 15,
+      "extraction_failures_current": 12,
+      "finish_reasons_previous": {
+        "length": 16,
+        "stop": 21088
+      },
+      "finish_reasons_current": {
+        "length": 12,
+        "stop": 21092
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.7854435178165277,
+          "current": 0.7877179681576952,
+          "delta_pp": 0.22744503411675776
+        },
+        "majority_vote_acc": {
+          "previous": 0.5731614859742229,
+          "current": 0.574677786201668,
+          "delta_pp": 0.15163002274450887
+        }
+      },
+      "mean_distinct_answers_previous": 4.655799848369977,
+      "mean_distinct_answers_current": 4.596664139499621,
+      "earlier_run_at_same1936updates": {
+        "correct": 9842,
+        "percent": 46.63570887035633,
+        "delta_pp_fresh_minus_earlier": 3.49696739954511,
+        "native_metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__120/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_120/test__0__1/log.json",
+        "native_metric_sha256": "cc3346b6a5ba2e1aede949da6c96c1c17355edca304f499967f707dec6efaf69"
+      }
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3773,
+      "percent": 63.220509383378015,
+      "correct_delta_from_eval110": -25,
+      "delta_pp_from_eval110": -0.41890080428954424,
+      "questions_more_correct": 96,
+      "questions_fewer_correct": 98,
+      "questions_same": 179,
+      "extraction_failures_previous": 3,
+      "extraction_failures_current": 2,
+      "finish_reasons_previous": {
+        "length": 3,
+        "stop": 5965
+      },
+      "finish_reasons_current": {
+        "length": 2,
+        "stop": 5966
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.8873994638069705,
+          "current": 0.8873994638069705,
+          "delta_pp": 0
+        },
+        "majority_vote_acc": {
+          "previous": 0.7131367292225201,
+          "current": 0.6943699731903485,
+          "delta_pp": -1.8766756032171594
+        }
+      },
+      "mean_distinct_answers_previous": 3.6568364611260056,
+      "mean_distinct_answers_current": 3.453083109919571,
+      "earlier_run_at_same1936updates": {
+        "correct": 3648,
+        "percent": 61.1260053619303,
+        "delta_pp_fresh_minus_earlier": 2.094504021447721,
+        "native_metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__120/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_120/validation__0__1/log.json",
+        "native_metric_sha256": "b1c143ffa3f9bc8ac612e6626f5bb627226132ae58d6f3bcd6bb419deca231c1"
+      }
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4196,
+      "percent": 70.49731182795699,
+      "correct_delta_from_eval110": 81,
+      "delta_pp_from_eval110": 1.3608870967741935,
+      "questions_more_correct": 103,
+      "questions_fewer_correct": 91,
+      "questions_same": 178,
+      "extraction_failures_previous": 2,
+      "extraction_failures_current": 0,
+      "finish_reasons_previous": {
+        "length": 1,
+        "stop": 5951
+      },
+      "finish_reasons_current": {
+        "stop": 5952
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.9112903225806451,
+          "current": 0.9032258064516129,
+          "delta_pp": -0.8064516129032251
+        },
+        "majority_vote_acc": {
+          "previous": 0.771505376344086,
+          "current": 0.7768817204301075,
+          "delta_pp": 0.5376344086021501
+        }
+      },
+      "mean_distinct_answers_previous": 3.424731182795699,
+      "mean_distinct_answers_current": 3.327956989247312,
+      "earlier_run_at_same1936updates": {
+        "correct": 4178,
+        "percent": 70.19489247311827,
+        "delta_pp_fresh_minus_earlier": 0.3024193548387097,
+        "native_metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__120/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_120/train__0__1/log.json",
+        "native_metric_sha256": "98f5ba8fbda5f1467ae5c187cd4dae6c3fec8a6aa6ab0dfd972ea3d10f7b8d87"
+      }
+    }
+  },
+  "all33024_counts_and21_metrics_verified": true,
+  "baseline": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 2186,
+    "current_correct": 10580,
+    "delta_percentage_points": 10.358225928733889,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "earlier_run_audit": {
+    "path": "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/docs/spo-reproduction-2026-10-08/evidence/progress-1936-updates.json",
+    "sha256": "8d09f0f91e1132dab7bbd86a2aeb40d5bbbcc33ee2dfa41af19b95f6cd6f13b1",
+    "limits": "Earlier full-answer audit and unchanged native metrics freshly checked, not all historical responses again. Stage matching is not an isolated BOS ablation or independent replication."
+  },
+  "evaluation_runtime": {
+    "loaded_policy": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_ppo_checkpoints/ckpt--iter_0121--epoch_2.00--step_1936/hf_pretrained",
+    "sampling_unique_values": {
+      "n": [
+        "16"
+      ],
+      "temperature": [
+        "0.35"
+      ],
+      "top_p": [
+        "1.0"
+      ],
+      "seed": [
+        "42"
+      ],
+      "max_tokens": [
+        "1024"
+      ]
+    },
+    "scientific_requests": 2064,
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_sha256": "f049caaf5235cf954f930e88d2edddae3d8ec49973a26cff66a9988faa376e44"
+  },
+  "artifact_sha256": {
+    "eval120-regrade-001/RECEIPT.json": "3786d9dc4eb813418d13c4f38648fb6553a77e7cb8b9f0b239dd7b33cedd75fd",
+    "eval120-regrade-001/QUESTION-COUNTS.json": "b7f368ac775a2891fe9b3357d1fa7aec906aee06b3b686d1963c77ca1c0667cb",
+    "eval120-regrade-001/INPUT-MANIFEST.json": "9e4e05bf9d52092e530714ed0a36135d2c2c8f6279f369deff575117188c28f1",
+    "eval120-regrade-001/regrade_eval120.py": "5e2c8d46f045e0017efc7a07775f6d6cdc4bf70f36aef1676003b684b66cffec",
+    "eval110-regrade-001/RECEIPT.json": "15dfd1e77f2f6cdd164de227a01949ca93831c2a03e7cb6cbfb9e799a9971cf9",
+    "training-audit-collection120-20261013.json": "ab39004f6818ab0c6d59f46f8b42efc7fdf2a1391a18585bc764fc9f4f5f38e2",
+    "training-windows-through1936-20261013.json": "45dab467734618d56d26dadffe265e257bdc1249054fa8c6dc09e8ac3317959f",
+    "checkpoint1920-metadata-20261013.json": "edf5afc04f21fb12f6ba1c7dd12a0ad95eb5c3cb553a25e88066290619711820",
+    "eval130-regrade-001/PREPARATION.json": "824426a7a0912e4fa8872ff4e20d53f244fddbe4bd77d1ec745300c8690c3456",
+    "eval120-live-start-20261013.json": "4c7ea40e7979a97d5450f7c64d6a721619ec83fad93824d89611225cd81558a4",
+    "pacing-after119-20261013.json": "33478c025d316826b909d039dcf4ea6ed3ef8cf01910ecb267cf71032418b31a"
+  },
+  "first_test_question": {
+    "correct": 5,
+    "extraction_failures": 0,
+    "first_correct": true,
+    "first_extracted": "18",
+    "gold": "18",
+    "index": 0,
+    "responses": 16,
+    "tree_path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__120/inference_results/test__0__1/trees/0.json",
+    "correct_previous": 2,
+    "selection": "Predetermined first original test question; illustrative only."
+  },
+  "limits": [
+    "One training ancestry, not independent training-seed replication or a statistical-significance claim.",
+    "Prior failed run also improved early; BOS likelihood diagnostics and intermediate gains do not establish durable recovery or causality.",
+    "Original historical source/EOS/checkpoint-selection rationale remain unresolved.",
+    "Native mean pass@1 retained, all scheduled points retained, and the training subset is not held out. Repeated test monitoring is development-exposed."
+  ],
+  "interpretation": "After121 collections/1936 updates, own mean test pass@1 is50.132676%, +10.358226 percentage points versus originalSFT39.774450% and +0.251137pp versus1776updates. Validation63.220509% falls0.418901pp; training subset70.497312% rises1.360887pp (not held out). Audited intermediate learning, not completed reproduction.",
+  "challenge": "Test accuracy improves modestly, but validation mean and majority vote decline. Of1319 test questions,363 gain correct samples,320 lose them and636 are unchanged. The predetermined first original test question improves2->5/16, yet remains wrong on11/16 answers. Training-subset once-hit coverage falls91.129032%->90.322581% despite higher mean and majority. The fresh run is3.496967pp ahead of the earlier ancestry on matched1936-update test; that ancestry had resumed and had other runtime differences, so this is not an isolated BOS ablation. Early improvement did not prevent the prior run's later collapse.",
+  "formatting_diagnostic": "Test extraction failures fall15->12 and length endings16->12 while correct answers rise53. Validation extraction failures also fall3->2 despite25 fewer correct answers. These aggregates do not isolate causes; preserve native string grading and all scheduled outcomes.",
+  "training_evidence": {
+    "receipt": "training-audit-collection120-20261013.json",
+    "responses": 512,
+    "correct": 341,
+    "incorrect": 171,
+    "mixed_terminal_groups": 40,
+    "terminal_uniform_groups_with_intermediate_advantages": 7,
+    "nonzero_advantage_tokens": 2922,
+    "query_bos_and_generation_training_token_alignment_verified": true,
+    "saved_logprobs_advantages_finite": true,
+    "all1936_logged_updates_finite": true,
+    "latest_window": "training-windows-through1936-20261013.json",
+    "checkpoint_metadata": "checkpoint1920-metadata-20261013.json"
+  },
+  "numerical_watchpoint": "Latest160-update meanratio1.00394375,approxKL0.06402841875,clip0.0932306875,grad17.996125. ApproxKL maximum0.283 is below the prior0.523; retain the earlier1712/0.523 watchpoint rather than declaring it resolved. No native ratio-guard warning or NaN/Inf loss anomaly through1936. Rounded changing-batch diagnostics are not exact KL, causal explanation or future-stability guarantee.",
+  "scientific_decision": "Continue same authenticated whole owner, original1000-collection LR horizon and fixed690/11040 endpoint. Next scheduled evaluation130 after2096updates has a CPU audit prepared before outputs. Retain protected1440/960/160; next coarse protection2560 or earlier interruption risk. No new GPU job, live source/reward/decoding change or favorable checkpoint selection.",
+  "advisor_decision": "Supporting report/evidence update only. Modest test improvement with a validation decline leaves the main story, material limits and next comparison unchanged. Synchronized advisor slide/pdfpc/guide retains explicitOctober12 20:53UTC cutoff; reproduction unfinished."
+}
