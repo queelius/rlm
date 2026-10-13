@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 01:31 UTC
+## Current status on October 13, 02:25 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,28 +33,29 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **1,936 optimizer updates**, is **50.13%**, versus
-**39.77%** for the original model: **+10.36 percentage points**. Earlier scheduled
+The latest scheduled test, after **2,096 optimizer updates**, is **51.05%**, versus
+**39.77%** for the original model: **+11.27 percentage points**. Earlier scheduled
 tests were 40.03% after 16 updates, 41.42% after 176, 42.59% after 336, and
 44.93% after 496, followed by 45.56% after 656, 46.39% after 816, 47.64% after 976,
 48.25% after 1,136, 48.50% after 1,296, 48.86% after 1,456, 49.39% after 1,616,
-and 49.88% after 1,776.
+49.88% after 1,776, and 50.13% after 1,936.
 Each evaluation's 33,024 answers across test, validation, and the training subset
-independently regrade to the native metrics. Test accuracy rose 0.25 points since
-the previous check; validation fell 0.42 points to 63.22%, while the training-subset
-score rose 1.36 points to 70.50% (not held out). This is measured intermediate
+independently regrade to the native metrics. Test accuracy rose 0.91 points since
+the previous check; validation rose 1.81 points to 65.03%, while the training-subset
+score was effectively flat at 70.48% (−0.02 points; not held out). This is measured intermediate
 improvement, **not completed reproduction or proof of lasting recovery**:
-the previous run also improved initially. All first 1,936 update numbers are
+the previous run also improved initially. All first 2,096 update numbers are
 present and logged numeric values are finite; audited training query tokens
 match actual generation requests. See the
-[latest audit](evidence/restart-eval120-20261013.json) and
-[interpretation](evidence/restart-eval120-interpretation-20261013.json).
-At the same 1,936 updates, the earlier run scored 46.64%: the fresh run is 3.50
+[latest audit](evidence/restart-eval130-20261013.json) and
+[interpretation](evidence/restart-eval130-interpretation-20261013.json).
+At the same 2,096 updates, the earlier run scored 47.99%: the fresh run is 3.06
 points higher, but this is not a clean causal comparison or proof of lasting recovery.
-Test solved-at-least-once coverage over 16 attempts rose from 78.54% to 78.77%,
-and majority-vote accuracy from 57.32% to 57.47%. Still, 363 test questions have
-more correct samples, 320 fewer, and 636 the same. Validation majority voting
-fell, and training-subset coverage fell despite its mean score rising.
+Test solved-at-least-once coverage over 16 attempts rose from 78.77% to 79.53%,
+and majority-vote accuracy from 57.47% to 58.68%. Still, 385 test questions have
+more correct samples, 331 fewer, and 603 the same. Validation coverage and majority
+voting also improved. A larger approximate-KL excursion remains a numerical
+watchpoint, despite the better evaluation scores.
 We retain the paper's mean single-answer accuracy, every scheduled comparison,
 and the fixed endpoint.
 
@@ -76,11 +77,11 @@ Training continues under the same owner. A prior
 [check of two preselected weight tensors](evidence/restart-parameter-update1280-20261012.json)
 confirms actual saved changes from 960 to 1,280 updates; it is not an
 all-parameter scan. The protected 1,440-update state is distinct from the
-1,936-update weights evaluated above. The native full 1,920-update checkpoint's
+2,096-update weights evaluated above. The native full 2,080-update checkpoint's
 ten files and trainer/actor/active Adam/scheduler counters also pass a
-[CPU metadata check](evidence/restart-full1920-metadata-20261013.json);
+[CPU metadata check](evidence/restart-full2080-metadata-20261013.json);
 it has not been separately protected or GPU-restored. The next scheduled test
-follows 2,096 updates.
+follows 2,256 updates.
 
 **Operational check, October 13, 01:15 UTC:** all 119 completed collection
 timings and 12 evaluation intervals leave about 10–12 hours before the whole-run
