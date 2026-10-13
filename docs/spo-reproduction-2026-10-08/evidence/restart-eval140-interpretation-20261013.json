@@ -1,0 +1,312 @@
+{
+  "schema": "spo-scheduled-evaluation-interpretation-v2",
+  "checked_utc": "2026-10-13T03:15:35.025740+00:00",
+  "scheduled_iteration": 140,
+  "completed_collections": 141,
+  "optimizer_updates": 2256,
+  "fixed_endpoint": {
+    "collections": 690,
+    "updates": 11040
+  },
+  "source_audit": "eval140-regrade-001/RECEIPT.json",
+  "splits": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 10842,
+      "percent": 51.37414708112206,
+      "correct_delta_from_eval130": 69,
+      "delta_pp_from_eval130": 0.3269522365428355,
+      "questions_more_correct": 354,
+      "questions_fewer_correct": 350,
+      "questions_same": 615,
+      "extraction_failures_previous": 11,
+      "extraction_failures_current": 12,
+      "finish_reasons_previous": {
+        "length": 15,
+        "stop": 21089
+      },
+      "finish_reasons_current": {
+        "length": 12,
+        "stop": 21092
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.7952994692949203,
+          "current": 0.7937831690674754,
+          "delta_pp": -0.15163002274449777
+        },
+        "majority_vote_acc": {
+          "previous": 0.5868081880212282,
+          "current": 0.5905989385898408,
+          "delta_pp": 0.37907505686125553
+        }
+      },
+      "mean_distinct_answers_previous": 4.605761940864291,
+      "mean_distinct_answers_current": 4.486732373009856,
+      "first_question": {
+        "correct": 12,
+        "extraction_failures": 0,
+        "first_correct": true,
+        "first_extracted": "18",
+        "gold": "18",
+        "index": 0,
+        "responses": 16,
+        "tree_path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__140/inference_results/test__0__1/trees/0.json",
+        "correct_previous": 9
+      },
+      "earlier_run_at_same2256updates": {
+        "correct": 10244,
+        "percent": 48.54056103108416,
+        "native_metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__140/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_140/test__0__1/log.json",
+        "native_metric_sha256": "e17ae06bfe4e1ee309d80bf51d6959118934f7922eecc7727ada55488d12e0c1",
+        "delta_pp_fresh_minus_earlier": 2.8335860500379004
+      }
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 3990,
+      "percent": 66.85656836461126,
+      "correct_delta_from_eval130": 109,
+      "delta_pp_from_eval130": 1.8264075067024128,
+      "questions_more_correct": 108,
+      "questions_fewer_correct": 89,
+      "questions_same": 176,
+      "extraction_failures_previous": 3,
+      "extraction_failures_current": 0,
+      "finish_reasons_previous": {
+        "length": 3,
+        "stop": 5965
+      },
+      "finish_reasons_current": {
+        "stop": 5968
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.8981233243967829,
+          "current": 0.8954423592493298,
+          "delta_pp": -0.2680965147453085
+        },
+        "majority_vote_acc": {
+          "previous": 0.7265415549597856,
+          "current": 0.7372654155495979,
+          "delta_pp": 1.072386058981234
+        }
+      },
+      "mean_distinct_answers_previous": 3.5603217158176945,
+      "mean_distinct_answers_current": 3.3270777479892764,
+      "first_question": {
+        "correct": 14,
+        "extraction_failures": 0,
+        "first_correct": true,
+        "first_extracted": "16",
+        "gold": "16",
+        "index": 0,
+        "responses": 16,
+        "tree_path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__140/inference_results/validation__0__1/trees/0.json",
+        "correct_previous": 15
+      },
+      "earlier_run_at_same2256updates": {
+        "correct": 3633,
+        "percent": 60.874664879356565,
+        "native_metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__140/analysis/TaskPerformanceAnalyzer/gsm8k_validation/ckpt--iter_140/validation__0__1/log.json",
+        "native_metric_sha256": "2b0b1b38bc93550b32ba8c27d6b3443390ab5d9822d1ebf66df7e92209aae6a2",
+        "delta_pp_fresh_minus_earlier": 5.9819034852546915
+      }
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4269,
+      "percent": 71.72379032258064,
+      "correct_delta_from_eval130": 74,
+      "delta_pp_from_eval130": 1.243279569892473,
+      "questions_more_correct": 95,
+      "questions_fewer_correct": 87,
+      "questions_same": 190,
+      "extraction_failures_previous": 0,
+      "extraction_failures_current": 0,
+      "finish_reasons_previous": {
+        "stop": 5952
+      },
+      "finish_reasons_current": {
+        "stop": 5952
+      },
+      "secondary_metrics": {
+        "once_hit": {
+          "previous": 0.9059139784946236,
+          "current": 0.9059139784946236,
+          "delta_pp": 0
+        },
+        "majority_vote_acc": {
+          "previous": 0.7849462365591398,
+          "current": 0.7983870967741935,
+          "delta_pp": 1.3440860215053752
+        }
+      },
+      "mean_distinct_answers_previous": 3.349462365591398,
+      "mean_distinct_answers_current": 3.0483870967741935,
+      "first_question": {
+        "correct": 16,
+        "extraction_failures": 0,
+        "first_correct": true,
+        "first_extracted": "6",
+        "gold": "6",
+        "index": 2770,
+        "responses": 16,
+        "tree_path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__140/inference_results/train__0__1/trees/2770.json",
+        "correct_previous": 16
+      },
+      "earlier_run_at_same2256updates": {
+        "correct": 4122,
+        "percent": 69.25403225806451,
+        "native_metric_path": "/home/atowell/research-runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/native/evaluation/iteration__140/analysis/TaskPerformanceAnalyzer/gsm8k_train/ckpt--iter_140/train__0__1/log.json",
+        "native_metric_sha256": "aa98450000cad0c640868240f69c5bd2410bed258bba6e52ab24e85e93b05ce9",
+        "delta_pp_fresh_minus_earlier": 2.4697580645161366
+      }
+    }
+  },
+  "all33024_counts_and21_metrics_verified": true,
+  "baseline": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 2448,
+    "current_correct": 10842,
+    "delta_percentage_points": 11.599696739954512,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "earlier_run_audit": {
+    "path": "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/docs/spo-reproduction-2026-10-08/evidence/progress-2256-updates.json",
+    "sha256": "f37d671ffc21fe9ec32a7099b3d92783fc8672cef33803ea04d9ef1bb5da944e",
+    "limits": "Earlier full-answer audit and unchanged native metrics freshly checked, not all historical responses again. Stage matching is not an isolated BOS ablation or independent replication."
+  },
+  "evaluation_runtime": {
+    "loaded_policy": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_ppo_checkpoints/ckpt--iter_0141--epoch_2.00--step_2256/hf_pretrained",
+    "sampling_unique_values": {
+      "n": [
+        "16"
+      ],
+      "temperature": [
+        "0.35"
+      ],
+      "top_p": [
+        "1.0"
+      ],
+      "seed": [
+        "42"
+      ],
+      "max_tokens": [
+        "1024"
+      ]
+    },
+    "scientific_requests": 2064,
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_sha256": "ffd84c93eea921996388fb8807d9917abed47f2e33f670436e6514a356f21ce8",
+    "log_path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__140/logs/vllm.log"
+  },
+  "artifact_sha256": {
+    "eval140-regrade-001/RECEIPT.json": "108bc9913e0184ae925fe463e43c55ef4aa23d3c156ed3830856c91c000bb0b1",
+    "eval140-regrade-001/QUESTION-COUNTS.json": "682e036ae5fdae69e11179a6d85648fa5f89f813adff92b9b1917de04bb8d107",
+    "eval140-regrade-001/INPUT-MANIFEST.json": "c8a08a77c9ac6960ba72c3d3ffe2141fd84ae44a6e5b38f49962b53c62ea515a",
+    "eval140-regrade-001/regrade_eval140.py": "a05275d6654b62cb71abb3e296ee716a10dd6ebedd97ad7a1579d836f0986b61",
+    "eval130-regrade-001/RECEIPT.json": "ddd7a6e212180bfbd350c150eb89a7ff9e5702b4dedd45745bd0fe08a546f1eb",
+    "training-audit-collection140-20261013.json": "05e36b954b5c137f188e3ed12779db79c54ac94f3bc6583b83a891947081cb79",
+    "checkpoint2240-metadata-20261013.json": "706c72317cf34f6f1a3ff68f0794b8a21fd9ad1f831c717bf8a225f3979a444e",
+    "training-windows-through2256-20261013.json": "7d3d71ebe2fb236af937da5d6e9113f4afc0483b6c30b1c44ec6f5fe3a9c047d",
+    "eval140-live-start-20261013.json": "8645ac6542abd67041b9c9c3abc3ebd452474582fbf3d69a431c117cb30b9f44",
+    "eval150-regrade-001/PREPARATION.json": "e85c1e9ca8d75fb71e76552d8b44453b541d53b655aa5b9e66c08a620ad3b0db"
+  },
+  "interpretation": [
+    "Measured intermediate mean-pass@1 improvement: test +11.599697 percentage points versus matched original SFT and +0.326952 versus evaluation130; validation and training-subset means also rise. Training subset is not held out.",
+    "Test and validation solved-at-least-once coverage fall slightly while mean correctness and majority vote rise. This checkpoint does not demonstrate broader sampled problem coverage. Fewer distinct parsed answers alone neither establishes beneficial concentration nor predicts stability.",
+    "All 33,024 saved answers and 21 native metrics agree. Source-bound native runtime retains n16, temperature0.35, effective top_p1.0, seed42 and max1024; completed evaluation has zero HTTP errors.",
+    "Training collection140 rewards and BOS/response-token bindings agree for all512 responses. One unfinished response receives the native -1 penalty. Outcome rewards certify final answers, not reasoning correctness.",
+    "The earlier failed ancestry at matched2256 updates is lower, but resumed ancestry and runtime differences prevent isolating BOS causality. Its later collapse remains relevant contrary evidence.",
+    "All2256 logged update numbers are contiguous and numeric values finite. Latest-window approximate-KL maximum0.355 is below the previous0.736 excursion; changing-batch aggregates are not exact distribution KL or evidence that future instability is resolved."
+  ],
+  "training_batch": {
+    "evidence": "training-audit-collection140-20261013.json",
+    "responses": 512,
+    "question_groups": 64,
+    "correct": 368,
+    "incorrect": 143,
+    "unfinished_penalty_minus1": 1,
+    "mixed_terminal_groups": 25,
+    "uniform_terminal_groups_with_intermediate_advantages": 11,
+    "nonzero_advantage_tokens": 2205,
+    "all_original_rewards_and_bos_bindings_agree": true,
+    "saved_logprobs_advantages_finite": true,
+    "http_successes": 944,
+    "http_errors": 0,
+    "illustrative_failure": {
+      "selection": "first penalized response in original saved order, row291/original train185",
+      "description": "Asked for fish after five years, the answer applies the annual loss only in year one, continues adding fish for far more than five years, reaches1024 tokens, and provides no final answer. Native -1 unfinished penalty matches.",
+      "limit": "One illustrative example, not a causal explanation or prevalence claim beyond1/512 in this batch; paper grader unchanged."
+    },
+    "prior_rationale_caution": "The previous collection130's first rewarded response returned the correct200 using wrong arithmetic. That example remains in the public diagnosis; no rationale verifier has been added."
+  },
+  "numerical_watchpoint": {
+    "evidence": "training-windows-through2256-20261013.json",
+    "updates": [
+      2097,
+      2256
+    ],
+    "mean_ratio": 1.0031625,
+    "mean_approx_kl": 0.06308035,
+    "max_approx_kl": 0.355,
+    "max_approx_kl_update": 2159,
+    "next_update_approx_kl": 0.207,
+    "mean_clip": 0.09481125,
+    "mean_grad_norm": 18.490625,
+    "previous_window_max_approx_kl": 0.736,
+    "previous_window_peak_update": 2047,
+    "earlier_peak": {
+      "update": 1712,
+      "approx_kl": 0.523
+    },
+    "limit": "Rounded native changing-batch aggregates. Previous window receipts are hash-verified, not recomputed in this invocation."
+  },
+  "checkpoint": {
+    "metadata_evidence": "checkpoint2240-metadata-20261013.json",
+    "native_full_update": 2240,
+    "ten_files_stable": true,
+    "trainer_actor_active_adam_step": 2240,
+    "scheduler_last_epoch": 2239,
+    "skipped_steps": 0,
+    "protected_updates": [
+      160,
+      960,
+      1440
+    ],
+    "next_coarse_protection_update": 2560,
+    "limit": "CPU/meta counters and file identities only. No new full-tensor scan, protected copy, or GPU restoration. Trainer automatically rotated native2080; its metadata remains historical."
+  },
+  "operational_limit": {
+    "first_evaluation_response_evidence": "eval140-live-start-20261013.json",
+    "seconds_to_actual_inspection": 121.371253,
+    "within_normal90second_target": false,
+    "explanation": "Tree availability was not an actual-response inspection; new read-only evaluation150 watcher inspects actual first responses. Live GPU source unchanged.",
+    "read_only_probe_failure": "eval140-regrade-001/READONLY-CHECK-ERRORS.json"
+  },
+  "decision": {
+    "action": "continue_same_whole_training_and_final_evaluation_owner",
+    "endpoint": "fixed690 collections/11040 updates; original1000-collection LR horizon",
+    "next_cpu_audit": "prepared evaluation150 after2416 updates and allthree native split gates",
+    "next_recovery_action": "Retain protected1440/960/160; next coarse full-state protection2560 or earlier interruption risk, never based on score.",
+    "gpu_admission": "No successor until whole owner and all scoped/GPU children depart. No new RLM/CURL/DrGRPO GPU work.",
+    "advisor_package": "Update supporting reports and verified evidence. Main story, material limitations and next comparison unchanged, so synchronized advisor slide/pdfpc/guide retains explicit October12 20:53 UTC cutoff; no partial deck edit."
+  },
+  "limits": [
+    "Own-training reproduction remains incomplete;2256 is not the fixed11040-update endpoint.",
+    "One training run/seed;16 responses per question are not independent training replications. No statistical-significance claim.",
+    "Historical author source, EOS behavior and checkpoint-selection rationale remain unresolved; process-local BOS and finite-zero adapters are disclosed.",
+    "No best-test checkpoint selection; allscheduled outcomes retained.",
+    "Released author56.69% validates evaluation, not our training reproduction.",
+    "Checkpoint pointers/publication are not a backup of model or optimizer files."
+  ]
+}

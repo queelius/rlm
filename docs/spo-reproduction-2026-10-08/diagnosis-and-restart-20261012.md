@@ -1,7 +1,7 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 02:25 UTC. The fourteenth scheduled restart evaluation
-is fully regraded at 2,096 updates. The complete 1,440-update checkpoint is
+Status: October 13, 2026, 03:15 UTC. The fifteenth scheduled restart evaluation
+is fully regraded at 2,256 updates. The complete 1,440-update checkpoint is
 byte-verified outside automatic cleanup, alongside the earlier 160- and
 960-update copies. A further CPU scan finds all saved model parameters,
 FP32 master weights and Adam moments finite at 1,440. Logged learning rates are
@@ -94,7 +94,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, and 2,096 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, and 2,256 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -116,90 +116,103 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 1,776 | 49.88% | 63.64% | 69.14% |
 | 1,936 | 50.13% | 63.22% | 70.50% |
 | 2,096 | 51.05% | 65.03% | 70.48% |
+| 2,256 | 51.37% | 66.86% | 71.72% |
 
-The latest test has **10,773 correct answers out of 21,104**, compared with 8,394
-for the original SFT model: **+11.27 percentage points**. It gained 193 correct
-answers, or 0.91 points, since the preceding scheduled test. Validation gained
-108 correct answers (+1.81 points), while the training subset lost one (−0.02 points).
+The latest test has **10,842 correct answers out of 21,104**, compared with 8,394
+for the original SFT model: **+11.60 percentage points**. It gained 69 correct
+answers, or 0.33 points, since the preceding scheduled test. Validation gained
+109 correct answers (+1.83 points), and the training subset gained 74 (+1.24 points).
 This is measured intermediate improvement in our run, not a completed
 reproduction or evidence that the token repair causes a lasting benefit.
 The previous run also improved initially before deteriorating. We retain the
 native decoding and mean single-answer accuracy; solved-at-least-once coverage
 and majority voting do not replace that metric.
 
-Test extraction failures fell from 12 to 11 while length-limit endings rose from
-12 to 15, alongside 193 more correct answers. Validation extraction failures
-rose from 2 to 3 despite 108 more correct answers. These aggregates are
-not a causal decomposition. Individual questions move both ways: 385 have more
-correct samples, 331 fewer, and 603 the same count.
-For the predetermined first test question, the model gets 9 of 16 answers right,
-up from 5. Its first response accounts for both the three breakfast eggs and
-four baking eggs, returning (16 − 3 − 4) × 2 = 18. It still misses 7 of 16
+Test extraction failures rose from 11 to 12 while length-limit endings fell from
+15 to 12, alongside 69 more correct answers. Validation extraction failures and
+length-limit endings both fell from three to zero. These aggregates are
+not a causal decomposition. Individual questions move both ways: 354 have more
+correct samples, 350 fewer, and 615 the same count.
+For the predetermined first test question, the model gets 12 of 16 answers right,
+up from 9. Its first response accounts for both the three breakfast eggs and
+four baking eggs, returning (16 − 3 − 4) × 2 = 18. It still misses 4 of 16
 attempts on that question. This illustration is not a representative sample,
 a separate benchmark, or a statistical-significance claim.
 
 **Secondary measures do not replace the paper's metric.** Test solved-at-least-once
-coverage over 16 samples rose from 78.77% to 79.53%, and majority voting from
-57.47% to 58.68%. Validation coverage rises from 88.74% to 89.81%, and majority
-voting from 69.44% to 72.65%. Training-subset coverage and majority voting rise
-despite its essentially flat mean. Test distinct parsed answers per question
-are nearly unchanged, 4.597 to 4.606. Neither diversity nor an improving
+coverage over 16 samples slipped from 79.53% to 79.38%, while majority voting rose
+from 58.68% to 59.06%. Validation coverage also fell, from 89.81% to 89.54%,
+while majority voting rose from 72.65% to 73.73%. Training-subset coverage is
+unchanged and majority voting rises. Better average correctness therefore does
+not establish broader sampled problem coverage. Test distinct parsed answers per
+question fell from 4.606 to 4.487. Neither diversity nor an improving
 score alone establishes beneficial concentration or lasting stability. We retain
 every metric and scheduled result. This is one training run, not independent
 replications or proof of a learning mechanism. See the
-[full audit](evidence/restart-eval130-20261013.json) and
-[interpretation](evidence/restart-eval130-interpretation-20261013.json).
-The [preceding evaluation](evidence/restart-eval120-20261013.json) remains in the record.
+[full audit](evidence/restart-eval140-20261013.json) and
+[interpretation](evidence/restart-eval140-interpretation-20261013.json).
+The [preceding evaluation](evidence/restart-eval130-20261013.json) remains in the record.
 
-At the same 2,096 updates, the earlier eventually failed run scored 47.99% test,
-61.46% validation and 69.37% on the training subset. The fresh run is higher by
-3.06, 3.57 and 1.11 points, respectively. The earlier all-answer audit and
+At the same 2,256 updates, the earlier eventually failed run scored 48.54% test,
+60.87% validation and 69.25% on the training subset. The fresh run is higher by
+2.83, 5.98 and 2.47 points, respectively. The earlier all-answer audit and
 unchanged native metric hashes were rechecked. Matching the update count is
 useful context, but the earlier run had a resumed ancestry and other runtime
 differences: this is not an isolated test of the BOS correction. Its later
 collapse is a reason to keep the endpoint fixed, not declare recovery now.
 
-Training completed 2,096 updates before this evaluation. The accompanying
-batch audit, collection 130, contains 351 correct and 161 incorrect responses,
-with mixed terminal outcomes on 26 of 64 questions. All 512 terminal rewards
+Training completed 2,256 updates before this evaluation. The accompanying
+batch audit, collection 140, contains 368 correct and 143 incorrect responses,
+plus one unfinished response penalized at −1. There are mixed terminal outcomes
+on 25 of 64 questions. All 512 terminal rewards
 regrade correctly. Training query tokens match actual generation requests, and
-saved actor/reference log probabilities and advantages are finite. Fourteen groups
+saved actor/reference log probabilities and advantages are finite. Eleven groups
 with uniform terminal outcomes still have nonzero intermediate advantages:
 SPO can supply a signal within a solution even when the final rewards all agree.
-All first 2,096 update numbers are present and logged numeric values are finite.
+All first 2,256 update numbers are present and logged numeric values are finite.
 Changing training questions are not a benchmark progress curve.
 
 **A correct outcome need not imply correct arithmetic.** The first rewarded
-response in this audited batch ends with the gold answer, $200, but omits the
-remaining $40 and incorrectly evaluates $20 / 0.30 as $200. The correct equation
+response in the preceding audited batch, collection 130, ends with the gold
+answer, $200, but omits the remaining $40 and incorrectly evaluates $20 / 0.30
+as $200. The correct equation
 is `0.4 × 0.75 × initial_money − 20 = 40`. The native reward of one is correct
 under the paper's outcome rule; it does not certify the rationale. This is one
 illustrative response, not a prevalence estimate or evidence of reward hacking.
-We preserve the paper's grader. The linked interpretation records its exact
-selection and external evidence pointer.
+We preserve the paper's grader. The
+[previous interpretation](evidence/restart-eval130-interpretation-20261013.json)
+records its exact selection and external evidence pointer.
 
-The latest 160-update diagnostic window has a mean policy ratio of 1.0033,
-approximate KL of 0.0793, clipping fraction of 0.0953, and gradient norm of 18.71.
-Its largest approximate KL is 0.736 at update 2,047, above the previous window's
-0.283 and the older 0.523 excursion at update 1,712. It falls to 0.147 on the next
-update. We retain both excursions as watchpoints; improved test scores do not
+The first penalized response in collection 140 illustrates a different failure:
+asked for the number of fish after five years, it keeps adding fish for far more
+years and reaches the 1,024-token limit without a final answer. The native −1
+unfinished penalty agrees. This is one example (one of 512 responses in this
+batch), not a new evaluation metric or a causal account of training progress.
+
+The latest 160-update diagnostic window has a mean policy ratio of 1.0032,
+approximate KL of 0.0631, clipping fraction of 0.0948, and gradient norm of 18.49.
+Its largest approximate KL is 0.355 at update 2,159, below the previous window's
+0.736 at update 2,047; the older 0.523 excursion at update 1,712 also remains in
+the record. The latest peak falls to 0.207 on the next update. We retain these
+excursions as watchpoints; improved test scores do not
 establish that the numerical concern is resolved.
 There are no logged high-ratio guard warnings or NaN/Inf loss anomalies through
-2,096 updates. These rounded changing-batch aggregates are not exact
+2,256 updates. These rounded changing-batch aggregates are not exact
 distributional KL measurements or a guarantee of future stability.
 Earlier windows and definitions remain in the
-[numerical audit](evidence/restart-training-windows2096-20261013.json).
+[numerical audit](evidence/restart-training-windows2256-20261013.json).
 
-The scheduled full checkpoint at 2,080 updates has all ten required files;
-trainer, actor and active Adam counters agree at 2,080, scheduler at 2,079,
+The scheduled full checkpoint at 2,240 updates has all ten required files;
+trainer, actor and active Adam counters agree at 2,240, scheduler at 2,239,
 with no skipped steps. This is a
-[CPU metadata check](evidence/restart-full2080-metadata-20261013.json),
+[CPU metadata check](evidence/restart-full2240-metadata-20261013.json),
 not a new tensor scan, protected copy or GPU restore. File identities were
-unchanged across this check. The separately protected
+unchanged across this check. Native cleanup rotated the older 2,080-update full
+state; its metadata receipt remains historical. The separately protected
 1,440-update recovery state remains available.
 
 The next decision remains the same: keep the recipe and endpoint fixed, inspect
-subsequent scheduled evaluations (next after 2,256 updates), and preserve complete
+subsequent scheduled evaluations (next after 2,416 updates), and preserve complete
 recovery states. This incremental result stays in the supporting report. The
 synchronized advisor slide, pdfpc notes and learning-guide status page retain
 their October 12, 20:53 UTC cutoff: the main story, material limits and next
