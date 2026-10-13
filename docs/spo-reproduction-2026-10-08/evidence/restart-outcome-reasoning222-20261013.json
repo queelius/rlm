@@ -1,0 +1,24 @@
+{
+  "schema": "spo-outcome-reward-reasoning-example-v1",
+  "checked_utc": "2026-10-13T09:55:29.840913+00:00",
+  "collection": 222,
+  "original_training_question_id": 2534,
+  "selection": "First saved question and first response; predetermined operational inspection, not correctness-selected.",
+  "native_answer_reward": 1,
+  "final_answer_and_original_gold": "4",
+  "correct_weekly_earnings": "1160",
+  "correct_weeks": 4,
+  "flawed_trace_weekly_earnings": 1040,
+  "flawed_trace_ratio_exact": "58/13, not 4",
+  "interpretation": "The answer is correct but the displayed reasoning omits the 1.5x overtime factor and incorrectly equates 4640/1040 with4. Native final-answer reward1 is faithful to the configured outcome-only rule; it is not a guarantee of reasoning validity.",
+  "limits": [
+    "One training example, not a prevalence estimate or held-out reasoning audit.",
+    "No changed reward function, evaluator, sample selection or training source. Do not relabel as evaluator failure or evidence of deceptive intent.",
+    "Concrete illustration for future RLM reward/credit-assignment design, not a transfer result."
+  ],
+  "log_path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0222/infer_results/process_00/vllm_server.log",
+  "log_prefix_bytes": 1493738,
+  "log_prefix_sha256": "cc32fc6afb2d80cd402e26c551648e25cbf5cb61b3a740ee0eececacc9dd8c3e",
+  "all_three_operational_example_prefixes_reverified": true,
+  "public_redaction": "No raw question text or model response is included; arithmetic quantities and native outcome retained."
+}

@@ -1,10 +1,10 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 09:05 UTC. The twenty-second scheduled restart evaluation
-is fully regraded at 3,376 updates; the next evaluation follows 3,536 updates.
-Test rebounds modestly to 53.57%; validation falls to 66.64%, while the
-non-held-out training subset rises to 76.43%. Recent test results are roughly
-flat. Reproduction remains unfinished.
+Status: October 13, 2026, 09:49 UTC. The twenty-third scheduled restart evaluation
+is fully regraded at 3,536 updates; the next evaluation follows 3,696 updates.
+Test rises to 54.02% and validation to 67.59%, while the non-held-out training
+subset is unchanged at 76.43%. This is a modest increase after a roughly flat
+test interval, not evidence of a durable trend. Reproduction remains unfinished.
 The complete 2,560-update checkpoint is byte-verified outside automatic cleanup,
 alongside the earlier 160-, 960-, and 1,440-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
@@ -107,7 +107,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, and 3,376 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, and 3,536 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -137,8 +137,54 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 3,056 | 53.59% | 66.82% | 75.03% |
 | 3,216 | 53.31% | 67.02% | 75.84% |
 | 3,376 | 53.57% | 66.64% | 76.43% |
+| 3,536 | 54.02% | 67.59% | 76.43% |
 
-### Latest evaluation: 3,376 updates
+### Latest evaluation: 3,536 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval220-20261013.json). Test has **11,401/21,104 correct
+answers, 54.0229%**, or **+14.2485 percentage points** versus original SFT.
+It gains 95 correct answers (+0.4502 points) since the preceding check.
+Validation gains 57 (+0.9551 points) to 67.5938%; the training subset is
+unchanged at 4,549/5,952, 76.4281%, and is not held out.
+
+The last five scheduled tests are 53.57%, 53.59%, 53.31%, 53.57% and 54.02%.
+The latest score moves above the preceding roughly flat band, but does not
+establish a durable upward trend. Test once-hit coverage rises from 79.98%
+to 80.29%, while majority rises from 60.05% to 60.20%. There are 342 questions
+with more correct samples, 307 fewer and 670 unchanged; 56 become once-hit
+and 52 lose all correct samples. Coverage remains below its earlier 81.27%
+observation. Validation mean, coverage and majority all rise. Training-subset
+mean and coverage are unchanged while majority rises. These descriptive
+comparisons are not significance tests or independent training replications.
+
+The predetermined first test question falls from 10/16 to 9/16 correct samples
+despite the aggregate gain. Test extraction failures remain six and length-limit
+endings seven; these aggregate counts do not explain the 95-sample increase.
+The native mean pass@1 rule remains the target, not once-hit or majority voting.
+Continue the unchanged 690/11,040 endpoint; do not select an earlier checkpoint
+or infer BOS causality, overfitting or completed reproduction.
+See the [interpretation and paired counts](evidence/restart-eval220-interpretation-20261013.json).
+
+The full reward/token audit remains collection 200. The newer
+[native 3,520-state inspection](evidence/restart-full3520-metadata-20261013.json)
+verifies ten stable files and matching trainer/actor/active Adam counters,
+scheduler 3,519 and zero skipped steps. It is not a new protected copy, full
+tensor scan or GPU restoration; evaluated 3,536 weights are distinct.
+Native 3,360 rotated out at 09:32 UTC under existing cleanup; its receipt below
+is historical. Protected 160/960/1,440/2,560 remain; next protection is preselected
+at 3,840. No live source, configuration, environment or GPU owner changed.
+
+An additional operational observation at 09:50 UTC is instructive: collection
+222's predetermined first training response received reward 1 for the correct
+answer, four weeks, while omitting the overtime pay factor and incorrectly
+equating 4,640/1,040 with four. Correct weekly pay is 1,160, giving exactly four
+weeks. This [checked example](evidence/restart-outcome-reasoning222-20261013.json)
+illustrates the boundary of final-answer rewards, not an evaluator defect or a
+prevalence estimate. It motivates caution about reasoning validity in future
+RLM reward design without changing this reproduction's scientific recipe.
+
+### Preceding evaluation: 3,376 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval210-20261013.json). Test has **11,306/21,104 correct

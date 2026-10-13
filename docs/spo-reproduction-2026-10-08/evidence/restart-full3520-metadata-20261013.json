@@ -1,0 +1,95 @@
+{
+  "schema": "spo-complete-checkpoint-metadata-v2",
+  "checked_utc": "2026-10-13T09:36:37.918901+00:00",
+  "checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0220--epoch_2.00--step_3520",
+  "native_completed_collection": 219,
+  "trainer_state": {
+    "global_step": 3520,
+    "epoch": 2,
+    "iteration": 220
+  },
+  "actor_global_steps": 3520,
+  "actor_skipped_steps": 0,
+  "scheduler_last_batch_iteration": 3519,
+  "optimizer_parameter_state_steps": {
+    "0": 3520,
+    "1": 3520
+  },
+  "optimizer_legacy_param_group_steps": [
+    0,
+    0
+  ],
+  "optimizer_step_path": "optimizer_state_dict/base_optimizer_state/state/<parameter-id>/step",
+  "file_bytes": {
+    "custom_checkpoint_11.pkl": 916,
+    "custom_checkpoint_0.pkl": 976,
+    "custom_checkpoint_10.pkl": 980,
+    "hf_pretrained/pytorch_model.bin": 2200124348,
+    "hf_pretrained/config.json": 792,
+    "hf_pretrained/generation_config.json": 111,
+    "actor/zero_to_fp32.py": 25314,
+    "actor/latest": 15,
+    "actor/global_step3520/mp_rank_00_model_states.pt": 2200157624,
+    "actor/global_step3520/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": 13200600768
+  },
+  "file_identities": {
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "inode": 1099979658946,
+      "mtime_ns": "1791883926462625585"
+    },
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "inode": 1099979660908,
+      "mtime_ns": "1791883926461625585"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "inode": 1099979658945,
+      "mtime_ns": "1791883926462625585"
+    },
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979660911,
+      "mtime_ns": "1791883930362625590"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "inode": 1099979660910,
+      "mtime_ns": "1791883926463625585"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "inode": 1099979658947,
+      "mtime_ns": "1791883926464625585"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "inode": 1099979660915,
+      "mtime_ns": "1791883957717625627"
+    },
+    "actor/latest": {
+      "bytes": 15,
+      "inode": 1099979658949,
+      "mtime_ns": "1791883957717625627"
+    },
+    "actor/global_step3520/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "inode": 1099979660914,
+      "mtime_ns": "1791883934258625595"
+    },
+    "actor/global_step3520/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "inode": 1099979658948,
+      "mtime_ns": "1791883957716625627"
+    }
+  },
+  "files_stable_during_inspection": true,
+  "cuda_initialized": false,
+  "selection_rule": "Latest complete scheduled full state at3520updates, after220collections; no score selection.",
+  "inspection_note": "Allten files, actor/latest and trainer/actor/activeAdam/scheduler counters checked after save; inode/size/mtime unchanged across read-only CPU/meta inspection. Legacy group0 fields are not active parameter counters.",
+  "limits": [
+    "CPU/meta counter and ten-file stability check, not all-tensor finite scan, protected copy or GPU restoration.",
+    "Native cleanup applies; separately protected2560/1440/960/160 retained."
+  ]
+}
