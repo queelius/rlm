@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 12, 23:29 UTC
+## Current status on October 12, 23:56 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,27 +33,27 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **1,456 optimizer updates**, is **48.86%**, versus
-**39.77%** for the original model: **+9.08 percentage points**. Earlier scheduled
+The latest scheduled test, after **1,616 optimizer updates**, is **49.39%**, versus
+**39.77%** for the original model: **+9.61 percentage points**. Earlier scheduled
 tests were 40.03% after 16 updates, 41.42% after 176, 42.59% after 336, and
 44.93% after 496, followed by 45.56% after 656, 46.39% after 816, 47.64% after 976,
-48.25% after 1,136, and 48.50% after 1,296.
+48.25% after 1,136, 48.50% after 1,296, and 48.86% after 1,456.
 Each evaluation's 33,024
 answers across test, validation, and the training subset independently regrade
-to the native metrics. Test accuracy rose 0.36 points since the previous check;
-validation rose 1.66 points to 62.55%, and the training-subset score
-rose 1.56 points to 69.47% (not held out). This is an early measured test
+to the native metrics. Test accuracy rose 0.53 points since the previous check;
+validation fell 0.20 points to 62.35%, and the training-subset score
+fell 1.31 points to 68.16% (not held out). This is an early measured test
 improvement, **not completed reproduction or proof of lasting recovery**: the previous run also improved
-initially. All first 1,456 update numbers are present and logged numeric values
+initially. All first 1,616 update numbers are present and logged numeric values
 are finite; audited training query tokens match actual generation requests.
-See the [latest audit](evidence/restart-eval90-20261012.json) and
-[interpretation](evidence/restart-eval90-interpretation-20261012.json).
-At the same 1,456 updates, the earlier run scored 47.31%: the fresh run is 1.54
+See the [latest audit](evidence/restart-eval100-20261012.json) and
+[interpretation](evidence/restart-eval100-interpretation-20261012.json).
+At the same 1,616 updates, the earlier run scored 47.46%: the fresh run is 1.92
 points higher, but this is not a clean causal comparison or proof of lasting recovery.
-Test solved-at-least-once coverage over 16 attempts rose to 78.70%, and
-majority-vote accuracy to 56.03%. Validation coverage, however, fell from 87.94%
-to 86.86% despite its mean accuracy improving. Individual questions also move
-both ways: 359 test questions have more correct samples, 350 fewer, and 610 the same.
+Test solved-at-least-once coverage over 16 attempts fell from 78.70% to 77.41%,
+while majority-vote accuracy stayed at 56.03%. Validation coverage rose despite
+its mean accuracy and majority vote falling. Individual questions also move
+both ways: 366 test questions have more correct samples, 341 fewer, and 612 the same.
 We keep reporting the paper's mean
 single-answer accuracy, without switching metrics or choosing a favorable checkpoint.
 
@@ -75,7 +75,11 @@ Training continues under the same owner. A prior
 [check of two preselected weight tensors](evidence/restart-parameter-update1280-20261012.json)
 confirms actual saved changes from 960 to 1,280 updates; it is not an
 all-parameter scan. The protected 1,440-update state is distinct from the
-1,456-update weights evaluated above. The next scheduled test follows 1,616 updates.
+1,616-update weights evaluated above. The native full 1,600-update checkpoint's
+ten files and trainer/actor/active Adam/scheduler counters also pass a
+[CPU metadata check](evidence/restart-full1600-metadata-20261012.json);
+it has not been separately protected or GPU-restored. The next scheduled test
+follows 1,776 updates.
 
 **Operational check, 22:45 UTC:** observed training and evaluation timings
 leave an estimated 9–13 hours before the whole-run cap; completion is not
