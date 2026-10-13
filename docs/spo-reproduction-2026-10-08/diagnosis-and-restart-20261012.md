@@ -1,12 +1,12 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 12:06 UTC; native-state check at 11:56 UTC.
-The twenty-sixth scheduled restart evaluation is fully regraded at 4,016 updates;
-the next evaluation follows 4,176 updates.
-Test rises slightly to 54.20%, validation to 67.24%, and the non-held-out training
-subset to 76.39%. Both held-out coverage scores rise, but both majority-vote
-scores fall. This is intermediate learning, not completed reproduction or a
-sustained-trend claim. Native 4,000 counters and ten-file stability are verified;
+Status: October 13, 2026, 12:54 UTC; native-state check at 12:39 UTC.
+The twenty-seventh scheduled restart evaluation is fully regraded at 4,176 updates;
+the next evaluation follows 4,336 updates.
+Test rises to 54.74%, validation falls to 66.54%, and the non-held-out training
+subset rises to 77.12%. Both held-out coverage scores fall, but both majority-vote
+scores rise. This is intermediate learning, not completed reproduction or a
+sustained-trend claim. Native 4,160 counters and ten-file stability are verified;
 that is not a protected copy, full-tensor scan or GPU restoration.
 The complete 3,840-update checkpoint remains byte-verified outside cleanup,
 alongside the earlier 160-, 960-, 1,440- and 2,560-update copies. A separate CPU scan
@@ -109,7 +109,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, and 4,016 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, and 4,176 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -143,8 +143,60 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 3,696 | 54.48% | 67.11% | 75.52% |
 | 3,856 | 54.13% | 66.71% | 76.14% |
 | 4,016 | 54.20% | 67.24% | 76.39% |
+| 4,176 | 54.74% | 66.54% | 77.12% |
 
-### Latest evaluation: 4,016 updates
+### Latest evaluation: 4,176 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval260-20261013.json). Test has **11,553/21,104 correct
+answers, 54.7432%**, or **+14.9687 percentage points** versus original SFT.
+It gains 114 correct answers (+0.5402 points) since the preceding check.
+Validation loses 42 (−0.7038 points) to **3,971/5,968, 66.5382%**.
+The training subset gains 43 (+0.7224 points) to **4,590/5,952, 77.1169%**
+and is not held out.
+
+The last four scheduled tests are 54.48%, 54.13%, 54.20% and 54.74%.
+Test improvement alongside validation decline does not establish a sustained
+trend, overfitting, lasting recovery or completed reproduction. Test once-hit
+coverage falls from 79.61% to 79.30%, while majority rises from 60.35% to
+61.64%. There are 329 questions with more correct samples, 313 fewer and 677
+unchanged; 50 become once-hit and 54 lose all correct samples. Validation
+coverage falls from 89.28% to 86.33%, while majority rises from 72.65% to
+72.92%. Training coverage rises while its majority falls. These metrics are
+not interchangeable.
+
+Test extraction failures and length-limit endings each fall from four to
+three. The predetermined first test question rises from 9/16 to 12/16 despite
+its first response being wrong. Secondary numeric-equivalence potential
+rescues are 66 test, 33 validation and 40 train, versus 88, 37 and 42 previously;
+primary scores remain unchanged. These descriptive paired counts are not
+independent training replications or significance tests. Keep all 27 scheduled
+points, mean pass@1 and fixed 690/11,040 endpoint; no favorable checkpoint,
+posthoc acceptance tolerance, BOS causal claim or demonstrated RLM transfer.
+See the [interpretation](evidence/restart-eval260-interpretation-20261013.json).
+
+The full reward/token audit remains collection 200. A separate
+[native 4,160-state metadata check](evidence/restart-full4160-metadata-20261013.json)
+verifies ten stable files, trainer/actor/active Adam counters, scheduler 4,159
+and zero skipped steps. This is not a protected copy, full-tensor finite scan
+or GPU restore. It is distinct from the evaluated 4,176 weights. The first
+read-only inspection encountered the installed PyTorch string-filename
+requirement for mmap; correcting that argument completed the check without
+changing training or checkpoint contents. Native 4,000 rotated at 12:34 UTC;
+its receipt is historical. Protected 160/960/1,440/2,560/3,840 remain. The
+step-selected 5,120 protection is prepared but awaits its full-save, owner,
+stability and fresh byte/file quota gates.
+
+All 2,065 evaluation HTTP returns succeeded, with no transport errors or
+tracebacks. The first test response was inspected within 28 seconds and
+wrongly answered 6 instead of 18. The completed read-only observer exited
+normally after all three splits. A subsequent collection-262 check was late
+at 123 seconds versus the normal 90-second goal, with 711 successes and zero
+errors; no wasted GPU interval is inferred. Collection 263 was checked within
+15 seconds and correctly answered 200. A new read-only observer covers
+270/4,336. Original owner, sealed sources and scientific recipe are unchanged.
+
+### Preceding evaluation: 4,016 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval250-20261013.json). Test has **11,439/21,104 correct
