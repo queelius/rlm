@@ -1,15 +1,17 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 10:37 UTC. The twenty-fourth scheduled restart evaluation
-is fully regraded at 3,696 updates; the next evaluation follows 3,856 updates.
-Test rises to 54.48%, while validation falls to 67.11% and the non-held-out
-training subset falls to 75.52%. Test once-hit coverage also falls despite
-its mean accuracy increase. These mixed intermediate results do not establish
-a durable trend. Reproduction remains unfinished.
-The complete 2,560-update checkpoint is byte-verified outside automatic cleanup,
-alongside the earlier 160-, 960-, and 1,440-update copies. A separate CPU scan
+Status: October 13, 2026, 11:21 UTC; recovery-state verification at 11:15 UTC.
+The twenty-fifth scheduled restart evaluation is fully regraded at 3,856 updates;
+the next evaluation follows 4,016 updates.
+Test falls to 54.13%, validation falls to 66.71%, and the non-held-out
+training subset rises to 76.14%. Test coverage and majority also fall;
+validation coverage and majority rise despite its lower mean. This merits
+continued observation, not a lasting-deterioration or overfitting claim.
+Reproduction remains unfinished.
+The complete 3,840-update checkpoint is byte-verified outside automatic cleanup,
+alongside the earlier 160-, 960-, 1,440- and 2,560-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
-at 1,440; no such full scan is claimed for 2,560. Logged learning rates are
+at 1,440; no such full scan is claimed for 2,560 or 3,840. Logged learning rates are
 independently checked through 768 updates;
 the scientific recipe and fixed endpoint are unchanged.
 Our primary objective is to reproduce the
@@ -108,7 +110,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, and 3,696 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, and 3,856 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -140,8 +142,48 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 3,376 | 53.57% | 66.64% | 76.43% |
 | 3,536 | 54.02% | 67.59% | 76.43% |
 | 3,696 | 54.48% | 67.11% | 75.52% |
+| 3,856 | 54.13% | 66.71% | 76.14% |
 
-### Latest evaluation: 3,696 updates
+### Latest evaluation: 3,856 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval240-20261013.json). Test has **11,424/21,104 correct
+answers, 54.1319%**, or **+14.3575 percentage points** versus original SFT.
+It loses 74 correct answers (−0.3506 points) since the preceding check.
+Validation loses 24 (−0.4021 points) to **3,981/5,968, 66.7058%**, its second
+consecutive mean decline. The training subset gains 37 (+0.6216 points)
+to **4,532/5,952, 76.1425%** and is not held out.
+
+The last three scheduled tests are 54.02%, 54.48% and 54.13%; the previous
+two-increase pattern did not persist. Both held-out means falling while
+training-subset mean rises is worth following, but does not establish
+overfitting, lasting deterioration, collapse or a cause. Test once-hit coverage
+falls from 79.83% to 79.08%, and majority from 61.18% to 61.03%. There are
+299 questions with more correct samples, 336 fewer and 684 unchanged; 46
+become once-hit and 56 lose all correct samples. Validation coverage and
+majority rise despite its lower mean; training coverage falls despite its
+higher mean and majority. Do not interchange these metrics.
+
+Test extraction failures decrease from eight to three and length-limit endings
+from eight to five: increased extraction failures do not explain this decline.
+The predetermined first test question falls from 12/16 to 11/16 correct samples.
+These are descriptive paired counts, not significance tests or independent
+training replications. Keep all 25 scheduled points, the unchanged 690/11,040
+endpoint and mean pass@1; no favorable checkpoint or BOS causal claim.
+See the [interpretation](evidence/restart-eval240-interpretation-20261013.json).
+
+The full reward/token audit remains collection 200. The protected 3,840-update
+state below is distinct from the 3,856-update evaluated weights. No new full
+tensor scan or GPU restore is claimed. Native 3,680 rotated at 11:04 UTC;
+its receipt remains historical. The 240 CPU audit and read-only observer
+both exited successfully; a new read-only observer covers evaluation 250
+after 4,016 updates. Its initial collection-241 response check was late
+(187 seconds versus the normal 90-second goal); the inspected response was
+wrong (9 instead of 15) and correctly received zero reward. At that check
+there were 856 successful returns and no transport errors; no wasted GPU
+interval is inferred from the late inspection.
+
+### Preceding evaluation: 3,696 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval230-20261013.json). Test has **11,498/21,104 correct
@@ -842,6 +884,33 @@ was changed. This is same-filesystem protection, not an off-system backup,
 all-tensor finite scan, GPU restoration test or new accuracy result. The next
 evaluation at 2,576 updates subsequently passed its full audit; the reproduction
 remains unfinished.
+
+At **October 13, 11:15 UTC**, the preselected **3,840-update full state** was
+protected by the same additive procedure. All ten source/copy SHA256 hashes
+match across 17.60 GB; source and destination have different inodes and remained
+stable throughout verification. The copied trainer is at iteration 240,
+trainer/actor/both active Adam states at 3,840, scheduler 3,839 and skipped steps
+zero. No CUDA initialization or GPU restore occurred.
+See the [3,840-update receipt](evidence/restart-full3840-protection-20261013.json).
+
+Selection was recorded at 04:43 UTC before the checkpoint and evaluation, not
+chosen from a test score. The source finished saving before inspection; the
+previous native 3,680 state rotated at 11:04 UTC. Protected 160/960/1,440/2,560
+remain in place. An initial read-only preflight failed because its old-state
+lookup omitted leading zeros in 0160/0960. The failed attempt is retained; the
+minimal corrected lookup and full preflight passed before copying. No model,
+source, configuration, environment or owner changed.
+
+The [fresh preflight](evidence/restart-full3840-preflight-20261013.json) found
+about 438 GB and 481,815 file slots available at home. Reusing the earlier
+conservative 605-collection/61-evaluation two-times-growth scenario, including
+one additional full copy, left about 243 GB and 174,635 file slots after projected
+demand. Fewer collections now remain, but this is not a new growth measurement,
+reservation or guarantee. After copying, home reported about 420 GB and 480,939
+file slots available. Project still had only about 16 GB and was not used for
+the checkpoint. Preselect the next coarse protection at 5,120 updates, with
+fresh complete-state and storage gates. Recovery protection is not new accuracy,
+an all-tensor finite scan, end-to-end resumption or an off-system backup.
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).

@@ -1,0 +1,170 @@
+{
+  "schema": "spo-checkpoint-protection-preflight-v1",
+  "checked_utc": "2026-10-13T11:11:55.072549+00:00",
+  "preparation": {
+    "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/checkpoint-protection-3840-001/PREPARATION.json",
+    "sha256": "1e015160490e5f94ffe9e633b978794c39c94414b3838702bfb88085b5f32df8"
+  },
+  "source": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0240--epoch_2.00--step_3840",
+  "destination": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0240--epoch_2.00--step_3840",
+  "destination_absent": true,
+  "latest_tag": "global_step3840",
+  "expected_file_count": 10,
+  "total_bytes": 17600911844,
+  "file_identities": {
+    "actor/global_step3840/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "inode": 1099979670099,
+      "mtime_ns": "1791889499009633081"
+    },
+    "actor/global_step3840/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "inode": 1099979671935,
+      "mtime_ns": "1791889475598633049"
+    },
+    "actor/latest": {
+      "bytes": 15,
+      "inode": 1099979670100,
+      "mtime_ns": "1791889499012633081"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "inode": 1099979671936,
+      "mtime_ns": "1791889499011633081"
+    },
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "inode": 1099979671929,
+      "mtime_ns": "1791889467853633039"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "inode": 1099979670096,
+      "mtime_ns": "1791889467853633039"
+    },
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "inode": 1099979670097,
+      "mtime_ns": "1791889467853633039"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "inode": 1099979671931,
+      "mtime_ns": "1791889467855633039"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "inode": 1099979670098,
+      "mtime_ns": "1791889467855633039"
+    },
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979671932,
+      "mtime_ns": "1791889471718633044"
+    }
+  },
+  "source_stable_during_cpu_inspection": true,
+  "trainer_state": {
+    "global_step": 3840,
+    "epoch": 2,
+    "iteration": 240
+  },
+  "actor_global_steps": 3840,
+  "actor_skipped_steps": 0,
+  "scheduler_last_batch_iteration": 3839,
+  "optimizer_parameter_state_steps": {
+    "0": 3840,
+    "1": 3840
+  },
+  "optimizer_legacy_param_group_steps": [
+    0,
+    0
+  ],
+  "cuda_initialized": false,
+  "owners": {
+    "queue": {
+      "pid": 2826646,
+      "startticks": 1362248004,
+      "state": "S"
+    },
+    "scoped": {
+      "pid": 2826649,
+      "startticks": 1362248013,
+      "state": "S"
+    },
+    "trainer": {
+      "pid": 2826650,
+      "startticks": 1362248017,
+      "state": "S"
+    },
+    "observer": {
+      "pid": 2829006,
+      "startticks": 1362275186,
+      "state": "S"
+    }
+  },
+  "sealed_source_pin_count": 7,
+  "all_sealed_source_pins_match": true,
+  "last_completed_collection": 240,
+  "command_log_prefix": {
+    "bytes": 33051674,
+    "sha256": "4178b267139c9e81c41311f01d5413c217be3107eee08d79e4ae23bbb91e840f"
+  },
+  "current_directory_quotas": {
+    "/home/atowell": {
+      "ceph.quota.max_bytes": 1099511627776,
+      "ceph.dir.rbytes": 661588513503,
+      "ceph.quota.max_files": 1000000,
+      "ceph.dir.rfiles": 518185,
+      "remaining_bytes": 437923114273,
+      "remaining_files": 481815
+    },
+    "/project/alex_phd": {
+      "ceph.quota.max_bytes": 1099511627776,
+      "ceph.dir.rbytes": 1083311125550,
+      "ceph.quota.max_files": 100000000,
+      "ceph.dir.rfiles": 2526518,
+      "remaining_bytes": 16200502226,
+      "remaining_files": 97473482
+    }
+  },
+  "conservative_projection": {
+    "source": "/project/alex_phd/runs/rl-paper-reproduction-20261012/storage-headroom-20261012T2240.json",
+    "sha256": "01481b19617c4c68cf9f31ef59686e7acfaed0ad876419b5200122b59777ee26",
+    "scenario": {
+      "future_training_and_eval_artifact_growth_multiplier": 2,
+      "additional_bytes_including_HF_retention_transient_full_and_one_extra_protected_full": 195046182687,
+      "home_remaining_after_projection_bytes": 302576149054,
+      "additional_files_including_checkpoint_allowance": 307180,
+      "home_remaining_files_after_projection": 213387
+    },
+    "fresh_home_headroom_after_projection_bytes": 242876931586,
+    "fresh_home_headroom_after_projection_files": 174635,
+    "interpretation": "Reuses conservative prior605collection/61evaluation2x-growth scenario including one extra full copy; fewer collections now remain. Not a fresh artifact-growth estimate, storage reservation or guarantee."
+  },
+  "prior_protected_directories": {
+    "160": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0010--epoch_2.00--step_0160",
+    "960": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0060--epoch_2.00--step_0960",
+    "1440": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0090--epoch_2.00--step_1440",
+    "2560": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0160--epoch_2.00--step_2560"
+  },
+  "selection": "Coarse full3840 preselected before output; recovery by step, never test score.",
+  "copy_started": false,
+  "limits": [
+    "CPU/meta counters and file stability, not an all-tensor finite scan or GPU restoration.",
+    "Same home filesystem protection from routine native cleanup, not off-system backup.",
+    "Ceph counters can lag and other jobs can consume shared quotas."
+  ],
+  "execution": {
+    "session_id": 1996,
+    "exit_code": 0,
+    "previous_failed_inspection": "PREFLIGHT-FAILED-001.json",
+    "padding_regression": {
+      "chunk_id": "5b2735",
+      "wall_time_seconds": 0.000012954,
+      "exit_code": 0,
+      "original_token_count": 66,
+      "output": "160 ckpt--iter_0010--epoch_2.00--step_0160\n960 ckpt--iter_0060--epoch_2.00--step_0960\n1440 ckpt--iter_0090--epoch_2.00--step_1440\n2560 ckpt--iter_0160--epoch_2.00--step_2560\nUnpadded lookup reproduced; padded lookup resolves all four prior retained directories.\n"
+    }
+  }
+}
