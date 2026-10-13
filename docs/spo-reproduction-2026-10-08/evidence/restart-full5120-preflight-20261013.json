@@ -1,0 +1,164 @@
+{
+  "schema": "spo-checkpoint-protection-preflight-v1",
+  "checked_utc": "2026-10-13T17:06:37.857121+00:00",
+  "preparation": {
+    "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/checkpoint-protection-5120-001/PREPARATION.json",
+    "sha256": "d5cce6f99fca62ccb7bab9b051cf029116f6bbc8130853e7a261c7f4bec2623c"
+  },
+  "source": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0320--epoch_2.00--step_5120",
+  "destination": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0320--epoch_2.00--step_5120",
+  "destination_absent": true,
+  "latest_tag": "global_step5120",
+  "expected_file_count": 10,
+  "total_bytes": 17600911844,
+  "file_identities": {
+    "actor/global_step5120/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "inode": 1099979716406,
+      "mtime_ns": "1791910739164661651"
+    },
+    "actor/global_step5120/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "inode": 1099979718157,
+      "mtime_ns": "1791910715668661619"
+    },
+    "actor/latest": {
+      "bytes": 15,
+      "inode": 1099979716407,
+      "mtime_ns": "1791910739166661651"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "inode": 1099979718158,
+      "mtime_ns": "1791910739166661651"
+    },
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "inode": 1099979718151,
+      "mtime_ns": "1791910707819661609"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "inode": 1099979716403,
+      "mtime_ns": "1791910707819661609"
+    },
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "inode": 1099979716404,
+      "mtime_ns": "1791910707819661609"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "inode": 1099979718153,
+      "mtime_ns": "1791910707820661609"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "inode": 1099979716405,
+      "mtime_ns": "1791910707821661609"
+    },
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979718154,
+      "mtime_ns": "1791910711728661614"
+    }
+  },
+  "source_stable_during_cpu_inspection": true,
+  "trainer_state": {
+    "global_step": 5120,
+    "epoch": 2,
+    "iteration": 320
+  },
+  "actor_global_steps": 5120,
+  "actor_skipped_steps": 0,
+  "scheduler_last_batch_iteration": 5119,
+  "optimizer_parameter_state_steps": {
+    "0": 5120,
+    "1": 5120
+  },
+  "optimizer_legacy_param_group_steps": [
+    0,
+    0
+  ],
+  "cuda_initialized": false,
+  "owners": {
+    "queue": {
+      "pid": 2826646,
+      "startticks": 1362248004,
+      "state": "S"
+    },
+    "scoped": {
+      "pid": 2826649,
+      "startticks": 1362248013,
+      "state": "S"
+    },
+    "trainer": {
+      "pid": 2826650,
+      "startticks": 1362248017,
+      "state": "S"
+    },
+    "observer": {
+      "pid": 2829006,
+      "startticks": 1362275186,
+      "state": "S"
+    }
+  },
+  "sealed_source_pin_count": 7,
+  "all_sealed_source_pins_match": true,
+  "last_completed_collection": 320,
+  "command_log_prefix": {
+    "bytes": 43780003,
+    "sha256": "e4e875724af3266c48e642ca0c23ffd4be520604c4aca7b9ea8ee58e2109c898"
+  },
+  "current_directory_quotas": {
+    "/home/atowell": {
+      "ceph.quota.max_bytes": 1099511627776,
+      "ceph.dir.rbytes": 691041282492,
+      "ceph.quota.max_files": 1000000,
+      "ceph.dir.rfiles": 538543,
+      "remaining_bytes": 408470345284,
+      "remaining_files": 461457
+    },
+    "/project/alex_phd": {
+      "ceph.quota.max_bytes": 1099511627776,
+      "ceph.dir.rbytes": 1083336295352,
+      "ceph.quota.max_files": 100000000,
+      "ceph.dir.rfiles": 2527136,
+      "remaining_bytes": 16175332424,
+      "remaining_files": 97472864
+    }
+  },
+  "conservative_projection": {
+    "source": "/project/alex_phd/runs/rl-paper-reproduction-20261012/storage-headroom-20261012T2240.json",
+    "sha256": "01481b19617c4c68cf9f31ef59686e7acfaed0ad876419b5200122b59777ee26",
+    "scenario": {
+      "future_training_and_eval_artifact_growth_multiplier": 2,
+      "additional_bytes_including_HF_retention_transient_full_and_one_extra_protected_full": 195046182687,
+      "home_remaining_after_projection_bytes": 302576149054,
+      "additional_files_including_checkpoint_allowance": 307180,
+      "home_remaining_files_after_projection": 213387
+    },
+    "fresh_home_headroom_after_projection_bytes": 213424162597,
+    "fresh_home_headroom_after_projection_files": 154277,
+    "interpretation": "Reuses conservative prior605collection/61evaluation2x-growth scenario including one extra17.60GBfull copy; only370collections remain at5120. Not a fresh artifact-growth estimate, reserved space or guarantee."
+  },
+  "prior_protected_directories": [
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0010--epoch_2.00--step_0160",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0060--epoch_2.00--step_0960",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0090--epoch_2.00--step_1440",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0160--epoch_2.00--step_2560",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0240--epoch_2.00--step_3840"
+  ],
+  "protected3840_ten_identities_match": true,
+  "selection": "Full 5120 was preselected by optimizer step in the evaluation240/protected3840 handoff and review0002. Source and destination absent at this preparation; never selected by score.",
+  "copy_started": false,
+  "limits": [
+    "CPU/meta counters and stability, not all-tensor finite scan or GPU restore.",
+    "Same home filesystem; not off-system backup.",
+    "Shared Ceph counters can lag. Fresh copy-time byte/file headroom gate remains required."
+  ],
+  "execution": {
+    "tool_session": 1318,
+    "exit_code": 0
+  }
+}
