@@ -1,14 +1,15 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 15:48 UTC; scientific cutoff 15:48, native-state check 15:43.
-The thirty-first scheduled restart evaluation is fully regraded at 4,816 updates;
-the next evaluation follows 4,976 updates.
-Test rises to 55.69% and validation to 68.36%, while the non-held-out training
-subset rises to 79.54%. This breaks the two-interval test decline and challenges
-a sustained-downturn interpretation of those local decreases. It does not
-prove lasting stability. Overall improvement remains intermediate learning,
-not completed reproduction. Native 4,800 counters and ten-file stability are
-verified; that is not a protected copy, full-tensor scan or GPU restoration.
+Status: October 13, 2026, 16:39 UTC; scientific cutoff 16:39, native-state check 16:21.
+The thirty-second scheduled restart evaluation is fully regraded at 4,976 updates;
+the next evaluation follows 5,136 updates.
+Test is 55.55% and validation 67.81%, both slightly lower than the preceding
+evaluation, while the non-held-out training subset rises to 80.19%. This is a
+generalization watchpoint, not proof of sustained overfitting or renewed collapse.
+Overall improvement remains intermediate learning, not completed reproduction.
+Native 4,960 counters and ten-file stability are verified; that is not a protected
+copy, full-tensor scan or GPU restoration. Native 4,800 was removed entirely by
+normal cleanup; its metadata receipt is historical.
 The complete 3,840-update checkpoint remains byte-verified outside cleanup,
 alongside the earlier 160-, 960-, 1,440- and 2,560-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
@@ -110,7 +111,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, and 4,816 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, and 4,976 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -149,8 +150,86 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 4,496 | 55.09% | 68.03% | 78.73% |
 | 4,656 | 54.75% | 67.04% | 78.95% |
 | 4,816 | 55.69% | 68.36% | 79.54% |
+| 4,976 | 55.55% | 67.81% | 80.19% |
 
-### Latest evaluation: 4,816 updates
+### Latest evaluation: 4,976 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval310-20261013.json). Test has **11,723/21,104 correct
+answers, 55.5487%**, or **+15.7743 percentage points** versus original SFT.
+It loses 29 correct answers (−0.1374 points) since 300. Validation loses 33
+(−0.5529 points) to **4,047/5,968, 67.8117%**. The training subset gains 39
+(+0.6552 points) to **4,773/5,952, 80.1915%**, and is not held out.
+
+The last four tests are 55.09%, 54.75%, 55.69% and 55.55%. Both held-out means
+dip after the rebound while training rises. Retain this generalization
+watchpoint; one local decline is not proof of sustained overfitting, renewed
+collapse or a cause. The preceding rebound did not establish lasting stability.
+
+Test questions 333 improve / 301 worsen / 685 stay the same, with 45 newly
+once-hit and 49 lost. More questions improve, yet 784 gained correct answers
+are outweighed by 813 lost; direction counts alone conceal the aggregate loss.
+Validation questions 85 improve / 89 worsen / 199 stay the same, with 8 newly
+once-hit and 18 lost (227 gained answers versus 260 lost). Training questions
+75 improve / 62 worsen / 235 stay the same, with 5 newly once-hit and 7 lost
+(190 gained answers versus 151 lost). The first test question improves
+13/16 to 15/16 despite the aggregate decline.
+
+Test once-hit falls 80.29% to 79.98%, and majority 62.85% to 62.17%.
+Validation once-hit falls 90.08% to 87.40%, and majority 73.99% to 72.92%.
+Training once-hit falls 94.09% to 93.55% while majority rises 84.41% to 85.22%.
+These auxiliary measures do not replace native mean pass@1. Test extraction
+failures and length finishes both remain four; validation adds one of each.
+Those counts alone cannot explain 29 fewer test and 33 fewer validation correct
+answers. Secondary numeric-equivalence potential rescues are 81/43/47 for
+test/validation/train versus 89/43/47 before; primary scores stay native.
+
+All 32 scheduled points are retained. These are descriptive comparisons, not
+significance tests or independent training replications. The 1.1753-point gap
+to supplied 56.724% is intermediate, not the fixed endpoint comparison or an
+acceptance tolerance. No causal BOS effect, lasting stability, completed
+reproduction or measured RLM transfer is established. See the
+[interpretation](evidence/restart-eval310-interpretation-20261013.json).
+
+A separate predetermined training observation finds an internal annotation
+inconsistency in original author row 754: its worked solution computes 108,
+but the terminal label is 106. All eight saved responses give 108, receive
+native zero rewards and have zero saved advantages. Text/token bindings and
+BOS agree. Keep the author labels and scorer unchanged. This one record
+does not establish prevalence, explain the learning curve or warrant correcting
+held-out scores. It motivates reward-oracle audits for future RLM work,
+not a measured transfer claim; see the
+[label evidence](evidence/restart-training-label310-20261013.json).
+
+The [native 4,960 metadata check](evidence/restart-full4960-metadata-20261013.json)
+verifies ten stable files, trainer/actor/both active Adam counters 4,960,
+scheduler 4,959, zero skipped steps and CUDA uninitialized. Evaluated weights
+are at 4,976, not this state. No new protected copy, all-tensor scan or GPU
+restore occurred. Native 4,800 was removed entirely at 16:16:24 UTC; its
+previous receipt is historical. Protected 160/960/1,440/2,560/3,840 remain.
+Prepared 5,120 protection still requires fresh state, identity, owner and
+storage gates. A metadata-output parse initially encountered expected CPU
+DeepSpeed startup messages; the existing JSON line was recovered without
+rerunning the inspection or changing training.
+
+All 2,065 evaluation HTTP returns succeeded, including 2,064 generation POSTs;
+no recorded errors or tracebacks occurred. The first answer was correct and
+checked 34 seconds after the first request. Wrapper creation at 16:19:23
+preceded the native root; first generation was 16:21:05, before the complete
+preparation receipt was recorded. The binding RED/GREEN and independent review
+passed. One CPU audit started after all three gates and exited zero at 16:29:54.
+
+The first post-evaluation training answer was correct, but inspection at
+311 seconds missed the 90-second target. There were 569 successful returns
+and zero errors; this is a monitoring delay, not inferred idle GPU time or
+service failure. The next collection's correct answer was checked within
+26 seconds. The successor read-only observer is active for 320/5,136; prepare
+its audit from pinned 310, and start future successor observers before lengthy
+publication work. Keep the same whole training owner and fixed 690/11,040
+endpoint. This supporting update does not change the advisor package's main
+story, material limitations or decision; its October 12 cutoff remains explicit.
+
+### Preceding evaluation: 4,816 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval300-20261013.json). Test has **11,752/21,104 correct

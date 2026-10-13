@@ -1,0 +1,63 @@
+{
+  "schema": "spo-training-label310-summary-v1",
+  "checked_utc": "2026-10-13T16:35:35.305000+00:00",
+  "selection": "First original training question and all eight saved responses of collection310, not selected for correctness.",
+  "original_author_train_index": 754,
+  "original_record_canonical_sha256": "4002c0c15897a01970e260dec3c22d974dfcda621e85a40d68fec70a40a5209a",
+  "author_worked_solution_total": 108,
+  "author_terminal_label": 106,
+  "manual_total": 108,
+  "sample_count": 8,
+  "all_eight_predictions": 108,
+  "all_eight_native_rewards": 0,
+  "all_eight_saved_advantage_arrays_zero": true,
+  "saved_text_and_token_bindings_match": true,
+  "leading_BOS": 1,
+  "dense_arrays_finite": true,
+  "evidence_external": "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval310-regrade-001/TRAINING-LABEL-ANOMALY.json",
+  "saved_dataset_files": {
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0310/infer_results/process_00/traj_results_ds/data-00000-of-00001.arrow": {
+      "bytes": 1022160,
+      "sha256": "5fa7473aa5037be916075d9f1d62347735763a82d90044e11a6738b4876ec913"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0310/infer_results/process_00/traj_results_ds/dataset_info.json": {
+      "bytes": 2206,
+      "sha256": "b6844bc04b0f690af93385da111dbaa5a947fcbf9cc2c68bca1361272f894b63"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0310/infer_results/process_00/traj_results_ds/state.json": {
+      "bytes": 247,
+      "sha256": "974c45762eebc8c2f404cb31abbcf68ae030f73086429cb7f136ef396485e3d5"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0310/infer_results/merged_trajectories/data-00000-of-00001.arrow": {
+      "bytes": 4505680,
+      "sha256": "1144c6ff988b6a1205260588e06e499fe69453a740f1179fa181cd427cb21d7d"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0310/infer_results/merged_trajectories/dataset_info.json": {
+      "bytes": 1794,
+      "sha256": "395ec7fa4c1dc98f69261608404a26fcaeb8daf550f4df904125d544a6f6a563"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0310/infer_results/merged_trajectories/state.json": {
+      "bytes": 470,
+      "sha256": "5e14ecafe63e536d67a4ed76e6f7b3406d84f1aa1b0ab094e597a49a9d213ec4"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0310/episodes/merged/data-00000-of-00001.arrow": {
+      "bytes": 2705400,
+      "sha256": "649996b13459382b7d40dbf11a6d010136db923163f313e3c4e0fa4087fb76a0"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0310/episodes/merged/dataset_info.json": {
+      "bytes": 1365,
+      "sha256": "f7b7d9ac8b92431de47cd8753bfefdf85a15f4c2ec1358eaad32f89847e40e72"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/temp_episodes/iteration__0310/episodes/merged/state.json": {
+      "bytes": 489,
+      "sha256": "ae252001e04b9ca5c759ef9f4665c4cedd8b5ed34c03ae61e7550490d11373d1"
+    }
+  },
+  "finding": "The original supplied rationale explicitly calculates108 while its terminal label says106. The mathematically consistent model answers receive zero reward under the unchanged native author rule.",
+  "decision": "Preserve original author labels and scorer for reproduction; record the mismatch. No training, primary score, checkpoint selection or live source change.",
+  "limits": [
+    "One training record, not label-error prevalence or measured aggregate impact.",
+    "All-zero advantages on these eight samples do not establish lack of batch-wide training signal; KL regularization is distinct.",
+    "Reward-oracle audits are a methodological lesson for later RLM work, not measured RLM transfer or causal training proof."
+  ]
+}
