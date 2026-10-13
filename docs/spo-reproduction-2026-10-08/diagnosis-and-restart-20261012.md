@@ -1,6 +1,6 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 04:49 UTC. The seventeenth scheduled restart evaluation
+Status: October 13, 2026, 05:29 UTC. The seventeenth scheduled restart evaluation
 is fully regraded at 2,576 updates; the next evaluation follows 2,736 updates.
 The complete 2,560-update checkpoint is byte-verified outside automatic cleanup,
 alongside the earlier 160-, 960-, and 1,440-update copies. A separate CPU scan
@@ -12,6 +12,15 @@ Our primary objective is to reproduce the
 paper's **training result** on one A100. It is still unfinished. We have matched
 the authors' released-model evaluation, diagnosed concrete discrepancies in our
 training pipeline, and started a fresh run that tests the strongest one.
+
+The broader purpose, reaffirmed by the user, is methodological calibration for
+continuing RLM research: check that our RL implementation, measurement and
+experimental reasoning can recover a published learning result. Success would
+strengthen confidence in those practices, not establish that SPO is the right
+algorithm for RLM or that all implementation assumptions are correct. We will
+report the fixed endpoint's exact score gap, gain from the starting model and
+remaining protocol differences; no acceptance tolerance is being chosen from
+an intermediate score.
 
 ## The result we need to reproduce
 
@@ -145,8 +154,44 @@ recovery, a clean causal BOS test, or an independent training-seed replication.
 Keep the recipe, all scheduled results and fixed 690/11,040 endpoint unchanged.
 The protected 2,560 recovery state is distinct from the 2,576 evaluated weights.
 See the [interpretation and question-level comparisons](evidence/restart-eval160-interpretation-20261013.json).
-The detailed training-batch and numerical-window audits below remain explicitly
-through collection 150 / 2,416 updates; they were not repeated for this readout.
+
+### Training audit through 2,576 updates and saved state at 2,720
+
+The [collection 160 audit](evidence/restart-training-batch160-20261013.json)
+rechecks all 512 rewards and generation/training query-token identities against
+the original data. It has 386 correct and 126 incorrect responses, no malformed or
+unfinished penalties, and 30 of 64 questions with mixed terminal rewards. Nineteen
+terminal-uniform groups nevertheless have nonzero intermediate advantages;
+2,311 advantage tokens are nonzero. Saved actor/reference log probabilities and
+advantages are finite. The completed generation log has 805 HTTP successes and
+no HTTP errors or tracebacks. Training questions change between batches, so this
+is an integrity check, not a held-out progress curve.
+
+The first wrong response in saved order reverses yesterday and today: nine
+songs yesterday and five more today should give 9 + 14 = 23, but the response returns
+13. The native reward of zero agrees. The first correct response computes
+3 × 18 × (2/3) = 36 remaining leaves. These examples illustrate both outcomes, not their
+prevalence or a causal explanation of the learning gain. Raw outputs remain in
+the external research store.
+
+The [new 160-update numerical window](evidence/restart-training-windows2576-20261013.json),
+updates 2,417–2,576, has mean policy ratio 1.0036, approximate KL 0.06836,
+clipping fraction 0.09892 and gradient norm 18.9254. Its largest approximate KL is
+0.338 at update 2,480, falling to 0.00118 on the next update. All 1–2,576 logged update
+numbers are present and finite, without logged NaN/Inf loss anomalies or ratio
+guard warnings. Earlier peaks 0.736 and 0.541 remain watchpoints: a smaller maximum
+on different batches does not establish lasting stability. Approximate KL and
+the reference penalty are native rounded proxies, not exact distributional KL.
+
+The [full 2,720-update state](evidence/restart-full2720-metadata-20261013.json)
+now has ten stable files and matching trainer/actor/active Adam counters 2,720,
+scheduler 2,719 and skipped 0. Native cleanup removed the previous 2,560 optimizer
+files at 05:21:21; the separately protected 2,560 copy retains all ten recorded file
+identities and its prior complete hashes. An old check requiring both source
+and copy failed on that expected rotation; the failure is retained in the
+review record. This is not a training failure, new full tensor scan, GPU restore,
+or additional protected copy. Keep protected 160/960/1440/2560; the next coarse
+protection is preselected 3,840, subject to actual-save and storage gates.
 
 ### Preceding evaluation and training audit: 2,416 updates
 
@@ -227,7 +272,7 @@ it confuses the first- and second-day mushroom counts, then divides a count by
 the dollar price. It returns 24 instead of `58 / 2 + 12 + 24 = 65`; native reward
 zero agrees. This first-in-saved-order example is not a prevalence estimate.
 
-The latest 160-update diagnostic window has a mean policy ratio of 1.0030,
+The preceding 160-update diagnostic window has a mean policy ratio of 1.0030,
 approximate KL of 0.0678, clipping fraction of 0.0931, and gradient norm of 18.50.
 Its largest approximate KL is 0.541 at update 2,415, above the previous window's
 0.355 at update 2,159. Earlier excursions of 0.736 at update 2,047 and 0.523 at

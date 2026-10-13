@@ -1,0 +1,155 @@
+{
+  "schema": "spo-training-collection-audit-public-v1",
+  "checked_utc": "2026-10-13T05:17:18.383367+00:00",
+  "native_root": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+  "collection": 160,
+  "optimizer_updates_after_collection": 2576,
+  "responses": 512,
+  "question_groups": 64,
+  "effective_reward_counts": {
+    "1.0": 386,
+    "0.0": 126
+  },
+  "mixed_effective_reward_groups": 30,
+  "terminal_uniform_groups_with_nonzero_advantages": 19,
+  "reward_regrade_mismatches": [],
+  "generation_training_query_id_mismatches": 0,
+  "episode_actor_trajectory_token_equality": true,
+  "original_gold_and_saved_response_identity_verified": true,
+  "actor_reference_logprobs_finite": true,
+  "advantages_finite": true,
+  "nonzero_advantage_tokens": 2311,
+  "http_successes": 805,
+  "http_errors": 0,
+  "generation_log_tracebacks": 0,
+  "source_artifacts": [
+    "episodes/episodes_0160",
+    "checkpoints/episodes__iter0160/w_actLogp",
+    "temp_episodes/iteration__0160/infer_results/merged_trajectories",
+    "temp_episodes/iteration__0160/infer_results/process_00/traj_results_ds",
+    "temp_episodes/iteration__0160/infer_results/process_00/vllm_server.log"
+  ],
+  "generation_log_sha256": "f0a3e6ab4f45a675ea3bb44e29f5e244a6fcf7e251198d2b1f20a70262e8dfc3",
+  "source_hashes": {
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/tasks/gsm8k.py": "ef7cff53cb0e048fbf5671d757199ff6bc01ef0dff465d90270c0e20032a1405",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator.py": "d95c525f5894d45d14fd8c567a695c0bfa4f892a4daaa6bba53358b1c006529a",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator_with_mc_advantages.py": "e098eee0f10381bb46c66778c20d1a6434b2294ca9db9f059dc435b048054cde",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/config.json": "30bdd16637a48a499d84cf2ad528d9ecc0eab25707a20d9d5d2917ce4bb69ebc"
+  },
+  "actual_examples": {
+    "correct": {
+      "row": 0,
+      "original_question_id": 794,
+      "predicted": "36",
+      "gold": "36",
+      "effective_reward": 1,
+      "interpretation": "Correctly computes3*18*(2/3)=36remaining leaves."
+    },
+    "wrong": {
+      "row": 8,
+      "original_question_id": 3781,
+      "predicted": "13",
+      "gold": "23",
+      "effective_reward": 0,
+      "interpretation": "Reverses the yesterday/today relation. Original question fixes yesterday at9 and today at14; correct two-day total23. Native reward0 agrees."
+    }
+  },
+  "interpretation": "All512 original rewards and saved generation/training query IDs agree at collection160. Terminal-uniform groups can have nonzero intermediate advantages under the native MC estimator; different training questions are not a held-out learning curve.",
+  "decision": "Continue same owner and fixed690/11040 endpoint. Next scheduled170 follows2736updates; no source/config/reward change or favorable checkpoint selection.",
+  "limits": [
+    "Independent string/penalty regrade follows native GSM8K rules, not a new mathematical equivalence verifier.",
+    "Finite saved logprobs/advantages and logged update scalars are not an all-parameter numerical audit.",
+    "No new held-out evaluation or independent training replication."
+  ],
+  "audit_template": {
+    "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/training-audit-collection16-20261012.py",
+    "sha256": "ca3b4a442701e0cef7e6ae3833d28f00b1db6bd70445b8e2392471a3f7f15d67",
+    "changes": "Only0160 path,collection160,2576update and descriptive metadata bindings; original reward/token/finite checks unchanged."
+  },
+  "completed_dataset_manifest": {
+    "episodes/episodes_0160/data-00000-of-00001.arrow": {
+      "bytes": 2332832,
+      "sha256": "eaaa11e6dd45a5c9eb120fe56c407def5f0331f70e0741d606cc48ed38c6766b",
+      "inode": 1099979610531,
+      "mtime_ns": "1791866027755601509"
+    },
+    "episodes/episodes_0160/dataset_info.json": {
+      "bytes": 1206,
+      "sha256": "2adc92ff6d00622b48197b54c9283fb19632958509cb0c6aa5ceffc99eda1a09",
+      "inode": 1099979608090,
+      "mtime_ns": "1791866027757601509"
+    },
+    "episodes/episodes_0160/state.json": {
+      "bytes": 440,
+      "sha256": "3bc024de0a3e3c671f748fae31430798cb9cc942f1beee733918a80dead8cf38",
+      "inode": 1099979608089,
+      "mtime_ns": "1791866027757601509"
+    },
+    "checkpoints/episodes__iter0160/w_actLogp/cache-9a8d96cc524c0334.arrow": {
+      "bytes": 4544,
+      "sha256": "99afa614fefe43db39c0acd40bd6513ae6a34fce29eca719557329b937a17b7b",
+      "inode": 1099979608065,
+      "mtime_ns": "1791865938358601389"
+    },
+    "checkpoints/episodes__iter0160/w_actLogp/data-00000-of-00001.arrow": {
+      "bytes": 3828416,
+      "sha256": "db7c4fef2c6f20f5a0c169f46d54c75c3f248a4b4f30889fa1b1f500ec7050a3",
+      "inode": 1099979610500,
+      "mtime_ns": "1791866038702601524"
+    },
+    "checkpoints/episodes__iter0160/w_actLogp/dataset_info.json": {
+      "bytes": 1498,
+      "sha256": "a2840e6a03becf335a878905a66910ff46b926e7aa92b290d2e616570d594ff9",
+      "inode": 1099979608064,
+      "mtime_ns": "1791866038708601524"
+    },
+    "checkpoints/episodes__iter0160/w_actLogp/state.json": {
+      "bytes": 500,
+      "sha256": "65679852503c7583b589ebaf3ab59532d81252012328e18b1c7136564548e66c",
+      "inode": 1099979608063,
+      "mtime_ns": "1791866038707601524"
+    },
+    "temp_episodes/iteration__0160/infer_results/merged_trajectories/data-00000-of-00001.arrow": {
+      "bytes": 3853808,
+      "sha256": "c64418fd8a7c842dc8cac8a7cb9708648a5a5c2efafbe47b9ed020b9718170ed",
+      "inode": 1099979610497,
+      "mtime_ns": "1791865933934601383"
+    },
+    "temp_episodes/iteration__0160/infer_results/merged_trajectories/dataset_info.json": {
+      "bytes": 1794,
+      "sha256": "395ec7fa4c1dc98f69261608404a26fcaeb8daf550f4df904125d544a6f6a563",
+      "inode": 1099979608062,
+      "mtime_ns": "1791865933938601383"
+    },
+    "temp_episodes/iteration__0160/infer_results/merged_trajectories/state.json": {
+      "bytes": 470,
+      "sha256": "ea5acf8bbd3909694be1e9128e6758a5f75f4ab1d29f3c3d0f7e84207288a294",
+      "inode": 1099979608061,
+      "mtime_ns": "1791865933938601383"
+    },
+    "temp_episodes/iteration__0160/infer_results/process_00/traj_results_ds/data-00000-of-00001.arrow": {
+      "bytes": 895712,
+      "sha256": "59e5f6d462179cc6cc4ba552075cdb2002c3c4af8787e3b4fb7ed551e910f8f5",
+      "inode": 1099979610493,
+      "mtime_ns": "1791865932762601382"
+    },
+    "temp_episodes/iteration__0160/infer_results/process_00/traj_results_ds/dataset_info.json": {
+      "bytes": 2206,
+      "sha256": "b6844bc04b0f690af93385da111dbaa5a947fcbf9cc2c68bca1361272f894b63",
+      "inode": 1099979608058,
+      "mtime_ns": "1791865932764601382"
+    },
+    "temp_episodes/iteration__0160/infer_results/process_00/traj_results_ds/state.json": {
+      "bytes": 247,
+      "sha256": "58661c245d5f204555922b81c85e4231d661ee76e4c460217b8c33ae139464b0",
+      "inode": 1099979608057,
+      "mtime_ns": "1791865932763601382"
+    }
+  },
+  "manifest_limit": "Hashes and file identities for the four completed saved datasets, not a new model-weight scan.",
+  "external_full_receipt": {
+    "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/training-audit-collection160-20261013.json",
+    "sha256": "88a9c86db2840ed0e128bf198715482889f6b966c2e4ae00306ae0d424500bd4",
+    "publication_note": "Raw question and response text omitted; exact external evidence retained. First correct and first wrong in saved order are illustrations, not prevalence estimates."
+  }
+}
