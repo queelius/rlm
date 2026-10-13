@@ -1,9 +1,10 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 08:22 UTC. The twenty-first scheduled restart evaluation
-is fully regraded at 3,216 updates; the next evaluation follows 3,376 updates.
-Test falls modestly to 53.31%; validation rises to 67.02%, while the
-non-held-out training subset rises to 75.84%. Reproduction remains unfinished.
+Status: October 13, 2026, 09:05 UTC. The twenty-second scheduled restart evaluation
+is fully regraded at 3,376 updates; the next evaluation follows 3,536 updates.
+Test rebounds modestly to 53.57%; validation falls to 66.64%, while the
+non-held-out training subset rises to 76.43%. Recent test results are roughly
+flat. Reproduction remains unfinished.
 The complete 2,560-update checkpoint is byte-verified outside automatic cleanup,
 alongside the earlier 160-, 960-, and 1,440-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
@@ -106,7 +107,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, and 3,216 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, and 3,376 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -135,8 +136,44 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 2,896 | 53.57% | 68.05% | 74.26% |
 | 3,056 | 53.59% | 66.82% | 75.03% |
 | 3,216 | 53.31% | 67.02% | 75.84% |
+| 3,376 | 53.57% | 66.64% | 76.43% |
 
-### Latest evaluation: 3,216 updates
+### Latest evaluation: 3,376 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval210-20261013.json). Test has **11,306/21,104 correct
+answers, 53.5728%**, or **+13.7983 percentage points** versus original SFT.
+It gains 55 correct answers (+0.2606 points) since the preceding check.
+Validation loses 23 (−0.3854 points) to 66.6387%; the training subset gains
+35 (+0.5880 points) to 76.4281%, not held out.
+
+The last four scheduled tests are 53.57%, 53.59%, 53.31% and 53.57%: roughly
+flat. This rebound does not establish a renewed upward trend or durable recovery.
+Test once-hit coverage falls from 81.12% to 79.98%, while majority rises from
+59.89% to 60.05%. There are 331 questions with more correct samples, 333 fewer
+and 655 unchanged; 46 become once-hit and 61 lose all correct samples.
+Higher mean sample accuracy therefore does not mean broader question coverage.
+Validation coverage rises while majority falls; training-subset coverage and
+majority both fall. These are descriptive comparisons, not significance tests
+or independent training replications.
+
+The predetermined first test question has 10/16 correct samples versus 11/16.
+Test extraction failures fall from ten to six and length-limit endings from
+eleven to seven. These changes do not identify the cause of the net rebound.
+The native mean pass@1 rule remains the target, not once-hit or majority voting.
+Continue the unchanged 690/11,040 endpoint; do not select an earlier checkpoint
+or infer BOS causality, overfitting or completed reproduction.
+See the [interpretation and paired counts](evidence/restart-eval210-interpretation-20261013.json).
+
+The full reward/token audit remains collection 200. The newer
+[native 3,360-state inspection](evidence/restart-full3360-metadata-20261013.json)
+verifies ten stable files and matching trainer/actor/active Adam counters,
+scheduler 3,359 and zero skipped steps. It is not a new protected copy, full
+tensor scan or GPU restoration; evaluated 3,376 weights are distinct.
+Native 3,200 optimizer state rotated out at 08:48 UTC under existing cleanup.
+Protected 160/960/1,440/2,560 states remain; next protection is preselected at 3,840.
+
+### Preceding evaluation: 3,216 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval200-20261013.json). Test has **11,251/21,104 correct

@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 08:22 UTC
+## Current status on October 13, 09:05 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -33,30 +33,33 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **3,216 optimizer updates**, is **53.31%**, versus
-**39.77%** for the original model: **+13.54 percentage points**. This is the
-twenty-first scheduled evaluation; every one of its 33,024 saved answers across
+The latest scheduled test, after **3,376 optimizer updates**, is **53.57%**, versus
+**39.77%** for the original model: **+13.80 percentage points**. This is the
+twenty-second scheduled evaluation; every one of its 33,024 saved answers across
 test, validation and the training subset independently regrades to the native
 metrics. The [complete scheduled series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far)
 retains every earlier result.
 
-**This latest result is mixed:** test loses 58 correct answers (−0.275 percentage
-points), while validation gains 12 (+0.201 points) to 67.02%. The training subset
-gains 48 (+0.806 points) to 75.84%, but is not held out. Following the preceding
-nearly flat test, this modest decline does not establish a collapse, overfitting
-or a causal explanation. The gain versus the original model remains intermediate
+**This latest result is mixed:** test gains 55 correct answers (+0.261 percentage
+points), while validation loses 23 (−0.385 points) to 66.64%. The training subset
+gains 35 (+0.588 points) to 76.43%, but is not held out. The last four scheduled
+tests are 53.57%, 53.59%, 53.31% and 53.57%: roughly flat. This modest rebound
+does not establish a renewed upward trend or a causal explanation.
+The gain versus the original model remains intermediate
 learning evidence, **not completed reproduction or proof of lasting recovery**.
 The previous run also improved initially.
 
-Test solved-at-least-once coverage over 16 attempts falls from 81.27% to 81.12%,
-and majority-vote accuracy falls from 60.12% to 59.89%. There are 344 test questions
-with more correct samples, 349 with fewer and 626 unchanged, net 58 fewer correct
-answers. Validation coverage falls while majority rises. These are descriptive
+Test solved-at-least-once coverage over 16 attempts falls from 81.12% to 79.98%,
+while majority-vote accuracy rises from 59.89% to 60.05%. There are 331 test questions
+with more correct samples, 333 with fewer and 655 unchanged, net 55 more correct
+answers. Forty-six become once-hit and 61 lose all correct samples: higher mean
+sample accuracy does not mean broader coverage. Validation coverage rises while
+majority falls. These are descriptive
 comparisons, not independent training replications or significance tests. We
 retain mean single-answer accuracy and the fixed endpoint; no alternative metric
 or favorable checkpoint replaces them.
-See the [latest evaluation audit](evidence/restart-eval200-20261013.json) and
-[interpretation](evidence/restart-eval200-interpretation-20261013.json).
+See the [latest evaluation audit](evidence/restart-eval210-20261013.json) and
+[interpretation](evidence/restart-eval210-interpretation-20261013.json).
 
 The separate full collection 200 audit verifies all 512 terminal rewards and
 generation/training token bindings: 354 correct / 158 incorrect, with finite
@@ -66,7 +69,7 @@ advantages. These changing training questions do not form a held-out progress
 curve; see the [training audit](evidence/restart-training-batch200-20261013.json).
 The last detailed numerical window, updates 2,577–2,736, remains in the
 [numerical audit](evidence/restart-training-windows2736-20261013.json).
-The newer live log check through 3,264 finds contiguous update numbers, finite
+The newer live log check through 3,376 finds contiguous update numbers, finite
 logged numeric values and no failure markers. It retains the finite approximate-KL
 excursion of 0.678 at update 2,952; earlier larger excursions remain in the record.
 Changing-batch rounded aggregates do not establish future stability.
@@ -81,9 +84,11 @@ result, full numerical scan, GPU restoration test, or off-system backup.
 See the [new checkpoint receipt](evidence/restart-full2560-protection-20261013.json).
 At 05:21 UTC native cleanup removed its optimizer files; the separately protected
 copy retains all ten recorded file identities. The latest inspected native full
-3,200 state passes [CPU counter and file-stability checks](evidence/restart-full3200-metadata-20261013.json):
-trainer, actor and active Adam counters are 3,200, scheduler 3,199, skipped steps zero.
+3,360 state passes [CPU counter and file-stability checks](evidence/restart-full3360-metadata-20261013.json):
+trainer, actor and active Adam counters are 3,360, scheduler 3,359, skipped steps zero.
 This is not a new protected copy, full tensor scan or GPU restoration test.
+Native 3,200 optimizer state rotated out at 08:48 UTC; its
+[inspection receipt](evidence/restart-full3200-metadata-20261013.json) is historical.
 Native 3,040 optimizer state rotated out at 07:57 UTC; its
 [inspection receipt](evidence/restart-full3040-metadata-20261013.json) is historical.
 Native 2,880 optimizer state rotated out at 07:08 UTC, and 2,720 at 06:17 UTC;
@@ -104,12 +109,12 @@ confirms actual saved changes from 1,440 to 2,240 updates; both tensors are fini
 This is not an all-parameter scan or a measure of learning effectiveness.
 The [earlier 960-to-1,280 check](evidence/restart-parameter-update1280-20261012.json)
 remains in the record. Protected recovery states are distinct from the
-3,216-update weights evaluated above. The earlier native full 2,400-update state
+3,376-update weights evaluated above. The earlier native full 2,400-update state
 passed a [CPU metadata check](evidence/restart-full2400-metadata-20261013.json);
 it was not separately protected or GPU-restored. Native cleanup has now rotated
 it and the older 2,240-update full state; their receipts remain historical.
-The evaluation after 3,216 updates is complete and independently regraded.
-The next scheduled evaluation follows 3,376 updates. The next coarse recovery
+The evaluation after 3,376 updates is complete and independently regraded.
+The next scheduled evaluation follows 3,536 updates. The next coarse recovery
 copy at 3,840 updates is preselected and prepared; actual-save and fresh storage
 gates remain.
 
