@@ -1,8 +1,8 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 12:54 UTC
+## Current status on October 13, 13:34 UTC
 
-Completed scientific-result cutoff: 12:54 UTC. Native-state check: 12:39 UTC;
+Completed scientific-result cutoff: 13:34 UTC. Native-state check: 13:25 UTC;
 protected recovery copy verified at 11:15 UTC.
 
 **The own-training reproduction is incomplete, not successful.** The previous run
@@ -36,31 +36,30 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **4,176 optimizer updates**, is **54.74%**, versus
-**39.77%** for the original model: **+14.97 percentage points**. This is the
-twenty-seventh scheduled evaluation; every one of its 33,024 saved answers across
-test, validation and the training subset independently regrades to the native
-metrics. The [complete scheduled series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far)
+The latest scheduled test, after **4,336 optimizer updates**, is **55.34%**, versus
+**39.77%** for the original model: **+15.56 percentage points**. This is the
+twenty-eighth scheduled evaluation; all 33,024 saved answers and 21 native
+metrics independently agree. The [complete scheduled series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far)
 retains every earlier result.
 
-Test gains 114 correct answers (+0.540 percentage points), while validation loses
-42 (−0.704 points) to 66.54%. The training subset gains 43 (+0.722 points) to
-77.12% and is not held out. The last four tests are 54.48%, 54.13%, 54.20% and
-54.74%: the mixed split directions do not establish a sustained trend. The gain versus
-the original model is intermediate learning evidence, **not completed reproduction
-or proof of lasting recovery**. The previous run also improved initially.
+Test gains 125 correct answers (+0.592 percentage points), validation gains
+76 (+1.273 points) to 67.81%, and the training subset gains 84 (+1.411 points)
+to 78.53%; training is not held out. The last four tests are 54.13%, 54.20%,
+54.74% and 55.34%. This aligned interval is encouraging learning evidence,
+**not completed reproduction or proof of lasting stability**. The fixed
+690-collection / 11,040-update comparison remains required. No acceptance
+tolerance is being chosen after seeing interim scores.
 
-Both held-out once-hit coverage scores fall, but both majority-vote scores rise.
-Test coverage falls from 79.61% to 79.30%, while majority rises from 60.35% to
-61.64%. There are 329 test questions with more correct samples, 313 with fewer
-and 677 unchanged, net 114 more correct answers; 50 become once-hit and 54 lose
-all correct samples. Validation coverage falls from 89.28% to 86.33%, while its
-majority rises from 72.65% to 72.92%. Training-subset coverage rises but majority
-falls. These are descriptive comparisons, not independent training
-replications or significance tests. Mean single-answer accuracy and the fixed
-endpoint remain the target; no alternative metric or favorable checkpoint
-replaces them. See the [latest evaluation audit](evidence/restart-eval260-20261013.json)
-and [interpretation](evidence/restart-eval260-interpretation-20261013.json).
+Both held-out once-hit coverage and majority-vote scores rise. Test coverage
+rises from 79.30% to 81.05%, and majority from 61.64% to 62.17%. There are
+348 test questions with more correct samples, 311 with fewer and 660 unchanged;
+70 become once-hit and 47 lose all correct samples. Validation coverage rises
+from 86.33% to 88.20%, and majority from 72.92% to 73.19%. Training coverage
+falls while its majority rises. These descriptive counts are not independent
+training replications or significance tests. Mean single-answer accuracy and
+the fixed endpoint remain primary; no favorable checkpoint or auxiliary metric
+replaces them. See the [latest evaluation audit](evidence/restart-eval270-20261013.json)
+and [interpretation](evidence/restart-eval270-interpretation-20261013.json).
 
 An additional training observation at 09:50 UTC illustrates a scoring limit:
 the first saved response in collection 222 received the correct-answer reward
@@ -87,10 +86,12 @@ advantages. These changing training questions do not form a held-out progress
 curve; see the [training audit](evidence/restart-training-batch200-20261013.json).
 The last detailed numerical window, updates 2,577–2,736, remains in the
 [numerical audit](evidence/restart-training-windows2736-20261013.json).
-The newer live log check at 12:41 UTC through 4,176 finds contiguous update
-numbers, finite logged numeric values and no failure markers. It retains the finite approximate-KL
-excursion of 0.721 at update 3,772; earlier larger excursions remain in the record.
-Changing-batch rounded aggregates do not establish future stability.
+The live log check at 13:31 UTC verifies contiguous updates through 4,336,
+all 23 logged numeric fields finite, and no recorded failure markers.
+Approximate KL reached 0.678 at update 4,304; in the next 32 updates its maximum
+was 0.343, with ratios 0.983–1.03 and gradient norms up to 40.7.
+This does not resolve the diagnostic watchpoint or establish future stability;
+the earlier 0.721 excursion at 3,772 and older observations remain recorded.
 
 **Recovery update, October 13, 11:15 UTC:** the complete **3,840-update checkpoint**
 is now copied outside the trainer's automatic cleanup directory. All ten files
@@ -107,13 +108,13 @@ directory names. The lookup was corrected and the full preflight passed before
 copying; the failed inspection is preserved and training was untouched.
 The [earlier 2,560-update protection](evidence/restart-full2560-protection-20261013.json)
 survives native cleanup of its optimizer files at 05:21 UTC.
-A separate [CPU metadata check of native 4,160](evidence/restart-full4160-metadata-20261013.json)
-at 12:39 UTC verifies all ten stable files, matching trainer/actor/active Adam
-counters, scheduler 4,159 and zero skipped steps. That state is not a new protected
-copy or full-tensor scan; it precedes the 4,176-update evaluated weights.
-The first read-only inspection stopped because installed PyTorch requires string
-filenames for memory-mapped loading. The corrected inspection passed; the failed
-attempt is preserved and no training source or checkpoint was changed.
+A separate [CPU metadata check of native 4,320](evidence/restart-full4320-metadata-20261013.json)
+at 13:25 UTC verifies all ten stable files, matching trainer/actor/active Adam
+counters, scheduler 4,319 and zero skipped steps. This is not a protected copy,
+full-tensor scan or GPU restore; it precedes the 4,336-update evaluated weights.
+Native 4,160 rotated out at 13:18 UTC; its
+[metadata receipt](evidence/restart-full4160-metadata-20261013.json) remains historical,
+including the preserved string-filename mmap inspection failure and correction.
 Native 4,000 was removed by normal cleanup at 12:34 UTC; its
 [metadata receipt](evidence/restart-full4000-metadata-20261013.json) is historical.
 Native cleanup removed the 3,840 optimizer at 11:48:59 UTC; only HF weights and
@@ -146,22 +147,24 @@ confirms actual saved changes from 1,440 to 2,240 updates; both tensors are fini
 This is not an all-parameter scan or a measure of learning effectiveness.
 The [earlier 960-to-1,280 check](evidence/restart-parameter-update1280-20261012.json)
 remains in the record. Protected recovery states are distinct from the
-4,176-update weights evaluated above. The earlier native full 2,400-update state
+4,336-update weights evaluated above. The earlier native full 2,400-update state
 passed a [CPU metadata check](evidence/restart-full2400-metadata-20261013.json);
 it was not separately protected or GPU-restored. Native cleanup has now rotated
 it and the older 2,240-update full state; their receipts remain historical.
-The evaluation after 4,176 updates is complete and independently regraded.
-Its first real response was checked within 28 seconds and was wrong (6 versus
-18); this operational check is separate from the full audit. All 2,065 evaluation
-HTTP returns succeeded, with no recorded transport errors or tracebacks.
-Training has resumed under the same owner. The initial collection-262 check was
-late at 123 seconds versus the normal 90-second goal, with 711 successful returns
-and zero errors; no wasted GPU interval is inferred. The following collection
-263 was checked within 15 seconds and returned a correct answer.
-The next scheduled evaluation follows 4,336 updates. Prepare its CPU audit
-before outputs, using the pinned current wrapper and generated-binding tests;
-run it only after all three native splits complete. The step-selected 5,120
-recovery procedure is prepared; no copy has started. Require complete-save,
+Evaluation 270 is complete and independently regraded. Its first real response
+was checked within 31 seconds and correctly answered 18; this operational check
+is separate from aggregate accuracy. All 2,065 evaluation HTTP returns succeeded,
+with no recorded transport errors or tracebacks. Training resumed under the same
+owner: collection 271 was checked within 59 seconds, correctly answering 100,
+with 313 successful returns and no errors at that check.
+
+The audit's target was fixed before outputs. Its wrapper was prepared 25 seconds
+before the first logged model request, but the native evaluation directory already
+existed at the first post-preparation check; we do not claim preparation preceded
+native initialization. The focused binding test and independent review passed.
+The next scheduled evaluation follows 4,496 updates. Prepare its CPU audit before
+outputs and run it only after all three native splits complete. The step-selected
+5,120 recovery procedure is prepared; no copy has started. Require complete-save,
 owner, file-stability, and fresh directory byte/file quota gates.
 
 **Operational check, October 13, 10:33 UTC:** all 231 completed collection

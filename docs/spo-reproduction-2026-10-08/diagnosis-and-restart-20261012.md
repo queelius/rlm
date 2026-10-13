@@ -1,13 +1,13 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 12:54 UTC; native-state check at 12:39 UTC.
-The twenty-seventh scheduled restart evaluation is fully regraded at 4,176 updates;
-the next evaluation follows 4,336 updates.
-Test rises to 54.74%, validation falls to 66.54%, and the non-held-out training
-subset rises to 77.12%. Both held-out coverage scores fall, but both majority-vote
-scores rise. This is intermediate learning, not completed reproduction or a
-sustained-trend claim. Native 4,160 counters and ten-file stability are verified;
-that is not a protected copy, full-tensor scan or GPU restoration.
+Status: October 13, 2026, 13:34 UTC; native-state check at 13:25 UTC.
+The twenty-eighth scheduled restart evaluation is fully regraded at 4,336 updates;
+the next evaluation follows 4,496 updates.
+Test rises to 55.34%, validation to 67.81%, and the non-held-out training subset
+to 78.53%. Both held-out coverage and majority-vote scores rise. This is
+intermediate learning, not completed reproduction or proof of lasting stability.
+Native 4,320 counters and ten-file stability are verified; that is not a
+protected copy, full-tensor scan or GPU restoration.
 The complete 3,840-update checkpoint remains byte-verified outside cleanup,
 alongside the earlier 160-, 960-, 1,440- and 2,560-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
@@ -109,7 +109,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, and 4,176 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, and 4,336 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -144,8 +144,62 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 3,856 | 54.13% | 66.71% | 76.14% |
 | 4,016 | 54.20% | 67.24% | 76.39% |
 | 4,176 | 54.74% | 66.54% | 77.12% |
+| 4,336 | 55.34% | 67.81% | 78.53% |
 
-### Latest evaluation: 4,176 updates
+### Latest evaluation: 4,336 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval270-20261013.json). Test has **11,678/21,104 correct
+answers, 55.3355%**, or **+15.5610 percentage points** versus original SFT.
+It gains 125 correct answers (+0.5923 points) since the preceding check.
+Validation gains 76 (+1.2735 points) to **4,047/5,968, 67.8117%**.
+The training subset gains 84 (+1.4113 points) to **4,674/5,952, 78.5282%**
+and is not held out.
+
+The last four scheduled tests are 54.13%, 54.20%, 54.74% and 55.34%.
+Both held-out means and auxiliary coverage/majority scores rise this interval.
+Test once-hit coverage rises from 79.30% to 81.05%, and majority from 61.64%
+to 62.17%. There are 348 questions with more correct samples, 311 fewer and
+660 unchanged; 70 become once-hit and 47 lose all correct samples.
+Validation coverage rises from 86.33% to 88.20%, and majority from 72.92%
+to 73.19%, with 98 improved / 76 worsened / 199 unchanged questions.
+Training coverage falls from 94.35% to 93.82% despite its higher mean and
+majority. The metrics remain distinct and improvement is not uniform.
+
+Test extraction failures and length-limit endings each fall from three to
+two. The predetermined first test question stays at 12/16; its first response
+now correctly answers 18. Secondary numeric-equivalence potential rescues are
+73 test, 31 validation and 49 train, versus 66, 33 and 40 previously; primary
+scores are unchanged. These descriptive paired counts are not significance
+tests or independent training replications. Keep all 28 scheduled points,
+mean pass@1 and the fixed 690/11,040 endpoint. The current score is 1.3885
+points below the supplied 56.724% Figure 3 reference, but is not the endpoint
+comparison; no posthoc acceptance tolerance, BOS causal claim, lasting
+stability or measured RLM transfer is established.
+See the [interpretation](evidence/restart-eval270-interpretation-20261013.json).
+
+The [native 4,320-state metadata check](evidence/restart-full4320-metadata-20261013.json)
+verifies ten stable files, trainer/actor/active Adam counters, scheduler 4,319
+and zero skipped steps. This differs from the evaluated 4,336 weights and
+is not a protected copy, full-tensor finite scan or GPU restore.
+Native 4,160 rotated out at 13:18 UTC; its metadata receipt remains historical.
+Protected 160/960/1,440/2,560/3,840 remain; prepared 5,120 protection awaits
+the full-save, owner, stability and fresh byte/file quota gates.
+The full reward/token audit remains collection 200, the two-tensor comparison
+2,240 updates, and the all-saved finite scan 1,440.
+
+All 2,065 evaluation HTTP returns succeeded, with no transport errors or
+tracebacks. The first test response was checked within 31 seconds.
+The audit target was selected before outputs; wrapper preparation preceded
+the first logged request by 25 seconds. The native directory already existed
+at the first post-preparation check, so preparation before native initialization
+is not established. Focused RED/GREEN and independent binding
+review passed, and the full CPU audit ran once after all three split gates.
+The completed read-only watcher exited normally. Its successor covers
+280/4,496 and checked collection 271 within 59 seconds: correct 100, 313
+successful returns and no errors. Original owner, sources and recipe are unchanged.
+
+### Preceding evaluation: 4,176 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval260-20261013.json). Test has **11,553/21,104 correct
