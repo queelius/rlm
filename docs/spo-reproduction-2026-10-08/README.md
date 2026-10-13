@@ -33,31 +33,31 @@ The new run corrects that mismatch and separately handles a verified
 zero-gradient optimizer boundary. The shared source and environment are
 unchanged; both corrections are isolated and documented.
 
-The latest scheduled test, after **2,736 optimizer updates**, is **53.13%**, versus
-**39.77%** for the original model: **+13.36 percentage points**. Earlier scheduled
+The latest scheduled test, after **2,896 optimizer updates**, is **53.57%**, versus
+**39.77%** for the original model: **+13.80 percentage points**. Earlier scheduled
 tests were 40.03% after 16 updates, 41.42% after 176, 42.59% after 336, and
 44.93% after 496, followed by 45.56% after 656, 46.39% after 816, 47.64% after 976,
 48.25% after 1,136, 48.50% after 1,296, 48.86% after 1,456, 49.39% after 1,616,
 49.88% after 1,776, 50.13% after 1,936, 51.05% after 2,096, 51.37% after 2,256,
-51.81% after 2,416, and 52.76% after 2,576.
+51.81% after 2,416, 52.76% after 2,576, and 53.13% after 2,736.
 Each evaluation's 33,024 answers across test, validation, and the training subset
-independently regrade to the native metrics. Test accuracy rose 0.37 points since
-the previous check; validation rose 1.22 points to 67.95%, and the training subset
-rose 0.15 points to 72.40% (not held out). This strengthens the intermediate
+independently regrade to the native metrics. Test accuracy rose 0.44 points since
+the previous check; validation rose 0.10 points to 68.05%, and the training subset
+rose 1.86 points to 74.26% (not held out). This strengthens the intermediate
 learning evidence, **not completed reproduction or proof of lasting recovery**:
-the previous run also improved initially. All first 2,736 update numbers were
+the previous run also improved initially. All first 2,896 update numbers were
 present and logged numeric values finite. The latest full collection 170
 audit verifies all 512 terminal rewards and generation/training token bindings:
 387 correct / 125 incorrect, with finite saved log probabilities and advantages.
 These changing training questions do not form a held-out progress curve.
 See the [training audit](evidence/restart-training-batch170-20261013.json),
-[latest evaluation audit](evidence/restart-eval170-20261013.json) and
-[interpretation](evidence/restart-eval170-interpretation-20261013.json).
-Test solved-at-least-once coverage over 16 attempts rose from 79.30% to 79.38%,
-and majority-vote accuracy rose from 60.80% to 61.49%. There are 372 test questions
-with more correct samples, 329 with fewer, and 618 unchanged. Validation coverage
-falls from 89.28% to 87.94% and majority from 74.26% to 73.99%, despite its higher
-mean score. Training-subset coverage and majority also fall. This is not uniform
+[latest evaluation audit](evidence/restart-eval180-20261013.json) and
+[interpretation](evidence/restart-eval180-interpretation-20261013.json).
+Test solved-at-least-once coverage over 16 attempts rose from 79.38% to 79.91%,
+but majority-vote accuracy fell from 61.49% to 60.42%. There are 337 test questions
+with more correct samples, 341 with fewer, and 641 unchanged. Validation coverage
+is unchanged at 87.94%, while majority rises from 73.99% to 74.53%.
+Training-subset coverage and majority also rise. This is not uniform
 improvement or an independent training-seed replication. Earlier approximate-KL
 excursions remain numerical watchpoints despite the better score. The latest
 detailed window, updates 2,577–2,736, has mean policy ratio 1.0047 and

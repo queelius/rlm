@@ -104,7 +104,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, and 2,736 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, and 2,896 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -130,8 +130,37 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 2,416 | 51.81% | 65.48% | 72.06% |
 | 2,576 | 52.76% | 66.72% | 72.24% |
 | 2,736 | 53.13% | 67.95% | 72.40% |
+| 2,896 | 53.57% | 68.05% | 74.26% |
 
-### Latest evaluation: 2,736 updates
+### Latest evaluation: 2,896 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval180-20261013.json). Test has **11,306/21,104 correct
+answers, 53.5728%**, or **+13.7983 percentage points** versus original SFT.
+It gains 93 correct answers (+0.4407 points) since the preceding scheduled check.
+Validation gains six (+0.1005 points) to 68.0462%; the training subset gains 111
+(+1.8649 points) to 74.2608%, which is not held-out performance.
+
+The secondary measures do not move uniformly. Test once-hit coverage rises
+from 79.38% to 79.91%, but majority-vote accuracy falls from 61.49% to 60.42%.
+Validation coverage stays at 87.94% while majority rises from 73.99% to 74.53%;
+training-subset coverage and majority also rise. On test, 337 questions have
+more correct samples, 341 fewer and 641 unchanged, with 65 newly once-hit
+questions and 58 losing all correct samples. Validation has 86 more, 90 fewer
+and 197 unchanged. Neither the positive total nor these small differences
+establish statistical significance, a cause, or uniform improvement.
+
+The predetermined first test question has 14/16 correct samples versus 12/16.
+Test extraction failures fall from 14 to four and length-limit endings from
+18 to eight. These observations do not change the native mean pass@1 rule.
+Continue the original training horizon and fixed 690/11,040 endpoint; this is
+further intermediate learning, not completed reproduction or durable recovery.
+See the [interpretation and paired counts](evidence/restart-eval180-interpretation-20261013.json).
+The separate full reward/token audit remains collection 170, the detailed
+numerical receipt ends at 2,736, and native full state was inspected at 2,880;
+none is relabeled as a new audit of collection 180 or its 2,896 evaluated weights.
+
+### Preceding evaluation: 2,736 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval170-20261013.json). Test has **11,213/21,104 correct
