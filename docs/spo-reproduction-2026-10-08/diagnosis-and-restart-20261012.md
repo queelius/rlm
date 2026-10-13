@@ -1,6 +1,7 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 22:20 UTC; full-audit exit verified at 22:15:48 UTC.
+Operations cutoff: October 13, 2026, 22:50 UTC. Latest full-answer audit
+remains evaluation 390, whose exit was verified at 22:15:48 UTC.
 The fortieth scheduled restart evaluation is fully regraded at 6,256 updates;
 next follows 6,416. Test is 56.463230%, validation 68.331099%, non-held-out
 training 83.266129%. These fall 0.255876, 1.407507 and 0.067204 percentage points.
@@ -8,8 +9,18 @@ The test gap below supplied 56.724% is 0.260770 points; original-SFT gain is
 16.688779 points. This is the latest intermediate result, not a fixed-endpoint
 reproduction. All 40 scheduled points remain; no favorable checkpoint or tolerance.
 
-Protected5,120 remains the recovery copy. Native6,240 has an inventory only;
-it is not the evaluated6,256 state, decoded-counter audit or protected copy.
+Protected 6,400 is now the latest recovery copy, verified at 22:49:51 UTC.
+All ten files (17.60 GB) match source hashes and remain stable. Trainer, actor
+and active Adam counters are 6,400, scheduler 6,399 and skipped steps zero.
+Earlier protected states remain intact.
+This is not an all-tensor scan, GPU restore or off-system backup; see the
+[receipt](evidence/restart-full6400-protection-20261013.json) and
+[fresh preflight](evidence/restart-full6400-preflight-20261013.json).
+Evaluation 400/6,416 is running, distinct from the saved 6,400 state. Its full CPU
+audit is prepared and independently reviewed, but not yet executed. One bounded
+read-only watcher is active. No aggregate 400 score or reproduction claim yet.
+Native 6,240 had an inventory-only audit; that remains historical evidence,
+not an audit of evaluated 6,256 weights.
 Native5,920 has stable ten-file
 counter verification and a comparison of the same two predetermined tensors
 against protected5,120; both tensors are finite and changed. It is not separately

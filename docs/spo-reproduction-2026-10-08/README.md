@@ -1,6 +1,30 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 22:20 UTC
+## Current operations on October 13, 22:50 UTC
+
+**The fixed-endpoint reproduction is still unfinished.** Latest audited test
+remains **56.463230% at 6,256 updates**, with all 40 scheduled points retained.
+Evaluation 400, after 6,416 updates, is running; no aggregate result is claimed.
+Its first saved test response matched the original gold and was inspected within
+52 seconds, with 193 successful HTTP returns and no observed errors/tracebacks.
+
+The preselected **6,400-update full state is now protected** outside native
+cleanup: all ten files (17.60 GB) match source SHA-256 hashes and have distinct,
+stable destination identities. Trainer/actor/both active Adam counters are 6,400,
+scheduler 6,399 and skipped steps zero. All earlier protected states remain.
+See the [protection receipt](evidence/restart-full6400-protection-20261013.json)
+and [storage/state preflight](evidence/restart-full6400-preflight-20261013.json).
+This is same-filesystem protection, not an off-system backup, all-tensor finite
+scan or GPU restoration. The saved state differs from evaluated 6,416 weights.
+
+The [evaluation-400 audit preparation](evidence/restart-eval400-preparation-20261013.json)
+passed six focused tests and an [independent review](evidence/restart-eval400-preparation-review-20261013.json).
+One bounded, read-only CPU watcher is active; the full audit waits for all three
+complete splits and fresh admission checks. Original training owner, sealed
+source, 1,000-collection LR horizon and fixed 690/11,040 endpoint are unchanged.
+The advisor package retains its explicit October 12, 20:53:09 UTC cutoff.
+
+## Latest completed evaluation: October 13, 22:20 UTC
 
 Audit completion verified at 22:15:48 UTC. **The fixed-endpoint training
 reproduction is still unfinished.** The fortieth scheduled evaluation, after

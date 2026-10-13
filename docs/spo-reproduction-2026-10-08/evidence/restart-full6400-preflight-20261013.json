@@ -1,0 +1,158 @@
+{
+  "schema": "spo-checkpoint-protection-preflight-v1",
+  "checked_utc": "2026-10-13T22:48:01.308680+00:00",
+  "preparation": {
+    "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/checkpoint-protection-6400-001/PREPARATION.json",
+    "sha256": "bc9d0cbc8b9fce05db6bb5d544715b07869a21a853f67e031555e52615445a2c"
+  },
+  "source": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0400--epoch_2.00--step_6400",
+  "destination": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0400--epoch_2.00--step_6400",
+  "destination_absent": true,
+  "sidecar_absent": true,
+  "latest_tag": "global_step6400",
+  "expected_file_count": 10,
+  "total_bytes": 17600911844,
+  "file_identities": {
+    "actor/global_step6400/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "inode": 1099979781308,
+      "mtime_ns": "1791931307895689318"
+    },
+    "actor/global_step6400/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "inode": 1099979782720,
+      "mtime_ns": "1791931284373689286"
+    },
+    "actor/latest": {
+      "bytes": 15,
+      "inode": 1099979781309,
+      "mtime_ns": "1791931307898689318"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "inode": 1099979782721,
+      "mtime_ns": "1791931307897689318"
+    },
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "inode": 1099979782714,
+      "mtime_ns": "1791931276584689276"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "inode": 1099979781305,
+      "mtime_ns": "1791931276584689276"
+    },
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "inode": 1099979781306,
+      "mtime_ns": "1791931276585689276"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "inode": 1099979782716,
+      "mtime_ns": "1791931276586689276"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "inode": 1099979781307,
+      "mtime_ns": "1791931276587689276"
+    },
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979782717,
+      "mtime_ns": "1791931280482689281"
+    }
+  },
+  "source_stable_during_cpu_inspection": true,
+  "trainer_state": {
+    "global_step": 6400,
+    "epoch": 2,
+    "iteration": 400
+  },
+  "actor_global_steps": 6400,
+  "actor_skipped_steps": 0,
+  "scheduler_last_batch_iteration": 6399,
+  "optimizer_parameter_state_steps": {
+    "0": 6400,
+    "1": 6400
+  },
+  "optimizer_legacy_param_group_steps": [
+    0,
+    0
+  ],
+  "cuda_initialized": false,
+  "owners": {
+    "queue": {
+      "pid": 2826646,
+      "startticks": 1362248004,
+      "state": "S"
+    },
+    "scoped": {
+      "pid": 2826649,
+      "startticks": 1362248013,
+      "state": "S"
+    },
+    "trainer": {
+      "pid": 2826650,
+      "startticks": 1362248017,
+      "state": "S"
+    },
+    "observer": {
+      "pid": 2829006,
+      "startticks": 1362275186,
+      "state": "S"
+    }
+  },
+  "sealed_source_pin_count": 7,
+  "all_sealed_source_pins_match": true,
+  "last_completed_collection": 400,
+  "command_log_prefix": {
+    "bytes": 54073184,
+    "sha256": "186dcfbdba7d9f58308b79755f7417af4ddb2751e0edae07c540523f7bdf5892"
+  },
+  "current_directory_quotas": {
+    "/home/atowell": {
+      "ceph.quota.max_bytes": 1099511627776,
+      "ceph.dir.rbytes": 720230558291,
+      "ceph.quota.max_files": 1000000,
+      "ceph.dir.rfiles": 558233,
+      "remaining_bytes": 379281069485,
+      "remaining_files": 441767
+    }
+  },
+  "conservative_projection": {
+    "source": "/project/alex_phd/runs/rl-paper-reproduction-20261012/storage-headroom-20261012T2240.json",
+    "sha256": "01481b19617c4c68cf9f31ef59686e7acfaed0ad876419b5200122b59777ee26",
+    "scenario": {
+      "future_training_and_eval_artifact_growth_multiplier": 2,
+      "additional_bytes_including_HF_retention_transient_full_and_one_extra_protected_full": 195046182687,
+      "home_remaining_after_projection_bytes": 302576149054,
+      "additional_files_including_checkpoint_allowance": 307180,
+      "home_remaining_files_after_projection": 213387
+    },
+    "fresh_home_headroom_after_projection_bytes": 184234886798,
+    "fresh_home_headroom_after_projection_files": 134587,
+    "interpretation": "Reuses deliberately conservative605collection/61evaluation2x-growth scenario including one extra17.60GBfull copy; only290collections remain at6400. Not a fresh growth fit, reserved space or guarantee."
+  },
+  "prior_protected_directories": [
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0010--epoch_2.00--step_0160",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0060--epoch_2.00--step_0960",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0090--epoch_2.00--step_1440",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0160--epoch_2.00--step_2560",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0240--epoch_2.00--step_3840",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0320--epoch_2.00--step_5120"
+  ],
+  "protected5120_ten_identities_match": true,
+  "selection": "Full6400 preselected by training step during evaluation320/protected5120 handoff at17:18:09UTC, before source or destination exists; never selected by score.",
+  "copy_started": false,
+  "limits": [
+    "CPU counters and identity stability, not all-tensor finiteness or GPU restoration.",
+    "Same home filesystem, not off-system backup.",
+    "Ceph usage counters can lag; copy-time fresh quota gate required."
+  ],
+  "execution": {
+    "tool_session": 76819,
+    "exit_code": 0
+  }
+}

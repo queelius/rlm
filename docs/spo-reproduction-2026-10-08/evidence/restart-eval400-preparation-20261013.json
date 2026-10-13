@@ -1,0 +1,163 @@
+{
+  "schema": "spo-evaluation400-preparation-v1",
+  "checked_utc": "2026-10-13T22:45:10.954926+00:00",
+  "iteration": 400,
+  "collections_at_evaluation": 401,
+  "optimizer_updates_at_evaluation": 6416,
+  "native400_root_absent": true,
+  "all_audit_outputs_absent": true,
+  "no_full_regrade_executed": true,
+  "previous_preparation_pins_match": true,
+  "changed_lines": {
+    "regrade_eval400.py": [
+      [
+        "\"\"\"Invoke the existing full-answer audit for scheduled iteration390, CPU only.\"\"\"",
+        "\"\"\"Invoke the existing full-answer audit for scheduled iteration400, CPU only.\"\"\""
+      ],
+      [
+        "ITERATION = 390",
+        "ITERATION = 400"
+      ],
+      [
+        "assert bindings['ITERATIONS'] == (390,)",
+        "assert bindings['ITERATIONS'] == (400,)"
+      ],
+      [
+        "    evaluation_semantics=\"After391 collections /6256 optimizer updates; not a final checkpoint.\",",
+        "    evaluation_semantics=\"After401 collections /6416 optimizer updates; not a final checkpoint.\","
+      ],
+      [
+        "    trigger=\"Scheduled evaluation390 selected before outputs existed; see PREPARATION.json for wrapper creation timing; no favorable checkpoint selection.\",",
+        "    trigger=\"Scheduled evaluation400 selected before outputs existed; see PREPARATION.json for wrapper creation timing; no favorable checkpoint selection.\","
+      ]
+    ],
+    "watch400.py": [
+      [
+        "seen={386};evaluation_seen=False",
+        "seen={399};evaluation_seen=False"
+      ],
+      [
+        "emit({\"kind\":\"WATCH_START\",\"checked_utc\":now().isoformat(),\"pid\":os.getpid(),\"startticks\":int(fields[19]),\"evaluation\":390,\"optimizer_updates\":6256,\"cap_seconds\":3600,\"scope\":\"Read-only CPU; timeout never stops training.\"})",
+        "emit({\"kind\":\"WATCH_START\",\"checked_utc\":now().isoformat(),\"pid\":os.getpid(),\"startticks\":int(fields[19]),\"evaluation\":400,\"optimizer_updates\":6416,\"cap_seconds\":3600,\"scope\":\"Read-only CPU; timeout never stops training.\"})"
+      ],
+      [
+        " er=n/\"evaluation/iteration__390\";tp=er/\"inference_results/test__0__1/trees/0.json\"",
+        " er=n/\"evaluation/iteration__400\";tp=er/\"inference_results/test__0__1/trees/0.json\""
+      ],
+      [
+        "  emit({\"kind\":\"EVALUATION_FIRST_RESPONSE\",\"checked_utc\":now().isoformat(),\"evaluation\":390,\"optimizer_updates\":6256,\"original_question_id\":0,\"original_question\":row[\"question\"],\"question_source_verified\":True,\"selection\":\"first original test question and first saved response; operational check only\",\"response\":response,\"prediction\":pred,\"original_gold\":gold,\"exact_native_style_correct\":pred is not None and pred.replace(\",\",\"\").lower()==gold.lower(),\"finish_reason\":ch.get(\"finish_reason\"),\"tree_path\":str(tp),\"tree_sha256\":hashlib.sha256(tp.read_bytes()).hexdigest(),\"saved_child_count\":len(t[\"children\"]),**loginfo(er/\"logs/vllm.log\")});evaluation_seen=True",
+        "  emit({\"kind\":\"EVALUATION_FIRST_RESPONSE\",\"checked_utc\":now().isoformat(),\"evaluation\":400,\"optimizer_updates\":6416,\"original_question_id\":0,\"original_question\":row[\"question\"],\"question_source_verified\":True,\"selection\":\"first original test question and first saved response; operational check only\",\"response\":response,\"prediction\":pred,\"original_gold\":gold,\"exact_native_style_correct\":pred is not None and pred.replace(\",\",\"\").lower()==gold.lower(),\"finish_reason\":ch.get(\"finish_reason\"),\"tree_path\":str(tp),\"tree_sha256\":hashlib.sha256(tp.read_bytes()).hexdigest(),\"saved_child_count\":len(t[\"children\"]),**loginfo(er/\"logs/vllm.log\")});evaluation_seen=True"
+      ],
+      [
+        " gates=presence_gates(n,390)",
+        " gates=presence_gates(n,400)"
+      ],
+      [
+        "  emit({\"kind\":\"ALL_SPLITS_READY\",\"checked_utc\":now().isoformat(),\"iteration\":390})",
+        "  emit({\"kind\":\"ALL_SPLITS_READY\",\"checked_utc\":now().isoformat(),\"iteration\":400})"
+      ]
+    ]
+  },
+  "files": {
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval400-regrade-001/regrade_eval400.py": {
+      "bytes": 2842,
+      "sha256": "99b43c346ed2158aa94a1b6b6986832abcb28c2a701bfe09e602d0aa320ff2ed"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval400-regrade-001/test_regrade_eval400_binding.py": {
+      "bytes": 3253,
+      "sha256": "fa69e138a03a61090e6766dad575990c6d657aedfef6f1140b18be77badcec02"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval400-regrade-001/test_watch400_gate.py": {
+      "bytes": 2671,
+      "sha256": "9ee2694c0461a32247f844e98bbd896c8af69563eabffb4526c1dee2f4b69586"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval400-regrade-001/watch400.py": {
+      "bytes": 5415,
+      "sha256": "00a387b37263704739b8aa16d9f37ac64dcbc10b136b7add4ac7ba730e74ed1a"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/early-eval0-regrade-001/regrade_eval0.py": {
+      "bytes": 5051,
+      "sha256": "12aab206b6ea7840cf492cf5d2c64dcb1f68812c4df64421961cb9bb254d023f"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/regrade.py": {
+      "bytes": 12722,
+      "sha256": "a79bf7baa576c0a426fc19a20543dc995ed7b7a21511648a7a1acd32228fcf1c"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/completion_probe.py": {
+      "bytes": 1387,
+      "sha256": "4ec273edb21273be69c7992ea05ae931a04616b215860d0c0add0a9a2e5fb760"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval370-regrade-001/test_completion_probe.py": {
+      "bytes": 2303,
+      "sha256": "b4da6cc16f23c29c8ba928d046679ed7545ab6ba3e5448584d4a9666e19d375d"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval390-regrade-001/regrade_eval390.py": {
+      "bytes": 2842,
+      "sha256": "37d6e9cda7d96a584a678952bce726c8633484220a92592d662c35d201dca547"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval390-regrade-001/watch390.py": {
+      "bytes": 5415,
+      "sha256": "f78c97a15d2231cd81f3565e92ebd31a1481a20d6b2889831372064404e9dc3c"
+    }
+  },
+  "wrapper_creation_mtime_utc": "2026-10-13T22:41:41.267689+00:00",
+  "watch_creation_mtime_utc": "2026-10-13T22:41:41.267689+00:00",
+  "old_watcher_departed": true,
+  "state": "prepared_not_executed_pending_focused_review",
+  "plan": "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval400-regrade-001/PLAN.md",
+  "tests": {
+    "red_missing_both": {
+      "chunk_id": "60a25c",
+      "wall_time_seconds": 0.000011311,
+      "exit_code": 1,
+      "original_token_count": 428,
+      "output": "test_audit_targets_evaluation400_after6416_updates (test_regrade_eval400_binding.ScheduledAuditBindingTest.test_audit_targets_evaluation400_after6416_updates) ... FAIL\ntest_requires_matching400_states_and_metrics (test_watch400_gate.WatcherGateTest.test_requires_matching400_states_and_metrics) ... FAIL\n\n======================================================================\nFAIL: test_audit_targets_evaluation400_after6416_updates (test_regrade_eval400_binding.ScheduledAuditBindingTest.test_audit_targets_evaluation400_after6416_updates)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/project/alex_phd/runs/rl-paper-reproduction-20261012/eval400-regrade-001/test_regrade_eval400_binding.py\", line 12, in test_audit_targets_evaluation400_after6416_updates\n    self.assertTrue(wrapper.is_file(), \"Scheduled evaluation400 wrapper is missing\")\nAssertionError: False is not true : Scheduled evaluation400 wrapper is missing\n\n======================================================================\nFAIL: test_requires_matching400_states_and_metrics (test_watch400_gate.WatcherGateTest.test_requires_matching400_states_and_metrics)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/project/alex_phd/runs/rl-paper-reproduction-20261012/eval400-regrade-001/test_watch400_gate.py\", line 12, in test_requires_matching400_states_and_metrics\n    self.assertTrue(path.is_file(), \"Successor watcher is missing\")\nAssertionError: False is not true : Successor watcher is missing\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (failures=2)\n"
+    },
+    "green400_complete": {
+      "chunk_id": "0fd44e",
+      "wall_time_seconds": 0.000013054,
+      "exit_code": 0,
+      "original_token_count": 100,
+      "output": "test_audit_targets_evaluation400_after6416_updates (test_regrade_eval400_binding.ScheduledAuditBindingTest.test_audit_targets_evaluation400_after6416_updates) ... ok\ntest_requires_matching400_states_and_metrics (test_watch400_gate.WatcherGateTest.test_requires_matching400_states_and_metrics) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.014s\n\nOK\n"
+    },
+    "green390_complete": {
+      "chunk_id": "e6ce2b",
+      "wall_time_seconds": 0.000011301,
+      "exit_code": 0,
+      "original_token_count": 100,
+      "output": "test_audit_targets_evaluation390_after6256_updates (test_regrade_eval390_binding.ScheduledAuditBindingTest.test_audit_targets_evaluation390_after6256_updates) ... ok\ntest_requires_matching390_states_and_metrics (test_watch390_gate.WatcherGateTest.test_requires_matching390_states_and_metrics) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.013s\n\nOK\n"
+    },
+    "green370_complete": {
+      "chunk_id": "5ce392",
+      "wall_time_seconds": 0.00001108,
+      "exit_code": 0,
+      "original_token_count": 105,
+      "output": "test_requires_three_matching_native_split_artifacts (test_completion_probe.CompletionProbeTest.test_requires_three_matching_native_split_artifacts) ... ok\ntest_audit_targets_evaluation370_after5936_updates (test_regrade_eval370_binding.ScheduledAuditBindingTest.test_audit_targets_evaluation370_after5936_updates) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.011s\n\nOK\n"
+    }
+  },
+  "quota": {
+    "checked_utc": "2026-10-13T22:44:43.455930+00:00",
+    "checked_epoch": 1791931483.4559305,
+    "method": "account/rateLimits/read",
+    "action": "pause_discretionary_codex",
+    "remaining_percent": 14,
+    "windows": [
+      {
+        "name": "primary",
+        "used_percent": 86,
+        "remaining_percent": 14,
+        "window_minutes": 10080,
+        "resets_epoch": 1792472358,
+        "resets_utc": "2026-10-20T04:59:18+00:00"
+      }
+    ],
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "pause_at_remaining_percent": 15,
+    "wind_down_at_remaining_percent": 20
+  },
+  "completion_gate": "Run full400 once only after fresh four owner/startticks, seven sealed source pins, all prepared pins, quota, three complete split state/metrics, and no-overwrite checks. Presence alone grants no admission.",
+  "watch_admission": "Authenticate original owners, all source/preparation pins and old5799/PID4130294 departure again immediately before one CPU-only watcher. Cooperative3600 second cap, not a hard bound; cannot run audits or stop training.",
+  "scientific_limits": "Preparation only; no new score, algorithm/scorer/recipe/environment/live owner change or reproduction completion.",
+  "invocation": "CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 /project/alex_phd/envs/spo-6c5f947/bin/python /project/alex_phd/runs/rl-paper-reproduction-20261012/eval400-regrade-001/regrade_eval400.py"
+}
