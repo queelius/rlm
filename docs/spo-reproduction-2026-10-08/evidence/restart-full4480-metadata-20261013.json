@@ -1,0 +1,118 @@
+{
+  "schema": "spo-complete-checkpoint-metadata-v2",
+  "checked_utc": "2026-10-13T14:06:43.663319+00:00",
+  "checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0280--epoch_2.00--step_4480",
+  "native_completed_collection": 279,
+  "trainer_state": {
+    "global_step": 4480,
+    "epoch": 2,
+    "iteration": 280
+  },
+  "actor_global_steps": 4480,
+  "actor_skipped_steps": 0,
+  "scheduler_last_batch_iteration": 4479,
+  "optimizer_parameter_state_steps": {
+    "0": 4480,
+    "1": 4480
+  },
+  "optimizer_legacy_param_group_steps": [
+    0,
+    0
+  ],
+  "optimizer_step_path": "optimizer_state_dict/base_optimizer_state/state/<parameter-id>/step",
+  "file_bytes": {
+    "actor/global_step4480/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": 13200600768,
+    "actor/global_step4480/mp_rank_00_model_states.pt": 2200157624,
+    "actor/latest": 15,
+    "actor/zero_to_fp32.py": 25314,
+    "custom_checkpoint_0.pkl": 976,
+    "custom_checkpoint_10.pkl": 980,
+    "custom_checkpoint_11.pkl": 916,
+    "hf_pretrained/config.json": 792,
+    "hf_pretrained/generation_config.json": 111,
+    "hf_pretrained/pytorch_model.bin": 2200124348
+  },
+  "file_identities": {
+    "actor/global_step4480/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+      "bytes": 13200600768,
+      "inode": 1099979692590,
+      "mtime_ns": "1791900260097647555"
+    },
+    "actor/global_step4480/mp_rank_00_model_states.pt": {
+      "bytes": 2200157624,
+      "inode": 1099979694907,
+      "mtime_ns": "1791900236623647524"
+    },
+    "actor/latest": {
+      "bytes": 15,
+      "inode": 1099979692591,
+      "mtime_ns": "1791900260100647555"
+    },
+    "actor/zero_to_fp32.py": {
+      "bytes": 25314,
+      "inode": 1099979694908,
+      "mtime_ns": "1791900260099647555"
+    },
+    "custom_checkpoint_0.pkl": {
+      "bytes": 976,
+      "inode": 1099979694901,
+      "mtime_ns": "1791900228835647513"
+    },
+    "custom_checkpoint_10.pkl": {
+      "bytes": 980,
+      "inode": 1099979692587,
+      "mtime_ns": "1791900228835647513"
+    },
+    "custom_checkpoint_11.pkl": {
+      "bytes": 916,
+      "inode": 1099979692588,
+      "mtime_ns": "1791900228835647513"
+    },
+    "hf_pretrained/config.json": {
+      "bytes": 792,
+      "inode": 1099979694903,
+      "mtime_ns": "1791900228837647513"
+    },
+    "hf_pretrained/generation_config.json": {
+      "bytes": 111,
+      "inode": 1099979692589,
+      "mtime_ns": "1791900228837647513"
+    },
+    "hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979694904,
+      "mtime_ns": "1791900232730647518"
+    }
+  },
+  "files_stable_during_inspection": true,
+  "cuda_initialized": false,
+  "owners": {
+    "queue": {
+      "pid": 2826646,
+      "startticks": 1362248004,
+      "state": "S"
+    },
+    "scoped": {
+      "pid": 2826649,
+      "startticks": 1362248013,
+      "state": "S"
+    },
+    "trainer": {
+      "pid": 2826650,
+      "startticks": 1362248017,
+      "state": "R"
+    }
+  },
+  "command_log_prefix": {
+    "bytes": 38420514,
+    "sha256": "c4af04e01de855fca3c416d77c51cdc28cb6437808866c160f8d7249df74076f"
+  },
+  "selection_rule": "Latest complete scheduled full state at4480 updates, after280 collections; no score selection.",
+  "inspection_note": "All ten files, actor/latest and trainer/actor/activeAdam/scheduler counters checked after save; inode/size/mtime unchanged across read-only CPU/meta inspection. Legacy group0 fields are not active parameter counters.",
+  "limits": [
+    "CPU/meta counter and ten-file stability check, not all-tensor finite scan, protected copy or GPU restoration.",
+    "Native cleanup applies; separately protected3840/2560/1440/960/160 retained."
+  ],
+  "elapsed_seconds": 3.530281038954854,
+  "observation_processing_note": "Completed CPU inspection14593 exited0. Initial parent JSON.parse incorrectly assumed stdout was pure JSON; two DeepSpeed CPU log lines caused SyntaxError. Reproduced against retained output, then selected its unique schema-tagged JSON record and verified counters. No inspection rerun, checkpoint/source edit or GPU access."
+}
