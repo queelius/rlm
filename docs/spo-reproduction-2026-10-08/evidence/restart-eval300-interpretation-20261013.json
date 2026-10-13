@@ -1,0 +1,347 @@
+{
+  "schema": "spo-scheduled-evaluation-interpretation-v1",
+  "created_utc": "2026-10-13T15:47:48.551350+00:00",
+  "checked_utc": "2026-10-13T15:48:49.146384+00:00",
+  "iteration": 300,
+  "completed_collections": 301,
+  "optimizer_updates": 4816,
+  "metric": "Native mean pass@1 over16 responses for each of1319 test questions; not best-of16.",
+  "selection": "All31 scheduled points retained. Target300 fixed before outputs; wrapper prepared after native generation began. Fixed endpoint690/11040 remains required.",
+  "prior_iteration": 290,
+  "receipt_sha256": "c3c003423449dcf4ff88ffc01169f359b7d1f210d5e60b6805232a54820d4965",
+  "rows": {
+    "test": {
+      "correct": 11752,
+      "responses": 21104,
+      "percent": 55.68612585291888,
+      "previous_correct": 11554,
+      "delta_correct": 198,
+      "delta_pp": 0.9382107657316149,
+      "metrics": {
+        "correct_frac": 0.5568612585291888,
+        "exact_match": 0.8028809704321456,
+        "exact_match_frac": 0.5568612585291888,
+        "majority_vote_acc": 0.6285064442759667,
+        "none_answer_extracted_frac_per_problem": 0.00018953752843062926,
+        "once_hit": 0.8028809704321456,
+        "unique_answer_count": 3.952994692949204
+      },
+      "previous_metrics": {
+        "correct_frac": 0.5474791508718726,
+        "exact_match": 0.7968157695223654,
+        "exact_match_frac": 0.5474791508718726,
+        "majority_vote_acc": 0.6125852918877938,
+        "none_answer_extracted_frac_per_problem": 0.00033169067475360124,
+        "once_hit": 0.7968157695223654,
+        "unique_answer_count": 4.002274450341168
+      },
+      "extraction_failures": 4,
+      "previous_extraction_failures": 7,
+      "length_finishes": 4,
+      "previous_length_finishes": 8,
+      "numeric_format_rescues": 89,
+      "previous_numeric_format_rescues": 91
+    },
+    "validation": {
+      "correct": 4080,
+      "responses": 5968,
+      "percent": 68.36461126005362,
+      "previous_correct": 4001,
+      "delta_correct": 79,
+      "delta_pp": 1.3237265415549597,
+      "metrics": {
+        "correct_frac": 0.6836461126005362,
+        "exact_match": 0.900804289544236,
+        "exact_match_frac": 0.6836461126005362,
+        "majority_vote_acc": 0.739946380697051,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.900804289544236,
+        "unique_answer_count": 2.8552278820375334
+      },
+      "previous_metrics": {
+        "correct_frac": 0.6704088471849866,
+        "exact_match": 0.8632707774798928,
+        "exact_match_frac": 0.6704088471849866,
+        "majority_vote_acc": 0.7184986595174263,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.8632707774798928,
+        "unique_answer_count": 2.8793565683646114
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "length_finishes": 0,
+      "previous_length_finishes": 0,
+      "numeric_format_rescues": 43,
+      "previous_numeric_format_rescues": 41
+    },
+    "train": {
+      "correct": 4734,
+      "responses": 5952,
+      "percent": 79.53629032258064,
+      "previous_correct": 4699,
+      "delta_correct": 35,
+      "delta_pp": 0.5880376344086021,
+      "metrics": {
+        "correct_frac": 0.7953629032258065,
+        "exact_match": 0.9408602150537635,
+        "exact_match_frac": 0.7953629032258065,
+        "majority_vote_acc": 0.8440860215053764,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9408602150537635,
+        "unique_answer_count": 2.4516129032258065
+      },
+      "previous_metrics": {
+        "correct_frac": 0.7894825268817204,
+        "exact_match": 0.9435483870967742,
+        "exact_match_frac": 0.7894825268817204,
+        "majority_vote_acc": 0.8440860215053764,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9435483870967742,
+        "unique_answer_count": 2.4516129032258065
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "length_finishes": 0,
+      "previous_length_finishes": 0,
+      "numeric_format_rescues": 47,
+      "previous_numeric_format_rescues": 50
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "improved": 336,
+      "worsened": 298,
+      "same": 685,
+      "newly_once_hit": 59,
+      "lost_once_hit": 51,
+      "first_question_before": 14,
+      "first_question_now": 13
+    },
+    "validation": {
+      "improved": 98,
+      "worsened": 68,
+      "same": 207,
+      "newly_once_hit": 18,
+      "lost_once_hit": 4,
+      "first_question_before": 16,
+      "first_question_now": 16
+    },
+    "train": {
+      "improved": 76,
+      "worsened": 74,
+      "same": 222,
+      "newly_once_hit": 4,
+      "lost_once_hit": 5,
+      "first_question_before": 12,
+      "first_question_now": 12
+    }
+  },
+  "question_counts_sha256": "cbe6661a8399b73b4c6922dc517d30da7f95444b52026dadeeb59697752b3dc0",
+  "baseline_comparison": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 3358,
+    "current_correct": 11752,
+    "delta_percentage_points": 15.911675511751326,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "all_33024_saved_responses_and_21_metrics_verified": true,
+  "evaluation_service": {
+    "path": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/evaluation/iteration__300/logs/vllm.log",
+    "bytes": 3271818,
+    "sha256": "2d1839c0d52d1bfc0d75f2f6eff35ba1fa4acfa966f01481dc7808f7e7a092d2",
+    "http_successes": 2065,
+    "generation_post_successes": 2064,
+    "http_errors": 0,
+    "tracebacks": 0
+  },
+  "interpretation": [
+    "Test11752/21104=55.686126% gains198 correct responses (+0.938211pp); validation4080/5968=68.364611% gains79 (+1.323727pp). Training4734/5952=79.536290% gains35 (+0.588038pp), not held out.",
+    "The test rise breaks the previous two-interval decline, and both held-out means rise with training. This challenges an interpretation of those local declines as an established sustained downturn; it does not prove lasting stability or exclude later overfitting/collapse.",
+    "Test once-hit rises79.681577% to80.288097%, majority61.258529% to62.850644%; validation once-hit86.327078% to90.080429%, majority71.849866% to73.994638%. Training once-hit falls94.354839% to94.086022% and majority stays84.408602% despite higher mean. Keep meanpass@1 primary.",
+    "Test questions336 improve/298 worsen/685 stay the same;59 become once-hit and51 lose all correct samples. The first test question decreases14/16 to13/16 despite aggregate improvement. Individual examples are not the learning curve.",
+    "Test extraction failures7 to4 and length finishes8 to4 are too few to explain198 additional correct responses alone. Secondary numeric-format rescues89/43/47 versus91/41/50 do not change the native primary scores.",
+    "Gain versus originalSFT is15.911676pp. Gap to supplied56.724% Figure3 reference is1.037874pp at this intermediate point, not the fixed endpoint comparison or a posthoc success tolerance.",
+    "All results remain one training ancestry. BOS-only and finite-zero BF16 deviations are disclosed; historic author implementation/selection is unresolved. No causal BOS proof, measured RLM transfer, or own-training reproduction completion is claimed."
+  ],
+  "checkpoint_boundary": {
+    "native_full_state_updates": 4800,
+    "metadata": "checkpoint4800-metadata-20261013.json",
+    "all_ten_identities_stable": true,
+    "trainer_actor_activeAdam": 4800,
+    "scheduler": 4799,
+    "skipped_steps": 0,
+    "evaluated_weights_updates": 4816,
+    "protected_updates": 3840,
+    "previous_native4640_optimizer_removed_utc": "2026-10-13T15:31:33.296+00:00",
+    "previous4640_receipt_historical": true,
+    "no_full_tensor_scan_or_copy_or_GPU_restore": true
+  },
+  "preparation_timing": {
+    "selection_before_outputs": true,
+    "wrapper_prepared_before_outputs": false,
+    "wrapper_prepared_utc": "2026-10-13T15:42:52.226655+00:00",
+    "first_native_request_utc": "2026-10-13T15:36:37+00:00",
+    "binding_test_RED_then_GREEN": true,
+    "independent_review_no_findings": true
+  },
+  "execution": {
+    "tool_session": 89920,
+    "exit_code": 0,
+    "completed_utc": "2026-10-13T15:45:40.316241+00:00",
+    "once_only": true,
+    "completed_read_only_observer": 52341,
+    "observer_exit_code": 0
+  },
+  "live_update_snapshot": {
+    "checked_utc": "2026-10-13T15:48:49.146384+00:00",
+    "owners": {
+      "queue": {
+        "pid": 2826646,
+        "startticks": 1362248004,
+        "state": "S"
+      },
+      "scoped": {
+        "pid": 2826649,
+        "startticks": 1362248013,
+        "state": "S"
+      },
+      "trainer": {
+        "pid": 2826650,
+        "startticks": 1362248017,
+        "state": "R"
+      },
+      "observer": {
+        "pid": 2829006,
+        "startticks": 1362275186,
+        "state": "S"
+      }
+    },
+    "sealed_source_pin_count": 7,
+    "all_sealed_source_pins_match": true,
+    "log": {
+      "path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/command.log",
+      "prefix_bytes": 41365117,
+      "prefix_sha256": "2b69e2a0d47ee987b617f91c20467043bcebbca0d8322b33c1fe2740d1d9696b",
+      "unique_update_count": 4816,
+      "max_update": 4816,
+      "contiguous": true,
+      "all_23_logged_numeric_fields_finite": true,
+      "latest": {
+        "advantages/mean": 0.0359,
+        "advantages/std": 0.317,
+        "advantages/close_to_zero_perc": 0,
+        "rewards/mean": 0.00549,
+        "num_tokens": 2000,
+        "actor/approx_kl": 0.187,
+        "actor/policy_kl": 0.0711,
+        "actor/clip_frac": 0.168,
+        "actor/ratio": 1,
+        "actor/pg_losses1_anomalies__num_nan": 0,
+        "actor/pg_losses1_anomalies__num_inf": 0,
+        "actor/pg_losses1_anomalies__num_high_z": 7.5,
+        "actor/pg_losses1_anomalies__total_anomalies": 7.5,
+        "actor/ref_kl_loss": 0.00105,
+        "non_score_rewards": 0,
+        "kls": 10.5,
+        "kl_coef": 0.0001,
+        "actor/loss": -0.0271,
+        "actor/grad_norm": 13.9,
+        "actor/lr": 7.21e-7,
+        "epoch": 2,
+        "step": 4816,
+        "actor/ds_step": 4816
+      },
+      "new_update_window": [
+        4785,
+        4816
+      ],
+      "new_window_bounds": {
+        "actor/ratio": {
+          "min": 0.979,
+          "max": 1.02,
+          "mean": 1.0001250000000002
+        },
+        "actor/approx_kl": {
+          "min": 0.00101,
+          "max": 0.396,
+          "mean": 0.0813878125
+        },
+        "actor/clip_frac": {
+          "min": 0.00292,
+          "max": 0.196,
+          "mean": 0.0795934375
+        },
+        "actor/grad_norm": {
+          "min": 10.7,
+          "max": 47.4,
+          "mean": 22.875
+        },
+        "kls": {
+          "min": 7.15,
+          "max": 10.8,
+          "mean": 8.9734375
+        },
+        "actor/pg_losses1_anomalies__num_nan": {
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "actor/pg_losses1_anomalies__num_inf": {
+          "min": 0,
+          "max": 0,
+          "mean": 0
+        }
+      },
+      "last_completed_collection": 300,
+      "failure_markers": {
+        "High PPO ratio detected:": 0,
+        "Traceback (most recent call last):": 0,
+        "CUDA out of memory": 0,
+        "Disk quota exceeded": 0
+      }
+    },
+    "evaluation300_native_gates": {
+      "test": true,
+      "validation": true,
+      "train": true
+    },
+    "observer_pending_id": "review-1791906228-58e944a9",
+    "observer_last_acknowledgement": "review-1791903704-9d0144c9",
+    "stop_exists": false,
+    "limits": [
+      "Rounded logged metrics and contiguous counters, not a new parameter tensor comparison or full batch reward/BOS regrade.",
+      "Separate full reward/BOS audit completed for collection200; this live check does not scan model parameters or change GPU/model/config."
+    ]
+  },
+  "post_evaluation_return": {
+    "collection": 301,
+    "prediction": "90",
+    "gold": "110",
+    "effective_native_rule_reward": 0,
+    "inspection_seconds": 34.402746,
+    "http_successes": 161,
+    "http_errors": 0,
+    "reasoning": "Model uses2/5 instead of1/5 for double returns and mishandles categories. Appropriate zero outcome reward. One unfiltered first response does not measure aggregate accuracy.",
+    "evidence": "eval300-regrade-001/POST-EVALUATION-RETURN.json"
+  },
+  "decision": "Continue unchanged whole owner to fixed690/11040 with original1000-collection LR horizon. Resume read-only11207; prepare scheduled310/4976 CPU audit from pinned300. Retain prepared5120 protection and state/owner/storage gates.",
+  "limits": [
+    "Single training seed; sixteen answers per question are not independent training replications.",
+    "Native training subset is not held out. No favorable checkpoint selection or auxiliary metric substitution.",
+    "Historical author implementation and checkpoint-selection rationale remain unresolved; BOS-only and finite-zero BF16 adapters remain disclosed deviations.",
+    "Full saved finite audit remains1440; two-tensor update comparison2240; full batch reward/token audit200."
+  ],
+  "advisor_package": {
+    "changed": false,
+    "cutoff_utc": "2026-10-12T20:53:09.492795+00:00",
+    "reason": "New intermediate rise updates supporting series and challenges the local downturn interpretation. Package's main story, material caveats and next fixed-endpoint decision remain unchanged: reproduction unfinished, causality/transfer unproved."
+  },
+  "observation_failures": {
+    "display": "An oversized read of receipt/counts was truncated. Re-read only bounded summaries; full audit was not repeated.",
+    "orchestration": "One JavaScript parse error occurred before any tool execution; corrected without changing training or files.",
+    "classification": "Observation-only errors, no new native training failure inferred."
+  }
+}
