@@ -1,10 +1,11 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 04:11 UTC. The sixteenth scheduled restart evaluation
-is fully regraded at 2,416 updates. The complete 1,440-update checkpoint is
-byte-verified outside automatic cleanup, alongside the earlier 160- and
-960-update copies. A further CPU scan finds all saved model parameters,
-FP32 master weights and Adam moments finite at 1,440. Logged learning rates are
+Status: October 13, 2026, 04:36 UTC. The sixteenth scheduled restart evaluation
+is fully regraded at 2,416 updates; the next evaluation at 2,576 is running.
+The complete 2,560-update checkpoint is byte-verified outside automatic cleanup,
+alongside the earlier 160-, 960-, and 1,440-update copies. A separate CPU scan
+found all saved model parameters, FP32 master weights and Adam moments finite
+at 1,440; no such full scan is claimed for 2,560. Logged learning rates are
 independently checked through 768 updates;
 the scientific recipe and fixed endpoint are unchanged.
 Our primary objective is to reproduce the
@@ -209,14 +210,15 @@ distributional KL measurements or a guarantee of future stability.
 Earlier windows and definitions remain in the
 [numerical audit](evidence/restart-training-windows2416-20261013.json).
 
-The scheduled full checkpoint at 2,400 updates has all ten required files;
-trainer, actor and active Adam counters agree at 2,400, scheduler at 2,399,
-with no skipped steps. This is a
+The scheduled full checkpoint at 2,400 updates had all ten required files;
+trainer, actor and active Adam counters agreed at 2,400, scheduler at 2,399,
+with no skipped steps. This was a
 [CPU metadata check](evidence/restart-full2400-metadata-20261013.json),
 not a new tensor scan, protected copy or GPU restore. File identities were
-unchanged across this check. Native cleanup rotated the older 2,240-update full
-state; its metadata and weight-comparison receipts remain historical. The
-separately protected 1,440-update recovery state remains available.
+unchanged across this check. Native cleanup has since rotated that state and
+the older 2,240-update full state; their receipts remain historical. The newer
+2,560-update state is now separately protected, as detailed below; older
+protected states remain available.
 
 **Saved-weight check, October 13, 03:35 UTC:** the same two layer-zero projection
 tensors used in earlier audits contain 1,854,493 and 2,630,490 changed BF16
@@ -228,10 +230,10 @@ The checkpoint pair was chosen by availability, not test score; unlike the tenso
 names, this pair was not selected before the checkpoints existed. No GPU was used.
 
 The next decision remains the same: keep the recipe and endpoint fixed, inspect
-subsequent scheduled evaluations (next after 2,576 updates), and preserve complete
-recovery states. The preselected 2,560-update protection is prepared but not yet
-copied; admission requires the actual full save, source stability and live
-directory-quota checks. This mixed incremental result stays in the supporting
+subsequent scheduled evaluations (currently running after 2,576 updates), and
+preserve complete recovery states. The preselected 2,560-update protection has
+passed full source/copy hashes and protected-copy counter checks. This mixed
+incremental result and recovery milestone stay in the supporting
 report. The synchronized advisor slide, pdfpc notes and learning-guide status page retain
 their October 12, 20:53 UTC cutoff: the main story, material limits and next
 comparison have not changed. They keep the previous failure visible and the
@@ -402,6 +404,25 @@ took 28 seconds with one CPU thread and did not initialize CUDA. See the
 This supports keeping the saved recovery point; it does not prove future
 stability, establish an end-to-end resume, or change the measured learning
 result. Training continued unchanged and had reached 1,536 updates at 23:29 UTC.
+
+At **October 13, 04:36 UTC**, the preselected **2,560-update full state** was
+also protected outside automatic cleanup. All ten source/copy hashes match
+across 17.60 GB. Reading the protected copy confirms trainer iteration 160,
+global/actor/active Adam step 2,560, scheduler counter 2,559 and no skipped steps.
+Both source and copy stayed unchanged during verification. Selection was
+recorded at 03:35 UTC, before the checkpoint and evaluation existed, and was
+not based on score. Earlier 160-, 960-, and 1,440-update copies are retained.
+See the [2,560-update receipt](evidence/restart-full2560-protection-20261013.json).
+
+Home directory quota had about 451 GB and 502,457 file slots remaining after
+the copy. Before copying, the earlier deliberately larger two-times-growth
+scenario still left about 273 GB and 195,493 file slots after projected demand;
+that scenario includes the new protected copy, retained model files and a
+transient full state. These are estimates, not reserved space. No native
+cleanup, live source, environment, owner, learning-rate horizon or endpoint
+was changed. This is same-filesystem protection, not an off-system backup,
+all-tensor finite scan, GPU restoration test or new accuracy result. The next
+evaluation is in flight at 2,576 updates; the reproduction remains unfinished.
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).

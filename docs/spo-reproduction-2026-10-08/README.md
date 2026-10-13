@@ -1,6 +1,6 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 04:11 UTC
+## Current status on October 13, 04:36 UTC
 
 **The own-training reproduction is incomplete, not successful.** The previous run
 continued after the last written review below, deteriorated, and exited with
@@ -60,15 +60,18 @@ earlier excursions remain numerical watchpoints despite the better test score.
 We retain the paper's mean single-answer accuracy, every scheduled comparison,
 and the fixed endpoint.
 
-**Recovery update, 23:09 UTC:** the complete **1,440-update checkpoint** is now
-copied outside the trainer's automatic cleanup directory, alongside the earlier
-160- and 960-update copies. All ten files (17.60 GB) match their originals by SHA256;
-trainer, actor and both active Adam counters are 1,440, and the scheduler is 1,439.
-This copy was chosen by completed update count, not test score. It protects a
-newer recovery point, not a new scientific result or an off-system backup.
-See the [new checkpoint receipt](evidence/restart-full1440-protection-20261012.json).
-An additional **CPU scan at 23:28 UTC** checked every element of the saved model
-parameters in both exports, the FP32 master weights, and both Adam moments:
+**Recovery update, October 13, 04:36 UTC:** the complete **2,560-update checkpoint**
+is now copied outside the trainer's automatic cleanup directory. All ten files
+(17.60 GB) match their originals by SHA256; trainer, actor and both active Adam
+counters are 2,560, and the scheduler is 2,559, with no skipped steps. Selection
+preceded the checkpoint and its evaluation. Earlier 160-, 960-, and 1,440-update
+copies are retained. This protects a newer recovery point, not a new scientific
+result, full numerical scan, GPU restoration test, or off-system backup.
+See the [new checkpoint receipt](evidence/restart-full2560-protection-20261013.json).
+The [earlier 1,440-update copy](evidence/restart-full1440-protection-20261012.json)
+was verified at 23:09 UTC. Its additional **CPU scan at 23:28 UTC** checked every
+element of the saved model parameters in both exports, the FP32 master weights,
+and both Adam moments:
 all are finite. The [finite-state receipt](evidence/restart-full1440-finite-20261012.json)
 records the counts and unchanged file identities. This strengthens the recovery
 check; it is not an end-to-end GPU restore or a new accuracy result. A separate
@@ -79,19 +82,19 @@ of the [same two previously selected weight tensors](evidence/restart-parameter-
 confirms actual saved changes from 1,440 to 2,240 updates; both tensors are finite.
 This is not an all-parameter scan or a measure of learning effectiveness.
 The [earlier 960-to-1,280 check](evidence/restart-parameter-update1280-20261012.json)
-remains in the record. The protected 1,440-update state is distinct from the
-2,416-update weights evaluated above. The native full 2,400-update checkpoint's
-ten files and trainer/actor/active Adam/scheduler counters also pass a
-[CPU metadata check](evidence/restart-full2400-metadata-20261013.json);
-it has not been separately protected or GPU-restored. Native cleanup has rotated
-the older 2,240-update full state; its metadata and saved-weight receipts remain
-historical. The next scheduled test follows 2,576 updates. Protection of the
-preselected 2,560-update full state is prepared, but no copy has yet been made.
+remains in the record. Protected recovery states are distinct from the
+2,416-update weights evaluated above. The earlier native full 2,400-update state
+passed a [CPU metadata check](evidence/restart-full2400-metadata-20261013.json);
+it was not separately protected or GPU-restored. Native cleanup has now rotated
+it and the older 2,240-update full state; their receipts remain historical.
+The next scheduled test, after 2,576 updates, is running. Its first scientific
+response was checked within 33 seconds; no completed aggregate is claimed here.
+The latest fully audited accuracy remains the 2,416-update result above.
 
 **Operational check, October 13, 01:15 UTC:** all 119 completed collection
 timings and 12 evaluation intervals leave about 10–12 hours before the whole-run
 cap under the recorded rate scenarios; completion is not guaranteed. The last
-storage check found about 477 GB of home directory-quota space at 23:09 UTC,
+storage check found about 451 GB of home directory-quota space after the new copy,
 versus only 16 GB under project, so full checkpoints stay under home.
 The [headroom analysis](diagnosis-and-restart-20261012.md#time-and-storage-headroom)
 records assumptions and limits. The scientific result above is unchanged.
