@@ -211,6 +211,15 @@ unchanged across this check. Native cleanup rotated the older 2,080-update full
 state; its metadata receipt remains historical. The separately protected
 1,440-update recovery state remains available.
 
+**Saved-weight check, October 13, 03:35 UTC:** the same two layer-zero projection
+tensors used in earlier audits contain 1,854,493 and 2,630,490 changed BF16
+elements, respectively, out of 4,194,304 each, between protected 1,440 and native
+2,240. Both tensors are finite and both files stayed unchanged during inspection.
+This [CPU comparison](evidence/restart-parameter-update2240-20261013.json) verifies
+actual saved updates, not their usefulness, all-model finiteness or BOS causality.
+The checkpoint pair was chosen by availability, not test score; unlike the tensor
+names, this pair was not selected before the checkpoints existed. No GPU was used.
+
 The next decision remains the same: keep the recipe and endpoint fixed, inspect
 subsequent scheduled evaluations (next after 2,416 updates), and preserve complete
 recovery states. This incremental result stays in the supporting report. The

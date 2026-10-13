@@ -74,10 +74,12 @@ records the counts and unchanged file identities. This strengthens the recovery
 check; it is not an end-to-end GPU restore or a new accuracy result. A separate
 faithful resume entrypoint is still required if interrupted; the live launcher
 is fresh-start-only.
-Training continues under the same owner. A prior
-[check of two preselected weight tensors](evidence/restart-parameter-update1280-20261012.json)
-confirms actual saved changes from 960 to 1,280 updates; it is not an
-all-parameter scan. The protected 1,440-update state is distinct from the
+Training continues under the same owner. A **CPU check at October 13, 03:35 UTC**
+of the [same two previously selected weight tensors](evidence/restart-parameter-update2240-20261013.json)
+confirms actual saved changes from 1,440 to 2,240 updates; both tensors are finite.
+This is not an all-parameter scan or a measure of learning effectiveness.
+The [earlier 960-to-1,280 check](evidence/restart-parameter-update1280-20261012.json)
+remains in the record. The protected 1,440-update state is distinct from the
 2,256-update weights evaluated above. The native full 2,240-update checkpoint's
 ten files and trainer/actor/active Adam/scheduler counters also pass a
 [CPU metadata check](evidence/restart-full2240-metadata-20261013.json);

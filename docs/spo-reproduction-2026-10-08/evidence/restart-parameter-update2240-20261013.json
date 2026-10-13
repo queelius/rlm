@@ -1,0 +1,70 @@
+{
+  "schema": "spo-selected-saved-parameter-update-audit-v1",
+  "checked_utc": "2026-10-13T03:35:24.508602+00:00",
+  "reference_updates": 1440,
+  "current_updates": 2240,
+  "reference_checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0090--epoch_2.00--step_1440",
+  "current_checkpoint": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0140--epoch_2.00--step_2240",
+  "fixed_tensor_names_receipt": "parameter-update1280-selection-20261012.json",
+  "selection_rationale": "Reuse the same two layer-zero projections fixed in earlier audits. Compare the latest completed native full2240 against protected1440; chosen for current availability, not score. Both checkpoints already exist at this selection.",
+  "comparisons": {
+    "model.layers.0.self_attn.q_proj.weight": {
+      "shape": [
+        2048,
+        2048
+      ],
+      "elements": 4194304,
+      "dtype": "torch.bfloat16",
+      "reference_finite": true,
+      "current_finite": true,
+      "changed_elements": 1854493,
+      "max_absolute_change": 0.000244140625,
+      "mean_absolute_change": 0.000011131469364045188,
+      "rms_change": 0.000022725573217030615,
+      "reference_bf16_tensor_bytes_sha256": "52808cd8187ebd5e4db1965a1fe2b8fb47b411c2c5edee0d3620ab27719fa792",
+      "current_bf16_tensor_bytes_sha256": "0ea388e56d3381f809fe8f1af5fa46f4e0a3838f12f833172e3dbb198ccdd124"
+    },
+    "model.layers.0.self_attn.o_proj.weight": {
+      "shape": [
+        2048,
+        2048
+      ],
+      "elements": 4194304,
+      "dtype": "torch.bfloat16",
+      "reference_finite": true,
+      "current_finite": true,
+      "changed_elements": 2630490,
+      "max_absolute_change": 0.000244140625,
+      "mean_absolute_change": 0.00001893936496344395,
+      "rms_change": 0.0000284870602627052,
+      "reference_bf16_tensor_bytes_sha256": "c84f15acaca1c24758a0d7a54bfd2288dd0848936d0f7bd57f5b57920aadb76b",
+      "current_bf16_tensor_bytes_sha256": "284fd6cb832a0781f19c8a5b69ebd640201405337b02a3a748ea0dc147021ffd"
+    }
+  },
+  "file_identities": {
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0090--epoch_2.00--step_1440/hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979558305,
+      "mtime_ns": "1791845810148574315"
+    },
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0140--epoch_2.00--step_2240/hf_pretrained/pytorch_model.bin": {
+      "bytes": 2200124348,
+      "inode": 1099979598108,
+      "mtime_ns": "1791860071822593498"
+    }
+  },
+  "files_stable_during_inspection": true,
+  "cuda_initialized": false,
+  "interpretation": "Direct saved-parameter change check on predetermined tensor names, not beneficial learning, a complete model scan or BOS causality.",
+  "limits": [
+    "Only these two tensors scanned for finiteness; not all parameters, master weights or moments.",
+    "Checkpoint2240 is native and subject to automatic rotation, not newly protected.",
+    "No source/model/optimizer/owner mutation or GPU job."
+  ],
+  "execution": {
+    "tool_session": 20172,
+    "exit_code": 0,
+    "cuda_visible_devices": "",
+    "omp_num_threads": 1
+  }
+}
