@@ -1,7 +1,9 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 05:44 UTC. The eighteenth scheduled restart evaluation
-is fully regraded at 2,736 updates; the next evaluation follows 2,896 updates.
+Status: October 13, 2026, 07:25 UTC. The twentieth scheduled restart evaluation
+is fully regraded at 3,056 updates; the next evaluation follows 3,216 updates.
+Test is essentially flat at 53.59%; validation falls to 66.82%, while the
+non-held-out training subset rises to 75.03%. Reproduction remains unfinished.
 The complete 2,560-update checkpoint is byte-verified outside automatic cleanup,
 alongside the earlier 160-, 960-, and 1,440-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
@@ -104,7 +106,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, and 2,896 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, and 3,056 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -131,8 +133,42 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 2,576 | 52.76% | 66.72% | 72.24% |
 | 2,736 | 53.13% | 67.95% | 72.40% |
 | 2,896 | 53.57% | 68.05% | 74.26% |
+| 3,056 | 53.59% | 66.82% | 75.03% |
 
-### Latest evaluation: 2,896 updates
+### Latest evaluation: 3,056 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval190-20261013.json). Test has **11,309/21,104 correct
+answers, 53.5870%**, or **+13.8125 percentage points** versus original SFT.
+It gains only three correct answers (+0.0142 points) since the preceding check:
+the test result is effectively flat. Validation loses 73 answers (−1.2232 points)
+to 66.8231%; the training subset gains 46 (+0.7728 points) to 75.0336%, not held out.
+
+Secondary metrics again differ. Test once-hit coverage rises from 79.91% to
+81.27%, while majority accuracy falls from 60.42% to 60.12%. Validation coverage
+rises from 87.94% to 88.74% and majority remains 74.53%; training-subset coverage
+falls from 92.20% to 91.94%, while majority rises from 81.99% to 83.33%.
+On test, 359 questions have more correct samples, 334 fewer and 626 unchanged,
+net only three answers; 67 become once-hit and 49 lose all correct samples.
+Validation has 84 improving, 92 declining and 197 unchanged question counts.
+These observations do not establish significance, a cause, or uniform improvement.
+
+The predetermined first test question has 13/16 correct samples versus 14/16.
+Test extraction failures increase from four to six and length-limit endings from
+eight to nine. The native mean pass@1 rule is unchanged; once-hit and majority
+are secondary diagnostics, not replacement targets.
+Continue the original training horizon and fixed 690/11,040 endpoint.
+The substantial gain from SFT is still intermediate learning, not a completed
+reproduction, independent-seed replication, BOS causal proof, or durable recovery.
+See the [interpretation and paired counts](evidence/restart-eval190-interpretation-20261013.json).
+
+The full reward/token audit remains collection 170 and the detailed numerical
+receipt ends at 2,736. A newer CPU/meta inspection verifies native full state at
+3,040; it does not claim a new tensor scan, protected copy or GPU restoration.
+The live log check through 3,067 is contiguous/finite with no failure markers,
+but retains the approximate-KL 0.678 excursion at 2,952 and older larger peaks.
+
+### Preceding evaluation: 2,896 updates
 
 All 33,024 saved answers and 21 native metrics agree in the
 [full audit](evidence/restart-eval180-20261013.json). Test has **11,306/21,104 correct
@@ -214,7 +250,7 @@ Keep the recipe, all scheduled results and fixed 690/11,040 endpoint unchanged.
 The protected 2,560 recovery state is distinct from the 2,576 evaluated weights.
 See the [interpretation and question-level comparisons](evidence/restart-eval160-interpretation-20261013.json).
 
-### Latest training audit through 2,736 updates and saved state at 2,880
+### Training audit through 2,736 updates and historical state at 2,880
 
 The [collection 170 audit](evidence/restart-training-batch170-20261013.json)
 verifies all 512 terminal rewards, original gold answers, and saved response and
@@ -242,14 +278,22 @@ warning appears. Earlier windows, including the larger 0.736 and 0.541 peaks,
 remain in the receipt. These rounded changing-batch proxies do not establish
 future stability or exact distributional KL.
 
-The [full 2,880-update checkpoint](evidence/restart-full2880-metadata-20261013.json)
-has ten stable files, matching trainer, actor and active Adam counters of 2,880,
+At its recorded inspection, the
+[full 2,880-update checkpoint](evidence/restart-full2880-metadata-20261013.json)
+had ten stable files, matching trainer, actor and active Adam counters of 2,880,
 scheduler counter 2,879 and zero skipped steps. This CPU/meta inspection leaves
 CUDA uninitialized. It is not an all-tensor scan, GPU restore or protected copy.
 The earlier native 2,720 optimizer state rotated out at 06:17:48; its inspection
 below is historical. Preserve protected 160/960/1440/2560. The next coarse copy
 remains step-preselected at 3,840, subject to complete-save and storage gates.
-The 2,880 recovery state is distinct from the next scheduled evaluation at 2,896.
+Native 2,880 optimizer state rotated out at 07:08:16; the receipt is historical.
+That recovery state is distinct from the evaluated weights at 2,896.
+
+The newer [full 3,040-update inspection](evidence/restart-full3040-metadata-20261013.json)
+at 07:12 UTC verifies ten stable files, trainer/actor/active Adam counters 3,040,
+scheduler 3,039 and zero skipped steps. CUDA remains uninitialized in this
+CPU/meta audit. It is not a new protected copy, all-tensor scan or GPU restoration.
+Its weights precede the completed scheduled evaluation at 3,056 updates.
 
 Two reporting issues were corrected before publication: CPU-selection log lines
 preceded the otherwise successful checkpoint JSON, and an in-memory numerical
@@ -407,7 +451,7 @@ The checkpoint pair was chosen by availability, not test score; unlike the tenso
 names, this pair was not selected before the checkpoints existed. No GPU was used.
 
 The next decision remains the same: keep the recipe and endpoint fixed, inspect
-subsequent scheduled evaluations (next after 2,896 updates), and
+subsequent scheduled evaluations (next after 3,216 updates), and
 preserve complete recovery states. The preselected 2,560-update protection has
 passed full source/copy hashes and protected-copy counter checks. This mixed
 incremental result and recovery milestone stay in the supporting
