@@ -1,7 +1,7 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 04:36 UTC. The sixteenth scheduled restart evaluation
-is fully regraded at 2,416 updates; the next evaluation at 2,576 is running.
+Status: October 13, 2026, 04:49 UTC. The seventeenth scheduled restart evaluation
+is fully regraded at 2,576 updates; the next evaluation follows 2,736 updates.
 The complete 2,560-update checkpoint is byte-verified outside automatic cleanup,
 alongside the earlier 160-, 960-, and 1,440-update copies. A separate CPU scan
 found all saved model parameters, FP32 master weights and Adam moments finite
@@ -95,7 +95,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, and 2,416 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, and 2,576 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -119,8 +119,38 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 2,096 | 51.05% | 65.03% | 70.48% |
 | 2,256 | 51.37% | 66.86% | 71.72% |
 | 2,416 | 51.81% | 65.48% | 72.06% |
+| 2,576 | 52.76% | 66.72% | 72.24% |
 
-The latest test has **10,935 correct answers out of 21,104**, compared with 8,394
+### Latest evaluation: 2,576 updates
+
+All 33,024 saved answers and 21 native metrics agree in the
+[full audit](evidence/restart-eval160-20261013.json). Test has **11,135/21,104 correct
+answers, 52.7625%**, or **+12.9881 percentage points** versus original SFT and
+200 answers (+0.9477 points) versus the preceding scheduled evaluation. Validation
+gains 74 answers (+1.2399 points) to 66.7225%; the training subset gains 11
+(+0.1848 points) to 72.2446%, and is not held out.
+
+Test once-hit coverage rises from 78.62% to 79.30% and majority accuracy from
+59.59% to 60.80%. Validation coverage rises from 87.40% to 89.28% and majority
+from 72.65% to 74.26%. Training-subset coverage falls slightly and majority is
+unchanged. Neither mean accuracy nor these secondary measures improves uniformly:
+376 test questions have more correct samples, 300 fewer, and 643 unchanged.
+There are 63 newly once-hit test questions and 54 losing all correct samples.
+The predetermined first test question still returns 18 on its first sample,
+but its total falls from 10/16 to 9/16 correct. Test extraction failures rise
+from 13 to 15 while length-limit endings fall from 18 to 15.
+
+This is further measured intermediate learning, not the fixed endpoint, durable
+recovery, a clean causal BOS test, or an independent training-seed replication.
+Keep the recipe, all scheduled results and fixed 690/11,040 endpoint unchanged.
+The protected 2,560 recovery state is distinct from the 2,576 evaluated weights.
+See the [interpretation and question-level comparisons](evidence/restart-eval160-interpretation-20261013.json).
+The detailed training-batch and numerical-window audits below remain explicitly
+through collection 150 / 2,416 updates; they were not repeated for this readout.
+
+### Preceding evaluation and training audit: 2,416 updates
+
+The preceding test has **10,935 correct answers out of 21,104**, compared with 8,394
 for the original SFT model: **+12.04 percentage points**. It gained 93 correct
 answers, or 0.44 points, since the preceding scheduled test. Validation lost
 82 correct answers (−1.37 points), while the training subset gained 20 (+0.34 points).
@@ -230,7 +260,7 @@ The checkpoint pair was chosen by availability, not test score; unlike the tenso
 names, this pair was not selected before the checkpoints existed. No GPU was used.
 
 The next decision remains the same: keep the recipe and endpoint fixed, inspect
-subsequent scheduled evaluations (currently running after 2,576 updates), and
+subsequent scheduled evaluations (next after 2,736 updates), and
 preserve complete recovery states. The preselected 2,560-update protection has
 passed full source/copy hashes and protected-copy counter checks. This mixed
 incremental result and recovery milestone stay in the supporting
@@ -422,7 +452,8 @@ transient full state. These are estimates, not reserved space. No native
 cleanup, live source, environment, owner, learning-rate horizon or endpoint
 was changed. This is same-filesystem protection, not an off-system backup,
 all-tensor finite scan, GPU restoration test or new accuracy result. The next
-evaluation is in flight at 2,576 updates; the reproduction remains unfinished.
+evaluation at 2,576 updates subsequently passed its full audit; the reproduction
+remains unfinished.
 
 A CPU recovery audit at 16:54 UTC independently reconstructed the original
 question order for all 14 checked collections (896 question appearances).
