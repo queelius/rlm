@@ -1,0 +1,31 @@
+{
+  "schema": "spo-evaluation380-observer-repair-evidence-v1",
+  "review_id": "review-1791924409-75150a03",
+  "scope": "External CPU observation only; no training or scoring changes.",
+  "original_problem": "The earlier watcher retained a stale checkpoint label. The successor used the unchanged SHA-pinned generic presence probe with explicit target380.",
+  "tests": {
+    "missing_watcher_red": true,
+    "stale_label_red": true,
+    "target380_tests_passed": 2,
+    "prior370_tests_passed": 2
+  },
+  "watcher_source_sha256": "8fa306a5a5e6221e539d694af12ef8371804ed6a3d88df12fb34c9003b7db954",
+  "generic_probe_sha256": "4ec273edb21273be69c7992ea05ae931a04616b215860d0c0add0a9a2e5fb760",
+  "read_only_review": "eval380-regrade-001/WATCH-REVIEW.json",
+  "cap_correction": "Cooperative 3600-second cap, not a strict one-poll overshoot bound; original source and receipt preserved.",
+  "completion": {
+    "schema": "spo-read-only-watch-end-v1",
+    "tool_session": 63268,
+    "pid": 4092118,
+    "startticks": 1372979231,
+    "exit_code": 0,
+    "reason": "ALL_SPLITS_READY",
+    "completed_utc": "2026-10-13T21:32:12.336559+00:00",
+    "departure_verified_utc": "2026-10-13T21:33:22.117994+00:00",
+    "training_stopped": false,
+    "instruction": "Completed normally; do not resume or duplicate.",
+    "cap_limit": "Ended on completed split gates before its cooperative observation cap."
+  },
+  "limits": "Presence gates do not prove scores or grant future audit admission. Full native scoring used the separately gated CPU audit.",
+  "external_store": "/project/alex_phd/runs/rl-paper-reproduction-20261012"
+}

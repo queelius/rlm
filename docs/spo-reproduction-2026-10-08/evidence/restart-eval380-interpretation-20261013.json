@@ -1,0 +1,183 @@
+{
+  "schema": "spo-scheduled-evaluation380-interpretation-v1",
+  "checked_utc": "2026-10-13T21:34:48.133803+00:00",
+  "iteration": 380,
+  "completed_collections": 381,
+  "optimizer_updates": 6096,
+  "receipt": "eval380-regrade-001/RECEIPT.json",
+  "receipt_created_utc": "2026-10-13T21:32:25.922221+00:00",
+  "audit_exit_observed_utc": "2026-10-13T21:33:22+00:00",
+  "rows": {
+    "test": {
+      "questions": 1319,
+      "correct": 11970,
+      "responses": 21104,
+      "percent": 56.719105382865806,
+      "previous_correct": 11926,
+      "delta_correct": 44,
+      "delta_pp": 0.20849128127369218,
+      "metrics": {
+        "correct_frac": 0.5671910538286581,
+        "exact_match": 0.8104624715693708,
+        "exact_match_frac": 0.5671910538286581,
+        "majority_vote_acc": 0.6178923426838514,
+        "none_answer_extracted_frac_per_problem": 0.00009476876421531463,
+        "once_hit": 0.8104624715693708,
+        "unique_answer_count": 3.673237300985595
+      },
+      "extraction_failures": 2,
+      "finish_reasons": {
+        "length": 2,
+        "stop": 21102
+      },
+      "numeric_format_rescues": 57
+    },
+    "validation": {
+      "questions": 373,
+      "correct": 4162,
+      "responses": 5968,
+      "percent": 69.73860589812332,
+      "previous_correct": 4124,
+      "delta_correct": 38,
+      "delta_pp": 0.6367292225201072,
+      "metrics": {
+        "correct_frac": 0.6973860589812333,
+        "exact_match": 0.8820375335120644,
+        "exact_match_frac": 0.6973860589812333,
+        "majority_vote_acc": 0.7426273458445041,
+        "none_answer_extracted_frac_per_problem": 0.0003351206434316354,
+        "once_hit": 0.8820375335120644,
+        "unique_answer_count": 2.6514745308310994
+      },
+      "extraction_failures": 2,
+      "finish_reasons": {
+        "length": 2,
+        "stop": 5966
+      },
+      "numeric_format_rescues": 49
+    },
+    "train": {
+      "questions": 372,
+      "correct": 4960,
+      "responses": 5952,
+      "percent": 83.33333333333333,
+      "previous_correct": 4981,
+      "delta_correct": -21,
+      "delta_pp": -0.3528225806451613,
+      "metrics": {
+        "correct_frac": 0.8333333333333334,
+        "exact_match": 0.9516129032258065,
+        "exact_match_frac": 0.8333333333333334,
+        "majority_vote_acc": 0.8897849462365591,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9516129032258065,
+        "unique_answer_count": 2.1236559139784945
+      },
+      "extraction_failures": 0,
+      "finish_reasons": {
+        "stop": 5952
+      },
+      "numeric_format_rescues": 36
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "questions": 1319,
+      "better": 318,
+      "worse": 283,
+      "unchanged": 718,
+      "gained_correct_samples": 698,
+      "lost_correct_samples": 654,
+      "net": 44,
+      "first_question_before": 10,
+      "first_question_after": 14
+    },
+    "validation": {
+      "questions": 373,
+      "better": 84,
+      "worse": 68,
+      "unchanged": 221,
+      "gained_correct_samples": 186,
+      "lost_correct_samples": 148,
+      "net": 38,
+      "first_question_before": 16,
+      "first_question_after": 16
+    },
+    "train": {
+      "questions": 372,
+      "better": 66,
+      "worse": 65,
+      "unchanged": 241,
+      "gained_correct_samples": 131,
+      "lost_correct_samples": 152,
+      "net": -21,
+      "first_question_before": 15,
+      "first_question_after": 16
+    }
+  },
+  "receipt_hashes": {
+    "RECEIPT.json": "1fef4d1b8e1d89503dd1458182e55f22fac9430fec9f48dd7c10f5ab6e201ea3",
+    "INPUT-MANIFEST.json": "cc06adc35aacc60d2b90316ebe48b882b15472fc4f497ca6a90adc6a029f4874",
+    "QUESTION-COUNTS.json": "e5165c4489085637a94e6d4b4501361f53f69be0b5292cea679214063945e4c4",
+    "EXAMPLES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "all_33024_saved_responses_and_21_metrics_verified": true,
+  "scheduled_points_retained": 39,
+  "baseline_comparison": {
+    "baseline_correct": 8394,
+    "baseline_correct_frac": 0.3977445034116755,
+    "baseline_native_metric_path": "/project/alex_phd/runs/spo-reproduction-20261008/base-reference-attempt1/native/evaluation/iteration__0/analysis/TaskPerformanceAnalyzer/gsm8k_test/ckpt--iter_0/test__0__1/log.json",
+    "baseline_responses": 21104,
+    "correct_answer_delta": 3576,
+    "current_correct": 11970,
+    "delta_percentage_points": 16.944655041698255,
+    "limits": "Descriptive comparison with previously fully regraded original-SFT reference. This invocation verifies its saved native metric/count consistency, not all baseline responses again. No uncertainty or causal gain claim."
+  },
+  "paper_reference_percent": 56.724,
+  "paper_reference_gap_pp": 0.004894617134191037,
+  "interpretation": [
+    "At this predetermined intermediate point, test mean pass@1 is 56.719105%, a descriptive numerical match at two decimal places to the supplied 56.724% reference. The gap is 0.004895 percentage points. This is not the fixed 690-collection / 11040-update result and does not establish statistical equivalence or complete the reproduction.",
+    "Test gains 44 correct samples (+0.208491 points) and validation gains 38 (+0.636729 points), while non-held-out training loses 21 (-0.352823 points). This reverses the previous validation/train directions; do not infer durable improvement, overfitting or a mechanism from adjacent evaluations.",
+    "Test has 318 questions with more correct samples, 283 with fewer and 718 unchanged; 698 gains offset 654 losses. Its first question rises from 10/16 to 14/16. These paired descriptive counts are not independent training-seed replications.",
+    "Test majority-vote accuracy falls despite mean pass@1 rising. Validation once-hit also falls despite its primary mean rising. Neither secondary metric substitutes for the prescribed native mean pass@1.",
+    "The gain over original SFT is 16.944655 percentage points. Author released weights remain evaluator validation, not our learning gain. Historical author source/selection uncertainties and disclosed BOS-only / finite-zero BF16 adapters remain.",
+    "All 39 scheduled points are retained. No favorable checkpoint, retrospective acceptance tolerance, shortened LR horizon or recipe change is introduced."
+  ],
+  "decision": "Continue the unchanged whole owner to fixed 690 collections / 11040 updates, preserving the 1000-collection LR horizon and 68-hour whole cap including endpoint evaluation. Next scheduled audit is 390 / 6256 updates, not yet prepared. Preserve protected 5120 and the preselected 6400 protection gates. Audit 81933 and watcher 63268 are complete; never resume or duplicate them. No successor GPU job before the entire existing owner and GPU children depart.",
+  "limits": [
+    "Own fixed-endpoint training reproduction remains incomplete; a near-matching intermediate number is not the final result.",
+    "No causal BOS attribution, independent-seed confirmation, statistical equivalence claim or measured RLM transfer.",
+    "Latest full original-gold/reward/BOS batch audit remains collection370. Latest decoded-counter/two-fixed-tensor comparison remains native5920 versus protected5120; the all-tensor finite scan remains1440.",
+    "Native6080 is only an inventory in this milestone and is not the evaluated6096 state. Protected5120 is recovery protection on the same filesystem, not an off-system backup or proven GPU restore."
+  ],
+  "evaluation_service": {
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_prefix_bytes": 3272030,
+    "log_prefix_sha256": "4c88b4367c70f49412c8bf018667e3c70c2693d43644142db12b5adb03d0a1fb"
+  },
+  "prepared_before_outputs": {
+    "created_utc": "2026-10-13T20:57:45.299681+00:00",
+    "preparation": "eval380-regrade-001/PREPARATION.json",
+    "fresh_admission": "eval380-regrade-001/PREFLIGHT.json"
+  },
+  "execution": {
+    "tool_session": 81933,
+    "exit_code": 0,
+    "verified_utc": "2026-10-13T21:33:22+00:00",
+    "instruction": "Completed once. Do not rerun."
+  },
+  "observer_completion": {
+    "tool_session": 63268,
+    "exit_code": 0,
+    "all_splits_ready_utc": "2026-10-13T21:32:12.336559+00:00",
+    "departure_verified_utc": "2026-10-13T21:33:22.117994+00:00"
+  },
+  "advisor_package": {
+    "changed": false,
+    "cutoff_utc": "2026-10-12T20:53:09.492795+00:00",
+    "rationale": "The research dossier now records a close intermediate match. This strengthens the supporting progress evidence but does not change the advisor package's central incomplete-reproduction claim, material limitations or fixed-endpoint next decision. Preserve its explicit earlier cutoff; no slide-build claim."
+  },
+  "reporting_boundary": "Full evaluation380 only. The close intermediate match is not a claim about a later checkpoint, training stability or RLM transfer."
+}

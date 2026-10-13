@@ -1,6 +1,48 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Current status on October 13, 20:54 UTC
+## Current status on October 13, 21:35 UTC
+
+Audit completion verified at 21:33:22 UTC. **The fixed-endpoint training
+reproduction is still unfinished**, but the thirty-ninth scheduled evaluation,
+after **6,096 optimizer updates**, gives a close intermediate numerical match:
+**56.719105% test mean pass@1**, versus the supplied 56.724% reference.
+The gap is **0.004895 percentage points**; both round to 56.72%.
+
+| Native mean pass@1 | Latest | Change from 5,936 updates |
+| --- | ---: | ---: |
+| Test | 56.72% | +0.21 percentage points |
+| Validation | 69.74% | +0.64 percentage points |
+| Non-held-out training subset | 83.33% | −0.35 percentage points |
+
+The [full audit](evidence/restart-eval380-20261013.json) verifies all 33,024 saved
+answers, original identities and 21 native metrics. Test is 11,970/21,104,
+**16.94 points above original SFT**. Its 698 gained and 654 lost correct samples
+net +44; 318 questions improve, 283 worsen and 718 are unchanged. Test and
+validation rise while training falls, reversing the previous split pattern.
+These are descriptive transitions, not stability, causal or significance claims.
+
+This scheduled point was prepared before its outputs existed. We retain all
+39 points and still require the fixed **690 collections / 11,040 updates**,
+with the original **1,000-collection LR horizon**. No favorable checkpoint or
+post-hoc acceptance tolerance is chosen. A rounded intermediate match is not
+the final reproduction, independent-seed confirmation, BOS causality or RLM
+transfer. The authors' released-weight match is still evaluator validation only.
+
+All 2,065 evaluation HTTP returns succeeded, with no errors or tracebacks;
+the original whole owner continues. The full reward/BOS audit remains
+collection 370; the decoded-counter/two-tensor audit remains native 5,920.
+Native 6,080 has a ten-file inventory only, not a new counter/finite-tensor
+audit or protected copy. Protected 5,120 and the preselected 6,400 recovery
+step remain. No training source, recipe, grader or GPU ownership changed.
+
+See the [interpretation](evidence/restart-eval380-interpretation-20261013.json),
+[full scheduled series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far)
+and [read-only observer repair](evidence/restart-eval380-observer-repair-20261013.json).
+The advisor package retains its explicit October 12, 20:53:09 UTC cutoff:
+the close intermediate match strengthens supporting evidence but does not
+change the incomplete-reproduction claim, limitations or fixed-endpoint decision.
+
+## Historical status on October 13, 20:54 UTC (superseded above)
 
 Scientific-result cutoff: 20:50:17 UTC; live log check: 20:51:37 UTC.
 

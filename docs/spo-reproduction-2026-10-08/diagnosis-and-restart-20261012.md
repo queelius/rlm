@@ -1,14 +1,16 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Status: October 13, 2026, 20:54 UTC; scientific cutoff 20:50:17, live check 20:51:37.
-The thirty-eighth scheduled restart evaluation is fully regraded at 5,936 updates;
-next follows 6,096. Test is 56.51%, validation 69.10%, non-held-out training 83.69%.
-Test is locally almost flat (+0.052 points), while validation falls0.855 points
-and training rises0.790 points. No broad rebound, mechanism, overfitting or
-stability claim follows from this transition. The intermediate gap to supplied
-56.724% is0.213 points; reproduction remains unfinished.
+Status: October 13, 2026, 21:35 UTC; full-audit exit verified at 21:33:22 UTC.
+The thirty-ninth scheduled restart evaluation is fully regraded at 6,096 updates;
+next follows 6,256. Test is 56.719105%, validation 69.738606%, non-held-out
+training 83.333333%. Test rises 0.208491 points, validation rises 0.636729 and
+training falls 0.352823. The test gap below supplied 56.724% is 0.004895 points:
+a close intermediate numerical match, not the fixed-endpoint reproduction.
+All 39 scheduled points remain; no favorable checkpoint or acceptance tolerance.
 
-Protected5,120 remains the recovery copy. Native5,920 now has stable ten-file
+Protected5,120 remains the recovery copy. Native6,080 has an inventory only;
+it is not the evaluated6,096 state, decoded-counter audit or protected copy.
+Native5,920 has stable ten-file
 counter verification and a comparison of the same two predetermined tensors
 against protected5,120; both tensors are finite and changed. It is not separately
 protected or GPU-restored and differs from evaluated5,936. Native5,760 optimizer
@@ -108,7 +110,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, and 5,936 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, and 6,096 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -154,8 +156,44 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 5,616 | 55.69% | 69.69% | 81.15% |
 | 5,776 | 56.46% | 69.96% | 82.90% |
 | 5,936 | 56.51% | 69.10% | 83.69% |
+| 6,096 | 56.72% | 69.74% | 83.33% |
 
-### Latest evaluation: 5,936 updates
+### Latest evaluation: 6,096 updates
+
+The [full audit](evidence/restart-eval380-20261013.json) verifies all 33,024
+saved answers and 21 native metrics, with original identities and prompt/tree/
+Arrow bindings. Test is11,970/21,104=56.719105%, validation4,162/5,968=69.738606%,
+and non-held-out training4,960/5,952=83.333333%. Relative to370 these change
++44/+38/−21 correct samples, or +0.208491/+0.636729/−0.352823 percentage points.
+
+The test gain over original SFT is16.944655 points. The supplied paper-reference
+gap is0.004895 points; both scores round to56.72%. This point was scheduled and
+prepared before its outputs, not selected for its favorable number. The
+fixed690/11,040 endpoint remains required, with the original1,000-collection
+LR horizon, no post-hoc tolerance and no claim of statistical equivalence.
+
+Test has318 improved questions,283 worsened and718 unchanged, with698 gained
+and654 lost correct samples. Its first question rises10/16 to14/16. Test
+majority-vote accuracy falls while mean pass@1 rises; validation once-hit falls
+while its mean rises. These secondary metrics do not replace native mean
+pass@1. The mixed split directions do not identify overfitting, a mechanism,
+future stability, independent-seed replication or measured RLM transfer.
+
+All2,065 evaluation HTTP returns succeeded, with no errors or tracebacks.
+Read-only watcher63268 exited0 at21:32:12 when all splits were ready; CPU
+audit81933 then ran once after fresh owner, sealed/prepared-pin and no-overwrite
+checks and exited0. The original GPU owner continues. Native6,080 inventory
+contains ten files totaling17,600,911,844bytes; no new counter/tensor scan,
+protection or GPU-restore claim follows. Collection370's full reward/BOS audit,
+native5,920's two-tensor/counter audit and protected5,120 retain their scopes.
+
+Next: prepare390/6,256 audit, retain predetermined6,400 protection gates and
+continue the unchanged whole owner. The advisor package's explicit earlier
+cutoff and central incomplete-reproduction claim remain unchanged. See the
+[interpretation](evidence/restart-eval380-interpretation-20261013.json) and
+[observer repair limits](evidence/restart-eval380-observer-repair-20261013.json).
+
+### Preceding evaluation: 5,936 updates
 
 The [full audit](evidence/restart-eval370-20261013.json) independently verifies
 all 33,024 saved answers and 21 native metrics after 371 collections:
