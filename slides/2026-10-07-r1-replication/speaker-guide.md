@@ -1,8 +1,8 @@
 # RL reproduction status and earlier learning lessons
 
 Eight slides, about nine minutes. Current evidence cutoff: **14 October 2026,
-07:06 UTC**. The primary objective is an end-to-end reproduction of the published
-SPO training result on our A100. That objective has **not** been achieved.
+18:10 UTC**. The primary objective is an end-to-end reproduction of the published
+SPO training result on our A100. The fixed endpoint recovered the reported performance level, with disclosed implementation differences.
 Slide 1 gives the current status; slides 2–8 preserve the historical 7 October
 Dr. GRPO experiment and its RLM teaching discussion. These are separate methods,
 models and benchmarks, not one combined learning curve.
@@ -17,64 +17,38 @@ and audience views, or `make rehearse` for private preparation. The short pdfpc
 notes are cues; the material below is optional background, not a script to read
 in full. See the [local setup instructions](README.md).
 
-## 1. SPO reproduction: fixed endpoint still pending
+## 1. SPO reproduction: fixed endpoint exceeds paper score
 
-Say: “Our latest own result is 55.88%, below the paper's reported 56.7% and above
-the 39.77% SFT baseline. Test accuracy had reached 56.85% at 8,016 updates, then
-fell to 56.44% and 55.88%. These are intermediate points on one training run.
-We still need the fixed 11,040-update endpoint and final independent check.”
+Say: “Our own fixed-endpoint result is58.19%, versus paper56.7% and matched
+SFT39.77%: an18.42-point gain. We finished690 collections and11,040 updates,
+then independently checked every saved answer. This recovers the performance
+level, with disclosed implementation differences—not historical-code identity.”
 
-The released SPO model scored **56.69%**, matching the paper's **56.7%** to one
-decimal place. Our earlier model scored **22.19% after 7,856 optimizer updates** on
-its latest scheduled GSM8K test: 4,684 correct out of 21,104 sampled answers
-(1,319 questions, 16 answers each). This is mean sampled-answer correctness,
-not greedy accuracy or the chance that at least one answer succeeds.
-Independent regrading matched all late test, validation and training-subset
-answers. Earlier higher checkpoints are not substituted for the latest result.
+The test count is12,281/21,104:1,319 questions with16 sampled answers each.
+This is mean pass@1, not greedy accuracy, majority vote or once-hit.
+Validation is4,324/5,968; the non-held-out training subset is5,390/5,952.
+All33,024 answers and21 native metrics passed the independent check.
+Evaluation680 was higher at58.316%; we report the fixed final58.193%, not the best.
 
-The run's last logged optimizer step was 7,995, short of the prescribed 11,040.
-Its immediate failure was an optimizer gradient-norm assertion after rejected
-microbatches, not an owner timeout. That terminal failure is distinct from the
-earlier accuracy decline; do not attribute either to allocation expiry.
+The authors' released56.69% checkpoint validates the evaluator, not our training.
+Our earlier attempt deteriorated to22.19% at7,856 updates and exited1 at7,995,
+not an allocation timeout. Its failure evidence and checkpoints remain preserved.
+The fresh run exited0; final trainer, actor and Adam counters are11,040,
+scheduler11,039, skipped0. All14 final checkpoint files match the preserved copy.
 
-The new GPU diagnosis found a training/generation inconsistency: generation
-includes a beginning-of-sequence marker (BOS), while saved training inputs omit
-it despite the configuration requesting it. For the **same saved answers**,
-adding that marker barely changes the original SFT model's probability scores
-but changes the late model's scores substantially across 16 fixed questions.
-HF and vLLM closely agree when the same token IDs and temperature are used.
-This supports investigating the mismatch; it does not establish why accuracy
-collapsed or demonstrate that correcting it improves learning.
+BOS-only token alignment and the finite-zero BF16 adapter are disclosed deviations.
+EOS remains native omission; historical implementation/selection is unresolved.
+Likelihood diagnostics do not prove the cause of earlier deterioration. One seed
+does not establish robustness. No clean BOS-only causal comparison was performed.
 
-The 16-question sample uses the first saved response from each of the first
-16 distinct question IDs, without reward filtering. One question overlaps the
-earlier diagnostic. They are late-policy responses, not newly generated SFT
-answers. Exact numbers and input provenance are in [the evidence](evidence.md)
+For RLM this calibrates reward/update/evaluation practice, not algorithm choice or
+transfer to recursive decisions, tools, costs and credit assignment. Carry the
+checks forward; test those remaining questions separately.
+
+See the [final report](../../docs/spo-reproduction-2026-10-08/final-result-20261014.md)
 and [portable status receipt](current-status-evidence.json).
-
-The current audit finds **11,792 / 21,104 = 55.875663% after 8,336 updates**,
-versus original SFT 8,394 / 21,104 = 39.774450%: **+16.101213 points**.
-Validation is 70.492627%; non-held-out training 87.281586%. All 33,024 answers
-and 21 native metrics agree with the independent regrade. Since 8,176 updates,
-test loses 119 correct responses, validation loses four and training loses 14.
-The intermediate curve retains all 53 scheduled points; no checkpoint replaces
-the fixed endpoint.
-
-The new run has also passed the old run's 7,995-step failure count.
-That is operational progress, not a clean BOS-only ablation or proof of the
-earlier collapse's cause. The process-local BOS and finite-zero BF16 adapters
-are disclosed deviations; historical author code and selection remain unresolved.
-Keep the original 1,000-collection learning-rate horizon and fixed 690-collection /
-11,040-update endpoint, followed by final native test and independent regrade.
-
-For RLM work this provides a stronger calibration of reward/update/evaluation
-practice, not a proof that SPO is the right algorithm or that gains transfer
-to tool use, recursive decisions, costs or credit assignment. Those need
-their own tests. The user's purpose is methodological confidence, not a
-requirement to reuse every algorithmic detail.
-
-Transition: “The following slides preserve what the earlier, smaller Dr. GRPO
-exercise taught us. Those lessons remain useful, but are not the SPO result.”
+Transition: “The following slides preserve lessons from the earlier, smaller
+Dr. GRPO exercise. They are not the SPO result.”
 
 ## 2. Before rewarding success, make success reachable
 
@@ -246,9 +220,9 @@ effects. Keep helpers and overall budgets comparable. Retain a direct-answer
 baseline: a useful RLM should learn when delegation helps, not merely do it more.
 
 Close: “The earlier math exercise suggested several RLM teaching experiments.
-Our immediate priority is now the full SPO training reproduction. The fresh
-run has reached the paper's numerical score range, but the fixed endpoint
-and final comparison remain unfinished.”
+Our fixed-endpoint SPO reproduction has now recovered the reported performance.
+The final comparison and implementation differences are documented in the
+SPO report. Transfer to RLM remains a separate experimental question.”
 
 ## Optional details if someone asks
 

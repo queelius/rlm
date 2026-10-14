@@ -1,5 +1,18 @@
 # Presentation verification
 
+## Final SPO endpoint, 14 October 2026, 18:10 UTC cutoff
+
+- Final 12,281/21,104 = 58.192760%; fixed 690 collections / 11,040 updates.
+  Portable final audit, execution and preservation receipts accompany the report.
+- Updated visible first slide/table, scalar cutoff, status data, speaker guide,
+  concise notes, evidence and README together. Slides 2–8 remain historical.
+- Tectonic build exited 0; eight matching pdfpc entries pass the 14-line check.
+  Deck verifier passed all page bounds and title checks. Rendered first slide
+  visually inspected: readable, no clipping or overlap. Wrapped first-slide
+  notes inspected; no live pdfpc GUI test was possible on this server.
+- No model weights or raw response corpora included in publication.
+
+
 ## Audited SPO intermediate result, 14 October 2026, 05:47 UTC
 
 - Synchronized the opening slide, scalar/evidence record, audience PDF,

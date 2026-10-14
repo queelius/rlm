@@ -1,5 +1,13 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
+## Final audited result: October 14, 18:10 UTC
+
+**58.192760% at the fixed 690 collections / 11,040 updates**, versus paper56.7%
+and matched SFT39.774450%. All final saved answers independently checked;
+full checkpoint preserved with matching hashes. See the
+[final report and limitations](final-result-20261014.md).
+The dated entries below are historical intermediate reports, not current status.
+
 ## Latest audited sequence: October 14, 15:07 UTC
 
 **57.666793% test at 10,256 updates**; fixed endpoint still unfinished.

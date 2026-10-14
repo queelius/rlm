@@ -47,17 +47,15 @@ keep any personal edits before pulling later updates.
 
 ## Research summary
 
-Updated: **14 October 2026, 07:06 UTC**. The latest scheduled SPO test scores
-**55.875663%** (11,792/21,104) after **8,336 updates**, below the paper's
-**56.7%** and 16.101213 points above original SFT **39.774450%**. Test scores
-at 8,016 and 8,176 updates were 56.847043% and 56.439538%; all three saved
-points remain visible. The independent regrade verifies all 33,024 answers
-and 21 metrics. The fixed **690 collections / 11,040 updates** plus final
-evaluation/regrade remains unfinished; all 53 scheduled points are retained
-without selecting a favorable checkpoint. The earlier own run's 22.19% and
-failure remain recorded. Released author weights at 56.69% are a separate
-evaluator validation. This result and the BOS diagnostic do not prove cause or
-transfer to RLM.
+Updated: **14 October 2026, 18:10 UTC**. The fixed final SPO test scores
+**58.192760%** (12,281/21,104) after **690 collections / 11,040 updates**,
+versus paper **56.7%** and matched SFT **39.774450%**: +18.418309 points.
+All 33,024 saved answers and 21 metrics passed independent regrading.
+The full checkpoint copy is hash-verified. Higher intermediate scores were
+not selected; the earlier failed run remains recorded. This recovers the
+reported performance level with disclosed BOS/BF16 implementation differences,
+not exact historical equivalence, causal BOS proof, or demonstrated RLM transfer.
+See the [final report](../../docs/spo-reproduction-2026-10-08/final-result-20261014.md).
 
 The opening slide separates those findings. The remaining seven slides retain
 the historical teaching story: math RL starts with relevant

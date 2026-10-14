@@ -1,3 +1,12 @@
+# Final SPO evidence: 14 October 2026, 18:10 UTC
+
+The visible first slide now reports the fixed final58.192760% at690/11040.
+See [the final report](../../docs/spo-reproduction-2026-10-08/final-result-20261014.md),
+[all-answer audit](../../docs/spo-reproduction-2026-10-08/evidence/final690-audit-20261014.json),
+and [checkpoint hashes](../../docs/spo-reproduction-2026-10-08/evidence/final11040-preservation-20261014.json).
+The following older evidence is retained as historical context; its pending-run
+statements are superseded by this final result. Slides2–8 remain historical.
+
 # Evidence and result update
 
 ## Current SPO status: 14 October 2026, 07:06 UTC
