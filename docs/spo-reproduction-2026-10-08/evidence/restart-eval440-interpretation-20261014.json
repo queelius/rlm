@@ -1,0 +1,246 @@
+{
+  "schema": "spo-scheduled-evaluation440-interpretation-v1",
+  "checked_utc": "2026-10-14T01:45:35.564555+00:00",
+  "receipt_created_utc": "2026-10-14T01:43:46.484149+00:00",
+  "rows": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 11894,
+      "percent": 56.35898407884761,
+      "previous_correct": 11855,
+      "delta_correct": 39,
+      "delta_pp": 0.18479909021986354,
+      "metrics": {
+        "correct_frac": 0.5635898407884761,
+        "exact_match": 0.7975739196360879,
+        "exact_match_frac": 0.5635898407884761,
+        "majority_vote_acc": 0.6194086429112965,
+        "none_answer_extracted_frac_per_problem": 0.00014215314632297195,
+        "once_hit": 0.7975739196360879,
+        "unique_answer_count": 3.5595147839272174
+      },
+      "previous_metrics": {
+        "correct_frac": 0.5617418498862775,
+        "exact_match": 0.7877179681576952,
+        "exact_match_frac": 0.5617418498862775,
+        "majority_vote_acc": 0.620166793025019,
+        "none_answer_extracted_frac_per_problem": 0.00018953752843062926,
+        "once_hit": 0.7877179681576952,
+        "unique_answer_count": 3.6224412433661866
+      },
+      "extraction_failures": 3,
+      "previous_extraction_failures": 4,
+      "finish_reasons": {
+        "length": 3,
+        "stop": 21101
+      },
+      "numeric_format_rescues": 76,
+      "previous_numeric_format_rescues": 80
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 4207,
+      "percent": 70.49262734584451,
+      "previous_correct": 4209,
+      "delta_correct": -2,
+      "delta_pp": -0.03351206434316354,
+      "metrics": {
+        "correct_frac": 0.704926273458445,
+        "exact_match": 0.8873994638069705,
+        "exact_match_frac": 0.704926273458445,
+        "majority_vote_acc": 0.7613941018766756,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.8873994638069705,
+        "unique_answer_count": 2.520107238605898
+      },
+      "previous_metrics": {
+        "correct_frac": 0.7052613941018767,
+        "exact_match": 0.8820375335120644,
+        "exact_match_frac": 0.7052613941018767,
+        "majority_vote_acc": 0.7506702412868632,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.8820375335120644,
+        "unique_answer_count": 2.5093833780160857
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "finish_reasons": {
+        "stop": 5968
+      },
+      "numeric_format_rescues": 53,
+      "previous_numeric_format_rescues": 51
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 5083,
+      "percent": 85.39986559139786,
+      "previous_correct": 5041,
+      "delta_correct": 42,
+      "delta_pp": 0.7056451612903226,
+      "metrics": {
+        "correct_frac": 0.8539986559139785,
+        "exact_match": 0.9435483870967742,
+        "exact_match_frac": 0.8539986559139785,
+        "majority_vote_acc": 0.9005376344086021,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9435483870967742,
+        "unique_answer_count": 1.9408602150537635
+      },
+      "previous_metrics": {
+        "correct_frac": 0.8469422043010753,
+        "exact_match": 0.9408602150537635,
+        "exact_match_frac": 0.8469422043010753,
+        "majority_vote_acc": 0.8924731182795699,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9408602150537635,
+        "unique_answer_count": 2.0080645161290325
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "finish_reasons": {
+        "stop": 5952
+      },
+      "numeric_format_rescues": 42,
+      "previous_numeric_format_rescues": 42
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "better": 295,
+      "worse": 265,
+      "unchanged": 759,
+      "gained": 707,
+      "lost": 668,
+      "first_before": 15,
+      "first_after": 15,
+      "once_hit_before": 1039,
+      "once_hit_after": 1052
+    },
+    "validation": {
+      "better": 74,
+      "worse": 75,
+      "unchanged": 224,
+      "gained": 166,
+      "lost": 168,
+      "first_before": 16,
+      "first_after": 16,
+      "once_hit_before": 329,
+      "once_hit_after": 331
+    },
+    "train": {
+      "better": 69,
+      "worse": 53,
+      "unchanged": 250,
+      "gained": 161,
+      "lost": 119,
+      "first_before": 10,
+      "first_after": 13,
+      "once_hit_before": 350,
+      "once_hit_after": 351
+    }
+  },
+  "test_vs_sft_pp": 16.58453373768006,
+  "gap_below_supplied56_724_pp": 0.36501592115238424,
+  "audit_totals": {
+    "answers": 33024,
+    "native_metrics": 21
+  },
+  "artifact_hashes": {
+    "RECEIPT.json": "cb1530323ec20cc75f59525fbe5456750abb8f074542924fd466cdf045916e00",
+    "INPUT-MANIFEST.json": "a8595e62a6de0b8baad3ca6e6ab32153da78df06b875fe5417c77c029b6e3ec3",
+    "QUESTION-COUNTS.json": "d7fee22f47f342f43bdbf6b010d40eae2666245ecf546c17ebc290da28c323e0",
+    "EXAMPLES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "iteration": 440,
+  "collections_at_evaluation": 441,
+  "optimizer_updates_at_evaluation": 7056,
+  "previous_iteration": 430,
+  "scheduled_points_retained": 45,
+  "preparation": "eval440-regrade-001/PREPARATION.json",
+  "receipt": "eval440-regrade-001/RECEIPT.json",
+  "verified_event_count": 143,
+  "event_types": {
+    "evaluation": 135,
+    "finished": 8
+  },
+  "service": {
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_prefix_bytes": 3270692,
+    "log_prefix_sha256": "bfb6c37aeb45a11c981fbe7cdbe9ef906843187d3fbf9b1c49ef62f85e97800b"
+  },
+  "checkpoint_status": {
+    "checked_utc": "2026-10-14T01:43:44.651376+00:00",
+    "protected6400_all_ten_identities_unchanged": true,
+    "protected6400_receipt_sha256": "b06432c6d0c694d2a4159b8a394bbdc863681f827a7bea0ae08698d028711e27",
+    "native_inventory": [
+      {
+        "name": "ckpt--iter_0040--epoch_2.00--step_0640",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0080--epoch_2.00--step_1280",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0120--epoch_2.00--step_1920",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0160--epoch_2.00--step_2560",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0200--epoch_2.00--step_3200",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0240--epoch_2.00--step_3840",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0280--epoch_2.00--step_4480",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0320--epoch_2.00--step_5120",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0360--epoch_2.00--step_5760",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0400--epoch_2.00--step_6400",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0440--epoch_2.00--step_7040",
+        "file_count": 10
+      }
+    ],
+    "scope": "Reuse prior full-hash evidence after unchanged identities; native7040 inventory only, not a new tensor/counter audit, copy or restore."
+  },
+  "interpretation": [
+    "Test improves by39 correct responses (+0.184799 percentage points), nonheldout train by42 (+0.705645points); validation loses2 (-0.033512points). The small mixed movement does not establish a plateau, overfitting, convergence, equivalence or causal repair effect.",
+    "On test295 questions improve,265 worsen,759 are unchanged;707 gained correct samples offset668 lost. Once-hit rises1039to1052, while majority vote falls by one question. These metrics capture different behavior; only mean pass@1 is the prescribed primary metric.",
+    "Validation74 improve/75worsen/224same, once-hit329to331 despite its two-sample loss. Training69improve/53worsen/250same, once-hit350to351. These are descriptive paired counts on reused questions and one training seed, not independent training replication.",
+    "Test extraction failures/length endings fall4to3; numeric-format diagnostic potential rescues80to76. Native scoring/reward remain unchanged. Secondary formatting, coverage or majority-vote outcomes do not select checkpoints or alter the recipe.",
+    "The gain over originalSFT8394/21104 is16.584534points, gap below supplied56.724 is0.365016points. Retain all45 scheduled points and compare only fixed690/11040 plus native final test/regrade. This is measured intermediate learning, not completed training reproduction.",
+    "All33,024saved answers and21native metrics agree with original identities and prompt/tree/Arrow binding. Original owners/seven sealed pins remain unchanged; finite7056 logged updates are not new all-parameter proof.",
+    "First saved441 response39625 versus gold13375 receives reward0: it treats5350steps per3km as perkm and also miscalculates the resulting multiplication. Checked77.98seconds after first request,400HTTPsuccesses/0errors, not a transport failure or accuracy estimate.",
+    "Protected6400 remains intact; native7040 ten-file inventory is distinct from evaluated7056 and not a new protected copy, tensor scan or restore. Next450/7216 audit is prepared before native450 exists. Preselected7680protection remains unprepared/uncopied."
+  ],
+  "decision": "Continue original whole training/evaluation owner unchanged to prescribed690collections/11040updates with1000-iteration LR horizon. Audit450 once after fresh gates; prepare preselected7680 full-state protection. No favorable checkpoint, recipe shortening, new GPU branch or reset.",
+  "advisor_package_decision": "Update supporting dossier only. Main unfinished-endpoint claim, material limitation and next decision unchanged; retain advisor cutoffOctober12 20:53:09UTC.",
+  "limits": [
+    "Historical implementation/source selection unresolved; disclosed BOS-only and finite-zero BF16 adapters retained.",
+    "No causal BOS, statistical equivalence or RLM transfer claim.",
+    "One training seed and shared-question transitions do not estimate training-seed uncertainty.",
+    "Published pointers are not checkpoint backup."
+  ]
+}

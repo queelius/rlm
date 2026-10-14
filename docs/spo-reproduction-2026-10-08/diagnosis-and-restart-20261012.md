@@ -1,24 +1,24 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Scientific-result cutoff: October 14, 2026, 01:03:58 UTC, after the completed
-full-answer audit was verified. All 44 scheduled restart points through
-evaluation 430 / 6,896 updates are retained. Latest test is 56.174185%,
-validation 70.526139%, non-held-out training 84.694220%. Changes from 420 are
-−5/−46/+37 correct responses: a nearly unchanged test average, lower validation,
-and higher training accuracy. This does not establish overfitting or convergence.
-The original-SFT gain is 16.399735 percentage points; the gap below supplied
-56.724% is 0.549815 points. Fixed-endpoint reproduction remains unfinished.
+Scientific-result cutoff: October 14, 2026, 01:45:35 UTC, after the completed
+full-answer audit was verified. All 45 scheduled restart points through
+evaluation 440 / 7,056 updates are retained. Latest test is 56.358984%,
+validation 70.492627%, non-held-out training 85.399866%. Changes from 430 are
++39/−2/+42 correct responses: test and training rise while validation loses two.
+This does not establish a plateau, overfitting, convergence or equivalence.
+The original-SFT gain is 16.584534 percentage points; the gap below supplied
+56.724% is 0.365016 points. Fixed-endpoint reproduction remains unfinished.
 
-Protected 6,400 remains the latest recovery copy. At 01:03:58 all ten destination
+Protected 6,400 remains the latest recovery copy. At 01:43:44 all ten destination
 identities matched the previous full-hash receipt. Native 6,400 has six files;
-native 6,880 has a ten-file inventory only. Neither is a protected copy or tensor
-audit of evaluated 6,896 weights. No new all-tensor scan or GPU restore.
+native 7,040 has a ten-file inventory only. Neither is a protected copy or tensor
+audit of evaluated 7,056 weights. No new all-tensor scan or GPU restore.
 See the [protection receipt](evidence/restart-full6400-protection-20261013.json)
-and [latest interpretation/state check](evidence/restart-eval430-interpretation-20261014.json).
+and [latest interpretation/state check](evidence/restart-eval440-interpretation-20261014.json).
 
-CPU audit 48843 (430) exited 0 once; never resume/repeat it or earlier audits.
-The 430 wrapper was prepared before its evaluation began. Next scheduled
-440/7,056 audit is prepared before its native root exists, not executed.
+CPU audit 50658 (440) exited 0 once; never resume/repeat it or earlier audits.
+The 440 wrapper was prepared before its evaluation began. Next scheduled
+450/7,216 audit is prepared before its native root exists, not executed.
 Coarse 7,680 recovery protection is preselected but not yet prepared/copied.
 The user explicitly authorized continuing past the former account reserve;
 no reset is assumed or performed. The resumed observer retains its deadline
@@ -125,7 +125,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, and 6,896 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, 6,896, and 7,056 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -177,8 +177,42 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 6,576 | 55.92% | 70.54% | 82.88% |
 | 6,736 | 56.20% | 71.30% | 84.07% |
 | 6,896 | 56.17% | 70.53% | 84.69% |
+| 7,056 | 56.36% | 70.49% | 85.40% |
 
-### Latest evaluation: 6,896 updates
+### Latest evaluation: 7,056 updates
+
+The full audit checks all 33,024 saved answers, original identities,
+prompt/tree/Arrow bindings and 21 native metrics. Test is 11,894/21,104 =
+56.358984%, validation 4,207/5,968 = 70.492627%, and non-held-out training
+5,083/5,952 = 85.399866%. Changes from 430 are +0.184799/−0.033512/+0.705645
+percentage points. All 45 scheduled points remain visible.
+
+Test gains 39 correct responses overall: 295 questions improve, 265 worsen,
+759 are unchanged; 707 gains offset 668 losses. Once-hit rises 1,039→1,052,
+while majority vote falls by one question. Validation once-hit rises 329→331
+despite losing two correct responses in total. Training once-hit rises 350→351.
+These descriptive transitions separate coverage, response reliability and
+majority vote; they are not independent training-seed replications. Only mean
+pass@1 is the primary metric. The small mixed movement does not establish
+a plateau, overfitting, convergence, statistical equivalence or RLM transfer.
+
+Test extraction failures/length endings decline four to three; numeric-format
+diagnostic rescues decline 80→76. The grader and reward stay unchanged. Gain over
+original SFT is 16.584534 points; gap below supplied 56.724 is 0.365016 points.
+Keep fixed 690/11,040 and the original 1,000-collection LR horizon, not a favorable
+intermediate checkpoint. No causal BOS claim follows from this corrected run.
+
+All 2,065 evaluation HTTP returns succeeded with no errors/tracebacks. The
+original owners and seven sealed training pins match. Finite logged updates
+are not a new full-tensor scan; protected 6,400 remains intact. Native 7,040
+inventory is distinct from evaluated 7,056. Next 450/7,216 audit is prepared
+before its native root exists; coarse 7,680 protection remains unprepared.
+
+Evidence: [440 audit](evidence/restart-eval440-20261014.json) and
+[440 interpretation](evidence/restart-eval440-interpretation-20261014.json).
+The advisor package retains its earlier cutoff and unfinished-endpoint story.
+
+### Previous evaluation: 6,896 updates
 
 The full audit checks all 33,024 saved answers, original identities,
 prompt/tree/Arrow bindings and 21 native metrics. Test is 11,855/21,104 =
