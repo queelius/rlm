@@ -1,0 +1,141 @@
+{
+  "verified_utc": "2026-10-14T09:41:59.646681+00:00",
+  "source": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0560--epoch_2.00--step_8960",
+  "destination": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0560--epoch_2.00--step_8960",
+  "all_ten_hashes_match": true,
+  "source_stable": true,
+  "sha256": {
+    "actor/global_step8960/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": "705b49a02d451ae3a6fad1e1136d64338d201cfe98523b8ac8281c65a0c65000",
+    "actor/global_step8960/mp_rank_00_model_states.pt": "c4e8b3d66538cf52492b0d36a162b2bd68ab1d5fbed9280be0125bcf141d72df",
+    "actor/latest": "92b38c4a4c00af35776874eac990c3ad25f99fa41ed26d8b86626836c4188496",
+    "actor/zero_to_fp32.py": "47e22c3e2e9c55705ff72102ffd1146b607e80880f2011ced5bc969d11ea7b05",
+    "custom_checkpoint_0.pkl": "d92488123d502485aaf0db9775c5a85767e5de48b8aa3b884c8f72bd006b9a48",
+    "custom_checkpoint_10.pkl": "aa20a5b959b29a4a53e33f6f7d13092fea8b5a5ef79b8218d989e7b4e25602e2",
+    "custom_checkpoint_11.pkl": "48cbca448331d0383454ff77c31f5693f196fe4961f361ad19cfa5148011461f",
+    "hf_pretrained/config.json": "fa257c0a935dff5c0136479348d593170143e4318cb30638b35206a649d2e0bc",
+    "hf_pretrained/generation_config.json": "8d7242f52ed9f3d40ab624ab7288d1db274f25255bd29571caa4862664d7fc80",
+    "hf_pretrained/pytorch_model.bin": "63ee47fb44d27b7845013749920339f2d6e78c237b4a2d263df205744672d61f"
+  },
+  "preflight": {
+    "checked_utc": "2026-10-14T09:40:31.293474+00:00",
+    "source": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/checkpoints/ckpt--iter_0560--epoch_2.00--step_8960",
+    "destination": "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0560--epoch_2.00--step_8960",
+    "file_identities": {
+      "actor/global_step8960/bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt": {
+        "bytes": 13200600768,
+        "inode": 1099979877509,
+        "mtime_ns": "1791970211170741646"
+      },
+      "actor/global_step8960/mp_rank_00_model_states.pt": {
+        "bytes": 2200157624,
+        "inode": 1099979878798,
+        "mtime_ns": "1791970187619741615"
+      },
+      "actor/latest": {
+        "bytes": 15,
+        "inode": 1099979877510,
+        "mtime_ns": "1791970211173741646"
+      },
+      "actor/zero_to_fp32.py": {
+        "bytes": 25314,
+        "inode": 1099979878799,
+        "mtime_ns": "1791970211172741646"
+      },
+      "custom_checkpoint_0.pkl": {
+        "bytes": 976,
+        "inode": 1099979878792,
+        "mtime_ns": "1791970179827741604"
+      },
+      "custom_checkpoint_10.pkl": {
+        "bytes": 980,
+        "inode": 1099979877506,
+        "mtime_ns": "1791970179828741604"
+      },
+      "custom_checkpoint_11.pkl": {
+        "bytes": 916,
+        "inode": 1099979877507,
+        "mtime_ns": "1791970179828741604"
+      },
+      "hf_pretrained/config.json": {
+        "bytes": 792,
+        "inode": 1099979878794,
+        "mtime_ns": "1791970179829741604"
+      },
+      "hf_pretrained/generation_config.json": {
+        "bytes": 111,
+        "inode": 1099979877508,
+        "mtime_ns": "1791970179829741604"
+      },
+      "hf_pretrained/pytorch_model.bin": {
+        "bytes": 2200124348,
+        "inode": 1099979878795,
+        "mtime_ns": "1791970183725741609"
+      }
+    },
+    "total_bytes": 17600911844,
+    "owners": {
+      "queue": {
+        "pid": 2826646,
+        "startticks": 1362248004,
+        "state": "S"
+      },
+      "scoped": {
+        "pid": 2826649,
+        "startticks": 1362248013,
+        "state": "S"
+      },
+      "trainer": {
+        "pid": 2826650,
+        "startticks": 1362248017,
+        "state": "S"
+      }
+    },
+    "trainer_state": {
+      "global_step": 8960,
+      "epoch": 2,
+      "iteration": 560
+    },
+    "actor_global_steps": 8960,
+    "actor_skipped_steps": 0,
+    "scheduler_last_batch_iteration": 8959,
+    "active_adam_steps": [
+      8960,
+      8960
+    ],
+    "source_stable": true,
+    "quota": {
+      "ceph.quota.max_bytes": 1099511627776,
+      "ceph.dir.rbytes": 777372268647,
+      "ceph.quota.max_files": 1000000,
+      "ceph.dir.rfiles": 599999
+    },
+    "conservative_projection": {
+      "scenario": {
+        "future_training_and_eval_artifact_growth_multiplier": 2,
+        "additional_bytes_including_HF_retention_transient_full_and_one_extra_protected_full": 195046182687,
+        "home_remaining_after_projection_bytes": 302576149054,
+        "additional_files_including_checkpoint_allowance": 307180,
+        "home_remaining_files_after_projection": 213387
+      }
+    },
+    "prior_protected_directories": [
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0010--epoch_2.00--step_0160",
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0060--epoch_2.00--step_0960",
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0090--epoch_2.00--step_1440",
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0160--epoch_2.00--step_2560",
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0240--epoch_2.00--step_3840",
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0320--epoch_2.00--step_5120",
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0400--epoch_2.00--step_6400",
+      "/home/atowell/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/spo-bos-only-from-sft-attempt1/ckpt--iter_0480--epoch_2.00--step_7680"
+    ],
+    "limits": "CPU counters, not tensor finiteness or GPU restore."
+  },
+  "copy_tool_session": 73609,
+  "copy_exit_code": 0,
+  "verification_tool_session": 37814,
+  "verification_exit_code": 0,
+  "limits": [
+    "CPU counters and byte equality, not tensor finiteness or GPU restore.",
+    "Same filesystem, not off-system backup. No efficacy selection."
+  ]
+}
