@@ -1,6 +1,46 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Latest result: October 14, 04:27 UTC
+## Latest result: October 14, 05:10 UTC
+
+**The fixed-endpoint reproduction remains unfinished.** The 50th scheduled
+evaluation, after **7,856 optimizer updates**, scores **56.624337% test mean
+pass@1** (11,950/21,104): **16.85 percentage points above original SFT** and
+0.099663 points below the supplied 56.724% reference.
+
+| Native mean pass@1 | Latest | Change from 7,696 updates |
+| --- | ---: | ---: |
+| Test | 56.62% | +0.441 percentage points |
+| Validation | 71.87% | −0.034 percentage points |
+| Non-held-out training subset | 86.37% | +0.487 percentage points |
+
+The [full audit](evidence/restart-eval490-20261014.json) verifies all 33,024
+saved answers and 21 native metrics, including original identities and
+prompt/tree/Arrow agreement. Test gains 93 correct responses, validation
+loses two and training gains 29. This is encouraging intermediate learning
+evidence, not completed reproduction or statistical equivalence.
+
+On test, 306 questions improve, 253 worsen and 760 are unchanged. Once-hit
+rises 1,055→1,065 while majority-vote correct questions fall 812→811.
+These describe different behavior; neither replaces prescribed mean pass@1.
+
+Retain **all 50 scheduled points**, the original **1,000-collection LR horizon**
+and fixed **690 collections / 11,040 updates** plus native final evaluation.
+No favorable checkpoint, score-dependent acceptance tolerance, causal BOS
+claim or measured RLM transfer is inferred. All 2,065 evaluation HTTP returns
+succeeded with zero errors/tracebacks. The original owner and sealed source continue.
+
+Full **7,680** recovery state remains [protected](evidence/restart-full7680-protection-20261014.json):
+all ten destination identities match the prior full-hash/counter receipt.
+Native 7,680 has rotated to six files, while the protected copy retains ten.
+Native 7,840 has a ten-file inventory only and differs from evaluated 7,856.
+The next 500/8,016 audit is prepared; protection target 8,960 remains
+preselected, not yet prepared or copied. See the
+[interpretation](evidence/restart-eval490-interpretation-20261014.json) and
+[complete series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far).
+The advisor package retains its October 12, 20:53:09 UTC cutoff: the central
+unfinished-endpoint claim, scientific limitations and next decision have not changed.
+
+## Historical result: October 14, 04:27 UTC (superseded above)
 
 **The fixed-endpoint reproduction remains unfinished.** The 49th scheduled
 evaluation, after **7,696 optimizer updates**, scores **56.183662% test mean
