@@ -1,7 +1,7 @@
 # RL reproduction status and earlier learning lessons
 
-Eight slides, about nine minutes. Current evidence cutoff: **12 October 2026,
-20:53 UTC**. The primary objective is an end-to-end reproduction of the published
+Eight slides, about nine minutes. Current evidence cutoff: **14 October 2026,
+05:47 UTC**. The primary objective is an end-to-end reproduction of the published
 SPO training result on our A100. That objective has **not** been achieved.
 Slide 1 gives the current status; slides 2–8 preserve the historical 7 October
 Dr. GRPO experiment and its RLM teaching discussion. These are separate methods,
@@ -19,10 +19,11 @@ in full. See the [local setup instructions](README.md).
 
 ## 1. SPO reproduction: not yet an end-to-end success
 
-Say: “We can recover the published score when we evaluate the authors' released
-weights. We have not recovered it by training the model ourselves. Our earlier
-run fell to 22.19% and stopped before the endpoint. The fresh restart has now
-improved from 39.77% to 47.64%, but its full comparison is still ahead.”
+Say: “Our own training now scores 56.85%, versus the paper's reported 56.7%,
+up from 39.77% before RL. This is substantial measured learning, but it is
+an intermediate evaluation at 8,016 updates. We still need the fixed
+11,040-update endpoint and final independent check before calling the
+end-to-end reproduction complete.”
 
 The released SPO model scored **56.69%**, matching the paper's **56.7%** to one
 decimal place. Our earlier model scored **22.19% after 7,856 optimizer updates** on
@@ -52,18 +53,26 @@ earlier diagnostic. They are late-policy responses, not newly generated SFT
 answers. Exact numbers and input provenance are in [the evidence](evidence.md)
 and [portable status receipt](current-status-evidence.json).
 
-The fresh BOS-consistent run now has a measured early gain: **10,055 / 21,104 =
-47.64% after 976 updates**, versus 8,394 / 21,104 = 39.77% before training.
-That is **+7.87 percentage points**, and +1.25 points since the preceding
-scheduled test. Validation is 60.54%. All 33,024 saved answers across test,
-validation and the training subset match the independently recomputed metrics.
+The current audit finds **11,997 / 21,104 = 56.847043% after 8,016 updates**,
+versus original SFT 8,394 / 21,104 = 39.774450%: **+17.072593 points**.
+Validation is 71.665550%; non-held-out training 86.760753%. All 33,024 answers
+and 21 native metrics agree with the independent regrade. Since 7,856 updates,
+test gains 47 correct responses, validation loses 12 and training gains 23.
+Numerically exceeding 56.7% is not statistical equivalence or permission
+to choose this checkpoint. All 51 scheduled points remain in the dossier.
 
-At the same 976 updates, the earlier run scored 45.84%. This makes the fresh
-trajectory worth following, but it is not a clean BOS-only ablation and does
-not establish lasting recovery. The previous run improved early too. We keep
-the original schedule and fixed 11,040-update endpoint, retain every result,
-and do not select the most favorable test checkpoint. Exact historical author
-code remains unresolved. Do not call this a completed reproduction.
+The new run has also passed the old run's 7,995-step failure count.
+That is operational progress, not a clean BOS-only ablation or proof of the
+earlier collapse's cause. The process-local BOS and finite-zero BF16 adapters
+are disclosed deviations; historical author code and selection remain unresolved.
+Keep the original 1,000-collection learning-rate horizon and fixed 690-collection /
+11,040-update endpoint, followed by final native test and independent regrade.
+
+For RLM work this provides a stronger calibration of reward/update/evaluation
+practice, not a proof that SPO is the right algorithm or that gains transfer
+to tool use, recursive decisions, costs or credit assignment. Those need
+their own tests. The user's purpose is methodological confidence, not a
+requirement to reuse every algorithmic detail.
 
 Transition: “The following slides preserve what the earlier, smaller Dr. GRPO
 exercise taught us. Those lessons remain useful, but are not the SPO result.”
@@ -239,7 +248,8 @@ baseline: a useful RLM should learn when delegation helps, not merely do it more
 
 Close: “The earlier math exercise suggested several RLM teaching experiments.
 Our immediate priority is now the full SPO training reproduction. The fresh
-run shows early learning, but the full result and durable recovery remain unproven.”
+run has reached the paper's numerical score range, but the fixed endpoint
+and final comparison remain unfinished.”
 
 ## Optional details if someone asks
 

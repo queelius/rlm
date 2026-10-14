@@ -1,6 +1,45 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Latest result: October 14, 05:10 UTC
+## Latest result: October 14, 05:47 UTC
+
+**Own training now scores 56.847043% test mean pass@1** (11,997/21,104)
+after **8,016 updates**, versus the paper's reported **56.7%**.
+That is **17.072593 percentage points above original SFT**. This is a verified
+intermediate result; the fixed-endpoint reproduction remains unfinished.
+
+| Native mean pass@1 | Latest | Change from 7,856 updates |
+| --- | ---: | ---: |
+| Test | 56.85% | +0.223 percentage points |
+| Validation | 71.67% | −0.201 percentage points |
+| Non-held-out training subset | 86.76% | +0.386 percentage points |
+
+The [full audit](evidence/restart-eval500-20261014.json) verifies all **33,024
+saved answers and 21 native metrics**, including original identities and
+prompt/tree/Arrow agreement. Test gains 47 correct responses, validation
+loses 12 and training gains 23. Test is numerically 0.147043 points above
+56.7%, or 0.123043 above the supplied 56.724% reference; this does not
+establish statistical equivalence or justify selecting this checkpoint.
+
+Test has 287 improved, 281 worsened and 751 unchanged questions; once-hit
+falls 1,065→1,060 while majority vote rises 811→823. Neither replaces mean
+pass@1. Keep **all 51 scheduled points**, the original **1,000-collection LR
+horizon** and fixed **690 collections / 11,040 updates**, followed by native
+final evaluation and independent regrading. No causal BOS or RLM-transfer claim.
+
+The original owner and sealed source continue; all 2,065 evaluation HTTP
+returns succeeded with no errors or tracebacks. Protected full **7,680**
+retains ten unchanged identities and its [full-hash/counter receipt](evidence/restart-full7680-protection-20261014.json).
+Native 8,000 has ten-file inventory only, distinct from evaluated 8,016;
+native 7,840 has rotated out. Next 510/8,176 CPU audit is prepared. Protection
+target 8,960 remains preselected, not yet prepared or copied.
+
+See the [interpretation](evidence/restart-eval500-interpretation-20261014.json)
+and [complete series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far).
+The advisor package is synchronized to this **October 14, 05:47 UTC**
+scientific cutoff because its old 47.64% progress display is materially stale.
+The endpoint, provenance, causality and RLM-transfer limitations remain.
+
+## Previous result: October 14, 05:10 UTC
 
 **The fixed-endpoint reproduction remains unfinished.** The 50th scheduled
 evaluation, after **7,856 optimizer updates**, scores **56.624337% test mean

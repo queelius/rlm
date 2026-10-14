@@ -31,13 +31,13 @@ What we tested & Latest result & What it establishes \\
 \midrule
 Authors' released weights & \textbf{56.69\%}, paper: 56.7\% & Evaluation check \\
 Earlier own run & \textbf{22.19\%} after 7,856 updates & Failed before endpoint \\
-Fresh restart & \textbf{39.77\% $\rightarrow$ 47.64\%} at 976 updates & Early gain: +7.87 points \\
+Fresh restart & \textbf{56.85\%} at 8,016 updates & +17.07 points over SFT \\
 \bottomrule
 \end{tabular}
 \end{center}
-\begin{block}{A verified inconsistency, now corrected}
-Generation and training now use the same start-of-text marker (BOS).
-The early gain does not prove that this repair prevents the earlier collapse.
+\begin{block}{An intermediate score at the paper's level}
+From 39.77\% before RL to 56.85\%; the paper reports 56.7\%.
+This is not the fixed endpoint or proof that the BOS repair caused recovery.
 \end{block}
 \textbf{Next:} continue to the fixed 11,040-update endpoint. Reproduction remains unfinished.
 \aside{GSM8K: mean correctness over 16 answers per question; all saved answers regraded. One training run, not independent replications. Exact historical-code fidelity remains unresolved.}

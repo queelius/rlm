@@ -1,6 +1,6 @@
 # Evidence and result update
 
-## Current SPO status: 12 October 2026, 20:53 UTC
+## Current SPO status: 14 October 2026, 05:47 UTC
 
 The first of eight visible slides reports the current **incomplete** SPO
 reproduction. Slides 2–8 retain the historical Dr. GRPO/RLM lessons; they are
@@ -47,22 +47,24 @@ original 1,000-iteration learning-rate horizon and fixed 690-collection /
 [admission receipt](/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/START.json)
 and [sealed queue](/project/alex_phd/runs/rl-paper-reproduction-20261012/training-queue-bos-only-001.json).
 
-The fresh run now scores **10,055 / 21,104 = 47.644996209249435%** after **976
-updates**, versus original SFT 8,394/21,104 = 39.77445034116755%: **+7.87054586808188
-percentage points**. It gained 264 correct answers since 816 updates. Validation
-is 3,613/5,968 = 60.53954%; training subset 3,961/5,952 = 66.54906% (not held out).
-The [complete evaluation60 audit](../../docs/spo-reproduction-2026-10-08/evidence/restart-eval60-20261012.json)
-checks all 33,024 saved answers, original identities, tree/Arrow bindings and
-all 21 native metric values. The
-[interpretation](../../docs/spo-reproduction-2026-10-08/evidence/restart-eval60-interpretation-20261012.json)
-records the preceding evaluation and the earlier run's stage-matched 45.84%
-result; the supporting report retains the full scheduled score history.
-Only 976/11,040 prescribed updates are evaluated. Early improvement is not
-lasting recovery, a clean causal BOS ablation or an independent-seed replication.
-The first slide, notes and current-status receipt now distinguish this gain
-from both the earlier failure and the authors' released-model evaluation.
+The fresh run scores **11,997 / 21,104 = 56.847043214556486%** after **8,016
+updates**, versus original SFT **39.77445034116755%**: **+17.07259287338893 points**.
+Validation is 4,277/5,968 = 71.665550%; non-held-out training 5,164/5,952 =
+86.760753%. Changes from 7,856 updates are +47/−12/+23 correct responses.
+The [complete evaluation500 audit](../../docs/spo-reproduction-2026-10-08/evidence/restart-eval500-20261014.json)
+matches all 33,024 answers, identities, prompt/tree/Arrow bindings and 21 metrics.
+Receipt SHA256: `6b9b5a7b7077df8ef2d5c42b37dd8b342b92aaf0cfd2bcf31b791405a0124e5e`.
+The [interpretation](../../docs/spo-reproduction-2026-10-08/evidence/restart-eval500-interpretation-20261014.json)
+retains paired changes and caveats; the supporting dossier keeps all 51 points.
 
-The last scheduled test and the saved full checkpoint used for
+This score is numerically above paper 56.7%, but is not statistical equivalence
+or the fixed final comparison. The original 1,000-collection LR horizon and
+690/11,040 endpoint plus final native test/regrade remain unchanged. One seed,
+reused evaluation questions, disclosed adapters and unresolved historical-code
+fidelity limit the claim. No best-test selection, causal BOS or RLM-transfer
+conclusion. Protected full 7,680 is a recovery state, not evaluated 8,016.
+
+The earlier failed run's last scheduled test and its saved full checkpoint used for
 the likelihood probe are different: **7,856 evaluation updates versus 7,840
 checkpoint updates**.
 

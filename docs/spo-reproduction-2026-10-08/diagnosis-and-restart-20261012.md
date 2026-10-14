@@ -1,55 +1,27 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Scientific-result cutoff: October 14, 2026, 05:10:06 UTC, after the completed
-full-answer audit was verified. All 50 scheduled restart points through
-evaluation 490 / 7,856 updates are retained. Latest test is 56.624337%,
-validation 71.866622%, non-held-out training 86.374328%. Changes from 480 are
-+93/−2/+29 correct responses. Mixed changes do not establish overfitting,
-convergence or equivalence. Non-held-out training is not proof of held-out
-generalization. Original-SFT gain is 16.849886 percentage points; gap below
-supplied 56.724% is 0.099663 points. Fixed-endpoint reproduction remains unfinished.
+Scientific-result cutoff: October 14, 2026, 05:47:06 UTC. All **51 scheduled
+restart points** through evaluation 500 / **8,016 updates** are retained.
+Latest test **56.847043%**, validation **71.665550%**, non-held-out training
+**86.760753%**. Changes from 490: +47/−12/+23 correct responses.
+Original-SFT gain: 17.072593 percentage points. Test is numerically 0.147043
+points above paper 56.7%, or 0.123043 above supplied 56.724%; this is not
+statistical equivalence or fixed-endpoint completion.
 
-Recovery status at 05:09:53 UTC: protected full 7,680 retains ten unchanged
-destination file identities, reusing the prior full-hash/counter receipt.
-Native 7,680 has rotated to six files; its protected copy and all seven earlier
-copies remain outside native cleanup. Native 7,840 has a ten-file inventory
-only, distinct from evaluated 7,856. No new checkpoint copy, counter/tensor
-scan or GPU restoration. The [protection receipt](evidence/restart-full7680-protection-20261014.json)
-still documents trainer/actor/active-Adam 7,680, scheduler 7,679, skipped zero,
-LR horizon 16,000; same-filesystem protection is not off-system backup.
-See the [latest interpretation](evidence/restart-eval490-interpretation-20261014.json).
-Next cadence target 8,960 is preselected, not yet prepared or copied.
+Recovery check at 05:46:47: protected full 7,680 retains ten unchanged
+destination identities and prior full-hash/counter evidence. Native 7,680
+has six files, native 8,000 ten-file inventory only; native 7,840 has rotated
+out. All seven earlier protected states remain. No new copy, counter/tensor
+scan or GPU restore. [Protection](evidence/restart-full7680-protection-20261014.json)
+is same-filesystem recovery, not off-system backup. Next 8,960 is preselected,
+not yet prepared or copied.
 
-CPU audit 52842 (490) exited 0 once; never resume/repeat it or earlier audits.
-The 490 wrapper was prepared before its evaluation began. Next scheduled
-500/8,016 audit was prepared before its native root existed, not executed.
-Protection cadence was also selected before future sources or scores existed.
-Faithful resume remains conditional/unimplemented; a successor can only start
-after interruption and complete whole-owner/GPU-process departure.
-The user authorized continuing past the former account reserve. Supported
-main-account reads now show 100% at 05:04:33 and 99% at 05:05:48:
-replenishment is observed, not assumed. No reset action or allocation renewal
-was performed. Observer deadline, ACK history, original owner, sealed source
-and scientific recipe stay unchanged.
-Native 6,240 had an inventory-only audit; that remains historical evidence,
-not an audit of evaluated 6,256 weights.
-Native5,920 has stable ten-file
-counter verification and a comparison of the same two predetermined tensors
-against protected5,120; both tensors are finite and changed. It is not separately
-protected or GPU-restored and differs from evaluated5,936. Native5,760 optimizer
-files rotated out at20:36:32; its full inventory is historical. No all-tensor scan
-beyond1,440. Latest full original-gold/reward/BOS audit is collection370; the
-earlier360 census remains narrower evidence. The fixed690/11,040 endpoint and
-original1,000-collection LR horizon remain unchanged.
-Our primary objective is the paper's **training result**.
-The broader purpose, reaffirmed by the user, is methodological calibration for
-continuing RLM research: check that our RL implementation, measurement and
-experimental reasoning can recover a published learning result. Success would
-strengthen confidence in those practices, not establish that SPO is the right
-algorithm for RLM or that all implementation assumptions are correct. We will
-report the fixed endpoint's exact score gap, gain from the starting model and
-remaining protocol differences; no acceptance tolerance is being chosen from
-an intermediate score.
+CPU audit **10869 (500) exited 0 once**; never resume/repeat it or previous audits.
+The wrapper was prepared before generation. Next 510/8,176 audit was prepared
+before its native root existed and is not executed. See the
+[latest interpretation](evidence/restart-eval500-interpretation-20261014.json).
+The advisor package advances to this cutoff; fixed 690/11,040 endpoint,
+1,000-collection LR horizon, native final evaluation and regrade are unchanged.
 
 ## The result we need to reproduce
 
@@ -133,7 +105,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, 6,896, 7,056, 7,216, 7,376, 7,536, 7,696, and 7,856 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, 6,896, 7,056, 7,216, 7,376, 7,536, 7,696, 7,856, and 8,016 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -191,8 +163,58 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 7,536 | 56.47% | 71.57% | 85.60% |
 | 7,696 | 56.18% | 71.90% | 85.89% |
 | 7,856 | 56.62% | 71.87% | 86.37% |
+| 8,016 | 56.85% | 71.67% | 86.76% |
 
-### Latest evaluation: 7,856 updates
+### Latest evaluation: 8,016 updates
+
+The full audit matches all 33,024 answers, original identities, prompt/tree/Arrow
+bindings and 21 native metrics. Test is 11,997/21,104 = 56.847043%, validation
+4,277/5,968 = 71.665550%, non-held-out training 5,164/5,952 = 86.760753%.
+Changes from 490 are +0.222707/−0.201072/+0.386425 percentage points.
+Test gains 47 responses (+17.072593 points over original SFT). All 51 points
+remain visible; numerical proximity/exceedance of a paper score is not an
+endpoint or statistical-equivalence claim.
+
+Test: 287 questions improve, 281 worsen, 751 unchanged; 679 sample gains/632
+losses. Once-hit 1,065→1,060, majority vote 811→823, first-sample 778→774.
+Validation: 69/82/222 questions, 160 gains/172 losses, once-hit 336→331,
+majority 296→290, first-sample 278→273. Training: 52/54/266 questions,
+130 gains/107 losses, once-hit 353→354, majority 333→338, first-sample
+332 unchanged. Mean pass@1 remains primary; reused questions and one seed
+are not independent replications. The training subset is not held out.
+
+Extraction failures/length endings: test 2→4, validation 1→0, training zero.
+Numeric-format-only potential rescues: 76→101, 50→43, 37→35. These diagnostics
+do not change native grading or rewards. Mixed validation/test changes do
+not establish overfitting or convergence; no acceptance tolerance is chosen
+from intermediate scores.
+
+All 2,065 evaluation HTTP returns succeeded, zero errors/tracebacks.
+At 05:53:48 the original three owners and seven sealed pins matched; 8,059
+contiguous logged updates had all 23 numeric fields finite. Window 8,000–8,059:
+ratios 0.98–1.07, approximate KL max 0.347, clip max 0.2, gradient norm max 58.1,
+no NaN/Inf or fatal marker. This is not all-tensor proof. Passing the old
+run's 7,995 failure count is operational progress, not proof of its cause.
+
+First saved collection-501 response 32 matches original question 1,776, gold
+32 and reward 1; 84−21−27−4=32 arithmetic is coherent. Inspected within
+67.67 seconds of first request; 525 successes, no errors/tracebacks.
+This predetermined example is not an accuracy estimate or full reward/BOS audit.
+Latest full-finite audit remains 1,440, fixed-two-tensor comparison 5,920,
+full reward/BOS collection 370.
+
+Protected 7,680 retains ten identities, native 8,000 inventory is not a fresh
+counter audit, and evaluated 8,016 is a distinct state. Next 510/8,176 audit
+prepared; 8,960 protection preselected, unprepared. Original whole owner
+continues unchanged to fixed 690/11,040 and final evaluation/regrade.
+
+Evidence: [500 audit](evidence/restart-eval500-20261014.json),
+[500 interpretation](evidence/restart-eval500-interpretation-20261014.json),
+[full 7,680 protection](evidence/restart-full7680-protection-20261014.json).
+The advisor opening status is updated coherently to this milestone;
+historical Dr. GRPO/RLM lessons remain separate.
+
+### Previous evaluation: 7,856 updates
 
 The full audit verifies all 33,024 saved answers, original identities,
 prompt/tree/Arrow bindings and 21 native metrics. Test is 11,950/21,104 =

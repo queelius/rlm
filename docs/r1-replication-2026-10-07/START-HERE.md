@@ -1,8 +1,10 @@
 # What math reinforcement learning taught us about training RLMs
 
-**Current priority, 12 October 2026, 20:53 UTC:** reproduce the published SPO
-training result on our A100. The fresh run improves from 39.77% to 47.64% after 976
-updates, but the fixed 11,040-update comparison is unfinished. See the
+**Current priority, 14 October 2026, 05:47 UTC:** reproduce the published SPO
+training result on our A100. Own training now scores **56.85% at 8,016 updates**
+versus paper **56.7%**, up from **39.77%**. All saved answers are regraded, but
+the fixed **11,040-update** comparison and final evaluation remain unfinished.
+This intermediate result does not establish causal BOS repair or RLM transfer. See the
 [current SPO report](../spo-reproduction-2026-10-08/README.md) for its evidence
 and the earlier failed attempt. The discussion below preserves the **separate
 7 October Dr. GRPO experiment and RLM teaching ideas**, not a completed SPO result.

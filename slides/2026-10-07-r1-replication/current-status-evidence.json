@@ -1,7 +1,7 @@
 {
-  "schema": "advisor-spo-current-status-20261012-v2",
-  "cutoff_utc": "2026-10-12T20:53:09.492795+00:00",
-  "claim": "Own-training reproduction incomplete; fresh restart shows measured early learning, not durable recovery or causal proof for BOS.",
+  "schema": "advisor-spo-current-status-20261014-v3",
+  "cutoff_utc": "2026-10-14T05:47:06.006644+00:00",
+  "claim": "Own training reaches56.847043% at8016updates versuspaper56.7; measured intermediate learning, fixed-endpoint reproduction incomplete, no causal BOS or RLM-transfer proof.",
   "released_author_weights": {
     "accuracy": 0.5668593631539045,
     "paper_percent": 56.7,
@@ -129,7 +129,7 @@
     },
     "limitations": "Fixed late-policy responses; likelihoods are not task accuracy, recovery evidence, or proof of collapse cause."
   },
-  "next_run_status_at_cutoff": "Fresh BOS-consistent run active; measured early improvement after976 updates, not completed reproduction or proven recovery. Exact historical author-code fidelity remains unresolved.",
+  "next_run_status_at_cutoff": "Original whole owner active,501collections/8016evaluatedupdates; fixed690/11040 plusfinalevaluation/regrade unfinished.",
   "next_run_admission": "/project/alex_phd/runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/START.json",
   "next_run_queue": "/project/alex_phd/runs/rl-paper-reproduction-20261012/training-queue-bos-only-001.json",
   "next_run_fixed_updates": 11040,
@@ -158,36 +158,38 @@
     "terminal_receipt": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/result.json"
   },
   "fresh_training": {
-    "latest_scheduled_eval_updates": 976,
-    "completed_collections": 61,
-    "test_correct": 10055,
+    "latest_scheduled_eval_updates": 8016,
+    "completed_collections": 501,
+    "test_correct": 11997,
     "test_answers": 21104,
     "test_questions": 1319,
     "answers_per_question": 16,
-    "test_accuracy": 0.4764499620924943,
+    "test_accuracy": 0.5684704321455648,
     "original_sft_correct": 8394,
     "original_sft_accuracy": 0.3977445034116755,
-    "gain_percentage_points": 7.87054586808188,
-    "previous_scheduled_eval_updates": 816,
-    "previous_scheduled_test_correct": 9791,
-    "validation_correct": 3613,
+    "gain_percentage_points": 17.07259287338893,
+    "previous_scheduled_eval_updates": 7856,
+    "previous_scheduled_test_correct": 11950,
+    "validation_correct": 4277,
     "validation_answers": 5968,
-    "train_subset_correct": 3961,
+    "train_subset_correct": 5164,
     "train_subset_answers": 5952,
     "train_subset_is_held_out": false,
     "all33024_answers_and21_metrics_verified": true,
     "fixed_endpoint_updates": 11040,
     "fixed_endpoint_reached": false,
-    "last_audited_full_checkpoint_step": 960,
-    "audit": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval60-20261012.json",
-    "audit_sha256": "869375e5f43b0575ad7892f2269eb8338c3cb110d51f6bcad5a57f322ad8d0c2",
-    "interpretation": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval60-interpretation-20261012.json",
-    "earlier_run_same976_update_test_correct": 9674,
+    "last_audited_full_checkpoint_step": 7680,
+    "audit": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval500-20261014.json",
+    "audit_sha256": "6b9b5a7b7077df8ef2d5c42b37dd8b342b92aaf0cfd2bcf31b791405a0124e5e",
+    "interpretation": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval500-interpretation-20261014.json",
     "limits": [
-      "One training ancestry, not independent training-seed replication; no statistical-significance claim.",
-      "Prior failed run also improved early; neither early accuracy nor BOS likelihood diagnostics prove durable recovery or its cause.",
-      "The complete fixed690/11040 endpoint and exact historical source/selection rationale remain unresolved.",
-      "Mean pass@1 is retained; secondary coverage/majority metrics do not replace it. Training subset is not held out."
-    ]
+      "Author released56.69% versus paper56.7 is evaluator validation, not our training gain.",
+      "BOS-only and finite-zeroBF16 adapters are disclosed deviations; EOS omission and historical author source/selection remain unresolved.",
+      "No acceptance tolerance chosen from intermediate scores; all scheduled points retained.",
+      "Prior own22.19% run exited1 at7995, not allocation timeout; failures/checkpoints preserved.",
+      "No all-tensor scan beyond1440, two-fixed-tensor change beyond5920 or full reward/BOS beyondcollection370 in this review.",
+      "EXAMPLES.json is empty legacy metadata, not a new qualitative example corpus."
+    ],
+    "scheduled_points_retained": 51
   }
 }

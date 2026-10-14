@@ -1,0 +1,195 @@
+{
+  "schema": "spo-evaluation500-interpretation-v1",
+  "checked_utc": "2026-10-14T05:47:06.006644+00:00",
+  "receipt_created_utc": "2026-10-14T05:46:49.443990+00:00",
+  "rows": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 11997,
+      "percent": 56.847043214556486,
+      "previous_correct": 11950,
+      "delta_correct": 47,
+      "delta_pp": 0.22270659590598937,
+      "extraction_failures": [
+        2,
+        4
+      ],
+      "numeric_format_only_potential_rescues": [
+        76,
+        101
+      ],
+      "majority_vote_correct_questions": [
+        811,
+        823
+      ]
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 4277,
+      "percent": 71.66554959785523,
+      "previous_correct": 4289,
+      "delta_correct": -12,
+      "delta_pp": -0.20107238605898123,
+      "extraction_failures": [
+        1,
+        0
+      ],
+      "numeric_format_only_potential_rescues": [
+        50,
+        43
+      ],
+      "majority_vote_correct_questions": [
+        296,
+        290
+      ]
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 5164,
+      "percent": 86.76075268817205,
+      "previous_correct": 5141,
+      "delta_correct": 23,
+      "delta_pp": 0.3864247311827957,
+      "extraction_failures": [
+        0,
+        0
+      ],
+      "numeric_format_only_potential_rescues": [
+        37,
+        35
+      ],
+      "majority_vote_correct_questions": [
+        333,
+        338
+      ]
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "better": 287,
+      "worse": 281,
+      "unchanged": 751,
+      "gained_correct_samples": 679,
+      "lost_correct_samples": 632,
+      "once_hit_questions": [
+        1065,
+        1060
+      ],
+      "first_sample_correct_questions": [
+        778,
+        774
+      ]
+    },
+    "validation": {
+      "better": 69,
+      "worse": 82,
+      "unchanged": 222,
+      "gained_correct_samples": 160,
+      "lost_correct_samples": 172,
+      "once_hit_questions": [
+        336,
+        331
+      ],
+      "first_sample_correct_questions": [
+        278,
+        273
+      ]
+    },
+    "train": {
+      "better": 52,
+      "worse": 54,
+      "unchanged": 266,
+      "gained_correct_samples": 130,
+      "lost_correct_samples": 107,
+      "once_hit_questions": [
+        353,
+        354
+      ],
+      "first_sample_correct_questions": [
+        332,
+        332
+      ]
+    }
+  },
+  "test_vs_sft_pp": 17.07259287338893,
+  "gap_below_supplied56_724_pp": -0.12304321455648903,
+  "audit_totals": {
+    "answers": 33024,
+    "metrics": 21,
+    "all_match": true
+  },
+  "artifact_hashes": {
+    "RECEIPT.json": {
+      "bytes": 41162,
+      "sha256": "6b9b5a7b7077df8ef2d5c42b37dd8b342b92aaf0cfd2bcf31b791405a0124e5e"
+    },
+    "INPUT-MANIFEST.json": {
+      "bytes": 706135,
+      "sha256": "ef9a45b5a473e48e57a3c29a4e7f6a77dde9707f2607bed9b380aebd93282fed"
+    },
+    "QUESTION-COUNTS.json": {
+      "bytes": 782786,
+      "sha256": "36eefa138cc6cce48cc88982c5e1d058466e87ef9d304a686d8b99a1e77742fa"
+    },
+    "EXAMPLES.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    }
+  },
+  "iteration": 500,
+  "collections_at_evaluation": 501,
+  "optimizer_updates_at_evaluation": 8016,
+  "previous_iteration": 490,
+  "scheduled_points_retained": 51,
+  "preparation": "eval500-regrade-001/PREPARATION.json",
+  "receipt": "eval500-regrade-001/RECEIPT.json",
+  "verified_event_count": 161,
+  "event_types": {
+    "evaluation": 153,
+    "finished": 8
+  },
+  "additional_results_during_review": "Three new500 split metrics; all audited exactly once by10869. Reuse completed490 audit on delayed notifications.",
+  "service": {
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_prefix_bytes": 3270921,
+    "log_prefix_sha256": "8926bf0e7e733db4a5d12361b270aa9d9a221094a0fb51638ab7a55238bbb363"
+  },
+  "checkpoint_status": {
+    "checked_utc": "2026-10-14T05:46:47.700327+00:00",
+    "protected7680_all_ten_identities_unchanged": true,
+    "protected7680_receipt_sha256": "ba2767408e9b715a878bf2a321634e63c98e444beb3d5a4157d7bd8d8a3a5595",
+    "prior_seven_protected_states_preserved": true,
+    "evaluated_updates": 8016,
+    "latest_native_saved_updates": 8000,
+    "latest_native_saved_state_file_count": 10,
+    "protected_saved_updates": 7680,
+    "scope": "Protected7680 ten unchanged identities retain prior full-hash/counter evidence; native7680 sixfiles, native8000 ten-file inventory only. Previousnative7840 rotated out. No new copy, tensor/counter inspection or GPU restore.",
+    "next_protection_updates": 8960,
+    "next_protection_state": "Preselected next1280-update cadence target; not prepared, copied or launched."
+  },
+  "interpretation": [
+    "Test gains47 correct responses (+0.222707 percentage points), validation loses12 (-0.201072), nonheldout train gains23 (+0.386425). Gain over original SFT17.072593 points. Test56.847043 is numerically0.147043 points above paper56.7 and0.123043 above supplied56.724 reference; intermediate result, not fixed-endpoint completion or equivalence.",
+    "Test287 improve,281 worsen,751 unchanged;679 correct-sample gains and632 losses. Once-hit1065to1060, majority811to823, first-sample778to774. Distinct metrics cannot replace mean pass@1.",
+    "Validation69 improve,82 worsen,222 unchanged;160 gains/172 losses. Training52 improve,54 worsen,266 unchanged;130 gains/107 losses. One seed and reused questions are not independent training replications; training subset is not held out.",
+    "Test extraction failures/length endings2to4, validation1to0, training0unchanged. Numeric-format potential rescues76to101,50to43,37to35 are diagnostics, not native score or reward changes.",
+    "All33024 answers/21metrics match original identities and prompt/tree/Arrow binding. All51scheduled points retained. Fixed690/11040 plus native final test and regrade unfinished;1000-collection LR horizon unchanged. No score-dependent checkpoint or acceptance tolerance.",
+    "At05:53:48 original owners/seven sealed pins match;8059 contiguous updates all23loggedfieldsfinite.8000..8059 ratios.98..1.07,approxKLmax.347,clipmax.2,gradmax58.1; no loggedNaN/Inf/high-ratio/traceback/OOM/disk marker. Passing prior7995 failure count is operational progress, not causal proof.",
+    "First501 saved response32 matches originalquestion1776/gold32/reward1;84-21-27-4=32 arithmetic is coherent. Inspected67.67seconds afterfirstrequest,525successes0errors0tracebacks. Operational sample, not accuracy orfullreward/BOSaudit.",
+    "Protected7680 tenidentities unchanged; earliersevenprotectedstates remain. Native8000 inventory10only distinctfrom evaluated8016. Next510/8176 audit prepared before native root;8960protection preselected, unprepared."
+  ],
+  "decision": "Continue unchanged original whole owner to fixed690/11040 and final native evaluation/regrade, preserving1000-collection LR horizon. Audit510 once after fresh gates; preserve recovery evidence, prepare8960 protection before save. No favorable checkpoint, competing GPU work, reset action or allocation renewal.",
+  "advisor_package_decision": "Update advisor opening slide, scalar/evidence, audience PDF, pdfpc notes, speaker guide and learning-guide frontmatter together to October14 05:47:06 cutoff. Intermediate56.847 versus56.7 materially changes displayed progress from47.64, while incomplete-endpoint, causal and RLM-transfer limits remain. Historical DrGRPO slides/pages stay unchanged.",
+  "limits": [
+    "Author released56.69% versus paper56.7 is evaluator validation, not our training gain.",
+    "BOS-only and finite-zeroBF16 adapters are disclosed deviations; EOS omission and historical author source/selection remain unresolved.",
+    "No acceptance tolerance chosen from intermediate scores; all scheduled points retained.",
+    "Prior own22.19% run exited1 at7995, not allocation timeout; failures/checkpoints preserved.",
+    "No all-tensor scan beyond1440, two-fixed-tensor change beyond5920 or full reward/BOS beyondcollection370 in this review.",
+    "EXAMPLES.json is empty legacy metadata, not a new qualitative example corpus."
+  ]
+}

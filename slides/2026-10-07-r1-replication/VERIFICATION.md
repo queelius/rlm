@@ -1,5 +1,32 @@
 # Presentation verification
 
+## Audited SPO intermediate result, 14 October 2026, 05:47 UTC
+
+- Synchronized the opening slide, scalar/evidence record, audience PDF,
+  concise pdfpc notes, speaker guide, README and learning-guide front page.
+  Own training: 11,997/21,104 = 56.847043% at 8,016 updates, versus paper
+  56.7% and original SFT 39.774450% (+17.072593 points). All 33,024 answers
+  and 21 native metrics match. The fixed 690/11,040 endpoint and final
+  evaluation/regrade remain unfinished; all 51 scheduled points are retained.
+  No favorable checkpoint, statistical equivalence, BOS causality or RLM
+  transfer is claimed. Historical Dr. GRPO material stays separate.
+- Both Tectonic 0.17.0 builds exited 0 without LaTeX warnings or overfull/
+  underfull boxes. Logs and guide preview remain in
+  `/project/alex_phd/runs/rl-paper-reproduction-20261012/advisor-eval500-verify-B5N9Xh`.
+  The first inspection command used the general RLM Python environment,
+  which lacks `fitz`; rerunning with the existing
+  `rlm-advisor-figures-20260911` environment passed without any installation
+  or environment mutation.
+- `make notes notes-check` and `verify_deck.py` pass: eight titles match,
+  all slide and guide text is within bounds; 16 guide pages. Notes have
+  11, 11, 12, 12, 12, 13, 12 and 12 lines, each at most 42 characters.
+  Read back the wrapped opening note; visually inspected the changed slide
+  and guide front page, with no clipping or overlap. No live pdfpc GUI test.
+- Historical slide sources 2–8 and guide page text 1–15 match the preceding
+  committed version. Portable audit checksum and result arithmetic match.
+  The two unrelated untracked files retain their fingerprints. No training
+  owner, sealed source, scorer, model environment or scientific recipe changed.
+
 ## Fresh SPO learning, 12 October 2026, 20:53 UTC
 
 - Updated the opening slide and guide frontmatter with the fully audited
