@@ -1,5 +1,10 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
+## Latest audited sequence: October 14, 15:07 UTC
+
+**57.666793% test at 10,256 updates**; fixed endpoint still unfinished.
+See [all eight newly audited scheduled evaluations](progress-through640-20261014.md).
+
 ## Latest result: October 14, 09:10 UTC
 
 Own training scores **56.870735% test mean pass@1 at8,816 updates**, independently
