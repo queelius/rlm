@@ -1,27 +1,28 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Scientific-result cutoff: October 14, 2026, 00:20:17 UTC, after both new
-full-answer audit completions were confirmed. All 43 scheduled restart points
-through evaluation 420 / 6,736 updates are retained. Latest test is 56.197877%,
-validation 71.296917%, non-held-out training 84.072581%. The previous 410 point
-is 55.923048% test: we retain its decline and the subsequent partial rebound.
-Latest original-SFT gain is 16.423427 percentage points; the gap below supplied
-56.724% is 0.526123 points. This is not completed fixed-endpoint reproduction.
+Scientific-result cutoff: October 14, 2026, 01:03:58 UTC, after the completed
+full-answer audit was verified. All 44 scheduled restart points through
+evaluation 430 / 6,896 updates are retained. Latest test is 56.174185%,
+validation 70.526139%, non-held-out training 84.694220%. Changes from 420 are
+−5/−46/+37 correct responses: a nearly unchanged test average, lower validation,
+and higher training accuracy. This does not establish overfitting or convergence.
+The original-SFT gain is 16.399735 percentage points; the gap below supplied
+56.724% is 0.549815 points. Fixed-endpoint reproduction remains unfinished.
 
-Protected 6,400 remains the latest recovery copy. At 00:21:49 all ten destination
-identities still matched the previous full-hash receipt, and all six earlier
-protected directories existed. Native 6,400 has now rotated to six files;
-native 6,720 has a ten-file inventory only. Neither is an audit or protected
-copy of the evaluated 6,736 weights. No new all-tensor scan or GPU restore.
+Protected 6,400 remains the latest recovery copy. At 01:03:58 all ten destination
+identities matched the previous full-hash receipt. Native 6,400 has six files;
+native 6,880 has a ten-file inventory only. Neither is a protected copy or tensor
+audit of evaluated 6,896 weights. No new all-tensor scan or GPU restore.
 See the [protection receipt](evidence/restart-full6400-protection-20261013.json)
-and [resumption/state check](evidence/restart-resumption-20261014.json).
+and [latest interpretation/state check](evidence/restart-eval430-interpretation-20261014.json).
 
-CPU audits 95818 (410) and 14549 (420) both exited 0 once; never resume/repeat them.
-Scheduled 430/6,896 audit is prepared, not executed. Coarse 7,680 recovery protection
-is preselected but not yet prepared/copied. The user explicitly authorized
-continuing past the former account reserve; no reset assumed or performed.
-The observer resumed under the same deadline with preserved STATE/ACKs, while
-the original GPU training owner, source and scientific recipe stayed unchanged.
+CPU audit 48843 (430) exited 0 once; never resume/repeat it or earlier audits.
+The 430 wrapper was prepared before its evaluation began. Next scheduled
+440/7,056 audit is prepared before its native root exists, not executed.
+Coarse 7,680 recovery protection is preselected but not yet prepared/copied.
+The user explicitly authorized continuing past the former account reserve;
+no reset is assumed or performed. The resumed observer retains its deadline
+and ACK history. Original GPU owner, sealed source and scientific recipe stay unchanged.
 Native 6,240 had an inventory-only audit; that remains historical evidence,
 not an audit of evaluated 6,256 weights.
 Native5,920 has stable ten-file
@@ -124,7 +125,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, and 6,736 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, and 6,896 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -175,8 +176,44 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 6,416 | 56.62% | 69.86% | 82.90% |
 | 6,576 | 55.92% | 70.54% | 82.88% |
 | 6,736 | 56.20% | 71.30% | 84.07% |
+| 6,896 | 56.17% | 70.53% | 84.69% |
 
-### Latest evaluations: 6,576 and 6,736 updates
+### Latest evaluation: 6,896 updates
+
+The full audit checks all 33,024 saved answers, original identities,
+prompt/tree/Arrow bindings and 21 native metrics. Test is 11,855/21,104 =
+56.174185%, validation 4,209/5,968 = 70.526139%, and non-held-out training
+5,041/5,952 = 84.694220%. Changes from 420 are −0.023692/−0.770777/+0.621640
+percentage points. All 44 scheduled points remain visible.
+
+The test mean changes little, but 282 questions improve, 287 worsen and 750
+are unchanged; 665 gained correct samples offset 670 lost. Once-hit falls
+1,041→1,039. On training, the average improves even though more questions
+worsen than improve (69 versus 54), and once-hit falls 353→350. Larger gains
+on fewer questions can offset broader, smaller losses. These are descriptive
+same-question transitions, not independent training replications or proof
+of overfitting. Mean pass@1 remains the primary metric.
+
+Test extraction failures/length endings decline from six to four; numeric-format
+diagnostic rescues remain 80. No grader or reward change follows. The gain
+over original SFT is 16.399735 points and the gap below supplied 56.724 is
+0.549815 points. Statistical equivalence, a causal BOS effect and RLM transfer
+remain unestablished. Continue the fixed 690/11,040 endpoint under the original
+1,000-collection LR horizon.
+
+All 2,065 evaluation HTTP returns succeeded with no errors/tracebacks. Training
+was verified through 6,910 contiguous finite logged updates, with original
+owners and seven sealed source pins unchanged. These logs are not a new
+full-tensor scan. Protected 6,400 remains intact; native 6,880 inventory is
+not an audit of evaluated 6,896 weights. The next 440/7,056 audit is prepared
+before generation; coarse 7,680 protection remains the next preparation.
+
+Evidence: [430 audit](evidence/restart-eval430-20261014.json) and
+[430 interpretation](evidence/restart-eval430-interpretation-20261014.json).
+The advisor package keeps its explicit earlier cutoff and unfinished-endpoint
+story; this milestone updates the supporting dossier.
+
+### Previous evaluations: 6,576 and 6,736 updates
 
 Each full audit verifies 33,024 answers and 21 metrics. At 410, test loses 147
 correct samples while validation gains 41 and non-held-out training loses 1.

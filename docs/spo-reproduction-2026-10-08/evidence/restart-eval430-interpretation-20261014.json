@@ -1,0 +1,244 @@
+{
+  "schema": "spo-scheduled-evaluation430-interpretation-v1",
+  "checked_utc": "2026-10-14T01:03:58.868763+00:00",
+  "receipt_created_utc": "2026-10-14T01:02:18.334299+00:00",
+  "rows": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 11855,
+      "percent": 56.17418498862775,
+      "previous_correct": 11860,
+      "delta_correct": -5,
+      "delta_pp": -0.023692191053828658,
+      "metrics": {
+        "correct_frac": 0.5617418498862775,
+        "exact_match": 0.7877179681576952,
+        "exact_match_frac": 0.5617418498862775,
+        "majority_vote_acc": 0.620166793025019,
+        "none_answer_extracted_frac_per_problem": 0.00018953752843062926,
+        "once_hit": 0.7877179681576952,
+        "unique_answer_count": 3.6224412433661866
+      },
+      "previous_metrics": {
+        "correct_frac": 0.5619787717968158,
+        "exact_match": 0.7892342683851402,
+        "exact_match_frac": 0.5619787717968158,
+        "majority_vote_acc": 0.6307808946171342,
+        "none_answer_extracted_frac_per_problem": 0.0002843062926459439,
+        "once_hit": 0.7892342683851402,
+        "unique_answer_count": 3.6633813495072025
+      },
+      "extraction_failures": 4,
+      "previous_extraction_failures": 6,
+      "finish_reasons": {
+        "length": 4,
+        "stop": 21100
+      },
+      "numeric_format_rescues": 80,
+      "previous_numeric_format_rescues": 80
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 4209,
+      "percent": 70.52613941018767,
+      "previous_correct": 4255,
+      "delta_correct": -46,
+      "delta_pp": -0.7707774798927614,
+      "metrics": {
+        "correct_frac": 0.7052613941018767,
+        "exact_match": 0.8820375335120644,
+        "exact_match_frac": 0.7052613941018767,
+        "majority_vote_acc": 0.7506702412868632,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.8820375335120644,
+        "unique_answer_count": 2.5093833780160857
+      },
+      "previous_metrics": {
+        "correct_frac": 0.7129691689008043,
+        "exact_match": 0.8820375335120644,
+        "exact_match_frac": 0.7129691689008043,
+        "majority_vote_acc": 0.7640750670241286,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.8820375335120644,
+        "unique_answer_count": 2.525469168900804
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "finish_reasons": {
+        "stop": 5968
+      },
+      "numeric_format_rescues": 51,
+      "previous_numeric_format_rescues": 52
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 5041,
+      "percent": 84.69422043010752,
+      "previous_correct": 5004,
+      "delta_correct": 37,
+      "delta_pp": 0.6216397849462365,
+      "metrics": {
+        "correct_frac": 0.8469422043010753,
+        "exact_match": 0.9408602150537635,
+        "exact_match_frac": 0.8469422043010753,
+        "majority_vote_acc": 0.8924731182795699,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9408602150537635,
+        "unique_answer_count": 2.0080645161290325
+      },
+      "previous_metrics": {
+        "correct_frac": 0.8407258064516129,
+        "exact_match": 0.9489247311827957,
+        "exact_match_frac": 0.8407258064516129,
+        "majority_vote_acc": 0.8817204301075269,
+        "none_answer_extracted_frac_per_problem": 0.00016801075268817206,
+        "once_hit": 0.9489247311827957,
+        "unique_answer_count": 1.9946236559139785
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 1,
+      "finish_reasons": {
+        "stop": 5952
+      },
+      "numeric_format_rescues": 42,
+      "previous_numeric_format_rescues": 40
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "better": 282,
+      "worse": 287,
+      "unchanged": 750,
+      "gained": 665,
+      "lost": 670,
+      "first_before": 15,
+      "first_after": 15,
+      "once_hit_before": 1041,
+      "once_hit_after": 1039
+    },
+    "validation": {
+      "better": 67,
+      "worse": 71,
+      "unchanged": 235,
+      "gained": 137,
+      "lost": 183,
+      "first_before": 16,
+      "first_after": 16,
+      "once_hit_before": 329,
+      "once_hit_after": 329
+    },
+    "train": {
+      "better": 54,
+      "worse": 69,
+      "unchanged": 249,
+      "gained": 181,
+      "lost": 144,
+      "first_before": 12,
+      "first_after": 10,
+      "once_hit_before": 353,
+      "once_hit_after": 350
+    }
+  },
+  "test_vs_sft_pp": 16.399734647460196,
+  "gap_below_supplied56_724_pp": 0.549815011372246,
+  "audit_totals": {
+    "answers": 33024,
+    "native_metrics": 21
+  },
+  "verified_event_count": 138,
+  "event_types": {
+    "evaluation": 130,
+    "finished": 8
+  },
+  "service": {
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "prefix_bytes": 3271145,
+    "sha256": "645264835e143f08ca42adfcec0322cb0d5b461b5cf1ea33bc1c6d2febbf7e1b"
+  },
+  "checkpoint_status": {
+    "protected6400_all_ten_identities_unchanged": true,
+    "protected6400_receipt_sha256": "b06432c6d0c694d2a4159b8a394bbdc863681f827a7bea0ae08698d028711e27",
+    "native_inventory": [
+      {
+        "name": "ckpt--iter_0040--epoch_2.00--step_0640",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0080--epoch_2.00--step_1280",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0120--epoch_2.00--step_1920",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0160--epoch_2.00--step_2560",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0200--epoch_2.00--step_3200",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0240--epoch_2.00--step_3840",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0280--epoch_2.00--step_4480",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0320--epoch_2.00--step_5120",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0360--epoch_2.00--step_5760",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0400--epoch_2.00--step_6400",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0430--epoch_2.00--step_6880",
+        "file_count": 10
+      }
+    ],
+    "scope": "Identity reuse of prior full hashes; no new full tensor/counter/hash scan, copy or GPU restore."
+  },
+  "artifact_hashes": {
+    "RECEIPT.json": "dd906b031ddc237a0eb0bff7dcefb34c06badaa79cde97275710c67d850478ea",
+    "INPUT-MANIFEST.json": "04b7de106f5874ae484da45a97bfe07797887488599638cd823ff8598a4a7c59",
+    "QUESTION-COUNTS.json": "b66ab3512e0e35bcd481c46f2d94d73e91a3ccdd6914cbaf5776bc6b3c26e8e4",
+    "EXAMPLES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "iteration": 430,
+  "collections_at_evaluation": 431,
+  "optimizer_updates_at_evaluation": 6896,
+  "previous_iteration": 420,
+  "scheduled_points_retained": 44,
+  "preparation": "eval430-regrade-001/PREPARATION.json",
+  "receipt": "eval430-regrade-001/RECEIPT.json",
+  "interpretation": [
+    "Test is effectively unchanged descriptively: five fewer correct samples (-0.023692 percentage points). Validation loses46 (-0.770777points), while nonheldout train gains37 (+0.621640points). This mixed one-checkpoint pattern does not establish overfitting, convergence, statistical equivalence or a causal mechanism.",
+    "The small aggregate test change masks282 improved questions,287 worsened and750 unchanged;665 gained correct samples are offset by670 lost. Once-hit falls1041to1039. On training, the mean rises even though54questions improve and69worsen, and once-hit falls353to350. Reliability and coverage are distinct; neither once-hit nor majority vote replaces mean pass@1.",
+    "Test extraction failures/length endings fall6to4 and numeric-format diagnostic rescues remain80. The native grader and reward are unchanged; there is no evidence here to retune them.",
+    "Gain over originalSFT8394/21104 is16.399735points; gap below supplied56.724 is0.549815points. Keep all44scheduled points and fixed690/11040 plus native final regrade. This is measured intermediate learning, not completed training reproduction.",
+    "All33,024saved answers and21native metrics agree, including original identities and prompt/tree/Arrow binding. The43rd-to44th scheduled transition is descriptive on shared questions/seed, not an independent training-seed replication.",
+    "Original GPU owner and seven sealed source pins remain unchanged. Logged progress through6910finite contiguous updates is not a fresh full-parameter/tensor audit. Latest actual431response5400 versus gold100 is a reasoning error;710successfulHTTPreturns,0errors. Inspection161.59seconds after first request misses the normal90second target and is recorded as a coverage gap.",
+    "Native6880 ten-file inventory is distinct from evaluated6896 weights and is not a new protected copy, counter/finite audit or restore. Protected6400 identities remain unchanged. Next440/7056CPU audit was prepared before native440exists;7680protection remains preselected, not prepared/copied."
+  ],
+  "decision": "Continue unchanged original whole training/evaluation owner to prescribed690/11040; retain all44scheduled points. Independently regrade440 once after fresh gates, preserve all checkpoints/failures, prepare preselected7680protection. No favorable selection, recipe shortening, new GPU branch or reset.",
+  "advisor_package_decision": "Supporting dossier updated. No change to the advisor package's unfinished-endpoint claim, material limitation or next decision; retain its October12 20:53:09UTC cutoff.",
+  "limits": [
+    "Historical implementation/source selection unresolved; disclosed BOS-only and finite-zero BF16 adapters retained.",
+    "No causal BOS claim, no statistical equivalence or RLM transfer claim.",
+    "Snapshot comparisons on shared questions and one training seed do not establish training-seed uncertainty.",
+    "Published pointers are not checkpoint backup."
+  ]
+}

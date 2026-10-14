@@ -1,6 +1,46 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Latest result: October 14, 00:20 UTC
+## Latest result: October 14, 01:04 UTC
+
+**The fixed-endpoint reproduction remains unfinished.** The 44th scheduled
+evaluation, after **6,896 optimizer updates**, scores **56.174185% test mean
+pass@1** (11,855/21,104): **16.40 percentage points above original SFT** and
+0.549815 points below the supplied 56.724% reference.
+
+| Native mean pass@1 | Latest | Change from 6,736 updates |
+| --- | ---: | ---: |
+| Test | 56.17% | −0.024 percentage points |
+| Validation | 70.53% | −0.771 percentage points |
+| Non-held-out training subset | 84.69% | +0.622 percentage points |
+
+The [full audit](evidence/restart-eval430-20261014.json) verifies all 33,024
+saved answers and 21 native metrics, including original identities and
+prompt/tree/Arrow agreement. Test has five fewer correct responses overall,
+validation loses 46, and training gains 37. This mixed transition does not
+establish overfitting, convergence or statistical equivalence.
+
+The nearly unchanged test average hides movement: 282 questions improve,
+287 worsen and 750 remain unchanged. Once-hit falls from 1,041 to 1,039
+questions. Training mean accuracy rises while its once-hit also falls, from
+353 to 350. Coverage and response reliability are different measurements;
+neither once-hit nor majority vote replaces the prescribed mean pass@1.
+
+Retain **all 44 scheduled points**, the original **1,000-collection LR horizon**
+and fixed **690 collections / 11,040 updates** plus native final evaluation.
+No favorable checkpoint, reward change, causal BOS claim or measured RLM
+transfer is inferred. All 2,065 evaluation HTTP returns succeeded with zero
+errors/tracebacks. The original GPU owner and sealed training source continue.
+
+Full **6,400** recovery state remains protected, with all ten file identities
+matching prior full-hash evidence. Native **6,880** has a ten-file inventory
+only, distinct from evaluated 6,896 weights. Next: the prepared 440/7,056
+audit and preparation for preselected 7,680 full-state protection.
+See the [interpretation](evidence/restart-eval430-interpretation-20261014.json)
+and [complete series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far).
+The advisor package retains its October 12, 20:53:09 UTC cutoff: the central
+unfinished-endpoint claim and next decision have not changed.
+
+## Historical result: October 14, 00:20 UTC (superseded above)
 
 **The fixed-endpoint reproduction remains unfinished.** Two further scheduled
 evaluations are now independently audited. The latest, after **6,736 optimizer
