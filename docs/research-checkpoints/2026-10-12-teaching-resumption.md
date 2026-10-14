@@ -38,6 +38,19 @@ using one fitted seed. They are not 32 independent tasks. Teaching histories
 and prompt dose differ; we cannot isolate visibility alone. These are flat,
 supervised tool policies—not new RL gains or learned recursive delegation.
 
+A retrospective [behavior breakdown](2026-10-14-teaching-panel03-behavior.json)
+helps locate the remaining problem. Across the four policies, 65 of the 72
+failed attempts explicitly finish before producing the required inventory;
+the other seven hit call/context limits. Discovery has the most native action
+errors (432), but 387 occur in its ten failed attempts. Twelve of its 22
+successful attempts also contain at least one native action error. Thus error
+counts alone neither measure competence nor establish an ability to recover.
+The breakdown checks all 256 episode/root-node file hashes and recomputes
+target completion from the saved inventories. It suggests examining planning
+and completion checking, without proving a causal mechanism. The prepared
+recovery-versus-ordinary comparison, not this outcome-conditioned analysis,
+will test whether the new teaching intervention helps.
+
 After all eight predecessor jobs exited successfully and the entire queue and
 its scoped GPU owners departed, the frozen **new-structure pilot launched at
 22:17 UTC**. Its first real model response returned at 22:17:28; sixteen calls

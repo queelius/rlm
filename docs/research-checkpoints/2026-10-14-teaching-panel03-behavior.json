@@ -1,0 +1,130 @@
+{
+  "schema": "teaching-panel03-behavior-diagnostic-v1",
+  "checked_epoch": 1792016464.469973,
+  "source_receipt": "/project/alex_phd/runs/rlm-teaching-goal-20261014/PANEL03-COMPLETE.json",
+  "source_sha256": "1d3e4c7aee810770f85c7dd0ba519c45ceef7139807019882b01897e0c5bf126",
+  "arms": {
+    "original": {
+      "by_outcome": {
+        "success": {
+          "episodes": 3,
+          "calls": 81,
+          "generated_tokens": 1816,
+          "native_action_errors": 15,
+          "episodes_with_native_errors": 3,
+          "finished_without_goal": 0,
+          "stops": {
+            "finished": 3
+          }
+        },
+        "failure": {
+          "episodes": 29,
+          "calls": 1090,
+          "generated_tokens": 22778,
+          "native_action_errors": 112,
+          "episodes_with_native_errors": 29,
+          "finished_without_goal": 27,
+          "stops": {
+            "finished": 27,
+            "global_call_cap": 2
+          }
+        }
+      },
+      "first_actions": {
+        "get_info": 32
+      }
+    },
+    "stable": {
+      "by_outcome": {
+        "success": {
+          "episodes": 17,
+          "calls": 241,
+          "generated_tokens": 5876,
+          "native_action_errors": 15,
+          "episodes_with_native_errors": 8,
+          "finished_without_goal": 0,
+          "stops": {
+            "finished": 17
+          }
+        },
+        "failure": {
+          "episodes": 15,
+          "calls": 538,
+          "generated_tokens": 13342,
+          "native_action_errors": 94,
+          "episodes_with_native_errors": 13,
+          "finished_without_goal": 15,
+          "stops": {
+            "finished": 15
+          }
+        }
+      },
+      "first_actions": {
+        "get_info": 32
+      }
+    },
+    "random": {
+      "by_outcome": {
+        "success": {
+          "episodes": 14,
+          "calls": 203,
+          "generated_tokens": 5026,
+          "native_action_errors": 16,
+          "episodes_with_native_errors": 6,
+          "finished_without_goal": 0,
+          "stops": {
+            "finished": 14
+          }
+        },
+        "failure": {
+          "episodes": 18,
+          "calls": 827,
+          "generated_tokens": 21624,
+          "native_action_errors": 221,
+          "episodes_with_native_errors": 17,
+          "finished_without_goal": 17,
+          "stops": {
+            "finished": 17,
+            "context_cap": 1
+          }
+        }
+      },
+      "first_actions": {
+        "get_info": 32
+      }
+    },
+    "discovery": {
+      "by_outcome": {
+        "success": {
+          "episodes": 22,
+          "calls": 339,
+          "generated_tokens": 9156,
+          "native_action_errors": 45,
+          "episodes_with_native_errors": 12,
+          "finished_without_goal": 0,
+          "stops": {
+            "finished": 22
+          }
+        },
+        "failure": {
+          "episodes": 10,
+          "calls": 676,
+          "generated_tokens": 23185,
+          "native_action_errors": 387,
+          "episodes_with_native_errors": 10,
+          "finished_without_goal": 6,
+          "stops": {
+            "finished": 6,
+            "context_cap": 4
+          }
+        }
+      },
+      "first_actions": {
+        "get_info": 32
+      }
+    }
+  },
+  "checked_episode_node_files": 256,
+  "interpretation": "Native-action-error count is not a substitute for whole-task success. This retrospective breakdown is descriptive and conditioned on outcomes, not proof of a causal recovery mechanism or evidence from the queued recovery-teaching experiment.",
+  "next_decision": "Keep native whole-task success primary, report error/cost breakdown secondarily, and use the planned same-warm-start recovery-versus-ordinary comparison for the intervention question."
+}
