@@ -199,6 +199,37 @@ must not choose training inputs or favorable checkpoints. Broader transfer,
 independent fits and RL added value remain open questions; the full research
 goal is not complete.
 
+## October 14, 21:57 UTC: stable repair completes the next panel
+
+Stable-order repair has now completed both worlds on panel03:
+
+| Teaching policy | Whole-task successes | Calls | Generated tokens |
+|---|---:|---:|---:|
+| Original known-recipe teacher | 3/32 | 1,171 | 24,594 |
+| Stable-order repair | 17/32 | 779 | 19,218 |
+| Discovery teacher | 22/32 | 1,015 | 32,341 |
+
+Repair gains fifteen paired attempts and loses one against original teaching;
+against discovery it gains two and loses seven. Its world50 score of 10/16
+is slightly above discovery's 9/16, but the combined comparison still favors
+discovery. Repair uses fewer calls and generated tokens in this slice; that
+is not a claim of equal accuracy or general cost dominance.
+
+All 96 outcomes in this table match completed native replay, with zero transport
+failures. The check reconciled matching task/seed/inventory/runtime contracts
+and 6,170 unique audit-referenced hashes. The
+[evidence receipt](2026-10-14-teaching-panel03-stable.json) retains every outcome.
+Eight previously exposed goal identities are repeated across worlds and draws;
+these are not 32 independent new tasks. The final random-order/world50 cell is
+still running and will be retained, not replaced by the more favorable ordering.
+
+This strengthens the narrow repair-versus-weak-teacher result, not fresh transfer
+or superiority to discovery teaching. The frozen four-policy fresh-structure
+pilot remains next, followed by recovery versus ordinary teaching. The completed
+second-fit original/repair/discovery checkpoints are available for later reuse;
+a matched longer-training control for that seed still needs preparation.
+No new advisor-deck headline is justified before the fresh comparison.
+
 ## Historical October 12 checkpoint
 
 **Priority correction, October 12:** the advisor's primary objective is a
