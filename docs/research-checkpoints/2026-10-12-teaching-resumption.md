@@ -1,5 +1,57 @@
 # Resuming research on teaching RLM competencies
 
+## October 14 update: completed comparison and renewed research goal
+
+The October 12 status below is retained as a historical checkpoint, not the
+current queue. The math-RL reproduction has since completed; its result and
+boundaries are documented in the [October 14 advisor deck](../../slides/2026-10-14-rl-reproduction/).
+The user has now activated the goal of testing whether better teaching examples
+enable useful RLM learning and publishing the findings.
+
+All four prescribed panel02 repair readouts finished. Combining worlds42 and50:
+
+| Teaching policy | Whole-task successes | Model calls | Generated tokens |
+|---|---:|---:|---:|
+| Original-known teacher | 1/32 | 1,102 | 22,740 |
+| Stable-visible repair | 11/32 | 767 | 18,180 |
+| Random-visible repair | 13/32 | 1,112 | 27,763 |
+| Discovery teacher | 13/32 | 1,275 | 39,502 |
+
+Each policy faced the same eight goal identities, two worlds and two rollout
+draws. All 128 outcomes are observed, with zero transport failures. Rechecking
+the existing native replay audits on October 14 matched every episode score,
+paired goals/worlds/inventories/seeds/inference settings, and all 8,822 unique
+files named by those audits. This was a receipt-integrity and pairing check,
+not a new replay or model-weight rehash. Exact paths, hashes, costs and paired
+outcomes are in [the evidence receipt](2026-10-14-teaching-panel02.json).
+
+Stable repair gained eleven attempts and lost one versus the original teacher;
+random repair gained thirteen and lost one. Against discovery, stable gained
+two and lost four; random gained three and lost three. Thus repair helps the
+weak original-teaching condition here, but neither repaired policy scores above
+the stronger teacher. Equal aggregate scores do not establish equivalence.
+Stable repair also uses fewer calls and generated tokens in this paired slice.
+
+This remains an exploratory result on a baseline-exposed panel, using frozen
+supervised checkpoints. Repeated draws and worlds are correlated, input history
+and prompt dose change, and flat tool use is not recursive delegation. It does
+not establish fresh-structure transfer, a visibility-only cause, or new RL gains.
+
+The next numbered panel03 is now being evaluated under the existing source,
+fixed checkpoint23 and seed2026092208, for both repairs and worlds42/50. Four
+bounded science jobs each have a native replay follow-up. This extension must
+not replace the main goal: fresh dependency-structure testing with original,
+repair, discovery and longer-training controls, followed by a matched test of
+whether RL adds value when useful starting behavior exists. Preserve negative
+and incomplete outcomes; do not choose checkpoints on evaluation success.
+
+Live queue and owner pointers are under
+`/project/alex_phd/runs/rlm-teaching-goal-20261014/`. The old RLM observer remains
+retired. No allocation renewal is assumed. This update belongs in supporting
+research evidence; it does not change the math-reproduction deck's main claim.
+
+## Historical October 12 checkpoint
+
 **Priority correction, October 12:** the advisor's primary objective is a
 completed reproduction of an RL paper's training result on our A100. That
 objective remains unfinished. The already-admitted readouts below can finish;

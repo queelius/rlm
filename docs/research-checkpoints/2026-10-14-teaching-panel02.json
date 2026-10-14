@@ -1,0 +1,789 @@
+{
+  "checked_utc": "2026-10-14T21:11:46.766088+00:00",
+  "scope": "Completed panel02 worlds42/50, fixed checkpoint23 fitseed2026092208; eight roots, two rollout draws per world",
+  "verification": "Rehashed all files listed in existing native audits, checked every native episode score against replay audit, matched task/world/seed/inventory/inference contracts. No fresh native replay or weight rehash in this reconciliation.",
+  "unique_audit_files_rehashed": 8822,
+  "totals": {
+    "known": {
+      "successes": 1,
+      "attempts": 32,
+      "calls": 1102,
+      "completion_tokens": 22740,
+      "failed_calls": 0
+    },
+    "stable_visible": {
+      "successes": 11,
+      "attempts": 32,
+      "calls": 767,
+      "completion_tokens": 18180,
+      "failed_calls": 0
+    },
+    "random_visible": {
+      "successes": 13,
+      "attempts": 32,
+      "calls": 1112,
+      "completion_tokens": 27763,
+      "failed_calls": 0
+    },
+    "discovery": {
+      "successes": 13,
+      "attempts": 32,
+      "calls": 1275,
+      "completion_tokens": 39502,
+      "failed_calls": 0
+    }
+  },
+  "contrasts": {
+    "stable_visible-vs-known": {
+      "wins": 11,
+      "losses": 1,
+      "ties": 20
+    },
+    "random_visible-vs-known": {
+      "wins": 13,
+      "losses": 1,
+      "ties": 18
+    },
+    "stable_visible-vs-discovery": {
+      "wins": 2,
+      "losses": 4,
+      "ties": 26
+    },
+    "random_visible-vs-discovery": {
+      "wins": 3,
+      "losses": 3,
+      "ties": 26
+    },
+    "random_visible-vs-stable_visible": {
+      "wins": 4,
+      "losses": 2,
+      "ties": 26
+    }
+  },
+  "cells": [
+    {
+      "mode": "known",
+      "world": 42,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-p02-w42-soriginal-corrected-raw-001",
+      "successes": 0,
+      "attempts": 16,
+      "cost": {
+        "calls": 568,
+        "prompt_tokens": 1563882,
+        "completion_tokens": 11394,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 960.0126016139984
+      },
+      "statuses": {
+        "finished": 16
+      },
+      "errors": {
+        "invalid_schema": 2,
+        "native_action_error": 67
+      },
+      "report_sha256": {
+        "PLAN.json": "a317b63c320bf8f3aa98aa48e467b37fe7891c8c48e5c0ffa82e6c12d7b83ca1",
+        "NATIVE-AUDIT.json": "2c95928749a3b5a5fbc097ad54335fe3bb71e1011cacdb991b0aa6c41fa023f5",
+        "SUMMARY.json": "e6d8657b66b3a9b6b4e874eed51aff5683bf1f4ae24b2e4464fc634cbb424fea"
+      }
+    },
+    {
+      "mode": "stable_visible",
+      "world": 42,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-stable_visible-s2026092208-p02-w42-raw",
+      "successes": 6,
+      "attempts": 16,
+      "cost": {
+        "calls": 348,
+        "prompt_tokens": 695479,
+        "completion_tokens": 8021,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 635.489337682724
+      },
+      "statuses": {
+        "finished": 16
+      },
+      "errors": {
+        "native_action_error": 50,
+        "invalid_schema": 1,
+        "rejected_action": 1
+      },
+      "report_sha256": {
+        "PLAN.json": "b09560f4330712d477ef2319f127d05e6b787990200cfe231b1eb50c044a05be",
+        "NATIVE-AUDIT.json": "403054d6c58cbbc57a0772d090acb38e5c76e4c21cd97d187029945a0ceb2bb4",
+        "SUMMARY.json": "82a347fe9cf9b9787b4b3043617bc073349e093c28ef93cff5ccc70ae2448f4d"
+      }
+    },
+    {
+      "mode": "random_visible",
+      "world": 42,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-random_visible-s2026092208-p02-w42-raw",
+      "successes": 7,
+      "attempts": 16,
+      "cost": {
+        "calls": 457,
+        "prompt_tokens": 1202552,
+        "completion_tokens": 11358,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 930.4355931282043
+      },
+      "statuses": {
+        "finished": 16
+      },
+      "errors": {
+        "native_action_error": 100,
+        "invalid_schema": 1
+      },
+      "report_sha256": {
+        "PLAN.json": "b671d2d0cb2cf1b8ebafda826f40bd661bee7b55a681c35039fd2865b5199514",
+        "NATIVE-AUDIT.json": "40f02373d861763ed80b58eeceab744527d9050c5ccfe83862e8f0f7bd09a83e",
+        "SUMMARY.json": "e4308ff2b524b54eb26820e1a01a50c27825eb769461c21feb659e3fe6870cae"
+      }
+    },
+    {
+      "mode": "discovery",
+      "world": 42,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-p02-w42-soriginal-raw-001",
+      "successes": 8,
+      "attempts": 16,
+      "cost": {
+        "calls": 576,
+        "prompt_tokens": 1785057,
+        "completion_tokens": 17772,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1447.6434803009033
+      },
+      "statuses": {
+        "finished": 15,
+        "context_cap": 1
+      },
+      "errors": {
+        "native_action_error": 278
+      },
+      "report_sha256": {
+        "PLAN.json": "07382c023624aad211dbb4740c5309416426ddf8d0dcd29cbc0f56f8d5267f98",
+        "NATIVE-AUDIT.json": "75c16a763c1bea69f5dd09754f30ed86b4aad425c0b78293b409d390beb8cb9a",
+        "SUMMARY.json": "cbded113e0e87e782f1ca142771fc327ccc2367a62fb452d34a58aa42d098302"
+      }
+    },
+    {
+      "mode": "known",
+      "world": 50,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-p02-w50-soriginal-corrected-raw-001",
+      "successes": 1,
+      "attempts": 16,
+      "cost": {
+        "calls": 534,
+        "prompt_tokens": 1383824,
+        "completion_tokens": 11346,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 944.9652674198151
+      },
+      "statuses": {
+        "finished": 15,
+        "context_cap": 1
+      },
+      "errors": {
+        "native_action_error": 63,
+        "rejected_action": 1
+      },
+      "report_sha256": {
+        "PLAN.json": "a8496f0b310fbcdb84586802ab88a06c3ee09be640e539f0c0293ad6959a7900",
+        "NATIVE-AUDIT.json": "285ed3a9015fde28d2ac1ddd605253a33f216c7173b0b28187af79707093811a",
+        "SUMMARY.json": "80b67e4dddefb5bfc65058f3d592fdf26f737aa84f8c2a40b71974a17bde7c0f"
+      }
+    },
+    {
+      "mode": "stable_visible",
+      "world": 50,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-stable_visible-s2026092208-p02-w50-raw",
+      "successes": 5,
+      "attempts": 16,
+      "cost": {
+        "calls": 419,
+        "prompt_tokens": 942848,
+        "completion_tokens": 10159,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 814.688018321991
+      },
+      "statuses": {
+        "finished": 16
+      },
+      "errors": {
+        "native_action_error": 35,
+        "invalid_schema": 9
+      },
+      "report_sha256": {
+        "PLAN.json": "525188379d348bfa72d589a3527407b520d0c652106e62ef65b42304c6615b4b",
+        "NATIVE-AUDIT.json": "51c1b0830a50f30778650dcd93296c3ec5e1a668d75a4b9dda4605ceb47e93ad",
+        "SUMMARY.json": "5a80310fdf6b3495245dd7fd47efeca44323a2317e98f32705e1c861324117d5"
+      }
+    },
+    {
+      "mode": "random_visible",
+      "world": 50,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-random_visible-s2026092208-p02-w50-raw",
+      "successes": 6,
+      "attempts": 16,
+      "cost": {
+        "calls": 655,
+        "prompt_tokens": 2094124,
+        "completion_tokens": 16405,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1394.2718012332916
+      },
+      "statuses": {
+        "finished": 14,
+        "context_cap": 2
+      },
+      "errors": {
+        "native_action_error": 147,
+        "invalid_schema": 3
+      },
+      "report_sha256": {
+        "PLAN.json": "ee7e8b3af0e30f7bf369cfddd692a9d2b68da6090c7a6458ba15128287f0e9c9",
+        "NATIVE-AUDIT.json": "aba7c1e6eab532b31c5e537cf15bb5a7e170fd5c2424e2fd241e276620421779",
+        "SUMMARY.json": "a93f8c1eaf70e0af43b3cf4df640a470c6277dd36aa3deb35716c211f43198c5"
+      }
+    },
+    {
+      "mode": "discovery",
+      "world": 50,
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-p02-w50-soriginal-raw-001",
+      "successes": 5,
+      "attempts": 16,
+      "cost": {
+        "calls": 699,
+        "prompt_tokens": 2349408,
+        "completion_tokens": 21730,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1796.0356786251068
+      },
+      "statuses": {
+        "finished": 15,
+        "context_cap": 1
+      },
+      "errors": {
+        "native_action_error": 360,
+        "invalid_schema": 1
+      },
+      "report_sha256": {
+        "PLAN.json": "509ca170ac54f789c126766b2974c6a85b145e189857bbd08f951b56f5254162",
+        "NATIVE-AUDIT.json": "1850478950571d7c09b8e099ee1355cdbc27626aebc078c7e6ff5e3d56442e81",
+        "SUMMARY.json": "2d0f93338ca833cf9d190f8c379752cbc4e5294435c552bf16d38331247d0e19"
+      }
+    }
+  ],
+  "paired_outcomes": {
+    "w42:textcraft_synth.val.102:r0": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w42:textcraft_synth.val.102:r1": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w42:textcraft_synth.val.327:r0": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w42:textcraft_synth.val.327:r1": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w42:textcraft_synth.val.63:r0": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 1,
+      "discovery": 0
+    },
+    "w42:textcraft_synth.val.63:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 1
+    },
+    "w42:textcraft_synth.val.58:r0": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 0,
+      "discovery": 1
+    },
+    "w42:textcraft_synth.val.58:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 1
+    },
+    "w42:textcraft_synth.val.55:r0": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w42:textcraft_synth.val.55:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 1,
+      "discovery": 0
+    },
+    "w42:textcraft_synth.val.521:r0": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w42:textcraft_synth.val.521:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w42:textcraft_synth.val.201:r0": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w42:textcraft_synth.val.201:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w42:textcraft_synth.val.52:r0": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w42:textcraft_synth.val.52:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.102:r0": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w50:textcraft_synth.val.102:r1": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w50:textcraft_synth.val.327:r0": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w50:textcraft_synth.val.327:r1": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w50:textcraft_synth.val.63:r0": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 1,
+      "discovery": 1
+    },
+    "w50:textcraft_synth.val.63:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.58:r0": {
+      "known": 0,
+      "stable_visible": 1,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.58:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 1,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.55:r0": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.55:r1": {
+      "known": 1,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.521:r0": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.521:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.201:r0": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.201:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.52:r0": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    },
+    "w50:textcraft_synth.val.52:r1": {
+      "known": 0,
+      "stable_visible": 0,
+      "random_visible": 0,
+      "discovery": 0
+    }
+  },
+  "matched_contracts": {
+    "42": {
+      "tasks_sha256": "102d848c5d9f9b8c2ed5b6136a9b20fe2ff65c28beaa857a5fa1ee95398a9722",
+      "world_sha256": "f76ce3978c038be9624b3c7387aa30033970508c6afecb1f8f08315aa0693808",
+      "sampling": {
+        "temperature": 0.5,
+        "top_p": 1,
+        "top_k": 0
+      },
+      "seeds": [
+        2026092204,
+        2026092205
+      ],
+      "max_global_calls": 96,
+      "max_native_calls": 1536,
+      "max_global_output_tokens": 8192,
+      "input_plus_output_limit": 8192,
+      "max_new_tokens": 256,
+      "model": "/project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554",
+      "template_sha256": "f2dbd40dc6ecc588e406d88e85b12d8aeef5d1d7c48aa82198c0003d94fdf00a",
+      "execution_mode": "raw",
+      "jobs": [
+        {
+          "episode_id": "t00-r0-flat-original",
+          "task_id": "textcraft_synth.val.102",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t00-r1-flat-original",
+          "task_id": "textcraft_synth.val.102",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t01-r0-flat-original",
+          "task_id": "textcraft_synth.val.327",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t01-r1-flat-original",
+          "task_id": "textcraft_synth.val.327",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t02-r0-flat-original",
+          "task_id": "textcraft_synth.val.63",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t02-r1-flat-original",
+          "task_id": "textcraft_synth.val.63",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t03-r0-flat-original",
+          "task_id": "textcraft_synth.val.58",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t03-r1-flat-original",
+          "task_id": "textcraft_synth.val.58",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t04-r0-flat-original",
+          "task_id": "textcraft_synth.val.55",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t04-r1-flat-original",
+          "task_id": "textcraft_synth.val.55",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t05-r0-flat-original",
+          "task_id": "textcraft_synth.val.521",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t05-r1-flat-original",
+          "task_id": "textcraft_synth.val.521",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t06-r0-flat-original",
+          "task_id": "textcraft_synth.val.201",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t06-r1-flat-original",
+          "task_id": "textcraft_synth.val.201",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t07-r0-flat-original",
+          "task_id": "textcraft_synth.val.52",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t07-r1-flat-original",
+          "task_id": "textcraft_synth.val.52",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        }
+      ]
+    },
+    "50": {
+      "tasks_sha256": "c1d13c1dc44a11897c00faea4b976e0a56758a5677dc0e01d46bd3594529376d",
+      "world_sha256": "749e4fed22dc6d56661ac78aff64d4f6e292ac35598ccb7b6daa62694d5e91c8",
+      "sampling": {
+        "temperature": 0.5,
+        "top_p": 1,
+        "top_k": 0
+      },
+      "seeds": [
+        2026092204,
+        2026092205
+      ],
+      "max_global_calls": 96,
+      "max_native_calls": 1536,
+      "max_global_output_tokens": 8192,
+      "input_plus_output_limit": 8192,
+      "max_new_tokens": 256,
+      "model": "/project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554",
+      "template_sha256": "f2dbd40dc6ecc588e406d88e85b12d8aeef5d1d7c48aa82198c0003d94fdf00a",
+      "execution_mode": "raw",
+      "jobs": [
+        {
+          "episode_id": "t00-r0-flat-original",
+          "task_id": "textcraft_synth.val.102",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t00-r1-flat-original",
+          "task_id": "textcraft_synth.val.102",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t01-r0-flat-original",
+          "task_id": "textcraft_synth.val.327",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t01-r1-flat-original",
+          "task_id": "textcraft_synth.val.327",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t02-r0-flat-original",
+          "task_id": "textcraft_synth.val.63",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t02-r1-flat-original",
+          "task_id": "textcraft_synth.val.63",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t03-r0-flat-original",
+          "task_id": "textcraft_synth.val.58",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t03-r1-flat-original",
+          "task_id": "textcraft_synth.val.58",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t04-r0-flat-original",
+          "task_id": "textcraft_synth.val.55",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t04-r1-flat-original",
+          "task_id": "textcraft_synth.val.55",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t05-r0-flat-original",
+          "task_id": "textcraft_synth.val.521",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t05-r1-flat-original",
+          "task_id": "textcraft_synth.val.521",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t06-r0-flat-original",
+          "task_id": "textcraft_synth.val.201",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t06-r1-flat-original",
+          "task_id": "textcraft_synth.val.201",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t07-r0-flat-original",
+          "task_id": "textcraft_synth.val.52",
+          "seed": 2026092204,
+          "repeat": 0,
+          "policy": "flat",
+          "prompt_profile": "original"
+        },
+        {
+          "episode_id": "t07-r1-flat-original",
+          "task_id": "textcraft_synth.val.52",
+          "seed": 2026092205,
+          "repeat": 1,
+          "policy": "flat",
+          "prompt_profile": "original"
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Baseline-exposed panel; exploratory, not fresh confirmation",
+    "Worlds/repeats share eight goal identities and recipes",
+    "Supervised flat tool policies, not new RL or recursive delegation",
+    "Repair changes input histories and dose; visibility alone is not isolated"
+  ]
+}
