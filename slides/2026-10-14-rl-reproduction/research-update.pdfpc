@@ -1,0 +1,43 @@
+{
+  "pdfpcFormat": 2,
+  "disableMarkdown": true,
+  "noteFontSize": 16,
+  "pages": [
+    {
+      "idx": 0,
+      "label": "1",
+      "overlay": 0,
+      "note": "Start with the advisor's purpose:\nestablish a reliable RL reference before\nmore complex RLM research.\n\nRLM means a model using code and model\ncalls on subtasks. Our math reproduction\nchecks the learning workflow, not that\nfuture task.\n\nArc: research question, known benchmark,\ncredible foundation."
+    },
+    {
+      "idx": 1,
+      "label": "2",
+      "overlay": 0,
+      "note": "We trained our own weights from the\nauthors' math-trained starting model.\n\nExplain SPO simply: sample possible\ncontinuations to estimate which parts\nhelp. It is not a hand-written reward for\nevery reasoning step.\n\nAuthor weights test evaluation; our run\ntests learning."
+    },
+    {
+      "idx": 2,
+      "label": "3",
+      "overlay": 0,
+      "note": "Final: 58.19%, versus paper 56.7% and\nmatched start 39.77%. Gain: 18.42\npercentage points.\n\nThe curve keeps every scheduled test; the\nendpoint was fixed, not selected for its\nscore.\n\nMean correctness over 16 samples per\nquestion; not best-of-16. One seed,\ndisclosed adaptations."
+    },
+    {
+      "idx": 3,
+      "label": "4",
+      "overlay": 0,
+      "note": "Competence is demonstrated by the evidence\nchain, not the headline alone.\n\nMatched before/after scoring, actual\nanswers and updates, independent final\nregrading.\n\nWe reproduced a substantial result. That\ndoes not establish every mechanism or\nguarantee RLM success."
+    },
+    {
+      "idx": 4,
+      "label": "5",
+      "overlay": 0,
+      "note": "These are proposals, not completed RLM\nresults.\n\nFirst check workflow competence, then test\nan RL gain on untouched tasks at matched\nbudgets. Only then ask whether\nintermediate feedback helps.\n\nKeep the experimental discipline; do not\ncommit to SPO as the RLM algorithm."
+    },
+    {
+      "idx": 5,
+      "label": "6",
+      "overlay": 0,
+      "note": "Optional detail for questions; not part of\nthe main talk.\n\nDistinguish the paper's starting score\nfrom our matched baseline. Disclose\nruntime adaptations without telling the\ndebugging story.\n\nOne seed and one task; checkpoint hashes\nare preservation evidence, not an\nindependent replication."
+    }
+  ]
+}

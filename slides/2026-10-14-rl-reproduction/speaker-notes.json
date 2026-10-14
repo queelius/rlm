@@ -1,0 +1,28 @@
+{
+  "slides": [
+    {
+      "title": "Before extending RL, establish that we can make it work.",
+      "notes": "Start with the advisor's purpose: establish a reliable RL reference before more complex RLM research.\n\nRLM means a model using code and model calls on subtasks. Our math reproduction checks the learning workflow, not that future task.\n\nArc: research question, known benchmark, credible foundation."
+    },
+    {
+      "title": "We reproduced the learning stage, not just a released model.",
+      "notes": "We trained our own weights from the authors' math-trained starting model.\n\nExplain SPO simply: sample possible continuations to estimate which parts help. It is not a hand-written reward for every reasoning step.\n\nAuthor weights test evaluation; our run tests learning."
+    },
+    {
+      "title": "Our own training recovered the paper's performance level.",
+      "notes": "Final: 58.19%, versus paper 56.7% and matched start 39.77%. Gain: 18.42 percentage points.\n\nThe curve keeps every scheduled test; the endpoint was fixed, not selected for its score.\n\nMean correctness over 16 samples per question; not best-of-16. One seed, disclosed adaptations."
+    },
+    {
+      "title": "The main lesson is an end-to-end test of our RL practice.",
+      "notes": "Competence is demonstrated by the evidence chain, not the headline alone.\n\nMatched before/after scoring, actual answers and updates, independent final regrading.\n\nWe reproduced a substantial result. That does not establish every mechanism or guarantee RLM success."
+    },
+    {
+      "title": "Carry the discipline into RLM; test the new assumptions.",
+      "notes": "These are proposals, not completed RLM results.\n\nFirst check workflow competence, then test an RL gain on untouched tasks at matched budgets. Only then ask whether intermediate feedback helps.\n\nKeep the experimental discipline; do not commit to SPO as the RLM algorithm."
+    },
+    {
+      "title": "Appendix: what exactly was reproduced and checked?",
+      "notes": "Optional detail for questions; not part of the main talk.\n\nDistinguish the paper's starting score from our matched baseline. Disclose runtime adaptations without telling the debugging story.\n\nOne seed and one task; checkpoint hashes are preservation evidence, not an independent replication."
+    }
+  ]
+}
