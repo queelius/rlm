@@ -1,0 +1,137 @@
+{
+  "schema": "teaching-panel03-w42-partial-check-v1",
+  "checked_epoch": 1792013327.1161566,
+  "cells": {
+    "original": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-p03-w42-soriginal-corrected-raw-001",
+      "plan_sha256": "d056532ace4221f5657cb79a015f30bc67c773de359ae3b3768b02c4e6575d94",
+      "audit_sha256": "e2748dcf5d4f855f7a7764eddeb28f3945f9a7ce917951e7a444c04b8fbe1190",
+      "summary_sha256": "09378d60af26c52707aa36b29b1fdd6073eb273ac3fb97d968c0e71c8dbe8e96",
+      "wins": 1,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 474,
+        "prompt_tokens": 1116159,
+        "completion_tokens": 9798,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 801.3508017063141
+      },
+      "episode_scores": {
+        "t00-r0-flat-original": 0,
+        "t00-r1-flat-original": 0,
+        "t01-r0-flat-original": 0,
+        "t01-r1-flat-original": 0,
+        "t02-r0-flat-original": 0,
+        "t02-r1-flat-original": 0,
+        "t03-r0-flat-original": 0,
+        "t03-r1-flat-original": 1,
+        "t04-r0-flat-original": 0,
+        "t04-r1-flat-original": 0,
+        "t05-r0-flat-original": 0,
+        "t05-r1-flat-original": 0,
+        "t06-r0-flat-original": 0,
+        "t06-r1-flat-original": 0,
+        "t07-r0-flat-original": 0,
+        "t07-r1-flat-original": 0
+      }
+    },
+    "repair": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-stable_visible-s2026092208-p03-w42-raw",
+      "plan_sha256": "c737e7a9a7be303dd40435910b17b6503a4e36d0c950bacb61313f232ab9645e",
+      "audit_sha256": "bba6e554180aadd44532473adc5995376ffe689b7803148f259ba21634655f61",
+      "summary_sha256": "c8091eacc9d463636d3e45dda6438c3a0b5e89e92768dc244cf79622015b6f24",
+      "wins": 7,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 376,
+        "prompt_tokens": 721716,
+        "completion_tokens": 9244,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 741.6395320892334
+      },
+      "episode_scores": {
+        "t00-r0-flat-original": 1,
+        "t00-r1-flat-original": 1,
+        "t01-r0-flat-original": 1,
+        "t01-r1-flat-original": 0,
+        "t02-r0-flat-original": 0,
+        "t02-r1-flat-original": 0,
+        "t03-r0-flat-original": 1,
+        "t03-r1-flat-original": 0,
+        "t04-r0-flat-original": 0,
+        "t04-r1-flat-original": 1,
+        "t05-r0-flat-original": 0,
+        "t05-r1-flat-original": 0,
+        "t06-r0-flat-original": 0,
+        "t06-r1-flat-original": 0,
+        "t07-r0-flat-original": 1,
+        "t07-r1-flat-original": 1
+      }
+    },
+    "discovery": {
+      "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-breadth-p03-w42-soriginal-raw-001",
+      "plan_sha256": "704c209e93be7d3f507618bf6470228c579e4c84c0c4d18e2eb2607ff08e5fed",
+      "audit_sha256": "29a8670d4f7bc7a0545195164d0c2af75393b9eb2cc29cba58e5d6e037196228",
+      "summary_sha256": "af66f9ddac451b572a985324c2795a43ef88d328b171bfe1c8b2affd86619862",
+      "wins": 13,
+      "observed": 16,
+      "physical_cost": {
+        "calls": 460,
+        "prompt_tokens": 1266872,
+        "completion_tokens": 14991,
+        "failed_calls": 0,
+        "unknown_completion_tokens_calls": 0,
+        "native_service_seconds": 1193.9917001724243
+      },
+      "episode_scores": {
+        "t00-r0-flat-original": 1,
+        "t00-r1-flat-original": 1,
+        "t01-r0-flat-original": 1,
+        "t01-r1-flat-original": 1,
+        "t02-r0-flat-original": 1,
+        "t02-r1-flat-original": 1,
+        "t03-r0-flat-original": 1,
+        "t03-r1-flat-original": 1,
+        "t04-r0-flat-original": 1,
+        "t04-r1-flat-original": 1,
+        "t05-r0-flat-original": 0,
+        "t05-r1-flat-original": 0,
+        "t06-r0-flat-original": 1,
+        "t06-r1-flat-original": 1,
+        "t07-r0-flat-original": 1,
+        "t07-r1-flat-original": 0
+      }
+    }
+  },
+  "paired": {
+    "original": {
+      "repair_wins": 7,
+      "repair_losses": 1
+    },
+    "discovery": {
+      "repair_wins": 1,
+      "repair_losses": 7
+    }
+  },
+  "matched_inference_fields": [
+    "model_manifest_sha256",
+    "world_seed",
+    "world_sha256",
+    "profile",
+    "root_depth",
+    "max_agent_depth",
+    "max_global_calls",
+    "max_global_output_tokens",
+    "input_plus_output_limit",
+    "max_new_tokens",
+    "sampling",
+    "seed_rule",
+    "execution_mode"
+  ],
+  "goals_seeds_inventories_paired": true,
+  "unique_audit_files_rehashed": 2755,
+  "method": "Receipt integrity and existing native replay/episode-score reconciliation; not a fresh replay or optimizer rehash.",
+  "interpretation": "Stable repair improves original teacher on this exposed slice but scores below discovery. Other prescribed panel03 cells remain unfinished; no new-structure or RL claim."
+}

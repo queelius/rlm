@@ -50,6 +50,63 @@ Live queue and owner pointers are under
 retired. No allocation renewal is assumed. This update belongs in supporting
 research evidence; it does not change the math-reproduction deck's main claim.
 
+## October 14, 21:28 UTC: a harder transfer check is ready
+
+The first repaired-teacher readout on panel03/world42 completed: **7/16**
+whole-task successes, compared with the original teacher's **1/16** and the
+discovery teacher's **13/16**. All three have sixteen observed outcomes and no
+transport failures. Paired against the original, repair gains seven attempts
+and loses one; against discovery, it gains one and loses seven. The repair
+uses 376 calls and 9,244 generated tokens. These results reinforce the need
+for a strong teacher control: improving a weak starting point does not mean
+we have found the best way to teach the model.
+
+The [partial evidence receipt](2026-10-14-teaching-panel03-w42-partial.json)
+checks matching goals, starting inventories, seeds and inference settings,
+reconciles all native replay scores, and rehashes 2,755 unique audit-referenced
+files. The remaining three prescribed repair/world cells are still in progress;
+this is not a complete panel03 result or an untouched transfer test.
+
+To test transfer more directly, we froze **eight new crafting problems before
+any model evaluation**. Their prerequisite structures differ from all 4,477
+distinct structures in our recorded catalog of recipe worlds42–52. This is
+an exact rooted-graph comparison that ignores item names and quantities while
+preserving shared prerequisites—not merely a renaming exercise. We also
+exclude 127 previously exposed goal names. Four selected goals have dependency
+depth three and four have depth four; each needs at most twelve recipe products.
+The selection rule was fixed after a CPU-only feasibility probe, without new
+model scores. A native constructive solution succeeds for all eight; this
+checks that the tasks are solvable, not that a learned policy can solve them.
+
+The prospective comparison has four fixed policies:
+
+- Original teaching after 23 updates.
+- Repaired teaching after 23 updates.
+- Discovery teaching after 23 updates.
+- Original teaching after 69 updates, to check whether more training suffices.
+
+Each gets the same eight problems and two rollout seeds: **64 planned attempts**.
+Checkpoint choices, task order, starting stock, sampling and inference caps are
+fixed. All four CPU preflights and eight focused tests passed; no fresh-task
+model calls have run at this cutoff. The source, actor identities, task hashes,
+qualification details and environment lock are recorded in the
+[prelaunch receipt](2026-10-14-teaching-fresh-prelaunch.json). The ready queue
+must wait until the entire existing queue and its scoped owners release.
+
+This is still a pilot: one fitted seed, one synthetic recipe world, familiar
+vocabulary and shared intermediate ingredients. One selected goal is even a
+prerequisite of another. Initial stock is conservatively sufficient and has
+no distractors, unlike the earlier panels. We will not treat the eight goals
+as independent domains, compare headline percentages across different task
+sets as a treatment effect, or describe flat tool use as learned recursion.
+
+The next decision is whether improved teaching survives this new-structure
+check and warrants broader replication. Testing whether matched RL adds value
+remains part of the goal; this inference-only pilot does not answer that question.
+This checkpoint belongs in supporting research evidence, with no new advisor
+deck headline until the comparison finishes. Native checkpoints remain external;
+publishing their hashes does not back up their contents.
+
 ## Historical October 12 checkpoint
 
 **Priority correction, October 12:** the advisor's primary objective is a

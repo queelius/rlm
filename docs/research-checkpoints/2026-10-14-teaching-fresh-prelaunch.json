@@ -1,0 +1,988 @@
+{
+  "schema": "teaching-fresh-prelaunch-check-v1",
+  "checked_epoch": 1792013309.0262442,
+  "native_root": "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001",
+  "status": "prepared_not_launched",
+  "selection_sha256": "fd7bcb913b7d80719fc76932df9568acdc2bcb6fc787f00cc8266a50b937c8c8",
+  "manifest_sha256": "3c322051d1f00011bf16a96b3acf32d035aaf06e1dc3c00cacc9547276e8bbbc",
+  "tasks_sha256": "2b02b15097bd88e5af19549d2a024605aa4def139b520f57c108f5d06d5e1f5b",
+  "world_seed": 2026101401,
+  "selection_seed": 2026101402,
+  "rollout_seeds": [
+    2026101403,
+    2026101404
+  ],
+  "old_unique_topologies": 4477,
+  "prior_worlds": [
+    {
+      "graphs_over_64_nodes": 616,
+      "root_graphs_checked": 786,
+      "world_seed": 42,
+      "world_sha256": "f76ce3978c038be9624b3c7387aa30033970508c6afecb1f8f08315aa0693808"
+    },
+    {
+      "graphs_over_64_nodes": 622,
+      "root_graphs_checked": 780,
+      "world_seed": 43,
+      "world_sha256": "9d71915420a2844d4fc94afc4fd4c9a5e19c6cc220e98a21c50dc738fdb003ff"
+    },
+    {
+      "graphs_over_64_nodes": 626,
+      "root_graphs_checked": 776,
+      "world_seed": 44,
+      "world_sha256": "27948f5d55e513d781a9574730b1d470a3ced4b91413782b7cfaffeeb980c27c"
+    },
+    {
+      "graphs_over_64_nodes": 627,
+      "root_graphs_checked": 775,
+      "world_seed": 45,
+      "world_sha256": "651273b2b72361ee3da545f6e40c02498a67a8d0b6a94449d44c544ef96c85ca"
+    },
+    {
+      "graphs_over_64_nodes": 630,
+      "root_graphs_checked": 772,
+      "world_seed": 46,
+      "world_sha256": "dfe491ec5baaa97dcf2e65ad9b325b9ced772d207669c5fb8d95525f3ff42ff7"
+    },
+    {
+      "graphs_over_64_nodes": 626,
+      "root_graphs_checked": 776,
+      "world_seed": 47,
+      "world_sha256": "89ebb2ee731a22ba257bb6b45ca33d93b334e6d09c21818301d7805630ebec7c"
+    },
+    {
+      "graphs_over_64_nodes": 631,
+      "root_graphs_checked": 771,
+      "world_seed": 48,
+      "world_sha256": "0d19045287bc9f5867238c906572913b820009c93f2b45b613d48d6882e69481"
+    },
+    {
+      "graphs_over_64_nodes": 640,
+      "root_graphs_checked": 762,
+      "world_seed": 49,
+      "world_sha256": "ff694d8aeadbb519c56ccdca0efa07198a47339a2847f9ff5d066e3336e0f655"
+    },
+    {
+      "graphs_over_64_nodes": 628,
+      "root_graphs_checked": 774,
+      "world_seed": 50,
+      "world_sha256": "749e4fed22dc6d56661ac78aff64d4f6e292ac35598ccb7b6daa62694d5e91c8"
+    },
+    {
+      "graphs_over_64_nodes": 641,
+      "root_graphs_checked": 761,
+      "world_seed": 51,
+      "world_sha256": "df3ba1e42e46bb065e9bd4e53b59f959b5ba6e846f3ccba65be3bfb160ac7c35"
+    },
+    {
+      "graphs_over_64_nodes": 611,
+      "root_graphs_checked": 791,
+      "world_seed": 52,
+      "world_sha256": "e05526dfef35747b6f4567d5b69993118cad56a4e28b9fa1c0296eaa3e83f68f"
+    }
+  ],
+  "excluded_goal_name_count": 127,
+  "selected_tasks": [
+    {
+      "depth": 3,
+      "edges": [
+        [
+          "m0_i2",
+          "m3_ore"
+        ],
+        [
+          "m0_i2",
+          "m4_i1_14"
+        ],
+        [
+          "m0_i3_10",
+          "m0_i2"
+        ],
+        [
+          "m0_i3_10",
+          "m4_i1_14"
+        ],
+        [
+          "m0_i3_10",
+          "m9_i1_19"
+        ],
+        [
+          "m4_i1_14",
+          "m3_ore"
+        ],
+        [
+          "m9_i1_19",
+          "m6_ore"
+        ]
+      ],
+      "node_kinds": {
+        "m0_i2": "product",
+        "m0_i3_10": "root",
+        "m3_ore": "base",
+        "m4_i1_14": "product",
+        "m6_ore": "base",
+        "m9_i1_19": "product"
+      },
+      "nodes": 6,
+      "root": "m0_i3_10"
+    },
+    {
+      "depth": 3,
+      "edges": [
+        [
+          "c1_i3_11",
+          "c2_i2_12"
+        ],
+        [
+          "c1_i3_11",
+          "c4_i2_14"
+        ],
+        [
+          "c1_i3_11",
+          "c8_i1_18"
+        ],
+        [
+          "c2_i2_12",
+          "c3_i1"
+        ],
+        [
+          "c2_i2_12",
+          "c9_i1_19"
+        ],
+        [
+          "c3_i1",
+          "c1_ore"
+        ],
+        [
+          "c4_i2_14",
+          "c5_i1_15"
+        ],
+        [
+          "c4_i2_14",
+          "c8_i1_18"
+        ],
+        [
+          "c5_i1_15",
+          "c7_ore"
+        ],
+        [
+          "c8_i1_18",
+          "c4_ore"
+        ],
+        [
+          "c9_i1_19",
+          "c1_ore"
+        ]
+      ],
+      "node_kinds": {
+        "c1_i3_11": "root",
+        "c1_ore": "base",
+        "c2_i2_12": "product",
+        "c3_i1": "product",
+        "c4_i2_14": "product",
+        "c4_ore": "base",
+        "c5_i1_15": "product",
+        "c7_ore": "base",
+        "c8_i1_18": "product",
+        "c9_i1_19": "product"
+      },
+      "nodes": 10,
+      "root": "c1_i3_11"
+    },
+    {
+      "depth": 3,
+      "edges": [
+        [
+          "c2_i2",
+          "c0_ore"
+        ],
+        [
+          "c2_i2",
+          "c2_ore"
+        ],
+        [
+          "c3_i2_13",
+          "c5_i1"
+        ],
+        [
+          "c3_i2_13",
+          "c8_i1"
+        ],
+        [
+          "c4_i3",
+          "c2_i2"
+        ],
+        [
+          "c4_i3",
+          "c3_i2_13"
+        ],
+        [
+          "c4_i3",
+          "c9_i1_19"
+        ],
+        [
+          "c5_i1",
+          "c0_ore"
+        ],
+        [
+          "c8_i1",
+          "c0_ore"
+        ],
+        [
+          "c9_i1_19",
+          "c1_ore"
+        ]
+      ],
+      "node_kinds": {
+        "c0_ore": "base",
+        "c1_ore": "base",
+        "c2_i2": "product",
+        "c2_ore": "base",
+        "c3_i2_13": "product",
+        "c4_i3": "root",
+        "c5_i1": "product",
+        "c8_i1": "product",
+        "c9_i1_19": "product"
+      },
+      "nodes": 9,
+      "root": "c4_i3"
+    },
+    {
+      "depth": 3,
+      "edges": [
+        [
+          "c0_i2",
+          "c0_ore"
+        ],
+        [
+          "c0_i2",
+          "c5_i1"
+        ],
+        [
+          "c2_i2_12",
+          "c3_i1"
+        ],
+        [
+          "c2_i2_12",
+          "c9_i1_19"
+        ],
+        [
+          "c3_i1",
+          "c1_ore"
+        ],
+        [
+          "c3_i3_23",
+          "c0_i2"
+        ],
+        [
+          "c3_i3_23",
+          "c2_i2_12"
+        ],
+        [
+          "c3_i3_23",
+          "c3_i1"
+        ],
+        [
+          "c5_i1",
+          "c0_ore"
+        ],
+        [
+          "c9_i1_19",
+          "c1_ore"
+        ]
+      ],
+      "node_kinds": {
+        "c0_i2": "product",
+        "c0_ore": "base",
+        "c1_ore": "base",
+        "c2_i2_12": "product",
+        "c3_i1": "product",
+        "c3_i3_23": "root",
+        "c5_i1": "product",
+        "c9_i1_19": "product"
+      },
+      "nodes": 8,
+      "root": "c3_i3_23"
+    },
+    {
+      "depth": 4,
+      "edges": [
+        [
+          "m1_i1",
+          "m0_ore"
+        ],
+        [
+          "m2_i1_12",
+          "m1_ore"
+        ],
+        [
+          "m2_i2_22",
+          "m2_i1_12"
+        ],
+        [
+          "m2_i2_22",
+          "m8_ore"
+        ],
+        [
+          "m3_i1_13",
+          "m3_ore"
+        ],
+        [
+          "m5_i2_15",
+          "m3_i1_13"
+        ],
+        [
+          "m5_i2_15",
+          "m7_ore"
+        ],
+        [
+          "m6_i1_16",
+          "m4_ore"
+        ],
+        [
+          "m6_i2_16",
+          "m3_ore"
+        ],
+        [
+          "m6_i2_16",
+          "m6_i1_16"
+        ],
+        [
+          "m8_i3_18",
+          "m1_i1"
+        ],
+        [
+          "m8_i3_18",
+          "m5_i2_15"
+        ],
+        [
+          "m8_i3_18",
+          "m6_i2_16"
+        ],
+        [
+          "m9_i4_19",
+          "m2_i2_22"
+        ],
+        [
+          "m9_i4_19",
+          "m8_i3_18"
+        ]
+      ],
+      "node_kinds": {
+        "m0_ore": "base",
+        "m1_i1": "product",
+        "m1_ore": "base",
+        "m2_i1_12": "product",
+        "m2_i2_22": "product",
+        "m3_i1_13": "product",
+        "m3_ore": "base",
+        "m4_ore": "base",
+        "m5_i2_15": "product",
+        "m6_i1_16": "product",
+        "m6_i2_16": "product",
+        "m7_ore": "base",
+        "m8_i3_18": "product",
+        "m8_ore": "base",
+        "m9_i4_19": "root"
+      },
+      "nodes": 15,
+      "root": "m9_i4_19"
+    },
+    {
+      "depth": 4,
+      "edges": [
+        [
+          "c0_i2",
+          "c0_ore"
+        ],
+        [
+          "c0_i2",
+          "c5_i1"
+        ],
+        [
+          "c1_i1",
+          "c3_ore"
+        ],
+        [
+          "c1_i1_11",
+          "c5_ore"
+        ],
+        [
+          "c2_i2_12",
+          "c3_i1"
+        ],
+        [
+          "c2_i2_12",
+          "c9_i1_19"
+        ],
+        [
+          "c2_i3_22",
+          "c1_i1_11"
+        ],
+        [
+          "c2_i3_22",
+          "c5_i2_15"
+        ],
+        [
+          "c2_i3_22",
+          "c8_i1"
+        ],
+        [
+          "c3_i1",
+          "c1_ore"
+        ],
+        [
+          "c3_i3_23",
+          "c0_i2"
+        ],
+        [
+          "c3_i3_23",
+          "c2_i2_12"
+        ],
+        [
+          "c3_i3_23",
+          "c3_i1"
+        ],
+        [
+          "c5_i1",
+          "c0_ore"
+        ],
+        [
+          "c5_i2_15",
+          "c1_i1"
+        ],
+        [
+          "c5_i2_15",
+          "c7_ore"
+        ],
+        [
+          "c5_i4_15",
+          "c2_i3_22"
+        ],
+        [
+          "c5_i4_15",
+          "c3_i3_23"
+        ],
+        [
+          "c8_i1",
+          "c0_ore"
+        ],
+        [
+          "c9_i1_19",
+          "c1_ore"
+        ]
+      ],
+      "node_kinds": {
+        "c0_i2": "product",
+        "c0_ore": "base",
+        "c1_i1": "product",
+        "c1_i1_11": "product",
+        "c1_ore": "base",
+        "c2_i2_12": "product",
+        "c2_i3_22": "product",
+        "c3_i1": "product",
+        "c3_i3_23": "product",
+        "c3_ore": "base",
+        "c5_i1": "product",
+        "c5_i2_15": "product",
+        "c5_i4_15": "root",
+        "c5_ore": "base",
+        "c7_ore": "base",
+        "c8_i1": "product",
+        "c9_i1_19": "product"
+      },
+      "nodes": 17,
+      "root": "c5_i4_15"
+    },
+    {
+      "depth": 4,
+      "edges": [
+        [
+          "o1_i1_11",
+          "raw_o4"
+        ],
+        [
+          "o2_i1_22",
+          "raw_o0"
+        ],
+        [
+          "o3_i2_23",
+          "o2_i1_22"
+        ],
+        [
+          "o3_i2_23",
+          "o6_i1"
+        ],
+        [
+          "o4_i3",
+          "o1_i1_11"
+        ],
+        [
+          "o4_i3",
+          "o7_i1"
+        ],
+        [
+          "o5_i3",
+          "o1_i1_11"
+        ],
+        [
+          "o5_i3",
+          "o7_i2"
+        ],
+        [
+          "o6_i1",
+          "raw_o3"
+        ],
+        [
+          "o7_i1",
+          "raw_o1"
+        ],
+        [
+          "o7_i1_17",
+          "raw_o9"
+        ],
+        [
+          "o7_i2",
+          "o7_i1_17"
+        ],
+        [
+          "o7_i2",
+          "raw_o1"
+        ],
+        [
+          "o7_i4_17",
+          "o3_i2_23"
+        ],
+        [
+          "o7_i4_17",
+          "o4_i3"
+        ],
+        [
+          "o7_i4_17",
+          "o5_i3"
+        ]
+      ],
+      "node_kinds": {
+        "o1_i1_11": "product",
+        "o2_i1_22": "product",
+        "o3_i2_23": "product",
+        "o4_i3": "product",
+        "o5_i3": "product",
+        "o6_i1": "product",
+        "o7_i1": "product",
+        "o7_i1_17": "product",
+        "o7_i2": "product",
+        "o7_i4_17": "root",
+        "raw_o0": "base",
+        "raw_o1": "base",
+        "raw_o3": "base",
+        "raw_o4": "base",
+        "raw_o9": "base"
+      },
+      "nodes": 15,
+      "root": "o7_i4_17"
+    },
+    {
+      "depth": 4,
+      "edges": [
+        [
+          "o0_i1",
+          "raw_o6"
+        ],
+        [
+          "o0_i2_10",
+          "raw_o3"
+        ],
+        [
+          "o0_i2_10",
+          "raw_o9"
+        ],
+        [
+          "o1_i2_21",
+          "o0_i1"
+        ],
+        [
+          "o1_i2_21",
+          "raw_o5"
+        ],
+        [
+          "o2_i1",
+          "raw_o5"
+        ],
+        [
+          "o3_i2",
+          "o2_i1"
+        ],
+        [
+          "o3_i2",
+          "raw_o2"
+        ],
+        [
+          "o3_i3_13",
+          "o1_i2_21"
+        ],
+        [
+          "o3_i3_13",
+          "o6_i2_16"
+        ],
+        [
+          "o3_i4_13",
+          "o0_i2_10"
+        ],
+        [
+          "o3_i4_13",
+          "o3_i2"
+        ],
+        [
+          "o3_i4_13",
+          "o3_i3_13"
+        ],
+        [
+          "o4_i1_24",
+          "raw_o8"
+        ],
+        [
+          "o6_i1",
+          "raw_o3"
+        ],
+        [
+          "o6_i2_16",
+          "o4_i1_24"
+        ],
+        [
+          "o6_i2_16",
+          "o6_i1"
+        ]
+      ],
+      "node_kinds": {
+        "o0_i1": "product",
+        "o0_i2_10": "product",
+        "o1_i2_21": "product",
+        "o2_i1": "product",
+        "o3_i2": "product",
+        "o3_i3_13": "product",
+        "o3_i4_13": "root",
+        "o4_i1_24": "product",
+        "o6_i1": "product",
+        "o6_i2_16": "product",
+        "raw_o2": "base",
+        "raw_o3": "base",
+        "raw_o5": "base",
+        "raw_o6": "base",
+        "raw_o8": "base",
+        "raw_o9": "base"
+      },
+      "nodes": 16,
+      "root": "o3_i4_13"
+    }
+  ],
+  "native_qualification": [
+    {
+      "qualification": {
+        "calls": 9,
+        "initial_prompt_tokens": 429,
+        "max_prompt_plus_cap": 1384,
+        "native_score": 1,
+        "output_tokens": 226
+      },
+      "root": "m0_i3_10",
+      "statistics": {
+        "batches": 4,
+        "craft_count": 4,
+        "declared_depth": 3,
+        "dependency_chain": 3,
+        "ingredient_edges": 7,
+        "initial_item_types": 2,
+        "initial_units": 16,
+        "maximum_fanin": 3,
+        "reachable_products": 4,
+        "root_batch_sizes": {
+          "m0_i3_10": 2
+        }
+      }
+    },
+    {
+      "qualification": {
+        "calls": 15,
+        "initial_prompt_tokens": 449,
+        "max_prompt_plus_cap": 1878,
+        "native_score": 1,
+        "output_tokens": 386
+      },
+      "root": "c1_i3_11",
+      "statistics": {
+        "batches": 11,
+        "craft_count": 7,
+        "declared_depth": 3,
+        "dependency_chain": 3,
+        "ingredient_edges": 11,
+        "initial_item_types": 3,
+        "initial_units": 30,
+        "maximum_fanin": 3,
+        "reachable_products": 7,
+        "root_batch_sizes": {
+          "c1_i3_11": 1
+        }
+      }
+    },
+    {
+      "qualification": {
+        "calls": 13,
+        "initial_prompt_tokens": 441,
+        "max_prompt_plus_cap": 1662,
+        "native_score": 1,
+        "output_tokens": 308
+      },
+      "root": "c4_i3",
+      "statistics": {
+        "batches": 11,
+        "craft_count": 6,
+        "declared_depth": 3,
+        "dependency_chain": 3,
+        "ingredient_edges": 10,
+        "initial_item_types": 3,
+        "initial_units": 40,
+        "maximum_fanin": 3,
+        "reachable_products": 6,
+        "root_batch_sizes": {
+          "c4_i3": 1
+        }
+      }
+    },
+    {
+      "qualification": {
+        "calls": 13,
+        "initial_prompt_tokens": 429,
+        "max_prompt_plus_cap": 1647,
+        "native_score": 1,
+        "output_tokens": 314
+      },
+      "root": "c3_i3_23",
+      "statistics": {
+        "batches": 11,
+        "craft_count": 6,
+        "declared_depth": 3,
+        "dependency_chain": 3,
+        "ingredient_edges": 10,
+        "initial_item_types": 2,
+        "initial_units": 26,
+        "maximum_fanin": 3,
+        "reachable_products": 6,
+        "root_batch_sizes": {
+          "c3_i3_23": 1
+        }
+      }
+    },
+    {
+      "qualification": {
+        "calls": 19,
+        "initial_prompt_tokens": 503,
+        "max_prompt_plus_cap": 2270,
+        "native_score": 1,
+        "output_tokens": 499
+      },
+      "root": "m9_i4_19",
+      "statistics": {
+        "batches": 11,
+        "craft_count": 9,
+        "declared_depth": 4,
+        "dependency_chain": 4,
+        "ingredient_edges": 15,
+        "initial_item_types": 6,
+        "initial_units": 76,
+        "maximum_fanin": 3,
+        "reachable_products": 9,
+        "root_batch_sizes": {
+          "m9_i4_19": 2
+        }
+      }
+    },
+    {
+      "qualification": {
+        "calls": 25,
+        "initial_prompt_tokens": 485,
+        "max_prompt_plus_cap": 2699,
+        "native_score": 1,
+        "output_tokens": 630
+      },
+      "root": "c5_i4_15",
+      "statistics": {
+        "batches": 18,
+        "craft_count": 12,
+        "declared_depth": 4,
+        "dependency_chain": 4,
+        "ingredient_edges": 20,
+        "initial_item_types": 5,
+        "initial_units": 80,
+        "maximum_fanin": 3,
+        "reachable_products": 12,
+        "root_batch_sizes": {
+          "c5_i4_15": 2
+        }
+      }
+    },
+    {
+      "qualification": {
+        "calls": 21,
+        "initial_prompt_tokens": 475,
+        "max_prompt_plus_cap": 2351,
+        "native_score": 1,
+        "output_tokens": 511
+      },
+      "root": "o7_i4_17",
+      "statistics": {
+        "batches": 10,
+        "craft_count": 10,
+        "declared_depth": 4,
+        "dependency_chain": 4,
+        "ingredient_edges": 16,
+        "initial_item_types": 5,
+        "initial_units": 52,
+        "maximum_fanin": 3,
+        "reachable_products": 10,
+        "root_batch_sizes": {
+          "o7_i4_17": 2
+        }
+      }
+    },
+    {
+      "qualification": {
+        "calls": 21,
+        "initial_prompt_tokens": 491,
+        "max_prompt_plus_cap": 2381,
+        "native_score": 1,
+        "output_tokens": 522
+      },
+      "root": "o3_i4_13",
+      "statistics": {
+        "batches": 15,
+        "craft_count": 10,
+        "declared_depth": 4,
+        "dependency_chain": 4,
+        "ingredient_edges": 17,
+        "initial_item_types": 6,
+        "initial_units": 64,
+        "maximum_fanin": 3,
+        "reachable_products": 10,
+        "root_batch_sizes": {
+          "o3_i4_13": 1
+        }
+      }
+    }
+  ],
+  "qualification_ready": true,
+  "queue_sha256": "3dc4d0df3e0595cd849f48819555e0b68eccc09a8cfaba108695c208520c6783",
+  "source_sha256": {
+    "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/teaching_transfer_20261014/prepare.py": "e1c4f1001bedcecd79e42af0eca569f79218abdd8d6b7368bd3e40fbbe440970",
+    "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/teaching_transfer_20261014/readout.py": "cb1b9ea0a01810383ca06e24f8013c2ce771144627b7c13847fd03624df8dfee",
+    "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/teaching_transfer_20261014/structure.py": "dcde47454727ca20cb5a3842c209ef4652de4f8269573a5851313e042ec74dd4"
+  },
+  "unique_queue_pins_checked": 41,
+  "paired_inference_fields_checked": [
+    "model",
+    "model_manifest_sha256",
+    "prepared",
+    "tasks_sha256",
+    "selection_sha256",
+    "world_sha256",
+    "profile",
+    "root_depth",
+    "max_agent_depth",
+    "max_global_calls",
+    "max_global_output_tokens",
+    "input_plus_output_limit",
+    "max_new_tokens",
+    "truncation",
+    "sampling",
+    "seed_rule",
+    "seeds",
+    "execution_mode"
+  ],
+  "paired_schedule_checked": true,
+  "model_calls_before_publication": 0,
+  "planned_attempts": 64,
+  "actors": {
+    "known23": {
+      "plan_sha256": "66a831f4b0d3936dfbf9cd026e6fe1d2bdca6aa4e2e3fb08d8f1c9dc4bde8bc2",
+      "checkpoint": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-quantity-matched-seed2026092208-001/checkpoint-0023",
+      "adapter_sha256": "c29ca971fb839eda116483d1652338444d895d2fab40a314004c3ee0b94650d8",
+      "state": {
+        "cursor": 0,
+        "epoch": 1,
+        "step": 23,
+        "training_seconds": 182.03292260318995
+      },
+      "training_plan_sha256": "368b0b3df7367129a78760010dbaf9664f780b41e123cf8902e077453a6cbb60"
+    },
+    "repair23": {
+      "plan_sha256": "53130cc8ddb73580bedc10370f96d3f256b2eb1ae37e60b3d4e82823a3347119",
+      "checkpoint": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/train-stable_visible-seed2026092208/checkpoint-0023",
+      "adapter_sha256": "680bd683c049952ea69cac79df8546a9379c4074d0a9c8223a1f030afbb8612f",
+      "state": {
+        "cursor": 0,
+        "epoch": 1,
+        "step": 23,
+        "training_seconds": 185.56821214593947
+      },
+      "training_plan_sha256": "624473acbfaac52c000e9c5472659521ed6c38fb403e494f0d3163579e1ffd90"
+    },
+    "discovery23": {
+      "plan_sha256": "440660fd9d19e2b04a070a6eb727cdcfe338bcc302ee675df7eb13af4423239f",
+      "checkpoint": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-public-discovery-sft-001/checkpoint-0023",
+      "adapter_sha256": "f029d36967eb1cef30e102fe82e52f22f90d5eacdaf91e82937b60218ba5b00f",
+      "state": {
+        "cursor": 0,
+        "epoch": 1,
+        "step": 23,
+        "training_seconds": 188.21467818319798
+      },
+      "training_plan_sha256": "5a34080562a39dc92dee2a813078e730b883fb60944dad96b613598c31f9624c"
+    },
+    "known69": {
+      "plan_sha256": "bd1c0fd0275ce7603484fa2c1b2039b1cbb405d1f437f7ba953ddf1f9472ad46",
+      "checkpoint": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-dose-20260928-001/train-known_recipe/checkpoint-0069",
+      "adapter_sha256": "5831559919216ce2c004262fa349ff3cf9096fe2311ed34511908232a38d13c4",
+      "state": {
+        "continuation_plan_sha256": "86a4f1eecff14f3a0330e62a2fc061f41d46d84e18cc18afc1105189578ac5db",
+        "cumulative_microbatches": 1098,
+        "cumulative_target_tokens": 26460,
+        "cursor": 0,
+        "epoch": 3,
+        "step": 69,
+        "training_seconds": 544.8412447478622
+      },
+      "training_plan_sha256": "86a4f1eecff14f3a0330e62a2fc061f41d46d84e18cc18afc1105189578ac5db"
+    }
+  },
+  "environment": {
+    "executable": "/project/alex_phd/repos/rlm-bootstrap/.worktrees/a100-lora-roundtrip/gpu/training/.venv/bin/python",
+    "python": "3.12.12 (main, Oct 28 2025, 12:10:49) [Clang 20.1.4 ]",
+    "torch": "2.13.0+cu130",
+    "transformers": "5.15.1"
+  },
+  "uv_lock": {
+    "path": "/project/alex_phd/repos/rlm-bootstrap/.worktrees/a100-lora-roundtrip/gpu/training/uv.lock",
+    "sha256": "d18054c5eaf69dbc69bc71f14c603df462a6d660001f044915814a9157552158"
+  },
+  "limitations": [
+    "Same synthetic generator and vocabulary; novel rooted topology within recorded catalog, not new domain.",
+    "Prior catalog covers native recipe worlds referenced by current TextCraft plans, not pretraining.",
+    "Graphs over64 nodes cannot match selected graphs of64 nodes or fewer.",
+    "Eight roots share one recipe world; no claim of eight independent domains.",
+    "Depth/size design chosen after CPU-only novelty probe, before any new policy outcomes.",
+    "Shared intermediate dependencies remain; c3_i3_23 is also a prerequisite of c5_i4_15.",
+    "Base-stock constructor and no distractors differ from earlier panels.",
+    "Single fit seed, flat policy; no new RL or recursion evidence.",
+    "Native teacher construction success is not learned policy success."
+  ],
+  "next_decision": "Run all four fixed arms after full predecessor queue release; use pilot to guide broader fresh-task replication and matched RL comparison, not as full-goal completion.",
+  "verification": {
+    "focused_tests": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /project/alex_phd/repos/rlm-bootstrap/.worktrees/a100-lora-roundtrip/gpu/training/.venv/bin/python -m pytest -q -p no:cacheprovider experiments/teaching_transfer_20261014",
+      "passed": 8,
+      "exit_code": 0
+    },
+    "scope": "CPU graph/selection/native constructor/checkpoint-binding and paired schedule tests. No fresh policy evaluation yet.",
+    "known_lint": "Frozen prepare.py retains one I001 and four E501 cosmetic findings. Source not reformatted after freeze; no claim of folder-wide lint cleanliness."
+  }
+}
