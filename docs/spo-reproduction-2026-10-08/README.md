@@ -1,6 +1,51 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Latest result: October 13, 23:02 UTC
+## Latest result: October 14, 00:20 UTC
+
+**The fixed-endpoint reproduction remains unfinished.** Two further scheduled
+evaluations are now independently audited. The latest, after **6,736 optimizer
+updates**, scores **56.197877% test mean pass@1** (11,860/21,104 responses):
+**16.42 percentage points above original SFT** and 0.526123 points below the
+supplied 56.724% paper reference.
+
+| Native mean pass@1 | 6,576 updates | 6,736 updates |
+| --- | ---: | ---: |
+| Test | 55.92% | 56.20% |
+| Validation | 70.54% | 71.30% |
+| Non-held-out training subset | 82.88% | 84.07% |
+
+Both [410](evidence/restart-eval410-20261014.json) and
+[420](evidence/restart-eval420-20261014.json) audits verify all 33,024 saved
+answers and 21 native metrics, including original identities and prompt/tree/
+Arrow bindings. The test decline at 410 is retained, not replaced by a favorable
+earlier point. At 420 all three means rise, but test once-hit falls from
+1,057/1,319 to 1,041/1,319 questions: the gain is not uniform across questions.
+Neither once-hit nor majority vote replaces the prescribed mean pass@1.
+
+Retain **all 43 scheduled points**, the original **1,000-collection LR horizon**
+and fixed **690 collections / 11,040 updates** plus native final evaluation.
+These intermediate gains support continued testing; they do not establish
+statistical equivalence, BOS causality or measured transfer to RLM.
+
+The user explicitly authorized continuing past the prior account reserve.
+The [review observer resumed](evidence/restart-resumption-20261014.json) with
+the same deadline and preserved acknowledgement history; no reset is assumed.
+The original GPU owner and sealed training source were never stopped or changed.
+Each new evaluation has 2,065 successful HTTP returns, zero errors/tracebacks.
+
+The protected full **6,400** state remains intact after its native source
+rotated to six files. All ten protected file identities match the previous
+full-hash receipt; all six older protected directories remain. This is not
+a new tensor scan or GPU restore. Next: the prepared 430/6,896 audit and
+preparation for the preselected 7,680 recovery copy.
+
+See the [410 interpretation](evidence/restart-eval410-interpretation-20261014.json),
+[420 interpretation](evidence/restart-eval420-interpretation-20261014.json)
+and [complete scheduled series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far).
+The advisor package keeps its October 12, 20:53:09 UTC cutoff; the central
+unfinished-endpoint claim and next research decision are unchanged.
+
+## Historical result: October 13, 23:02 UTC (superseded above)
 
 **Our fixed-endpoint training reproduction is still unfinished.** Evaluation
 400, after **6,416 optimizer updates**, is now independently regraded:

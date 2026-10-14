@@ -1,0 +1,163 @@
+{
+  "schema": "spo-scheduled-evaluation420-interpretation-v1",
+  "checked_utc": "2026-10-14T00:20:17.084521+00:00",
+  "receipt_created_utc": "2026-10-14T00:19:50.147014+00:00",
+  "rows": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 11860,
+      "percent": 56.197877179681576,
+      "previous_correct": 11802,
+      "delta_correct": 58,
+      "delta_pp": 0.2748294162244124,
+      "metrics": {
+        "correct_frac": 0.5619787717968158,
+        "exact_match": 0.7892342683851402,
+        "exact_match_frac": 0.5619787717968158,
+        "majority_vote_acc": 0.6307808946171342,
+        "none_answer_extracted_frac_per_problem": 0.0002843062926459439,
+        "once_hit": 0.7892342683851402,
+        "unique_answer_count": 3.6633813495072025
+      },
+      "previous_metrics": {
+        "correct_frac": 0.5592304776345717,
+        "exact_match": 0.8013646702047005,
+        "exact_match_frac": 0.5592304776345717,
+        "majority_vote_acc": 0.6156178923426838,
+        "none_answer_extracted_frac_per_problem": 0.00033169067475360124,
+        "once_hit": 0.8013646702047005,
+        "unique_answer_count": 3.756633813495072
+      },
+      "extraction_failures": 6,
+      "previous_extraction_failures": 7,
+      "finish_reasons": {
+        "length": 6,
+        "stop": 21098
+      },
+      "numeric_format_rescues": 80,
+      "previous_numeric_format_rescues": 78
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 4255,
+      "percent": 71.29691689008042,
+      "previous_correct": 4210,
+      "delta_correct": 45,
+      "delta_pp": 0.7540214477211796,
+      "metrics": {
+        "correct_frac": 0.7129691689008043,
+        "exact_match": 0.8820375335120644,
+        "exact_match_frac": 0.7129691689008043,
+        "majority_vote_acc": 0.7640750670241286,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.8820375335120644,
+        "unique_answer_count": 2.525469168900804
+      },
+      "previous_metrics": {
+        "correct_frac": 0.7054289544235925,
+        "exact_match": 0.8739946380697051,
+        "exact_match_frac": 0.7054289544235925,
+        "majority_vote_acc": 0.7560321715817694,
+        "none_answer_extracted_frac_per_problem": 0.0001675603217158177,
+        "once_hit": 0.8739946380697051,
+        "unique_answer_count": 2.5335120643431637
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 1,
+      "finish_reasons": {
+        "stop": 5968
+      },
+      "numeric_format_rescues": 52,
+      "previous_numeric_format_rescues": 55
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 5004,
+      "percent": 84.0725806451613,
+      "previous_correct": 4933,
+      "delta_correct": 71,
+      "delta_pp": 1.1928763440860215,
+      "metrics": {
+        "correct_frac": 0.8407258064516129,
+        "exact_match": 0.9489247311827957,
+        "exact_match_frac": 0.8407258064516129,
+        "majority_vote_acc": 0.8817204301075269,
+        "none_answer_extracted_frac_per_problem": 0.00016801075268817206,
+        "once_hit": 0.9489247311827957,
+        "unique_answer_count": 1.9946236559139785
+      },
+      "previous_metrics": {
+        "correct_frac": 0.8287970430107527,
+        "exact_match": 0.9381720430107527,
+        "exact_match_frac": 0.8287970430107527,
+        "majority_vote_acc": 0.8790322580645161,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9381720430107527,
+        "unique_answer_count": 2.110215053763441
+      },
+      "extraction_failures": 1,
+      "previous_extraction_failures": 0,
+      "finish_reasons": {
+        "length": 1,
+        "stop": 5951
+      },
+      "numeric_format_rescues": 40,
+      "previous_numeric_format_rescues": 40
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "better": 277,
+      "worse": 285,
+      "unchanged": 757,
+      "gained": 706,
+      "lost": 648,
+      "first_before": 16,
+      "first_after": 15
+    },
+    "validation": {
+      "better": 83,
+      "worse": 64,
+      "unchanged": 226,
+      "gained": 195,
+      "lost": 150,
+      "first_before": 16,
+      "first_after": 16
+    },
+    "train": {
+      "better": 77,
+      "worse": 53,
+      "unchanged": 242,
+      "gained": 196,
+      "lost": 125,
+      "first_before": 14,
+      "first_after": 12
+    }
+  },
+  "delta_vs_sft_pp": 16.423426838514025,
+  "gap_below_paper_pp": 0.5261228203184203,
+  "receipt_sha256": "ede5df90a0597f0ae83828e72fbbfdd6a57630d280ddf1e1c13594b3ee6dec0c",
+  "interpretation": [
+    "At421collections/6736updates, all three mean accuracies increase from410: test+58,validation+45,nonheldout train+71 correct responses (+0.274829,+0.754021,+1.192876 percentage points). Test56.197877% remains below400 by89 correct samples. Retain all43 scheduled points.",
+    "Original SFT gain is16.423427percentage points; gap below supplied56.724reference is0.526123points. This is measured intermediate learning, not completion at fixed690/11040. The original1000collection LR horizon and native final evaluation remain required.",
+    "Test277questions improve,285worsen,757unchanged;706gains offset648losses. Once-hit falls from1057/1319 to1041/1319 even while mean pass@1 rises. More reliable answers on some questions coexist with reduced any-correct coverage; do not substitute majority vote or once-hit for the prescribed metric.",
+    "Extraction failures/length endings decrease7to6; unchanged numeric-format diagnostic potential rescues78to80. These remain secondary diagnostics, not reasons to change grader/reward or select a favorable point.",
+    "The near-paper intermediate score and sustained SFT gain are encouraging for RL-method calibration. They do not prove historical implementation equivalence, a causal BOS repair effect, SPO suitability for RLM, or actual RLM transfer.",
+    "420 wrapper was prepared after evaluation generation began but before its test aggregate was written; this was not a pre-generation preparation. All33,024 answers/21metrics independently agree."
+  ],
+  "decision": "Continue unchanged original training owner toward fixed690/11040 and full native final regrade; next scheduled430/6896 audit prepared. Keep6400 and prior protected states; prepare preselected7680 copy separately.",
+  "service": {
+    "successful_http_returns": 2065,
+    "http_errors": 0,
+    "tracebacks": 0
+  },
+  "advisor_package": {
+    "change_to_main_story": false,
+    "change_to_material_limitations": false,
+    "change_to_next_decision": false,
+    "action": "Update supporting dossier; retain explicit2026-10-12T20:53:09.492795UTC advisor-deck cutoff and unfinished fixed-endpoint claim."
+  }
+}

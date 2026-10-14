@@ -1,0 +1,129 @@
+{
+  "schema": "spo-resumption-milestone-v1",
+  "checked_utc": "2026-10-14T00:21:49.514750+00:00",
+  "authority": "Human explicitly instructed continuing past the previous reserve threshold on October14; no reset assumed or performed.",
+  "authority_path": "/project/alex_phd/runs/rl-paper-reproduction-20261012/resumption-20261014/AUTHORITY.json",
+  "authority_sha256": "49ad28de5ff716364e848b3046e2530ff39e70381eaac44a69eca8a6a229b77a",
+  "observer": {
+    "source": "/project/alex_phd/runs/rl-paper-reproduction-20261012/code-monitor-resumed-v2/review_monitor.py",
+    "source_sha256": "d7cc3bd15ade30cb39a8001c86940a3e7dafcd9c6c2182375a3281a580d3a9cb",
+    "config": "/project/alex_phd/runs/rl-paper-reproduction-20261012/reviews/CONFIG-RESUMED-20261014.json",
+    "pid": 22856,
+    "startticks": 1374103851,
+    "exec_session": 90724,
+    "deadline": 1792068616,
+    "old_stop_and_terminal": "Archived byte-exact under resumption-20261014/previous-observer before removal; STATE and all ACKs preserved.",
+    "admission": "Fresh main codex quota only; unknown/stale/Spark-only/exhausted values not admitted. Original stop/deadline/lock/pending/ACK logic unchanged.",
+    "independent_review": "/project/alex_phd/runs/rl-paper-reproduction-20261012/resumption-20261014/REVIEW.json"
+  },
+  "original_training_owners": {
+    "queue": {
+      "pid": 2826646,
+      "startticks": 1362248004,
+      "state": "S"
+    },
+    "scoped": {
+      "pid": 2826649,
+      "startticks": 1362248013,
+      "state": "S"
+    },
+    "trainer": {
+      "pid": 2826650,
+      "startticks": 1362248017,
+      "state": "R"
+    }
+  },
+  "seven_sealed_training_pins_match": true,
+  "audits": [
+    {
+      "iteration": 410,
+      "collections": 411,
+      "updates": 6576,
+      "session": 95818,
+      "exit_code": 0,
+      "receipt_sha256": "d4c7d9db0112d2a4312e38e2b643cbb595014c126eb5e5ca640ed7e0095ab278"
+    },
+    {
+      "iteration": 420,
+      "collections": 421,
+      "updates": 6736,
+      "session": 14549,
+      "exit_code": 0,
+      "receipt_sha256": "ede5df90a0597f0ae83828e72fbbfdd6a57630d280ddf1e1c13594b3ee6dec0c"
+    }
+  ],
+  "preparation_timing": {
+    "410": "Created after all outputs; fixed scheduled ordinal, not favorable selection.",
+    "420": "Created during generation, before first aggregate completion; not pre-generation.",
+    "430": "Prepared before native root existed; not executed."
+  },
+  "checkpoint_status": {
+    "checked_utc": "2026-10-14T00:21:49.514750+00:00",
+    "protected6400_receipt_sha256": "b06432c6d0c694d2a4159b8a394bbdc863681f827a7bea0ae08698d028711e27",
+    "ten_destination_identities_unchanged": true,
+    "six_prior_protected_directories_exist": true,
+    "native_inventory": [
+      {
+        "name": "ckpt--iter_0040--epoch_2.00--step_0640",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0080--epoch_2.00--step_1280",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0120--epoch_2.00--step_1920",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0160--epoch_2.00--step_2560",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0200--epoch_2.00--step_3200",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0240--epoch_2.00--step_3840",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0280--epoch_2.00--step_4480",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0320--epoch_2.00--step_5120",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0360--epoch_2.00--step_5760",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0400--epoch_2.00--step_6400",
+        "files": 6
+      },
+      {
+        "name": "ckpt--iter_0420--epoch_2.00--step_6720",
+        "files": 10
+      }
+    ],
+    "home_quota": {
+      "ceph.quota.max_bytes": 1099511627776,
+      "ceph.dir.rbytes": 741876601120,
+      "ceph.quota.max_files": 1000000,
+      "ceph.dir.rfiles": 565080
+    },
+    "limits": "Stat identity reuse of prior full hashes, not a redundant17.60GB rehash, new tensor audit or restore. Native list is inventory only."
+  },
+  "followups": [
+    "Continue original owner to690collections/11040updates plus native final regrade under unchanged1000collection LR horizon.",
+    "Prepared scheduled430/6896 audit after all3native split gates and fresh pins/no-overwrite checks.",
+    "Prepare preselected7680 full-state protection; not yet copied. No GPU resume while current owner lives."
+  ],
+  "limits": [
+    "No fixed-endpoint completion, favorable checkpoint, post-hoc acceptance tolerance, causal BOS or measured RLM-transfer claim.",
+    "Logged numerical finiteness and one observed answer are not all-tensor or full-batch verification.",
+    "GitHub publication is not a backup of model weights or external runs."
+  ]
+}

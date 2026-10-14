@@ -1,0 +1,161 @@
+{
+  "schema": "spo-scheduled-evaluation410-interpretation-v1",
+  "checked_utc": "2026-10-14T00:20:17.073070+00:00",
+  "receipt_created_utc": "2026-10-14T00:17:14.953614+00:00",
+  "rows": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 11802,
+      "percent": 55.92304776345716,
+      "previous_correct": 11949,
+      "delta_correct": -147,
+      "delta_pp": -0.6965504169825626,
+      "metrics": {
+        "correct_frac": 0.5592304776345717,
+        "exact_match": 0.8013646702047005,
+        "exact_match_frac": 0.5592304776345717,
+        "majority_vote_acc": 0.6156178923426838,
+        "none_answer_extracted_frac_per_problem": 0.00033169067475360124,
+        "once_hit": 0.8013646702047005,
+        "unique_answer_count": 3.756633813495072
+      },
+      "previous_metrics": {
+        "correct_frac": 0.5661959818043972,
+        "exact_match": 0.8028809704321456,
+        "exact_match_frac": 0.5661959818043972,
+        "majority_vote_acc": 0.6300227445034117,
+        "none_answer_extracted_frac_per_problem": 0.00018953752843062926,
+        "once_hit": 0.8028809704321456,
+        "unique_answer_count": 3.7680060652009097
+      },
+      "extraction_failures": 7,
+      "previous_extraction_failures": 4,
+      "finish_reasons": {
+        "length": 7,
+        "stop": 21097
+      },
+      "numeric_format_rescues": 78,
+      "previous_numeric_format_rescues": 74
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 4210,
+      "percent": 70.54289544235925,
+      "previous_correct": 4169,
+      "delta_correct": 41,
+      "delta_pp": 0.6869973190348525,
+      "metrics": {
+        "correct_frac": 0.7054289544235925,
+        "exact_match": 0.8739946380697051,
+        "exact_match_frac": 0.7054289544235925,
+        "majority_vote_acc": 0.7560321715817694,
+        "none_answer_extracted_frac_per_problem": 0.0001675603217158177,
+        "once_hit": 0.8739946380697051,
+        "unique_answer_count": 2.5335120643431637
+      },
+      "previous_metrics": {
+        "correct_frac": 0.698558981233244,
+        "exact_match": 0.8873994638069705,
+        "exact_match_frac": 0.698558981233244,
+        "majority_vote_acc": 0.7587131367292225,
+        "none_answer_extracted_frac_per_problem": 0.0001675603217158177,
+        "once_hit": 0.8873994638069705,
+        "unique_answer_count": 2.675603217158177
+      },
+      "extraction_failures": 1,
+      "previous_extraction_failures": 1,
+      "finish_reasons": {
+        "length": 1,
+        "stop": 5967
+      },
+      "numeric_format_rescues": 55,
+      "previous_numeric_format_rescues": 49
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 4933,
+      "percent": 82.87970430107526,
+      "previous_correct": 4934,
+      "delta_correct": -1,
+      "delta_pp": -0.016801075268817203,
+      "metrics": {
+        "correct_frac": 0.8287970430107527,
+        "exact_match": 0.9381720430107527,
+        "exact_match_frac": 0.8287970430107527,
+        "majority_vote_acc": 0.8790322580645161,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9381720430107527,
+        "unique_answer_count": 2.110215053763441
+      },
+      "previous_metrics": {
+        "correct_frac": 0.8289650537634409,
+        "exact_match": 0.9489247311827957,
+        "exact_match_frac": 0.8289650537634409,
+        "majority_vote_acc": 0.8844086021505376,
+        "none_answer_extracted_frac_per_problem": 0,
+        "once_hit": 0.9489247311827957,
+        "unique_answer_count": 2.185483870967742
+      },
+      "extraction_failures": 0,
+      "previous_extraction_failures": 0,
+      "finish_reasons": {
+        "stop": 5952
+      },
+      "numeric_format_rescues": 40,
+      "previous_numeric_format_rescues": 30
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "better": 303,
+      "worse": 307,
+      "unchanged": 709,
+      "gained": 724,
+      "lost": 871,
+      "first_before": 16,
+      "first_after": 16
+    },
+    "validation": {
+      "better": 76,
+      "worse": 72,
+      "unchanged": 225,
+      "gained": 211,
+      "lost": 170,
+      "first_before": 16,
+      "first_after": 16
+    },
+    "train": {
+      "better": 65,
+      "worse": 70,
+      "unchanged": 237,
+      "gained": 160,
+      "lost": 161,
+      "first_before": 14,
+      "first_after": 14
+    }
+  },
+  "delta_vs_sft_pp": 16.148597422289612,
+  "gap_below_paper_pp": 0.8009522365428339,
+  "receipt_sha256": "d4c7d9db0112d2a4312e38e2b643cbb595014c126eb5e5ca640ed7e0095ab278",
+  "interpretation": [
+    "At411collections/6576updates, test55.923048% loses147 correct responses versus400, while validation gains41 and nonheldout training loses1. This is a mixed split trajectory, not a continuing universal decline or completed fixed-endpoint reproduction.",
+    "Test303questions improve,307worsen,709unchanged;724gains offset871losses. Extraction failures rise from4to7 and are too few to explain the147correct-response loss alone. No scoring/data-binding or service error was found.",
+    "Retain scheduled410 regardless of its lower score. No favorable checkpoint selection, retrospective tolerance, significance/equivalence, BOS causality or measured RLM-transfer claim.",
+    "Audit preparation followed completed410 outputs during the quota observer stop. The existing every10 evaluation policy fixed this point, not its score."
+  ],
+  "decision": "Continue unchanged original training owner toward fixed690/11040 and full native final regrade; next scheduled430/6896 audit prepared. Keep6400 and prior protected states; prepare preselected7680 copy separately.",
+  "service": {
+    "successful_http_returns": 2065,
+    "http_errors": 0,
+    "tracebacks": 0
+  },
+  "advisor_package": {
+    "change_to_main_story": false,
+    "change_to_material_limitations": false,
+    "change_to_next_decision": false,
+    "action": "Update supporting dossier; retain explicit2026-10-12T20:53:09.492795UTC advisor-deck cutoff and unfinished fixed-endpoint claim."
+  }
+}
