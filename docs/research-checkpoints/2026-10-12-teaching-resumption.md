@@ -1,5 +1,57 @@
 # Resuming research on teaching RLM competencies
 
+## Latest: October 14, 22:18 UTC — panel03 complete; new-structure test running
+
+The full next-panel comparison is now available. Across the same eight goal
+identities, two worlds and two rollout draws:
+
+| Teaching policy | Whole-task successes | Model calls | Generated tokens |
+|---|---:|---:|---:|
+| Original-known teacher | 3/32 | 1,171 | 24,594 |
+| Stable-visible repair | 17/32 | 779 | 19,218 |
+| Random-visible repair | 14/32 | 1,030 | 26,650 |
+| Discovery teacher | 22/32 | 1,015 | 32,341 |
+
+**The useful lesson is that better examples help against our weak original
+teacher, but a strong teaching baseline changes the conclusion.** Neither
+repair beats discovery on total successes. Stable repair uses fewer calls and
+generated tokens than every other arm in this panel; this is a measured
+success/cost trade-off, not evidence of universally superior teaching.
+
+Stable repair gains fifteen paired attempts and loses one versus original;
+random repair gains twelve and loses one. Against discovery, stable gains two
+and loses seven, while random gains one and loses nine. Stable beats random
+on four attempts and loses on one, with 27 ties. That small, single-fit
+difference does not establish a reliable ordering advantage.
+
+All **128 scheduled outcomes** are observed and match their saved native replay
+scores. Matching task identities, starting inventories, seeds and inference
+settings were checked, along with **8,300 unique audit-referenced file hashes**.
+There are zero transport failures. One random-repair/world50 attempt reaches
+the context limit and remains an observed failure, not an excluded run.
+The [complete evidence receipt](2026-10-14-teaching-panel03.json) preserves
+cell-level scores, costs, action errors, pairing checks and provenance. This
+reconciliation reuses completed native replays; it is not another GPU run.
+
+These remain previously exposed goals, repeated across worlds and draws,
+using one fitted seed. They are not 32 independent tasks. Teaching histories
+and prompt dose differ; we cannot isolate visibility alone. These are flat,
+supervised tool policies—not new RL gains or learned recursive delegation.
+
+After all eight predecessor jobs exited successfully and the entire queue and
+its scoped GPU owners departed, the frozen **new-structure pilot launched at
+22:17 UTC**. Its first real model response returned at 22:17:28; sixteen calls
+had returned without transport failures by 22:17:50. The four prescribed
+policies and all 64 planned attempts are unchanged from the prelaunch design
+below. No new-structure score or completed comparison is claimed yet.
+
+Next: finish this controlled transfer comparison, then the already prepared
+recovery-versus-ordinary teaching comparison after the whole fresh queue
+releases. Independent-fit replication and an evidence-backed decision about
+matched RL remain required. The research goal is unfinished. This result stays
+in supporting research evidence; it does not change the math-reproduction
+deck's headline. The earlier dated sections below remain historical cutoffs.
+
 ## October 14 update: completed comparison and renewed research goal
 
 The October 12 status below is retained as a historical checkpoint, not the
