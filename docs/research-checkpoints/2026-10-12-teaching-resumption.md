@@ -150,6 +150,55 @@ then test recovery versus ordinary teaching. Broader replication and matched
 RL added value remain unresolved. No new advisor-deck headline is warranted
 by this partial, previously exposed panel.
 
+## October 14: reconcile the earlier RL endpoint before designing another run
+
+The older September 29 narrative ended at the third update. The native records
+contain a fourth raw-action update and completed evaluation. Reconciliation now
+covers all **176 observed diagnostic outcomes and 256 training trajectories**,
+checking 1,296 episode/root-node/first-call hashes, native replay scores, paired
+task/inventory/runtime contracts, and saved probability-replay diagnostics.
+These are existing runs, not new GPU experiments or independent replications.
+
+| Policy interface | Warm | RL step1 | Step2 | Step3 | Step4 | One extra SFT step |
+|---|---:|---:|---:|---:|---:|---:|
+| Model writes all action arguments | 4/16 | 4/16 | 5/16 | 4/16 | 4/16 | 4/16 |
+| Code supplies observed recipe arguments | 5/16 | 4/16 | 4/16 | 4/16 | Not evaluated | 5/16 |
+
+The final raw model gains TRAIN1796 on one seed but loses TRAIN1847 on that
+seed. For the gained attempt it makes four requested items against a target of
+three; for the lost attempt it finishes without making the requested product.
+Equal totals therefore do not mean an unchanged policy. Calls rise from 778 to
+905 and generated tokens from 23,516 to 27,727. This fixed endpoint supplies
+neither a net task-success gain nor a cost saving on the reused eight-goal B
+diagnostic. The temporary step2 gain was not sustained. No best checkpoint is
+selected, and the one-step SFT control is not a four-step dose match.
+
+The assisted fourth fit stopped before a new optimizer update; its evaluation
+was explicitly skipped, not scored as zero. One of 51,588 sampled-token
+log-probabilities exceeded the fixed maximum generation/replay-gap gate:
+0.2500000596 against 0.25. The mean gap was 0.0005573, below its 0.025 gate.
+That reconstructs the exact stop condition, not the numerical cause of the
+underlying discrepancy. We preserve the failed attempt and the threshold;
+we have not resumed it or claimed a fix.
+
+Most importantly for the next experiment, the same four A training goals
+(1051, 1921, 2026 and 2338) had **zero successes in 128 attempts** across both
+interfaces and all four collections. These are four shared-world goals sampled
+repeatedly, not 128 independent problems. Their all-failure groups supply no
+direct relative terminal-reward gradient, although updates from other goals
+can change their behavior. This supports testing whether recovery teaching
+creates useful ordinary-start successes before repeating the unchanged RL
+recipe. It does not prove that sparse reward is the sole cause of failure.
+
+The [reconciliation receipt](2026-10-14-teaching-prior-rl-reconciliation.json)
+preserves all cells, collection signal, endpoint checks, missingness and the
+next-decision boundaries. Current GPU jobs and frozen follow-on queues remain
+unchanged. A future RL comparison must use fresh on-policy data, fixed taught
+endpoints, no-RL controls and explicit dose accounting. Diagnostic B outcomes
+must not choose training inputs or favorable checkpoints. Broader transfer,
+independent fits and RL added value remain open questions; the full research
+goal is not complete.
+
 ## Historical October 12 checkpoint
 
 **Priority correction, October 12:** the advisor's primary objective is a
