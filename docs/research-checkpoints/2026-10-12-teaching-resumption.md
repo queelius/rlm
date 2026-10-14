@@ -107,6 +107,49 @@ This checkpoint belongs in supporting research evidence, with no new advisor
 deck headline until the comparison finishes. Native checkpoints remain external;
 publishing their hashes does not back up their contents.
 
+## October 14, 21:43 UTC: second result and recovery-teaching readiness
+
+Random-order repair completed **6/16** successes on panel03/world42. Stable
+repair scored **7/16**, original teaching **1/16**, and discovery teaching
+**13/16**. Random and stable repair differ on only three paired attempts:
+random wins one and stable wins two. This small slice does not establish an
+ordering advantage. Random repair used 511 calls and 12,754 generated tokens,
+with zero transport failures but 127 native action errors. All sixteen scores
+match native replay; 1,086 audit-referenced file hashes and the paired initial
+inventories were checked. The world50 comparisons are still running.
+
+The next queued experiment asks a different question: **does teaching the
+model how to recover from its own mistakes help more than more ordinary
+examples?** Both arms begin at the same discovery-teacher checkpoint. Each
+gets one supervised optimizer update on 32 frozen examples from the same
+eight training goals, with 823 supervised tokens. We then test whole tasks
+from their normal starting states, alongside the unchanged starting model.
+Doing better at predicting the teaching answers is only an optimization check;
+the useful outcome is completing more tasks without a helpful error prefix.
+
+Both real datasets passed full token re-encoding checks. Ten focused CPU tests
+pass, including a small actual optimizer update and the native prepare-only
+entrypoint. A separate code review found no scientific-contract defect but
+required an outer watchdog: the prepared five-job queue now supplies hard
+20-minute fit and 90-minute readout limits, with a 310-minute whole budget.
+Its 33 unique input/source pins were checked. These are launch preparations,
+**not GPU training results**. The full preceding fresh-task queue must release
+before admission, and remaining allocation time must be checked again.
+
+Recovery and ordinary examples differ in history, eight target labels, and
+prompt length (80,120 versus 65,044 tokens); this is not a pure history-only
+intervention. The evaluation is on training-side goals, not untouched transfer.
+It is supervised teaching, not RL, and one null update cannot rule out a
+larger-dose benefit. The original exploratory advance thresholds and prohibition
+on B-driven selection are preserved in the queue. Exact plans, review findings,
+checks, costs and raw-result pointers are in the
+[evidence receipt](2026-10-14-teaching-recovery-prelaunch.json).
+
+The research order remains: finish panel03, test the frozen new structures,
+then test recovery versus ordinary teaching. Broader replication and matched
+RL added value remain unresolved. No new advisor-deck headline is warranted
+by this partial, previously exposed panel.
+
 ## Historical October 12 checkpoint
 
 **Priority correction, October 12:** the advisor's primary objective is a

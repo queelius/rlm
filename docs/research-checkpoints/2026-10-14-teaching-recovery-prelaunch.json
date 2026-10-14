@@ -1,0 +1,97 @@
+{
+  "checked_epoch": 1792014173.2635868,
+  "random_world42": {
+    "path": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-random_visible-s2026092208-p03-w42-raw",
+    "successes": 6,
+    "planned": 16,
+    "observed": 16,
+    "plan_sha256": "47aa2bb0960a0752c4a86366154df56ddcbca8156111860235913180683bd8fe",
+    "summary_sha256": "18e7ee0add9825674536b33d9f38aaa49d5f02fdcc3ba3f632e73147f95605bb",
+    "audit_sha256": "97c8c952ece142b9dc2f70f3abd3d8e8a42a2aa5cbb9d6ed0d77465be3ed4b6b",
+    "rechecked_audit_hashes": 1086,
+    "episode_scores": {
+      "t00-r0-flat-original": 0,
+      "t00-r1-flat-original": 1,
+      "t01-r0-flat-original": 1,
+      "t01-r1-flat-original": 0,
+      "t02-r0-flat-original": 0,
+      "t02-r1-flat-original": 0,
+      "t03-r0-flat-original": 1,
+      "t03-r1-flat-original": 0,
+      "t04-r0-flat-original": 0,
+      "t04-r1-flat-original": 1,
+      "t05-r0-flat-original": 0,
+      "t05-r1-flat-original": 0,
+      "t06-r0-flat-original": 1,
+      "t06-r1-flat-original": 0,
+      "t07-r0-flat-original": 0,
+      "t07-r1-flat-original": 1
+    },
+    "cost": {
+      "calls": 511,
+      "prompt_tokens": 1255134,
+      "completion_tokens": 12754,
+      "failed_calls": 0,
+      "unknown_completion_tokens_calls": 0,
+      "native_service_seconds": 1050.2840003967285
+    },
+    "native_action_errors": 127,
+    "paired_vs_stable": {
+      "random_wins": 1,
+      "stable_wins": 2,
+      "ties": 13
+    },
+    "paired_plan_and_initial_inventories": true
+  },
+  "recovery_prelaunch": {
+    "queue": "/project/alex_phd/runs/rlm-teaching-goal-20261014/RECOVERY-QUEUE.json",
+    "queue_sha256": "85fb012eff3240e736455a56955a8a7cad8d90a4e0a1799b622d7c8d1d58ffaa",
+    "unique_pins_checked": 33,
+    "executor_sha256": "35d1c12376dd29513960303df97fee109aa353c7f757175d948f680b00fcd6c8",
+    "hard_cap_argv_verified": true,
+    "plans": {
+      "train-recovery": "ff084a46e53ea1a61982b6323a65a38a6f70bc9a301f14649e1384ded30775e7",
+      "train-ordinary": "d073752ec0e388ae886a963e6c4d2a873a2ab77e46f463097ab70222d6935209",
+      "eval-warm": "7b2223efa0f7a4baf7e8038be82a582fed9ca5eec140bba38e8cdca6cc64d627"
+    },
+    "gpu_launched": false
+  },
+  "live": {
+    "queue_pid": 467286,
+    "queue_create_time": 1792012246.05,
+    "collector_pid": 482264,
+    "collector_create_time": 1792014108.73,
+    "science_output": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-teaching-order-20260928-001/eval-stable_visible-s2026092208-p03-w50-raw",
+    "status": {
+      "state": "native_calls",
+      "returned": 35,
+      "failed": 0,
+      "last_call": "t02-r1-flat-original-c001",
+      "updated": 1792014172.494571
+    },
+    "first_response": {
+      "started": 1792014121.4652889,
+      "ended": 1792014123.565146,
+      "text": "{\"action\":\"get_info\",\"items\":[\"o4_i2\"]}"
+    }
+  },
+  "interpretation": "Random-visible6/16 and stable-visible7/16 exceed original1/16 but remain below discovery13/16 on exposed panel03/world42. Small paired slice, not order superiority or fresh transfer. World50 still running; fresh-structure and recovery comparisons remain pending.",
+  "schema": "teaching-recovery-prelaunch-and-panel03-progress-v1",
+  "tests": {
+    "focused_adapter_tests": 10,
+    "result": "passed",
+    "gpu_visible": false,
+    "ruff_check": "passed",
+    "ruff_format": "4 files already formatted",
+    "coverage": "Saved causal shift and target masking; full real-row token re-encoding for both arms; one-step tiny Torch optimizer; fixed endpoint rejection checks; actual native prepare-only entrypoint. Does not establish GPU numerical behavior or efficacy."
+  },
+  "review": {
+    "critical": 0,
+    "important": "Training/collection limits cooperative internally; outer hard limits required.",
+    "resolution": "RECOVERY-QUEUE uses existing executor and GNU timeout TERM60s before specified hard caps. Verified argv and executor source; no GPU launch yet.",
+    "minor": "Per-row saved losses normalized by823; reporting must regroup by action type then divide by type token count.",
+    "scientific_scope": "One-step recovery versus ordinary teaching plus unchanged warm control on original A starts. Not RL or fresh generalization."
+  },
+  "next_decision": "Let existing panel03 queue finish. Admit frozen fresh structural pilot only after whole predecessor and scoped owners release. Recovery queue follows entire fresh queue with live quota/time check; no outcome-selected checkpoint or retry. Full goal unfinished.",
+  "deck_decision": "No headline change: this exposed small slice still supports original-teacher repair without superiority to discovery. Keep in supporting research record until fresh-task evidence."
+}
