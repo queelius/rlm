@@ -1,27 +1,32 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Scientific-result cutoff: October 14, 2026, 03:47:10 UTC, after the completed
-full-answer audit was verified. All 48 scheduled restart points through
-evaluation 470 / 7,536 updates are retained. Latest test is 56.472707%,
-validation 71.565013%, non-held-out training 85.601478%. Changes from 460 are
-−8/+21/−17 correct responses. This small mixed movement does not establish
+Scientific-result cutoff: October 14, 2026, 04:27:05 UTC, after the completed
+full-answer audit was verified. All 49 scheduled restart points through
+evaluation 480 / 7,696 updates are retained. Latest test is 56.183662%,
+validation 71.900134%, non-held-out training 85.887097%. Changes from 470 are
+−61/+20/+17 correct responses. This mixed movement does not establish
 overfitting, convergence or equivalence. Non-held-out training is not proof
-of held-out generalization. The original-SFT gain is 16.698256 percentage
-points; the gap below supplied 56.724% is 0.251293 points.
+of held-out generalization. The original-SFT gain is 16.409212 percentage
+points; the gap below supplied 56.724% is 0.540338 points.
 Fixed-endpoint reproduction remains unfinished.
 
-Protected 6,400 remains the latest recovery copy. At 03:41:39 all ten destination
-identities matched the previous full-hash receipt. Native 6,400 and 7,040 have
-six files each; native 7,520 has a ten-file inventory only. It is not a protected
-copy or tensor audit of evaluated 7,536 weights. No new all-tensor scan or GPU restore.
-See the [protection receipt](evidence/restart-full6400-protection-20261013.json)
-and [latest interpretation/state check](evidence/restart-eval470-interpretation-20261014.json).
+Recovery update at 04:29:26 UTC: full 7,680 is now protected. All ten
+source/destination hashes and CPU trainer/actor/active-Adam counters agree;
+scheduler is 7,679, skipped steps zero, LR horizon 16,000 updates.
+All seven earlier protected copies remain. Preflight identities were stable,
+copy-time home quota gates passed, and the copy is outside native cleanup.
+This is not an all-tensor scan, GPU restoration or off-system backup.
+Saved 7,680 differs from evaluated 7,696. See the
+[protection receipt](evidence/restart-full7680-protection-20261014.json)
+and [latest interpretation](evidence/restart-eval480-interpretation-20261014.json).
+The next cadence target is 8,960, not yet prepared or copied.
 
-CPU audit 34508 (470) exited 0 once; never resume/repeat it or earlier audits.
-The 470 wrapper was prepared before its evaluation began. Next scheduled
-480/7,696 audit was prepared before its native root existed, not executed.
-Coarse 7,680 recovery protection is now prepared before source/destination
-existence, not copied; fresh storage, complete-state and stability gates remain.
+CPU audit 89096 (480) exited 0 once; never resume/repeat it or earlier audits.
+The 480 wrapper was prepared before its evaluation began. Next scheduled
+490/7,856 audit was prepared before its native root existed, not executed.
+The protection step was also selected before its source or score existed.
+Faithful resume remains conditional/unimplemented; a successor can only start
+after interruption and complete whole-owner/GPU-process departure.
 The user explicitly authorized continuing past the former account reserve;
 no reset is assumed or performed. The resumed observer retains its deadline
 and ACK history. Original GPU owner, sealed source and scientific recipe stay unchanged.
@@ -127,7 +132,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, 6,896, 7,056, 7,216, 7,376, and 7,536 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, 6,896, 7,056, 7,216, 7,376, 7,536, and 7,696 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -183,8 +188,62 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 7,216 | 56.12% | 70.58% | 85.85% |
 | 7,376 | 56.51% | 71.21% | 85.89% |
 | 7,536 | 56.47% | 71.57% | 85.60% |
+| 7,696 | 56.18% | 71.90% | 85.89% |
 
-### Latest evaluation: 7,536 updates
+### Latest evaluation: 7,696 updates
+
+The full audit checks all 33,024 saved answers, original identities,
+prompt/tree/Arrow bindings and 21 native metrics. Test is 11,857/21,104 =
+56.183662%, validation 4,291/5,968 = 71.900134%, and non-held-out training
+5,112/5,952 = 85.887097%. Changes from 470 are −0.289045/+0.335121/+0.285618
+percentage points. All 49 scheduled points remain visible.
+
+Test loses 61 correct responses: 283 questions improve, 293 worsen and
+743 are unchanged; 616 gains are offset by 677 losses. Once-hit rises
+1,044→1,055, majority-vote correct questions fall 813→812 and first-sample
+correct questions fall 773→759. Validation has 66 improved, 62 worsened and
+245 unchanged questions, with 183 gains and 163 losses; once-hit rises
+329→331 and majority vote 284→289 while first-sample falls 283→278.
+Training has 56 improved, 52 worsened and 264 unchanged questions, with
+128 gains and 111 losses; once-hit rises 350→354 while majority vote falls
+335→334. These are descriptive paired observations, not independent training
+replications. Increasing once-hit can coexist with falling mean pass@1;
+only the latter is the primary metric.
+
+This mixed movement does not establish overfitting, convergence, equivalence,
+causal BOS repair or RLM transfer. Non-held-out training cannot demonstrate
+generalization. Test extraction failures remain three while length endings
+rise two to three; numeric-format-only potential rescues fall 70→63.
+Validation and training length/extraction failures fall one to zero; numeric
+rescues fall 52→51 and 49→40. Keep native grading and rewards unchanged.
+Gain over original SFT is 16.409212 points; gap below supplied 56.724 is
+0.540338 points. No acceptance tolerance is chosen from this score.
+
+All 2,065 evaluation HTTP returns succeeded with zero errors/tracebacks.
+Original owners and seven sealed pins match. First saved collection-480
+answer 600 and collection-481 answer 15 match original questions 2068 and
+2103, their gold answers and native effective reward 1. Inspection delays
+were 557.45 and 58.92 seconds from first request; the former misses the
+90-second target and is a recorded monitoring gap, not established idleness
+or transport failure. They counted 584 and 323 successful returns respectively,
+zero errors. Both sampled arithmetic traces are coherent, but these are
+operational samples, not accuracy estimates or full batch reward/BOS audits.
+The 7,696 contiguous logged updates have finite scalar fields, not a new
+all-parameter audit.
+
+The preselected full 7,680 state is now protected, with ten matching
+source/destination hashes and CPU counters; all earlier copies remain.
+The checkpoint has the original 16,000-update LR horizon and differs from
+evaluated 7,696. This is recovery coverage, not a scientific score or a
+verified GPU resume. Next 490/7,856 audit is prepared; 8,960 protection is
+the next cadence target, not yet prepared or copied.
+
+Evidence: [480 audit](evidence/restart-eval480-20261014.json),
+[480 interpretation](evidence/restart-eval480-interpretation-20261014.json)
+and [full 7,680 protection](evidence/restart-full7680-protection-20261014.json).
+The advisor package keeps its earlier cutoff and unfinished-endpoint story.
+
+### Previous evaluation: 7,536 updates
 
 The full audit checks all 33,024 saved answers, original identities,
 prompt/tree/Arrow bindings and 21 native metrics. Test is 11,918/21,104 =

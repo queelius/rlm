@@ -1,6 +1,48 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Latest result: October 14, 03:47 UTC
+## Latest result: October 14, 04:27 UTC
+
+**The fixed-endpoint reproduction remains unfinished.** The 49th scheduled
+evaluation, after **7,696 optimizer updates**, scores **56.183662% test mean
+pass@1** (11,857/21,104): **16.41 percentage points above original SFT** and
+0.540338 points below the supplied 56.724% reference.
+
+| Native mean pass@1 | Latest | Change from 7,536 updates |
+| --- | ---: | ---: |
+| Test | 56.18% | −0.289 percentage points |
+| Validation | 71.90% | +0.335 percentage points |
+| Non-held-out training subset | 85.89% | +0.286 percentage points |
+
+The [full audit](evidence/restart-eval480-20261014.json) verifies all 33,024
+saved answers and 21 native metrics, including original identities and
+prompt/tree/Arrow agreement. Test loses 61 correct responses, validation
+gains 20 and training gains 17. This mixed movement does not establish
+overfitting, convergence or statistical equivalence.
+
+On test, 283 questions improve, 293 worsen and 743 are unchanged. Once-hit
+rises 1,044→1,055 while majority-vote correct questions fall 813→812 and
+first-sample correct questions fall 773→759. These describe different
+behavior; none replaces the prescribed mean pass@1.
+
+Retain **all 49 scheduled points**, the original **1,000-collection LR horizon**
+and fixed **690 collections / 11,040 updates** plus native final evaluation.
+No favorable checkpoint, score-dependent acceptance tolerance, causal BOS
+claim or measured RLM transfer is inferred. All 2,065 evaluation HTTP returns
+succeeded with zero errors/tracebacks. The original owner and sealed source continue.
+
+Recovery update at 04:29 UTC: the preselected full **7,680** state is now
+[protected](evidence/restart-full7680-protection-20261014.json). All ten
+source/destination hashes and CPU counters match; all seven earlier recovery
+copies remain. This is a same-filesystem copy, not an off-system backup,
+all-tensor finite scan or GPU restore. Saved 7,680 differs from evaluated
+7,696. The next 490/7,856 audit is prepared; the next protection target is
+8,960, not yet prepared or copied. See the
+[interpretation](evidence/restart-eval480-interpretation-20261014.json) and
+[complete series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far).
+The advisor package retains its October 12, 20:53:09 UTC cutoff: the central
+unfinished-endpoint claim, scientific limitations and next decision have not changed.
+
+## Historical result: October 14, 03:47 UTC (superseded above)
 
 **The fixed-endpoint reproduction remains unfinished.** The 48th scheduled
 evaluation, after **7,536 optimizer updates**, scores **56.472707% test mean
