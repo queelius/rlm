@@ -1,25 +1,25 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Scientific-result cutoff: October 14, 2026, 02:23:40 UTC, after the completed
-full-answer audit was verified. All 46 scheduled restart points through
-evaluation 450 / 7,216 updates are retained. Latest test is 56.122062%,
-validation 70.576408%, non-held-out training 85.853495%. Changes from 440 are
-−50/+5/+27 correct responses: test falls while validation and training rise.
-This does not establish overfitting, convergence or equivalence. Non-held-out
-training improvement is not evidence of improved held-out generalization.
-The original-SFT gain is 16.347612 percentage points; the gap below supplied
-56.724% is 0.601938 points. Fixed-endpoint reproduction remains unfinished.
+Scientific-result cutoff: October 14, 2026, 03:04:28 UTC, after the completed
+full-answer audit was verified. All 47 scheduled restart points through
+evaluation 460 / 7,376 updates are retained. Latest test is 56.510614%,
+validation 71.213137%, non-held-out training 85.887097%. Changes from 450 are
++82/+38/+2 correct responses. This reverses the preceding test decline but
+does not establish monotonic improvement, convergence or equivalence.
+Non-held-out training improvement is not proof of held-out generalization.
+The original-SFT gain is 16.736164 percentage points; the gap below supplied
+56.724% is 0.213386 points. Fixed-endpoint reproduction remains unfinished.
 
-Protected 6,400 remains the latest recovery copy. At 02:21:09 all ten destination
+Protected 6,400 remains the latest recovery copy. At 03:03:52 all ten destination
 identities matched the previous full-hash receipt. Native 6,400 and 7,040 have
-six files each; native 7,200 has a ten-file inventory only. None is a protected
-copy or tensor audit of evaluated 7,216 weights. No new all-tensor scan or GPU restore.
+six files each; native 7,360 has a ten-file inventory only. It is not a protected
+copy or tensor audit of evaluated 7,376 weights. No new all-tensor scan or GPU restore.
 See the [protection receipt](evidence/restart-full6400-protection-20261013.json)
-and [latest interpretation/state check](evidence/restart-eval450-interpretation-20261014.json).
+and [latest interpretation/state check](evidence/restart-eval460-interpretation-20261014.json).
 
-CPU audit 59955 (450) exited 0 once; never resume/repeat it or earlier audits.
-The 450 wrapper was prepared before its evaluation began. Next scheduled
-460/7,376 audit is prepared before its native root exists, not executed.
+CPU audit 33544 (460) exited 0 once; never resume/repeat it or earlier audits.
+The 460 wrapper was prepared before its evaluation began. Next scheduled
+470/7,536 audit was prepared before its native root existed, not executed.
 Coarse 7,680 recovery protection is preselected but not yet prepared/copied.
 The user explicitly authorized continuing past the former account reserve;
 no reset is assumed or performed. The resumed observer retains its deadline
@@ -126,7 +126,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, 6,896, 7,056, and 7,216 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, 6,896, 7,056, 7,216, and 7,376 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -180,8 +180,50 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 6,896 | 56.17% | 70.53% | 84.69% |
 | 7,056 | 56.36% | 70.49% | 85.40% |
 | 7,216 | 56.12% | 70.58% | 85.85% |
+| 7,376 | 56.51% | 71.21% | 85.89% |
 
-### Latest evaluation: 7,216 updates
+### Latest evaluation: 7,376 updates
+
+The full audit checks all 33,024 saved answers, original identities,
+prompt/tree/Arrow bindings and 21 native metrics. Test is 11,926/21,104 =
+56.510614%, validation 4,250/5,968 = 71.213137%, and non-held-out training
+5,112/5,952 = 85.887097%. Changes from 450 are +0.388552/+0.636729/+0.033602
+percentage points. All 47 scheduled points remain visible.
+
+Test gains 82 correct responses: 300 questions improve, 285 worsen and
+734 are unchanged; 734 gains outweigh 652 losses. Once-hit rises
+1,053→1,059 and majority-vote correct questions rise 808→824. Validation
+has 77 improved, 70 worsened and 226 unchanged questions, with 192 gains
+and 154 losses; once-hit rises 329→333, majority vote stays 286. Training
+has 56 improved, 60 worsened and 256 unchanged questions, with 147 gains
+and 145 losses; once-hit rises 352→356 but first-sample correct questions
+fall 332→331. These are descriptive paired observations, not independent
+training replications. Only mean pass@1 is the primary metric.
+
+This all-split improvement reverses the preceding test decline; it does not
+establish monotonic improvement, convergence, equivalence, causal BOS repair
+or RLM transfer. Non-held-out training cannot demonstrate generalization.
+Test extraction failures/length endings rise two to three despite higher
+mean pass@1; numeric-format-only diagnostic potential rescues fall 85→79.
+Training has one length/extraction failure. Keep native grading and rewards
+unchanged. Gain over original SFT is 16.736164 points; gap below supplied
+56.724 is 0.213386 points. No acceptance tolerance is chosen from this score.
+
+All 2,065 evaluation HTTP returns succeeded with zero errors/tracebacks.
+Original owners and seven sealed pins match. The first saved collection-461
+answer 14 matches original question 673, gold and effective reward 1, inspected
+42.65 seconds after the first request with 214 HTTP successes and zero errors.
+This is an operational sample, not an accuracy estimate or full batch audit.
+The 7,376 contiguous logged updates have finite scalar fields, not a new
+all-parameter audit. Protected 6,400 remains intact; saved 7,360 inventory is
+distinct from evaluated 7,376. Next 470/7,536 audit was prepared before its
+native root existed; preselected 7,680 protection remains unprepared.
+
+Evidence: [460 audit](evidence/restart-eval460-20261014.json) and
+[460 interpretation](evidence/restart-eval460-interpretation-20261014.json).
+The advisor package keeps its earlier cutoff and unfinished-endpoint story.
+
+### Previous evaluation: 7,216 updates
 
 The full audit checks all 33,024 saved answers, original identities,
 prompt/tree/Arrow bindings and 21 native metrics. Test is 11,844/21,104 =

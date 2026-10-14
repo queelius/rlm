@@ -1,6 +1,45 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Latest result: October 14, 02:24 UTC
+## Latest result: October 14, 03:04 UTC
+
+**The fixed-endpoint reproduction remains unfinished.** The 47th scheduled
+evaluation, after **7,376 optimizer updates**, scores **56.510614% test mean
+pass@1** (11,926/21,104): **16.74 percentage points above original SFT** and
+0.213386 points below the supplied 56.724% reference.
+
+| Native mean pass@1 | Latest | Change from 7,216 updates |
+| --- | ---: | ---: |
+| Test | 56.51% | +0.389 percentage points |
+| Validation | 71.21% | +0.637 percentage points |
+| Non-held-out training subset | 85.89% | +0.034 percentage points |
+
+The [full audit](evidence/restart-eval460-20261014.json) verifies all 33,024
+saved answers and 21 native metrics, including original identities and
+prompt/tree/Arrow agreement. Test gains 82 correct responses, validation gains
+38 and training gains two. This reverses the preceding test decline but does
+not establish monotonic improvement, convergence or statistical equivalence.
+
+On test, 300 questions improve, 285 worsen and 734 are unchanged. Once-hit
+rises 1,053→1,059 and majority-vote correct questions rise 808→824. These
+describe different behavior; neither replaces the prescribed mean pass@1.
+Non-held-out training improvement is not proof of held-out generalization.
+
+Retain **all 47 scheduled points**, the original **1,000-collection LR horizon**
+and fixed **690 collections / 11,040 updates** plus native final evaluation.
+No favorable checkpoint, score-dependent acceptance tolerance, causal BOS
+claim or measured RLM transfer is inferred. All 2,065 evaluation HTTP returns
+succeeded with zero errors/tracebacks. The original owner and sealed source continue.
+
+Full **6,400** recovery state remains protected; all ten file identities match
+prior full-hash evidence. Native **7,360** has a ten-file inventory only,
+distinct from evaluated 7,376 weights; native 7,040 has six files. Next:
+the prepared 470/7,536 audit and preparation for preselected 7,680 protection.
+See the [interpretation](evidence/restart-eval460-interpretation-20261014.json)
+and [complete series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far).
+The advisor package keeps its October 12, 20:53:09 UTC cutoff: the central
+unfinished-endpoint claim, limitations and next decision have not changed.
+
+## Historical result: October 14, 02:24 UTC (superseded above)
 
 **The fixed-endpoint reproduction remains unfinished.** The 46th scheduled
 evaluation, after **7,216 optimizer updates**, scores **56.122062% test mean

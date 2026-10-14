@@ -1,0 +1,239 @@
+{
+  "schema": "spo-evaluation460-interpretation-v1",
+  "checked_utc": "2026-10-14T03:04:28.376886+00:00",
+  "receipt_created_utc": "2026-10-14T03:04:13.225083+00:00",
+  "rows": {
+    "test": {
+      "questions": 1319,
+      "responses": 21104,
+      "correct": 11926,
+      "percent": 56.51061410159212,
+      "previous_correct": 11844,
+      "delta_correct": 82,
+      "delta_pp": 0.38855193328279,
+      "extraction_failures": [
+        2,
+        3
+      ],
+      "numeric_format_only_potential_rescues": [
+        85,
+        79
+      ],
+      "majority_vote_correct_questions": [
+        808,
+        824
+      ]
+    },
+    "validation": {
+      "questions": 373,
+      "responses": 5968,
+      "correct": 4250,
+      "percent": 71.21313672922253,
+      "previous_correct": 4212,
+      "delta_correct": 38,
+      "delta_pp": 0.6367292225201072,
+      "extraction_failures": [
+        0,
+        0
+      ],
+      "numeric_format_only_potential_rescues": [
+        54,
+        55
+      ],
+      "majority_vote_correct_questions": [
+        286,
+        286
+      ]
+    },
+    "train": {
+      "questions": 372,
+      "responses": 5952,
+      "correct": 5112,
+      "percent": 85.88709677419355,
+      "previous_correct": 5110,
+      "delta_correct": 2,
+      "delta_pp": 0.033602150537634407,
+      "extraction_failures": [
+        0,
+        1
+      ],
+      "numeric_format_only_potential_rescues": [
+        39,
+        43
+      ],
+      "majority_vote_correct_questions": [
+        335,
+        335
+      ]
+    }
+  },
+  "paired_counts": {
+    "test": {
+      "better": 300,
+      "worse": 285,
+      "unchanged": 734,
+      "gained_correct_samples": 734,
+      "lost_correct_samples": 652,
+      "once_hit_questions": [
+        1053,
+        1059
+      ],
+      "first_sample_correct_questions": [
+        773,
+        779
+      ]
+    },
+    "validation": {
+      "better": 77,
+      "worse": 70,
+      "unchanged": 226,
+      "gained_correct_samples": 192,
+      "lost_correct_samples": 154,
+      "once_hit_questions": [
+        329,
+        333
+      ],
+      "first_sample_correct_questions": [
+        275,
+        276
+      ]
+    },
+    "train": {
+      "better": 56,
+      "worse": 60,
+      "unchanged": 256,
+      "gained_correct_samples": 147,
+      "lost_correct_samples": 145,
+      "once_hit_questions": [
+        352,
+        356
+      ],
+      "first_sample_correct_questions": [
+        332,
+        331
+      ]
+    }
+  },
+  "test_vs_sft_pp": 16.736163760424564,
+  "gap_below_supplied56_724_pp": 0.21338589840787847,
+  "audit_totals": {
+    "answers": 33024,
+    "metrics": 21,
+    "all_match": true
+  },
+  "artifact_hashes": {
+    "RECEIPT.json": {
+      "bytes": 41195,
+      "sha256": "cc0525ce18c48ee13657228c768ece816c424ad223c7fb5d05ca94808ea99277"
+    },
+    "INPUT-MANIFEST.json": {
+      "bytes": 705704,
+      "sha256": "1a2d06b755d72d06212fc58fe1068b968878054b5ecd052f1e9d02ea7428bf39"
+    },
+    "QUESTION-COUNTS.json": {
+      "bytes": 782746,
+      "sha256": "c1246f0d2082f5b57536d132727ef15c0c3b5ef385e4b89a13c5db0f40e48288"
+    },
+    "EXAMPLES.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    }
+  },
+  "iteration": 460,
+  "collections_at_evaluation": 461,
+  "optimizer_updates_at_evaluation": 7376,
+  "previous_iteration": 450,
+  "scheduled_points_retained": 47,
+  "preparation": "eval460-regrade-001/PREPARATION.json",
+  "receipt": "eval460-regrade-001/RECEIPT.json",
+  "verified_event_count": 147,
+  "event_types": {
+    "evaluation": 139,
+    "finished": 8
+  },
+  "additional_results_during_review": "Request notified test460 only; validation and train also completed before admission03:03:35, and all three were audited once. Do not duplicate audit on delayed notifications.",
+  "service": {
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_prefix_bytes": 3271589,
+    "log_prefix_sha256": "9bc470531314a9948ca760e284b5bff3cc088d2f6fe260aef6bf39ee276ed046"
+  },
+  "checkpoint_status": {
+    "checked_utc": "2026-10-14T03:03:52.615979+00:00",
+    "protected6400_all_ten_identities_unchanged": true,
+    "protected6400_receipt_sha256": "b06432c6d0c694d2a4159b8a394bbdc863681f827a7bea0ae08698d028711e27",
+    "native_inventory": [
+      {
+        "name": "ckpt--iter_0040--epoch_2.00--step_0640",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0080--epoch_2.00--step_1280",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0120--epoch_2.00--step_1920",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0160--epoch_2.00--step_2560",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0200--epoch_2.00--step_3200",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0240--epoch_2.00--step_3840",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0280--epoch_2.00--step_4480",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0320--epoch_2.00--step_5120",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0360--epoch_2.00--step_5760",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0400--epoch_2.00--step_6400",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0440--epoch_2.00--step_7040",
+        "file_count": 6
+      },
+      {
+        "name": "ckpt--iter_0460--epoch_2.00--step_7360",
+        "file_count": 10
+      }
+    ],
+    "scope": "Reuse prior full-hash evidence after unchanged identities. Native7360 ten-file inventory only, distinct from evaluated7376; no new tensor/counter audit, copy or restore. Native7200 has rotated out; native7040 has six files."
+  },
+  "interpretation": [
+    "Test gains82 correct responses (+0.388552 percentage points), validation gains38 (+0.636729 points), and nonheldout train gains2 (+0.033602 points). Gain over original SFT is16.736164 points; gap below supplied56.724% is0.213386 points.",
+    "Test300 questions improve,285 worsen,734 are unchanged;734 correct-sample gains outweigh652 losses. Once-hit rises1053to1059 and majority-vote correct questions rise808to824. These descriptive measures are not interchangeable; mean pass@1 remains primary.",
+    "Validation77 questions improve,70 worsen,226 same;192 gains versus154 losses, once-hit329to333, unchanged majority-vote286. Training56 improve,60 worsen,256 same;147 gains versus145 losses and once-hit352to356, but first-sample correct questions fall332to331. All are paired descriptive observations on reused questions and one training seed, not independent replications.",
+    "The small all-split improvement reverses the preceding test decline; it does not establish a monotonic trajectory, convergence, statistical equivalence or a mechanism. Nonheldout training remains unsuitable as proof of heldout generalization. Nearness to the paper at this intermediate point cannot select the endpoint or determine an acceptance tolerance.",
+    "Test extraction failures/length endings rise2to3 despite improved mean pass@1. Numeric-format-only diagnostic potential rescues fall85to79. Training has one length/extraction failure. Keep native scoring and rewards unchanged; secondary formatting counts do not replace the prescribed metric.",
+    "All33,024 saved answers and21 native metrics agree with original identities and prompt/tree/Arrow binding. All47 scheduled points retained. The fixed690 collections/11040 updates plus native final test and independent regrade remains unfinished, with1000-collection LR horizon preserved.",
+    "Original three owners and seven sealed pins match at03:03:36;7376 contiguous logged updates and23 numeric fields finite. New window7329..7376 ratios0.975..1.04, approximate KL<=0.349, clip fraction<=0.224, gradnorm<=49.6; no loggedNaN/Inf, ratio guard or fatal marker. Logged scalars are not a new full-tensor or batch audit.",
+    "First saved461 response14 matches original question673, gold14 and native effective reward1. Inspected42.65 seconds after first request,214 HTTP successes and0errors. All2065 evaluation460 service returns succeeded without errors/tracebacks. This predetermined operational sample is not an accuracy estimate or complete reward/BOS audit.",
+    "Protected6400 remains intact; saved7360 inventory is distinct from evaluated7376. Next470/7536 audit prepared before its native root exists. Preselected7680 recovery protection remains unprepared/uncopied; preserve previous checkpoints and failures."
+  ],
+  "decision": "Continue original whole training/evaluation owner unchanged to fixed690collections/11040updates, preserving1000-collection LR horizon. Audit470 once after fresh gates; prepare preselected7680 recovery protection. No favorable checkpoint, recipe shortening, competing GPU work, reset or allocation extension.",
+  "advisor_package_decision": "Update supporting dossier only. The central unfinished-endpoint claim, material limitations and next decision are unchanged; retain advisor slide cutoffOctober12 20:53:09UTC.",
+  "limits": [
+    "Author released56.69% versus paper56.7 is evaluator validation, not our training gain.",
+    "BOS-only and finite-zeroBF16 adapters are disclosed deviations; EOS omission and historical author source/selection remain unresolved.",
+    "No acceptance tolerance chosen from intermediate scores; all scheduled points retained.",
+    "Prior own22.19% run exited1 at7995, not allocation timeout; failures/checkpoints preserved.",
+    "No all-tensor scan beyond1440, two-fixed-tensor change beyond5920 or full reward/BOS beyondcollection370 in this review.",
+    "EXAMPLES.json is empty legacy metadata, not a new qualitative example corpus."
+  ]
+}
