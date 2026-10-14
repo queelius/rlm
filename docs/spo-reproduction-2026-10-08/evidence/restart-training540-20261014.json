@@ -1,0 +1,62 @@
+{
+  "schema": "spo-training-collection-audit-v2",
+  "checked_utc": "2026-10-14T08:34:08.370280+00:00",
+  "native_root": "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native",
+  "collection": 540,
+  "optimizer_updates_after_collection": 8656,
+  "responses": 512,
+  "question_groups": 64,
+  "effective_reward_counts": {
+    "1.0": 450,
+    "0.0": 62
+  },
+  "mixed_effective_reward_groups": 15,
+  "terminal_uniform_groups_with_nonzero_advantages": 10,
+  "reward_regrade_mismatches": [],
+  "generation_training_query_id_mismatches": 0,
+  "episode_actor_trajectory_token_equality": true,
+  "original_gold_and_saved_response_identity_verified": true,
+  "actor_reference_logprobs_finite": true,
+  "advantages_finite": true,
+  "nonzero_advantage_tokens": 1153,
+  "http_successes": 571,
+  "http_errors": 0,
+  "generation_log_tracebacks": 0,
+  "source_artifacts": [
+    "episodes/episodes_0540",
+    "checkpoints/episodes__iter0540/w_actLogp",
+    "temp_episodes/iteration__0540/infer_results/merged_trajectories",
+    "temp_episodes/iteration__0540/infer_results/process_00/traj_results_ds",
+    "temp_episodes/iteration__0540/infer_results/process_00/vllm_server.log"
+  ],
+  "generation_log_sha256": "4a9685f33cc8e56c1b6f55949ce33b40587a566fd3742440c702fb5736d6fe77",
+  "source_hashes": {
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/tasks/gsm8k.py": "ef7cff53cb0e048fbf5671d757199ff6bc01ef0dff465d90270c0e20032a1405",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator.py": "d95c525f5894d45d14fd8c567a695c0bfa4f892a4daaa6bba53358b1c006529a",
+    "/project/alex_phd/research-cache/repos/SPO/src/treetune/episode_generators/math_episode_generator_with_mc_advantages.py": "e098eee0f10381bb46c66778c20d1a6434b2294ca9db9f059dc435b048054cde",
+    "/home/atowell/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1/native/config.json": "30bdd16637a48a499d84cf2ad528d9ecc0eab25707a20d9d5d2917ce4bb69ebc"
+  },
+  "actual_examples": {
+    "correct": {
+      "row": 0,
+      "predicted": "84",
+      "gold": "84",
+      "effective_reward": 1,
+      "response_text": "\nEach group of balloons was 672 / 4 = 168 balloons.\nAnya took home 168 / 2 = 84 balloons.\n#### 84\n"
+    },
+    "wrong": {
+      "row": 14,
+      "predicted": "80",
+      "gold": "86",
+      "effective_reward": 0,
+      "response_text": "\nThe class is 60% boys because 100 - 40 = 60\nThe rest of the class is girls because 100 - 60 = 40\nBoys get an average of 80% because 0.8 * 90 = 72\nGirls get an average of 90% because 0.4 * 100 = 40\nThe class average is 80% because (0.8 * 80 + 0.4 * 90)/(40 + 60) = 80\n#### 80\n"
+    }
+  },
+  "interpretation": "Reward and token-alignment checks remain consistent in a newer completed batch. Mixed terminal rewards and finite nonzero intermediate advantages provide a usable learning signal. Changing training questions are not a benchmark curve or proof of paper reproduction.",
+  "decision": "Continue same authenticated owner and fixed690/11040 recipe; next scheduled evaluation550 follows8816 optimizer updates. No new GPU job, live source change, reward change or checkpoint selection.",
+  "limits": [
+    "Independent string/penalty regrade follows native GSM8K rules, not a new mathematical equivalence verifier.",
+    "Finite saved logprobs/advantages and logged update scalars are not an all-parameter numerical audit.",
+    "No new held-out evaluation or independent training replication."
+  ]
+}

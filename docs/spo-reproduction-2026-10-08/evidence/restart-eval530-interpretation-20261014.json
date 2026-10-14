@@ -1,0 +1,39 @@
+{
+  "schema": "spo-evaluation530-interpretation-v1",
+  "checked_utc": "2026-10-14T08:02:48.387440+00:00",
+  "receipt_sha256": "638e84e0548cca7a13998a5120be3c937e3cbd60c6047471263642379751f5f8",
+  "splits": {
+    "test": {
+      "correct": 11952,
+      "percent": 56.633813495072026,
+      "all_checks_pass": true
+    },
+    "train": {
+      "correct": 5238,
+      "percent": 88.00403225806451,
+      "all_checks_pass": true
+    },
+    "validation": {
+      "correct": 4233,
+      "percent": 70.92828418230563,
+      "all_checks_pass": true
+    }
+  },
+  "iteration": 530,
+  "collections": 531,
+  "optimizer_updates": 8496,
+  "change_vs520_correct": {
+    "test": 160,
+    "validation": 26,
+    "train": 43
+  },
+  "test_gain_vs_sft_pp": 16.85936315390447,
+  "test_gap_vs_paper_pp": -0.06618650492797684,
+  "interpretation": "Test rebounds from55.875663% to56.633813%; validation and nonheldout train also rise. Intermediate fluctuations do not establish convergence or an endpoint reproduction. The preceding decline did not continue at530.",
+  "decision": "Continue original owner to fixed690 collections/11040 updates, followed by native final evaluation and independent regrade. Next scheduled audit540/8656; prepare protection8960.",
+  "limits": [
+    "One training seed with reused evaluation questions.",
+    "BOS-only and finite-zero adapters disclosed; historical equivalence and causal effect remain unresolved.",
+    "No new full parameter/BOS audit; this audit covers saved evaluation answers and all native metrics."
+  ]
+}

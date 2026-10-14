@@ -1,6 +1,14 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Latest result: October 14, 07:06 UTC
+## Latest result: October 14, 09:10 UTC
+
+Own training scores **56.870735% test mean pass@1 at8,816 updates**, independently
+regraded, versus paper56.7%. The fixed11,040-update endpoint is still unfinished.
+See the [updated sequence through550](progress-through550-20261014.md) for all
+three new evaluations, split changes, reward/token audit and limitations.
+The advisor package retains its explicit07:06 cutoff; newer evidence is here.
+
+## Previous result: October 14, 07:06 UTC
 
 **Own training scores 55.875663% test mean pass@1** (11,792/21,104) after
 **8,336 updates**, versus 56.7% in the paper. This is 16.101213 points above

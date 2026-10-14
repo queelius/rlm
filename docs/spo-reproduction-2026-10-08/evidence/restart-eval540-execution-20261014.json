@@ -1,0 +1,35 @@
+{
+  "schema": "spo-evaluation540-execution-v1",
+  "tool_session": 11634,
+  "exit_code": 0,
+  "verified_utc": "2026-10-14T08:21:54.557115+00:00",
+  "cuda_visible_devices": "",
+  "receipt_sha256": "6ceda7b757d2c397cf0a3e561d290f56e3c4e5c908f4008be3c25a0f5ceb8640",
+  "prepared_before_native_root": true,
+  "admission": "Original owner identities, seven source pins and wrapper hash checked08:20; live main quota67%. All three native metric/state guards and no-overwrite guards passed.",
+  "quota": {
+    "checked_utc": "2026-10-14T08:20:08.914666+00:00",
+    "checked_epoch": 1791966008.9146664,
+    "method": "account/rateLimits/read",
+    "action": "continue_with_reserve",
+    "remaining_percent": 67,
+    "windows": [
+      {
+        "name": "primary",
+        "used_percent": 33,
+        "remaining_percent": 67,
+        "window_minutes": 10080,
+        "resets_epoch": 1792559045,
+        "resets_utc": "2026-10-21T05:04:05+00:00"
+      }
+    ],
+    "source_bucket": "codex",
+    "reserve_percent": 10,
+    "pause_at_remaining_percent": 15,
+    "wind_down_at_remaining_percent": 20
+  },
+  "http_successes": 2065,
+  "http_errors": 0,
+  "tracebacks": 0,
+  "instruction": "Completed once; never resume or repeat11634."
+}

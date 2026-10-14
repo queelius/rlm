@@ -1,0 +1,38 @@
+{
+  "schema": "spo-evaluation550-interpretation-v1",
+  "utc": "2026-10-14T09:10:10.369861+00:00",
+  "receipt_sha256": "608a00887d8b0447c7c50c0ff6e9f2821d7201d25977adbb96243c3f45c00319",
+  "splits": {
+    "test": {
+      "correct": 12002,
+      "percent": 56.870735405610304,
+      "verified": true
+    },
+    "train": {
+      "correct": 5232,
+      "percent": 87.90322580645162,
+      "verified": true
+    },
+    "validation": {
+      "correct": 4231,
+      "percent": 70.89477211796248,
+      "verified": true
+    }
+  },
+  "http_successes": 2065,
+  "http_errors": 0,
+  "tracebacks": 0,
+  "iteration": 550,
+  "collections": 551,
+  "optimizer_updates": 8816,
+  "change_vs540_correct": {
+    "test": 134,
+    "validation": -35,
+    "train": 17
+  },
+  "test_gain_vs_sft_pp": 17.09628506444276,
+  "test_gap_vs_paper_pp": 0.17073540561030143,
+  "interpretation": "Test rebounds above paper56.7 while validation falls. Scheduled intermediate result on one training seed; no favorable checkpoint selection, statistical equivalence or causal BOS claim.",
+  "decision": "Continue original690/11040 whole owner and final native test/regrade. Protect preselected8960 after complete-state/storage gates; next evaluation560/8976.",
+  "goal_complete": false
+}
