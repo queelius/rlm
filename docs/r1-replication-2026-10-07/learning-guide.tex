@@ -28,12 +28,13 @@
   (first question-trained), and 306 (fresh repeat), and chat scores 154 (base)
   and 308 (chat-trained). These are evaluation repeats, not additional training
   replications. All completed results are retained.}
-\newcommand{\EvidenceCutoff}{Historical Dr.\ GRPO cutoff: 7 October 2026, 20:56 UTC.
+\newcommand{\EvidenceCutoff}{Current advisor status cutoff: 14 October 2026, 07:06 UTC.
+  Historical Dr.\ GRPO experiment cutoff remains 7 October 2026, 20:56 UTC.
   Math training stopped by choice; checkpoints and all completed results retained.
   Latest progress check: 47/64 at update 192. Lessons for RLMs begin on page 11.}
 \begin{document}
 \pagenumbering{roman}
-\pagetitle{CURRENT STATUS \quad | \quad 14 OCTOBER 2026, 05:47 UTC}
+\pagetitle{CURRENT STATUS \quad | \quad 14 OCTOBER 2026, 07:06 UTC}
   {SPO reproduction is still incomplete}
 
 Our primary objective is to reproduce the published \textbf{Segment Policy
@@ -48,30 +49,32 @@ Evidence & Result & Meaning \\
 \midrule
 Released SPO weights & 56.69\%; paper: 56.7\% & Reference evaluator agrees \\
 Earlier own run & 22.19\% at 7,856 updates & Failed before endpoint \\
-Fresh restart & 56.85\% at 8,016 updates & +17.07 points over SFT \\
+Fresh restart & 55.88\% at 8,336 updates & +16.10 points over SFT \\
 Fixed endpoint & 11,040 updates, not reached & No completed reproduction \\
 \bottomrule
 \end{tabular}
 
-The fresh test has 11,997 correct of 21,104 sampled answers across all 1,319
+The latest test has 11,792 correct of 21,104 sampled answers across all 1,319
 GSM8K questions, with 16 answers each. Original SFT scored 8,394 correct:
-the gain is 17.07 percentage points. All 33,024 saved answers across test,
+the gain is 16.10 percentage points. All 33,024 saved answers across test,
 validation and the training subset independently match the native metrics.
-Validation is 71.67\%; training is 86.76\% and is not held out. This intermediate
-test is numerically above paper 56.7\%, not a statistical-equivalence claim.
+Validation is 70.49\%; training is 87.28\% and is not held out. Test results
+were 56.85\% at 8,016 updates, 56.44\% at 8,176 and 55.88\% at 8,336, below
+paper 56.7\%. These intermediate points on one trajectory do not establish
+convergence, cause, or statistical equivalence.
 
 The earlier run's latest test had 4,684 correct answers. It later failed with
 an optimizer gradient-norm assertion at logged step 7,995, not an allocation
 timeout. That failure and the preceding accuracy decline need separate explanations.
 
-\topic{Paper-level intermediate score, fixed endpoint still ahead}
+\topic{Intermediate score below paper, fixed endpoint still ahead}
 
 Generation included a start-of-text marker (BOS), but training inputs omitted
 it. GPU checks found this changes the late model's probabilities strongly.
 The fresh run corrects this inconsistency and separately handles a verified
 zero-gradient optimizer boundary. Those diagnostics are not causal proof.
 
-All 51 scheduled scores remain available; none replaces the fixed 11,040-update
+All 53 scheduled scores remain available; none replaces the fixed 11,040-update
 endpoint and final native test/regrade. The new run has passed the old failure
 count, but exact historical author-code fidelity and collapse causality remain
 unresolved. This is \textbf{measured RL improvement, not completed reproduction}.

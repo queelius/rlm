@@ -1,0 +1,49 @@
+{
+  "schema": "spo-evaluation520-preparation-v1",
+  "checked_utc": "2026-10-14T07:03:46.791522+00:00",
+  "wrapper_mtime_utc": "2026-10-14T07:03:38.327729+00:00",
+  "wrapper_mtime_ns": "1791961418327729819",
+  "native_root_exists": true,
+  "all_audit_outputs_absent": true,
+  "files": {
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval520-regrade-001/regrade_eval520.py": {
+      "bytes": 2779,
+      "sha256": "1e6d2ccef3622d0254f8a12c2fda7ae9684a0778cef077d4fc8e1f85a3370941"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/eval520-regrade-001/test_regrade_eval520_binding.py": {
+      "bytes": 3131,
+      "sha256": "ddbecc4c0793567b1044dda64ee2eb270523b3ffe5b1f8dd772dcc699437b314"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/early-eval0-regrade-001/regrade_eval0.py": {
+      "bytes": 5051,
+      "sha256": "12aab206b6ea7840cf492cf5d2d64cdb1f68812c4df64421961cb9bb254d023f"
+    },
+    "/project/alex_phd/runs/rl-paper-reproduction-20261012/late-regrade/regrade.py": {
+      "bytes": 12722,
+      "sha256": "a79bf7baa576c0a426fc19a20543dc995ed7b7a21511648a7a1acd32228fcf1c"
+    }
+  },
+  "iteration": 520,
+  "collections_at_evaluation": 521,
+  "optimizer_updates_at_evaluation": 8336,
+  "native_input_availability": {
+    "checked_utc": "2026-10-14T07:03:46.791522+00:00",
+    "train_outputs_exist": true,
+    "test_and_validation_preceded_wrapper_creation": true,
+    "train_outputs_preceded_wrapper_creation": true,
+    "note": "All three native split outputs existed before the audit wrapper was created. The audit is a post-output independent regrade, and must say so; it cannot validate monitoring of these outputs before completion."
+  },
+  "tests": {
+    "red": {
+      "exit_code": 1,
+      "meaning": "Failed because the scheduled wrapper was absent."
+    },
+    "green": {
+      "exit_code": 0,
+      "meaning": "Verified iteration 520, output path, pinned scorer/helper, and 521-collection/8336-update semantics."
+    }
+  },
+  "scope": "CPU-only unchanged pinned full-answer audit. No live source, scorer, model, environment, or training recipe mutation.",
+  "completion_gate": "Rerun fresh owner/source pins/quota/no-overwrite checks; require all three native split states and metrics to exist and all four audit outputs to remain absent immediately before the single audit invocation.",
+  "authority": "resumption-20261014/AUTHORITY.json"
+}

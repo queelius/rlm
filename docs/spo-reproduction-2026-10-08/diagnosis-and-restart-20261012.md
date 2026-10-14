@@ -1,27 +1,35 @@
 # Diagnosing the SPO training failure and testing a corrected run
 
-Scientific-result cutoff: October 14, 2026, 05:47:06 UTC. All **51 scheduled
-restart points** through evaluation 500 / **8,016 updates** are retained.
-Latest test **56.847043%**, validation **71.665550%**, non-held-out training
-**86.760753%**. Changes from 490: +47/−12/+23 correct responses.
-Original-SFT gain: 17.072593 percentage points. Test is numerically 0.147043
-points above paper 56.7%, or 0.123043 above supplied 56.724%; this is not
-statistical equivalence or fixed-endpoint completion.
+Scientific-result cutoff: October 14, 2026, 07:06 UTC. All **53 scheduled
+restart points** through evaluation 520 / **8,336 updates** are retained.
+Latest test **55.875663%**, validation **70.492627%**, non-held-out training
+**87.281586%**. Changes from 510: −119/−4/−14 correct responses. Test remains
+16.101213 points above original SFT and is 0.824337 points below the paper's
+56.7%; the fixed endpoint is unfinished and no equivalence is established.
 
-Recovery check at 05:46:47: protected full 7,680 retains ten unchanged
-destination identities and prior full-hash/counter evidence. Native 7,680
-has six files, native 8,000 ten-file inventory only; native 7,840 has rotated
-out. All seven earlier protected states remain. No new copy, counter/tensor
-scan or GPU restore. [Protection](evidence/restart-full7680-protection-20261014.json)
-is same-filesystem recovery, not off-system backup. Next 8,960 is preselected,
-not yet prepared or copied.
+The latest sequence declines: evaluation 500 scored 56.847043%, 510
+scored 56.439538%, and 520 scored 55.875663%. These are repeated scheduled
+measurements of one training trajectory on reused questions. The 520 paired
+question-count comparison with 510 has 275/302/742 test questions better/worse/
+unchanged; validation 74/62/237; training 47/57/268. This descriptive movement
+does not identify a cause or support checkpoint selection.
 
-CPU audit **10869 (500) exited 0 once**; never resume/repeat it or previous audits.
-The wrapper was prepared before generation. Next 510/8,176 audit was prepared
-before its native root existed and is not executed. See the
-[latest interpretation](evidence/restart-eval500-interpretation-20261014.json).
-The advisor package advances to this cutoff; fixed 690/11,040 endpoint,
-1,000-collection LR horizon, native final evaluation and regrade are unchanged.
+Recovery check at 07:05:56: protected full 7,680 retains ten unchanged
+destination identities and prior full-hash/counter evidence. Native 8,320 is
+present at the top-level inventory only; it is distinct from evaluated 8,336
+and has no new full hash/tensor/counter audit here. All seven earlier protected
+states remain. No new copy, tensor scan, or GPU restore. The
+[protection receipt](evidence/restart-full7680-protection-20261014.json) is a
+same-filesystem recovery copy, not off-system backup. Next 8,960 remains
+preselected, not prepared or copied.
+
+CPU audit **10869 (500) exited 0 once**; evaluation 510 and 520 were each
+independently regraded once and passed. The 520 native outputs predated its
+audit wrapper, so this post-output regrade verifies saved-answer identity and
+scoring, not monitoring before completion. See the
+[520 interpretation](evidence/restart-eval520-interpretation-20261014.json).
+The fixed 690/11,040 endpoint, 1,000-collection LR horizon, native final
+evaluation and regrade remain unchanged.
 
 ## The result we need to reproduce
 
@@ -105,7 +113,7 @@ historical author runtime or add a new learning result. See the
 
 ## Scheduled evaluations so far
 
-The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, 6,896, 7,056, 7,216, 7,376, 7,536, 7,696, 7,856, and 8,016 optimizer updates**.
+The scheduled tests measure the model after **16, 176, 336, 496, 656, 816, 976, 1,136, 1,296, 1,456, 1,616, 1,776, 1,936, 2,096, 2,256, 2,416, 2,576, 2,736, 2,896, 3,056, 3,216, 3,376, 3,536, 3,696, 3,856, 4,016, 4,176, 4,336, 4,496, 4,656, 4,816, 4,976, 5,136, 5,296, 5,456, 5,616, 5,776, 5,936, 6,096, 6,256, 6,416, 6,576, 6,736, 6,896, 7,056, 7,216, 7,376, 7,536, 7,696, 7,856, 8,016, 8,176, and 8,336 optimizer updates**.
 None is the untrained model or the prescribed final checkpoint.
 Every saved answer was independently regraded, including original question
 identities, prompts, tree and dataset agreement, and all seven native metrics.
@@ -164,55 +172,63 @@ Each evaluation's 33,024 answers across the three splits passed these checks.
 | 7,696 | 56.18% | 71.90% | 85.89% |
 | 7,856 | 56.62% | 71.87% | 86.37% |
 | 8,016 | 56.85% | 71.67% | 86.76% |
+| 8,176 | 56.44% | 70.56% | 87.52% |
+| 8,336 | 55.88% | 70.49% | 87.28% |
 
-### Latest evaluation: 8,016 updates
+### Latest evaluation: 8,336 updates
 
 The full audit matches all 33,024 answers, original identities, prompt/tree/Arrow
-bindings and 21 native metrics. Test is 11,997/21,104 = 56.847043%, validation
-4,277/5,968 = 71.665550%, non-held-out training 5,164/5,952 = 86.760753%.
-Changes from 490 are +0.222707/−0.201072/+0.386425 percentage points.
-Test gains 47 responses (+17.072593 points over original SFT). All 51 points
-remain visible; numerical proximity/exceedance of a paper score is not an
-endpoint or statistical-equivalence claim.
+bindings and 21 native metrics. Test is 11,792/21,104 = 55.875663%, validation
+4,207/5,968 = 70.492627%, non-held-out training 5,195/5,952 = 87.281586%.
+Changes from 510 are −0.563874/−0.067024/−0.235215 percentage points. Test is
+16.101213 points above original SFT and 0.824337 points below the paper's
+56.7%. All 53 scheduled points remain visible; this is not the fixed endpoint.
 
-Test: 287 questions improve, 281 worsen, 751 unchanged; 679 sample gains/632
-losses. Once-hit 1,065→1,060, majority vote 811→823, first-sample 778→774.
-Validation: 69/82/222 questions, 160 gains/172 losses, once-hit 336→331,
-majority 296→290, first-sample 278→273. Training: 52/54/266 questions,
-130 gains/107 losses, once-hit 353→354, majority 333→338, first-sample
-332 unchanged. Mean pass@1 remains primary; reused questions and one seed
-are not independent replications. The training subset is not held out.
+Between 510 and 520, test has 275 questions improve, 302 worsen and 742 unchanged;
+609 correct-response gains and 728 losses. Once-hit 1,062→1,043, majority vote
+804→800, first-sample 774→760. Validation has 74/62/237 improved/worsened/
+unchanged, once-hit 323→329 and majority 287→284. Training has 47/57/268,
+once-hit 354 unchanged and majority 337→340. From 500 to 520, test loses 205
+correct responses; 265/318/736 questions improve/worsen/hold. Reused questions
+and a single seed make these descriptive paired changes, not independent
+replications or a confidence interval. The training subset is not held out.
 
-Extraction failures/length endings: test 2→4, validation 1→0, training zero.
-Numeric-format-only potential rescues: 76→101, 50→43, 37→35. These diagnostics
-do not change native grading or rewards. Mixed validation/test changes do
-not establish overfitting or convergence; no acceptance tolerance is chosen
-from intermediate scores.
+Extraction failures/length endings are test 1/1→2/2, validation 0/0→1/1, and
+training zero throughout. Numeric-format-only possible rescues are diagnostics;
+they do not change native scoring or rewards. Mixed sample and split metrics do
+not establish the cause of the intermediate decline, overfitting or convergence.
 
-All 2,065 evaluation HTTP returns succeeded, zero errors/tracebacks.
-At 05:53:48 the original three owners and seven sealed pins matched; 8,059
-contiguous logged updates had all 23 numeric fields finite. Window 8,000–8,059:
-ratios 0.98–1.07, approximate KL max 0.347, clip max 0.2, gradient norm max 58.1,
-no NaN/Inf or fatal marker. This is not all-tensor proof. Passing the old
-run's 7,995 failure count is operational progress, not proof of its cause.
+Evaluation 520 had 2,065 successful HTTP returns and zero errors/tracebacks.
+At 07:02:48 the original three owners and seven sealed pins matched; 8,336
+contiguous logged updates had all 23 displayed scalar fields finite. Updates
+8,177–8,336 had ratio 0.972–1.04, approximate KL max 0.264, clip fraction max
+0.193, gradient norm max 53.3 and no logged NaN/Inf or fatal marker. This is
+not a new all-tensor proof. Full-finite audit remains 1,440, fixed-two-tensor
+comparison 5,920 and full reward/BOS audit collection 370.
 
-First saved collection-501 response 32 matches original question 1,776, gold
-32 and reward 1; 84−21−27−4=32 arithmetic is coherent. Inspected within
-67.67 seconds of first request; 525 successes, no errors/tracebacks.
-This predetermined example is not an accuracy estimate or full reward/BOS audit.
-Latest full-finite audit remains 1,440, fixed-two-tensor comparison 5,920,
-full reward/BOS collection 370.
+The first checked collection-521 response predicted 28 for a gold answer of 20
+and received reward 0. It treats 140 ounces as the total even though that is
+70% blue; the correct total is 200, leaving 20 ounces white. This is one
+predetermined operational example, not an accuracy estimate. First inspection
+was 112.6 seconds after the request, slightly beyond the 90-second target;
+553 requests had succeeded with zero errors/tracebacks.
 
-Protected 7,680 retains ten identities, native 8,000 inventory is not a fresh
-counter audit, and evaluated 8,016 is a distinct state. Next 510/8,176 audit
-prepared; 8,960 protection preselected, unprepared. Original whole owner
-continues unchanged to fixed 690/11,040 and final evaluation/regrade.
+Protected 7,680 retains ten prior identities and all seven earlier protected
+states. Native 8,320 is a distinct save with inventory only, not a new
+counter/hash/tensor audit; evaluated 8,336 is a different state. The 520 audit
+wrapper was created after all three native split outputs existed, then
+independently regraded the saved answers. It cannot be described as observing
+those outputs before they completed. Next scheduled point is 530/8,496; 8,960
+protection is preselected but unprepared. Continue the original owner to fixed
+690/11,040 and final native evaluation/regrade.
 
-Evidence: [500 audit](evidence/restart-eval500-20261014.json),
-[500 interpretation](evidence/restart-eval500-interpretation-20261014.json),
+Evidence: [520 audit](evidence/restart-eval520-20261014.json),
+[520 interpretation](evidence/restart-eval520-interpretation-20261014.json),
+[510 audit](evidence/restart-eval510-20261014.json),
+[510 interpretation](evidence/restart-eval510-interpretation-20261014.json),
 [full 7,680 protection](evidence/restart-full7680-protection-20261014.json).
-The advisor opening status is updated coherently to this milestone;
-historical Dr. GRPO/RLM lessons remain separate.
+The advisor package reflects this interim score at the same cutoff; the endpoint,
+provenance, causality and RLM-transfer limitations remain explicit.
 
 ### Previous evaluation: 7,856 updates
 

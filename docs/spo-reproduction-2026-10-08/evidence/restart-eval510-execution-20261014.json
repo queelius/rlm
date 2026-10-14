@@ -1,0 +1,32 @@
+{
+  "schema": "spo-evaluation510-execution-v1",
+  "started_utc": "2026-10-14T06:37:46+00:00",
+  "completed_utc": "2026-10-14T06:37:51.330750+00:00",
+  "exit_code": 0,
+  "cuda_visible_devices": "",
+  "audit": {
+    "iteration": 510,
+    "test": {"questions": 1319, "responses": 21104, "correct": 11911, "all_checks_pass": true, "extraction_failures": 1, "finish_reasons": {"stop": 21103, "length": 1}},
+    "validation": {"questions": 373, "responses": 5968, "correct": 4211, "all_checks_pass": true, "extraction_failures": 0, "finish_reasons": {"stop": 5968}},
+    "train": {"questions": 372, "responses": 5952, "correct": 5209, "all_checks_pass": true, "extraction_failures": 0, "finish_reasons": {"stop": 5952}},
+    "all_splits_all_iterations_verified": true,
+    "paired_native_metric_changes": {}
+  },
+  "evaluation_service": {"http_successes": 2065, "http_errors": 0, "tracebacks": 0},
+  "training_live_sample": {
+    "collection": 515,
+    "question_id": 1434,
+    "gold": "12",
+    "prediction": "12",
+    "effective_reward": 1,
+    "http_successes": 554,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "first_request_to_inspection_seconds": 92.372842,
+    "note": "A coherent correct saved response. First inspection was slightly beyond the 90-second target; no errors or evidence of idleness were seen. One operational sample, not an accuracy estimate."
+  },
+  "limitations": [
+    "No full-batch reward or BOS audit is implied; the latest such audit remains collection 370.",
+    "The latest full-finite parameter scan remains update 1,440 and fixed two-tensor comparison remains update 5,920."
+  ]
+}

@@ -1,7 +1,7 @@
 {
-  "schema": "advisor-spo-current-status-20261014-v3",
-  "cutoff_utc": "2026-10-14T05:47:06.006644+00:00",
-  "claim": "Own training reaches56.847043% at8016updates versuspaper56.7; measured intermediate learning, fixed-endpoint reproduction incomplete, no causal BOS or RLM-transfer proof.",
+  "schema": "advisor-spo-current-status-20261014-v4",
+  "cutoff_utc": "2026-10-14T07:06:00+00:00",
+  "claim": "Own training scored55.875663% at8336updates after intermediate test results of56.847043% at8016 and56.439538% at8176; current score is belowpaper56.7 and above originalSFT39.774450. Fixed-endpoint reproduction remains incomplete; no causal BOS or RLM-transfer proof.",
   "released_author_weights": {
     "accuracy": 0.5668593631539045,
     "paper_percent": 56.7,
@@ -158,30 +158,30 @@
     "terminal_receipt": "/project/alex_phd/runs/spo-reproduction-20261008/spo-historical-resume160-attempt3/result.json"
   },
   "fresh_training": {
-    "latest_scheduled_eval_updates": 8016,
-    "completed_collections": 501,
-    "test_correct": 11997,
+    "latest_scheduled_eval_updates": 8336,
+    "completed_collections": 521,
+    "test_correct": 11792,
     "test_answers": 21104,
     "test_questions": 1319,
     "answers_per_question": 16,
-    "test_accuracy": 0.5684704321455648,
+    "test_accuracy": 0.558756633813495,
     "original_sft_correct": 8394,
     "original_sft_accuracy": 0.3977445034116755,
-    "gain_percentage_points": 17.07259287338893,
-    "previous_scheduled_eval_updates": 7856,
-    "previous_scheduled_test_correct": 11950,
-    "validation_correct": 4277,
+    "gain_percentage_points": 16.101213040181954,
+    "previous_scheduled_eval_updates": 8176,
+    "previous_scheduled_test_correct": 11911,
+    "validation_correct": 4207,
     "validation_answers": 5968,
-    "train_subset_correct": 5164,
+    "train_subset_correct": 5195,
     "train_subset_answers": 5952,
     "train_subset_is_held_out": false,
-    "all33024_answers_and21_metrics_verified": true,
+    "all_33024_answers_and_21_metrics_verified": true,
     "fixed_endpoint_updates": 11040,
     "fixed_endpoint_reached": false,
     "last_audited_full_checkpoint_step": 7680,
-    "audit": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval500-20261014.json",
-    "audit_sha256": "6b9b5a7b7077df8ef2d5c42b37dd8b342b92aaf0cfd2bcf31b791405a0124e5e",
-    "interpretation": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval500-interpretation-20261014.json",
+    "audit": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval520-20261014.json",
+    "audit_sha256": "8b38838da4ab5b1b473a8a2e4ab0793b64f05026fbd57477c7800e9e43f6e7ad",
+    "interpretation": "../../docs/spo-reproduction-2026-10-08/evidence/restart-eval520-interpretation-20261014.json",
     "limits": [
       "Author released56.69% versus paper56.7 is evaluator validation, not our training gain.",
       "BOS-only and finite-zeroBF16 adapters are disclosed deviations; EOS omission and historical author source/selection remain unresolved.",
@@ -190,6 +190,15 @@
       "No all-tensor scan beyond1440, two-fixed-tensor change beyond5920 or full reward/BOS beyondcollection370 in this review.",
       "EXAMPLES.json is empty legacy metadata, not a new qualitative example corpus."
     ],
-    "scheduled_points_retained": 51
+    "latest_native_save_updates": 8320,
+    "protected_full_state_updates": 7680,
+    "latest_evaluation_service": {"http_successes": 2065, "http_errors": 0, "tracebacks": 0},
+    "recent_scheduled_evaluations": [
+      {"iteration": 500, "updates": 8016, "test_correct": 11997, "test_responses": 21104, "test_accuracy": 0.5684704321455648},
+      {"iteration": 510, "updates": 8176, "test_correct": 11911, "test_responses": 21104, "test_accuracy": 0.5643953752843063},
+      {"iteration": 520, "updates": 8336, "test_correct": 11792, "test_responses": 21104, "test_accuracy": 0.558756633813495}
+    ],
+    "latest_native_checkpoint_status": "Native8320 save exists; this cutoff has an inventory only, not a new hash/tensor/counter audit; protected7680 identities remain verified.",
+    "scheduled_points_retained": 53
   }
 }

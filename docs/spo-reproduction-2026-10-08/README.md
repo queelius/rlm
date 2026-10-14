@@ -1,43 +1,72 @@
 # Reproducing an LLM reinforcement-learning experiment on one A100
 
-## Latest result: October 14, 05:47 UTC
+## Latest result: October 14, 07:06 UTC
 
-**Own training now scores 56.847043% test mean pass@1** (11,997/21,104)
-after **8,016 updates**, versus the paper's reported **56.7%**.
-That is **17.072593 percentage points above original SFT**. This is a verified
-intermediate result; the fixed-endpoint reproduction remains unfinished.
+**Own training scores 55.875663% test mean pass@1** (11,792/21,104) after
+**8,336 updates**, versus 56.7% in the paper. This is 16.101213 points above
+the original SFT baseline and 0.824337 points below the paper score. It is a
+verified intermediate result; the fixed endpoint remains unfinished.
 
-| Native mean pass@1 | Latest | Change from 7,856 updates |
+| Native mean pass@1 | Latest | Change from 8,176 updates |
 | --- | ---: | ---: |
-| Test | 56.85% | +0.223 percentage points |
-| Validation | 71.67% | −0.201 percentage points |
-| Non-held-out training subset | 86.76% | +0.386 percentage points |
+| Test | 55.88% | −0.564 percentage points |
+| Validation | 70.49% | −0.067 percentage points |
+| Non-held-out training subset | 87.28% | −0.235 percentage points |
 
-The [full audit](evidence/restart-eval500-20261014.json) verifies all **33,024
+The [full audit](evidence/restart-eval520-20261014.json) verifies all **33,024
 saved answers and 21 native metrics**, including original identities and
-prompt/tree/Arrow agreement. Test gains 47 correct responses, validation
-loses 12 and training gains 23. Test is numerically 0.147043 points above
-56.7%, or 0.123043 above the supplied 56.724% reference; this does not
-establish statistical equivalence or justify selecting this checkpoint.
+prompt/tree/Arrow agreement. Relative to the previous scheduled point, test
+loses 119 correct responses, validation loses 4 and the training subset loses
+14. The previous two test points also declined: evaluation 500 scored 56.847043%,
+510 scored 56.439538%, and 520 scored 55.875663%. This movement is descriptive
+for one training seed on reused questions; it does not establish a cause,
+convergence, or a final paper match.
 
-Test has 287 improved, 281 worsened and 751 unchanged questions; once-hit
-falls 1,065→1,060 while majority vote rises 811→823. Neither replaces mean
-pass@1. Keep **all 51 scheduled points**, the original **1,000-collection LR
-horizon** and fixed **690 collections / 11,040 updates**, followed by native
-final evaluation and independent regrading. No causal BOS or RLM-transfer claim.
+Between 510 and 520, 275 test questions improved, 302 worsened and 742 were
+unchanged; once-hit falls 1,062→1,043 and majority vote 804→800. These metrics
+do not replace mean pass@1. Keep **all 53 scheduled points**, the original
+**1,000-collection LR horizon** and fixed **690 collections / 11,040 updates**,
+followed by the prescribed native final evaluation and independent regrading.
+No causal BOS or RLM-transfer claim follows from this interim result.
 
-The original owner and sealed source continue; all 2,065 evaluation HTTP
-returns succeeded with no errors or tracebacks. Protected full **7,680**
-retains ten unchanged identities and its [full-hash/counter receipt](evidence/restart-full7680-protection-20261014.json).
-Native 8,000 has ten-file inventory only, distinct from evaluated 8,016;
-native 7,840 has rotated out. Next 510/8,176 CPU audit is prepared. Protection
-target 8,960 remains preselected, not yet prepared or copied.
+The original owner and sealed source continue. Evaluation 520 returned 2,065
+successful HTTP responses with no errors or tracebacks. A predetermined first
+training response in collection 521 was coherently wrong (prediction 28 versus
+gold 20; reward 0); this operational sample is not an accuracy estimate.
+The first inspection came 112.6 seconds after the request, slightly beyond the
+90-second live check target, with 553 successful training requests and no
+errors. Protected full **7,680** retains ten unchanged identities and its
+[full-hash/counter receipt](evidence/restart-full7680-protection-20261014.json).
+Native 8,320 is present but has only an inventory check here, distinct from
+evaluated 8,336. Protection target 8,960 remains preselected and unprepared.
 
-See the [interpretation](evidence/restart-eval500-interpretation-20261014.json)
+See the [interpretation](evidence/restart-eval520-interpretation-20261014.json)
 and [complete series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far).
-The advisor package is synchronized to this **October 14, 05:47 UTC**
-scientific cutoff because its old 47.64% progress display is materially stale.
-The endpoint, provenance, causality and RLM-transfer limitations remain.
+The advisor package reflects this interim score at the October 14, 07:06 UTC
+cutoff, with the fixed endpoint, provenance, causality and RLM-transfer limits explicit.
+
+## Previous result: October 14, 06:37 UTC
+
+Evaluation 510 followed **8,176 optimizer updates** and scored **56.439538%
+test mean pass@1** (11,911/21,104), 16.665087 points above original SFT and
+0.260462 points below the paper's 56.7%. It fell by 86 test responses and 66
+validation responses from evaluation 500; the non-held-out training subset
+rose by 45 responses. Its [full audit](evidence/restart-eval510-20261014.json)
+rechecks all 33,024 answers and 21 native metrics. The 520 result above is the
+newer scheduled point. Both are intermediate measurements, not checkpoint
+selection or independent training-seed replication.
+
+See the [510 interpretation](evidence/restart-eval510-interpretation-20261014.json)
+and the [complete series](diagnosis-and-restart-20261012.md#scheduled-evaluations-so-far).
+
+## Historical result: October 14, 05:47 UTC
+
+Evaluation 500 scored **56.847043% test mean pass@1** (11,997/21,104) after
+8,016 updates, a verified scheduled point numerically above the paper's 56.7%.
+It remains in the full curve; later points 510 and 520 declined. That earlier
+score does not replace the fixed endpoint or establish equivalence.
+See its [full audit](evidence/restart-eval500-20261014.json) and
+[interpretation](evidence/restart-eval500-interpretation-20261014.json).
 
 ## Previous result: October 14, 05:10 UTC
 

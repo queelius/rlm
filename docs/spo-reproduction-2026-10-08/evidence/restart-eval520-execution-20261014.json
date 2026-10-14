@@ -1,0 +1,40 @@
+{
+  "schema": "spo-evaluation520-execution-v1",
+  "started_utc": "2026-10-14T07:04:09+00:00",
+  "completed_utc": "2026-10-14T07:04:15+00:00",
+  "exit_code": 0,
+  "cuda_visible_devices": "",
+  "audit": {
+    "iteration": 520,
+    "test": {"questions": 1319, "responses": 21104, "correct": 11792, "all_checks_pass": true, "extraction_failures": 2, "finish_reasons": {"stop": 21102, "length": 2}},
+    "validation": {"questions": 373, "responses": 5968, "correct": 4207, "all_checks_pass": true, "extraction_failures": 1, "finish_reasons": {"stop": 5967, "length": 1}},
+    "train": {"questions": 372, "responses": 5952, "correct": 5195, "all_checks_pass": true, "extraction_failures": 0, "finish_reasons": {"stop": 5952}},
+    "all_splits_all_iterations_verified": true,
+    "paired_native_metric_changes": {}
+  },
+  "evaluation_service": {
+    "http_successes": 2065,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "log_prefix_bytes": 3270470,
+    "log_prefix_sha256": "8ac89be19537a66363326411ad77d7c2e3dffd9a02994c4af4b9e445140bf07f"
+  },
+  "training_live_sample": {
+    "collection": 521,
+    "question_id": 2939,
+    "gold": "20",
+    "prediction": "28",
+    "effective_reward": 0,
+    "http_successes": 553,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "first_request_to_inspection_seconds": 112.602039,
+    "log_prefix_bytes": 1227837,
+    "log_prefix_sha256": "36bb65ee36b1c34b18d6a4b461a2589a5c44386432b165974408dde7aa20619c",
+    "note": "Saved response is a coherent wrong answer: the question says 140 ounces is 70% blue, so total is 200 and white is 20. The response treated 140 ounces as total and answered 28. First inspection was 112.6 seconds after request start, slightly beyond the 90-second target; no errors or evidence of idleness were seen."
+  },
+  "limitations": [
+    "No full-batch reward or BOS audit is implied; the latest such audit remains collection 370.",
+    "The latest full-finite parameter scan remains update 1,440 and fixed two-tensor comparison remains update 5,920."
+  ]
+}

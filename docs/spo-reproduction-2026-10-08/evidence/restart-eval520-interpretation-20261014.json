@@ -1,0 +1,64 @@
+{
+  "schema": "spo-evaluation520-interpretation-v1",
+  "checked_utc": "2026-10-14T07:06:30+00:00",
+  "receipt_created_utc": "2026-10-14T07:04:13.885378+00:00",
+  "iteration": 520,
+  "collections_at_evaluation": 521,
+  "optimizer_updates_at_evaluation": 8336,
+  "rows": {
+    "test": {"questions": 1319, "responses": 21104, "correct": 11792, "percent": 55.875663381349504, "previous_510_correct": 11911, "delta_correct": -119, "delta_pp": -0.563874147081124, "previous_500_correct": 11997, "delta_from_500_correct": -205, "delta_from_500_pp": -0.971379833206982},
+    "validation": {"questions": 373, "responses": 5968, "correct": 4207, "percent": 70.49262734584451, "previous_510_correct": 4211, "delta_correct": -4, "delta_pp": -0.067024128954423, "previous_500_correct": 4277, "delta_from_500_correct": -70, "delta_from_500_pp": -1.172922252010724},
+    "train": {"questions": 372, "responses": 5952, "correct": 5195, "percent": 87.28158602150538, "previous_510_correct": 5209, "delta_correct": -14, "delta_pp": -0.235215053763441, "previous_500_correct": 5164, "delta_from_500_correct": 31, "delta_from_500_pp": 0.52083333333333}
+  },
+  "paired_question_correct_count_changes_510_to_520": {
+    "test": {"better": 275, "worse": 302, "unchanged": 742, "correct_sample_gains": 609, "correct_sample_losses": 728, "once_hit_questions": [1062, 1043], "first_sample_correct_questions": [774, 760]},
+    "validation": {"better": 74, "worse": 62, "unchanged": 237, "correct_sample_gains": 153, "correct_sample_losses": 157, "once_hit_questions": [323, 329], "first_sample_correct_questions": [271, 271]},
+    "train": {"better": 47, "worse": 57, "unchanged": 268, "correct_sample_gains": 99, "correct_sample_losses": 113, "once_hit_questions": [354, 354], "first_sample_correct_questions": [340, 333]}
+  },
+  "paired_question_correct_count_changes_500_to_520": {
+    "test": {"better": 265, "worse": 318, "unchanged": 736, "correct_sample_gains": 676, "correct_sample_losses": 881},
+    "validation": {"better": 65, "worse": 81, "unchanged": 227, "correct_sample_gains": 173, "correct_sample_losses": 243},
+    "train": {"better": 58, "worse": 53, "unchanged": 261, "correct_sample_gains": 150, "correct_sample_losses": 119}
+  },
+  "test_vs_original_sft_pp": 16.101213040181954,
+  "gap_below_paper_56_7_pp": -0.824336618650496,
+  "audit_totals": {"answers": 33024, "metrics": 21, "all_match": true},
+  "artifact_hashes": {
+    "RECEIPT.json": "8b38838da4ab5b1b473a8a2e4ab0793b64f05026fbd57477c7800e9e43f6e7ad",
+    "INPUT-MANIFEST.json": "e6de5b22b47a003837cb3e419a2761094b9ac0edadcac1f15c57d1206005a7c8",
+    "QUESTION-COUNTS.json": "92a49c069d712dcc8b856b08fa1a380855602012ca7e8b2a18531def169ac900",
+    "EXAMPLES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "evaluation_service": {"http_successes": 2065, "http_errors": 0, "tracebacks": 0, "log_prefix_bytes": 3270470, "log_prefix_sha256": "8ac89be19537a66363326411ad77d7c2e3dffd9a02994c4af4b9e445140bf07f"},
+  "live_training_sample": {
+    "collection": 521,
+    "question_id": 2939,
+    "gold": "20",
+    "prediction": "28",
+    "effective_reward": 0,
+    "response_was_saved": true,
+    "training_http_successes": 553,
+    "http_errors": 0,
+    "tracebacks": 0,
+    "first_request_to_inspection_seconds": 112.602039,
+    "inspection_gap_note": "Slightly exceeded the 90-second live check target. The sample is one operational response, not a training accuracy estimate. The saved question requires 140 ounces at 70% blue to imply 200 total and 20 white; the response instead treated 140 as the total and answered 28, so reward 0 is coherent."
+  },
+  "event_review": {"event_count": 164, "evaluation_events": 156, "finished_events": 8, "all_event_hashes_match": true, "new_events_in_review": ["iteration510 validation and train metrics"], "completed500_audit_reused_not_rerun": true},
+  "checkpoint_status": {
+    "checked_utc": "2026-10-14T07:05:56.608990+00:00",
+    "evaluated_updates": 8336,
+    "latest_native_saved_updates": 8320,
+    "latest_native_saved_checkpoint": "ckpt--iter_0520--epoch_2.00--step_8320",
+    "latest_native_checkpoint_status": "present; top-level inventory only in this review, not a new hash/tensor/counter audit",
+    "protected_updates": 7680,
+    "protected7680_ten_identities_unchanged": true,
+    "prior_seven_protected_states_preserved": true
+  },
+  "limitations": [
+    "This scheduled checkpoint is not the fixed 690-collection/11,040-update endpoint. It is not a causal test of the BOS-only adapter or an independent training-seed replication.",
+    "Checkpoints share a training seed and evaluation questions. Paired movement is descriptive; it is not an independent replication or confidence interval.",
+    "The author released checkpoint's 56.69% score validates evaluator behavior; it is not this run's training result. Historical author runtime details remain unresolved.",
+    "The live metric audit checks 23 displayed scalar fields, not a new parameter tensor comparison. Latest full finite tensor scan remains update 1,440; fixed two-tensor comparison remains update 5,920; full reward/BOS audit remains collection 370."
+  ],
+  "decision": "Continue the original owner unchanged to 690 collections/11,040 updates and native final test/regrade. Record the two-point intermediate test decline and the fact that test, validation, and training-subset behavior diverge. Do not select evaluation 500 or add a score-based stop rule. Prepare and audit the next scheduled point under fresh owner, source-pin, output, and quota gates."
+}

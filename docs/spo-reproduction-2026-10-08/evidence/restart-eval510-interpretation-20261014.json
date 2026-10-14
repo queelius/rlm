@@ -1,0 +1,41 @@
+{
+  "schema": "spo-evaluation510-interpretation-v1",
+  "checked_utc": "2026-10-14T07:06:30+00:00",
+  "receipt_created_utc": "2026-10-14T06:37:51.330750+00:00",
+  "iteration": 510,
+  "collections_at_evaluation": 511,
+  "optimizer_updates_at_evaluation": 8176,
+  "rows": {
+    "test": {"questions": 1319, "responses": 21104, "correct": 11911, "percent": 56.43953752843063, "previous_500_correct": 11997, "delta_correct": -86, "delta_pp": -0.407505686125858},
+    "validation": {"questions": 373, "responses": 5968, "correct": 4211, "percent": 70.55965147453082, "previous_500_correct": 4277, "delta_correct": -66, "delta_pp": -1.1058981238264},
+    "train": {"questions": 372, "responses": 5952, "correct": 5209, "percent": 87.51680107526882, "previous_500_correct": 5164, "delta_correct": 45, "delta_pp": 0.75604838709677}
+  },
+  "paired_question_correct_count_changes_500_to_510": {
+    "test": {"better": 284, "worse": 307, "unchanged": 728, "correct_sample_gains": 657, "correct_sample_losses": 743, "once_hit_questions": [1060, 1062], "first_sample_correct_questions": [774, 778]},
+    "validation": {"better": 59, "worse": 81, "unchanged": 233, "correct_sample_gains": 137, "correct_sample_losses": 203, "once_hit_questions": [331, 323], "first_sample_correct_questions": [273, 271]},
+    "train": {"better": 57, "worse": 50, "unchanged": 265, "correct_sample_gains": 138, "correct_sample_losses": 93, "once_hit_questions": [354, 354], "first_sample_correct_questions": [338, 340]}
+  },
+  "test_vs_original_sft_pp": 16.66508718726308,
+  "gap_below_paper_56_7_pp": -0.26046247156937,
+  "audit_totals": {"answers": 33024, "metrics": 21, "all_match": true},
+  "artifact_hashes": {
+    "RECEIPT.json": "ad10800b2a3997e44e1c1d91b87291f24d624957359298f9d9ab95222675440d",
+    "INPUT-MANIFEST.json": "08fce8236ea3069226ec73a721d12aa7a20dc9f8441afeefd0d27e01d26a12c3",
+    "QUESTION-COUNTS.json": "4cd0fa02b894358b06cd29a25f2c02f6a2fa1493a1193e43c4324a1311a10f17",
+    "EXAMPLES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "event_review": {"event_count": 164, "evaluation_events": 156, "finished_events": 8, "all_event_hashes_match": true, "500_audit_reused_not_rerun": true},
+  "execution": {
+    "exit_code": 0,
+    "all_three_splits_verified": true,
+    "all_http_returns": 2065,
+    "http_errors": 0,
+    "tracebacks": 0
+  },
+  "limitations": [
+    "This scheduled checkpoint is not the fixed 690-collection/11,040-update endpoint. It is not a causal test of the BOS-only adapter or an independent training-seed replication.",
+    "Checkpoints share the same training seed and evaluation questions; paired movement is descriptive and is not an independent replication or confidence interval.",
+    "The author released checkpoint's 56.69% score validates evaluator behavior; it is not this run's training result. Historical author runtime details remain unresolved."
+  ],
+  "decision": "Continue the original owner unchanged to 690 collections/11,040 updates and native final test/regrade. Preserve the observed decline; do not select the earlier 500 checkpoint or add a score-based stop rule. Prepare and audit the next scheduled point under fresh owner, source-pin, output, and quota gates."
+}

@@ -20,7 +20,7 @@
 \begin{document}
 
 \begin{frame}[t]
-\frametitle{SPO reproduction: not yet an end-to-end success.}
+\frametitle{SPO reproduction: fixed endpoint still pending.}
 \textbf{Current objective:} reproduce the published RL result on our A100.
 \medskip
 \begin{center}
@@ -31,13 +31,14 @@ What we tested & Latest result & What it establishes \\
 \midrule
 Authors' released weights & \textbf{56.69\%}, paper: 56.7\% & Evaluation check \\
 Earlier own run & \textbf{22.19\%} after 7,856 updates & Failed before endpoint \\
-Fresh restart & \textbf{56.85\%} at 8,016 updates & +17.07 points over SFT \\
+Fresh restart & \textbf{55.88\%} at 8,336 updates & +16.10 points over SFT \\
 \bottomrule
 \end{tabular}
 \end{center}
-\begin{block}{An intermediate score at the paper's level}
-From 39.77\% before RL to 56.85\%; the paper reports 56.7\%.
-This is not the fixed endpoint or proof that the BOS repair caused recovery.
+\begin{block}{Recent intermediate tests have declined}
+The scheduled test reached 56.85\% at 8,016 updates, then fell to 56.44\% and
+55.88\%. The latest remains above SFT but is below the paper's 56.7\%.
+This is not the fixed endpoint or a causal test of the BOS adapter.
 \end{block}
 \textbf{Next:} continue to the fixed 11,040-update endpoint. Reproduction remains unfinished.
 \aside{GSM8K: mean correctness over 16 answers per question; all saved answers regraded. One training run, not independent replications. Exact historical-code fidelity remains unresolved.}

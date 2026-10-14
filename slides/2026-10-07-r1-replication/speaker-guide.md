@@ -1,7 +1,7 @@
 # RL reproduction status and earlier learning lessons
 
 Eight slides, about nine minutes. Current evidence cutoff: **14 October 2026,
-05:47 UTC**. The primary objective is an end-to-end reproduction of the published
+07:06 UTC**. The primary objective is an end-to-end reproduction of the published
 SPO training result on our A100. That objective has **not** been achieved.
 Slide 1 gives the current status; slides 2–8 preserve the historical 7 October
 Dr. GRPO experiment and its RLM teaching discussion. These are separate methods,
@@ -17,13 +17,12 @@ and audience views, or `make rehearse` for private preparation. The short pdfpc
 notes are cues; the material below is optional background, not a script to read
 in full. See the [local setup instructions](README.md).
 
-## 1. SPO reproduction: not yet an end-to-end success
+## 1. SPO reproduction: fixed endpoint still pending
 
-Say: “Our own training now scores 56.85%, versus the paper's reported 56.7%,
-up from 39.77% before RL. This is substantial measured learning, but it is
-an intermediate evaluation at 8,016 updates. We still need the fixed
-11,040-update endpoint and final independent check before calling the
-end-to-end reproduction complete.”
+Say: “Our latest own result is 55.88%, below the paper's reported 56.7% and above
+the 39.77% SFT baseline. Test accuracy had reached 56.85% at 8,016 updates, then
+fell to 56.44% and 55.88%. These are intermediate points on one training run.
+We still need the fixed 11,040-update endpoint and final independent check.”
 
 The released SPO model scored **56.69%**, matching the paper's **56.7%** to one
 decimal place. Our earlier model scored **22.19% after 7,856 optimizer updates** on
@@ -53,13 +52,13 @@ earlier diagnostic. They are late-policy responses, not newly generated SFT
 answers. Exact numbers and input provenance are in [the evidence](evidence.md)
 and [portable status receipt](current-status-evidence.json).
 
-The current audit finds **11,997 / 21,104 = 56.847043% after 8,016 updates**,
-versus original SFT 8,394 / 21,104 = 39.774450%: **+17.072593 points**.
-Validation is 71.665550%; non-held-out training 86.760753%. All 33,024 answers
-and 21 native metrics agree with the independent regrade. Since 7,856 updates,
-test gains 47 correct responses, validation loses 12 and training gains 23.
-Numerically exceeding 56.7% is not statistical equivalence or permission
-to choose this checkpoint. All 51 scheduled points remain in the dossier.
+The current audit finds **11,792 / 21,104 = 55.875663% after 8,336 updates**,
+versus original SFT 8,394 / 21,104 = 39.774450%: **+16.101213 points**.
+Validation is 70.492627%; non-held-out training 87.281586%. All 33,024 answers
+and 21 native metrics agree with the independent regrade. Since 8,176 updates,
+test loses 119 correct responses, validation loses four and training loses 14.
+The intermediate curve retains all 53 scheduled points; no checkpoint replaces
+the fixed endpoint.
 
 The new run has also passed the old run's 7,995-step failure count.
 That is operational progress, not a clean BOS-only ablation or proof of the
