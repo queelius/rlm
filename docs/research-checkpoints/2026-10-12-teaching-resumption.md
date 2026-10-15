@@ -1,6 +1,82 @@
 # Resuming research on teaching RLM competencies
 
-## Latest: October 14, 23:57 UTC — new structures limit the teaching claim
+## Latest: October 15, 01:56 UTC — recovery examples do not clear the next gate
+
+**A small update on recovery examples did not outperform ordinary examples,
+and neither intervention unlocked the tasks that had always failed.** This
+answers the bounded comparison; it does not show that recovery teaching in
+general cannot work.
+
+We started both interventions from the same discovery-trained model. Each
+received exactly one supervised optimizer update on 32 examples containing
+823 target tokens. Evaluation began from normal task starts, not helpful
+partially completed trajectories. The unchanged model and both updated models
+faced the same eight training-side tasks, two rollout seeds and inference caps.
+
+| Model | Whole-task successes | Model calls | Generated tokens | Inference service seconds |
+|---|---:|---:|---:|---:|
+| Unchanged starting model | 2/16 | 859 | 27,717 | 2,335 |
+| One recovery-example update | 3/16 | 930 | 27,721 | 2,360 |
+| One ordinary-example update | 4/16 | 827 | 25,737 | 2,142 |
+
+Recovery teaching gains one attempt over the unchanged model and loses none;
+ordinary teaching gains two and loses none. Recovery and ordinary outcomes
+differ on just one attempt, favoring ordinary teaching. That is too little
+evidence to conclude that ordinary teaching is generally better. More
+importantly, all five historically unsuccessful tasks remain unsuccessful on
+both draws in every condition: **0/10 attempts per condition**.
+
+The predeclared exploratory promotion rule required recovery teaching to gain
+at least three successes over ordinary teaching, solve at least two previously
+unsuccessful tasks, and lose at most one success versus the starting model on
+the remaining tasks. The observed values are **minus one, zero, and zero**:
+the first two requirements fail. These thresholds are decision rules, not
+statistical significance tests. We therefore **do not advance this intervention
+to the conditional matched RL comparison** on a claim that it created useful
+hard-task reward diversity. Repeating unchanged sparse-reward RL would not test
+that intended hypothesis.
+
+Both training updates were real: all saved adapter and optimizer tensors were
+finite, exactly one optimizer step was recorded, and saved parameters changed.
+Recovery-example loss fell from 0.10861 to 0.09572; ordinary-example loss fell
+from 0.08376 to 0.07057. These are losses on each arm's own examples, not directly
+comparable measures of skill. Fitting a teaching example better is not the same
+as completing an entire task. Training-owner time was about 53 seconds for
+recovery and 45 for ordinary; the table reports inference service time, not
+whole-queue time or matched FLOPs.
+
+The two teaching sets match row count, action-type counts and target-token
+count, but 8 of 32 labels differ and their histories contain 80,120 versus
+65,044 prompt tokens. This tests a recovery-teaching package, not the isolated
+effect of showing an error. There is only one fitted update per arm and two
+draws per task; 48 attempts are not 48 independent tasks. The tasks are exposed
+optimization-side tasks, not untouched transfer data. This is flat supervised
+tool use, not new RL or learned recursive delegation. A one-update negative
+result leaves training dose, optimization and iterative recovery teaching open.
+
+All **48 planned outcomes** match native replay and independently recomputed
+inventory targets. All **5,328 unique audit-referenced file hashes** were
+rechecked, along with paired task identities, starting inventories, rollout
+seeds and inference settings. There were no transport failures. Each condition
+has two context-limit failures, retained in its denominator. All five jobs
+exited successfully; the whole queue and all scoped owners departed, and the
+GPU was checked empty. The [complete evidence receipt](2026-10-15-teaching-recovery.json)
+contains every outcome, cost, paired contrast, criterion check and checkpoint
+identity. Native checkpoints remain external; publishing this receipt does
+not back them up.
+
+**Research arc and next decision:** repairing weak demonstrations helped on
+the earlier exposed panels, but strong-teacher and longer-training controls
+limit the claim. The new-structure pilot remains weak, and this recovery
+intervention does not fix the hard-task bottleneck. Independent-fit replication
+of the four-arm new-structure comparison is the next priority; its bounded
+second-seed adapter design still awaits approval. Broader structural coverage
+and the full-goal synthesis remain unfinished. No successor GPU run has been
+launched while that implementation gate is unresolved. This result belongs in
+the supporting teaching report; it does not change the successful math-paper
+reproduction result or establish transfer of that result to RLMs.
+
+## October 14, 23:57 UTC — new structures limit the teaching claim
 
 **Better examples help on our earlier exposed panels, but this completed pilot
 does not establish reliable transfer to new task structures.** Giving the
