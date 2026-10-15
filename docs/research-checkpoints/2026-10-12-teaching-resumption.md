@@ -1,6 +1,85 @@
 # Resuming research on teaching RLM competencies
 
-## Latest: October 15, 09:17 UTC — repair's advantage over the weak baseline repeats
+## Latest: October 15, 10:10 UTC — repair's narrow benefit repeats; extra training is seed-sensitive
+
+**Better demonstrations help relative to our weak original teacher in both
+training seeds. More training on the original demonstrations does not give a
+reliable improvement here.** The approved second-seed comparison is complete:
+all four fixed models faced the same eight task roots and two rollout draws.
+The table reports whole tasks successfully completed, not training loss or
+individual correct tool calls.
+
+| Teaching policy | Fixed training updates | First training seed: successes | Second training seed: successes |
+|---|---:|---:|---:|
+| Original examples | 23 | 1/16 | 1/16 |
+| Repaired examples | 23 | 3/16 | 5/16 |
+| Discovery examples | 23 | 3/16 | 3/16 |
+| Original examples, longer training | 69 | 5/16 | 0/16 |
+
+The training seeds are 2026092208 and 2026092291. Each model uses its prescribed
+23- or 69-update endpoint; we did not select the better seed or checkpoint.
+Repaired teaching gains three matched attempts and loses one against original
+teaching in the first seed; it gains four and loses none in the second. All
+three first-seed repair successes persist in the second, which adds two.
+Discovery ties repair in the first seed and trails it by two successes in the
+second; that small contrast does not establish general superiority.
+
+The longer-trained original model loses all five first-seed successes in the
+second seed and gains none. This is a **completed negative result**, not a
+missing evaluation: all 16 attempts were observed, nine finished without their
+targets, six reached the call limit, and one reached the context limit. There
+were no transport failures. The fixed 69-update training state was independently
+checked for actual finite updates, restored optimizer state and the correct
+training order. Every inference call used the planned model. These checks make
+the outcome interpretable; they do not identify its cause. Two fits are not
+enough to conclude that longer training is generally harmful.
+
+Costs also matter. Repair used 412 and 437 model calls across the two fits,
+versus 997 and 1,179 for the longer-trained original; generated-token totals
+were 10,361/12,748 versus 22,493/23,406. Longer training also used three times
+the supervised target-token dose: 26,460 versus 8,820. Repair is not uniformly
+cheaper than the short original or discovery controls: in the second seed it
+uses fewer calls but more generated tokens and service time than either.
+The [complete two-fit receipt](2026-10-15-teaching-two-fit-comparison.json)
+retains all outcomes, costs, task failures and paired contrasts.
+
+**What we learned:** the encouraging first-seed dose result was not stable.
+Repeating the comparison changed the conclusion, which is why we needed the
+stronger teacher and longer-training controls. We have a repeatable, narrow
+benefit from repairing weak demonstrations, but not a reliably capable agent.
+Even repair's higher count is only five successes in sixteen attempts, and
+two task roots fail in every draw for all eight fitted models. We should carry
+the experimental discipline from the successful math-RL reproduction into RLM
+research, not assume that its learning result transfers automatically.
+
+All **128 outcomes across both fits** match native replay and independent
+final-inventory scoring. We rechecked **10,926 unique audit-file hashes**,
+matched tasks, starting inventories and inference limits, recomputed costs
+from saved calls, and checked all **5,304 calls** against their fixed adapter
+identities. All nine second-fit training/readout/audit jobs exited successfully;
+the whole queue and scoped owners departed and the GPU was checked empty.
+All budget-limited task failures remain in the denominator. These counts are
+audit coverage, not independent scientific replications.
+
+The two fits share the same eight roots, vocabulary, intermediate recipes and
+world; they are not broader-world replication. Repair changes demonstration
+histories and does not isolate a single causal mechanism. These are flat,
+supervised tool policies, not new RL or learned recursive delegation. The
+separate recovery-teaching comparison below still does not clear its
+predeclared gate for a new matched RL run.
+
+**Next decision:** test the fixed four-model comparison on two additional
+prospectively frozen worlds, without selecting tasks using policy outcomes.
+That bounded design still awaits approval and allocation admission; no such
+model readouts have run. Independent-fit replication is now complete, but
+broader coverage and the final full-goal synthesis remain open. This update
+belongs in the supporting teaching report. The dated math-reproduction deck
+still correctly distinguishes its completed SPO result from proposed RLM RL
+and recursive-learning comparisons, so its math headline is unchanged.
+Native models and detailed runs remain in the external research store;
+publishing receipts does not back up those checkpoints.
+
+## October 15, 09:17 UTC — repair's advantage over the weak baseline repeats
 
 **Repaired examples outperform our original examples in both training seeds
 on the same frozen task panel. The stronger controls are not yet complete.**
