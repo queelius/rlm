@@ -1,6 +1,43 @@
 # Resuming research on teaching RLM competencies
 
-## Latest: October 15, 08:50 UTC — independent-fit comparison is running
+## Latest: October 15, 09:17 UTC — repair's advantage over the weak baseline repeats
+
+**Repaired examples outperform our original examples in both training seeds
+on the same frozen task panel. The stronger controls are not yet complete.**
+Every entry below is a completed, audited evaluation of eight task roots with
+two rollout draws, using the same inference limits and fixed 23-update models.
+
+| Training seed | Original examples | Repaired examples |
+|---|---:|---:|
+| 2026092208 | 1/16 | 3/16 |
+| 2026092291 | 1/16 | 5/16 |
+
+In the second seed, repair gains four paired attempts over the original and
+loses none. It retains all three first-seed repair successes and adds two.
+The original model's one success moves to a different attempt across seeds:
+equal totals do not mean identical behavior.
+
+The cost story is mixed. Second-seed repair uses fewer calls than the original
+(437 versus 499), but more generated tokens (12,748 versus 9,771) and inference
+service time (998 versus 798 seconds). Thus a blanket claim that repair is
+cheaper would be wrong. Both arms have zero transport failures; all 32 planned
+outcomes match native replay and independent inventory scoring, with 1,977
+unique audit-referenced file hashes rechecked. The
+[paired evidence receipt](2026-10-15-teaching-second-fit-first-pair.json)
+preserves all outcomes, costs and first-seed comparisons.
+
+This strengthens the narrow teaching result, not a claim of reliable general
+competence: even repair solves only five of sixteen attempts here. The two
+fits reuse the same eight roots, vocabulary and recipe world; they are not
+32 independent tasks. Second-seed discovery and longer-original-training
+controls remain in the accepted queue, with discovery now running. Their
+first-seed results were 3/16 and 5/16, so they are essential to the eventual
+interpretation. Broader-world model evaluation is still unexecuted. No new RL,
+isolated teaching mechanism, or learned recursion is established. The full
+goal stays open; this interim result updates the supporting report, not the
+math-reproduction headline.
+
+## October 15, 08:50 UTC — independent-fit comparison is running
 
 **The approved second-seed comparison is underway; it does not yet have a
 completed task result.** It asks whether our first four-model comparison was
