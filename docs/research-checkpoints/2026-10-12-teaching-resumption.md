@@ -1,6 +1,85 @@
 # Resuming research on teaching RLM competencies
 
-## Latest: October 14, 22:18 UTC — panel03 complete; new-structure test running
+## Latest: October 14, 23:57 UTC — new structures limit the teaching claim
+
+**Better examples help on our earlier exposed panels, but this completed pilot
+does not establish reliable transfer to new task structures.** Giving the
+original teacher more training produces the highest observed success count
+here, although it also costs more. This is a useful constraint on the research
+story, not a reason to select a different checkpoint or omit the control.
+
+We froze eight new task roots before seeing these policies' outcomes. Every
+policy faced the same two rollout draws, starting inventories and inference
+limits. All four prescribed actors and all **64 attempts** are now complete:
+
+| Teaching policy | Training updates | Whole-task successes | Model calls | Generated tokens |
+|---|---:|---:|---:|---:|
+| Original known-recipe teacher | 23 | 1/16 | 527 | 10,930 |
+| Stable-order repaired teacher | 23 | 3/16 | 412 | 10,361 |
+| Discovery teacher | 23 | 3/16 | 799 | 25,987 |
+| Original teacher, longer training | 69 | 5/16 | 997 | 22,493 |
+
+The longer-trained original gains four paired attempts and loses two against
+repair; against discovery it gains three and loses one. Repair and discovery
+share two successes and each has one unique success, so their equal totals
+are not evidence of equivalence. Three roots fail on both draws for every
+policy. Even the highest count is only five successes in sixteen attempts.
+These small differences do not establish population-level superiority.
+
+Repair uses the fewest calls and generated tokens in this pilot. The
+longer-trained original uses three times the supervised target-token dose
+(26,460 versus 8,820) and more evaluation calls. Its saved cumulative training
+time is about 545 seconds versus 186 for repair; these are training-state
+durations, not whole-owner wall time or matched FLOPs. The evidence supports
+reporting a success/cost trade-off, not a universally best teaching method.
+
+All 64 scores match their completed native replay audits and independently
+recomputed final-inventory targets. Pairing checks cover task identity, seed,
+starting inventory and inference settings; **5,645 unique audit-referenced
+file hashes** were checked. There are zero transport failures. Eight observed
+failures reach call/context limits and remain in the denominator. Of the
+other 44 failures, each explicitly finishes without meeting its target.
+The [complete evidence receipt](2026-10-14-teaching-fresh-structure.json)
+retains every score, paired contrast, cost, checkpoint identity and terminal
+job receipt. This reconciliation did not launch another evaluation.
+
+The task qualification excludes recorded old rooted dependency structures,
+but the eight roots still share a generator, vocabulary and intermediate
+recipes; one selected root is another's prerequisite. They are not independent
+domains, and two draws do not turn eight roots into sixteen independent tasks.
+The pilot uses one fitted seed, conservative base stock and no distractors.
+Because inventory construction differs from earlier panels, the cross-panel
+score change is not a controlled estimate of a transfer drop. This is flat
+supervised tool use, not new RL or learned recursive delegation. Neither a
+visibility-only mechanism nor broad compositional competence is established.
+
+**Next decision:** test the already prepared recovery examples against ordinary
+examples, from the same warm actor and with one fixed supervised update per
+arm. Evaluate from normal task starts on the optimization-side A tasks;
+do not use these fresh diagnostic outcomes to select labels or checkpoints.
+Only useful A-side starting behavior would justify the planned matched RL
+comparison. Independent-fit and broader-structure replication remain open;
+the second-fit continuation/readout adapter design still awaits approval.
+
+All eight fresh science/audit jobs exited successfully, and the whole queue
+and all four scoped collectors departed. After checking an empty GPU, 33
+recovery input pins, live quota and allocation margin, the frozen five-job
+recovery queue launched at 23:58:22 UTC. Its first scientific request began
+77 seconds after the predecessor's final audit; its first response returned
+at 23:58:34. Sixteen responses and zero transport failures were verified by
+23:59:13. This is startup evidence, not a recovery-training result. Native
+receipts are `RECOVERY-ADMISSION.json` and `RECOVERY-FIRST-RESPONSE.json` in
+`/project/alex_phd/runs/rlm-teaching-goal-20261014/`.
+
+The main quota still reports zero remaining; continuation uses the user's
+explicit October 14 authority, without assuming a reset or renewing allocation
+6037. Its end remains October 15, 13:00:16 UTC. The full goal remains unfinished.
+The math-reproduction deck already states that RLM transfer is proposed, not
+demonstrated, so this pilot changes the supporting research report rather than
+that deck's measured math result. Model checkpoints remain in external storage;
+GitHub publication is not their backup.
+
+## October 14, 22:18 UTC — panel03 complete; new-structure test running
 
 The full next-panel comparison is now available. Across the same eight goal
 identities, two worlds and two rollout draws:
