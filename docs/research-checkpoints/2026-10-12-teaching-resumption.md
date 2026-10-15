@@ -43,6 +43,26 @@ The [complete evidence receipt](2026-10-14-teaching-fresh-structure.json)
 retains every score, paired contrast, cost, checkpoint identity and terminal
 job receipt. This reconciliation did not launch another evaluation.
 
+An October 15 [final-state diagnostic](2026-10-15-teaching-fresh-final-state.json)
+clarifies what those failures mean. Only **2 of the 52 failed attempts** ended
+with enough immediate ingredients to make the requested target in one correctly
+specified craft action; the other 50 still lacked some prerequisites. Among
+the 44 failed attempts that explicitly finished, 15 finished immediately after
+an environment-reported action error. Thus the shortfall is not usually just
+forgetting the final craft. Planning quantities and using failure feedback
+remain concrete questions for teaching research.
+
+This diagnostic rechecks all 128 episode/root-node file hashes and all 64
+scores, then tests the exact target recipe on isolated copies of the final
+inventories using the pinned native environment. It makes no model calls and
+does not change any observed score. It supplies the correct action and ignores
+remaining inference limits, so it is **not** a measured recovery improvement.
+Missing immediate ingredients also does not mean a state is unsolvable:
+additional prerequisite crafting may still succeed. These retrospective
+observations do not identify a cause or authorize changing the frozen teaching
+comparison. They support keeping the already running recovery-versus-ordinary
+test, not selecting a new checkpoint from diagnostic outcomes.
+
 The task qualification excludes recorded old rooted dependency structures,
 but the eight roots still share a generator, vocabulary and intermediate
 recipes; one selected root is another's prerequisite. They are not independent

@@ -1,0 +1,2638 @@
+{
+  "schema": "teaching-fresh-final-state-diagnostic-v1",
+  "checked_epoch": 1792025109.2577903,
+  "world_sha256": "618614d07d48428bafb15ea6894bf4c2bebacf7a0493bdbb24dd14faa6d8805c",
+  "arms": {
+    "known23": {
+      "counts": {
+        "observed": 16,
+        "successes": 1,
+        "failures": 15,
+        "failed_with_target_ingredients_ready": 1,
+        "failed_with_target_prerequisite_shortfall": 14,
+        "explicit_finish_failures": 14,
+        "explicit_finish_with_target_ingredients_ready": 1,
+        "explicit_finish_immediately_after_native_error": 0,
+        "budget_failures": 1
+      },
+      "by_depth": {
+        "3": {
+          "observed": 8,
+          "successes": 0
+        },
+        "4": {
+          "observed": 8,
+          "successes": 1
+        }
+      },
+      "episodes": {
+        "t00-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m0_i3_10",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 16,
+          "target": "m0_i3_10",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m0_i3_10",
+            "output_count": 2,
+            "ingredients": {
+              "m9_i1_19": 1,
+              "m0_i2": 1,
+              "m4_i1_14": 1
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m9_i1_19": 1,
+            "m0_i2": 1,
+            "m4_i1_14": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m0_i3_10. Errors:\nRecipe 1: Insufficient ingredients in inventory: m9_i1_19: need 1, have 0, m0_i2: need 1, have 0, m4_i1_14: need 1, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "m1_ore"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "m1_ore",
+              "can_craft": false,
+              "is_base": true,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t00-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m0_i3_10",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 65,
+          "target": "m0_i3_10",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m0_i3_10",
+            "output_count": 2,
+            "ingredients": {
+              "m9_i1_19": 1,
+              "m0_i2": 1,
+              "m4_i1_14": 1
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m9_i1_19": 1,
+            "m0_i2": 1,
+            "m4_i1_14": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m0_i3_10. Errors:\nRecipe 1: Insufficient ingredients in inventory: m9_i1_19: need 1, have 0, m0_i2: need 1, have 0, m4_i1_14: need 1, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "m0_i1_11"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "m0_i1_11",
+              "can_craft": false,
+              "is_base": false,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t01-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c1_i3_11",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 52,
+          "target": "c1_i3_11",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c1_i3_11",
+            "output_count": 2,
+            "ingredients": {
+              "c4_i2_14": 2,
+              "c2_i2_12": 4,
+              "c8_i1_18": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c4_i2_14": 2,
+            "c2_i2_12": 4,
+            "c8_i1_18": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c1_i3_11. Errors:\nRecipe 1: Insufficient ingredients in inventory: c4_i2_14: need 2, have 0, c2_i2_12: need 4, have 0, c8_i1_18: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "c1_i1_11"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "c1_i1_11",
+              "can_craft": true,
+              "is_base": false,
+              "in_inventory": 0,
+              "crafting_depth": 1,
+              "recipes": [
+                {
+                  "ingredients": {
+                    "c5_ore": 1
+                  },
+                  "result_count": 4
+                }
+              ]
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t01-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c1_i3_11",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 25,
+          "target": "c1_i3_11",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c1_i3_11",
+            "output_count": 2,
+            "ingredients": {
+              "c4_i2_14": 2,
+              "c2_i2_12": 4,
+              "c8_i1_18": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c4_i2_14": 2,
+            "c2_i2_12": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c1_i3_11. Errors:\nRecipe 1: Insufficient ingredients in inventory: c4_i2_14: need 2, have 0, c2_i2_12: need 4, have 2",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c4_ore": 2
+            },
+            "target_item": "c8_i1_18",
+            "output_count": 4
+          },
+          "pre_finish_feedback": "Successfully crafted 4 c8_i1_18(s)",
+          "immediately_follows_native_error": false
+        },
+        "t02-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c4_i3",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 7,
+          "target": "c4_i3",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c4_i3",
+            "output_count": 2,
+            "ingredients": {
+              "c2_i2": 2,
+              "c9_i1_19": 4,
+              "c3_i2_13": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c2_i2": 2,
+            "c9_i1_19": 4,
+            "c3_i2_13": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c4_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2: need 2, have 0, c9_i1_19: need 4, have 0, c3_i2_13: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "c4_ore"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "c4_ore",
+              "can_craft": false,
+              "is_base": true,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t02-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c4_i3",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 7,
+          "target": "c4_i3",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c4_i3",
+            "output_count": 2,
+            "ingredients": {
+              "c2_i2": 2,
+              "c9_i1_19": 4,
+              "c3_i2_13": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c2_i2": 2,
+            "c9_i1_19": 4,
+            "c3_i2_13": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c4_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2: need 2, have 0, c9_i1_19: need 4, have 0, c3_i2_13: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "c9_ore"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "c9_ore",
+              "can_craft": false,
+              "is_base": true,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t03-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c3_i3_23",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 23,
+          "target": "c3_i3_23",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c3_i3_23",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i1": 4,
+              "c0_i2": 2,
+              "c2_i2_12": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i1": 4,
+            "c2_i2_12": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i1: need 4, have 0, c2_i2_12: need 4, have 2",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c9_i1_19": 1,
+              "c3_i1": 2
+            },
+            "target_item": "c2_i2_12",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Successfully crafted 2 c2_i2_12(s)",
+          "immediately_follows_native_error": false
+        },
+        "t03-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c3_i3_23",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 5,
+          "target": "c3_i3_23",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c3_i3_23",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i1": 4,
+              "c0_i2": 2,
+              "c2_i2_12": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i1": 4,
+            "c0_i2": 2,
+            "c2_i2_12": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i1: need 4, have 0, c0_i2: need 2, have 0, c2_i2_12: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "c5_ore"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "c5_ore",
+              "can_craft": false,
+              "is_base": true,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t04-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m9_i4_19",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 38,
+          "target": "m9_i4_19",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m9_i4_19",
+            "output_count": 2,
+            "ingredients": {
+              "m2_i2_22": 2,
+              "m8_i3_18": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m2_i2_22": 2,
+            "m8_i3_18": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m9_i4_19. Errors:\nRecipe 1: Insufficient ingredients in inventory: m2_i2_22: need 2, have 0, m8_i3_18: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "m5_i1_19"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "m5_i1_19",
+              "can_craft": false,
+              "is_base": false,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t04-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m9_i4_19",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 46,
+          "target": "m9_i4_19",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m9_i4_19",
+            "output_count": 2,
+            "ingredients": {
+              "m2_i2_22": 2,
+              "m8_i3_18": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m2_i2_22": 2,
+            "m8_i3_18": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m9_i4_19. Errors:\nRecipe 1: Insufficient ingredients in inventory: m2_i2_22: need 2, have 0, m8_i3_18: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "m6_ore"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "m6_ore",
+              "can_craft": false,
+              "is_base": true,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t05-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c5_i4_15",
+          "depth": 4,
+          "score": 0,
+          "status": "global_call_cap",
+          "calls": 96,
+          "target": "c5_i4_15",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "get_info",
+            "items": [
+              "c2_i1_13"
+            ]
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c5_i4_15",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i3_23": 2,
+              "c2_i3_22": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i3_23": 2,
+            "c2_i3_22": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c5_i4_15. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i3_23: need 2, have 0, c2_i3_22: need 2, have 0",
+          "native_counterfactual_score": 0
+        },
+        "t05-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c5_i4_15",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 26,
+          "target": "c5_i4_15",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c5_i4_15",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i3_23": 2,
+              "c2_i3_22": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i3_23": 2,
+            "c2_i3_22": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c5_i4_15. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i3_23: need 2, have 0, c2_i3_22: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c0_ore": 2,
+              "c5_i1": 1
+            },
+            "target_item": "c0_i2",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Successfully crafted 2 c0_i2(s)",
+          "immediately_follows_native_error": false
+        },
+        "t06-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o7_i4_17",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 8,
+          "target": "o7_i4_17",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o7_i4_17",
+            "output_count": 2,
+            "ingredients": {
+              "o5_i3": 2,
+              "o4_i3": 1,
+              "o3_i2_23": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o5_i3": 2,
+            "o4_i3": 1,
+            "o3_i2_23": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o7_i4_17. Errors:\nRecipe 1: Insufficient ingredients in inventory: o5_i3: need 2, have 0, o4_i3: need 1, have 0, o3_i2_23: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "raw_o5"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "raw_o5",
+              "can_craft": false,
+              "is_base": true,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t06-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o7_i4_17",
+          "depth": 4,
+          "score": 1,
+          "status": "finished",
+          "calls": 49,
+          "target": "o7_i4_17",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t07-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o3_i4_13",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 26,
+          "target": "o3_i4_13",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o3_i4_13",
+            "output_count": 2,
+            "ingredients": {
+              "o0_i2_10": 4,
+              "o3_i3_13": 4,
+              "o3_i2": 4
+            }
+          },
+          "immediate_ingredient_deficits": {},
+          "native_counterfactual_feedback": "Successfully crafted 2 o3_i4_13(s)",
+          "native_counterfactual_score": 1,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "o2_i1": 4,
+              "raw_o2": 4
+            },
+            "target_item": "o3_i2",
+            "output_count": 6
+          },
+          "pre_finish_feedback": "Successfully crafted 6 o3_i2(s)",
+          "immediately_follows_native_error": false
+        },
+        "t07-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o3_i4_13",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 38,
+          "target": "o3_i4_13",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o3_i4_13",
+            "output_count": 2,
+            "ingredients": {
+              "o0_i2_10": 4,
+              "o3_i3_13": 4,
+              "o3_i2": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o0_i2_10": 2,
+            "o3_i3_13": 4,
+            "o3_i2": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o3_i4_13. Errors:\nRecipe 1: Insufficient ingredients in inventory: o0_i2_10: need 4, have 2, o3_i3_13: need 4, have 0, o3_i2: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "raw_o3": 1,
+              "raw_o9": 2
+            },
+            "target_item": "o0_i2_10",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Successfully crafted 2 o0_i2_10(s)",
+          "immediately_follows_native_error": false
+        }
+      }
+    },
+    "repair23": {
+      "counts": {
+        "observed": 16,
+        "successes": 3,
+        "failures": 13,
+        "failed_with_target_ingredients_ready": 1,
+        "failed_with_target_prerequisite_shortfall": 12,
+        "explicit_finish_failures": 13,
+        "explicit_finish_with_target_ingredients_ready": 1,
+        "explicit_finish_immediately_after_native_error": 3
+      },
+      "by_depth": {
+        "3": {
+          "observed": 8,
+          "successes": 2
+        },
+        "4": {
+          "observed": 8,
+          "successes": 1
+        }
+      },
+      "episodes": {
+        "t00-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m0_i3_10",
+          "depth": 3,
+          "score": 1,
+          "status": "finished",
+          "calls": 9,
+          "target": "m0_i3_10",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t00-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m0_i3_10",
+          "depth": 3,
+          "score": 1,
+          "status": "finished",
+          "calls": 10,
+          "target": "m0_i3_10",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t01-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c1_i3_11",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 18,
+          "target": "c1_i3_11",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c1_i3_11",
+            "output_count": 2,
+            "ingredients": {
+              "c4_i2_14": 2,
+              "c2_i2_12": 4,
+              "c8_i1_18": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c2_i2_12": 2,
+            "c8_i1_18": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c1_i3_11. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2_12: need 4, have 2, c8_i1_18: need 4, have 2",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c4_i2_14": 2,
+              "c2_i2_12": 4,
+              "c8_i1_18": 4
+            },
+            "target_item": "c1_i3_11",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c1_i3_11. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2_12: need 4, have 2, c8_i1_18: need 4, have 2",
+          "immediately_follows_native_error": true
+        },
+        "t01-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c1_i3_11",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 29,
+          "target": "c1_i3_11",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c1_i3_11",
+            "output_count": 2,
+            "ingredients": {
+              "c4_i2_14": 2,
+              "c2_i2_12": 4,
+              "c8_i1_18": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c2_i2_12": 4,
+            "c8_i1_18": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c1_i3_11. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2_12: need 4, have 0, c8_i1_18: need 4, have 3",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c4_ore": 2,
+              "c2_i2_12": 4,
+              "c8_i1_18": 4
+            },
+            "target_item": "c1_i3_11",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c1_i3_11. Errors:\nRecipe 1: Missing required ingredient c4_i2_14",
+          "immediately_follows_native_error": true
+        },
+        "t02-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c4_i3",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 20,
+          "target": "c4_i3",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c4_i3",
+            "output_count": 2,
+            "ingredients": {
+              "c2_i2": 2,
+              "c9_i1_19": 4,
+              "c3_i2_13": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c2_i2": 2,
+            "c9_i1_19": 4,
+            "c3_i2_13": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c4_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2: need 2, have 0, c9_i1_19: need 4, have 0, c3_i2_13: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "c4_ore"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "c4_ore",
+              "can_craft": false,
+              "is_base": true,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t02-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c4_i3",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 22,
+          "target": "c4_i3",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 1,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c4_i3",
+            "output_count": 1,
+            "ingredients": {
+              "c2_i2": 1,
+              "c9_i1_19": 2,
+              "c3_i2_13": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i2_13": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c4_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i2_13: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c2_i2": 1,
+              "c9_i1_19": 2,
+              "c3_i2_13": 2
+            },
+            "target_item": "c4_i3",
+            "output_count": 1
+          },
+          "pre_finish_feedback": "Successfully crafted 1 c4_i3(s)",
+          "immediately_follows_native_error": false
+        },
+        "t03-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c3_i3_23",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 23,
+          "target": "c3_i3_23",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c3_i3_23",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i1": 4,
+              "c0_i2": 2,
+              "c2_i2_12": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i1": 2,
+            "c0_i2": 2,
+            "c2_i2_12": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i1: need 4, have 2, c0_i2: need 2, have 0, c2_i2_12: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "c3_i1"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "c3_i1",
+              "can_craft": true,
+              "is_base": false,
+              "in_inventory": 2,
+              "crafting_depth": 1,
+              "recipes": [
+                {
+                  "ingredients": {
+                    "c1_ore": 1
+                  },
+                  "result_count": 2
+                }
+              ]
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t03-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c3_i3_23",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 23,
+          "target": "c3_i3_23",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c3_i3_23",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i1": 4,
+              "c0_i2": 2,
+              "c2_i2_12": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i1": 2,
+            "c2_i2_12": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i1: need 4, have 2, c2_i2_12: need 4, have 2",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c1_ore": 1
+            },
+            "target_item": "c3_i1",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Successfully crafted 2 c3_i1(s)",
+          "immediately_follows_native_error": false
+        },
+        "t04-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m9_i4_19",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 38,
+          "target": "m9_i4_19",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m9_i4_19",
+            "output_count": 2,
+            "ingredients": {
+              "m2_i2_22": 2,
+              "m8_i3_18": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m8_i3_18": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m9_i4_19. Errors:\nRecipe 1: Insufficient ingredients in inventory: m8_i3_18: need 2, have 1",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "m8_i3_18"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "m8_i3_18",
+              "can_craft": true,
+              "is_base": false,
+              "in_inventory": 1,
+              "crafting_depth": 3,
+              "recipes": [
+                {
+                  "ingredients": {
+                    "m6_i2_16": 2,
+                    "m1_i1": 1,
+                    "m5_i2_15": 1
+                  },
+                  "result_count": 1
+                }
+              ]
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t04-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m9_i4_19",
+          "depth": 4,
+          "score": 1,
+          "status": "finished",
+          "calls": 28,
+          "target": "m9_i4_19",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t05-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c5_i4_15",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 56,
+          "target": "c5_i4_15",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c5_i4_15",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i3_23": 2,
+              "c2_i3_22": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i3_23": 1,
+            "c2_i3_22": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c5_i4_15. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i3_23: need 2, have 1, c2_i3_22: need 2, have 1",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "c3_i3_23"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "c3_i3_23",
+              "can_craft": true,
+              "is_base": false,
+              "in_inventory": 1,
+              "crafting_depth": 3,
+              "recipes": [
+                {
+                  "ingredients": {
+                    "c3_i1": 2,
+                    "c0_i2": 1,
+                    "c2_i2_12": 2
+                  },
+                  "result_count": 1
+                }
+              ]
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t05-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c5_i4_15",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 33,
+          "target": "c5_i4_15",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c5_i4_15",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i3_23": 2,
+              "c2_i3_22": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i3_23": 2,
+            "c2_i3_22": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c5_i4_15. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i3_23: need 2, have 0, c2_i3_22: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c1_ore": 1,
+              "c0_ore": 2,
+              "c5_i1": 1
+            },
+            "target_item": "c0_i2",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c0_i2. Errors:\nRecipe 1: Extra ingredients not required: c1_ore",
+          "immediately_follows_native_error": true
+        },
+        "t06-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o7_i4_17",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 21,
+          "target": "o7_i4_17",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o7_i4_17",
+            "output_count": 2,
+            "ingredients": {
+              "o5_i3": 2,
+              "o4_i3": 1,
+              "o3_i2_23": 2
+            }
+          },
+          "immediate_ingredient_deficits": {},
+          "native_counterfactual_feedback": "Successfully crafted 2 o7_i4_17(s)",
+          "native_counterfactual_score": 1,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "o7_i2": 2,
+              "o1_i1_11": 1
+            },
+            "target_item": "o5_i3",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Successfully crafted 2 o5_i3(s)",
+          "immediately_follows_native_error": false
+        },
+        "t06-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o7_i4_17",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 28,
+          "target": "o7_i4_17",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o7_i4_17",
+            "output_count": 2,
+            "ingredients": {
+              "o5_i3": 2,
+              "o4_i3": 1,
+              "o3_i2_23": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o5_i3": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o7_i4_17. Errors:\nRecipe 1: Insufficient ingredients in inventory: o5_i3: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "raw_o1": 1,
+              "o7_i1_17": 1
+            },
+            "target_item": "o7_i2",
+            "output_count": 3
+          },
+          "pre_finish_feedback": "Successfully crafted 3 o7_i2(s)",
+          "immediately_follows_native_error": false
+        },
+        "t07-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o3_i4_13",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 26,
+          "target": "o3_i4_13",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o3_i4_13",
+            "output_count": 2,
+            "ingredients": {
+              "o0_i2_10": 4,
+              "o3_i3_13": 4,
+              "o3_i2": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o3_i3_13": 4,
+            "o3_i2": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o3_i4_13. Errors:\nRecipe 1: Insufficient ingredients in inventory: o3_i3_13: need 4, have 0, o3_i2: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "raw_o3": 1,
+              "raw_o9": 2
+            },
+            "target_item": "o0_i2_10",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Successfully crafted 2 o0_i2_10(s)",
+          "immediately_follows_native_error": false
+        },
+        "t07-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o3_i4_13",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 28,
+          "target": "o3_i4_13",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o3_i4_13",
+            "output_count": 2,
+            "ingredients": {
+              "o0_i2_10": 4,
+              "o3_i3_13": 4,
+              "o3_i2": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o3_i3_13": 4,
+            "o3_i2": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o3_i4_13. Errors:\nRecipe 1: Insufficient ingredients in inventory: o3_i3_13: need 4, have 0, o3_i2: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "raw_o9"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "raw_o9",
+              "can_craft": false,
+              "is_base": true,
+              "in_inventory": 2,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        }
+      }
+    },
+    "discovery23": {
+      "counts": {
+        "observed": 16,
+        "successes": 3,
+        "failures": 13,
+        "failed_with_target_ingredients_ready": 0,
+        "failed_with_target_prerequisite_shortfall": 13,
+        "explicit_finish_failures": 12,
+        "explicit_finish_with_target_ingredients_ready": 0,
+        "explicit_finish_immediately_after_native_error": 10,
+        "budget_failures": 1
+      },
+      "by_depth": {
+        "3": {
+          "observed": 8,
+          "successes": 3
+        },
+        "4": {
+          "observed": 8,
+          "successes": 0
+        }
+      },
+      "episodes": {
+        "t00-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m0_i3_10",
+          "depth": 3,
+          "score": 1,
+          "status": "finished",
+          "calls": 14,
+          "target": "m0_i3_10",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t00-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m0_i3_10",
+          "depth": 3,
+          "score": 1,
+          "status": "finished",
+          "calls": 20,
+          "target": "m0_i3_10",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t01-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c1_i3_11",
+          "depth": 3,
+          "score": 1,
+          "status": "finished",
+          "calls": 32,
+          "target": "c1_i3_11",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t01-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c1_i3_11",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 65,
+          "target": "c1_i3_11",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c1_i3_11",
+            "output_count": 2,
+            "ingredients": {
+              "c4_i2_14": 2,
+              "c2_i2_12": 4,
+              "c8_i1_18": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c2_i2_12": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c1_i3_11. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2_12: need 4, have 2",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c8_i1_18": 2,
+              "c5_i1_15": 1
+            },
+            "target_item": "c4_i2_14",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c4_i2_14. Errors:\nRecipe 1: Wrong amount of c8_i1_18. Need 1, provided 2",
+          "immediately_follows_native_error": true
+        },
+        "t02-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c4_i3",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 78,
+          "target": "c4_i3",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c4_i3",
+            "output_count": 2,
+            "ingredients": {
+              "c2_i2": 2,
+              "c9_i1_19": 4,
+              "c3_i2_13": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i2_13": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c4_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i2_13: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c0_ore": 2,
+              "c5_i1": 2,
+              "c8_i1": 2
+            },
+            "target_item": "c3_i2_13",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c3_i2_13. Errors:\nRecipe 1: Extra ingredients not required: c0_ore",
+          "immediately_follows_native_error": true
+        },
+        "t02-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c4_i3",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 50,
+          "target": "c4_i3",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 1,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c4_i3",
+            "output_count": 1,
+            "ingredients": {
+              "c2_i2": 1,
+              "c9_i1_19": 2,
+              "c3_i2_13": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i2_13": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c4_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i2_13: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c0_ore": 2,
+              "c2_ore": 2
+            },
+            "target_item": "c2_i2",
+            "output_count": 3
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c2_i2. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_ore: need 2, have 0",
+          "immediately_follows_native_error": true
+        },
+        "t03-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c3_i3_23",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 27,
+          "target": "c3_i3_23",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c3_i3_23",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i1": 4,
+              "c0_i2": 2,
+              "c2_i2_12": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c2_i2_12": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2_12: need 4, have 2",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c1_ore": 4
+            },
+            "target_item": "c3_i1",
+            "output_count": 4
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c3_i1. Errors:\nRecipe 1: Wrong amount of c1_ore. Need 2, provided 4",
+          "immediately_follows_native_error": true
+        },
+        "t03-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c3_i3_23",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 25,
+          "target": "c3_i3_23",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c3_i3_23",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i1": 4,
+              "c0_i2": 2,
+              "c2_i2_12": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c2_i2_12": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2_12: need 4, have 2",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c3_i1": 4,
+              "c0_i2": 2,
+              "c2_i2_12": 4
+            },
+            "target_item": "c3_i3_23",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2_12: need 4, have 2",
+          "immediately_follows_native_error": true
+        },
+        "t04-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m9_i4_19",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 49,
+          "target": "m9_i4_19",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m9_i4_19",
+            "output_count": 2,
+            "ingredients": {
+              "m2_i2_22": 2,
+              "m8_i3_18": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m8_i3_18": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m9_i4_19. Errors:\nRecipe 1: Insufficient ingredients in inventory: m8_i3_18: need 2, have 1",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "m0_ore": 1,
+              "m1_ore": 1
+            },
+            "target_item": "m1_i1",
+            "output_count": 3
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for m1_i1. Errors:\nRecipe 1: Extra ingredients not required: m1_ore",
+          "immediately_follows_native_error": true
+        },
+        "t04-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m9_i4_19",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 64,
+          "target": "m9_i4_19",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m9_i4_19",
+            "output_count": 2,
+            "ingredients": {
+              "m2_i2_22": 2,
+              "m8_i3_18": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m8_i3_18": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m9_i4_19. Errors:\nRecipe 1: Insufficient ingredients in inventory: m8_i3_18: need 2, have 1",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "m1_ore": 1,
+              "m3_ore": 2,
+              "m8_ore": 2
+            },
+            "target_item": "m2_i1_12",
+            "output_count": 4
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for m2_i1_12. Errors:\nRecipe 1: Extra ingredients not required: m3_ore, m8_ore",
+          "immediately_follows_native_error": true
+        },
+        "t05-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c5_i4_15",
+          "depth": 4,
+          "score": 0,
+          "status": "context_cap",
+          "calls": 84,
+          "target": "c5_i4_15",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "get_info",
+            "items": [
+              "c2_i2_12"
+            ]
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c5_i4_15",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i3_23": 2,
+              "c2_i3_22": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i3_23": 2,
+            "c2_i3_22": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c5_i4_15. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i3_23: need 2, have 0, c2_i3_22: need 2, have 0",
+          "native_counterfactual_score": 0
+        },
+        "t05-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c5_i4_15",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 79,
+          "target": "c5_i4_15",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c5_i4_15",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i3_23": 2,
+              "c2_i3_22": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i3_23": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c5_i4_15. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i3_23: need 2, have 1",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c1_i1": 2,
+              "c7_ore": 1
+            },
+            "target_item": "c5_i2_15",
+            "output_count": 3
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c5_i2_15. Errors:\nRecipe 1: Insufficient ingredients in inventory: c1_i1: need 2, have 1",
+          "immediately_follows_native_error": true
+        },
+        "t06-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o7_i4_17",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 42,
+          "target": "o7_i4_17",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o7_i4_17",
+            "output_count": 2,
+            "ingredients": {
+              "o5_i3": 2,
+              "o4_i3": 1,
+              "o3_i2_23": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o5_i3": 2,
+            "o3_i2_23": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o7_i4_17. Errors:\nRecipe 1: Insufficient ingredients in inventory: o5_i3: need 2, have 0, o3_i2_23: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "o7_i2": 4,
+              "o1_i1_11": 2
+            },
+            "target_item": "o5_i3",
+            "output_count": 4
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for o5_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: o7_i2: need 4, have 3",
+          "immediately_follows_native_error": true
+        },
+        "t06-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o7_i4_17",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 69,
+          "target": "o7_i4_17",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o7_i4_17",
+            "output_count": 2,
+            "ingredients": {
+              "o5_i3": 2,
+              "o4_i3": 1,
+              "o3_i2_23": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o5_i3": 2,
+            "o4_i3": 1,
+            "o3_i2_23": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o7_i4_17. Errors:\nRecipe 1: Insufficient ingredients in inventory: o5_i3: need 2, have 0, o4_i3: need 1, have 0, o3_i2_23: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "raw_o1": 2,
+              "raw_o9": 2,
+              "o7_i1": 2,
+              "o1_i1_11": 4,
+              "o7_i1_17": 2
+            },
+            "target_item": "o7_i2",
+            "output_count": 6
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for o7_i2. Errors:\nRecipe 1: Extra ingredients not required: raw_o9, o7_i1, o1_i1_11",
+          "immediately_follows_native_error": true
+        },
+        "t07-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o3_i4_13",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 50,
+          "target": "o3_i4_13",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o3_i4_13",
+            "output_count": 2,
+            "ingredients": {
+              "o0_i2_10": 4,
+              "o3_i3_13": 4,
+              "o3_i2": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o3_i3_13": 4,
+            "o3_i2": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o3_i4_13. Errors:\nRecipe 1: Insufficient ingredients in inventory: o3_i3_13: need 4, have 0, o3_i2: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "o3_i4_13"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "o3_i4_13",
+              "can_craft": true,
+              "is_base": false,
+              "in_inventory": 0,
+              "crafting_depth": 4,
+              "recipes": [
+                {
+                  "ingredients": {
+                    "o0_i2_10": 2,
+                    "o3_i3_13": 2,
+                    "o3_i2": 2
+                  },
+                  "result_count": 1
+                }
+              ]
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t07-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o3_i4_13",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 51,
+          "target": "o3_i4_13",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o3_i4_13",
+            "output_count": 2,
+            "ingredients": {
+              "o0_i2_10": 4,
+              "o3_i3_13": 4,
+              "o3_i2": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o3_i3_13": 4,
+            "o3_i2": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o3_i4_13. Errors:\nRecipe 1: Insufficient ingredients in inventory: o3_i3_13: need 4, have 0, o3_i2: need 4, have 3",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "o6_i1"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "o6_i1",
+              "can_craft": true,
+              "is_base": false,
+              "in_inventory": 0,
+              "crafting_depth": 1,
+              "recipes": [
+                {
+                  "ingredients": {
+                    "raw_o3": 1
+                  },
+                  "result_count": 2
+                }
+              ]
+            }
+          ],
+          "immediately_follows_native_error": false
+        }
+      }
+    },
+    "known69": {
+      "counts": {
+        "observed": 16,
+        "successes": 5,
+        "failures": 11,
+        "failed_with_target_ingredients_ready": 0,
+        "failed_with_target_prerequisite_shortfall": 11,
+        "budget_failures": 6,
+        "explicit_finish_failures": 5,
+        "explicit_finish_with_target_ingredients_ready": 0,
+        "explicit_finish_immediately_after_native_error": 2
+      },
+      "by_depth": {
+        "3": {
+          "observed": 8,
+          "successes": 3
+        },
+        "4": {
+          "observed": 8,
+          "successes": 2
+        }
+      },
+      "episodes": {
+        "t00-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m0_i3_10",
+          "depth": 3,
+          "score": 1,
+          "status": "finished",
+          "calls": 38,
+          "target": "m0_i3_10",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t00-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m0_i3_10",
+          "depth": 3,
+          "score": 0,
+          "status": "global_call_cap",
+          "calls": 96,
+          "target": "m0_i3_10",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "get_info",
+            "items": [
+              "m4_i1_10"
+            ]
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m0_i3_10",
+            "output_count": 2,
+            "ingredients": {
+              "m9_i1_19": 1,
+              "m0_i2": 1,
+              "m4_i1_14": 1
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m9_i1_19": 1,
+            "m0_i2": 1,
+            "m4_i1_14": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m0_i3_10. Errors:\nRecipe 1: Insufficient ingredients in inventory: m9_i1_19: need 1, have 0, m0_i2: need 1, have 0, m4_i1_14: need 1, have 0",
+          "native_counterfactual_score": 0
+        },
+        "t01-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c1_i3_11",
+          "depth": 3,
+          "score": 1,
+          "status": "finished",
+          "calls": 64,
+          "target": "c1_i3_11",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 3,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t01-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c1_i3_11",
+          "depth": 3,
+          "score": 1,
+          "status": "finished",
+          "calls": 44,
+          "target": "c1_i3_11",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t02-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c4_i3",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 6,
+          "target": "c4_i3",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c4_i3",
+            "output_count": 2,
+            "ingredients": {
+              "c2_i2": 2,
+              "c9_i1_19": 4,
+              "c3_i2_13": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c2_i2": 2,
+            "c9_i1_19": 4,
+            "c3_i2_13": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c4_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: c2_i2: need 2, have 0, c9_i1_19: need 4, have 0, c3_i2_13: need 4, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "c9_ore"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "c9_ore",
+              "can_craft": false,
+              "is_base": true,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t02-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c4_i3",
+          "depth": 3,
+          "score": 0,
+          "status": "context_cap",
+          "calls": 87,
+          "target": "c4_i3",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 1,
+          "last_action": {
+            "action": "craft",
+            "ingredients": {
+              "c0_ore": 1,
+              "c2_ore": 1
+            },
+            "target_item": "c2_i2",
+            "output_count": 2
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c4_i3",
+            "output_count": 1,
+            "ingredients": {
+              "c2_i2": 1,
+              "c9_i1_19": 2,
+              "c3_i2_13": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i2_13": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c4_i3. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i2_13: need 2, have 0",
+          "native_counterfactual_score": 0
+        },
+        "t03-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c3_i3_23",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 27,
+          "target": "c3_i3_23",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c3_i3_23",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i1": 4,
+              "c0_i2": 2,
+              "c2_i2_12": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c0_i2": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c0_i2: need 2, have 0",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "c1_ore": 4
+            },
+            "target_item": "c9_i1_19",
+            "output_count": 4
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for c9_i1_19. Errors:\nRecipe 1: Insufficient ingredients in inventory: c1_ore: need 4, have 1",
+          "immediately_follows_native_error": true
+        },
+        "t03-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c3_i3_23",
+          "depth": 3,
+          "score": 0,
+          "status": "finished",
+          "calls": 50,
+          "target": "c3_i3_23",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c3_i3_23",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i1": 4,
+              "c0_i2": 2,
+              "c2_i2_12": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i1": 4,
+            "c0_i2": 2,
+            "c2_i2_12": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c3_i3_23. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i1: need 4, have 0, c0_i2: need 2, have 0, c2_i2_12: need 4, have 2",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "get_info",
+            "items": [
+              "c6_i1_11"
+            ]
+          },
+          "pre_finish_feedback": [
+            {
+              "item": "c6_i1_11",
+              "can_craft": false,
+              "is_base": false,
+              "in_inventory": 0,
+              "crafting_depth": 0,
+              "recipes": []
+            }
+          ],
+          "immediately_follows_native_error": false
+        },
+        "t04-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m9_i4_19",
+          "depth": 4,
+          "score": 0,
+          "status": "context_cap",
+          "calls": 87,
+          "target": "m9_i4_19",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "get_info",
+            "items": [
+              "m9_i2_19"
+            ]
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m9_i4_19",
+            "output_count": 2,
+            "ingredients": {
+              "m2_i2_22": 2,
+              "m8_i3_18": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m2_i2_22": 2,
+            "m8_i3_18": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m9_i4_19. Errors:\nRecipe 1: Insufficient ingredients in inventory: m2_i2_22: need 2, have 0, m8_i3_18: need 2, have 0",
+          "native_counterfactual_score": 0
+        },
+        "t04-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.m9_i4_19",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 69,
+          "target": "m9_i4_19",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "m9_i4_19",
+            "output_count": 2,
+            "ingredients": {
+              "m2_i2_22": 2,
+              "m8_i3_18": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "m8_i3_18": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for m9_i4_19. Errors:\nRecipe 1: Insufficient ingredients in inventory: m8_i3_18: need 2, have 1",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "m8_i3_18": 2
+            },
+            "target_item": "m9_i4_19",
+            "output_count": 2
+          },
+          "pre_finish_feedback": "Error: All 1 recipe(s) failed for m9_i4_19. Errors:\nRecipe 1: Missing required ingredient m2_i2_22",
+          "immediately_follows_native_error": true
+        },
+        "t05-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c5_i4_15",
+          "depth": 4,
+          "score": 0,
+          "status": "context_cap",
+          "calls": 86,
+          "target": "c5_i4_15",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "get_info",
+            "items": [
+              "c5_i4_15"
+            ]
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "c5_i4_15",
+            "output_count": 2,
+            "ingredients": {
+              "c3_i3_23": 2,
+              "c2_i3_22": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "c3_i3_23": 2,
+            "c2_i3_22": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for c5_i4_15. Errors:\nRecipe 1: Insufficient ingredients in inventory: c3_i3_23: need 2, have 0, c2_i3_22: need 2, have 1",
+          "native_counterfactual_score": 0
+        },
+        "t05-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.c5_i4_15",
+          "depth": 4,
+          "score": 1,
+          "status": "finished",
+          "calls": 73,
+          "target": "c5_i4_15",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t06-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o7_i4_17",
+          "depth": 4,
+          "score": 1,
+          "status": "finished",
+          "calls": 27,
+          "target": "o7_i4_17",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 2,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          }
+        },
+        "t06-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o7_i4_17",
+          "depth": 4,
+          "score": 0,
+          "status": "context_cap",
+          "calls": 87,
+          "target": "o7_i4_17",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "get_info",
+            "items": [
+              "o7_i4_17"
+            ]
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o7_i4_17",
+            "output_count": 2,
+            "ingredients": {
+              "o5_i3": 2,
+              "o4_i3": 1,
+              "o3_i2_23": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o5_i3": 2
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o7_i4_17. Errors:\nRecipe 1: Insufficient ingredients in inventory: o5_i3: need 2, have 0",
+          "native_counterfactual_score": 0
+        },
+        "t07-r0-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o3_i4_13",
+          "depth": 4,
+          "score": 0,
+          "status": "context_cap",
+          "calls": 82,
+          "target": "o3_i4_13",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 0,
+          "last_action": {
+            "action": "get_info",
+            "items": [
+              "o1_i3_11"
+            ]
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o3_i4_13",
+            "output_count": 2,
+            "ingredients": {
+              "o0_i2_10": 4,
+              "o3_i3_13": 4,
+              "o3_i2": 4
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o0_i2_10": 4,
+            "o3_i3_13": 4,
+            "o3_i2": 4
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o3_i4_13. Errors:\nRecipe 1: Insufficient ingredients in inventory: o0_i2_10: need 4, have 0, o3_i3_13: need 4, have 0, o3_i2: need 4, have 0",
+          "native_counterfactual_score": 0
+        },
+        "t07-r1-flat-original": {
+          "task_id": "teaching_structure.w2026101401.o3_i4_13",
+          "depth": 4,
+          "score": 0,
+          "status": "finished",
+          "calls": 74,
+          "target": "o3_i4_13",
+          "required_final_quantity": 2,
+          "actual_final_quantity": 1,
+          "last_action": {
+            "action": "finish",
+            "message": "done"
+          },
+          "immediate_target_action": {
+            "action": "craft",
+            "target_item": "o3_i4_13",
+            "output_count": 1,
+            "ingredients": {
+              "o0_i2_10": 2,
+              "o3_i3_13": 2,
+              "o3_i2": 2
+            }
+          },
+          "immediate_ingredient_deficits": {
+            "o0_i2_10": 2,
+            "o3_i3_13": 2,
+            "o3_i2": 1
+          },
+          "native_counterfactual_feedback": "Error: All 1 recipe(s) failed for o3_i4_13. Errors:\nRecipe 1: Insufficient ingredients in inventory: o0_i2_10: need 2, have 0, o3_i3_13: need 2, have 0, o3_i2: need 2, have 1",
+          "native_counterfactual_score": 0,
+          "pre_finish_action": {
+            "action": "craft",
+            "ingredients": {
+              "o0_i2_10": 2,
+              "o3_i3_13": 2,
+              "o3_i2": 2
+            },
+            "target_item": "o3_i4_13",
+            "output_count": 1
+          },
+          "pre_finish_feedback": "Successfully crafted 1 o3_i4_13(s)",
+          "immediately_follows_native_error": false
+        }
+      }
+    }
+  },
+  "receipt_hashes": {
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/FRESH-COMPLETE.json": "238d86b457114308c973991202b70338a17d7f4116c62b5593134c602daca7d9",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/SELECTION.json": "fd7bcb913b7d80719fc76932df9568acdc2bcb6fc787f00cc8266a50b937c8c8",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/MANIFEST.json": "3c322051d1f00011bf16a96b3acf32d035aaf06e1dc3c00cacc9547276e8bbbc",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/tasks.jsonl": "2b02b15097bd88e5af19549d2a024605aa4def139b520f57c108f5d06d5e1f5b",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/NATIVE-AUDIT.json": "4ac9aa5034ee038b90aa5a592008034584c73fe40e327ffbd2c0bb3277da9297",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t00-r0-flat-original.json": "26491b220b181df2c26d1248b5bae4d6de040ef83cffe0344feac25f9b46b60a",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t00-r0-flat-original-n0.json": "f972a9d58625cbede258b04aeb06f020faec0967fb57edcfdc695e341593499c",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t00-r1-flat-original.json": "f9438c277dfd42efa97c18259ffbdc99f7c574d4a4b250b4e151f179f50f5872",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t00-r1-flat-original-n0.json": "7d59442c3da01145b3a9755674a8fcaa50c6750c064f1b926bdc89c9dd638cfc",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t01-r0-flat-original.json": "6bb9c5f6277a2123d20588636cba8b19fd4d1bfb8186f4aa69675bbc2831480c",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t01-r0-flat-original-n0.json": "3e6d00162b68dbe9bb2448ee73ba1157ca5112ac046aa35f0fd2345a084dcca3",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t01-r1-flat-original.json": "36e3439232b07ee9dd69083fe5dcbd8d59d639049631c9de16fa692f76fb33d6",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t01-r1-flat-original-n0.json": "30b0bd159b0e9ccdd4aaeec1dc875ae69de6dd62a8e4276cd2265576dcfe57b4",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t02-r0-flat-original.json": "8ed98512a2ab945dfac4c82c49a3163169efce89b32ae85d2ce7556ec11d770a",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t02-r0-flat-original-n0.json": "4372ac922163bd9dd9b17408e070282728b799d70e3ccd81044091fe5116d5ac",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t02-r1-flat-original.json": "b92fcf719f490a4b0140f807e19210bc30e3f77d7683bd435f03f8622697e6fe",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t02-r1-flat-original-n0.json": "a4655d035a8880185aac0e11327b523399dfc6da6029cf735f0dcf389cbbb851",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t03-r0-flat-original.json": "adb783f53f980337affa6dc169df001ce0b1325fe2ecb07e1e75e9d96b75ad5c",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t03-r0-flat-original-n0.json": "0afe34e4fffb57b08637c4d285378cf81d67a5eb5e1b92d993a8b377ab4fe4cd",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t03-r1-flat-original.json": "facba46d2ab0c433f2e03f314a28237832e77798e135b769f1cc8a6201508ff6",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t03-r1-flat-original-n0.json": "a4fd4cb03710f10393f2cacaaca54de78a93f035054a12422eb854767b6624ce",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t04-r0-flat-original.json": "0b0bcd837f2cb3c6ea9baa36336155f0bde98da1e550cbb657c054d5106d1cb1",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t04-r0-flat-original-n0.json": "06ed082146d86290e02cc20fa31da66b6ecd4dddb7b00d435bbee2a5b6530b5a",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t04-r1-flat-original.json": "cbdcbe4f9da8af60f46c1044f70d6d0c2e68948073aa92001aefe7558ba15c99",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t04-r1-flat-original-n0.json": "49ee3df4a2220c82ed38e105c7a622f3b8036cb8ec11f6a169509a3f1114a3a6",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t05-r0-flat-original.json": "d89cf87e51f50948f787097c112d66d924bc8b54d335ffbb8f06bf5a876f8496",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t05-r0-flat-original-n0.json": "50bd648bd78ba39cfb858372d91aa3e5434ca5c81be5d863dcdcb59884e3dfe0",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t05-r1-flat-original.json": "44f9ef7a76859bd123dcea8d09b8d42edf284b5ce5f457495fa784302513e250",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t05-r1-flat-original-n0.json": "0886f3b5f58889db019d3014bc74aedaf3e879cd13bfb0bcd6be4a5e96302c8f",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t06-r0-flat-original.json": "e58c11819b19fbe1a3bd329f7bc66c2ee40bda1cbcdda92cc75e14dba71218ae",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t06-r0-flat-original-n0.json": "ba63ce5c924874d9d01ce4d9adeb7d37722cebc6f2bad8775dd79e9e632043cf",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t06-r1-flat-original.json": "c167da6d2ecaf96112f5188c757c40a9e7c1da4d838b2876d7566e347a919774",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t06-r1-flat-original-n0.json": "73aaa966c81e25d94bdf74911406f85a2ce688257207de0d0a186b920ea70001",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t07-r0-flat-original.json": "03b66c976c3aafeb3d8c39ecfca473f773ae449f8bc49d0ee6e52e1dabd80cea",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t07-r0-flat-original-n0.json": "c52d2fc36dcfaa00512fe543adb51df82b06659cdae1f6e9a9d04c0cdbdc7c92",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/episodes/t07-r1-flat-original.json": "609110d375ddbd3e513da840b589d2328e0d725204196169eefec8aac9617fdb",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known23/nodes/t07-r1-flat-original-n0.json": "3a890dfdfba5b76771125d4883bdedcc24c320d60026cd2eba67315e52a9fb18",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/NATIVE-AUDIT.json": "75aa776315566a2988a4135ea62f4c957ef5296f0baa7f2b4eeaf27b66feb153",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t00-r0-flat-original.json": "1235381984e89c1be22fdb4af62b56be0e3cbed93dff2711637b984ecba7a971",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t00-r0-flat-original-n0.json": "b3e332fe60aa4798a8d89781379047e7a48858daa61c1359a52662bca49c4971",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t00-r1-flat-original.json": "86baf042ec1f5c4b7e686e9e096de2dc450a7813371eba720d2e24ae6807bf65",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t00-r1-flat-original-n0.json": "44fda0f605534ffaa9f20d9a944573b555b0f5a3b2cda9708a27fbb17eaa232a",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t01-r0-flat-original.json": "252bb8abd19fca4f7a8c9a59a666976a67d7294544371d8bac365462eb4613e0",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t01-r0-flat-original-n0.json": "80b04ffe61f27113854dbcda2c7e7564f18f7b3c36062417c7d5a4545626e875",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t01-r1-flat-original.json": "02dd3437bbf5955e4957a08d10bbacd63f2b0d32e9df5a2cd227f5710613749c",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t01-r1-flat-original-n0.json": "cc06fdb401c699fc3b35d3bf78261b35de76628fb3e7c05012cf0b59d5c406cd",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t02-r0-flat-original.json": "1cedf70c00487b0eb60754e49893d0fc742ec309da2897a0817a09770063e0ac",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t02-r0-flat-original-n0.json": "8ce05205e3e8bcb3e953cea1c4953fe4a06309ea7ffd2120efc6cfbb445ec491",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t02-r1-flat-original.json": "0bfea39e59f1306101d265c66a4cde018432fef0bc6d7d701cee7a069a07749d",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t02-r1-flat-original-n0.json": "c8fc53528880b20c78a1b2d85f1038504821bdd7dc2e3c1a7012a789930c797d",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t03-r0-flat-original.json": "f147e4e74bc4ebf3c47c6aa07eb9a9693fd455d26e467983a263d6bd6080dd20",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t03-r0-flat-original-n0.json": "7c56ca4854869f6bb6d90fb37b446aad16789b43d95f31eb3fe09c3191df3cc8",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t03-r1-flat-original.json": "e264c0515bfa669da0857fe28b1a700703a8fb06d5c63d4647a69b2a284e28e2",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t03-r1-flat-original-n0.json": "b9e2412e9567fa6e4289cb9249d95ec00c9f8e1cc74c234d2f33f62f7919caaf",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t04-r0-flat-original.json": "f2b86cea8d0510380799c8dc800a320a2d88bdad0dc8b11cca92650f2738c550",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t04-r0-flat-original-n0.json": "bb31d2aa30903b6dd6334d0448f2f8d9722883a1001ae35f9c15dd808f7630aa",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t04-r1-flat-original.json": "5fe66a08b77fbb9929670c650d93a5610021c8b8757c5b03d8b5e2acdac656b2",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t04-r1-flat-original-n0.json": "35aeec11e68f5bb0bddf135d4b47718b59597d0f6a8e218b290d45736c886342",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t05-r0-flat-original.json": "ac7ffc367641a9d96a2b53c5a5788354fc6245b5e7d68b897dfd0cd1029ba623",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t05-r0-flat-original-n0.json": "887590ce9de014c6d06f61c8063e101a435269cf0b40c2354355cbf0794615ce",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t05-r1-flat-original.json": "35dd6ef3d288fdea290a01022f1413ef02a47cea2d872069a01cbc137827cf11",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t05-r1-flat-original-n0.json": "a842050a2855f34ff5e27d36c69f8558bb35a44a1da3fb59cdd293de643fa37c",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t06-r0-flat-original.json": "d1fff72d61bd3aef287bcf5e920b7d13c7d33fce99eab2bc6a11a43115bdadac",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t06-r0-flat-original-n0.json": "6cf73868f750936473db7eac6c313b6a9de7c0f7ca74066d287e50b925ccc74d",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t06-r1-flat-original.json": "100fe84c158cfaeef025802559937924ac369b8f57cd4bfed1a1dcd1aaff7518",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t06-r1-flat-original-n0.json": "2724819283f2cfe26ec3f08a748279fa4b7c9f2cea99b620ede6540d87b9ab9c",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t07-r0-flat-original.json": "54f7a7c2af50b30f8bfaf27d4d0c45c80766802ef0b787bb00b671b5541799fe",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t07-r0-flat-original-n0.json": "b0206c4f9ed56ff7072d2a7afc4760fbd356fc70fd2e93105f3557523a76b257",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/episodes/t07-r1-flat-original.json": "9f56ec58f609b62cea786d1e193b3910c6efb4a81597dcd6fc7a30781736b68e",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-repair23/nodes/t07-r1-flat-original-n0.json": "6e351467cb96c4e97ba8c7d92f5ee852ca8ac2929efffc3b803559d4f64d0f84",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/NATIVE-AUDIT.json": "667305e3b201bb5b1ea86cb8a782085d1d8f3dbef421d0607326381adae552d7",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t00-r0-flat-original.json": "79341f5cb74f388bf1b5d6a088d2bb9d9c6c15bc71f33560ef19b28ead06c021",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t00-r0-flat-original-n0.json": "d4105287a97053873399e9cf1fa270651ed4e8621ab830eaa9c30d296ce6dc3b",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t00-r1-flat-original.json": "97f8e54699851aa3fa002e35822a20b1eef21707baab7fceef5e4fbc6881589f",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t00-r1-flat-original-n0.json": "8502be9caa88ae9e48a14df1104edea0ff449c63a28cf465223885b2e7be2fe1",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t01-r0-flat-original.json": "6da90d519588ce3b1d7b0583dee195bf58f2ff76725a6ec440105473e0535fc1",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t01-r0-flat-original-n0.json": "639e22dd58b6d2909d968f02ed498a0d24afb695147d001fd1757025fc4176b7",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t01-r1-flat-original.json": "e224167f1d9f051483d1d092443f1a9166ada44d8aa74570bec35c40fb0302a4",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t01-r1-flat-original-n0.json": "2adbc151a5a05c6d4e0ef3e347dcfaea749b79d82f874b92eb9a149d587a3655",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t02-r0-flat-original.json": "0f72b2faaf8563bfcc51db9a258c731c0924172dfdbf2eb7caad86c925b1ace2",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t02-r0-flat-original-n0.json": "b4849bf2f00e37714cf347d016ae59a1562cd6a8226e28d31ac1bbf9ee5afcf0",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t02-r1-flat-original.json": "cef935126ce5b969cc21f9d11db5de7184e065b88bf7bf3fc867921164e593ac",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t02-r1-flat-original-n0.json": "005cc1617514e885ff5f2b5230f4d7d3e621315f36a5531d9b9858f8fac5c0b2",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t03-r0-flat-original.json": "0a665ff6151293d2238e3c06930a99f539523a31b8ee387ceb8f35cba3a30858",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t03-r0-flat-original-n0.json": "bdc66b7318744ebcb3dd6908c175998542f5c9436b54a24c7a42cced9e73b237",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t03-r1-flat-original.json": "74f7a005587cf1f48b90da247da3652da214665c9499db2b279eb49cd480de41",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t03-r1-flat-original-n0.json": "b530c4e9633f528acf2471588dcbffeaa23733162c7b672251112dfd701c032b",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t04-r0-flat-original.json": "ca70f7a0b132c9be53b4fb42dcb516d49c5af5f8bd313e9c885f5b77a2fffa44",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t04-r0-flat-original-n0.json": "34725da2b701f5d5b2719831affb7c7f83385eca171bba082e73586e44ad5e73",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t04-r1-flat-original.json": "02b9abc872b690dcdce2ef8d5abe7e152f80a831490bab78379220399bfe3a91",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t04-r1-flat-original-n0.json": "ea2cbe6ebeb5c0cf1fc1f5009c273e4d295965c67f1ac43e9254f57580b3b72a",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t05-r0-flat-original.json": "83c07ddab02a6f478a045313febf304d549e60444fc0298658506f6cbe5117de",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t05-r0-flat-original-n0.json": "821a04b976b50d41735e7af96d48058463e16931a13340e0d86e19eaa86b60c3",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t05-r1-flat-original.json": "6f661e721f4e1f5fc43fc946e6db7eced9f894ebab94a3ed47036edc5c288463",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t05-r1-flat-original-n0.json": "4f624d3354750d5accf5af660409fa38eb9b264b2bba6c49e19de43a5ad73cf3",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t06-r0-flat-original.json": "ea76efa8f61b9d19cd71bfc43a9db3dd0ccb5aee8c6dcc63d8f7a870eb396da4",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t06-r0-flat-original-n0.json": "aa15eff1c6d087a278373d4b27a3314bac610ed0d1ee2e090fc57dca97a4e8ec",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t06-r1-flat-original.json": "7753c5ef10e4f901fcb5ef14c44632f2c64fa9d2842caa657f9d6aa3611c23e8",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t06-r1-flat-original-n0.json": "bf8862f215c21d20bf50da57fe255d85aa85fd0f3f479942bdd03c1b91dbab1d",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t07-r0-flat-original.json": "0c4e11089a6f410b89ec0a3039feec504c63833cb2289bc1fb8da1011c5fe426",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t07-r0-flat-original-n0.json": "db75f56978905088c2776ee5ecd8ced77c85caa70f5917589dced9305aec7b73",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/episodes/t07-r1-flat-original.json": "865b46848a040df2e44616d04a38395dd1bc018ab29210afb5610c38195e5048",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-discovery23/nodes/t07-r1-flat-original-n0.json": "efdbd6258b92607fba3c7dfbabd415d4e93b7d022e32d7ec2fa237fa208563a2",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/NATIVE-AUDIT.json": "93975d9e26b4330e5197547181cdb285aed82e20dfb8d87afed204a1f241e6d9",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t00-r0-flat-original.json": "3fd5a97e5c9f21e1782d41fdf6c270419f416f4eb17cd0a2847ae1c73009db5e",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t00-r0-flat-original-n0.json": "dada439207b723e6302b27989a36794023a6f4740e956cff711b62e6f925a2ac",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t00-r1-flat-original.json": "1b71fe72ee41eae8c4395e42aeb568f6a4f5e035dfbbc2b01b73b59826f38001",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t00-r1-flat-original-n0.json": "1c99258c1061235568e066a22f5ed6b289108d8ff210f1830df3c3ff258e611a",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t01-r0-flat-original.json": "f1eca3122b24584a098d6a3d9b72328b01bf59d8eed368422fb83bfcf7bff8a3",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t01-r0-flat-original-n0.json": "b18bb057cf9458b7e815e1315494d97e8b0d85b052a437b2006b75229fe48c31",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t01-r1-flat-original.json": "f85aa239534c0b172ccfb3675866dabc7cd5cf9ef90196b4ba9d6580516eb6e0",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t01-r1-flat-original-n0.json": "6002dd98b2df4c13b09dd32c98049e200fde10f14378cc80d9c2ae9e7d72589c",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t02-r0-flat-original.json": "d1a3b4bc69c7ab8a745940ae284c9e7247678dce7911ffd4d468adb65eb289ce",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t02-r0-flat-original-n0.json": "d80b596ed79ad83843b52b9c936aebac0240d7575d50dbbd0168a5e90fa5c513",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t02-r1-flat-original.json": "86e324c56012b132b4aa47be89556b1a0078758cac26756bc18a0a44ff428965",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t02-r1-flat-original-n0.json": "4b3c329627788d444dbc429d87d815b461b57d024e2786379b6fc833c1e0865d",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t03-r0-flat-original.json": "5cc66f765654de5f888692843a313f4ad0af7654d0e9ed53873e30544c3ffe9e",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t03-r0-flat-original-n0.json": "89d7f85dcb130a9d0a82f9e0f6e736dd1be0f0cecef8121d80e948e1682f55b3",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t03-r1-flat-original.json": "528bbd1ce64d759351fdb06eb851868c9673172febd3a5c002976cbceaaed995",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t03-r1-flat-original-n0.json": "c5c64bfaba727d4e6cc04610a6ae0d1746a4699951ec76f4d7d52c6dfde6c36b",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t04-r0-flat-original.json": "b84110e0f13fff4b238229a1af491dbe1983b3a1242ba1cddded9a9fc53286bd",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t04-r0-flat-original-n0.json": "f4bd73cbed84f872d4d2b13050d0a9f492125b12aa2cc0cc94f2c0f26930d2a9",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t04-r1-flat-original.json": "c3ce017223dc563f6032c6bdd0aac6a284c66f4ed9a053ced3ddcb43209614aa",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t04-r1-flat-original-n0.json": "df2e7ceb0fc68de3bb0175f364f4e9fdc42f4c59e688357f71d62ce0352a8c65",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t05-r0-flat-original.json": "855ca215368c18a02c3bf659e964476c07121c6b34c13c8ee729b22a046a902a",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t05-r0-flat-original-n0.json": "0d3ee75641b28eff114c76a7b500becf762ed19d016cdcdc00125b5f798f2a1b",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t05-r1-flat-original.json": "7173520ef53ba9798abe9264764a1b54bf84a57fa3376b80d28a58abde0a0eea",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t05-r1-flat-original-n0.json": "af27dc89a24f7fba9ecb8a3404839258940ab83cd9eecaaa84685d841e285e6d",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t06-r0-flat-original.json": "7b950523452dadb7a4fa369d6ba6ae8e9199ffd641e4090a9746efd13a7c749a",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t06-r0-flat-original-n0.json": "43af6f03ce268c9c4b5272f8c1fa9f3dadf1099e1a7804bd64bec81c1dc0a3bb",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t06-r1-flat-original.json": "061c18b46fa4f9c3ecd0f66462107db07951eb07c3439399ccbe979253bb18b7",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t06-r1-flat-original-n0.json": "04905703b36444820920e76be79064f5e734ea463844aa1d08212c327397ae6f",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t07-r0-flat-original.json": "54212ba0abc7938fb86cac74aac4c04a1674ed4bb6b4b4dd264299abb464c7ee",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t07-r0-flat-original-n0.json": "6a2285acaa5af06eddb97649b8efff47e7f0b3e3eb12b941ece89edf981127c0",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/episodes/t07-r1-flat-original.json": "c19892c9d30e5ee84ecf84cba928d64a60b18bebbcadb2d794aef8644b091b04",
+    "/project/alex_phd/runs/rlm-teaching-goal-20261014/fresh-structure-pilot-001/eval-known69/nodes/t07-r1-flat-original-n0.json": "2190f543902cfca37b6c9befa1329090927ed2de69d911f53fcb48c9692705a5"
+  },
+  "episode_and_node_hashes_checked": 128,
+  "totals": {
+    "observed": 64,
+    "successes": 12,
+    "failures": 52,
+    "failed_with_target_ingredients_ready": 2,
+    "failed_with_target_prerequisite_shortfall": 50,
+    "explicit_finish_failures": 44,
+    "explicit_finish_with_target_ingredients_ready": 2,
+    "explicit_finish_immediately_after_native_error": 15,
+    "budget_failures": 8
+  },
+  "method": "Read-only retrospective final-state diagnostic. Rehash all64 episode and64 root-node files against completed native audits and recompute all64 scores. For each failure, use the single native target recipe scaled to the missing quantity, apply one exact target craft and finish to an isolated copy of final inventory, and compare native scoring with direct ingredient availability. No new model calls or changes to observed scores, policy, budget, source, checkpoint, or live queue.",
+  "limitations": [
+    "This is an oracle inventory diagnostic, not a learned recovery or measured harness improvement. It ignores remaining context/call/token limits and supplies the correct recipe and batch quantity.",
+    "Immediate target-craft infeasibility does not imply the final inventory is globally unsolvable; prerequisite crafting may still work.",
+    "Outcome-conditioned retrospective counts cannot identify a causal mechanism or justify fresh-diagnostic checkpoint selection.",
+    "Single fitted seed; eight correlated roots and two draws per actor, not64 independent problems."
+  ],
+  "interpretation": "Most failures were not simply one omitted final craft: only2/52 failed endpoints already held sufficient immediate ingredients for a correct target craft;50 still lacked immediate prerequisites. Among44 explicit failed finishes,15 immediately followed a native action error. This localizes a planning/quantity-tracking and feedback-use question without proving a causal mechanism. Continue the frozen A-only recovery-versus-ordinary experiment; do not alter labels/checkpoints using these diagnostic outcomes."
+}
