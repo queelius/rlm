@@ -1,0 +1,65 @@
+{
+  "checked_epoch": 1792053943.2387724,
+  "fit_seed": 2026092291,
+  "checkpoint": "/project/alex_phd/runs/rlm-research-r4/sidecars/selective-delegation-20260921/textcraft-second-fit-dose-20261015-001/train-known_recipe/checkpoint-0069",
+  "state": {
+    "step": 69,
+    "epoch": 3,
+    "cursor": 0,
+    "training_seconds": 547.6381433401257,
+    "cumulative_microbatches": 1098,
+    "cumulative_target_tokens": 26460,
+    "continuation_plan_sha256": "f49f8ce6099f16dc4dd38938c166336859985275c8cbb7ba1ae0b476b17204a7"
+  },
+  "checkpoint_hashes": {
+    "README.md": "1db9af3ef95b236c9262ff1c05f262571affb872f64892e67183417b90e43524",
+    "optimizer.pt": "294480e0593166bb96e11cb2b3b5fb750db2cd7f67496b81f4482103597cdf2c",
+    "STATE.json": "2492c380e9c8bd4b9e22c8233c07d4745f88edd00200a0ac352e1b1d0e4ccbf8",
+    "rng.pt": "16886d959e7911824e955d7234991c017cf0b387d7858c0f5df42c501b2ad742",
+    "adapter_config.json": "922e73be8bd148753f193218737caa54be0b419497c15d1816d204dbe38548c4",
+    "adapter_model.safetensors": "e5af1b7ef90215b825a9d552282e51a3b792d8bc91b14023ac0838dc5a008a84"
+  },
+  "all46_receipts_contiguous_and_epoch_orders_match": true,
+  "additional_microbatches": 732,
+  "additional_target_tokens": 17640,
+  "optimizer_steps": [
+    69
+  ],
+  "optimizer_parameter_states": 504,
+  "all_saved_adapter_optimizer_tensors_finite": true,
+  "changed_adapter_parameters_vs23": 16515069,
+  "parameter_l2_delta_vs23": 2.4877177864483597,
+  "owner": {
+    "complete": true,
+    "continuation_plan_sha256": "f49f8ce6099f16dc4dd38938c166336859985275c8cbb7ba1ae0b476b17204a7",
+    "cumulative_microbatches": 1098,
+    "cumulative_target_tokens": 26460,
+    "cursor": 0,
+    "deadline": 1792055257.3869603,
+    "elapsed_seconds": 398.0639650821686,
+    "ended": 1792053855.4509265,
+    "epoch": 3,
+    "failure": null,
+    "step": 69,
+    "stopped": false,
+    "training_seconds": 547.6381433401257
+  },
+  "job": {
+    "name": "train-known69",
+    "started": 1792053450.9691923,
+    "argv": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60s",
+      "840s",
+      "/project/alex_phd/repos/rlm-bootstrap/.worktrees/a100-lora-roundtrip/gpu/training/.venv/bin/python",
+      "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/teaching_second_fit_20261015/train.py",
+      "--teacher",
+      "known_recipe",
+      "--resume"
+    ],
+    "returncode": 0,
+    "ended": 1792053856.5228162
+  },
+  "interpretation": "Verified completed fixed training-dose control; no task-learning claim until paired evaluation."
+}

@@ -1,6 +1,43 @@
 # Resuming research on teaching RLM competencies
 
-## Latest: October 15, 01:56 UTC — recovery examples do not clear the next gate
+## Latest: October 15, 08:50 UTC — independent-fit comparison is running
+
+**The approved second-seed comparison is underway; it does not yet have a
+completed task result.** It asks whether our first four-model comparison was
+sensitive to the randomness of training. We reuse the independently trained
+original, repaired and discovery models at 23 updates, and have now completed
+the original model's prescribed extension to 69 updates. The training seed is
+2026092291, versus 2026092208 for the first comparison.
+
+The longer-trained model resumed its saved optimizer and random-number state.
+All 46 additional updates, the two shuffled epoch orders, finite saved weights
+and optimizer state, and the fixed endpoint were independently checked. Its
+total supervised dose is 26,460 target tokens. These checks establish that
+training really happened, **not that the model learned to finish more tasks**.
+The [training evidence receipt](2026-10-15-teaching-second-fit-training.json)
+records the endpoint and immutable checkpoint hashes. The
+[frozen experiment code](../../experiments/teaching_second_fit_20261015/) is
+published without changing the live owner's sources.
+
+All four models face the same eight frozen task roots, two rollout seeds and
+inference limits as the first comparison: 64 planned attempts, followed by
+native replay checks. The first evaluator returned a genuine model action
+within 2.1 seconds and had returned 217 responses with zero transport failures
+at this cutoff. No partial success count is promoted here. The next result
+will report all four arms, paired changes and costs, including failures.
+
+This repeats the comparison with a different training seed on **the same task
+world**; it is not broader structural coverage or learned recursion. A proposal for two new
+worlds remains pending, subject to approval and remaining allocation time.
+The recovery result and decision not to repeat unchanged sparse-reward RL
+below remain intact. The advisor story is unchanged until task outcomes are
+complete. Native run pointers are under
+`/project/alex_phd/runs/rlm-teaching-goal-20261014/SECOND-FIT-QUEUE.json` and
+`second-fit-fresh-001/`; publishing source and receipts does not back up model
+checkpoints. Earlier approval-pending statements below describe their dated
+cutoffs, not the current state.
+
+## October 15, 01:56 UTC — recovery examples do not clear the next gate
 
 **A small update on recovery examples did not outperform ordinary examples,
 and neither intervention unlocked the tasks that had always failed.** This
