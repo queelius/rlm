@@ -84,6 +84,7 @@ def main():
     p.add_argument("--public-model", default="qwen3-4b")
     p.add_argument("--harness", default="default", choices=("default", "hinted"))
     p.add_argument("--diversify", action="store_true", help="sample chunk size, prompt phrasing and filter per task")
+    p.add_argument("--unified", action="store_true", help="family-agnostic peek first (expert.UnifiedExpert)")
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     lo, hi = args.seeds.split("-")
@@ -101,7 +102,7 @@ def main():
         row = dict(task_id=task.task_id, n=task.n_records, question_type=task.question_type, seed=task.seed,
                    answer=task.answer, policy="expert", variant=variant)
         rlm = run_sweep.make_rlm(ra, trace_dir, "expert-controller")
-        rlm = RLM(rlm.backend, config=rlm.config, controller_backend=ExpertController(variant))
+        rlm = RLM(rlm.backend, config=rlm.config, controller_backend=(__import__("expert").UnifiedExpert(variant) if args.unified else ExpertController(variant)))
         try:
             result = rlm.run(run_sweep.public_request(task, args.public_model, 0.0, 4096))
             row.update(output_text=response_output_text(result.response), total_tokens=result.usage.total_tokens,
