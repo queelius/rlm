@@ -204,6 +204,24 @@ stronger cost term (`rl-mixed-lam03-001`), each followed by the same held-out ev
 rows per OOLONG length is a small sample; the 32k difference (2 versus 5 to 6 of 12) is the only
 per-length change outside ordinary variation.
 
+## Full-sample OOLONG comparison (12:10 UTC)
+
+All 293 held-out OOLONG rows (43 to 50 per length), Wilson 95% intervals, mean total tokens:
+
+| Controller | 1k | 2k | 4k | 8k | 16k | 32k | All | Errors |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: |
+| Scripted expert in harness | 26/43 | 34/50 | 37/50 | 37/50 | 34/50 | 29/50 | 0.672 [0.62, 0.72] (14k) | 0 |
+| SFT-005 warm start | 21/43 | 25/50 | 35/50 | 35/50 | 38/50 | 12/50 | 0.567 [0.51, 0.62] (10k) | 31 |
+| SFT-005 + RL, 30 updates | 26/43 | 33/50 | 36/50 | 36/50 | 33/50 | 27/50 | 0.652 [0.60, 0.70] (14k) | 5 |
+
+Paired over the same rows, RL gains 39 and loses 14 against the warm start (152 both right, 88
+both wrong). RL training saw OOLONG contexts of at most 8k tokens; the largest gain is at 32k,
+where the warm start's helper-call budget failures (31 errors overall, nearly all at 32k) are gone.
+By task group RL improves counting (65 to 84 of 156) and user questions (50 to 62 of 75) and loses
+some timeline questions (51 to 45 of 62). The RL controller is within the expert's interval at the
+expert's cost. Direct answering on the same 293 rows and the no-cost, second-seed and stronger-cost
+RL runs are in progress.
+
 ## Operations notes (continued)
 
 - The project volume reached its 1.1 TB quota at 06:46 UTC and an adapter save failed. The study's
