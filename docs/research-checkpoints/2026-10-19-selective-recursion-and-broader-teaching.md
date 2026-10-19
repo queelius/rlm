@@ -262,6 +262,17 @@ two families: toward larger chunks on OOLONG (where that fixed budget failures) 
 chunks on event-log (where it had no in-range benefit and an out-of-range cost). Whether this is
 seed noise or a systematic effect is what the second seed and the 0.3 cost run will show.
 
+## Second seed (15:55 UTC)
+
+`rl-mixed-002` (same recipe, seed 1): OOLONG 72-row sample 42/72 (seed 1: 41, no-cost: 40, warm
+start: 36), zero budget errors at 32k; event-log dev aggregation 87/96 (seed 1: 88, no-cost: 85,
+warm start: 86), lookups 24/24. Both cost-aware seeds moved event-log chunking from 24 to 12 lines
+(7/10/17/30/57 helper calls at 32 to 512 records versus 5/7/10/17/32 for the warm start), while
+the no-cost run kept the warm start's chunking. So that drift is systematic for the 0.1 cost term,
+not seed noise, although its mechanism is unclear: the 12-line variant costs about 10 percent more
+tokens, so the cost term alone should push the other way. The full 293-row evaluation of seed 2
+and the 0.3-cost run are in progress.
+
 ## What this supports, and what it does not (draft at 15:00 UTC; seed 2 and 0.3-cost pending)
 
 Supported by the evidence above:
