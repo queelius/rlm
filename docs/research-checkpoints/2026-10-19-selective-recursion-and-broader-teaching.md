@@ -273,6 +273,26 @@ not seed noise, although its mechanism is unclear: the 12-line variant costs abo
 tokens, so the cost term alone should push the other way. The full 293-row evaluation of seed 2
 and the 0.3-cost run are in progress.
 
+## Routing experiment, teaching stage (16:30 UTC)
+
+To make "do not decompose" a taught and rewarded option, a direct route (peek, then one
+delegated model call) was added to the expert and taught on half of the short inputs
+(`teach-004`: event-log seeds 24-31; `teach-oolong-005`: OOLONG train windows). The teaching
+data itself shows where each route pays (helper tokens, excluding controller overhead):
+
+| Family, length | Direct route | Decomposition |
+| --- | ---: | ---: |
+| Event-log, 8 records | 22/23 (0.8k) | 17/17 (0.8k, plus one extra controller turn) |
+| Event-log, 32 records | 6/14 (1.8k) | 26/26 (2.6k) |
+| OOLONG, 1k tokens | 16/32 (3.2k) | 18/23 (0.6k) |
+| OOLONG, 2k tokens | 16/24 (4.1k) | 23/26 (1.5k) |
+
+So the correct policy is family- and length-dependent: direct only for the shortest event-log
+inputs; decomposition everywhere on OOLONG, where the direct model reasons at length and is both
+worse and costlier. SFT-006 trains on all unified teaching including these routes (only correct
+trajectories, so the direct route survives mainly at 8 records), and RL runs with cost 0.1 and 0.3
+then test whether the controller learns this routing (`pipeline10_gpu0.log`).
+
 ## What this supports, and what it does not (draft at 15:00 UTC; seed 2 and 0.3-cost pending)
 
 Supported by the evidence above:
