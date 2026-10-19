@@ -288,8 +288,30 @@ as did the no-cost run, whereas both 0.1 seeds moved to 12-line chunks. So the c
 about 7 percent fewer tokens for about 1 to 3 points on the small event-log split and nothing on
 OOLONG; the chunk-size drift is not monotone in lambda (present in two 0.1 runs, absent in one run
 each at 0 and 0.3), and its mechanism remains unresolved. The RL accuracy gain over the warm start
-is therefore the correctness signal's doing at every cost strength tried (0, 0.1, 0.3); the 293-row
-evaluation of this run is in progress.
+is therefore the correctness signal's doing at every cost strength tried (0, 0.1, 0.3). On all 293
+held-out rows the 0.3-cost run scores 185/293 = 0.631 [0.57, 0.68] at 13k tokens (38 paired gains,
+19 losses against the warm start; 29/50 at 32k; 8 budget errors against 2 to 5 for the other RL
+runs), so the four RL runs span 0.631 to 0.652 against the warm start's 0.567.
+
+## Out-of-range length, all RL adapters (18:50 UTC)
+
+The 1024-record check was repeated for the other RL adapters (same 16 aggregation and 4 lookup
+tasks, helper-call limit 160):
+
+| Controller | Aggregation | Helper calls | Tokens | Lookups |
+| --- | ---: | ---: | ---: | ---: |
+| Scripted expert (12-line chunks) | 13/16 | 111 | 99k | 4/4 |
+| SFT-005 warm start (24-line chunks) | 14/16 | 60 | 94k | 4/4 |
+| RL 0.1 cost, seed 0 (12-line) | 9/16 | 111 | 102k | 4/4 |
+| RL 0.1 cost, seed 1 (12-line) | 12/16 | 111 | 104k | 4/4 |
+| RL no cost (24-line) | 11/16 | 57 | 91k | 4/4 |
+| RL 0.3 cost (24-line) | pending | | | |
+
+This retracts the earlier reading that the chunk drift caused the out-of-range loss: the no-cost
+adapter kept the warm start's chunking and still lost three tasks, and the second 0.1 seed with
+12-line chunks lost only two. Every RL adapter is 2 to 5 tasks below the warm start at twice the
+training length, on 16 tasks, which is consistent with a small loss of out-of-range robustness
+from RL or with noise; it is not a chunk-size effect.
 
 ## Routing experiment, teaching stage (16:30 UTC)
 
@@ -334,8 +356,9 @@ Not supported, or open:
   decomposition is always right for aggregation and the lookup path is already in the teaching.
   The routing shown is between taught programs, not between recursion and direct answering.
 - RL moved chunk size in opposite directions on the two families under the 0.1 cost term (both
-  seeds), and the event-log drift hurts at 1024 records; the no-cost and 0.3-cost runs did not
-  drift. The mechanism is unresolved, and the 1024-record check exists for one adapter only.
+  seeds) but not at 0 or 0.3; the mechanism is unresolved. At 1024 records every RL adapter is
+  2 to 5 of 16 tasks below the warm start regardless of chunking, so RL may cost some
+  out-of-range robustness; 16 tasks cannot separate that from noise.
 - One model family and size, one benchmark, synthetic event logs; the OOLONG verifier is a
   format-tolerant exact match, not the official scorer; costs are endpoint-reported tokens with
   the harness prompt repeated every turn.
