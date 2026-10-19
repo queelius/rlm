@@ -119,6 +119,44 @@ ceiling of roughly two thirds on this benchmark with this helper.
 
 Run store: `/project/alex_phd/runs/selective-recursion-20261019/`.
 
+## Teaching results so far (07:10 UTC)
+
+| Warm start | Teaching data | Event-log dev (aggregation, N=8..512) | Event-log dev (lookup) | OOLONG held-out |
+| --- | --- | --- | --- | --- |
+| SFT-001 | event-log expert only (533 pairs) | 1.00 / 0.94 / 0.81 / 1.00 / 0.75 / 0.81 (same cost as expert) | 1.00 at every N, 2.6k tokens | 0/72; 45 runs never submit |
+| SFT-002 | event-log + OOLONG expert (995 pairs) | 1.00 / 1.00 / 0.81 / 1.00 / 0.81 / 0.81 | 1.00 | 0/72 (72 traced: always the event-log inspect cell first) |
+
+Two findings. First, a 4B controller fine-tuned on about 500 native-replay trajectories executes
+the taught decomposition exactly as well as the scripted expert in distribution, including the
+routing between a cheap filtered lookup and chunked extraction, where the untrained controller and
+direct answering score 0 at 256 and 512 records. Second, narrow imitation does not transfer across
+input formats: the event-log-only controller scores 0 on OOLONG, below the untrained controller.
+The mixed warm start (SFT-002) also failed on OOLONG, and the traces show why: the controller's
+first turn sees only bootstrap metadata, so an expert whose first cell depends on the task family
+teaches a blind guess, and the majority template wins at temperature 0. This is a teaching-design
+flaw of mine, not a model limitation. The corrected "unified" expert (`expert.py`) prints the
+input's head and tail first and chooses the family-specific program from that observation; both
+families were re-taught with it and with diversified program variants (chunk size 6/12/24, two
+prompt phrasings, two lookup filters). SFT-004 trains on that data (580 + 456 pairs from correct
+runs) and RL starts from it. Diversified variants have real cost/accuracy differences for RL to
+exploit: on event-log tasks the 24-line chunk with the second prompt reaches 0.97 at the lowest
+cost, while 6-line chunks are less accurate and exceed the helper-call budget at 512 records.
+
+## Operations notes (continued)
+
+- The project volume reached its 1.1 TB quota at 06:46 UTC and an adapter save failed. The study's
+  heavy outputs (adapters, RL runs, new evaluations) now live under
+  `/home/atowell/research-runs/selective-recursion-20261019/` with symlinks at the original paths;
+  the re-downloadable OOLONG parquet cache was removed (the exported JSONL and provenance remain).
+  Nothing belonging to earlier sessions was deleted. The largest consumers are earlier replication
+  artifacts: `runs/rlm-research-r4` (324 GB), `~/research-runs/rl-paper-reproduction-20261012`
+  (291 GB), `~/research-runs/r1-zero-replication-20261007` (185 GB),
+  `~/research-runs/spo-reproduction-20261008` (171 GB), the CURL replication runs (about 230 GB
+  across eight directories) and the Hugging Face model cache (100 GB). Clearing any of these is the
+  user's decision.
+- SFT-003 (diversified but family-specific first cell) was stopped to give GPU 0 to SFT-004; it is a
+  low-value ablation given the SFT-002 diagnosis and can be rerun later if wanted.
+
 ## Limits to keep in view
 
 Synthetic templates and vocabulary; one model family and size; one training seed per stage
