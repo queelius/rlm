@@ -148,6 +148,14 @@ def collect_rollouts(args, step: int, controller_model: str, out: Path) -> list[
     for r in rows:
         by_task.setdefault(r["task_id"], []).append(r)
     for group in by_task.values():
+        if args.cost_mode == "relative":
+            # Scale-free cost: tokens relative to the group's mean, so the penalty difference between
+            # two routes on the same task does not shrink with the task's absolute cost.
+            charged = [min(float(r.get("total_tokens") or args.token_cap), args.token_cap) for r in group]
+            mean_tokens = max(sum(charged) / len(charged), 1.0)
+            for r, c in zip(group, charged):
+                r["reward_absolute"] = r["reward"]
+                r["reward"] = (1.0 if r.get("correct") else 0.0) - args.lam * c / mean_tokens
         rs = [r["reward"] for r in group]
         for r in group:
             others = [x for x in rs if x is not r["reward"]] if len(rs) > 1 else []
@@ -332,6 +340,8 @@ def main():
     p.add_argument("--oolong-max-len", type=int, default=8192)
     p.add_argument("--oolong-dev-per-len", type=int, default=6)
     p.add_argument("--lam", type=float, default=0.1, help="reward penalty per 10k total tokens")
+    p.add_argument("--cost-mode", default="absolute", choices=("absolute", "relative"),
+                   help="relative: penalty lam * tokens / group-mean tokens (scale-free across lengths)")
     p.add_argument("--token-cap", type=float, default=50_000, help="tokens charged to failed runs; also caps the penalty")
     p.add_argument("--temperature", type=float, default=1.0)
     p.add_argument("--harness", default="default", choices=("default", "hinted"))
