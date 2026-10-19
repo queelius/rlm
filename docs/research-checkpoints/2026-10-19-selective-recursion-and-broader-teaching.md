@@ -305,11 +305,11 @@ tasks, helper-call limit 160):
 | RL 0.1 cost, seed 0 (12-line) | 9/16 | 111 | 102k | 4/4 |
 | RL 0.1 cost, seed 1 (12-line) | 12/16 | 111 | 104k | 4/4 |
 | RL no cost (24-line) | 11/16 | 57 | 91k | 4/4 |
-| RL 0.3 cost (24-line) | pending | | | |
+| RL 0.3 cost (24-line) | 11/16 | 57 | 91k | 4/4 |
 
 This retracts the earlier reading that the chunk drift caused the out-of-range loss: the no-cost
-adapter kept the warm start's chunking and still lost three tasks, and the second 0.1 seed with
-12-line chunks lost only two. Every RL adapter is 2 to 5 tasks below the warm start at twice the
+and 0.3-cost adapters kept the warm start's chunking and still lost three tasks each, and the
+second 0.1 seed with 12-line chunks lost only two. Every RL adapter is 2 to 5 tasks below the warm start at twice the
 training length, on 16 tasks, which is consistent with a small loss of out-of-range robustness
 from RL or with noise; it is not a chunk-size effect.
 
