@@ -1,5 +1,5 @@
 person, item = re.search(r"did (\w+) buy an? (\w+)\?", question).groups()
-hits = [l for l in lines if person in l and item in l]
+hits = [l for l in lines if {{FILTER}}]
 reply = ask(
     "Lines:\n" + "\n".join(hits) + f"\n\nOn which day did {person} buy a {item}? Count only a "
     "completed purchase (bought, purchased, paid for, picked up per a receipt, a logged sale, or an "

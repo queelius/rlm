@@ -1,0 +1,1 @@
+"Classify every numbered line below. Think about what each line is before choosing; then output ONLY a JSON array with one object per line in order, {\"line\": <number>, \"label\": <label>}, where <label> must be exactly one of: " + ", ".join(repr(l) for l in labels) + ". Every line must appear exactly once."

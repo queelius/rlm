@@ -1,8 +1,6 @@
-SYSTEM = ("You label short texts. For EVERY numbered input line output exactly one JSON object, in the same "
-          "order, inside one JSON array: {\"line\": <line number>, \"label\": <one of the allowed labels>}. "
-          "Allowed labels: " + ", ".join(repr(l) for l in labels) + ". Output only the JSON array.")
+SYSTEM = ({{SYSTEM_EXPR}})
 numbered = [f"{i + 1}. {r['text']}" for i, r in enumerate(rows)]
-chunks = ["\n".join(numbered[i:i + 12]) for i in range(0, len(numbered), 12)]
+chunks = ["\n".join(numbered[i:i + {{CHUNK}}]) for i in range(0, len(numbered), {{CHUNK}})]
 batch = ask_batch(["Lines:\n" + c + "\n\nJSON array:" for c in chunks], system=SYSTEM,
                   options={"temperature": 0, "max_output_tokens": 1024})
 for r in rows:

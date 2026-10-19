@@ -28,32 +28,34 @@ from teach import response_object  # noqa: E402
 
 from rlm import RLM, response_output_text  # noqa: E402
 
+import variants  # noqa: E402
+
 CELLS = HERE / "oolong_cells"
-INSPECT = (CELLS / "inspect.py").read_text().rstrip()
-CLASSIFY = (CELLS / "classify.py").read_text().rstrip()
-AGGREGATE = (CELLS / "aggregate.py").read_text().rstrip()
-COUNT = (CELLS / "count.py").read_text().rstrip()
 NEEDS_LABELS = re.compile(r"label|classified", re.I)
 
 
 class OolongExpert:
+    def __init__(self, variant: dict | None = None):
+        self.variant = variant or variants.pick("", False)
+        self.cells = {n: variants.render(CELLS, n, self.variant) for n in ("inspect", "classify", "aggregate", "count")}
+
     def complete(self, request, *, timeout, context):
         items = [it for it in request["input"] if it.get("role") == "user"]
         if len(items) == 1:
-            return response_object(f"```python\n{INSPECT}\n```")
+            return response_object(f"```python\n{self.cells['inspect']}\n```")
         last = json.loads(items[-1]["content"])
         execution = last.get("execution") or {}
         if execution.get("exception") or last.get("submission", {}).get("status") == "rejected":
             raise RuntimeError("expert cell failed: " + json.dumps(execution)[:500])
         namespace = execution.get("namespace") or {}
         if "batch" in namespace:
-            return response_object(f"```python\n{AGGREGATE}\n```")
+            return response_object(f"```python\n{self.cells['aggregate']}\n```")
         if "question" in namespace:
             stdout = execution.get("stdout", "")
             question = stdout.split("\n", 1)[1].strip() if "\n" in stdout else ""
             if NEEDS_LABELS.search(question):
-                return response_object(f"```python\n{CLASSIFY}\n```")
-            return response_object(f"```python\n{COUNT}\n```")
+                return response_object(f"```python\n{self.cells['classify']}\n```")
+            return response_object(f"```python\n{self.cells['count']}\n```")
         raise RuntimeError("expert cannot determine its stage: " + json.dumps(namespace)[:300])
 
 
@@ -82,6 +84,7 @@ def main():
     p.add_argument("--api-key", default="local")
     p.add_argument("--public-model", default="qwen3-4b")
     p.add_argument("--harness", default="default", choices=("default", "hinted"))
+    p.add_argument("--diversify", action="store_true")
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     rows = load_rows(args.split, args.max_len)
@@ -100,10 +103,12 @@ def main():
 
     def one(r):
         task = as_task(r)
+        variant = variants.pick(task.task_id, args.diversify)
         row = dict(id=r["id"], policy="expert", dataset=r["dataset"], context_len=r["context_len"], task_group=r["task_group"],
-                   task=r["task"], answer_type=r["answer_type"], gold=r["answer"], n=r["context_len"], question_type=r["task"])
+                   task=r["task"], answer_type=r["answer_type"], gold=r["answer"], n=r["context_len"], question_type=r["task"],
+                   variant=variant)
         rlm = run_sweep.make_rlm(ra, trace_dir, "expert-controller")
-        rlm = RLM(rlm.backend, config=rlm.config, controller_backend=OolongExpert())
+        rlm = RLM(rlm.backend, config=rlm.config, controller_backend=OolongExpert(variant))
         try:
             result = rlm.run(run_sweep.public_request(task, args.public_model, 0.0, 4096))
             row.update(output_text=response_output_text(result.response), total_tokens=result.usage.total_tokens,
@@ -120,7 +125,7 @@ def main():
         if row.get("trace_dir"):
             for k, t in enumerate(rl_train.controller_turns(row["trace_dir"])):
                 pairs.append(dict(task_id=task.task_id, n=r["context_len"], question_type=r["task"], turn=k, correct=row["correct"],
-                                  messages=t["messages"], completion=t["completion"], source="oolong"))
+                                  messages=t["messages"], completion=t["completion"], source="oolong", variant=variant))
         with lock:
             with rows_path.open("a") as f:
                 f.write(json.dumps(row, default=str) + "\n")
