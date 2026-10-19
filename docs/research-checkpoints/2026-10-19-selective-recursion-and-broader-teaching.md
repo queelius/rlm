@@ -397,6 +397,16 @@ tokens over its task group's mean tokens, so two routes on the same short task d
 constant fraction of lambda, while groups on one route are unaffected) and queued from SFT-007 at
 lambda 0.5 with two seeds (`pipeline12_gpu0.log`), after the absolute 0.1 and 0.3 runs.
 
+Step-10 checkpoint of the absolute-0.1 balanced run (22:55 UTC). The direct route is extinct on
+every input: 8-record event-log tasks 0 direct in 40 rollouts after step 5 (16/16 decompose plus
+lookups in each bucket), OOLONG 1k 0 direct in 48. Dev accuracy 0.891 and dev tokens at 8 records
+unchanged at 4.9k, i.e. the policy pays for decomposition where the direct route was free. So under
+an absolute token cost the negative signal from the lengths where direct answering fails (32
+records, OOLONG 2k) generalizes through the shared cell text and removes the route everywhere,
+faster than the tiny positive signal at 8 records can defend it. The run completes as the control;
+the queue was reordered so the two relative-cost arms run next and the absolute-0.3 arm last
+(`pipeline13_gpu0.log`).
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
