@@ -262,6 +262,44 @@ two families: toward larger chunks on OOLONG (where that fixed budget failures) 
 chunks on event-log (where it had no in-range benefit and an out-of-range cost). Whether this is
 seed noise or a systematic effect is what the second seed and the 0.3 cost run will show.
 
+## What this supports, and what it does not (draft at 15:00 UTC; seed 2 and 0.3-cost pending)
+
+Supported by the evidence above:
+
+1. A 4B controller can be taught the RLM decomposition routine from a few hundred native-replay
+   trajectories and then executes it as well as the scripted expert in distribution, routing cheap
+   single-helper lookups and chunked extraction correctly where direct answering and the untrained
+   controller fail.
+2. Two teaching-design facts matter more than data volume: the first turn must be family-agnostic
+   because the controller sees only metadata before it inspects, and taught programs must be short
+   and selected by the question, because a 3k-character program is not reproduced reliably.
+3. On a real long-context benchmark (OOLONG-synth, held-out windows, 1k to 32k tokens), the taught
+   controller reaches 0.567 and 30 updates of on-policy RL raise it to 0.652, within the expert's
+   interval and three times direct answering at similar cost. The RL gain is a length-generalizing
+   fix of chunk size at 32k tokens that was never seen in training, and it comes from the
+   correctness signal; the 0.1 cost term is inert.
+
+Not supported, or open:
+
+- No evidence yet that a controller learns *when not to decompose*: on these task families
+  decomposition is always right for aggregation and the lookup path is already in the teaching.
+  The routing shown is between taught programs, not between recursion and direct answering.
+- RL moved chunk size in opposite directions on the two families, and the event-log drift hurts
+  at 1024 records. One seed; the second seed and the 0.3 cost run decide whether this is noise.
+- One model family and size, one benchmark, synthetic event logs; the OOLONG verifier is a
+  format-tolerant exact match, not the official scorer; costs are endpoint-reported tokens with
+  the harness prompt repeated every turn.
+
+Ranked next comparisons (each a few GPU-hours on this setup):
+
+1. A task family where direct answering beats decomposition for some inputs, so "do not decompose"
+   is a rewarded choice; measure routing accuracy against an oracle router.
+2. Replace the deterministic expert by diverse teachers (prompt and chunk variants are a start)
+   and test whether RL from a higher-entropy warm start finds better programs than any teacher.
+3. Scale the controller (Qwen3-8B) with the same recipe to see whether the SFT/expert gap and the
+   RL gain change with capacity.
+4. OOLONG at 64k to 128k tokens for the RL controller, where budget-safe chunking matters most.
+
 ## Operations notes (continued)
 
 - The project volume reached its 1.1 TB quota at 06:46 UTC and an adapter save failed. The study's
