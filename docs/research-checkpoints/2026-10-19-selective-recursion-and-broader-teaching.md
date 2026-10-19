@@ -333,6 +333,31 @@ worse and costlier. SFT-006 trains on all unified teaching including these route
 trajectories, so the direct route survives mainly at 8 records), and RL runs with cost 0.1 and 0.3
 then test whether the controller learns this routing (`pipeline10_gpu0.log`).
 
+## Routing experiment, warm start and redesign (19:20 UTC)
+
+SFT-006 (all unified teaching, 2,408 pairs, 355 updates) performs like SFT-005 (OOLONG sample
+34/72; event-log dev 87/96, lookups 24/24) and, classified from its traces with
+`route_analysis.py`, never takes the direct route at temperature 0 on either family. Sampled at
+temperature 1 on 8- and 32-record tasks it decomposes 63 of 63 aggregation tasks, so its
+probability of the taught direct route on short event-log inputs is effectively zero: the
+teaching set holds about 100 decompose trajectories at 8 records from the earlier set against 22
+direct ones. On OOLONG at 1k tokens, by contrast, the first RL rollouts from SFT-006 take the direct
+route about one time in five, where it is the worse and costlier option.
+
+The RL run from SFT-006 (`rl-route-lam01`, 0.1 cost) therefore cannot discover direct answering on
+event-log inputs, whatever the reward says; it can only test whether RL suppresses a bad direct
+route on short OOLONG inputs. It runs to completion as that control. To test the question that
+matters, whether RL learns *when not to decompose* when both routes are available, a
+route-balanced warm start was built (`balance_routes.py`, `teach-balanced-007`, 1,456 pairs):
+equal numbers of direct and decompose trajectories at 8 and 32 records and at 1k and 2k OOLONG
+tokens (22/22, 6/8, 16/16, 16/16), all longer trajectories unchanged. SFT-007 trains on it after the
+control run, followed by RL at 0.1 and 0.3 cost (`pipeline11_gpu0.log`), each evaluated at
+temperature 0 and sampled at temperature 1 on short inputs to read the learned route shares.
+
+Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
+be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
+asked to choose between them.
+
 ## What this supports, and what it does not (draft at 15:00 UTC; seed 2 and 0.3-cost pending)
 
 Supported by the evidence above:
