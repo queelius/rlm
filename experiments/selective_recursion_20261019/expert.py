@@ -113,6 +113,8 @@ class UnifiedExpert:
             family = family_of(stdout)
             question = question_of(family, stdout)
             self.question = question
+            if self.variant.get("route") == "direct":
+                return response_object(f"```python\n{(EVENT / 'direct.py').read_text().rstrip()}\n```")
             if family == "eventlog":
                 action = "lookup" if question.startswith("On which day did") else "extract"
                 return response_object(f"```python\n{self.cell(EVENT, 'inspect', action)}\n```")

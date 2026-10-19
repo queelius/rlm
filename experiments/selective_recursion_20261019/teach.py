@@ -85,6 +85,7 @@ def main():
     p.add_argument("--harness", default="default", choices=("default", "hinted"))
     p.add_argument("--diversify", action="store_true", help="sample chunk size, prompt phrasing and filter per task")
     p.add_argument("--unified", action="store_true", help="family-agnostic peek first (expert.UnifiedExpert)")
+    p.add_argument("--route-direct-prob", type=float, default=0.0, help="teach the direct route on short inputs with this probability")
     p.add_argument("--max-subcalls", type=int, default=80)
     p.add_argument("--max-model-calls", type=int, default=96)
     args = p.parse_args()
@@ -100,7 +101,7 @@ def main():
     lock = threading.Lock()
 
     def one(task):
-        variant = variants.pick(task.task_id, args.diversify)
+        variant = variants.pick(task.task_id, args.diversify, short=task.n_records <= 32, route_direct_prob=args.route_direct_prob)
         row = dict(task_id=task.task_id, n=task.n_records, question_type=task.question_type, seed=task.seed,
                    answer=task.answer, policy="expert", variant=variant)
         rlm = run_sweep.make_rlm(ra, trace_dir, "expert-controller")

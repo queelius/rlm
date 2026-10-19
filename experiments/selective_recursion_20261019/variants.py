@@ -11,12 +11,17 @@ PROMPTS = ("a", "b")
 FILTERS = {"person_item": "person in l and item in l", "person": "person in l"}
 
 
-def pick(task_id: str, diversify: bool) -> dict:
-    """Deterministic per-task variant; variant 0 reproduces the original expert."""
+def pick(task_id: str, diversify: bool, short: bool = False, route_direct_prob: float = 0.0) -> dict:
+    """Deterministic per-task variant; variant 0 reproduces the original expert.
+
+    With `short` and a positive `route_direct_prob`, short inputs are sometimes taught the direct
+    route (one delegated model call, no decomposition) so a learner can later choose between them.
+    """
     if not diversify:
-        return dict(chunk=12, prompt="a", filter="person_item")
+        return dict(chunk=12, prompt="a", filter="person_item", route="decompose")
     rng = random.Random("variant:" + task_id)
-    return dict(chunk=rng.choice(CHUNKS), prompt=rng.choice(PROMPTS), filter=rng.choice(list(FILTERS)))
+    route = "direct" if (short and rng.random() < route_direct_prob) else "decompose"
+    return dict(chunk=rng.choice(CHUNKS), prompt=rng.choice(PROMPTS), filter=rng.choice(list(FILTERS)), route=route)
 
 
 def render(cells_dir: Path, name: str, variant: dict) -> str:

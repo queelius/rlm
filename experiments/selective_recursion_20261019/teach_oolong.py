@@ -86,6 +86,7 @@ def main():
     p.add_argument("--harness", default="default", choices=("default", "hinted"))
     p.add_argument("--diversify", action="store_true")
     p.add_argument("--unified", action="store_true", help="family-agnostic peek first (expert.UnifiedExpert)")
+    p.add_argument("--route-direct-prob", type=float, default=0.0, help="teach the direct route on short inputs with this probability")
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     rows = load_rows(args.split, args.max_len)
@@ -104,7 +105,7 @@ def main():
 
     def one(r):
         task = as_task(r)
-        variant = variants.pick(task.task_id, args.diversify)
+        variant = variants.pick(task.task_id, args.diversify, short=r['context_len'] <= 2048, route_direct_prob=args.route_direct_prob)
         row = dict(id=r["id"], policy="expert", dataset=r["dataset"], context_len=r["context_len"], task_group=r["task_group"],
                    task=r["task"], answer_type=r["answer_type"], gold=r["answer"], n=r["context_len"], question_type=r["task"],
                    variant=variant)
