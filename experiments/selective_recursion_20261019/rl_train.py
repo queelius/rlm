@@ -373,7 +373,7 @@ def main():
     trainer = Trainer(args, out)
     print(json.dumps(dict(event="trainer_ready", trainable_params=trainer.n_params)), flush=True)
     if args.init_adapter:
-        controller = f"ctrl-init-{int(time.time())}"
+        controller = f"ctrl-{out.name}-init-{int(time.time())}"
         load_adapter(args, controller, Path(args.init_adapter))
     if start_step == 1:
         dev = evaluate(args, controller, out, 0)
@@ -393,7 +393,7 @@ def main():
         t2 = time.time()
         adapter_dir = out / "adapters" / f"step-{step:04d}"
         trainer.save(adapter_dir)
-        new_name = f"ctrl-s{step:04d}"
+        new_name = f"ctrl-{out.name}-s{step:04d}"  # unique per run so parallel/sequential runs never collide
         load_adapter(args, new_name, adapter_dir)
         if controller != args.public_model:
             unload_adapter(args, controller)
