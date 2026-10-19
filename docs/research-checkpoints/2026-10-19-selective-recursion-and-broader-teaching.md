@@ -27,8 +27,21 @@ every win from saved final inventories and reconciles plan identity and call rec
 Store: `/project/alex_phd/runs/rlm-teaching-goal-20261014/broader-structure-001/`
 (`BROADER-QUEUE.json`, `world*/eval-*/SUMMARY.json`, `LITE-AUDIT.json`).
 
-Partial readout, world 2026101501 (16 attempts per arm): original23 2/16, repair23 6/16,
-discovery23 3/12 so far. World 2 and the longer-training arm are pending.
+Readout (16 attempts per arm per world; world 2 longer-training arm still running at 05:00 UTC):
+
+| Arm (first-fit actors, seed 2026092208) | World 2026101501 | World 2026101502 |
+| --- | ---: | ---: |
+| Original examples, 23 updates | 2/16 | 1/16 |
+| Repaired examples, 23 updates | 6/16 | 5/16 |
+| Discovery examples, 23 updates | 3/16 | 5/16 |
+| Original examples, 69 updates | 8/16 | pending |
+
+Repair beats the matched original teacher on both new worlds, as on the pilot world. It does not
+beat the discovery teacher on world 2 and does not beat longer original training on world 1,
+where the 69-update actor is the best arm (the opposite of the pilot world's second fit, where it
+scored 0/16). The repair-versus-original contrast therefore replicates across three worlds and two
+fits, while the comparison against stronger controls remains world-dependent. Lite audits agree
+with the collector's native scores on every completed arm.
 
 ## Track B: learned selective recursion (GPU 1 serving, GPU 0 training after Track A)
 
@@ -42,14 +55,20 @@ of N natural-language records with negated and filler distractors, and five exac
 question types (distinct buyers, people who bought both items, net units, bought-then-returned,
 and a single-record lookup of a purchase day). Length N is the main knob.
 
-Calibration at temperature 0 with Qwen3-4B-Instruct-2507 (sweep-001-t0, 32 tasks per cell,
-aggregate questions, partial):
+Baselines at temperature 0 with Qwen3-4B-Instruct-2507 (sweep-001-t0 and sweep-002; 32 tasks per
+cell for the four aggregation questions; accuracy, mean total tokens in parentheses):
 
-| Policy | N=8 | N=32 | N=64 | N=128 | tokens at N=128 |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Direct, one call | 0.75 | 0.47 | 0.22 | 0.06 | 6.6k |
-| Base RLM controller (default harness) | 0.84 | 0.53 | 0.06 | 0.00 | 8.9k |
-| Programmed split (12-line chunks, per-line extraction, exact aggregation) | 0.97 | 1.00 | 0.97 | 0.97 | 12.3k |
+| Policy | N=8 | N=32 | N=64 | N=128 | N=256 | N=512 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Direct, one call | 0.75 (0.8k) | 0.47 (2.0k) | 0.22 (3.6k) | 0.06 (6.6k) | 0.00 (10.3k) | 0.00 (16.6k) |
+| Base controller, default harness | 0.84 (3.8k) | 0.53 (5.6k) | 0.06 (7.4k) | 0.00 (8.9k) | 0.00 (15.8k) | 0.00 (24.4k) |
+| Base controller, hinted harness | 0.84 (4.0k) | 0.47 (5.5k) | 0.03 (7.6k) | 0.00 (12.2k) | 0.00 (15.6k) | 0.00 (21.3k) |
+| Programmed split (12-line chunks, per-line extraction, exact aggregation) | 0.97 (0.8k) | 1.00 (3.2k) | 0.97 (6.2k) | 0.97 (12.3k) | 0.75 (24.7k) | 0.84 (49.7k) |
+| Scripted expert inside the harness (dev split, 16 per cell) | 1.00 (0.8k) | 1.00 (3.3k) | 0.81 (6.2k) | 1.00 (12.5k) | 0.81 (24.9k) | 0.88 (49.6k) |
+
+Lookup questions (8 per cell): direct answers 1.00 / 0.86 / 1.00 at N=8/32/64 for 0.5k to 2.2k
+tokens; the scripted expert answers 1.00 at every length for about 0.3k tokens by filtering lines in
+Python and asking one helper; the base controller reaches 0.25 to 0.50 at N=256 to 512.
 
 Observations that shaped the design:
 
@@ -76,9 +95,23 @@ roughly 0.7k tokens (N=8) to 12k tokens (N=128). Correct trajectories become sup
 (`rl_train.py`, REINFORCE with leave-one-out baseline, reward = correct − 0.1 × tokens/10k with
 a 50k-token cap, adapter hot-swapped into vLLM after every update).
 
-Transfer target: OOLONG-synth validation rows up to 32k tokens
-(`oolong_eval.py`; lenient exact match on the requested answer line, not the official scorer).
-Base direct answered 4/8 and the base controller 0/8 on a smoke sample at 1k-4k tokens.
+Transfer target: OOLONG-synth validation rows up to 32k tokens (`oolong_eval.py`; exact match
+on the requested answer line with any key prefix, not the official scorer). Within each context
+length the distinct context windows are split train/test, so every length has held-out windows.
+A second scripted expert (`oolong_cells/`) classifies lines with helpers only when the question
+needs labels and answers user/date counting questions in code alone; with the dataset's gold
+labels substituted for the helper its logic matches 595/598 answers (OOLONG compares label shares
+before/after a date). Held-out OOLONG results so far (accuracy, mean total tokens):
+
+| Policy | 1k | 2k | 4k | 8k | 16k | 32k | all |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Direct (12 per length) | 0.50 (1.7k) | 0.33 (3.9k) | 0.33 (6.8k) | 0.08 (11.2k) | 0.00 (19.0k) | 0.08 (32.8k) | 0.22 (12.6k) |
+| Base controller (12 per length) | 0.25 (5.0k) | 0.08 (10.1k) | 0.17 (11.7k) | 0.00 (13.4k) | 0.00 (19.8k) | 0.17 (33.5k) | 0.11 (15.6k) |
+| Scripted expert in harness (43 to 50 per length) | 0.60 (0.5k) | 0.68 (1.4k) | 0.74 (3.1k) | 0.74 (6.5k) | 0.68 (14.2k) | 0.58 (27.6k) | 0.67 (9.1k) |
+
+The expert's remaining errors are mostly six-way TREC classification by the 4B helper (counting
+group 0.53 versus 0.82 to 0.84 for timeline and user groups). The teaching stage therefore has a
+ceiling of roughly two thirds on this benchmark with this helper.
 
 Run store: `/project/alex_phd/runs/selective-recursion-20261019/`.
 
