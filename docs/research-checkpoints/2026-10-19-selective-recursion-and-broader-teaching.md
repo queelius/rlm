@@ -233,9 +233,12 @@ same seed and task sequence. On the 72-row OOLONG sample it scores 40/72 versus 
 cost-aware run and 36/72 for the warm start, with the same recovery at 32k tokens (6 of 12, no
 budget errors) and the same cost (13k versus 14k tokens). On the event-log dev split it scores
 85/96 aggregation and 24/24 lookups while keeping the warm start's chunking and cost (18k tokens),
-whereas the cost-aware run drifted to smaller chunks and about 10 percent more tokens (20k). So at
-0.1 per 10k tokens the cost term neither produced the OOLONG gain nor reduced cost; the gain comes
-from the correctness signal teaching budget-safe chunking at long inputs. A second seed of the
+whereas the cost-aware run drifted to smaller chunks and about 10 percent more tokens (20k). On all 293
+held-out rows the no-cost adapter scores 187/293 = 0.638 [0.58, 0.69] against 191/293 for the
+cost-aware run (paired: 14 rows only the cost-aware run gets right, 10 only the no-cost run), with
+the same 32k recovery (28 versus 27 of 50). So at 0.1 per 10k tokens the cost term neither produced
+the OOLONG gain nor reduced cost; the gain comes from the correctness signal teaching budget-safe
+chunking at long inputs. A second seed of the
 cost-aware run and a 0.3 cost term are running to separate seed noise from the cost term's effect.
 (The no-cost run's step-30 dev entry was lost to an adapter-name collision with the first run,
 fixed afterwards; its step-30 adapter was saved and is the one evaluated here.)
