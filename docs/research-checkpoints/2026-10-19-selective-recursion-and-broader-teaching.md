@@ -142,6 +142,38 @@ runs) and RL starts from it. Diversified variants have real cost/accuracy differ
 exploit: on event-log tasks the 24-line chunk with the second prompt reaches 0.97 at the lowest
 cost, while 6-line chunks are less accurate and exceed the helper-call budget at 512 records.
 
+## Unified-peek warm starts (08:05 UTC)
+
+Two more warm starts were trained on the corrected teaching (family-agnostic peek first, diversified
+variants). SFT-004 used the original long OOLONG aggregation program; SFT-005 used short
+question-specific aggregation cells composed by the expert (optional subset filter plus one 5-12 line
+block; their logic matches 595/598 gold answers with gold labels).
+
+| Controller | Event-log dev, aggregation (N=8..512) | OOLONG held-out, by length 1k/2k/4k/8k/16k/32k | OOLONG all (tokens) |
+| --- | --- | --- | --- |
+| Direct answering | 0.75 / 0.47 / 0.22 / 0.06 / 0.00 / 0.00 | 0.50 / 0.33 / 0.33 / 0.08 / 0.00 / 0.08 | 0.22 (12.6k) |
+| Base controller | 0.84 / 0.53 / 0.06 / 0.00 / 0.00 / 0.00 | 0.25 / 0.08 / 0.17 / 0.00 / 0.00 / 0.17 | 0.11 (15.6k) |
+| Scripted expert in harness | 1.00 / 1.00 / 0.81 / 1.00 / 0.81 / 0.88 | 0.60 / 0.68 / 0.74 / 0.74 / 0.68 / 0.58 | 0.67 (14.4k) |
+| SFT-004 (unified peek, monolithic aggregate) | 1.00 / 1.00 / 0.88 / 1.00 / 0.69 / 0.88 | 0.08 / 0.00 / 0.08 / 0.08 / 0.08 / 0.08 | 0.07 (10.6k) |
+| SFT-005 (unified peek, composed cells) | 1.00 / 1.00 / 0.81 / 0.94 / pending / pending | 0.58 / 0.33 / 0.75 / 0.58 / 0.58 / 0.17 | 0.50 (9.5k) |
+
+SFT-004 peeks and classifies correctly but cannot reproduce the 3k-character aggregation program
+from memory: 12 of its 25 inspected OOLONG failures contain syntax or name errors from drifting
+mid-program. SFT-005, taught the same behaviour as short per-question programs, reaches 0.50 on
+held-out OOLONG contexts with no code errors in the inspected trajectories, above direct answering
+(0.22) and the untrained controller (0.11), at lower token cost than direct answering, and below the
+expert's 0.67. Its 32k-token result (0.17 at only 5.9k tokens) comes from choosing 12-line chunks,
+which exceeds the helper-call budget at that length; the diversified teaching also contains the
+24-line variant that fits, so this is a length-dependent choice the cost-aware RL can learn. The
+lesson for teaching tool-using controllers: program length matters more than program count; a
+learner reproduces many short programs selected by the question more reliably than one long one.
+On the event-log family SFT-004 and SFT-005 match the expert and pick the cheaper 24-line chunking
+at temperature 0 (10 calls at 128 records versus 17 for SFT-001).
+
+Mixed-task RL (`rl-mixed-001`) starts from SFT-005: 16 tasks per step (8 event-log, 8 OOLONG train
+windows up to 8k tokens), 4 samples per task at temperature 1, reward = correct − 0.1 × tokens/10k,
+REINFORCE with a leave-one-out baseline, LoRA updates on GPU 0 and adapter hot-swap into vLLM.
+
 ## Operations notes (continued)
 
 - The project volume reached its 1.1 TB quota at 06:46 UTC and an adapter save failed. The study's

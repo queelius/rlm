@@ -66,12 +66,13 @@ def table(rows, title, key="n"):
 
 
 ORDER = ["direct", "base controller", "base controller (hinted)", "programmed split", "expert in harness",
-         "SFT (event-log)", "SFT (event-log + OOLONG)", "SFT + RL (OOLONG)"]
+         "SFT (event-log)", "SFT (event-log + OOLONG)", "SFT unified peek, monolithic aggregate",
+         "SFT unified peek, composed cells", "SFT + RL (OOLONG)"]
 
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--rl-dir", default="rl-oolong-001")
+    p.add_argument("--rl-dir", default="rl-mixed-001")
     args = p.parse_args()
     ev = []
     ev += rows_of(S / "dev-base", "direct", "eventlog", lambda r: r["policy"] == "direct")
@@ -80,12 +81,16 @@ def main():
     ev += rows_of(S / "dev-expert", "expert in harness", "eventlog")
     ev += rows_of(S / "dev-sft1", "SFT (event-log)", "eventlog")
     ev += rows_of(S / "dev-sft2", "SFT (event-log + OOLONG)", "eventlog")
+    ev += rows_of(S / "dev-sft4", "SFT unified peek, monolithic aggregate", "eventlog")
+    ev += rows_of(S / "dev-sft5", "SFT unified peek, composed cells", "eventlog")
     oo = []
     oo += rows_of(S / "oolong-base", "direct", "oolong", lambda r: r["policy"] == "direct")
     oo += rows_of(S / "oolong-base", "base controller", "oolong", lambda r: r["policy"] == "rlm")
     oo += rows_of(S / "oolong-expert-test", "expert in harness", "oolong")
     oo += rows_of(S / "oolong-sft1", "SFT (event-log)", "oolong")
     oo += rows_of(S / "oolong-sft2", "SFT (event-log + OOLONG)", "oolong")
+    oo += rows_of(S / "oolong-sft4", "SFT unified peek, monolithic aggregate", "oolong")
+    oo += rows_of(S / "oolong-sft5", "SFT unified peek, composed cells", "oolong")
     rl = S / args.rl_dir / "dev"
     if rl.exists():
         files = sorted(rl.glob("step-*.jsonl"))
