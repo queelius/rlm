@@ -5,8 +5,11 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import sys
 import time
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 MODEL = "/project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554"
 
@@ -28,6 +31,8 @@ def main():
     import torch
     from peft import LoraConfig, get_peft_model
     from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    from rl_train import completion_logprobs
 
     pairs = []
     for path in args.data:
@@ -76,14 +81,11 @@ def main():
         opt.zero_grad(set_to_none=True)
         for idx in order:
             prompt, comp = encoded[idx]
-            ids = torch.tensor([prompt + comp], device="cuda:0")
-            labels = torch.tensor([[-100] * len(prompt) + comp], device="cuda:0")
-            out = model(input_ids=ids, labels=labels)
-            # HF mean-reduces over completion tokens; weight by token count for a token-mean over the batch
-            loss = out.loss * len(comp)
+            tok_logp = completion_logprobs(model, prompt, comp, torch)
+            loss = -tok_logp.sum()
             loss.backward()
             acc_loss += loss.item(); acc_comp += len(comp); acc_tokens += len(prompt) + len(comp)
-            del out
+            del tok_logp
             if acc_tokens >= args.batch_tokens:
                 for p_ in params:
                     if p_.grad is not None:

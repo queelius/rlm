@@ -122,6 +122,17 @@ def collect_rollouts(args, step: int, controller_model: str, out: Path) -> list[
     return rows
 
 
+def completion_logprobs(model, prompt: list[int], comp: list[int], torch):
+    """Per-token log-probabilities of the completion given the prompt, keeping only C+1 logits."""
+    ids = torch.tensor([prompt + comp], device="cuda:0")
+    out = model(input_ids=ids, logits_to_keep=len(comp) + 1)
+    logits = out.logits[0, :-1, :].float()  # positions P-1 .. L-2 predict comp[0..C-1]
+    target = torch.tensor(comp, device="cuda:0")
+    logp = torch.log_softmax(logits, dim=-1).gather(-1, target.unsqueeze(-1)).squeeze(-1)
+    del out, logits
+    return logp
+
+
 # ----------------------------------------------------------------------------- training
 class Trainer:
     def __init__(self, args, out: Path):
@@ -181,19 +192,12 @@ class Trainer:
         loss_sum, logp_sum = 0.0, 0.0
         random.shuffle(seqs)
         for prompt, comp, adv in seqs:
-            ids = torch.tensor([prompt + comp], device="cuda:0")
-            labels = torch.tensor([[-100] * len(prompt) + comp], device="cuda:0")
-            out = self.model(input_ids=ids)
-            logits = out.logits[:, :-1, :].float()
-            target = labels[:, 1:]
-            logp = torch.log_softmax(logits, dim=-1)
-            mask = target != -100
-            tok_logp = logp.gather(-1, target.clamp(min=0).unsqueeze(-1)).squeeze(-1)[mask]
+            tok_logp = completion_logprobs(self.model, prompt, comp, torch)
             loss = -(adv * tok_logp.sum()) / total_tokens
             loss.backward()
             loss_sum += loss.item()
             logp_sum += tok_logp.sum().item()
-            del out, logits, logp
+            del tok_logp
         grad_norm = torch.nn.utils.clip_grad_norm_([p for p in self.model.parameters() if p.requires_grad], self.args.grad_clip)
         self.opt.step()
         self.opt.zero_grad(set_to_none=True)
