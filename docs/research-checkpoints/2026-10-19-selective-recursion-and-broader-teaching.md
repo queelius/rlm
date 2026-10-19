@@ -124,3 +124,13 @@ Run store: `/project/alex_phd/runs/selective-recursion-20261019/`.
 Synthetic templates and vocabulary; one model family and size; one training seed per stage
 until a signal appears; cost is counted in tokens reported by the serving endpoint; the
 programmed split is a strong task-specific baseline written with knowledge of the generator.
+
+## Operations notes
+
+- GPU 0 sat idle from 05:39 to 06:01 UTC (about 22 minutes) because the first pipeline
+  serialized SFT-002 behind a slow zero-shot OOLONG evaluation that only needed GPU 1. The pipeline
+  was restarted so training begins as soon as the card is free. Avoidable idle time, recorded as
+  such.
+- Two shell self-terminations happened when `pkill -f` patterns matched the invoking command line;
+  later kills use bracketed patterns and PID loops.
+
