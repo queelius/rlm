@@ -383,6 +383,20 @@ drops it); on OOLONG the teaching data said direct is worse, though this small h
 disagrees at 1k. RL from SFT-007 at 0.1 cost (`rl-route7-lam01`) is running, with 0.3 cost to
 follow; per-step route shares are being recorded for both.
 
+First balanced RL steps and a reward-scale problem (22:40 UTC). In the first five updates of
+`rl-route7-lam01`, the direct route on OOLONG 2k (1/6 correct) and 1k (10/12 correct against
+25/25 for decomposition, barely cheaper) was driven to zero within three steps, as the reward
+prescribes. On 8-record event-log tasks, where the direct route was 5/5 correct at 2.7k tokens
+against 11/15 at 5.4k for decomposition, its mean advantage was +0.005: the absolute cost term pays
+0.1 per 10k tokens, so saving 2.7k tokens is worth 0.03 reward, two orders of magnitude below a
+correctness difference, and 8-record tasks are one sixth of event-log draws. Under this reward the
+policy can learn *not* to take a worse direct route but has almost no signal to *prefer* a cheaper
+equally accurate one; the 0.3-cost run triples a signal that is still small. A scale-free variant
+was therefore added to the trainer (`--cost-mode relative`: penalty lambda times the rollout's
+tokens over its task group's mean tokens, so two routes on the same short task differ by a
+constant fraction of lambda, while groups on one route are unaffected) and queued from SFT-007 at
+lambda 0.5 with two seeds (`pipeline12_gpu0.log`), after the absolute 0.1 and 0.3 runs.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
