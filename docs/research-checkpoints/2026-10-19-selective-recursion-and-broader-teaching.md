@@ -268,13 +268,28 @@ seed noise or a systematic effect is what the second seed and the 0.3 cost run w
 start: 36), zero budget errors at 32k; event-log dev aggregation 87/96 (seed 1: 88, no-cost: 85,
 warm start: 86), lookups 24/24. Both cost-aware seeds moved event-log chunking from 24 to 12 lines
 (7/10/17/30/57 helper calls at 32 to 512 records versus 5/7/10/17/32 for the warm start), while
-the no-cost run kept the warm start's chunking. So that drift is systematic for the 0.1 cost term,
+the no-cost run kept the warm start's chunking. So that drift is reproducible under the 0.1 cost term,
 not seed noise, although its mechanism is unclear: the 12-line variant costs about 10 percent more
-tokens, so the cost term alone should push the other way. On all 293 held-out rows seed 2 scores 187/293 = 0.638 [0.58, 0.69] (40 paired gains, 19
+tokens, so the cost term alone should push the other way (and the 0.3-cost run below does not
+show it). On all 293 held-out rows seed 2 scores 187/293 = 0.638 [0.58, 0.69] (40 paired gains, 19
 losses against the warm start; 27/50 at 32k). The three RL runs so far (0.652, 0.638 with no
 cost term, 0.638 second seed) therefore agree on a gain of 7 to 9 points over the warm start's
 0.567, each driven by the 32k recovery and small gains at 1k to 2k. The 0.3-cost run is in
 progress.
+
+## Stronger cost term (18:30 UTC)
+
+`rl-mixed-lam03-001` (lambda 0.3, seed 0, otherwise identical): training-sample tokens fell from
+12.3k (steps 1 to 10) to 11.8k (steps 21 to 30) while training accuracy stayed at 0.83; the 0.1
+runs showed no token decline. Held out: OOLONG 72-row sample 41/72 at 13k tokens (0.1 runs: 41
+and 42 at 14k), 2 budget errors; event-log dev aggregation 85/96 at 18k tokens (0.1 runs: 88 and
+87 at 20k), lookups 24/24. It kept the warm start's 24-line chunking (5/7/10/17/30 helper calls),
+as did the no-cost run, whereas both 0.1 seeds moved to 12-line chunks. So the cost term buys
+about 7 percent fewer tokens for about 1 to 3 points on the small event-log split and nothing on
+OOLONG; the chunk-size drift is not monotone in lambda (present in two 0.1 runs, absent in one run
+each at 0 and 0.3), and its mechanism remains unresolved. The RL accuracy gain over the warm start
+is therefore the correctness signal's doing at every cost strength tried (0, 0.1, 0.3); the 293-row
+evaluation of this run is in progress.
 
 ## Routing experiment, teaching stage (16:30 UTC)
 
@@ -318,8 +333,9 @@ Not supported, or open:
 - No evidence yet that a controller learns *when not to decompose*: on these task families
   decomposition is always right for aggregation and the lookup path is already in the teaching.
   The routing shown is between taught programs, not between recursion and direct answering.
-- RL moved chunk size in opposite directions on the two families, and the event-log drift hurts
-  at 1024 records. One seed; the second seed and the 0.3 cost run decide whether this is noise.
+- RL moved chunk size in opposite directions on the two families under the 0.1 cost term (both
+  seeds), and the event-log drift hurts at 1024 records; the no-cost and 0.3-cost runs did not
+  drift. The mechanism is unresolved, and the 1024-record check exists for one adapter only.
 - One model family and size, one benchmark, synthetic event logs; the OOLONG verifier is a
   format-tolerant exact match, not the official scorer; costs are endpoint-reported tokens with
   the harness prompt repeated every turn.
