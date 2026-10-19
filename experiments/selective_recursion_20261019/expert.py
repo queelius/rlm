@@ -22,6 +22,50 @@ PEEK = (EVENT / "peek.py").read_text().rstrip()
 NEEDS_LABELS = re.compile(r"label|classified", re.I)
 
 
+PARTS = OOLONG / "parts"
+HEADER = "from collections import Counter\n"
+
+
+def oolong_aggregate_cell(question: str) -> str:
+    """Compose a short aggregate cell: optional subset filter plus one question-specific block."""
+    q = question
+    if re.search(r"associated with user IDs? ", q):
+        filt = "filter_users"
+    elif re.search(r"occur in \w+ of any year", q):
+        filt = "filter_month"
+    elif re.search(r"occur between .* inclusive", q):
+        filt = "filter_range"
+    else:
+        filt = "filter_none"
+    if re.search(r"was label '[^']+' more common, less common, or the same frequency before", q):
+        blk = "q_before_after"
+    elif "occur more frequently than the label" in q:
+        blk = "q_months_more"
+    elif "the single most frequently" in q:
+        blk = "q_months_single_most"
+    elif re.search(r"is label '[^']+' more common, less common, or the same frequency as label", q):
+        blk = "q_relative_labels"
+    elif "how many data points should be classified as label" in q:
+        blk = "q_count_label"
+    elif "which user has more instances with the label" in q:
+        blk = "q_user_more_label"
+    elif "which user has the most instances with the label" in q:
+        blk = "q_user_most_label"
+    elif "which of the labels is the most common" in q:
+        blk = "q_most_label"
+    elif "which of the labels is the least common" in q:
+        blk = "q_least_label"
+    elif re.search(r"which user is represented (the )?(second )?most often", q):
+        blk = "q_user_rank"
+    elif "how many dates are represented exactly" in q:
+        blk = "q_dates_exactly"
+    elif re.search(r"which date is represented (the )?(second )?most often", q):
+        blk = "q_date_rank"
+    else:
+        raise RuntimeError("no aggregate block for question: " + q[:120])
+    return HEADER + (PARTS / f"{filt}.py").read_text().rstrip() + "\n" + (PARTS / f"{blk}.py").read_text().rstrip()
+
+
 def family_of(stdout: str) -> str:
     if "LOG (" in stdout and "QUESTION:" in stdout:
         return "eventlog"
@@ -40,6 +84,7 @@ class UnifiedExpert:
     def __init__(self, variant: dict | None = None):
         self.variant = variant or variants.pick("", False)
         self.cells = {}
+        self.question = ""
 
     def cell(self, cells_dir: Path, *names: str) -> str:
         key = (str(cells_dir), names)
@@ -59,14 +104,19 @@ class UnifiedExpert:
         stdout = execution.get("stdout", "")
         if "events" in namespace:
             return response_object(f"```python\n{self.cell(EVENT, 'aggregate')}\n```")
-        if "batch" in namespace:
-            return response_object(f"```python\n{self.cell(OOLONG, 'aggregate')}\n```")
+        if "batch" in namespace or ("rows" in namespace and "labels" in namespace and "events" not in namespace and "sub" not in namespace):
+            question = stdout.split("\n", 1)[1].split("\n", 1)[0].strip() if "\n" in stdout else ""
+            if not question:
+                question = self.question
+            return response_object(f"```python\n{oolong_aggregate_cell(question)}\n```")
         if set(namespace) <= {"text"}:
             family = family_of(stdout)
             question = question_of(family, stdout)
+            self.question = question
             if family == "eventlog":
                 action = "lookup" if question.startswith("On which day did") else "extract"
                 return response_object(f"```python\n{self.cell(EVENT, 'inspect', action)}\n```")
-            action = "classify" if NEEDS_LABELS.search(question) else "count"
-            return response_object(f"```python\n{self.cell(OOLONG, 'inspect', action)}\n```")
+            if NEEDS_LABELS.search(question):
+                return response_object(f"```python\n{self.cell(OOLONG, 'inspect', 'classify')}\n```")
+            return response_object(f"```python\n{self.cell(OOLONG, 'inspect')}\n```")
         raise RuntimeError("expert cannot determine its stage: " + json.dumps(namespace)[:300])

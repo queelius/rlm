@@ -11,8 +11,10 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import oolong_eval as o
 
-files = sorted(glob.glob('/project/alex_phd/cache/huggingface/hub/datasets--oolongbench--oolong-synth/snapshots/*/data/validation-*.parquet'))
+files = sorted(glob.glob('/home/atowell/research-cache/hf/hub/datasets--oolongbench--oolong-synth/snapshots/*/data/validation-*.parquet'))
 cells = {n: (HERE / "oolong_cells" / f"{n}.py").read_text() for n in ("inspect", "aggregate", "count")}
+import expert as EX
+USE_COMPOSER = True
 NEEDS_LABELS = re.compile(r"label|classified", re.I)
 stats = collections.defaultdict(lambda: [0, 0])
 failures = []
@@ -34,8 +36,11 @@ for f in files:
             exec(cells["inspect"], ns)
             for row in ns["rows"]:
                 row["label"] = gold_labels.get((row["date"].strftime("%b %d, %Y"), row["user"], row["text"].strip()))
-            needs = bool(NEEDS_LABELS.search(ns["question"]))
-            exec(cells["aggregate"] if needs else cells["count"], ns)
+            if USE_COMPOSER:
+                exec(EX.oolong_aggregate_cell(ns["question"]), ns)
+            else:
+                needs = bool(NEEDS_LABELS.search(ns["question"]))
+                exec(cells["aggregate"] if needs else cells["count"], ns)
             text = out.get("text", "")
         except Exception as exc:  # noqa: BLE001
             text = f"EXC {type(exc).__name__}: {exc}"

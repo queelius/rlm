@@ -25,7 +25,7 @@ def parse_gold(value):
 
 OUT = "/project/alex_phd/research-cache/datasets/oolong-synth-20261019/validation-le32k.jsonl"
 def main():
-    files = sorted(glob.glob('/project/alex_phd/cache/huggingface/hub/datasets--oolongbench--oolong-synth/snapshots/*/data/validation-*.parquet'))
+    files = sorted(glob.glob('/home/atowell/research-cache/hf/hub/datasets--oolongbench--oolong-synth/snapshots/*/data/validation-*.parquet'))
     n = 0
     with open(OUT, "w") as out:
         for f in files:
