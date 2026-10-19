@@ -39,7 +39,7 @@ def main(paths: list[str]) -> None:
         rows = [json.loads(line) for line in Path(path).read_text().splitlines()]
         table = collections.defaultdict(lambda: collections.defaultdict(lambda: [0, 0, 0]))
         for row in rows:
-            route = route_of(row["trace_dir"])
+            route = route_of(row.get("trace_dir"))
             length = row.get("context_len") or row["n"]
             cell = table[length][route]
             cell[0] += 1
