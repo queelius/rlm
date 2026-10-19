@@ -24,6 +24,25 @@ sys.path.insert(0, str(HERE))
 import run_sweep  # noqa: E402
 
 ROWS = Path("/project/alex_phd/research-cache/datasets/oolong-synth-20261019/validation-le32k.jsonl")
+def window_split(rows: list[dict]) -> dict:
+    """Map (context_len, context_window_id) -> 'train' | 'test': even/odd window id per length, or alternating
+    sorted ids where a length has only one parity (4096 tokens)."""
+    by_len: dict = {}
+    for r in rows:
+        by_len.setdefault(r["context_len"], set()).add(r["context_window_id"])
+    out = {}
+    for n, ids in by_len.items():
+        ordered = sorted(ids)
+        if {wid % 2 for wid in ordered} == {0, 1}:
+            # even ids train, odd ids test (matches the first teaching run)
+            for wid in ordered:
+                out[(n, wid)] = "train" if wid % 2 == 0 else "test"
+        else:
+            for rank, wid in enumerate(ordered):
+                out[(n, wid)] = "train" if rank % 2 == 0 else "test"
+    return out
+
+
 COMPARISON_CANON = {"same frequency as": "same frequency", "the same frequency": "same frequency",
                     "more common than": "more common", "less common than": "less common"}
 
@@ -85,6 +104,7 @@ def main():
     p.add_argument("--concurrency", type=int, default=8)
     p.add_argument("--temperature", type=float, default=0.0)
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--split", default="test", choices=("test", "train", "all"))
     p.add_argument("--base-url", default="http://127.0.0.1:8001/v1")
     p.add_argument("--api-key", default="local")
     p.add_argument("--public-model", default="qwen3-4b")
@@ -92,6 +112,9 @@ def main():
     lens = {int(x) for x in args.lens.split(",")}
     rows = [json.loads(l) for l in ROWS.read_text().splitlines()]
     rows = [r for r in rows if r["context_len"] in lens and not r["answer_type"].endswith("MONTH_YEAR")]
+    split = window_split(rows)
+    if args.split != "all":
+        rows = [r for r in rows if split[(r["context_len"], r["context_window_id"])] == args.split]
     rng = random.Random(args.seed)
     by_cell: dict[tuple, list] = {}
     for r in rows:

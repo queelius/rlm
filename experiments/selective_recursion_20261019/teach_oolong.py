@@ -1,7 +1,7 @@
 """Scripted OOLONG expert controller run through the real kernel (teaching trajectories + expert baseline).
 
-Split: context windows with even `context_window_id` are the teaching/RL split, odd ids are held
-out for evaluation. Label questions classify every line with helper calls; user/date counting
+Split: within each context length, distinct context windows are sorted by id and alternate
+train/test, so every length has held-out windows. Label questions classify every line with helper calls; user/date counting
 questions are answered by code alone.
 """
 
@@ -62,8 +62,8 @@ def load_rows(split: str, max_len: int, lens: set[int] | None = None) -> list[di
     rows = [r for r in rows if r["context_len"] <= max_len and not r["answer_type"].endswith("MONTH_YEAR")]
     if lens:
         rows = [r for r in rows if r["context_len"] in lens]
-    parity = 0 if split == "train" else 1
-    return [r for r in rows if r["context_window_id"] % 2 == parity]
+    assignment = oolong_eval.window_split(rows)
+    return [r for r in rows if assignment[(r["context_len"], r["context_window_id"])] == split]
 
 
 def as_task(r: dict) -> SimpleNamespace:
