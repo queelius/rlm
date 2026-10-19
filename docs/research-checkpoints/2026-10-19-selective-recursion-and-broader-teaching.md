@@ -213,14 +213,18 @@ All 293 held-out OOLONG rows (43 to 50 per length), Wilson 95% intervals, mean t
 | Scripted expert in harness | 26/43 | 34/50 | 37/50 | 37/50 | 34/50 | 29/50 | 0.672 [0.62, 0.72] (14k) | 0 |
 | SFT-005 warm start | 21/43 | 25/50 | 35/50 | 35/50 | 38/50 | 12/50 | 0.567 [0.51, 0.62] (10k) | 31 |
 | SFT-005 + RL, 30 updates | 26/43 | 33/50 | 36/50 | 36/50 | 33/50 | 27/50 | 0.652 [0.60, 0.70] (14k) | 5 |
+| Direct answering, one call | 22/43 | 14/50 | 11/50 | 8/50 | 2/50 | 4/50 | 0.208 [0.17, 0.26] (12k) | 0 |
 
 Paired over the same rows, RL gains 39 and loses 14 against the warm start (152 both right, 88
 both wrong). RL training saw OOLONG contexts of at most 8k tokens; the largest gain is at 32k,
 where the warm start's helper-call budget failures (31 errors overall, nearly all at 32k) are gone.
 By task group RL improves counting (65 to 84 of 156) and user questions (50 to 62 of 75) and loses
 some timeline questions (51 to 45 of 62). The RL controller is within the expert's interval at the
-expert's cost. Direct answering on the same 293 rows and the no-cost, second-seed and stronger-cost
-RL runs are in progress.
+expert's cost, and more than three times the accuracy of direct answering at a similar cost.
+Helper-call counts show what RL changed: the warm start used more helper calls than the expert at
+every length (14 versus 9 at 4k tokens, implying small chunks) and the RL policy matches the
+expert's counts (10 at 4k, 16 at 8k, 31 at 16k, 59 at 32k). The second-seed and stronger-cost RL
+runs are in progress.
 
 ## No-cost ablation (13:05 UTC)
 
