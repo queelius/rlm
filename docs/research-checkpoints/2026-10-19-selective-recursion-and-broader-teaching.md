@@ -240,6 +240,24 @@ cost-aware run and a 0.3 cost term are running to separate seed noise from the c
 (The no-cost run's step-30 dev entry was lost to an adapter-name collision with the first run,
 fixed afterwards; its step-30 adapter was saved and is the one evaluated here.)
 
+## Out-of-range length on the event-log family (14:00 UTC)
+
+Event-log tasks with 1024 records (twice the longest training length; 16 aggregation and 4 lookup
+tasks; helper-call limits raised to 160 for every controller):
+
+| Controller | Aggregation | Helper calls | Tokens | Lookups |
+| --- | ---: | ---: | ---: | ---: |
+| Scripted expert (12-line chunks) | 13/16 | 111 | 99k | 4/4 |
+| SFT-005 warm start | 14/16 | 60 | 94k | 4/4 |
+| SFT-005 + RL (0.1 cost) | 9/16 | 111 | 102k | 4/4 |
+
+The warm start generalizes to the longer input with 24-line chunks; the cost-aware RL policy, which
+had drifted to 12-line chunks on this family, loses five tasks there because more helper calls
+accumulate more extraction errors. So the same RL run moved chunking in opposite directions on the
+two families: toward larger chunks on OOLONG (where that fixed budget failures) and toward smaller
+chunks on event-log (where it had no in-range benefit and an out-of-range cost). Whether this is
+seed noise or a systematic effect is what the second seed and the 0.3 cost run will show.
+
 ## Operations notes (continued)
 
 - The project volume reached its 1.1 TB quota at 06:46 UTC and an adapter save failed. The study's
