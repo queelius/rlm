@@ -364,6 +364,25 @@ OOLONG sample (SFT-006 34/72; the earlier RL runs 40 to 42) at 12k tokens with 4
 chunking. So the control reproduces the earlier RL gain and shows the expected suppression, and it
 cannot speak to discovering a good direct route, as predicted.
 
+Balanced warm start (22:10 UTC). SFT-007 (1,456 pairs, 2 epochs) matches the earlier warm starts
+on accuracy (OOLONG sample 34/72 at 9k tokens; event-log aggregation 85/96, lookups 24/24) and now
+holds both routes with usable probability:
+
+| Input | Sampling | Direct route | Decomposition |
+| --- | --- | ---: | ---: |
+| Event-log, 8 records | temperature 1 (36 samples) | 13/15 correct, 2k tokens | 20/21 correct, 5k tokens |
+| Event-log, 32 records | temperature 1 (35 samples) | 4/7 correct, 3k tokens | 27/28 correct, 7k tokens |
+| Event-log, 8 records | temperature 0 (held-out dev) | 4/4, 2k | 15/15, 5k |
+| Event-log, 32 records and longer | temperature 0 | never | 15/16 and as before |
+| OOLONG, 1k tokens | temperature 0 (12 rows) | 4/6 | 1/5 |
+| OOLONG, 2k tokens and longer | temperature 0 | never | as before |
+
+So the reward landscape the RL runs face is: at 8 records the direct route is as accurate and costs
+half the tokens (the right policy keeps it); at 32 records it loses accuracy (the right policy
+drops it); on OOLONG the teaching data said direct is worse, though this small held-out sample
+disagrees at 1k. RL from SFT-007 at 0.1 cost (`rl-route7-lam01`) is running, with 0.3 cost to
+follow; per-step route shares are being recorded for both.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
