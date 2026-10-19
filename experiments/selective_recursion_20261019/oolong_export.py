@@ -24,17 +24,22 @@ def parse_gold(value):
     return out
 
 OUT = "/project/alex_phd/research-cache/datasets/oolong-synth-20261019/validation-le32k.jsonl"
-files = sorted(glob.glob('/project/alex_phd/cache/huggingface/hub/datasets--oolongbench--oolong-synth/snapshots/*/data/validation-*.parquet'))
-n = 0
-with open(OUT, "w") as out:
-    for f in files:
-        t = pq.read_table(f).to_pandas()
-        t = t[t["context_len"] <= 32768]
-        for _, r in t.iterrows():
-            gold = parse_gold(r["answer"])
-            out.write(json.dumps(dict(id=int(r["id"]), context_len=int(r["context_len"]), dataset=r["dataset"], question=r["question"],
-                                      task_group=r["task_group"], task=r["task"], answer=gold, answer_type=str(r["answer_type"]),
-                                      input_subset=str(r["input_subset"]), num_labels=int(r["num_labels"]), context_window_id=int(r["context_window_id"]),
-                                      context=r["context_window_text"])) + "\n")
-            n += 1
-print("exported", n, "rows to", OUT)
+def main():
+    files = sorted(glob.glob('/project/alex_phd/cache/huggingface/hub/datasets--oolongbench--oolong-synth/snapshots/*/data/validation-*.parquet'))
+    n = 0
+    with open(OUT, "w") as out:
+        for f in files:
+            t = pq.read_table(f).to_pandas()
+            t = t[t["context_len"] <= 32768]
+            for _, r in t.iterrows():
+                gold = parse_gold(r["answer"])
+                out.write(json.dumps(dict(id=int(r["id"]), context_len=int(r["context_len"]), dataset=r["dataset"], question=r["question"],
+                                          task_group=r["task_group"], task=r["task"], answer=gold, answer_type=str(r["answer_type"]),
+                                          input_subset=str(r["input_subset"]), num_labels=int(r["num_labels"]), context_window_id=int(r["context_window_id"]),
+                                          context=r["context_window_text"])) + "\n")
+                n += 1
+    print("exported", n, "rows to", OUT)
+
+
+if __name__ == "__main__":
+    main()

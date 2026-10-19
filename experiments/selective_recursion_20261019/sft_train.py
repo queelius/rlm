@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import sys
 import time
@@ -11,7 +12,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-MODEL = "/project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554"
+MODEL = os.environ.get("SR_MODEL", "/project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554")
+DEVICE = os.environ.get("SR_DEVICE", "cuda:0")
 
 
 def main():
@@ -58,7 +60,7 @@ def main():
                           completion_tokens=sum(len(c) for _, c in encoded))), flush=True)
 
     model = AutoModelForCausalLM.from_pretrained(MODEL, local_files_only=True, dtype=torch.bfloat16,
-                                                 attn_implementation="sdpa", device_map={"": "cuda:0"})
+                                                 attn_implementation="sdpa", device_map={"": DEVICE})
     model.gradient_checkpointing_enable()
     model.config.use_cache = False
     cfg = LoraConfig(r=args.lora_r, lora_alpha=2 * args.lora_r, lora_dropout=0.0, bias="none",
