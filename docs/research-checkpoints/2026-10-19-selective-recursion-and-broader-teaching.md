@@ -174,6 +174,36 @@ Mixed-task RL (`rl-mixed-001`) starts from SFT-005: 16 tasks per step (8 event-l
 windows up to 8k tokens), 4 samples per task at temperature 1, reward = correct − 0.1 × tokens/10k,
 REINFORCE with a leave-one-out baseline, LoRA updates on GPU 0 and adapter hot-swap into vLLM.
 
+## First RL result (10:45 UTC)
+
+`rl-mixed-001`: 30 updates from SFT-005, 64 rollouts per update (16 tasks × 4 samples; half
+event-log tasks, half OOLONG training windows up to 8k tokens), temperature 1, reward
+correct − 0.1 × tokens/10k, REINFORCE with a leave-one-out baseline, about 3.5 minutes per update
+(rollouts on GPU 1, LoRA update on GPU 0, adapter hot-swapped into vLLM). Every task group had
+reward variance from the first update (cost differences between program variants even when all
+samples are correct). The small mixed dev set (46 tasks) stayed between 0.87 and 0.93 throughout,
+so the full held-out evaluations decide:
+
+| Controller | Event-log dev, aggregation 96 tasks (tokens) | Event-log lookups | OOLONG held-out 72 rows by length 1k/2k/4k/8k/16k/32k | OOLONG all (tokens) |
+| --- | --- | --- | --- | --- |
+| SFT-005 (warm start) | 86/96 (19k) | 24/24 | 7 / 4 / 9 / 7 / 7 / 2 of 12 | 36/72 = 0.50 (9k) |
+| RL step 10 | 86/96 (21k) | 24/24 | 7 / 7 / 8 / 7 / 7 / 6 | 42/72 = 0.58 (14k) |
+| RL step 30 (final) | 88/96 (20k) | 24/24 | 7 / 7 / 8 / 7 / 7 / 5 | 41/72 = 0.57 (14k) |
+| Direct answering | 20/96 | 23/24 | 6 / 4 / 4 / 1 / 0 / 1 | 16/72 = 0.22 (13k) |
+| Untrained controller | 14/96 | 24/24 | 3 / 1 / 2 / 0 / 0 / 2 | 8/72 = 0.11 (16k) |
+
+RL raised held-out OOLONG accuracy from 0.50 to 0.57 while leaving the in-distribution event-log
+results essentially unchanged. The gain is concentrated at 32k tokens, a length never seen in RL
+training: SFT-005 chose 12-line chunks there and exceeded the helper-call budget in 9 of 12 runs
+(cheap failures at 5k tokens), whereas the RL policy completes those runs (about 58 helper calls,
+34k tokens) and solves 5 to 6 of 12. The RL policy also uses more helper calls on event-log tasks
+(17 instead of 10 at 128 records), costing about 10 percent more tokens for the same accuracy, so
+the cost term at 0.1 per 10k tokens is not yet shaping behaviour strongly. Pending: the same run
+without the cost term (`rl-mixed-nocost-001`, running), a second seed (`rl-mixed-002`) and a
+stronger cost term (`rl-mixed-lam03-001`), each followed by the same held-out evaluations. Twelve
+rows per OOLONG length is a small sample; the 32k difference (2 versus 5 to 6 of 12) is the only
+per-length change outside ordinary variation.
+
 ## Operations notes (continued)
 
 - The project volume reached its 1.1 TB quota at 06:46 UTC and an adapter save failed. The study's
