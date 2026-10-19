@@ -36,7 +36,7 @@ def route_of(trace_dir: str | None) -> str:
 
 def main(paths: list[str]) -> None:
     for path in paths:
-        rows = [json.loads(line) for line in open(path)]
+        rows = [json.loads(line) for line in Path(path).read_text().splitlines()]
         table = collections.defaultdict(lambda: collections.defaultdict(lambda: [0, 0, 0]))
         for row in rows:
             route = route_of(row["trace_dir"])
