@@ -354,6 +354,16 @@ tokens (22/22, 6/8, 16/16, 16/16), all longer trajectories unchanged. SFT-007 tr
 control run, followed by RL at 0.1 and 0.3 cost (`pipeline11_gpu0.log`), each evaluated at
 temperature 0 and sampled at temperature 1 on short inputs to read the learned route shares.
 
+Control result (21:35 UTC). `rl-route-lam01` (30 updates from SFT-006, 0.1 cost; final dev 0.891)
+sampled no direct route on any task from step 8 to step 30 (per-step route shares recorded in
+`route-shares.jsonl`; event-log 8 records 94/96 decompose plus lookups, OOLONG 1k 135/181 decompose,
+0 direct), so the one-in-five direct share seen on OOLONG 1k in steps 1 to 4 was driven to zero: RL
+suppressed the worse route. Held out at temperature 0 it decomposes everywhere, scores 39/72 on the
+OOLONG sample (SFT-006 34/72; the earlier RL runs 40 to 42) at 12k tokens with 4 budget errors, and
+86/96 on event-log aggregation (SFT-006 87/96), lookups 24/24, keeping the warm start's 24-line
+chunking. So the control reproduces the earlier RL gain and shows the expected suppression, and it
+cannot speak to discovering a good direct route, as predicted.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
