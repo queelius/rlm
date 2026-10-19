@@ -250,6 +250,7 @@ tasks; helper-call limits raised to 160 for every controller):
 | Scripted expert (12-line chunks) | 13/16 | 111 | 99k | 4/4 |
 | SFT-005 warm start | 14/16 | 60 | 94k | 4/4 |
 | SFT-005 + RL (0.1 cost) | 9/16 | 111 | 102k | 4/4 |
+| Direct answering | 0/16 | 1 | 29k | 1/4 |
 
 The warm start generalizes to the longer input with 24-line chunks; the cost-aware RL policy, which
 had drifted to 12-line chunks on this family, loses five tasks there because more helper calls
