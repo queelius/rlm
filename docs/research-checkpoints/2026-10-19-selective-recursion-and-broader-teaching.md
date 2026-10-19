@@ -222,6 +222,20 @@ some timeline questions (51 to 45 of 62). The RL controller is within the expert
 expert's cost. Direct answering on the same 293 rows and the no-cost, second-seed and stronger-cost
 RL runs are in progress.
 
+## No-cost ablation (13:05 UTC)
+
+`rl-mixed-nocost-001` repeats the RL run with the cost term removed (reward = correctness only),
+same seed and task sequence. On the 72-row OOLONG sample it scores 40/72 versus 41/72 for the
+cost-aware run and 36/72 for the warm start, with the same recovery at 32k tokens (6 of 12, no
+budget errors) and the same cost (13k versus 14k tokens). On the event-log dev split it scores
+85/96 aggregation and 24/24 lookups while keeping the warm start's chunking and cost (18k tokens),
+whereas the cost-aware run drifted to smaller chunks and about 10 percent more tokens (20k). So at
+0.1 per 10k tokens the cost term neither produced the OOLONG gain nor reduced cost; the gain comes
+from the correctness signal teaching budget-safe chunking at long inputs. A second seed of the
+cost-aware run and a 0.3 cost term are running to separate seed noise from the cost term's effect.
+(The no-cost run's step-30 dev entry was lost to an adapter-name collision with the first run,
+fixed afterwards; its step-30 adapter was saved and is the one evaluated here.)
+
 ## Operations notes (continued)
 
 - The project volume reached its 1.1 TB quota at 06:46 UTC and an adapter save failed. The study's
