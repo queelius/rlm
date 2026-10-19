@@ -27,21 +27,25 @@ every win from saved final inventories and reconciles plan identity and call rec
 Store: `/project/alex_phd/runs/rlm-teaching-goal-20261014/broader-structure-001/`
 (`BROADER-QUEUE.json`, `world*/eval-*/SUMMARY.json`, `LITE-AUDIT.json`).
 
-Readout (16 attempts per arm per world; world 2 longer-training arm still running at 05:00 UTC):
+Readout (16 attempts per arm per world; complete at 05:27 UTC, receipt in `2026-10-19-teaching-broader-worlds.json`):
 
 | Arm (first-fit actors, seed 2026092208) | World 2026101501 | World 2026101502 |
 | --- | ---: | ---: |
 | Original examples, 23 updates | 2/16 | 1/16 |
 | Repaired examples, 23 updates | 6/16 | 5/16 |
 | Discovery examples, 23 updates | 3/16 | 5/16 |
-| Original examples, 69 updates | 8/16 | pending |
+| Original examples, 69 updates | 8/16 | 3/16 |
 
-Repair beats the matched original teacher on both new worlds, as on the pilot world. It does not
-beat the discovery teacher on world 2 and does not beat longer original training on world 1,
-where the 69-update actor is the best arm (the opposite of the pilot world's second fit, where it
-scored 0/16). The repair-versus-original contrast therefore replicates across three worlds and two
-fits, while the comparison against stronger controls remains world-dependent. Lite audits agree
-with the collector's native scores on every completed arm.
+Repair beats the matched original teacher on both new worlds, as on the pilot world. Against the
+discovery teacher it ties or leads by small margins (6 vs 3, 5 vs 5). Against 69 updates of original
+training it loses on world 1 (6 vs 8) and wins on world 2 (5 vs 3); that control is itself world-
+and fit-sensitive (8/16 and 3/16 here, 5/16 and 0/16 on the pilot world's two fits). Pooled over the
+two new worlds: original 3/32, repaired 11/32, discovery 8/32, original-69 11/32. The narrow
+repair-over-original effect therefore replicates across three worlds and two fits; superiority to
+the stronger controls does not. Lite audits agree with the collector's native scores on every arm,
+and all eight queue jobs exited 0. Decision: this closes the approved comparison. The teaching line
+is worth a short workshop-style write-up of the replicated contrast with its controls; it does not
+justify further GPU time in this allocation.
 
 ## Track B: learned selective recursion (GPU 1 serving, GPU 0 training after Track A)
 
