@@ -85,14 +85,16 @@ def main():
     p.add_argument("--harness", default="default", choices=("default", "hinted"))
     p.add_argument("--diversify", action="store_true", help="sample chunk size, prompt phrasing and filter per task")
     p.add_argument("--unified", action="store_true", help="family-agnostic peek first (expert.UnifiedExpert)")
+    p.add_argument("--max-subcalls", type=int, default=80)
+    p.add_argument("--max-model-calls", type=int, default=96)
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     lo, hi = args.seeds.split("-")
     tasks = [taskgen.make_task(s, int(n), qt, split=args.split) for n in args.ns.split(",")
              for qt in args.qts.split(",") for s in range(int(lo), int(hi) + 1)]
     ra = SimpleNamespace(base_url=args.base_url, api_key=args.api_key, public_model=args.public_model,
-                         harness=args.harness, controller_max_output=2048, max_turns=6, max_model_calls=96,
-                         max_subcalls=80, max_total_tokens=400_000, deadline=900.0, exec_timeout=540.0, temperature=0.0)
+                         harness=args.harness, controller_max_output=2048, max_turns=6, max_model_calls=args.max_model_calls,
+                         max_subcalls=args.max_subcalls, max_total_tokens=400_000, deadline=900.0, exec_timeout=540.0, temperature=0.0)
     trace_dir = args.out / "traces"
     rows_path, sft_path = args.out / "rows.jsonl", args.out / "sft.jsonl"
     lock = threading.Lock()
