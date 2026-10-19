@@ -270,8 +270,11 @@ warm start: 86), lookups 24/24. Both cost-aware seeds moved event-log chunking f
 (7/10/17/30/57 helper calls at 32 to 512 records versus 5/7/10/17/32 for the warm start), while
 the no-cost run kept the warm start's chunking. So that drift is systematic for the 0.1 cost term,
 not seed noise, although its mechanism is unclear: the 12-line variant costs about 10 percent more
-tokens, so the cost term alone should push the other way. The full 293-row evaluation of seed 2
-and the 0.3-cost run are in progress.
+tokens, so the cost term alone should push the other way. On all 293 held-out rows seed 2 scores 187/293 = 0.638 [0.58, 0.69] (40 paired gains, 19
+losses against the warm start; 27/50 at 32k). The three RL runs so far (0.652, 0.638 with no
+cost term, 0.638 second seed) therefore agree on a gain of 7 to 9 points over the warm start's
+0.567, each driven by the 32k recovery and small gains at 1k to 2k. The 0.3-cost run is in
+progress.
 
 ## Routing experiment, teaching stage (16:30 UTC)
 
