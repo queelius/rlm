@@ -101,6 +101,7 @@ def main():
     p.add_argument("--temperature", type=float, default=0.7)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--register", action="store_true", help="write the accepted routine to skills/learned/")
+    p.add_argument("--max-output-tokens", type=int, default=2048, help="raise for thinking models that reason before the code")
     p.add_argument("--repair-rounds", type=int, default=0,
                    help="after a round with no accepted candidate, show the proposer the best candidate and its failing cases and ask for a revision")
     a = p.parse_args()
@@ -151,10 +152,11 @@ def main():
                 (out / f"repair-prompt-{rnd}.txt").write_text(round_prompt)
             for k in range(a.candidates):
                 t0 = time.time()
-                r = client.responses.create(model=a.model, input=round_prompt, temperature=a.temperature, max_output_tokens=2048)
+                r = client.responses.create(model=a.model, input=round_prompt, temperature=a.temperature,
+                                            max_output_tokens=a.max_output_tokens)
                 text = r.output_text or ""
-                m = re.search(r"```python\n(.*?)```", text, re.S)
-                code = m.group(1) if m else text
+                blocks = re.findall(r"```python\n(.*?)```", text, re.S)
+                code = blocks[-1] if blocks else text.split("</think>")[-1]  # the last block, after any thinking
                 acc, fails, results = verify(code, fn, recs)
                 acc_gold, _, _ = verify(code, fn, recs, use_gold=True)
                 rec = dict(round=rnd, k=k, acc=acc, acc_gold=acc_gold, n=len(recs), fails=fails, seconds=round(time.time() - t0, 1),
