@@ -85,6 +85,10 @@ def hinted_harness_spec():
     )
 
 
+STATS_TABLE = None  # routine-outcome statistics table (skills.stats), set from --stats-file
+STATS_LAM = 0.05
+
+
 def skills_harness_spec(task=None):
     """Per-task harness: the retrieved library skills prebound through the harness prelude (L1 proper).
 
@@ -98,7 +102,16 @@ def skills_harness_spec(task=None):
     prelude = registry.prelude_for(names)
     note = registry.policy_note(names) if names else ""
     policy = P.DEFAULT_POLICY + ("\n" + note + "\n" if note else "")
-    prompt = PromptSpec(name="skills", version="2", protocol=P.DEFAULT_PROTOCOL, policy=policy)
+    version = "2"
+    if STATS_TABLE is not None and task is not None:
+        from skills import stats
+
+        sig = stats.signature_from_input(getattr(task, "prompt", "")) or registry.signature(task)
+        hist = stats.note_for(sig, STATS_TABLE, lam=STATS_LAM)
+        if hist:
+            policy += "\n" + hist + "\n"
+            version = "2+stats"
+    prompt = PromptSpec(name="skills", version=version, protocol=P.DEFAULT_PROTOCOL, policy=policy)
     return HarnessSpec(
         prompt=prompt,
         rendered_prompts=PromptDigests(
@@ -358,6 +371,8 @@ def main():
     p.add_argument("--temperature", type=float, default=0.7)
     p.add_argument("--direct-max-output", type=int, default=4096)
     p.add_argument("--harness", default="default", choices=("default", "hinted", "skills", "exemplars"))
+    p.add_argument("--stats-file", default=None, help="routine statistics table for the skills harness note")
+    p.add_argument("--stats-lam", type=float, default=0.05)
     p.add_argument("--controller-max-output", type=int, default=1024)
     p.add_argument("--max-turns", type=int, default=10)
     p.add_argument("--max-model-calls", type=int, default=96)
@@ -367,6 +382,12 @@ def main():
     p.add_argument("--exec-timeout", type=float, default=540.0, help="per-cell IPython execution cap")
     p.add_argument("--limit", type=int, default=0, help="debug: only first K jobs")
     args = p.parse_args()
+    if args.stats_file:
+        from skills import stats as _stats
+
+        global STATS_TABLE, STATS_LAM
+        STATS_TABLE = _stats.load(args.stats_file)
+        STATS_LAM = args.stats_lam
 
     args.out.mkdir(parents=True, exist_ok=True)
     trace_dir = args.out / "traces"
