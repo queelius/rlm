@@ -474,6 +474,14 @@ smaller than the policy-gradient term even at that position. The run was stopped
 artifacts kept. The sequence-normalized arms were started in its slot, and a KL arm with
 coefficient 5 (alone and with short weighting) was queued after them (`pipeline17_gpu0.log`).
 
+Relative-cost run, seed 1, complete (06:00 UTC). `rl-route7-rel05-s1` reproduces seed 0: the
+direct route was sampled only in steps 1 and 2 and never after; held out it decomposes everywhere
+(0 of 32 sampled 8-record tasks at temperature 1), scores 43/72 on the OOLONG sample at 14k tokens
+(seed 0: 42/72) and 87/96 on event-log aggregation (seed 0: 86/96), lookups 24/24. Unlike seed 0
+it moved to 12-line chunks on the event-log family (7/10/17/30/57 helper calls), as the two
+absolute-0.1 seeds of the earlier study did. So the extinction of the direct route under the
+group-relative cost is a two-seed result, and the usual RL gain comes with it.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
