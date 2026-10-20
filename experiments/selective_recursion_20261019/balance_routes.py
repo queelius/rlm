@@ -23,6 +23,8 @@ def main() -> None:
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--floor", type=int, default=8)
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--consistent", action="store_true",
+                   help="teach a deterministic rule: direct only at 8 records, decomposition everywhere else")
     args = p.parse_args()
     rows = []
     for index, f in enumerate(args.data):
@@ -47,7 +49,12 @@ def main() -> None:
     for key, by_route in sorted(groups.items(), key=str):
         direct = by_route.get("direct", [])
         decomp = sorted(by_route.get("decompose", []))
-        if key in SHORT:
+        if args.consistent:
+            if key == ("eventlog", 8):
+                decomp = []  # only the direct route is taught at 8 records
+            else:
+                direct = []  # decomposition everywhere else
+        elif key in SHORT:
             target = max(len(direct), args.floor)
             rng.shuffle(decomp)
             decomp = decomp[:target]
