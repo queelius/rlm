@@ -1,7 +1,7 @@
 # Hugging Face release list (draft, 2026-10-20)
 
 Fill from `experiments/selective_recursion_20261019/manifest.json` (hashes, run paths) and
-`docs/RESULTS.md` (numbers). Upload after `hf auth login` on the cluster.
+`docs/RESULTS.md` (numbers). Login done 2026-10-20 (`oauth-queelius`). Uploaded so far, **private** until reviewed: `queelius/rlm-qwen3-4b-sft-005` and `queelius/rlm-qwen3-4b-rl-mixed-001` (adapter_config.json, adapter_model.safetensors 252 MB, README card from the template).
 
 | HF repo | Local artifact | Training paragraph | OOLONG 293 | Event-log 96 |
 | --- | --- | --- | ---: | ---: |
