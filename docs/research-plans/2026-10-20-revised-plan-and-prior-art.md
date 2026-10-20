@@ -149,6 +149,35 @@ The one-card limit is the serving card: controller and helpers share it, so an 8
 8B helpers halves rollout throughput relative to 4B. The capacity study (item 6 above) therefore
 uses an 8B controller with 4B helpers first.
 
+## Harness-side learning and role adapters (added 07:10 UTC after the user's questions)
+
+Serving note: a second model does not require unloading the first. Two vLLM processes can share
+one 40 GB card with reduced memory fractions (4B at about 0.25, 8B at about 0.55), each started
+once (about 90 s); per-request LoRA adapters on one base are the cheapest form of this and are
+what the controller adapters already use, with the un-adapted base as helper.
+
+Prior art: GEPA (Agrawal et al., arXiv:2507.19457, ICLR 2026 oral; repository already cloned under
+`research-cache/repos/gepa`) evolves prompts and other text parameters by reflection and beats
+GRPO by 6 points on average with up to 35 times fewer rollouts, though GRPO still wins on AIME;
+Meta-Harness (arXiv:2603.28052, cloned) and Harness-1 (arXiv:2606.02373, cloned) search the code
+around a fixed model end to end; self-generated in-context exemplars (NeurIPS 2025) raise ALFWorld
+from 73 to 89 percent by retrieving the agent's own successful trajectories, 93 with curation;
+ExpeL, JARVIS-1, SkillRL (2026), AutoRefine (2026) and SkillsVote (2026) distill trajectories into
+retrievable insights or skills. The RLM state is unusually retrieval-friendly: request metadata,
+the peek output and a namespace summary are a few hundred tokens, and the same keys apply to a
+sub-problem in a recursive call.
+
+| Id | Question | Design | Cost | Decision |
+| --- | --- | --- | --- | --- |
+| H1 | Does retrieving one exemplar cell by state (family, length bucket, question type) from our teaching traces let the *untrained* 4B controller execute the routine? | Library = `teach-003/004` and OOLONG cells; inject the exemplar through the harness hint; evaluate on the held-out splits against base, SFT-005 and RL | no training; about 1 GPU-hour of evaluation | retrieval-augmented base within 5 points of SFT-005 means the routine is a prompting problem, not a weights problem |
+| H2 | Does retrieval give routing without gradients? | Same library keyed by length; at 8 records the retrieved exemplar is a direct answer; on top of SFT-007 and on top of the base | about 1 GPU-hour | direct share at 8 records with no loss elsewhere |
+| H3 | Can GEPA evolve the harness hint text to do what RL could not? | GEPA over the hint and bootstrap wording, metric = held-out correctness minus a token cost, budget 500 rollouts | about 2 GPU-hours of rollouts | beats SFT-007 at equal tokens, or routes correctly |
+| H4 | Role adapters: does co-training a helper adapter with the controller adapter beat a fixed base helper? | Two LoRA adapters on one base, alternating updates, helper reward = extraction correctness, controller reward as now | one RL run, about 4 GPU-hours | revisits ledger C07/C08 (helper SFT improved labels but the root did not exploit them) |
+
+Recursive calls at depth above one are not exercised by the current expert (helpers are
+`ask_batch` calls, not nested controllers); H1 and H2 apply unchanged to a nested controller because
+the retrieval key is the state shape, which is worth testing once a depth-2 teacher exists.
+
 ## Time budget
 
 Allocation ends 2026-10-22 00:39 UTC. Pipelines 14, 16 and 17 (short-weighted, sequence-normalized,
