@@ -79,7 +79,7 @@ QUESTION_TYPES = ("count_buyers", "both_items", "net_units", "bought_then_return
 AGGREGATE_TYPES = QUESTION_TYPES[:4]
 # Held-out types for the library-growth experiment (E08): not covered by the taught routines or the
 # shipped library, generated under the same schema so prior task ids are unchanged.
-HELDOUT_TYPES = ("top_buyer", "purchase_span", "busiest_day")
+HELDOUT_TYPES = ("top_buyer", "purchase_span", "busiest_day", "same_day_cross")
 
 
 def plural(item: str, q: int) -> str:
@@ -167,6 +167,14 @@ def _answer(question_type: str, events: list[Event], a: str, b: str | None) -> t
                 per_day[e.day] = per_day.get(e.day, 0) + e.qty
         top = max(per_day.values())
         return str(min(d for d, q in per_day.items() if q == top) + 1), "integer", sum(e.item == a for e in buys)
+    if question_type == "same_day_cross":
+        # join: buyers of a on a day when a different person returned a
+        ret_days: dict[int, set] = {}
+        for e in rets:
+            if e.item == a:
+                ret_days.setdefault(e.day, set()).add(e.person)
+        people = sorted({e.person for e in buys if e.item == a and e.day in ret_days and ret_days[e.day] - {e.person}})
+        return (", ".join(people) if people else "none"), "name_list", sum(e.item == a for e in buys + rets)
     raise ValueError(question_type)
 
 
@@ -196,6 +204,9 @@ def _question(question_type: str, a: str, b: str | None) -> tuple[str, str]:
         return (f"On which day were the most units of {a} bought in total, counting every purchase that day "
                 f"(returns do not count)? If several days tie, give the earliest. Answer with the day number only.",
                 "a single integer")
+    if question_type == "same_day_cross":
+        return (f"Which people bought a {a} on a day when a different person returned a {a}?",
+                "the names in alphabetical order separated by commas, or the word none")
     raise ValueError(question_type)
 
 
@@ -246,6 +257,12 @@ def make_task(seed: int, n_records: int, question_type: str, *, split: str = "tr
                 events[k] = Event("buy", leaders[0], a, events[k].qty + 1, events[k].day)
             else:
                 events.append(Event("buy", leaders[0], a, 1, rng.randrange(len(DAYS))))
+    if question_type == "same_day_cross":
+        # plant two cross-person same-day pairs so the answer is rarely "none"
+        for k in range(3, min(5, n_records)):
+            buyer = events[k - 3]
+            other = rng.choice([p for p in people if p != buyer.person])
+            events[k] = Event("return", other, a, rng.randint(1, 3), buyer.day)
     if question_type == "bought_then_returned":
         for k in range(6, min(9, n_records)):
             buyer = events[k - 6]
