@@ -68,7 +68,7 @@ inside files, not in folder names.
    with the CURL raw curves as a release asset, not tracked files; then remove those folders here.
    **Done locally 2026-10-20** (`/project/alex_phd/repos/spo-gsm8k-reproduction`, 110 commits;
    `/project/alex_phd/repos/rl-reproductions`, 76 commits; history filtered with git filter-repo;
-   see `docs/PATH_MAP.json`). GitHub creation and the removal from this repo await user review.
+   see `docs/PATH_MAP.json`). Pushed 2026-10-20 as private repositories `queelius/spo-gsm8k-reproduction` and `queelius/rl-reproductions` (release v0.1.0 with the CURL curves). Removal of the folders from this repo awaits the user's review of both.
 5. Fast-forward `main` to the research branch; remove stale worktrees after confirming no live
    process uses them.
 6. Hugging Face: model cards and dataset cards for the salient adapters and teaching/eval sets.
