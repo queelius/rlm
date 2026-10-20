@@ -194,3 +194,10 @@ splits, global budgets, trace semantics, or fatal-error handling.
 The IPython executor is process-isolated but **not** a security sandbox.
 Generated code has the file, network, and process permissions of the current
 OS user. Run only trusted generated code and treat traces as sensitive.
+
+## Related reproductions
+
+Three paper reproductions done as training-pipeline exercises in October 2026 live in their own
+repositories: [SPO on GSM8K](https://github.com/queelius/spo-gsm8k-reproduction) (audited,
+58.19 percent versus the paper's 56.7) and [R1-style Dr. GRPO and CURL](https://github.com/queelius/rl-reproductions).
+See `docs/PATH_MAP.json` for where their former folders went.
