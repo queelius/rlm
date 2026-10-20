@@ -1,0 +1,231 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,booktabs,array}
+\definecolor{Ink}{HTML}{17324D}
+\definecolor{Teal}{HTML}{007F7B}
+\definecolor{Gray}{HTML}{657483}
+\definecolor{Rust}{HTML}{B5533C}
+\definecolor{Soft}{HTML}{EEF3F6}
+\setbeamercolor{alerted text}{fg=Rust}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=Teal}
+\setbeamercolor{block title}{fg=white,bg=Teal}
+\setbeamercolor{block body}{fg=Ink,bg=Soft}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=9mm,text margin right=9mm}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Library and statistics for recursive language models | advisor update, 21 Oct 2026\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\newcommand{\source}[1]{\vfill{\scriptsize\color{Gray}#1\par}}
+\hypersetup{pdftitle={Where should a small controller's skill live?},pdfauthor={Alex Towell}}
+\title{Where should a small controller's skill live?}
+\subtitle{Routines in a library, route choice in a table of verified outcomes}
+\author{Alex Towell}
+\date{Advisor meeting, 21 October 2026}
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\vfill
+\begin{block}{In one sentence}
+Moving the decomposition routine out of the weights into a prebound library, and the
+direct-versus-decompose choice into a table of verified outcomes, lets an \emph{untrained} 4B
+controller match or beat every controller we trained, at lower cost, on both task families.
+\end{block}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Where we were: learned selective recursion, and routing collapse.}
+\small
+\textbf{Setup.} Qwen3-4B controls a recursive language model (RLM): it writes Python cells, calls
+helper models on chunks, and submits an answer. Two families: a synthetic store log (8 to 512
+lines, five question forms) and OOLONG-synth (1k to 32k tokens).
+\medskip
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\textbf{What worked.} Teaching by replaying a scripted expert, then RL with a verifiable reward:
+held-out OOLONG 0.567 (taught) to 0.652 (RL); direct answering 0.208.
+\medskip
+
+\textbf{What did not.} Every RL form lost the \emph{route choice} (answer directly on short
+inputs, decompose on long ones): absolute and relative cost, KL to the warm start, sequence
+normalisation, short-task weighting, stratified sampling, a balance term.
+\end{column}
+\begin{column}{.49\textwidth}
+\begin{block}{The decisive pair}
+A consistent teacher makes the rule learnable by supervised fine-tuning (direct on 38 of 40 short
+tasks, decompose on 31 of 32 long ones). RL started \emph{from that correct router} is all-direct
+by step 5 (dev 0.87 to 0.30).
+\end{block}
+The rule is representable; policy-gradient dynamics move it globally. Routing collapse is also
+reported in the literature (Kassenaar et al. 2026).
+\end{column}
+\end{columns}
+\source{Ledger E06, E07-1 to E07-9 in docs/RESULTS.md. One seed per arm except where stated; synthetic families; exact-match scoring.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Put the routine in a library: the untrained controller matches the trained ones.}
+The kernel now runs a \emph{prelude}: library code bound before the first cell, listed in the
+prompt by name and contract, never shown as source. The controller only has to call it.
+\begin{center}\footnotesize
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Store log, dev split (96 aggregation and 24 lookup tasks) & Aggregation & Lookups & Tokens/task \\
+\midrule
+Scripted expert (full programs in its cells) & 88/96 & 24/24 & 17.0k \\
+Taught controller SFT-005 (routine in the weights) & 86/96 & 24/24 & 15.8k \\
+Untrained 4B with no library & 46/192 & 36/48 & --- \\
+\textbf{Untrained 4B + prebound library} & \textbf{85/96} & \textbf{23/24} & 16.8k \\
+Controller taught to call the library (SFT-009) & 85/96 & 24/24 & 14.9k \\
+\midrule
+OOLONG-synth, 72-row sample & Correct & Errors & Tokens \\
+\midrule
+Taught SFT-005 & 36/72 & 10 & 9k \\
+Best RL controller & 41/72 & 1 & 14k \\
+\textbf{Untrained 4B + OOLONG library} & \textbf{43/72} & \textbf{0} & \textbf{10k} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\small Teaching the call pattern (SFT-009) adds only the cheap lookup route, at four times the tokens
+on short tasks.
+\source{Ledger L1-b to L1-d, L4. No-library row: baseline sweep. OOLONG expert: 0.672 on the 293-row held-out set; the library's 293-row run is in progress.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Put the route choice in a table: no training, best accuracy, lowest cost.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.5\textwidth}
+\textbf{The table.} Every logged run on the teaching split contributes (input signature, routine,
+correct, tokens). The signature is computed from the input text alone: family, line-count
+bucket, question form.
+\medskip
+
+\textbf{The note.} At run time the harness retrieves the history for the input's signature and
+renders it in the prompt with one recommendation: highest accuracy minus 0.05 per 10k tokens.
+\medskip
+
+\textbf{Result.} The untrained controller follows the recommendation on 120 of 120 dev tasks.
+\end{column}
+\begin{column}{.46\textwidth}
+\scriptsize
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Dev split & Agg. & Lookups & Tokens \\
+\midrule
+Untrained + library & 85/96 & 23/24 & 16.8k \\
+\quad lookups alone & & & 17.3k \\
+\textbf{+ statistics note} & \textbf{87/96} & \textbf{24/24} & \textbf{14.3k} \\
+\quad lookups alone & & & \textbf{1.6k} \\
+Scripted expert & 88/96 & 24/24 & 17.0k \\
+\bottomrule
+\end{tabular}
+\medskip
+
+\begin{block}{Why it cannot collapse}
+The table is a lookup over verified outcomes per signature. Nothing is trained, so no
+gradient can move one bucket's choice to all buckets.
+\end{block}
+\end{column}
+\end{columns}
+\source{Ledger L3a; skills/stats.py; table built from the teaching and train splits only. Greedy recommendation; a bandit with exploration is the next step.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{A library must not overclaim: what happens off its coverage.}
+Three question forms the library does not cover were added to the generator (most-buying person,
+purchase span, busiest day with a tie rule).
+\medskip
+\begin{center}\footnotesize
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.5\textwidth}r>{\raggedright\arraybackslash}p{.32\textwidth}@{}}
+\toprule
+72 held-out dev tasks & Correct & What the controller does \\
+\midrule
+Direct answer, no library & 29/72 & fine to 64 lines, near zero above \\
+Untrained + shipped library (docstring claims every form) & \alert{0/72} & submits the library's ``unknown'' \\
+Untrained + honest library (None off coverage; look first) & 34/72 & writes its own aggregation \\
+\quad of which top buyer & 1/24 & right name, wrong format in 20 of 24 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Reading.} A trusting controller plus an overclaiming library is worse than no library. An honest
+contract recovers most of it; the residual losses, exact output format and budget-safe chunking, are
+what a verified routine provides.
+\source{Ledger E08-0, E08-1. A first honest variant let the controller guess before it had seen the question (0/3); the fix: look first, aggregate next cell.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Grow the library by verification: the librarian loop.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.5\textwidth}
+\small
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item Cache the model's own event extractions for the teaching tasks of the new form.
+\item Ask the proposer (the same 4B) for candidate routines, given the event schema, the shipped
+aggregator as style, and three teaching examples with gold answers.
+\item Verify each candidate on the cached extractions against gold; keep the best above threshold.
+\item Register it with its verification record, so it enters the statistics table like any
+logged route.
+\end{enumerate}
+\end{column}
+\begin{column}{.46\textwidth}
+\begin{block}{Result (to be filled in from E08)}
+Dry run: both candidates for the first form verified 12 of 12 teaching tasks. After-growth dev
+numbers for the three forms are being computed at the time of writing.
+\end{block}
+\small Only the teaching split seeds the library. Verification uses the model's extractions, not
+the generator's hidden events, so acceptance reflects what a deployed controller sees.
+\end{column}
+\end{columns}
+\source{librarian.py, extract\_cache.py; runs e08-*. Prior art: Voyager, LILO (2023), Agent Workflow Memory (2024), SkillRL, AutoRefine (2026).}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{What this changes, and what to test next.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\small
+\textbf{The claim, sharpened.} For a small controller, capability belongs in a library of verified
+programs over the kernel's ABI, selection in outcome statistics keyed by the input; the weights
+only call and compose. RL's remaining job is where verification is unavailable: helper quality,
+and proposing routines the librarian then verifies.
+\medskip
+
+\textbf{Limits.} Synthetic families; one seed per arm; exact-match scoring; a greedy table keyed
+by hand-chosen signature features; growth tested on easy forms first.
+\end{column}
+\begin{column}{.48\textwidth}
+\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.4\linewidth}>{\raggedright\arraybackslash}p{.56\linewidth}@{}}
+\toprule
+Question & Smallest test \\
+\midrule
+Growth on a harder form? & joins across people and items; 8B proposer; count rejected candidates \\[1mm]
+Online selection? & Thompson sampling over the table on a mixed stream; regret vs greedy \\[1mm]
+External validity? & OOLONG-real with the library; the 293-row held-out run \\[1mm]
+A smaller caller? & 1.7B with the same library and table \\
+\bottomrule
+\end{tabular}
+\end{column}
+\end{columns}
+\source{Plan of record: docs/research-plans/2026-10-20-revised-plan-and-prior-art.md. Allocation ends 22 October 00:39 UTC.}
+\end{frame}
+
+\appendix
+\begin{frame}[t]
+\frametitle{Appendix: protocol and provenance.}
+\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.24\textwidth}>{\raggedright\arraybackslash}p{.70\textwidth}@{}}
+\toprule
+Item & Protocol \\
+\midrule
+Models & Qwen3-4B-Instruct-2507 as controller and helper, served by vLLM 0.27.1 with LoRA hot-loading; two A100 40GB. \\[1mm]
+Families and splits & Store log: train, teach (seeds 16 to 23) and dev (seeds 1000 to 1003) by seed namespace; OOLONG-synth: even context windows teach, odd held out; 72-row sample across six lengths. \\[1mm]
+Library & Event-log skills: split, chunked extraction by helper calls, exact aggregation, cheap lookup; OOLONG skills: parse, classify, aggregate. Bound by the kernel prelude, digest in the harness fingerprint, hidden from the variable listing. \\[1mm]
+Statistics & Routine classified from the controller's cells in the trace; costs are total tokens; scripted replays get a 1.5k controller overhead added. \\[1mm]
+Scoring & Exact match after normalisation (integers; sorted name lists). Failed and aborted runs preserved with notes. \\
+\bottomrule
+\end{tabular}
+\source{Code: github.com/queelius/rlm (experiments/selective\_recursion\_20261019, src/rlm); ledger docs/RESULTS.md; notebook docs/notebook/2026-10-19-*.md.}
+\end{frame}
+\end{document}
