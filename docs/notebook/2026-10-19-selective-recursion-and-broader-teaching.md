@@ -554,8 +554,10 @@ start. By step 2 the direct route had spread to 64 records (1 of 12 correct) and
 15); by step 3 it was the route on every length sampled: 32 records 4/4, 64 records 5/16, OOLONG
 1k 5/8, 2k 2/3, 4k 0 of 8 with 8 budget failures. So on-policy RL did not keep a correct
 length-conditional policy it was handed; within two updates it generalized the cheaper cell to
-lengths where it fails outright. Together with E07-7 (SFT can learn the rule) and E07-8 (the
-stratified lanes flip to opposite single modes), this closes the question for this setup:
+lengths where it fails outright. At the step-5 checkpoint its dev accuracy had fallen from 0.87 to 0.304, the all-direct
+state; the run was stopped there with its step-5 adapter kept and evaluated. Together with
+E07-7 (SFT can learn the rule) and E07-8 (the stratified lanes flip to opposite single modes),
+this closes the question for this setup:
 the rule is representable, but policy-gradient training with outcome-minus-cost rewards moves the
 route globally, not conditionally. Routing has to be decided outside the weights (library
 statistics, a probe) or trained with a mechanism that ties the decision to the input signature.
