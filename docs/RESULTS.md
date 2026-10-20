@@ -47,7 +47,7 @@ Full entries C79 to C96 in `docs/results/claims-2026-08-to-10.md`. The load-bear
 
 ## Codex-era findings, August 24 to September 29 (E01 to E03)
 
-Ninety-six entries across sixteen threads are in `docs/results/claims-2026-08-to-10.md`
+The September notebook itself (questions, analyses, promising-results notes as of 2026-09-14) is archived read-only at https://github.com/queelius/rlm-research; the September 29 audit in `docs/research-audit-2026-09-29/` supersedes it. Ninety-six entries across sixteen threads are in `docs/results/claims-2026-08-to-10.md`
 (extracted 2026-10-20 from the checkpoint notes and the September 29 audit; statuses are the
 notes' own, and none reaches "confirmed"). The ones that carry weight:
 

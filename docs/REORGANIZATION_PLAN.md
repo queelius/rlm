@@ -33,10 +33,10 @@ inside files, not in folder names.
 
 | Repository | What it is | Decision |
 | --- | --- | --- |
-| `rlm-bootstrap` | Intended orchestration/training sibling (Sep 2026); stalled before selecting a recipe. Its worktree venv is the de-facto training environment used by `experiments/selective_recursion_20261019`. | Fold intent into `experiments/`; export the training lock into the monorepo (done: `experiments/selective_recursion_20261019/env/`); mark the repo superseded. |
-| `rlm-research` | Publication snapshot of the Codex-era notebook (Sep 2026, 4,784 files): questions, claims, analyses, sidecars. | Import its claims into `docs/RESULTS.md` with evidence links; keep the repo as a read-only archive, linked from the ledger. |
+| `rlm-bootstrap` | Intended orchestration/training sibling (Sep 2026); stalled before selecting a recipe. Its worktree venv is the de-facto training environment used by `experiments/selective_recursion_20261019`. | Intent folded into `experiments/`; training lock exported (`experiments/selective_recursion_20261019/env/`); README marked superseded on GitHub 2026-10-20. The local clone stays until the current GPU campaign ends because its worktree venv is the live training environment; then rebuild the environment inside the monorepo from the lock and remove the clone. |
+| `rlm-research` | Publication snapshot of the Codex-era notebook (Sep 2026, 4,784 files): questions, claims, analyses, sidecars. | Claims imported into `docs/RESULTS.md` (via the September 29 audit, which supersedes the snapshot); the public GitHub repo stays as the read-only archive, linked from the ledger. The local clone (116 MB, fully pushed) can be removed at any time. |
 | `structured-decomposition-benchmark` | Pre-RLM study (Aug 2026) of one-level decomposition; own data and benchmark. | Keep as its own repository; cite as prior work; harvest `rlm-experiment-ideas` into the notebook. |
-| `rlm-research-r4` (directory, not a repo) | Empty remnant (one `sidecars/` dir). The real r4 store is under `/project/alex_phd/runs/rlm-research-r4`. | Delete candidate; user's call. |
+| `rlm-research-r4` (directory, not a repo) | Remnant with two files byte-identical to the runs store. | Deleted 2026-10-20 (logged). |
 | `exp1` (45 GB, no remote), `forgot` | Unrelated to RLM; `exp1` is not on GitHub. | Out of scope here; flag that `exp1` has no remote backup. |
 | `evolved-integrators`, `use-mention-gating` | Unrelated projects, on GitHub. | Out of scope. |
 
