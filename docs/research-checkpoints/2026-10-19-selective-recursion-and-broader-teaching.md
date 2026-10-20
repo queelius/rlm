@@ -442,6 +442,28 @@ lookups 24/24, and it kept the warm start's 24-line chunking. So a scale-free co
 balanced prior still converges on "always decompose". The seed-1 replicate is running; the
 short-weighted and KL-regularized arms follow.
 
+Where the gradient on the direct route comes from (04:55 UTC, `advantage_mass.py`). Summing the
+leave-one-out advantages that landed on direct-route rollouts (aggregation tasks; route inferred
+from turn and call counts, which matches the trace classification where traces remain):
+
+| Run | 8 records | OOLONG 1k | OOLONG 2k and longer | Total | Last step with a direct rollout |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| absolute 0.1 | +0.02 (1 rollout) | -1.30 (12) | -0.69 (6) | -1.97 | 3 |
+| relative 0.5, seed 0 | +0.57 (4) | -1.16 (18) | -0.81 (12) | -1.40 | 3 |
+| relative 0.5, seed 1 | none sampled | +0.04 (12) | -0.17 (4) | -0.12 | 2 |
+
+In the first two runs the negative mass from OOLONG inputs, where direct answering is worse, is
+two to sixty times the positive mass at 8 records, which is the shared-cell-text account. The
+seed-1 run is more telling: the route vanished after step 2 with essentially zero net advantage
+on its rollouts. Two mechanisms can do that without a negative signal on the route itself: the
+loss sums token log-probabilities, so a correct 300-token decomposition cell receives about ten
+times the gradient of a correct 30-token direct cell at equal advantage, and 8-record tasks were
+never drawn in that run's first two steps. A sequence-normalized loss (`--seq-norm`, per-sequence
+mean as in GRPO) was added and queued with the relative cost, alone and with short weighting
+(`pipeline16_gpu0.log`), after the KL arms, which started concurrently with pipeline 14 at
+04:55 UTC so that one run's rollouts overlap the other's updates (each RL step had left the
+training GPU idle about 60 percent of the time).
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.

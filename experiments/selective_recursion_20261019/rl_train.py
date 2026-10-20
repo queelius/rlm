@@ -250,11 +250,16 @@ class Trainer:
                     ref_logp = completion_logprobs(self.model, prompt, comp, torch).detach()
                     self.model.set_adapter("default")
             tok_logp = completion_logprobs(self.model, prompt, comp, torch)
-            loss = -(adv * tok_logp.sum()) / total_tokens
+            if self.args.seq_norm:
+                # per-sequence mean log-prob, averaged over sequences: a long cell no longer
+                # carries more gradient than a short one at equal advantage
+                loss = -(adv * tok_logp.mean()) / len(seqs)
+            else:
+                loss = -(adv * tok_logp.sum()) / total_tokens
             if ref_logp is not None:
                 diff = ref_logp - tok_logp
                 kl = (diff.exp() - diff - 1.0).sum()
-                loss = loss + self.args.kl_coef * kl / total_tokens
+                loss = loss + self.args.kl_coef * (kl / len(comp) / len(seqs) if self.args.seq_norm else kl / total_tokens)
                 kl_sum += kl.item()
             loss.backward()
             loss_sum += loss.item()
@@ -369,6 +374,7 @@ def main():
     p.add_argument("--harness", default="default", choices=("default", "hinted"))
     p.add_argument("--lr", type=float, default=2e-5)
     p.add_argument("--kl-coef", type=float, default=0.0, help="k3 KL penalty to the warm start per token")
+    p.add_argument("--seq-norm", action="store_true", help="per-sequence mean log-prob (GRPO-style) instead of token sum")
     p.add_argument("--lora-r", type=int, default=32)
     p.add_argument("--grad-clip", type=float, default=1.0)
     p.add_argument("--max-seq-len", type=int, default=12000)
