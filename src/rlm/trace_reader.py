@@ -582,11 +582,19 @@ def _validate_usage(value: Any, *, config: RLMConfig) -> _TraceUsage:
     return usage
 
 
+_OPTIONAL_SNAPSHOT_FIELDS: dict[str, frozenset[str]] = {
+    # A harness without a prelude is snapshotted without the key, so older traces still match.
+    "HarnessSpec": frozenset({"prelude"}),
+}
+
+
 def _exact_dataclass_mapping(value: Any, data_type: type[Any], *, name: str) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise TraceError(f"{name} must be an object")
     expected = {item.name for item in fields(data_type)}
-    if set(value) != expected:
+    optional = _OPTIONAL_SNAPSHOT_FIELDS.get(data_type.__name__, frozenset())
+    present = set(value)
+    if not (expected - optional <= present <= expected):
         raise TraceError(f"{name} fields do not match {data_type.__name__}")
     return value
 
