@@ -12,6 +12,7 @@ Revision log:
 - 2026-10-20 06:45: distillation and model-capacity analysis added.
 - 2026-10-20 06:05: harness-side learning (retrieval, GEPA, Meta-Harness) and role adapters added.
 - 2026-10-20 06:15: queues merged into one ranked list with status; revisit rule stated.
+- 2026-10-20 07:40: exemplar-payload variant (H1') and the router representation ladder (L3a to L3c) added.
 - 2026-10-20 07:20: SFT-008 shows the rule is representable; RL from it queued ahead of balance and KL; stratified lanes at steps 3 to 4 flip toward always-direct (interim).
 - 2026-10-20 06:45: library-learning thread (L1 to L4) added from the user's RAG proposal.
 - 2026-10-20 06:28: cyclic task-sampling artifact found (short lengths absent for several steps at a
@@ -263,6 +264,22 @@ Ranked experiments (added to the queue as L1 to L4):
 | L2 | Does the library grow and transfer? | Admit programs from successful runs on the teaching split only (generalize constants to parameters, store outcome stats); evaluate on a new family never seen (OOLONG-real, or a new synthetic family) with and without growth | about 3 GPU-hours | OOD gain over the frozen library |
 | L3 | Does bandit selection over (direct, routine) per signature bucket give selective recursion without gradients? | Thompson sampling on verified outcomes minus cost, bucketed by length and family, frozen policy weights | about 1 GPU-hour | direct share at 8 records, none at 32 and OOLONG 2k, no accuracy loss |
 | L4 | Is a controller trained to *use* the library better than one trained to *contain* the routine? | SFT on library-using traces vs SFT-005; then RL from each | one SFT plus one RL run | accuracy, tokens, and robustness to a new family |
+
+Two refinements from the user (07:40 UTC):
+
+- **Retrieval payloads.** L1 retrieves executable routines (functions with contracts; they call
+  `ask_batch` internally and may call the kernel recursively). H1' retrieves exemplar cells
+  instead (demonstrations the controller imitates): same key, same splits, more tokens per turn,
+  no verification of the artifact. Run both; the difference measures what verification buys.
+- **A small router over a representation of the state (L3a to L3c).** Actions are the verified
+  strategies (null, lookup, chunked extraction, later the others), never tokens. Representations,
+  cheapest first: the explicit signature from the peek cell; a mean-pooled controller embedding of
+  the peek-stage context; the controller's last-layer state at the decision token. Training data
+  already exists: thousands of logged rollouts with route, outcome and cost on the teaching split.
+  Fit offline (supervised or contextual bandit on outcome minus cost), evaluate by injecting the
+  chosen action through the harness on held-out splits. This is the precise form of the earlier
+  small-policy idea that was abandoned: the policy only chooses among verified programs and reads
+  the LLM's own representation.
 
 Leakage rule: the library is built only from the teaching split; held-out windows never seed it.
 
