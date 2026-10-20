@@ -28,6 +28,7 @@ RECIPES = {
     "own": "your own program (ask_batch over chunks, aggregate in Python)",
 }
 LABELS = {"direct": "direct answer", "own": "own program without the library"}
+SCRIPTED_OVERHEAD = 1500
 
 
 def question_kind(question: str) -> str:
@@ -116,8 +117,13 @@ def collect(run_dir: Path, routine: str | None = None, source: str | None = None
         if rt == "other":
             continue
         sig = _row_signature(r, family)
+        tokens = int(r.get("total_tokens") or 0)
+        if r.get("policy") == "expert":
+            # scripted replays count helper calls only; add the controller's own prompt and cells so the
+            # cost is comparable with a controller that writes the same calls (about 1.5k tokens)
+            tokens += SCRIPTED_OVERHEAD
         out.append(dict(family=family, length=sig["length"], question_type=sig["question_type"],
-                        routine=rt, correct=bool(r.get("correct")), tokens=int(r.get("total_tokens") or 0),
+                        routine=rt, correct=bool(r.get("correct")), tokens=tokens,
                         source=source or Path(run_dir).name))
     return out
 
