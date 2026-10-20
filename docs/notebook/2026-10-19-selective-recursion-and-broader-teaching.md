@@ -589,6 +589,17 @@ events (earliest matching purchase), and the evaluation is being rerun. This is 
 "small model plus library" number: with the routine in the library, no training of the controller
 was needed for the decomposition itself.
 
+Untrained controller plus repaired library (09:25 UTC). With `answer_eventlog` handling lookup
+questions, the untrained Qwen3-4B controller scores 85/96 on aggregation and 23/24 on lookups on
+the event-log dev split with one error, against 86/96 and 24/24 for the taught SFT-005 controller
+and 88/96 and 24/24 for the scripted expert: parity with no training of the controller at all,
+and about 1k tokens per 8-record task against 5k. The one cost it does not yet optimize is inside
+the library: it answers lookups by extracting every event (17k tokens) rather than through the
+cheaper `lookup_day` path the expert used (2k), which is exactly the kind of choice a per-bucket
+outcome statistic should make. Taken with the routing results, the picture for a small controller
+is: put the routines in the library, let the model call them, and decide between alternatives
+from verified statistics rather than from the weights.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
