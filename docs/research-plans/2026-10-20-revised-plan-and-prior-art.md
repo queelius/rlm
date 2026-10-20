@@ -1,4 +1,4 @@
-# Research plan of record (living document; revised 2026-10-20 10:20 UTC)
+# Research plan of record (living document; revised 2026-10-20 12:25 UTC)
 
 **Rule: revisit this plan periodically.** At every completed or failed arm, at every session start
 or resumption, and at least once per 12 hours of GPU time, re-rank the queue below against the
@@ -7,6 +7,14 @@ evidence or new prior art suggests, and append a line to the revision log. The q
 by expected information per GPU-hour and readiness, not by when an idea arrived.
 
 Revision log:
+- 2026-10-20 12:25: growth and the paper-grade numbers landed. L3a: statistics note gives the
+  untrained controller the best dev accuracy and lowest cost (87/96, 24/24, 14.3k). E08: verified
+  growth takes 0/48 to 48/48 on two held-out forms with the 4B proposer; the third form was kept
+  out (all 24 4B candidates had one sort bug) and recovered by an 8B proposer (8/8 verified,
+  24/24 on dev). E09: untrained caller + library equals the scripted expert on the 293-row
+  held-out OOLONG set (0.672, no errors, 11.0k tokens) and beats every trained controller. E10
+  online-selection streams restarted against the stable library. Next: harder family (joins),
+  OOLONG-real, a smaller caller, bandit results; RL lanes finish as confirmatory.
 - 2026-10-20 10:20: library thread promoted to the lead. L1-b/c/d: the *untrained* 4B controller with
   a prebound library matches the taught and RL controllers on both families (event-log 85/96 and
   23/24; OOLONG 43/72 against 36 and 41); L4: teaching the call pattern (SFT-009) adds only the
@@ -33,11 +41,14 @@ Revision log:
 | --- | --- | --- | --- | --- |
 | done | L1-b/c/d | library prebound through the kernel prelude: scripted caller, untrained 4B, OOLONG | 87/96 oracle; untrained 85/96 and 23/24 (event-log), 43/72 (OOLONG) with no errors; see RESULTS L1-* | the routine belongs in the library, not the weights |
 | done | L4 | controller taught to call the library (SFT-009) | 85/96, 24/24; takes the cheap lookup route; 4x tokens on short tasks | teaching buys the route choice only |
-| running | L3a-lite | per-signature outcome statistics rendered as a harness note (`skills/stats.py`, `--stats-file`) | `dev-lib-base-stats0` 36/36 so far, lookups at 1k tokens (17k without); `teach-lib-base-stats` collects the controller's own statistics for v1 | route choice without gradients; the table is the router |
-| running | E08 | library growth: three held-out question types; untrained controller fails them with the shipped library (0/22, submits the library's "unknown"); librarian proposes, verifies on cached teaching extractions, registers; before/after on dev | chains `e08_growth_gpu1.sh`, `e08b_growth_gpu1.sh`; honest-library fallback arm `e08-dev-heldout-honest` | does verified growth recover a new question type without training; does an honest library make the controller fall back to its own program |
-| 1 | L3b | OOLONG route statistics (library vs direct vs own) and the note on OOLONG; 293-row held-out run with the library | needs OOLONG teaching-split rows for the library route | second family for the statistics router; the held-out number for the paper |
-| 2 | E08-hard | a harder held-out family (joins, multi-item) and an 8B proposer for the librarian | after E08 | where the 4B librarian fails and verification matters |
-| 3 | L3c | contextual bandit over the table (Thompson sampling with exploration) replacing the greedy note; measure regret on a stream of mixed tasks | after L3a-lite | online adaptation without weights |
+| done | L3a | per-signature outcome statistics rendered as a harness note | 87/96, 24/24, 14.3k tokens, 120/120 follow the note (RESULTS L3a) | route choice without gradients; the table is the router |
+| done | E08 | library growth on three held-out forms: 0/72 with the shipped library (E08-0); honest library 34/72 (E08-1); verified growth 48/48 on two forms with the 4B proposer, third form kept out and then recovered by the 8B proposer (E08-2, E08-3) | `e08-*`, `skills/learned/` | growth works and verification gates it; the ceiling is the proposer |
+| done | E09 | 293-row held-out OOLONG with the library | 0.672, no errors, 11.0k tokens; equals the expert, beats RL (0.652) | the paper-grade number for capability in the library |
+| running | E10 (L3c) | online routine selection: Thompson, greedy, random from an empty table, greedy warm from the teaching statistics; 240-task streams from a fresh seed namespace | `e10-bandit-*` (restarted 12:25 against the stable library; partial runs preserved) | online adaptation without weights; regret against the hindsight-best routine per signature |
+| 1 | E08-hard | a held-out form needing a join (people x items x days) with the 4B and 8B proposers; count rejected candidates and repair rounds | needs GPU 0 memory for the 8B server (after the RL lanes) | where growth fails and what verification catches |
+| 2 | L3b | OOLONG route statistics (library vs direct) and the note on OOLONG | needs OOLONG teaching-split rows for the direct route | second family for the statistics router |
+| 3 | S1 | a smaller caller (Qwen3-1.7B) with the same library and table | needs a serving slot | how small the caller can be |
+| 4 | X1 | OOLONG-real with the library | licence check first | external validity |
 | stopped | G-short, G-seq | short-weighted and sequence-normalized arms under cyclic sampling | stopped at step 5: confounded by the burst artifact | superseded by pipeline 20 |
 | running | G-strat (lane A) | stratified sampling + relative cost + seq-norm, then + balance term, then + strong KL | `rl-s7-strat*`, pipeline 20 | does even per-step coverage of short tasks hold the route; then the two remedies on a clean footing |
 | running | G-strat-short (lane B) | stratified + short-weighted, then + balance | pipeline 20 | signal share on a clean footing |
