@@ -464,6 +464,16 @@ mean as in GRPO) was added and queued with the relative cost, alone and with sho
 04:55 UTC so that one run's rollouts overlap the other's updates (each RL step had left the
 training GPU idle about 60 percent of the time).
 
+KL penalty at the usual strength is inert (05:40 UTC). `rl-route7-rel05-kl` (relative cost 0.5,
+k3 KL to the warm start with coefficient 0.1, seed 0) reproduced the seed-0 relative run step for
+step, including the collapse of the direct route by step 4, with a mean per-token KL of 1 to 5
+times 10^-4. The reason is arithmetic: the route decision is a handful of tokens in cells of
+hundreds, so a KL averaged over all tokens barely registers a change that moves the direct
+probability from 0.4 to near zero at one position, and at coefficient 0.1 the restoring term is
+smaller than the policy-gradient term even at that position. The run was stopped at step 5 and its
+artifacts kept. The sequence-normalized arms were started in its slot, and a KL arm with
+coefficient 5 (alone and with short weighting) was queued after them (`pipeline17_gpu0.log`).
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
