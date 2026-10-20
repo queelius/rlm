@@ -409,8 +409,8 @@ the queue was reordered so the two relative-cost arms run next and the absolute-
 
 Absolute-0.1 balanced run, complete (00:50 UTC). Over 30 updates the direct route was sampled
 only in steps 1 to 5 and never after (8 records: 0 of 112 rollouts from step 6; OOLONG 1k: 0 of
-193). Held out, the adapter decomposes everywhere at temperature 0 and in 0 of 40 sampled
-8-record tasks at temperature 1 (the warm start: 15 of 36), and otherwise shows the usual RL
+193). Held out, the adapter decomposes everywhere at temperature 0 and in all 32 sampled
+8-record aggregation tasks at temperature 1 (the warm start took the direct route in 15 of 36), and otherwise shows the usual RL
 gains: OOLONG sample 39/72 at 13k tokens (warm start 34/72, 2 budget errors against 11), event-log
 aggregation 87/96 (warm start 85/96), lookups 24/24. So with a balanced prior and an absolute cost
 term, RL converges on "always decompose" and gives up the free saving on short inputs.
