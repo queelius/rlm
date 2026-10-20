@@ -1,4 +1,4 @@
-# Research plan of record (living document; revised 2026-10-20 06:15 UTC)
+# Research plan of record (living document; revised 2026-10-20 10:20 UTC)
 
 **Rule: revisit this plan periodically.** At every completed or failed arm, at every session start
 or resumption, and at least once per 12 hours of GPU time, re-rank the queue below against the
@@ -7,6 +7,14 @@ evidence or new prior art suggests, and append a line to the revision log. The q
 by expected information per GPU-hour and readiness, not by when an idea arrived.
 
 Revision log:
+- 2026-10-20 10:20: library thread promoted to the lead. L1-b/c/d: the *untrained* 4B controller with
+  a prebound library matches the taught and RL controllers on both families (event-log 85/96 and
+  23/24; OOLONG 43/72 against 36 and 41); L4: teaching the call pattern (SFT-009) adds only the
+  cheap lookup route; L3a-lite: a note rendered from per-signature outcome statistics makes the
+  untrained controller take the cheap route with no training (first 36 rows). E07-9 closed
+  (all-direct by step 5). New: library growth E08 (held-out question types, verifying librarian),
+  honest-library fallback arm, OOLONG route statistics. RL routing arms (balance, KL) now
+  confirmatory only.
 - 2026-10-20 06:30: first revision after the routing experiments; prior-art pass (routing collapse,
   length-weighting impossibility, When2Tool, Prime Intellect RLM post, SRLM, entropy collapse).
 - 2026-10-20 06:45: distillation and model-capacity analysis added.
@@ -19,18 +27,25 @@ Revision log:
 - 2026-10-20 06:28: cyclic task-sampling artifact found (short lengths absent for several steps at a
   time); confounded arms stopped; remedies requeued under stratified sampling in two lanes.
 
-## Ranked queue, merged (status as of 06:15 UTC)
+## Ranked queue, merged (status as of 10:20 UTC)
 
 | Rank | Id | Arm | Status | Decision it informs |
 | --- | --- | --- | --- | --- |
+| done | L1-b/c/d | library prebound through the kernel prelude: scripted caller, untrained 4B, OOLONG | 87/96 oracle; untrained 85/96 and 23/24 (event-log), 43/72 (OOLONG) with no errors; see RESULTS L1-* | the routine belongs in the library, not the weights |
+| done | L4 | controller taught to call the library (SFT-009) | 85/96, 24/24; takes the cheap lookup route; 4x tokens on short tasks | teaching buys the route choice only |
+| running | L3a-lite | per-signature outcome statistics rendered as a harness note (`skills/stats.py`, `--stats-file`) | `dev-lib-base-stats0` 36/36 so far, lookups at 1k tokens (17k without); `teach-lib-base-stats` collects the controller's own statistics for v1 | route choice without gradients; the table is the router |
+| running | E08 | library growth: three held-out question types; untrained controller fails them with the shipped library (0/22, submits the library's "unknown"); librarian proposes, verifies on cached teaching extractions, registers; before/after on dev | chains `e08_growth_gpu1.sh`, `e08b_growth_gpu1.sh`; honest-library fallback arm `e08-dev-heldout-honest` | does verified growth recover a new question type without training; does an honest library make the controller fall back to its own program |
+| 1 | L3b | OOLONG route statistics (library vs direct vs own) and the note on OOLONG; 293-row held-out run with the library | needs OOLONG teaching-split rows for the library route | second family for the statistics router; the held-out number for the paper |
+| 2 | E08-hard | a harder held-out family (joins, multi-item) and an 8B proposer for the librarian | after E08 | where the 4B librarian fails and verification matters |
+| 3 | L3c | contextual bandit over the table (Thompson sampling with exploration) replacing the greedy note; measure regret on a stream of mixed tasks | after L3a-lite | online adaptation without weights |
 | stopped | G-short, G-seq | short-weighted and sequence-normalized arms under cyclic sampling | stopped at step 5: confounded by the burst artifact | superseded by pipeline 20 |
 | running | G-strat (lane A) | stratified sampling + relative cost + seq-norm, then + balance term, then + strong KL | `rl-s7-strat*`, pipeline 20 | does even per-step coverage of short tasks hold the route; then the two remedies on a clean footing |
 | running | G-strat-short (lane B) | stratified + short-weighted, then + balance | pipeline 20 | signal share on a clean footing |
 | done | SFT-008 | consistent teacher (direct only at 8 records) | routes by length as taught (38/40 direct at 8 records, 31/32 decompose at 32) | length-conditional routing is representable; RL failures are dynamics |
-| running | G-s8 | RL from SFT-008 under relative cost, seq-norm, stratified sampling (`rl-s8-strat`, pipeline 22) | by step 3 the direct route spread to every length (E07-9) | RL does not keep a correct routing; routing moves outside the weights (L3, P1) |
-| 1 | H1 | retrieval-augmented untrained controller | ready, no training | prompting vs weights |
-| 2 | H2 | retrieval routing on SFT-007 and on the base | ready, no training | routing without gradients |
-| 3 | P1 | probe routing (When2Tool-style) | needs hidden-state dump | representability; oracle router |
+| stopped | G-s8 | RL from SFT-008 under relative cost, seq-norm, stratified sampling (`rl-s8-strat`) | all-direct by step 5 (dev 0.87 to 0.304); stopped, adapter kept (E07-9) | RL does not keep a correct routing; routing moves outside the weights |
+| confirmatory | G-strat, G-bal, G-kl5, G-short-bal | stratified lanes and their balance and KL remedies (pipelines 21, 22) | running on GPU 0; expected to confirm collapse or a forced balance at an accuracy cost | last word on gradient routing in this setup |
+| 4 | H1' | exemplar payload (cells of a matching teaching trajectory) vs the library | ready | what verification buys over imitation |
+| 5 | P1 | probe routing (When2Tool-style) | needs hidden-state dump | representability; only if the signature table proves insufficient |
 | 4 | D1 | stronger-controller teaching with local helpers (rlm-qwen3-8b, Qwen3-8B) | needs 8B serving slot | does a teacher's routing judgment transfer by SFT |
 | 5 | C1 | capacity: 8B controller, 4B helpers, E06 recipe | needs vLLM restart | gap and gain vs capacity |
 | 6 | H3 | GEPA over the harness hint text | ready after H1 | harness evolution vs RL |
@@ -40,10 +55,6 @@ Revision log:
 | 10 | X2 | 64k to 128k OOLONG-synth for the RL controllers | ready | budget-safe chunking at length |
 | 11 | G-dec | decoupled route-token loss (Thinkless-style) | only if G-bal fails | last RL remedy |
 | 12 | G-alpha | length-weighting sweep (alpha = 0.5) | after G-seq | fills the tradeoff curve |
-| 2b | L1 | static skill library retrieved by input signature (see the library section) | ready after H1's harness injection exists | routine in the library vs in the weights |
-| 3b | L3 | bandit routing over verified options per input bucket | after L1 | selective recursion without gradients |
-| 6b | L2 | library growth and OOD transfer | after L1 | does the library generalize |
-| 9b | L4 | train the controller to use the library | after L2 | small model plus library |
 | retired | absolute cost 0.3 from SFT-007; weak KL; more seeds beyond two per arm | | |
 
 ## What the last 24 hours established
@@ -284,8 +295,30 @@ Two refinements from the user (07:40 UTC):
 
 Leakage rule: the library is built only from the teaching split; held-out windows never seed it.
 
+Status at 10:20 UTC (results in `docs/RESULTS.md`, L1-b to L1-d, L4; notebook of 2026-10-19):
+
+- Implemented: kernel prelude (`PreludeSpec`), skill registry with learned-skill discovery and
+  variants, `skills/stats.py` (signature from the input text, routine classification from traces,
+  per-signature table, rendered note with a recommendation by accuracy minus 0.05 per 10k tokens),
+  `build_stats.py`, `extract_cache.py`, `librarian.py` (propose, verify on cached model
+  extractions of the teaching split, register with a verification pseudo-run so the routine
+  enters the statistics), three held-out question types in `taskgen.py`.
+- Found: with the routine in the library, the untrained controller is as good a caller as the
+  taught and RL-trained ones in both families; teaching adds only the route choice; the
+  statistics note adds the route choice without training; a prompt-side library (exec in the
+  prompt) breaks the taught controller; an overconfident library docstring makes the untrained
+  controller submit "unknown" on uncovered questions (E08 before-growth, 0/22), which the honest
+  variant and growth address.
+- Open: the librarian's 4B proposer verified the first held-out routine at 1.0 on 12 tasks (dry
+  run), so the first two held-out types test the loop, not the proposer; `busiest_day` (tie
+  rule) is the harder third; a family with joins and an 8B proposer come next if the loop holds.
+
+
 ## Time budget
 
-Allocation ends 2026-10-22 00:39 UTC. Pipelines 14, 16 and 17 (short-weighted, sequence-normalized,
-strong KL) end around 14:00 UTC today; items 1 to 3 fit by about 20:00 UTC; item 6 overnight; items
-7 and 8 on 21 October. Two trainers share GPU 0 throughout so neither GPU idles.
+Allocation ends 2026-10-22 00:39 UTC (about 38 hours from this revision). GPU 0 runs the
+confirmatory RL lanes (pipelines 21 and 22) until about 16:00 UTC; GPU 1 serves every library,
+statistics and growth evaluation, which are the binding constraint now (six to eight concurrent
+sweeps share it). After the RL lanes end, GPU 0 is free for an 8B serving slot (librarian proposer,
+capacity study C1) or the OOLONG 293-row library run. Before the allocation ends: rebuild the
+training environment inside the monorepo, prune per-step adapters, publish the handoff.
