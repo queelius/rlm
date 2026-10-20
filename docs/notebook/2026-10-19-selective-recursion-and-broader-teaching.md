@@ -533,6 +533,20 @@ the correctly routing warm start SFT-008 (`rl-s8-strat`), with the short-weighte
 run after it; the plain lane continues to step 30 and is followed by the balance and strong-KL
 arms from SFT-007.
 
+Library experiment L1, prompt-side version, negative (07:50 UTC). The two routine families
+(`skills/eventlog.py`, `skills/oolong.py`: parsing, chunked helper extraction or classification,
+exact aggregation, lookup, as functions with a usage note) were offered through the harness policy
+text as one `exec` line plus the function signatures. The untrained 4B used them in 2 of 8 smoke
+tasks; the taught SFT-005 controller fell from 86/96 to 17/96 on the event-log dev split
+(lookups 24/24 to 4/24, 17 budget or no-final errors): it called the library names in its first
+cell before defining them, then tried `from skills import eventlog` and other imports that do not
+exist, mixing its trained routine with the new functions. Two lessons. A prompt-side library is
+out of distribution for a controller taught a fixed routine and too fiddly for an untrained one;
+the library has to be *prebound* by the kernel, present in the namespace from turn 1 and listed in
+the bootstrap like the ABI helpers, which is a kernel feature (a harness prelude recorded in the
+harness digest), and the controller then has to be taught to use it (L4). The remaining L1
+evaluations were stopped; the kernel prelude is the next implementation step.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
