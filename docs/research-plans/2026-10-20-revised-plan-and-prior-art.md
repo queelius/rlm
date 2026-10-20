@@ -12,6 +12,7 @@ Revision log:
 - 2026-10-20 06:45: distillation and model-capacity analysis added.
 - 2026-10-20 06:05: harness-side learning (retrieval, GEPA, Meta-Harness) and role adapters added.
 - 2026-10-20 06:15: queues merged into one ranked list with status; revisit rule stated.
+- 2026-10-20 07:20: SFT-008 shows the rule is representable; RL from it queued ahead of balance and KL; stratified lanes at steps 3 to 4 flip toward always-direct (interim).
 - 2026-10-20 06:45: library-learning thread (L1 to L4) added from the user's RAG proposal.
 - 2026-10-20 06:28: cyclic task-sampling artifact found (short lengths absent for several steps at a
   time); confounded arms stopped; remedies requeued under stratified sampling in two lanes.
@@ -23,7 +24,8 @@ Revision log:
 | stopped | G-short, G-seq | short-weighted and sequence-normalized arms under cyclic sampling | stopped at step 5: confounded by the burst artifact | superseded by pipeline 20 |
 | running | G-strat (lane A) | stratified sampling + relative cost + seq-norm, then + balance term, then + strong KL | `rl-s7-strat*`, pipeline 20 | does even per-step coverage of short tasks hold the route; then the two remedies on a clean footing |
 | running | G-strat-short (lane B) | stratified + short-weighted, then + balance | pipeline 20 | signal share on a clean footing |
-| running | SFT-008 | consistent teacher (direct only at 8 records) | evaluating | can SFT represent length-conditional routing |
+| done | SFT-008 | consistent teacher (direct only at 8 records) | routes by length as taught (38/40 direct at 8 records, 31/32 decompose at 32) | length-conditional routing is representable; RL failures are dynamics |
+| running | G-s8 | RL from SFT-008 under relative cost, seq-norm, stratified sampling (`rl-s8-strat`, pipeline 21, lane A after the plain run) | queued next | does RL keep a correct routing or flip it |
 | 1 | H1 | retrieval-augmented untrained controller | ready, no training | prompting vs weights |
 | 2 | H2 | retrieval routing on SFT-007 and on the base | ready, no training | routing without gradients |
 | 3 | P1 | probe routing (When2Tool-style) | needs hidden-state dump | representability; oracle router |
