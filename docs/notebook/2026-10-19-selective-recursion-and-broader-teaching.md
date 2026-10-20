@@ -609,6 +609,17 @@ one-line cells of its teacher, so an 8-record task costs 4k tokens against 1k fo
 controller, which writes the same calls in one cell. Teaching therefore buys the route choice, not
 the capability; the next entry gets the route choice without any training.
 
+Untrained controller plus the OOLONG library (10:05 UTC). On the 72-row OOLONG sample (six
+context lengths, 1k to 32k tokens), the untrained Qwen3-4B controller with the OOLONG skills
+prebound (`parse_oolong`, `classify_rows`, `answer_oolong`) scores 43/72 with no errors at 10k mean
+tokens, against 36/72 (10 errors) for the taught SFT-005 controller and 41/72 for the best RL
+controller (14k tokens) on the same rows; it called the library on every task. A first attempt of
+this evaluation failed on every row because the skill registry recognised the task family from an
+attribute only the teaching script's task objects carry, so the event-log library was prebound
+instead; the registry now reads the family from the evaluator's task fields (failed run preserved
+as `oolong-lib-base/FAILED.txt`). Two families now show the same picture: the capability lives in
+the library, and the untrained controller is as good a caller as the taught or RL-trained ones.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
