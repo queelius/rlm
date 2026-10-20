@@ -79,7 +79,7 @@ QUESTION_TYPES = ("count_buyers", "both_items", "net_units", "bought_then_return
 AGGREGATE_TYPES = QUESTION_TYPES[:4]
 # Held-out types for the library-growth experiment (E08): not covered by the taught routines or the
 # shipped library, generated under the same schema so prior task ids are unchanged.
-HELDOUT_TYPES = ("top_buyer", "purchase_span")
+HELDOUT_TYPES = ("top_buyer", "purchase_span", "busiest_day")
 
 
 def plural(item: str, q: int) -> str:
@@ -160,6 +160,13 @@ def _answer(question_type: str, events: list[Event], a: str, b: str | None) -> t
     if question_type == "purchase_span":
         days = [e.day for e in buys if e.item == a]
         return str(max(days) - min(days)), "integer", len(days)
+    if question_type == "busiest_day":
+        per_day: dict[int, int] = {}
+        for e in buys:
+            if e.item == a:
+                per_day[e.day] = per_day.get(e.day, 0) + e.qty
+        top = max(per_day.values())
+        return str(min(d for d, q in per_day.items() if q == top) + 1), "integer", sum(e.item == a for e in buys)
     raise ValueError(question_type)
 
 
@@ -184,6 +191,10 @@ def _question(question_type: str, a: str, b: str | None) -> tuple[str, str]:
                 "the name only")
     if question_type == "purchase_span":
         return (f"How many days passed between the earliest purchase of a {a} and the latest purchase of a {a}?",
+                "a single integer")
+    if question_type == "busiest_day":
+        return (f"On which day were the most units of {a} bought in total, counting every purchase that day "
+                f"(returns do not count)? If several days tie, give the earliest. Answer with the day number only.",
                 "a single integer")
     raise ValueError(question_type)
 
