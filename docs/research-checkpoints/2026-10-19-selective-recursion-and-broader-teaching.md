@@ -433,6 +433,15 @@ warm start (k3 estimator, coefficient 0.1, `--kl-coef`) was added to the trainer
 pipeline 14 in two arms, with uniform and with short-weighted training draws, preceded by a one-step
 smoke test of the new code path (`pipeline15_gpu0.log`).
 
+Relative-cost run, complete (03:35 UTC). `rl-route7-rel05` (30 updates, final dev 0.891) never
+sampled the direct route after step 3 (8 records: 0 of 102 rollouts; OOLONG 1k: 0 of 199). Held
+out it decomposes everywhere at temperature 0 and in all 32 sampled 8-record aggregation tasks at
+temperature 1, with the usual RL gains: OOLONG sample 42/72 at 13k tokens with no budget errors
+(warm start 34/72; absolute-cost arm 39/72), event-log aggregation 86/96 (warm start 85/96),
+lookups 24/24, and it kept the warm start's 24-line chunking. So a scale-free cost term with a
+balanced prior still converges on "always decompose". The seed-1 replicate is running; the
+short-weighted and KL-regularized arms follow.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
