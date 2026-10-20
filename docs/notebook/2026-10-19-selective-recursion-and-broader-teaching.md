@@ -509,6 +509,18 @@ conditioning on length, not reward shaping: the consistent-teacher SFT-008 test 
 library-with-bandit design (route chosen per input bucket from verified statistics) address that
 directly. To be confirmed at steps 10 and 30 with held-out numbers.
 
+Consistent teacher: the rule is representable (07:15 UTC). SFT-008 was trained on the same
+trajectories as SFT-007 except that at 8 records only direct trajectories were kept and at every
+other length only decomposition (1,757 pairs, 2 epochs). Held out, it routes by length exactly as
+taught: at 8 records direct in 19 of 20 greedy runs and 38 of 40 samples at temperature 1 (3k
+tokens against 5k for decomposition), at 32 records decomposition in 16 of 16 greedy runs and 31 of
+32 samples, decomposition everywhere longer, OOLONG unchanged at 34/72. Accuracy at 8 records is
+14/16 against 16/16 for the always-decompose controllers, a small price for the direct route's
+errors on this family. So a 4B controller can represent and learn length-conditional routing from
+a consistent teacher; what RL could not do is find or keep it. The decisive follow-up, RL from
+this correctly routing warm start under the relative cost with stratified sampling, is queued next
+in lane A ahead of the balance and KL arms.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
