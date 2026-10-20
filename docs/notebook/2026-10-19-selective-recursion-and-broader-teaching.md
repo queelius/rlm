@@ -620,6 +620,37 @@ instead; the registry now reads the family from the evaluator's task fields (fai
 as `oolong-lib-base/FAILED.txt`). Two families now show the same picture: the capability lives in
 the library, and the untrained controller is as good a caller as the taught or RL-trained ones.
 
+Route choice from statistics, no training (L3a-lite, 10:40 UTC). `skills/stats.py` builds a
+table of routine outcomes keyed by an input signature computed from the request text alone
+(family, power-of-two bucket of the line count, question kind parsed from the question), from
+logged runs on the teaching and train splits only: the scripted library caller's replay and the
+baseline sweep (direct answer and own-program routes through the controller). The skills harness
+renders the retrieved history as a short note in the policy text, with the routine of highest
+accuracy minus 0.05 per 10k tokens recommended. With this note the untrained Qwen3-4B controller
+follows the recommendation on 120 of 120 dev tasks and scores 87/96 on aggregation and 24/24 on
+lookups with no errors, at 14.3k mean tokens per task (lookups 1.6k), against 85/96, 23/24 and
+16.8k without the note, 86/96, 24/24 and 15.8k for the taught SFT-005 controller, and 88/96,
+24/24 and 17.0k for the scripted expert. So the route choice that every RL form lost (E07-3 to
+E07-9) is recovered by a lookup table over verified outcomes, and nothing is trained. The first
+version of the table keyed on the record count instead of the visible line count and on raw
+instead of bucketed lengths, and scored a routine that never succeeded above one that did at
+long lengths with a 0.2 penalty; both were caught on the teaching-split check before the
+evaluation ran, and the run was restarted (two aborted starts, no rows kept).
+
+Growth, before (E08, 10:40 UTC). Three question types the shipped library does not cover were
+added to the generator (`top_buyer`, `purchase_span`, `busiest_day` with a tie rule; old task ids
+unchanged). With the shipped library the untrained controller scores 0/72 on their dev tasks: it
+calls `answer_eventlog`, receives "ANSWER: unknown", and submits it, every time, at 17k tokens,
+because the library's docstring claims coverage of every question type. The direct answer scores
+14/24, 7/24 and 8/24 (about 6 of 8 at 8 to 64 lines, about 0 above), so a controller that trusts
+an overclaiming library is worse than no library on anything the library does not cover. Two
+remedies run next: an honest library whose aggregator returns None for uncovered questions with
+guidance to look at the question before aggregating (interim: the controller then writes its own
+correct aggregation for purchase span and busiest day, but formats every top-buyer answer as
+prose and fails the exact match), and the librarian, which proposes a routine, verifies it on
+cached model extractions of the teaching split, and registers it with its verification record in
+the statistics.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
