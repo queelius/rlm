@@ -45,9 +45,10 @@ def response_object(text: str) -> dict:
 class ExpertController:
     """Deterministic controller: inspect, then branch on the question printed in the observation."""
 
-    def __init__(self, variant: dict | None = None):
+    def __init__(self, variant: dict | None = None, cells_dir=None):
         self.variant = variant or variants.pick("", False)
-        self.cells = {n: variants.render(CELLS, n, self.variant) for n in ("inspect", "lookup", "extract", "aggregate")}
+        cells = cells_dir or CELLS
+        self.cells = {n: variants.render(cells, n, self.variant) for n in ("inspect", "lookup", "extract", "aggregate")}
 
     def complete(self, request, *, timeout, context):
         # The kernel shows only the bootstrap plus the latest assistant/observation pair, so the
@@ -82,7 +83,8 @@ def main():
     p.add_argument("--base-url", default="http://127.0.0.1:8001/v1")
     p.add_argument("--api-key", default="local")
     p.add_argument("--public-model", default="qwen3-4b")
-    p.add_argument("--harness", default="default", choices=("default", "hinted"))
+    p.add_argument("--harness", default="default", choices=("default", "hinted", "skills"))
+    p.add_argument("--cells-dir", default="", help="alternative expert cell directory (e.g. expert_cells_library)")
     p.add_argument("--diversify", action="store_true", help="sample chunk size, prompt phrasing and filter per task")
     p.add_argument("--unified", action="store_true", help="family-agnostic peek first (expert.UnifiedExpert)")
     p.add_argument("--route-direct-prob", type=float, default=0.0, help="teach the direct route on short inputs with this probability")
@@ -104,8 +106,8 @@ def main():
         variant = variants.pick(task.task_id, args.diversify, short=task.n_records <= 32, route_direct_prob=args.route_direct_prob)
         row = dict(task_id=task.task_id, n=task.n_records, question_type=task.question_type, seed=task.seed,
                    answer=task.answer, policy="expert", variant=variant)
-        rlm = run_sweep.make_rlm(ra, trace_dir, "expert-controller")
-        rlm = RLM(rlm.backend, config=rlm.config, controller_backend=(__import__("expert").UnifiedExpert(variant) if args.unified else ExpertController(variant)))
+        rlm = run_sweep.make_rlm(ra, trace_dir, "expert-controller", task=task)
+        rlm = RLM(rlm.backend, config=rlm.config, controller_backend=(__import__("expert").UnifiedExpert(variant) if args.unified else ExpertController(variant, cells_dir=(HERE / args.cells_dir) if args.cells_dir else None)))
         try:
             result = rlm.run(run_sweep.public_request(task, args.public_model, 0.0, 4096))
             row.update(output_text=response_output_text(result.response), total_tokens=result.usage.total_tokens,

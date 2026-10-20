@@ -560,6 +560,20 @@ the rule is representable, but policy-gradient training with outcome-minus-cost 
 route globally, not conditionally. Routing has to be decided outside the weights (library
 statistics, a probe) or trained with a mechanism that ties the decision to the input signature.
 
+Library through the kernel prelude, validated (08:20 UTC). The kernel now supports a harness
+prelude (`PreludeSpec`: source executed once before the first cell, names listed in the prompt,
+hidden from `SHOW_VARS`, restored before every cell, digest in the harness fingerprint; tests in
+`tests/test_prelude.py`). With the event-log skills prebound this way, a scripted controller that
+only calls them (`expert_cells_library/`: `split_log`, `extract_events`, `answer_eventlog`,
+`lookup_day`, two to three one-line cells per task) scores 87/96 on aggregation and 24/24 on
+lookups on the event-log dev split with no errors, against 88/96 and 24/24 for the original expert
+whose cells carry the full programs. So the library reproduces the routine mechanically, and the
+controller's program shrinks from about 60 lines to three calls. The taught SFT-005 controller,
+given the same prelude, calls `split_log` and `extract_events` correctly but then writes its own
+aggregation instead of calling `answer_eventlog` (smoke: 1 of 8 correct), as a controller trained
+on the full routine would; the untrained base is evaluated next, and a controller taught on
+library-calling trajectories (SFT-009) is being built from the oracle's native replay.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.

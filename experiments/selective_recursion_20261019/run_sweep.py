@@ -86,22 +86,28 @@ def hinted_harness_spec():
 
 
 def skills_harness_spec(task=None):
-    """Per-task harness: the hinted policy plus the library skills retrieved for the task's signature."""
+    """Per-task harness: the retrieved library skills prebound through the harness prelude (L1 proper).
+
+    The default policy text is kept so a taught controller sees its usual prompt plus the prelude
+    listing and a short usage note; the skill source never appears in the prompt."""
     from rlm import prompts as P
     from rlm.specs import HarnessSpec, PromptDigests, PromptSpec
     from skills import registry
 
-    block = registry.hint_block(registry.retrieve(registry.signature(task))) if task is not None else ""
-    policy = HINTED_POLICY + ("\n" + block + "\n" if block else "")
-    prompt = PromptSpec(name="skills", version="1", protocol=P.DEFAULT_PROTOCOL, policy=policy)
+    names = registry.retrieve(registry.signature(task)) if task is not None else []
+    prelude = registry.prelude_for(names)
+    note = registry.policy_note(names) if names else ""
+    policy = P.DEFAULT_POLICY + ("\n" + note + "\n" if note else "")
+    prompt = PromptSpec(name="skills", version="2", protocol=P.DEFAULT_PROTOCOL, policy=policy)
     return HarnessSpec(
         prompt=prompt,
         rendered_prompts=PromptDigests(
-            nonrecursive=P._prompt_digest(P._render_prompt(prompt, allow_recursion=False)),
-            recursive=P._prompt_digest(P._render_prompt(prompt, allow_recursion=True)),
+            nonrecursive=P._prompt_digest(P._render_prompt(prompt, allow_recursion=False, prelude=prelude)),
+            recursive=P._prompt_digest(P._render_prompt(prompt, allow_recursion=True, prelude=prelude)),
         ),
         abi_version=P.ENVIRONMENT_ABI.version,
         abi_digest=P.ENVIRONMENT_ABI.digest(),
+        prelude=prelude,
     )
 
 
