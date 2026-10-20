@@ -103,14 +103,15 @@ def skills_harness_spec(task=None):
     note = registry.policy_note(names) if names else ""
     policy = P.DEFAULT_POLICY + ("\n" + note + "\n" if note else "")
     version = "2"
-    if STATS_TABLE is not None and task is not None:
+    forced = getattr(task, "forced_routine", None) if task is not None else None
+    if (STATS_TABLE is not None or forced) and task is not None:
         from skills import stats
 
         sig = stats.signature_from_input(getattr(task, "prompt", "")) or registry.signature(task)
-        hist = stats.note_for(sig, STATS_TABLE, lam=STATS_LAM)
+        hist = stats.note_for(sig, STATS_TABLE or {}, lam=STATS_LAM, force=forced)
         if hist:
             policy += "\n" + hist + "\n"
-            version = "2+stats"
+            version = "2+stats" + ("+forced" if forced else "")
     prompt = PromptSpec(name="skills", version=version, protocol=P.DEFAULT_PROTOCOL, policy=policy)
     return HarnessSpec(
         prompt=prompt,

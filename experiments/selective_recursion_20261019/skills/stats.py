@@ -166,9 +166,25 @@ def score(cell: dict, lam: float) -> float:
     return acc - lam * (cell["tokens"] / cell["n"]) / 10_000
 
 
-def note_for(sig: dict, table: dict, lam: float = 0.05, min_n: int = 4) -> str:
+def recipe_of(rt: str) -> str:
+    recipe = RECIPES.get(rt, "")
+    if not recipe and rt.startswith("lib:answer_"):
+        recipe = ("lines, question = split_log(request['input']); events = extract_events(lines); "
+                  f"FINAL_TEXT({rt[4:]}(events, question))")
+    return recipe
+
+
+def label_of(rt: str) -> str:
+    return LABELS.get(rt, rt.replace("lib:", "").replace("+", " + "))
+
+
+def note_for(sig: dict, table: dict, lam: float = 0.05, min_n: int = 4, force: str | None = None) -> str:
+    """The verified-history note; `force` names the routine to recommend (online selection)."""
     key, hist = lookup(sig, table)
     if not hist:
+        if force:
+            return (f"Routine to use for this input: {label_of(force)}. Write it as the first cell: "
+                    f"{recipe_of(force)}")
         return ""
     fam, length, qt = key.split("|")
     where = f"{'event-log' if fam == 'eventlog' else fam}, about {length} lines, {qt.replace('_', ' ')} question"
@@ -178,17 +194,16 @@ def note_for(sig: dict, table: dict, lam: float = 0.05, min_n: int = 4) -> str:
              f"from logged runs; accuracy, then mean total tokens:"]
     best = None
     for rt, c in rows:
-        label = LABELS.get(rt, rt.replace("lib:", "").replace("+", " + "))
-        recipe = RECIPES.get(rt, "")
-        if not recipe and rt.startswith("lib:answer_"):
-            recipe = ("lines, question = split_log(request['input']); events = extract_events(lines); "
-                      f"FINAL_TEXT({rt[4:]}(events, question))")
+        label = label_of(rt)
+        recipe = recipe_of(rt)
         lines.append(f"  - {label}: {c['correct']}/{c['n']} correct, ~{c['tokens'] / c['n'] / 1000:.1f}k tokens"
                      + (f"  [{recipe}]" if recipe else ""))
         if best is None and c["n"] >= min_n:
             best = rt
-    if best is not None:
-        lines.append(f"Recommended here: {LABELS.get(best, best.replace('lib:', '').replace('+', ' + '))} "
+    if force is not None:
+        lines.append(f"Routine to use for this input: {label_of(force)}. Write it as the first cell: {recipe_of(force)}")
+    elif best is not None:
+        lines.append(f"Recommended here: {label_of(best)} "
                      f"(best verified accuracy minus cost). Use it as the first cell unless the input clearly differs.")
     return "\n".join(lines)
 
