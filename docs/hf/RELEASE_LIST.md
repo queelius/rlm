@@ -10,7 +10,10 @@ Fill from `experiments/selective_recursion_20261019/manifest.json` (hashes, run 
 | `queelius/rlm-qwen3-4b-sft-007` | `adapters/sft-007/final` | As SFT-005 but on the route-balanced teaching set (equal direct and decompose trajectories on short inputs). | 34/72 sample | 85/96 |
 | `queelius/rlm-qwen3-4b-rl-route-*` | best informative routing arm | To be chosen after pipeline 15. | | |
 
-Datasets (CC-BY-4.0):
+Datasets (CC-BY-4.0), uploaded and public 2026-10-20 05:05 UTC:
+`queelius/rlm-teaching-eventlog` (1,234 message-cell pairs, synthetic), `queelius/rlm-teaching-oolong-cells`
+(1,174 cells by OOLONG row id, no benchmark text), `queelius/rlm-oolong-split-and-verdicts` (600-row split
+definition and 1,758 per-row verdicts for the six full held-out evaluations). Planned:
 
 | HF repo | Content |
 | --- | --- |
