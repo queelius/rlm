@@ -85,12 +85,33 @@ def hinted_harness_spec():
     )
 
 
-HARNESSES = {"default": default_harness_spec, "hinted": hinted_harness_spec}
+def skills_harness_spec(task=None):
+    """Per-task harness: the hinted policy plus the library skills retrieved for the task's signature."""
+    from rlm import prompts as P
+    from rlm.specs import HarnessSpec, PromptDigests, PromptSpec
+    from skills import registry
+
+    block = registry.hint_block(registry.retrieve(registry.signature(task))) if task is not None else ""
+    policy = HINTED_POLICY + ("\n" + block + "\n" if block else "")
+    prompt = PromptSpec(name="skills", version="1", protocol=P.DEFAULT_PROTOCOL, policy=policy)
+    return HarnessSpec(
+        prompt=prompt,
+        rendered_prompts=PromptDigests(
+            nonrecursive=P._prompt_digest(P._render_prompt(prompt, allow_recursion=False)),
+            recursive=P._prompt_digest(P._render_prompt(prompt, allow_recursion=True)),
+        ),
+        abi_version=P.ENVIRONMENT_ABI.version,
+        abi_digest=P.ENVIRONMENT_ABI.digest(),
+    )
 
 
-def make_rlm(args, trace_dir: Path, controller_model: str) -> RLM:
+HARNESSES = {"default": default_harness_spec, "hinted": hinted_harness_spec, "skills": skills_harness_spec}
+
+
+def make_rlm(args, trace_dir: Path, controller_model: str, task=None) -> RLM:
+    spec = HARNESSES[args.harness]
     config = RLMConfig(
-        harness=HARNESSES[args.harness](),
+        harness=spec(task) if args.harness == "skills" else spec(),
         limits=RunLimits(
             max_turns=args.max_turns,
             max_model_calls=args.max_model_calls,
@@ -137,7 +158,7 @@ def run_direct(args, task, trace_dir):
 
 
 def run_rlm(args, task, trace_dir):
-    rlm = make_rlm(args, trace_dir, args.controller_model)
+    rlm = make_rlm(args, trace_dir, args.controller_model, task=task)
     try:
         result = rlm.run(public_request(task, args.public_model, args.temperature, args.direct_max_output))
     finally:
@@ -309,7 +330,7 @@ def main():
     p.add_argument("--controller-model", default="qwen3-4b")
     p.add_argument("--temperature", type=float, default=0.7)
     p.add_argument("--direct-max-output", type=int, default=4096)
-    p.add_argument("--harness", default="default", choices=("default", "hinted"))
+    p.add_argument("--harness", default="default", choices=("default", "hinted", "skills"))
     p.add_argument("--controller-max-output", type=int, default=1024)
     p.add_argument("--max-turns", type=int, default=10)
     p.add_argument("--max-model-calls", type=int, default=96)
