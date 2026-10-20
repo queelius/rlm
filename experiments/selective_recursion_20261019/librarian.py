@@ -101,6 +101,8 @@ def main():
     p.add_argument("--temperature", type=float, default=0.7)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--register", action="store_true", help="write the accepted routine to skills/learned/")
+    p.add_argument("--repair-rounds", type=int, default=0,
+                   help="after a round with no accepted candidate, show the proposer the best candidate and its failing cases and ask for a revision")
     a = p.parse_args()
     from openai import OpenAI
 
@@ -115,26 +117,58 @@ def main():
     prompt = build_prompt(a.qt, prompt_examples, fn)
     (out / "prompt.txt").write_text(prompt)
     best = None
+
+    def failing_cases(code: str, limit: int = 3) -> list[dict]:
+        ns = {"ask_batch": None, "ask": None}
+        exec(compile((HERE / "skills" / "eventlog.py").read_text(), "eventlog", "exec"), ns)
+        exec(compile(code, fn, "exec"), ns)
+        cases = []
+        for r in recs:
+            try:
+                got = str(ns[fn](r["events"], r["question"]))
+            except Exception as e:
+                got = f"raised {type(e).__name__}: {e}"
+            if not taskgen.verify(dict(answer=r["answer"], answer_type=r["answer_type"]), got):
+                cases.append(dict(question=r["question"], expected=r["answer"], got=got,
+                                  events=[e for e in r["events"] if ns["_is_item"](e, re.findall(r"\b(\w+)\b", r["question"])[-1]) or True][:14]))
+            if len(cases) >= limit:
+                break
+        return cases
+
     with open(out / "candidates.jsonl", "a") as log:
-        for k in range(a.candidates):
-            t0 = time.time()
-            r = client.responses.create(model=a.model, input=prompt, temperature=a.temperature, max_output_tokens=2048)
-            text = r.output_text or ""
-            m = re.search(r"```python\n(.*?)```", text, re.S)
-            code = m.group(1) if m else text
-            acc, fails, results = verify(code, fn, recs)
-            acc_gold, _, _ = verify(code, fn, recs, use_gold=True)
-            rec = dict(k=k, acc=acc, acc_gold=acc_gold, n=len(recs), fails=fails, seconds=round(time.time() - t0, 1),
-                       tokens=dict(input=r.usage.input_tokens, output=r.usage.output_tokens), code=code)
-            log.write(json.dumps(rec) + "\n")
-            log.flush()
-            print(f"candidate {k}: verified {acc:.3f} on extracted events ({acc_gold:.3f} on gold), "
-                  f"{r.usage.output_tokens} output tokens", flush=True)
-            if best is None or acc > best["acc"]:
-                best = dict(rec, results=results)
+        for rnd in range(1 + a.repair_rounds):
+            if rnd == 0:
+                round_prompt = prompt
+            else:
+                if best is None or best["acc"] >= a.threshold:
+                    break
+                cases = failing_cases(best["code"])
+                round_prompt = (prompt + "\n\nA previous attempt was verified on the teaching split and failed. Its code:\n"
+                                f"```python\n{best['code'].strip()}\n```\nIt scored {best['acc']:.2f}. Failing cases "
+                                "(question, expected answer, what the code returned, the relevant extracted events):\n"
+                                + "\n".join(f"- Q: {c['question']}\n  expected: {c['expected']}; got: {c['got']}\n  events: {json.dumps(c['events'])}" for c in cases)
+                                + "\n\nFind the mistake, fix it, and return the complete corrected function in one ```python block.")
+                (out / f"repair-prompt-{rnd}.txt").write_text(round_prompt)
+            for k in range(a.candidates):
+                t0 = time.time()
+                r = client.responses.create(model=a.model, input=round_prompt, temperature=a.temperature, max_output_tokens=2048)
+                text = r.output_text or ""
+                m = re.search(r"```python\n(.*?)```", text, re.S)
+                code = m.group(1) if m else text
+                acc, fails, results = verify(code, fn, recs)
+                acc_gold, _, _ = verify(code, fn, recs, use_gold=True)
+                rec = dict(round=rnd, k=k, acc=acc, acc_gold=acc_gold, n=len(recs), fails=fails, seconds=round(time.time() - t0, 1),
+                           tokens=dict(input=r.usage.input_tokens, output=r.usage.output_tokens), code=code)
+                log.write(json.dumps(rec) + "\n")
+                log.flush()
+                print(f"round {rnd} candidate {k}: verified {acc:.3f} on extracted events ({acc_gold:.3f} on gold), "
+                      f"{r.usage.output_tokens} output tokens", flush=True)
+                if best is None or acc > best["acc"]:
+                    best = dict(rec, results=results)
     accepted = best is not None and best["acc"] >= a.threshold
-    summary = dict(question_type=a.qt, candidates=a.candidates, best_acc=best["acc"] if best else None,
-                   best_k=best["k"] if best else None, accepted=accepted, threshold=a.threshold, model=a.model)
+    summary = dict(question_type=a.qt, candidates=a.candidates, repair_rounds=a.repair_rounds,
+                   best_acc=best["acc"] if best else None, best_k=best["k"] if best else None,
+                   best_round=best.get("round", 0) if best else None, accepted=accepted, threshold=a.threshold, model=a.model)
     (out / "summary.json").write_text(json.dumps(summary, indent=1))
     print(json.dumps(summary))
     if accepted and a.register:
