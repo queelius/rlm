@@ -29,7 +29,7 @@
 \vfill
 \begin{block}{In one sentence}
 Moving the decomposition routine out of the weights into a prebound library, and the
-direct-versus-decompose choice into a table of verified outcomes, lets an \emph{untrained} 4B
+direct-versus-decompose choice into a table of verified outcomes (retrieval keyed by the input, as in RAG), lets an \emph{untrained} 4B
 controller match or beat every controller we trained, at lower cost, on both task families.
 \end{block}
 \end{frame}
@@ -121,13 +121,12 @@ Scripted expert & 88/96 & 24/24 & 17.0k \\
 \end{tabular}
 \medskip
 
-\begin{block}{Why it cannot collapse}
-The table is a lookup over verified outcomes per signature. Nothing is trained, so no
-gradient can move one bucket's choice to all buckets.
+\begin{block}{Online version (240-task streams)}
+Thompson 0.84, greedy 0.80, random 0.80; greedy warm-started from the table \textbf{0.87} with the lowest regret. No weights change; one bucket cannot move another.
 \end{block}
 \end{column}
 \end{columns}
-\source{Ledger L3a; skills/stats.py; table built from the teaching and train splits only. Greedy recommendation; a bandit with exploration is the next step.}
+\source{Ledger L3a; skills/stats.py; table from teaching and train splits only; online streams: runs e10-bandit-*.}
 \end{frame}
 
 \begin{frame}[t]
@@ -167,17 +166,16 @@ three teaching examples with gold answers.
 \end{enumerate}
 \end{column}
 \begin{column}{.46\textwidth}
-\begin{block}{Result}
-Two forms: 4B candidates verified 47 or 48 of 48; the untrained controller then scores
-\textbf{24/24 and 24/24} on dev (0/24 before). Third form (tie rule): all 24 4B candidates had
-the same sort bug, verified \alert{0/48}, kept out. An 8B proposer (4-bit, reasoning first):
-8 of 8 verified 48/48; the 4B caller then scores \textbf{24/24}.
+\begin{block}{Result: four held-out forms}
+Untrained caller on dev, before $\to$ after growth:\\
+top buyer 0 $\to$ \textbf{24}/24; purchase span 0 $\to$ \textbf{24}/24 (4B proposer);\\
+busiest day 0 $\to$ \textbf{24}/24: every 4B candidate had one sort bug (\alert{0/48}, kept out); an 8B proposer fixed it;\\
+join (bought on a day someone else returned) 0 $\to$ \textbf{22}/24 (4B, 43/48 verified; direct answer 6/24).
 \end{block}
-\small Only the teaching split seeds the library. The ceiling is the proposer, not the caller;
-verification makes mixing capacities safe.
+\small The ceiling is the proposer, not the caller; verification makes mixing capacities safe.
 \end{column}
 \end{columns}
-\source{librarian.py, extract\_cache.py; runs e08-*. Prior art: Voyager, LILO, Agent Workflow Memory, SkillRL, AutoRefine.}
+\source{Runs e08-*, e11-*. Prior art: Voyager, LILO, Agent Workflow Memory.}
 \end{frame}
 
 \begin{frame}[t]
@@ -200,8 +198,8 @@ by hand-chosen signature features; growth tested on easy forms first.
 \toprule
 Question & Smallest test \\
 \midrule
-Growth on a harder form? & joins across people and items; 8B proposer; count rejected candidates \\[1mm]
-Online selection? & Thompson sampling over the table on a mixed stream; regret vs greedy \\[1mm]
+Harder growth? & multi-step forms and a second family; proposer size vs acceptance \\[1mm]
+Learned signature? & router over the controller's own state instead of hand-chosen features \\[1mm]
 External validity? & OOLONG-real with the library; the 293-row held-out run \\[1mm]
 A smaller caller? & 1.7B with the same library and table \\
 \bottomrule
