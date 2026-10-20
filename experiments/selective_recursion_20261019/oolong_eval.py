@@ -98,7 +98,7 @@ def main():
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--policies", default="direct,rlm")
     p.add_argument("--controller-model", default="qwen3-4b")
-    p.add_argument("--harness", default="default", choices=("default", "hinted", "skills"))
+    p.add_argument("--harness", default="default", choices=("default", "hinted", "skills", "exemplars"))
     p.add_argument("--lens", default="1024,2048,4096,8192,16384,32768")
     p.add_argument("--per-cell", type=int, default=8, help="rows per (dataset, context_len)")
     p.add_argument("--concurrency", type=int, default=8)
