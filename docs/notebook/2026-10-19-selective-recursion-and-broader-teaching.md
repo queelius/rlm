@@ -651,6 +651,19 @@ prose and fails the exact match), and the librarian, which proposes a routine, v
 cached model extractions of the teaching split, and registers it with its verification record in
 the statistics.
 
+Honest library (E08-1, 10:55 UTC). With the aggregator returning None for uncovered questions
+and the usage note telling the controller to print the question and a sample of events and
+aggregate in the next cell rather than guess in the first (a first version let it guess in the
+same cell, before it had seen the question, and it wrote a generic fallback for the five covered
+forms: 0/3, restarted), the untrained controller scores 34/72 on the three held-out types: busiest
+day 17/24, purchase span 16/24, top buyer 1/24. The top-buyer failures are format, not logic: the
+gold name leads the submitted answer in 20 of 24 cases ("ANSWER: Greta bought the most units of
+blender ..."), which the exact-match check rejects; the 512-line tasks hit the helper-call budget
+(8 errors). So an honest library turns 0/72 into 34/72 with no new routine, the controller can
+write the aggregation it needs once it has looked at the question, and the remaining losses are
+exactly what a verified routine removes: exact output format and budget-safe chunking. The
+librarian's result follows.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
