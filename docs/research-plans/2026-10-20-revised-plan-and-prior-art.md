@@ -89,6 +89,66 @@ Retired or deprioritized: more absolute-cost strengths (inert), weak KL (inert),
 seed studies beyond two seeds per arm, and breadth across new task families before the routing
 story is settled.
 
+## Data quality and distillation (added 06:45 UTC after the user's question)
+
+What we did before: all teaching came from a deterministic scripted expert run through the real
+kernel (native replay), filtered to correct trajectories. That gave a warm start that matches the
+expert in distribution on event logs but sits 10 points below it on OOLONG (0.567 vs 0.672), and
+it carries no routing judgment at all; the earlier Codex-era self-SFT control (ledger C32) and the
+TextCraft teaching work (C79 to C81) are the other data-quality experiments. The RLM paper
+post-trained RLM-Qwen3-8B on filtered demonstration trajectories (the public abstract gives no
+count, teacher or filter), and Prime Intellect names training small models to use the RLM as the
+open problem. Relevant method: Thinking Machines' *on-policy distillation* (October 2025): the
+student samples, a teacher scores every sampled token with a reverse KL, so the signal is dense
+and on the student's own states; a Qwen3-8B student went from 60 to 70 percent on AIME'24 in about
+150 steps at a claimed 9 to 30 times less compute than SFT; follow-ups (arXiv:2604.13016) report it
+depends on student and teacher sharing compatible patterns.
+
+Options, ranked by expected information per GPU-hour and cost:
+
+1. **Stronger-controller teaching with local helpers.** Drive our kernel with a stronger model as
+   controller while the helper calls still go to the local 4B, so the student later sees the
+   same helper behaviour it was taught against. Teachers available without an API: the RLM paper's
+   own post-trained `mit-oasys/rlm-qwen3-8b-v0.1` (local, MIT; trained for a different scaffold,
+   so it must first be checked for compatibility with our ABI), Qwen3-8B, and re-downloadable
+   Qwen3-14B (bf16 fits one 40 GB card for inference) or Qwen3-32B-AWQ (4-bit, about 18 GB,
+   inference only). An API teacher (Claude or GPT class) would cost roughly 15k controller tokens
+   per trajectory, so about 1,000 trajectories for 15M tokens, tens of dollars at mid-tier
+   pricing; there is no API key on the cluster today. The point of a strong teacher is not only
+   program quality: a strong model decides *when to answer directly* on its own, so its filtered
+   traces contain the routing judgment that RL could not discover. Filter by correctness, cost and
+   program brevity (our teaching lesson: short composed programs reproduce, long ones drift).
+2. **On-policy distillation with a local teacher.** Student samples through the kernel; the
+   teacher (8B or 14B served on the second GPU) scores the student's cells per token; train on
+   reverse KL. Dense signal without the collapse dynamics of outcome rewards, and the routing
+   token gets a direct teacher signal. Implementation: a second logprob pass with the teacher's
+   weights, which the trainer's KL code path already resembles. Needs the teacher to be competent
+   on our tasks first (item 1 measures that).
+3. **Rejection-sampled self-improvement (STaR/RFT) from the RL controllers.** Sample the 0.65
+   controller many times, keep correct-and-cheap trajectories, SFT the warm start on them. Cheap,
+   but the September self-SFT control (C32) was inconclusive; run only as a baseline for 1 and 2.
+4. **Reasoning in traces.** Our kernel takes one Python cell per turn and shows only the last
+   pair, so long reasoning per turn is not retained; "high-quality reasoning traces" here means
+   brief rationale comments plus the decision itself. A teacher's hidden reasoning can still shape
+   the cell it writes; what we distill is the cell.
+
+Decision rule for the whole thread: a distilled warm start must beat SFT-007 on held-out OOLONG and
+event-log accuracy at equal or lower tokens *and* keep a nonzero direct share on short inputs at
+temperature 0; otherwise the scripted expert remains the better teacher per dollar.
+
+## What fits on two A100 40GB (MIG, no NVLink, no tensor parallel across cards)
+
+| Model | Serve (vLLM, bf16 unless noted) | Train (LoRA, bf16 base) |
+| --- | --- | --- |
+| Qwen3-4B (current) | 8 GB weights, ample KV | 9 to 12 GB per trainer; two trainers fit |
+| Qwen3-8B / rlm-qwen3-8b | 16 GB weights, KV fine at 32k | about 24 to 30 GB with checkpointing; one trainer |
+| Qwen3-14B | 28 GB weights, KV tight above 16k | QLoRA (4-bit base) only, about 20 GB; slow |
+| Qwen3-32B | AWQ 4-bit about 18 GB, inference only | no |
+
+The one-card limit is the serving card: controller and helpers share it, so an 8B controller with
+8B helpers halves rollout throughput relative to 4B. The capacity study (item 6 above) therefore
+uses an 8B controller with 4B helpers first.
+
 ## Time budget
 
 Allocation ends 2026-10-22 00:39 UTC. Pipelines 14, 16 and 17 (short-weighted, sequence-normalized,
