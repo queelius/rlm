@@ -169,12 +169,14 @@ logged route.
 \end{enumerate}
 \end{column}
 \begin{column}{.46\textwidth}
-\begin{block}{Result (to be filled in from E08)}
-Dry run: both candidates for the first form verified 12 of 12 teaching tasks. After-growth dev
-numbers for the three forms are being computed at the time of writing.
+\begin{block}{Result}
+Two forms: every candidate verified 47 or 48 of 48; registered; the untrained controller then scores
+\textbf{24/24 and 24/24} on dev (0/24 each before). Third form (tie rule): all 24 candidates over
+three rounds shared one bug (ascending sort), verified \alert{0/48}, and were kept out; a one-token
+fix verifies 48/48.
 \end{block}
-\small Only the teaching split seeds the library. Verification uses the model's extractions, not
-the generator's hidden events, so acceptance reflects what a deployed controller sees.
+\small Only the teaching split seeds the library. Verification uses the model's extractions, not the
+generator's hidden events. Growth is bounded by the proposer, not the loop: an 8B proposer is next.
 \end{column}
 \end{columns}
 \source{librarian.py, extract\_cache.py; runs e08-*. Prior art: Voyager, LILO (2023), Agent Workflow Memory (2024), SkillRL, AutoRefine (2026).}

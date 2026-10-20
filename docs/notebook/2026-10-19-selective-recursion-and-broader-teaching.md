@@ -664,6 +664,30 @@ write the aggregation it needs once it has looked at the question, and the remai
 exactly what a verified routine removes: exact output format and budget-safe chunking. The
 librarian's result follows.
 
+Growth, after (E08-2, 12:00 UTC). The librarian (`librarian.py`) asked the 4B for eight
+candidate routines per held-out form, given the event schema, the shipped aggregator as a style
+reference and three teaching examples with gold answers, and verified each candidate on the cached
+model extractions of the 48 teaching tasks of that form. Top buyer: all eight candidates verified
+47/48; purchase span: all eight 48/48; both registered under `skills/learned/` with their
+verification rows entering the statistics table as a routine. Busiest day (tie rule): all eight
+candidates verified 0/48, and two repair rounds that showed the proposer its best candidate with
+three failing cases (question, expected, got, events) produced sixteen more candidates, five
+distinct programs in all, every one with the same bug: the day totals are sorted ascending and the
+first element returned, so the routine answers the day with the fewest units. A one-token fix
+(descending sort) verifies 48/48 on both extracted and gold events, so the harness is sound and
+the rejection is the proposer's. With the two accepted routines and the rebuilt note, the
+untrained controller scores 24/24 on top buyer and 24/24 on purchase span on dev (0/24 and 0/24
+before growth; 1/24 and 16/24 with the honest library), calling the learned routine every time,
+with no errors at 17.6k mean tokens. The first after-growth run was invalid and is preserved
+(`e08-dev-heldout-after/FAILED.txt`): the registry read the learned skill's family header from
+the first five lines and the librarian wrote it on the sixth, so nothing was bound, and the
+signature keyed the new forms as "other"; the librarian now registers each form's question
+pattern alongside the routine, and the signature extractor consults them. Lesson for the deck: on
+a form a small proposer can write, verified growth takes the controller from zero to perfect with
+no training; on a form it cannot, verification keeps the wrong routine out and the failure is
+visible in the candidates file. A stronger proposer (Qwen3-8B, 4-bit) is being tried on the
+rejected form.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
