@@ -33,12 +33,34 @@ the controller only request metadata plus the latest cell/observation; synthetic
 | E07-3 | From that warm start, RL with an absolute token cost (0.1) extinguishes the direct route everywhere within five updates, including 8-record tasks where it is equally accurate at half the tokens; the saving is worth about 0.03 reward against order-1 correctness differences elsewhere. | exploratory | 2026-10-19 note, step-10 and completed sections; `rl-route7-lam01`, `dev-ctrl-rlroute7-01-t1` | One seed; the 0.3-cost arm is queued. |
 | E07-4 | A group-relative cost (penalty scaled by the task group's mean tokens, coefficient 0.5) changes the dynamics (a surge of direct routing at step 2) but not the outcome: the route is extinct again by step 4. | exploratory | 2026-10-19 note, relative-cost sections; `rl-route7-rel05` | Run in progress at the time of writing; seed 1, short-weighted and KL-regularized arms queued. |
 
-## Harness teaching and transfer on TextCraft (E04, E05)
+## Harness teaching and transfer on TextCraft (E04, E05; September 22 to October 19)
 
-Entries pending import from the checkpoint notes of 14 to 19 October (teaching-repair transfer,
-recovery teaching, second fit, broader two-world comparison).
+Full entries C79 to C96 in `docs/results/claims-2026-08-to-10.md`. The load-bearing ones:
 
-## Codex-era findings, September 2026 (E01 to E03)
+| Id | Claim | Status | Evidence | Caveats and what overturns it |
+| --- | --- | --- | --- | --- |
+| C79 | Answer-preserving repair of teaching histories (recipe lookups reordered so names are visible before they are queried; actions, answer tokens and denominators unchanged) raises TextCraft successes over the weak original teacher, for example 1 to 14, 2 to 13 and 3 to 17 of 32. | replicated (second fit seed, added roots, further panels, new structures, two new worlds) | `claims-2026-08-to-10.md` C79; `docs/research-audit-2026-09-29/teaching-and-execution.md`; `experiments/teaching_*` | Every panel is exploratory; the comparison is against a weak teacher. |
+| C80 | Repair never beats the stronger discovery teacher or the extra-training-dose control. | replicated | C80; `experiments/teaching_broader_20261019` | Same panels as C79. |
+| C81 | The 69-update dose control flips between 5/16 and 0/16 across training seeds, so dose comparisons are seed-limited. | exploratory | C81 | Two seeds. |
+| C84 | Code-filled ingredient arguments (execution assistance) raise success 323 to 381 of 768. | replicated | C84 | Assistance changes the action space, not the policy. |
+| C87 | Four fixed RL updates from the SFT warm start give no sustained gain on the eight-goal diagnostic (4, 4, 5, 4, 4 of 16 raw; 5, 4, 4, 4 assisted). | replicated null | C87; `docs/RESEARCH_RESUME_2026-10-04.md` | One training run on an exposed diagnostic. |
 
-Entries pending import from `rlm-research` and the September checkpoint notes (fixed
-one-candidate delegation, record grouping, matched RL updates, breadth campaigns).
+## Codex-era findings, August 24 to September 29 (E01 to E03)
+
+Ninety-six entries across sixteen threads are in `docs/results/claims-2026-08-to-10.md`
+(extracted 2026-10-20 from the checkpoint notes and the September 29 audit; statuses are the
+notes' own, and none reaches "confirmed"). The ones that carry weight:
+
+| Id | Claim | Status | Caveats and what overturns it |
+| --- | --- | --- | --- |
+| C62 | Singleton delegation (one helper per candidate) on the generated record-selection task: complete sets 4/12 to 10/12 on six frozen problems and 10/24 to 22/24 on twelve fresh ones (twelve gains, no losses). | replicated | About 3.7 times the input tokens; a fixed program, not learned routing. |
+| C60 | Python-organized state on the same task: 1/24 to 9/24. | replicated | Same task family. |
+| C50 | MRCR procedural SFT taught a Python search routine: 0 to 10 of 16 on two fresh panels, transferring to longer inputs. | replicated | Later RL on it mostly improved delivery; one gain did not replicate (C51, C53). |
+| C68 | Code-executed arithmetic roughly doubles strict FinQA matches (51 to 108 and 52 to 102 of 508). | replicated | Prior exposure of the panels; semantic audit pending. |
+| C40 | Eight RL updates on the AG News helper: 422 to 437 and 436 of 512 across two seeds on the earlier panel; on fresh official-test articles 427/429 against 426 after SFT. | replicated on the earlier panel, inconclusive against SFT on fresh data | Helper-only RL; attenuates on fresh examples. |
+| C06 | An explicitly taught adaptive routine (Python for visible metadata, else a 16-record facet) reaches 144/144 conditional answers with a 67.8 percent helper-token reduction over two optimization seeds. | replicated | The routine was taught, not learned; synthetic. |
+| C32, C39, C41, C51, C53, C76 | Every other RL claim (self-SFT compute saving, AG News one-update gain, varied-versus-repeated data, MRCR one-step gains, ALFWorld manager gain). | exploratory, null or retracted | See the full ledger for each. |
+
+Reading across the ledger: taught programs transfer and replicate; every attempt to *learn*
+routing or decomposition by RL before October 19 was exploratory, null or retracted, which is why
+E06 and E07 were designed around a taught warm start plus a verifiable reward.
