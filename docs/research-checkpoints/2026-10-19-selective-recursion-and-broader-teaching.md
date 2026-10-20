@@ -482,6 +482,21 @@ it moved to 12-line chunks on the event-log family (7/10/17/30/57 helper calls),
 absolute-0.1 seeds of the earlier study did. So the extinction of the direct route under the
 group-relative cost is a two-seed result, and the usual RL gain comes with it.
 
+A sampling artifact, found and fixed (07:40 UTC). The trainer drew training tasks by walking the
+length-by-question grid cyclically, eight event-log cells per step over 30 cells, so 8-record tasks
+appeared only in bursts (steps 3, 4, 7, 8, 11, 15, ... in the uniform runs; steps 1 and 5 in the
+short-weighted run, whose weighting only lengthened the bursts). In the steps between bursts
+there was no positive signal for the direct route at all while the negative signal from OOLONG
+inputs acted every step. That is the cleanest account yet of the seed-1 collapse with near-zero
+net advantage on direct rollouts, and it confounds both remedy arms run so far: short weighting
+(`rl-route7-rel05-short`, direct still 10 of 11 correct at 8 records in step 1, extinct by step
+5) and sequence normalization (`rl-route7-rel05-seq`, extinct by step 4). Both were stopped at
+step 5 with their artifacts kept, and the queued strong-KL and balance pipelines were cancelled.
+The trainer now has `--sample-mode stratified` (independent weighted draw every step, shortest
+length guaranteed in the first slot). Pipeline 20 reruns the remedies on this footing in two
+concurrent lanes, all with the relative cost and sequence-normalized loss: plain, balance term,
+strong KL; and short-weighted, short-weighted plus balance.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.

@@ -12,16 +12,17 @@ Revision log:
 - 2026-10-20 06:45: distillation and model-capacity analysis added.
 - 2026-10-20 07:10: harness-side learning (retrieval, GEPA, Meta-Harness) and role adapters added.
 - 2026-10-20 07:20: queues merged into one ranked list with status; revisit rule stated.
+- 2026-10-20 07:40: cyclic task-sampling artifact found (short lengths absent for several steps at a
+  time); confounded arms stopped; remedies requeued under stratified sampling in two lanes.
 
 ## Ranked queue, merged (status as of 07:20 UTC)
 
 | Rank | Id | Arm | Status | Decision it informs |
 | --- | --- | --- | --- | --- |
-| running | G-short | relative cost + short-weighted draws (`rl-route7-rel05-short`) | step 3 of 30 | is the collapse a signal-share problem |
-| running | G-seq | relative cost + sequence-normalized loss (`rl-route7-rel05-seq`) | step 3 of 30 | is token-sum weighting the mechanism |
-| running | SFT-008 | consistent teacher (direct only at 8 records) | training | can SFT represent length-conditional routing |
-| queued | G-kl5 | strong KL (coefficient 5), alone and with short weighting (pipeline 17) | after G-seq | does a restoring force hold the route |
-| queued | G-bal | outcome-gated balance term, two seeds (pipeline 18) | after G-kl5 | Kassenaar-style remedy |
+| stopped | G-short, G-seq | short-weighted and sequence-normalized arms under cyclic sampling | stopped at step 5: confounded by the burst artifact | superseded by pipeline 20 |
+| running | G-strat (lane A) | stratified sampling + relative cost + seq-norm, then + balance term, then + strong KL | `rl-s7-strat*`, pipeline 20 | does even per-step coverage of short tasks hold the route; then the two remedies on a clean footing |
+| running | G-strat-short (lane B) | stratified + short-weighted, then + balance | pipeline 20 | signal share on a clean footing |
+| running | SFT-008 | consistent teacher (direct only at 8 records) | evaluating | can SFT represent length-conditional routing |
 | 1 | H1 | retrieval-augmented untrained controller | ready, no training | prompting vs weights |
 | 2 | H2 | retrieval routing on SFT-007 and on the base | ready, no training | routing without gradients |
 | 3 | P1 | probe routing (When2Tool-style) | needs hidden-state dump | representability; oracle router |
