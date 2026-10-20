@@ -40,6 +40,24 @@ inside files, not in folder names.
 | `exp1` (45 GB, no remote), `forgot` | Unrelated to RLM; `exp1` is not on GitHub. | Out of scope here; flag that `exp1` has no remote backup. |
 | `evolved-integrators`, `use-mention-gating` | Unrelated projects, on GitHub. | Out of scope. |
 
+## Hugging Face plan and constraints
+
+- Namespace: the user's personal account (`queelius`). No login exists on the cluster yet; the
+  user runs `hf auth login` (interactive) before any upload.
+- Models (LoRA adapters, about 130 MB each at rank 32, Apache-2.0 with the Qwen3 base noted):
+  `rlm-qwen3-4b-sft-005` (taught warm start), `rlm-qwen3-4b-rl-mixed-001` (best RL controller),
+  `rlm-qwen3-4b-sft-007` (route-balanced warm start), and the most informative routing arm. Each
+  card states base model revision, teaching data, recipe, held-out numbers from `docs/RESULTS.md`,
+  and the harness contract it expects.
+- Datasets (CC-BY-4.0): the unified teaching sets (synthetic event logs plus our controller cells;
+  OOLONG-derived rows carry only row ids, window ids and our cells, not the source text), the
+  held-out split definition for OOLONG-synth (window ids), evaluation row tables and traces for
+  the headline comparisons with OOLONG text stripped to ids.
+- OOLONG-synth itself declared **no license** at the revision used (f0d59eaf, retrieved
+  2026-10-19, `research-cache/datasets/oolong-synth-20261019/PROVENANCE.json`), so its text is
+  not redistributed; the cards link to the source dataset and revision instead.
+- Reproductions: the SPO checkpoint goes to its own model repo from the SPO repository.
+
 ## Migration order (additive first)
 
 1. Write `docs/RESULTS.md` (claims ledger) and `experiments/INDEX.md`.
