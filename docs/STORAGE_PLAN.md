@@ -30,6 +30,29 @@ by the claims ledger), **prune** (keep final and referenced checkpoints, delete 
 | `envs/vllm`, `envs/rlm` | 8 GB | Active serving and runtime environments. **Keep**. |
 | `research-cache/runtime-images`, `research-cache/spo`, `research-cache/datasets` | 30 GB | Container images, SPO data, benchmark exports. **Keep** datasets with provenance records; review images. |
 
+## Concrete candidates from the second-level inventory (2026-10-20)
+
+| Path | Size | Classification | Condition |
+| --- | ---: | --- | --- |
+| `runs/rlm-research-r4/sidecars/official-rlm-prime-pilot-v1` | 67 GB | delete | Not cited by any ledger entry; a retired prime-rl pilot with its own manifest. Keep `MANIFEST.json` and `RUNBOOK.md`. |
+| `runs/rlm-research-r4/sidecars/selective-delegation-20260921` | 134 GB | prune | Cited by the ledger (threads 11 to 15). Keep reports, receipts and the checkpoints behind C79, C84 and C87; delete per-update adapters of retired pilots. |
+| `runs/rlm-research-r4/shared/renderer-gate-launch` | 16 GB | delete | Not cited. |
+| `runs/rlm-research-r4/campaigns/adaptive-context` | 9.7 GB | prune | Reports behind C05 and C06 stay; adapters can go. |
+| other `runs/rlm-research-r4/sidecars/*` (about 25 pilots, 1.6 to 9.5 GB each) | about 70 GB | prune | Keep `REPORT.md`, `FINDINGS.json`, `MANIFEST.json`; delete adapters except those behind replicated claims (C07 trec-leaf-sft-v1, C50 openai-mrcr-procedural-sft-continue32-v1, C40 helper-agnews-*). |
+| `~/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints/.../ckpt--iter_0690--epoch_2.00--step_11040` | part of 181 GB | **keep** (archive, Hugging Face) | The audited SPO final state with its fourteen-file hash receipt. |
+| rest of `~/research-runs/rl-paper-reproduction-20261012` | about 250 GB | prune | Intermediate SPO checkpoints and optimizer states. |
+| `~/research-runs/spo-reproduction-20261008` | 171 GB | prune | First SPO attempt (restarted 2026-10-12); keep receipts and evaluations. |
+| `~/research-runs/r1-zero-replication-20261007` | 185 GB | prune | Keep updates 208 and 216 of the stopped run and their evaluations; the four `subset512-*` runs (96 GB) and `archive` (47 GB) are candidates. |
+| `runs/curl-*` | 234 GB | delete | After `rl-reproductions` is on GitHub with the curves asset. |
+| `cache/huggingface/hub` (Qwen3-14B, Qwen3-14B-Base, Qwen3.5-9B, Qwen2.5-7B-Instruct, a duplicate Qwen3-4B-Instruct-2507) | 98 GB | delete | All re-downloadable; none used by a live experiment. |
+| reproduction environments (`envs/prime-rl-*`, `envs/r1-zero-*`, `envs/spo-*`, `envs/curl-*`, `cache/uv-prime`) | 49 GB | delete | After each reproduction repository carries an exported lock. |
+| `~/research-runs/selective-recursion-20261019/rl-*` (per-step adapters, 7.5 GB per run) | about 60 GB | prune later | After the campaign: keep the final adapter and any step cited in the ledger or `manifest.json`. |
+
+**Suggested first tranche (safe, about 450 GB on the project volume):** the HF hub cache (98 GB),
+the CURL runs (234 GB, after the GitHub push), the prime pilot (67 GB) and renderer-gate (16 GB),
+and the reproduction environments (49 GB). Everything in it is either re-downloadable,
+reconstructible from a lock, or uncited by any claim.
+
 ## Order of operations
 
 1. Sub-inventory `rlm-research-r4` and the three reproduction stores to list exactly which
