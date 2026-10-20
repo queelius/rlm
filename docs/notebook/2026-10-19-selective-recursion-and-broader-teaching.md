@@ -521,6 +521,18 @@ a consistent teacher; what RL could not do is find or keep it. The decisive foll
 this correctly routing warm start under the relative cost with stratified sampling, is queued next
 in lane A ahead of the balance and KL arms.
 
+Stratified lanes at step 5 (07:25 UTC): one mode each, in opposite directions. Lane A (plain)
+settled back to always-decompose (8 records 12/12 decompose at step 5, dev 0.891). Lane B
+(short-weighted) went all-direct everywhere (8 records 13/16, 32 records 8/12, 64 records 2/4,
+OOLONG 1k 4/8 and 4k 5/8 direct) and its dev accuracy fell from 0.848 to 0.391, with 0 of 5 at
+256 and 512 records. Same warm start, same reward, same sampling; only the share of short tasks in
+the draw differed, and that decided which single mode the policy fell into. The policy does not
+condition the route on length; it flips globally toward the mode that wins the current mix. Lane B
+was stopped at step 6 with its artifacts kept, and its slot was given to the decisive arm, RL from
+the correctly routing warm start SFT-008 (`rl-s8-strat`), with the short-weighted-plus-balance
+run after it; the plain lane continues to step 30 and is followed by the balance and strong-KL
+arms from SFT-007.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
