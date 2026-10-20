@@ -69,7 +69,22 @@ Pre-checks before deletion: no running process referenced any path; vLLM serves 
 snapshot under `research-cache/models`; the training pipelines set no HF cache variables; no
 symlink from the active stores pointed into the removed trees.
 
-## Second tranche (proposed 2026-10-20 05:10 UTC; awaiting the user's approval)
+## Second tranche: execution record (approved and run 2026-10-20 05:15 to 05:21 UTC)
+
+5,103 files over 5 MB (605.3 GB) deleted and 13,690 emptied directories removed, each file logged in
+`/project/alex_phd/runs/DELETIONS-2026-10-20.jsonl`. Kept in full: the eight cited sidecars, the
+selective-delegation sub-stores named by the ledger or bound as adapters by teaching `PLAN.json`
+files (`textcraft-teaching-order/dose/replication`, `textcraft-second-fit-dose`, `textcraft-fresh-rl-002`,
+`textcraft-phi-repair`, `textcraft-action-sft-001`, `rl-fullpass-001`, `rl-continuation-001`,
+`rl-planner-001`, `planner-sft-001`, `plan-only-001`, and others listed in the dry run), the audited
+SPO final state (17 GB), the SPO diagnosis state at 7,840 updates (17 GB), and the R1 stopped-run
+states at updates 208 and 216 with their buffers. Every file under 5 MB everywhere survived.
+Sizes afterwards: `runs/rlm-research-r4` 164 GB (from 325); home `r1-zero-replication` 47 GB
+(from 185), `rl-paper-reproduction-20261012` 40 GB (from 292), `spo-reproduction-20261008` 34 GB
+(from 171). The `rlm-research` local clone (116 MB) was also removed after archiving its GitHub
+repository, and the `repos/rlm-research-r4` remnant was deleted.
+
+## Second tranche (proposal as approved)
 
 Inventory crossed with the claims ledger (`docs/results/claims-2026-08-to-10.md`). "Keep" means
 the whole directory stays; "prune" means reports, receipts, manifests and every file under 5 MB
