@@ -4,8 +4,7 @@ split_log(text) -> (lines, question)          # numbered log lines and the quest
 extract_events(lines, chunk=12) -> list[dict]  # helper calls per chunk; dicts: kind buy/return, person, item, qty, day
 answer_eventlog(events, question) -> str|None # exact aggregation for the five covered question forms (count buyers, both items, net units, bought-then-returned, lookup day); returns "ANSWER: ..." or None when the question is not one of them
 lookup_day(lines, question) -> str            # cheaper alternative for "On which day did X buy a Y?": one helper call on the lines naming the person
-Typical use: lines, question = split_log(request["input"]); events = extract_events(lines);
-answer = answer_eventlog(events, question); if answer is None the question is not covered: aggregate `events` yourself in Python (dicts with kind, person, item, qty, day; helpers _is_item, _who, _qty, _day) and FINAL_TEXT("ANSWER: ...") from your own result. For "On which day did X buy a Y?" use lookup_day.
+Typical use: lines, question = split_log(request["input"]); events = extract_events(lines); answer = answer_eventlog(events, question); FINAL_TEXT(answer) if answer is not None. If answer is None the question form is not covered by the library: aggregate `events` yourself in Python (each event is a dict with kind, person, item, qty, day; helpers _is_item(e, item), _who(e), _qty(e), _day(e) are defined) and FINAL_TEXT("ANSWER: ...") with your own result. For "On which day did X buy a Y?" use lookup_day.
 """
 import json
 import re
