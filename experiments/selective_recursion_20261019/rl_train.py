@@ -100,7 +100,12 @@ def step_tasks(args, step: int) -> list:
         cells = [(n, qt) for n in (args.train_ns or args.ns) for qt in args.qts]
         count = args.tasks_per_step if args.task_source == "eventlog" else args.tasks_per_step // 2
         for i in range(count):
-            n, qt = cells[(step * count + i) % len(cells)]
+            if args.sample_mode == "random":
+                # independent weighted draw every step: no length is absent for several steps in a
+                # row, which the cyclic walk below produces (bursts of short tasks every few steps)
+                n, qt = rng.choice(cells)
+            else:
+                n, qt = cells[(step * count + i) % len(cells)]
             tasks.append(taskgen.make_task(rng.randrange(10**6, 10**9), n, qt, split="rl"))
     if args.task_source in ("oolong", "mixed"):
         pool = oolong_tasks("train", args.oolong_max_len)
@@ -112,7 +117,8 @@ def step_tasks(args, step: int) -> list:
             lens = [n for n in args.oolong_train_lens if n in by_len]  # repeats weight the draw
         count = args.tasks_per_step if args.task_source == "oolong" else args.tasks_per_step - len(tasks)
         for i in range(count):
-            tasks.append(rng.choice(by_len[lens[(step * count + i) % len(lens)]]))
+            n = rng.choice(lens) if args.sample_mode == "random" else lens[(step * count + i) % len(lens)]
+            tasks.append(rng.choice(by_len[n]))
     return tasks
 
 
@@ -381,6 +387,8 @@ def main():
     p.add_argument("--group", type=int, default=4)
     p.add_argument("--ns", default="8,32,64,128,256,512")
     p.add_argument("--train-ns", default="", help="event-log lengths for training draws; repeats weight them")
+    p.add_argument("--sample-mode", default="cyclic", choices=("cyclic", "random"),
+                   help="cyclic: walk the length x question grid in order (bursty); random: weighted draw per step")
     p.add_argument("--oolong-train-lens", default="", help="OOLONG lengths for training draws; repeats weight them")
     p.add_argument("--qts", default=",".join(taskgen.QUESTION_TYPES))
     p.add_argument("--task-source", default="eventlog", choices=("eventlog", "oolong", "mixed"))
