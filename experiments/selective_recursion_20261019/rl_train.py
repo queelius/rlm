@@ -100,10 +100,13 @@ def step_tasks(args, step: int) -> list:
         cells = [(n, qt) for n in (args.train_ns or args.ns) for qt in args.qts]
         count = args.tasks_per_step if args.task_source == "eventlog" else args.tasks_per_step // 2
         for i in range(count):
-            if args.sample_mode == "random":
+            if args.sample_mode in ("random", "stratified"):
                 # independent weighted draw every step: no length is absent for several steps in a
-                # row, which the cyclic walk below produces (bursts of short tasks every few steps)
+                # row, which the cyclic walk below produces (bursts of short tasks every few steps);
+                # stratified additionally guarantees the shortest length in the first slot
                 n, qt = rng.choice(cells)
+                if args.sample_mode == "stratified" and i == 0:
+                    n = min(args.train_ns or args.ns)
             else:
                 n, qt = cells[(step * count + i) % len(cells)]
             tasks.append(taskgen.make_task(rng.randrange(10**6, 10**9), n, qt, split="rl"))
@@ -117,7 +120,10 @@ def step_tasks(args, step: int) -> list:
             lens = [n for n in args.oolong_train_lens if n in by_len]  # repeats weight the draw
         count = args.tasks_per_step if args.task_source == "oolong" else args.tasks_per_step - len(tasks)
         for i in range(count):
-            n = rng.choice(lens) if args.sample_mode == "random" else lens[(step * count + i) % len(lens)]
+            if args.sample_mode in ("random", "stratified"):
+                n = min(lens) if (args.sample_mode == "stratified" and i == 0) else rng.choice(lens)
+            else:
+                n = lens[(step * count + i) % len(lens)]
             tasks.append(rng.choice(by_len[n]))
     return tasks
 
@@ -387,7 +393,7 @@ def main():
     p.add_argument("--group", type=int, default=4)
     p.add_argument("--ns", default="8,32,64,128,256,512")
     p.add_argument("--train-ns", default="", help="event-log lengths for training draws; repeats weight them")
-    p.add_argument("--sample-mode", default="cyclic", choices=("cyclic", "random"),
+    p.add_argument("--sample-mode", default="cyclic", choices=("cyclic", "random", "stratified"),
                    help="cyclic: walk the length x question grid in order (bursty); random: weighted draw per step")
     p.add_argument("--oolong-train-lens", default="", help="OOLONG lengths for training draws; repeats weight them")
     p.add_argument("--qts", default=",".join(taskgen.QUESTION_TYPES))
