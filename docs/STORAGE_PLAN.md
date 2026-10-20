@@ -53,6 +53,22 @@ the CURL runs (234 GB, after the GitHub push), the prime pilot (67 GB) and rende
 and the reproduction environments (49 GB). Everything in it is either re-downloadable,
 reconstructible from a lock, or uncited by any claim.
 
+## First tranche: execution record (2026-10-20 04:09 UTC)
+
+Executed after the user's approval; 22 entries in `/project/alex_phd/runs/DELETIONS-2026-10-20.jsonl`.
+
+| Removed | Freed (from the inventory) | Notes |
+| --- | ---: | --- |
+| `runs/curl-*` (8 campaigns) | 234 GB | 45 `latest.pt` checkpoints deleted; every file under 5 MB (protocols, admission, launch and queue receipts, summaries) preserved under `~/research-runs/archive/curl-runs-metadata-20261020/` |
+| `cache/huggingface/hub/models--*` | 98 GB | datasets entries kept; the OOLONG snapshot is also mirrored under `~/research-cache/hf` |
+| `runs/rlm-research-r4/sidecars/official-rlm-prime-pilot-v1/outputs` | 67 GB | manifest, runbook, configs, src, tests, data and an exported package list kept (445 KB) |
+| `runs/rlm-research-r4/shared/renderer-gate-launch` | 16 GB | a read-only venv tree; needed `chmod -R u+w` first |
+| `envs/prime-rl-5990b1b`, `envs/r1-zero-dfca49d`, `envs/spo-6c5f947`, `envs/curl-8416d6e`, `cache/uv-prime` | 49 GB | package lists exported to the reproduction repositories and the pilot sidecar beforehand |
+
+Pre-checks before deletion: no running process referenced any path; vLLM serves from the pinned
+snapshot under `research-cache/models`; the training pipelines set no HF cache variables; no
+symlink from the active stores pointed into the removed trees.
+
 ## Order of operations
 
 1. Sub-inventory `rlm-research-r4` and the three reproduction stores to list exactly which
