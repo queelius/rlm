@@ -96,7 +96,8 @@ def step_tasks(args, step: int) -> list:
     rng = random.Random(f"{args.seed}:{step}")
     tasks = []
     if args.task_source in ("eventlog", "mixed"):
-        cells = [(n, qt) for n in args.ns for qt in args.qts]
+        # --train-ns may repeat lengths to weight the training draw (dev set still uses --ns)
+        cells = [(n, qt) for n in (args.train_ns or args.ns) for qt in args.qts]
         count = args.tasks_per_step if args.task_source == "eventlog" else args.tasks_per_step // 2
         for i in range(count):
             n, qt = cells[(step * count + i) % len(cells)]
@@ -107,6 +108,8 @@ def step_tasks(args, step: int) -> list:
         for t in pool:
             by_len.setdefault(t.n_records, []).append(t)
         lens = sorted(by_len)
+        if args.oolong_train_lens:
+            lens = [n for n in args.oolong_train_lens if n in by_len]  # repeats weight the draw
         count = args.tasks_per_step if args.task_source == "oolong" else args.tasks_per_step - len(tasks)
         for i in range(count):
             tasks.append(rng.choice(by_len[lens[(step * count + i) % len(lens)]]))
@@ -335,6 +338,8 @@ def main():
     p.add_argument("--tasks-per-step", type=int, default=16)
     p.add_argument("--group", type=int, default=4)
     p.add_argument("--ns", default="8,32,64,128,256,512")
+    p.add_argument("--train-ns", default="", help="event-log lengths for training draws; repeats weight them")
+    p.add_argument("--oolong-train-lens", default="", help="OOLONG lengths for training draws; repeats weight them")
     p.add_argument("--qts", default=",".join(taskgen.QUESTION_TYPES))
     p.add_argument("--task-source", default="eventlog", choices=("eventlog", "oolong", "mixed"))
     p.add_argument("--oolong-max-len", type=int, default=8192)
@@ -368,6 +373,8 @@ def main():
     p.add_argument("--resume", action="store_true")
     args = p.parse_args()
     args.ns = [int(x) for x in args.ns.split(",")]
+    args.train_ns = [int(x) for x in args.train_ns.split(",") if x]
+    args.oolong_train_lens = [int(x) for x in args.oolong_train_lens.split(",") if x]
     args.qts = args.qts.split(",")
     out = args.out
     for d in ("adapters", "dev", "rollouts", "traces"):
