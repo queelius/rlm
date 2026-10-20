@@ -710,6 +710,23 @@ By task type the weak spot is numeric-one-class (24/71), a library limitation sh
 expert. So on the second family and the paper-grade split, the untrained caller with the
 library matches the programmed expert that the whole RL campaign was trying to approach.
 
+Online selection, design (E10, 13:35 UTC). `online_bandit.py` streams 240 tasks from a fresh
+seed namespace (all nine question forms, six lengths, shuffled) through the untrained controller;
+for each task a policy picks a routine from the applicable set, the harness note names that
+routine as the one to use, the answer is verified, and the table is updated with the chosen arm's
+outcome. Four arms run in parallel: Thompson sampling, greedy and uniform random from an empty
+table, and greedy warm-started from the teaching table. Two false starts are preserved
+(`e10-bandit-*-partial1`, `-partial2`): the first was contaminated when the third learned routine
+was registered mid-stream (the arm set and the busiest-day signature changed under the running
+processes); the second let every routine compete for every signature with an optimistic prior,
+so 240 tasks were spent forcing inapplicable routines (lookup on a count question) and the random
+arm scored best (0.41). The fix is a library contract, not a bandit trick: each routine declares
+the forms it applies to (the shipped aggregator five, the cheap lookup one, each learned routine
+its registered form), and the policy chooses among applicable routines and the direct answer,
+which is exactly the direct-versus-routine question by length; statistics are pooled across
+lengths within a form as a prior worth four observations. The streams are running with this
+design.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
