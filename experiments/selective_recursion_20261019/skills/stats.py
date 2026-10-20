@@ -75,9 +75,22 @@ def signature_from_input(text: str) -> dict | None:
     return None
 
 
+def _lib_names(family: str) -> tuple:
+    names = list(LIB_NAMES.get(family, ()))
+    try:
+        from skills import registry
+
+        for sk in registry.learned_skills().values():
+            if family in sk["families"]:
+                names += [e[0] for e in registry.exports_of(sk["path"])]
+    except Exception:
+        pass
+    return tuple(names)
+
+
 def routine_of(cells: list[str], family: str) -> str:
     joined = "\n".join(cells)
-    used = [n for n in LIB_NAMES.get(family, ()) if re.search(rf"\b{n}\(", joined)]
+    used = [n for n in _lib_names(family) if re.search(rf"\b{n}\(", joined)]
     core = [n for n in used if n not in ("split_log", "parse_oolong")]
     if core:
         return "lib:" + "+".join(core)
