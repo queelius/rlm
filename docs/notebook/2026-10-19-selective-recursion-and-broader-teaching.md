@@ -600,6 +600,15 @@ outcome statistic should make. Taken with the routing results, the picture for a
 is: put the routines in the library, let the model call them, and decide between alternatives
 from verified statistics rather than from the weights.
 
+Teaching the call pattern (SFT-009, 09:56 UTC). A controller fine-tuned on 651 library-calling
+pairs (native replay of the scripted library caller on the teaching split, through the prelude
+harness) scores 85/96 on aggregation and 24/24 on lookups on the event-log dev split, the same
+accuracy as the untrained controller with the same library (85/96, 23/24), and it takes the taught
+cheap lookup route every time (2k tokens on lookups against 17k untrained). It imitates the three
+one-line cells of its teacher, so an 8-record task costs 4k tokens against 1k for the untrained
+controller, which writes the same calls in one cell. Teaching therefore buys the route choice, not
+the capability; the next entry gets the route choice without any training.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
