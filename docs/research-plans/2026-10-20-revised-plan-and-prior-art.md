@@ -1,4 +1,40 @@
-# Revised research plan after the routing experiments (2026-10-20, 06:30 UTC)
+# Research plan of record (living document; revised 2026-10-20 07:20 UTC)
+
+**Rule: revisit this plan periodically.** At every completed or failed arm, at every session start
+or resumption, and at least once per 12 hours of GPU time, re-rank the queue below against the
+newest evidence in `docs/RESULTS.md`, retire what stopped producing information, add what the
+evidence or new prior art suggests, and append a line to the revision log. The queue is ordered
+by expected information per GPU-hour and readiness, not by when an idea arrived.
+
+Revision log:
+- 2026-10-20 06:30: first revision after the routing experiments; prior-art pass (routing collapse,
+  length-weighting impossibility, When2Tool, Prime Intellect RLM post, SRLM, entropy collapse).
+- 2026-10-20 06:45: distillation and model-capacity analysis added.
+- 2026-10-20 07:10: harness-side learning (retrieval, GEPA, Meta-Harness) and role adapters added.
+- 2026-10-20 07:20: queues merged into one ranked list with status; revisit rule stated.
+
+## Ranked queue, merged (status as of 07:20 UTC)
+
+| Rank | Id | Arm | Status | Decision it informs |
+| --- | --- | --- | --- | --- |
+| running | G-short | relative cost + short-weighted draws (`rl-route7-rel05-short`) | step 3 of 30 | is the collapse a signal-share problem |
+| running | G-seq | relative cost + sequence-normalized loss (`rl-route7-rel05-seq`) | step 3 of 30 | is token-sum weighting the mechanism |
+| running | SFT-008 | consistent teacher (direct only at 8 records) | training | can SFT represent length-conditional routing |
+| queued | G-kl5 | strong KL (coefficient 5), alone and with short weighting (pipeline 17) | after G-seq | does a restoring force hold the route |
+| queued | G-bal | outcome-gated balance term, two seeds (pipeline 18) | after G-kl5 | Kassenaar-style remedy |
+| 1 | H1 | retrieval-augmented untrained controller | ready, no training | prompting vs weights |
+| 2 | H2 | retrieval routing on SFT-007 and on the base | ready, no training | routing without gradients |
+| 3 | P1 | probe routing (When2Tool-style) | needs hidden-state dump | representability; oracle router |
+| 4 | D1 | stronger-controller teaching with local helpers (rlm-qwen3-8b, Qwen3-8B) | needs 8B serving slot | does a teacher's routing judgment transfer by SFT |
+| 5 | C1 | capacity: 8B controller, 4B helpers, E06 recipe | needs vLLM restart | gap and gain vs capacity |
+| 6 | H3 | GEPA over the harness hint text | ready after H1 | harness evolution vs RL |
+| 7 | D2 | on-policy distillation from a local teacher | after D1 | dense signal without collapse |
+| 8 | X1 | OOLONG-real transfer of the best 4B controllers | license check first | external validity |
+| 9 | H4 | role adapters (controller + helper co-training) | after G-bal | revisits C07/C08 |
+| 10 | X2 | 64k to 128k OOLONG-synth for the RL controllers | ready | budget-safe chunking at length |
+| 11 | G-dec | decoupled route-token loss (Thinkless-style) | only if G-bal fails | last RL remedy |
+| 12 | G-alpha | length-weighting sweep (alpha = 0.5) | after G-seq | fills the tradeoff curve |
+| retired | absolute cost 0.3 from SFT-007; weak KL; more seeds beyond two per arm | | |
 
 ## What the last 24 hours established
 

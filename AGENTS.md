@@ -76,6 +76,12 @@ decomposition strategies, RLVR objectives, and evaluation datasets to the ranked
 Follow the durable operating loop in `docs/RESEARCH_OPERATIONS.md` and keep the live experiment
 queue in the active research store current.
 
+Keep a plan of record under `docs/research-plans/` and revisit it periodically: at every completed
+or failed arm, at every session start or resumption, and at least once per 12 hours of GPU time,
+re-rank the queue against the newest evidence in `docs/RESULTS.md`, retire what stopped producing
+information, add what new evidence or prior art suggests, and append a line to the plan's revision
+log. Periodic prior-art searches (arXiv, blogs, social posts) are part of each revision.
+
 For new work or repairs assigned to an existing agent, use `followup_task` so a completed
 agent is actually restarted. `send_message` alone does not wake it. Confirm that GPU-critical
 preparation is running; never mistake a delivered message for active work.
