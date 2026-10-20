@@ -31,7 +31,23 @@ LABELS = {"direct": "direct answer", "own": "own program without the library"}
 SCRIPTED_OVERHEAD = 1500
 
 
+def pattern_from_examples(questions: list[str]) -> str:
+    """A regex for a question form: tokens shared by all examples are kept, varying ones become \\S+."""
+    toks = [q.split() for q in questions]
+    n = min(len(t) for t in toks)
+    out = []
+    for i in range(n):
+        col = {t[i] for t in toks}
+        out.append(re.escape(toks[0][i]) if len(col) == 1 else r"\S+")
+    return r"\s+".join(out)
+
+
 def question_kind(question: str) -> str:
+    from skills import registry
+
+    for kind, pattern in registry.learned_question_kinds():
+        if re.search(pattern, question):
+            return kind
     if re.search(r"did (\w+) buy an? (\w+)\?", question):
         return "lookup_day"
     if re.search(r"at least one (\w+) and also bought at least one (\w+)\?", question):

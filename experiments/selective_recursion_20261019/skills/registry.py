@@ -22,11 +22,20 @@ def learned_skills() -> dict:
     `# families: a,b` header line; listed after the shipped skills so their helpers are bound."""
     out = {}
     for path in sorted(LEARNED_DIR.glob("*.py")) if LEARNED_DIR.exists() else []:
-        head = path.read_text().splitlines()[:5]
+        head = path.read_text().splitlines()[:15]
         fams = next((l.split(":", 1)[1] for l in head if l.startswith("# families:")), "")
+        kind = next((l.split(":", 1)[1].strip() for l in head if l.startswith("# question_kind:")), None)
+        pattern = next((l.split(":", 1)[1].strip() for l in head if l.startswith("# question_pattern:")), None)
         if fams.strip():
-            out[path.stem] = dict(path=path, families={f.strip() for f in fams.split(",")})
+            out[path.stem] = dict(path=path, families={f.strip() for f in fams.split(",")},
+                                  question_kind=kind, question_pattern=pattern)
     return out
+
+
+def learned_question_kinds() -> list[tuple[str, str]]:
+    """(kind, regex) pairs registered by learned skills, so the signature extractor knows new forms."""
+    return [(s["question_kind"], s["question_pattern"]) for s in learned_skills().values()
+            if s.get("question_kind") and s.get("question_pattern")]
 
 
 def signature(task) -> dict:

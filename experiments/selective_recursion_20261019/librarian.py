@@ -139,11 +139,17 @@ def main():
     print(json.dumps(summary))
     if accepted and a.register:
         path = HERE / "skills" / "learned" / f"eventlog_{a.qt}.py"
-        header = (f'"""Learned skill for {a.qt.replace("_", " ")} questions (E08 librarian, {a.model}; verified '
+        from skills import stats as _stats
+
+        pattern = _stats.pattern_from_examples([r["question"] for r in recs])
+        header = ('# families: eventlog\n'
+                  f'# question_kind: {a.qt}\n'
+                  f'# question_pattern: {pattern}\n'
+                  f'"""Learned skill for {a.qt.replace("_", " ")} questions (E08 librarian, {a.model}; verified '
                   f'{best["acc"]:.2f} on {len(recs)} teaching tasks with model-extracted events).\n\n'
                   f'{fn}(events, question) -> str      # exact aggregation over extract_events output; returns "ANSWER: ..."\n'
                   f'Typical use: lines, question = split_log(request["input"]); events = extract_events(lines); '
-                  f'FINAL_TEXT({fn}(events, question)).\n"""\n# families: eventlog\n')
+                  f'FINAL_TEXT({fn}(events, question)).\n"""\n')
         path.write_text(header + best["code"].strip() + "\n")
         # pseudo-run rows: the verification outcomes as logged routes for the statistics table
         with open(out / "rows.jsonl", "w") as rows:
