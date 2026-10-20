@@ -415,6 +415,19 @@ gains: OOLONG sample 39/72 at 13k tokens (warm start 34/72, 2 budget errors agai
 aggregation 87/96 (warm start 85/96), lookups 24/24. So with a balanced prior and an absolute cost
 term, RL converges on "always decompose" and gives up the free saving on short inputs.
 
+Relative-cost run, first five steps (01:10 UTC). Under the group-relative cost (lambda 0.5) the
+direct route first surged (step 2: all OOLONG 1k, 2k and 4k rollouts direct, correct 5/8, 2/8 and
+1/2) and then collapsed: from step 4 on, 0 direct in 48 OOLONG and 24 event-log rollouts, including
+8 records where at step 3 direct and decomposition were both 4/4. Dev at step 5: 0.87, 8-record
+tokens 4.9k (decomposition). So a stronger, scale-free cost signal changes the dynamics (a surge
+rather than a slow fade) but not, so far, the outcome: the route decision generalizes across
+lengths through the shared program text, the lengths where direct answering fails dominate the
+update, and once the direct probability is near zero there is no exploration to recover it. The
+run continues to step 30 with the seed-1 replicate next. To separate "too little short-input
+signal" from "cannot condition on length", a third relative-cost run with short inputs
+over-weighted in the training draw (8 records x3, 32 x2, OOLONG 1k x3, 2k x2; `--train-ns`,
+`--oolong-train-lens`) is queued before the absolute-0.3 arm (`pipeline14_gpu0.log`).
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
