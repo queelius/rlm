@@ -9,6 +9,11 @@ LIBRARY = {
     "eventlog": dict(path=SKILLS_DIR / "eventlog.py", families={"eventlog"}),
     "oolong": dict(path=SKILLS_DIR / "oolong.py", families={"oolong"}),
 }
+# Variants selected by RLM_SKILLS_VARIANT (e.g. "honest"): a variant replaces the shipped skill of
+# the same name for the run, so a running sweep with the default library is unaffected.
+VARIANTS = {
+    "honest": {"eventlog": dict(path=SKILLS_DIR / "eventlog_honest.py", families={"eventlog"})},
+}
 LEARNED_DIR = SKILLS_DIR / "learned"
 
 
@@ -38,7 +43,10 @@ def signature(task) -> dict:
 
 
 def all_skills() -> dict:
-    return {**LIBRARY, **learned_skills()}
+    import os
+
+    variant = VARIANTS.get(os.environ.get("RLM_SKILLS_VARIANT", ""), {})
+    return {**LIBRARY, **variant, **learned_skills()}
 
 
 def retrieve(sig: dict) -> list[str]:
