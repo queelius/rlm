@@ -700,6 +700,16 @@ ceiling is the proposer, not the caller: a 4B caller with an 8B-written, verifie
 exact, and the verification step is what makes mixing proposer capacities safe. The three learned
 routines are committed under `skills/learned/` with the librarian's verification records.
 
+OOLONG, 293-row held-out set (E09, 12:20 UTC). The untrained Qwen3-4B controller with the OOLONG
+library prebound scores 197/293 = 0.672 on the full held-out set with no errors at 11.0k mean
+tokens: equal to the scripted expert (0.672), above the best RL controller (0.652 at 14.3k tokens,
+5 errors) and the taught SFT-005 controller (0.567, 31 errors), and far above the direct answer
+(0.208). By length: 26/43 at 1k, 34/50 at 2k, 37/50 at 4k, 37/50 at 8k, 34/50 at 16k, 29/50 at
+32k; the 32k rows, where SFT-005 ran out of helper budget, are where the library's chunking pays.
+By task type the weak spot is numeric-one-class (24/71), a library limitation shared with the
+expert. So on the second family and the paper-grade split, the untrained caller with the
+library matches the programmed expert that the whole RL campaign was trying to approach.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.

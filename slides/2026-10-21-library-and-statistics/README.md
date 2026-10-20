@@ -10,6 +10,6 @@ library-and-statistics results from the selective-recursion study of 19 and 20 O
   `docs/notebook/2026-10-19-selective-recursion-and-broader-teaching.md`, and the plan of record
   `docs/research-plans/2026-10-20-revised-plan-and-prior-art.md`.
 
-Status: growth results (E08-2) are in frame 6; the 8B-proposer attempt on the rejected form, the
-293-row OOLONG run with the library (E09) and the online-selection streams (E10) are pending.
-Update the slide, the speaker note and this file together when those numbers land.
+Status: growth (E08-2, E08-3) in frame 6 and the 293-row OOLONG number (E09) in frame 3 are final;
+the online-selection streams (E10) are pending and would go on frame 4 or 7. Update the slide, the
+speaker note and this file together when they land.

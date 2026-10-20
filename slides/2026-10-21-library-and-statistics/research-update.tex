@@ -79,17 +79,19 @@ Untrained 4B with no library & 46/192 & 36/48 & --- \\
 \textbf{Untrained 4B + prebound library} & \textbf{85/96} & \textbf{23/24} & 16.8k \\
 Controller taught to call the library (SFT-009) & 85/96 & 24/24 & 14.9k \\
 \midrule
-OOLONG-synth, 72-row sample & Correct & Errors & Tokens \\
+OOLONG-synth, 293-row held-out set & Accuracy & Errors & Tokens \\
 \midrule
-Taught SFT-005 & 36/72 & 10 & 9k \\
-Best RL controller & 41/72 & 1 & 14k \\
-\textbf{Untrained 4B + OOLONG library} & \textbf{43/72} & \textbf{0} & \textbf{10k} \\
+Direct answer & 0.208 & 0 & 12.9k \\
+Taught SFT-005 & 0.567 & 31 & 10.3k \\
+Best RL controller (E06) & 0.652 & 5 & 14.3k \\
+Scripted expert & 0.672 & --- & --- \\
+\textbf{Untrained 4B + OOLONG library} & \textbf{0.672} & \textbf{0} & \textbf{11.0k} \\
 \bottomrule
 \end{tabular}
 \end{center}
 \small Teaching the call pattern (SFT-009) adds only the cheap lookup route, at four times the tokens
 on short tasks.
-\source{Ledger L1-b to L1-d, L4. No-library row: baseline sweep. OOLONG expert: 0.672 on the 293-row held-out set; the library's 293-row run is in progress.}
+\source{Ledger L1-b to L1-d, L4, E09. No-library row: baseline sweep (train split). OOLONG: 293 held-out rows, six lengths from 1k to 32k tokens.}
 \end{frame}
 
 \begin{frame}[t]
