@@ -170,13 +170,14 @@ logged route.
 \end{column}
 \begin{column}{.46\textwidth}
 \begin{block}{Result}
-Two forms: every candidate verified 47 or 48 of 48; registered; the untrained controller then scores
-\textbf{24/24 and 24/24} on dev (0/24 each before). Third form (tie rule): all 24 candidates over
-three rounds shared one bug (ascending sort), verified \alert{0/48}, and were kept out; a one-token
-fix verifies 48/48.
+Two forms: every 4B candidate verified 47 or 48 of 48; registered; the untrained controller then
+scores \textbf{24/24 and 24/24} on dev (0/24 each before). Third form (tie rule): all 24 4B
+candidates shared one bug (ascending sort), verified \alert{0/48}, and were kept out. An 8B
+proposer (4-bit, reasoning first) verified 48/48 on all eight candidates; the 4B caller then
+scores \textbf{24/24}.
 \end{block}
-\small Only the teaching split seeds the library. Growth is bounded by the proposer, not the loop:
-an 8B proposer is next.
+\small Only the teaching split seeds the library. The loop's ceiling is the proposer, not the
+caller; verification makes mixing capacities safe.
 \end{column}
 \end{columns}
 \source{librarian.py, extract\_cache.py; runs e08-*. Prior art: Voyager, LILO, Agent Workflow Memory, SkillRL, AutoRefine.}

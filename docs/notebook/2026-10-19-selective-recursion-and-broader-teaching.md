@@ -688,6 +688,18 @@ no training; on a form it cannot, verification keeps the wrong routine out and t
 visible in the candidates file. A stronger proposer (Qwen3-8B, 4-bit) is being tried on the
 rejected form.
 
+A stronger proposer recovers the rejected form (E08-3, 12:10 UTC). Qwen3-8B in 4-bit AWQ
+(Hugging Face `Qwen/Qwen3-8B-AWQ`, revision 4da05a8e, Apache-2.0; provenance file beside the
+weights) was served on the spare memory of GPU 0 with thinking enabled and a 6,000-token output
+budget. Given the same librarian prompt for busiest day, all eight of its candidates verified 48/48
+on the teaching extractions after 3.8k to 5.2k tokens of reasoning each, where all 24 of the 4B's
+candidates had verified 0/48. The first candidate was registered, the statistics rebuilt, and the
+untrained 4B controller then scores 24/24 on busiest day on dev with no errors (0/24 with the
+shipped library, 17/24 writing its own aggregation with the honest library). So the loop's
+ceiling is the proposer, not the caller: a 4B caller with an 8B-written, verified routine is
+exact, and the verification step is what makes mixing proposer capacities safe. The three learned
+routines are committed under `skills/learned/` with the librarian's verification records.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
