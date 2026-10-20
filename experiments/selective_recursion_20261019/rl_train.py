@@ -201,6 +201,11 @@ class Trainer:
                              target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
                              task_type="CAUSAL_LM")
             self.model = get_peft_model(model, cfg)
+        self.kl = args.kl_coef > 0 and bool(args.init_adapter)
+        if self.kl:
+            # frozen copy of the warm start as a second adapter; k3 KL(policy || warm start) per token
+            self.model.load_adapter(args.init_adapter, adapter_name="ref")
+            self.model.set_adapter("default")
         self.model.enable_input_require_grads()
         params = [p for p in self.model.parameters() if p.requires_grad]
         self.opt = torch.optim.AdamW(params, lr=args.lr, betas=(0.9, 0.99), weight_decay=0.0)
@@ -235,25 +240,37 @@ class Trainer:
             return dict(sequences=0, skipped_long=skipped_long, skipped_zero_adv=skipped_zero, loss=None)
         self.model.train()
         self.opt.zero_grad(set_to_none=True)
-        loss_sum, logp_sum = 0.0, 0.0
+        loss_sum, logp_sum, kl_sum = 0.0, 0.0, 0.0
         random.shuffle(seqs)
         for prompt, comp, adv in seqs:
+            ref_logp = None
+            if self.kl:
+                with torch.no_grad():
+                    self.model.set_adapter("ref")
+                    ref_logp = completion_logprobs(self.model, prompt, comp, torch).detach()
+                    self.model.set_adapter("default")
             tok_logp = completion_logprobs(self.model, prompt, comp, torch)
             loss = -(adv * tok_logp.sum()) / total_tokens
+            if ref_logp is not None:
+                diff = ref_logp - tok_logp
+                kl = (diff.exp() - diff - 1.0).sum()
+                loss = loss + self.args.kl_coef * kl / total_tokens
+                kl_sum += kl.item()
             loss.backward()
             loss_sum += loss.item()
             logp_sum += tok_logp.sum().item()
-            del tok_logp
+            del tok_logp, ref_logp
         grad_norm = torch.nn.utils.clip_grad_norm_([p for p in self.model.parameters() if p.requires_grad], self.args.grad_clip)
         self.opt.step()
         self.opt.zero_grad(set_to_none=True)
         (torch.cuda.empty_cache() if DEVICE.startswith("cuda") else None)
         return dict(sequences=len(seqs), completion_tokens=total_tokens, loss=loss_sum,
                     mean_token_logp=logp_sum / max(total_tokens, 1), grad_norm=float(grad_norm),
+                    mean_token_kl=kl_sum / max(total_tokens, 1),
                     skipped_long=skipped_long, skipped_zero_adv=skipped_zero)
 
     def save(self, path: Path):
-        self.model.save_pretrained(str(path))
+        self.model.save_pretrained(str(path), selected_adapters=["default"])
 
 
 # ----------------------------------------------------------------------------- serving control
@@ -351,6 +368,7 @@ def main():
     p.add_argument("--temperature", type=float, default=1.0)
     p.add_argument("--harness", default="default", choices=("default", "hinted"))
     p.add_argument("--lr", type=float, default=2e-5)
+    p.add_argument("--kl-coef", type=float, default=0.0, help="k3 KL penalty to the warm start per token")
     p.add_argument("--lora-r", type=int, default=32)
     p.add_argument("--grad-clip", type=float, default=1.0)
     p.add_argument("--max-seq-len", type=int, default=12000)
