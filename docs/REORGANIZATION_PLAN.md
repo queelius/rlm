@@ -19,7 +19,7 @@ rlm/
   experiments/INDEX.md       one line per experiment: id, question, status, verdict
   experiments/E##-slug/      EXPERIMENT.md, manifest.json, scripts/, results/, analysis/, env/
   docs/RESULTS.md            claims ledger: claim, status, evidence, caveats, what overturns it
-  docs/notebook/             dated checkpoint notes (today's docs/notebook)
+  docs/notebook/             dated checkpoint notes (formerly docs/research-checkpoints)
   docs/operations/           RESEARCH_OPERATIONS.md, A100 quickstart
   paper/ slides/
 ```
