@@ -426,7 +426,12 @@ update, and once the direct probability is near zero there is no exploration to 
 run continues to step 30 with the seed-1 replicate next. To separate "too little short-input
 signal" from "cannot condition on length", a third relative-cost run with short inputs
 over-weighted in the training draw (8 records x3, 32 x2, OOLONG 1k x3, 2k x2; `--train-ns`,
-`--oolong-train-lens`) is queued before the absolute-0.3 arm (`pipeline14_gpu0.log`).
+`--oolong-train-lens`) is queued before the absolute-0.3 arm (`pipeline14_gpu0.log`). By step 10
+the relative-cost run had not recovered the route (0 direct in 20 8-record and 56 OOLONG-1k
+rollouts from step 4). Because the collapse is an exploration failure, a per-token KL penalty to the
+warm start (k3 estimator, coefficient 0.1, `--kl-coef`) was added to the trainer and queued after
+pipeline 14 in two arms, with uniform and with short-weighted training draws, preceded by a one-step
+smoke test of the new code path (`pipeline15_gpu0.log`).
 
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
