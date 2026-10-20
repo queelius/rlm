@@ -547,6 +547,19 @@ the bootstrap like the ABI helpers, which is a kernel feature (a harness prelude
 harness digest), and the controller then has to be taught to use it (L4). The remaining L1
 evaluations were stopped; the kernel prelude is the next implementation step.
 
+RL from the correctly routing warm start, first three steps (08:10 UTC). `rl-s8-strat` starts
+from SFT-008, which routes by length (direct at 8 records, decomposition elsewhere), under the
+relative cost, sequence-normalized loss and stratified sampling. Step 1 looked like the warm
+start. By step 2 the direct route had spread to 64 records (1 of 12 correct) and OOLONG 1k (8 of
+15); by step 3 it was the route on every length sampled: 32 records 4/4, 64 records 5/16, OOLONG
+1k 5/8, 2k 2/3, 4k 0 of 8 with 8 budget failures. So on-policy RL did not keep a correct
+length-conditional policy it was handed; within two updates it generalized the cheaper cell to
+lengths where it fails outright. Together with E07-7 (SFT can learn the rule) and E07-8 (the
+stratified lanes flip to opposite single modes), this closes the question for this setup:
+the rule is representable, but policy-gradient training with outcome-minus-cost rewards moves the
+route globally, not conditionally. Routing has to be decided outside the weights (library
+statistics, a probe) or trained with a mechanism that ties the decision to the input signature.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
