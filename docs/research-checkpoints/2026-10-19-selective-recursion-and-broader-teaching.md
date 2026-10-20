@@ -482,7 +482,7 @@ it moved to 12-line chunks on the event-log family (7/10/17/30/57 helper calls),
 absolute-0.1 seeds of the earlier study did. So the extinction of the direct route under the
 group-relative cost is a two-seed result, and the usual RL gain comes with it.
 
-A sampling artifact, found and fixed (07:40 UTC). The trainer drew training tasks by walking the
+A sampling artifact, found and fixed (06:28 UTC). The trainer drew training tasks by walking the
 length-by-question grid cyclically, eight event-log cells per step over 30 cells, so 8-record tasks
 appeared only in bursts (steps 3, 4, 7, 8, 11, 15, ... in the uniform runs; steps 1 and 5 in the
 short-weighted run, whose weighting only lengthened the bursts). In the steps between bursts

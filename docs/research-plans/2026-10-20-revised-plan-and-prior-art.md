@@ -1,4 +1,4 @@
-# Research plan of record (living document; revised 2026-10-20 07:20 UTC)
+# Research plan of record (living document; revised 2026-10-20 06:15 UTC)
 
 **Rule: revisit this plan periodically.** At every completed or failed arm, at every session start
 or resumption, and at least once per 12 hours of GPU time, re-rank the queue below against the
@@ -10,12 +10,12 @@ Revision log:
 - 2026-10-20 06:30: first revision after the routing experiments; prior-art pass (routing collapse,
   length-weighting impossibility, When2Tool, Prime Intellect RLM post, SRLM, entropy collapse).
 - 2026-10-20 06:45: distillation and model-capacity analysis added.
-- 2026-10-20 07:10: harness-side learning (retrieval, GEPA, Meta-Harness) and role adapters added.
-- 2026-10-20 07:20: queues merged into one ranked list with status; revisit rule stated.
-- 2026-10-20 07:40: cyclic task-sampling artifact found (short lengths absent for several steps at a
+- 2026-10-20 06:05: harness-side learning (retrieval, GEPA, Meta-Harness) and role adapters added.
+- 2026-10-20 06:15: queues merged into one ranked list with status; revisit rule stated.
+- 2026-10-20 06:28: cyclic task-sampling artifact found (short lengths absent for several steps at a
   time); confounded arms stopped; remedies requeued under stratified sampling in two lanes.
 
-## Ranked queue, merged (status as of 07:20 UTC)
+## Ranked queue, merged (status as of 06:15 UTC)
 
 | Rank | Id | Arm | Status | Decision it informs |
 | --- | --- | --- | --- | --- |
@@ -186,7 +186,7 @@ The one-card limit is the serving card: controller and helpers share it, so an 8
 8B helpers halves rollout throughput relative to 4B. The capacity study (item 6 above) therefore
 uses an 8B controller with 4B helpers first.
 
-## Harness-side learning and role adapters (added 07:10 UTC after the user's questions)
+## Harness-side learning and role adapters (added 06:05 UTC after the user's questions)
 
 Serving note: a second model does not require unloading the first. Two vLLM processes can share
 one 40 GB card with reduced memory fractions (4B at about 0.25, 8B at about 0.55), each started
