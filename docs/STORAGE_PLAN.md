@@ -69,6 +69,29 @@ Pre-checks before deletion: no running process referenced any path; vLLM serves 
 snapshot under `research-cache/models`; the training pipelines set no HF cache variables; no
 symlink from the active stores pointed into the removed trees.
 
+## Second tranche (proposed 2026-10-20 05:10 UTC; awaiting the user's approval)
+
+Inventory crossed with the claims ledger (`docs/results/claims-2026-08-to-10.md`). "Keep" means
+the whole directory stays; "prune" means reports, receipts, manifests and every file under 5 MB
+stay and the listed bulk goes.
+
+| Store | Size | Proposal | Keep |
+| --- | ---: | --- | --- |
+| `runs/rlm-research-r4/sidecars/selective-delegation-20260921` | 134 GB | prune | all `REPORT.md`, `FINDINGS.json`, `MANIFEST.json`, receipts; the adapters named by ledger entries C79, C84, C87 (TextCraft teaching, binder, RL endpoints); delete per-update adapters and rollouts of retired pilots |
+| cited sidecars: `root-question-sensitive-authenticated-map-reward-pilot-v3` (9.5 GB), `openai-mrcr-procedural-sft-continue32-v1` (5.2 GB, C50), `unattended-breadth-20260914` (2.2 GB), `trec-leaf-sft-v1` (1.6 GB, C07), `helper-agnews-native-hf-eightstep-v1` and `-seed2-v1` (3.2 GB, C40), `helper-hf-onpolicy-fourstep-v1` (0.8 GB) | 23 GB | keep | everything |
+| about 40 uncited sidecars (`root-*`, `leaf-*`, `helper-*`, `openai-mrcr-*` pilots) | about 75 GB | prune | small files only; delete adapters and outputs |
+| `runs/rlm-research-r4/campaigns/adaptive-context` | 9.7 GB | prune | reports behind C05 and C06 |
+| `~/research-runs/rl-paper-reproduction-20261012/preserved-checkpoints` | 181 GB | prune | `ckpt--iter_0690--epoch_2.00--step_11040` (17.6 GB, the audited final state, hash receipt) and the receipts; delete the other preserved states (160, 1280, 8960, 10240) once the final weights are on Hugging Face |
+| `~/research-runs/rl-paper-reproduction-20261012/spo-bos-only-from-sft-attempt1` | 111 GB | prune | logs, metrics, evaluation outputs; delete intermediate checkpoints |
+| `~/research-runs/spo-reproduction-20261008` (first attempt) | 171 GB | prune | receipts, evaluations, and the 7,840-update state used by the diagnosis probe if present; delete other checkpoints |
+| `~/research-runs/r1-zero-replication-20261007/{archive, larger4096-chat-drgrpo42-attempt4}` | 94 GB | prune | updates 208 and 216 of the stopped run with their evaluations and receipts; delete other checkpoints |
+| `~/research-runs/r1-zero-replication-20261007/subset512-*` (four screens) | 96 GB | prune | receipts and scored outputs; delete checkpoints |
+
+Expected recovery: about 190 GB on the project volume and about 500 GB on the home volume.
+Prerequisites: the SPO final weights published on Hugging Face (license decision pending), and a
+sub-inventory of `selective-delegation-20260921` naming the adapters behind C79, C84 and C87
+before anything in it is removed.
+
 ## Order of operations
 
 1. Sub-inventory `rlm-research-r4` and the three reproduction stores to list exactly which
