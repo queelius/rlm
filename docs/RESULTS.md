@@ -4,7 +4,7 @@ Every empirical claim this research makes, with its status and the evidence behi
 **exploratory** (single run or small n), **replicated** (repeated with new seeds or inputs),
 **confirmed** (replicated under a sealed or audited protocol), **retracted** (superseded; the
 entry says by what), **inconclusive**. Each entry names what would overturn it. Experiment ids
-refer to `experiments/INDEX.md`; notes are under `docs/research-checkpoints/` (to become
+refer to `experiments/INDEX.md`; notes are under `docs/notebook/` (to become
 `docs/notebook/`). Numbers are quoted as recorded; nothing here is rounded up in status.
 
 ## Selective recursion: teaching and cost-aware RL of a 4B controller (E06)

@@ -1,0 +1,46 @@
+site_name: RLM research
+site_description: Teaching and training small controllers for Recursive Language Models; claims ledger, lab notebook, plan of record
+site_url: https://queelius.github.io/rlm/
+repo_url: https://github.com/queelius/rlm
+edit_uri: edit/main/docs/
+docs_dir: docs
+theme:
+  name: material
+  features: [navigation.sections, navigation.indexes, navigation.top, search.suggest, content.code.copy, toc.integrate]
+  palette:
+    - scheme: default
+      primary: teal
+      toggle: {icon: material/weather-night, name: Dark mode}
+    - scheme: slate
+      primary: teal
+      toggle: {icon: material/weather-sunny, name: Light mode}
+markdown_extensions:
+  - admonition
+  - footnotes
+  - tables
+  - toc: {permalink: true}
+  - pymdownx.arithmatex: {generic: true}
+  - pymdownx.superfences
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+exclude_docs: |
+  superpowers/
+  PATH_MAP.json
+  hf/MODEL_CARD_TEMPLATE.md
+nav:
+  - Home: index.md
+  - Primer: primer.md
+  - Claims ledger: RESULTS.md
+  - Full ledgers: results/
+  - Experiments: experiments/
+  - Lab notebook: notebook/
+  - Plan of record: research-plans/2026-10-20-revised-plan-and-prior-art.md
+  - Links and prior art: links.md
+  - Releases on Hugging Face: hf/RELEASE_LIST.md
+  - Operations:
+      - Research operations: RESEARCH_OPERATIONS.md
+      - A100 quickstart: A100_EXPERIMENTS.md
+      - Reorganization plan: REORGANIZATION_PLAN.md
+      - Storage plan: STORAGE_PLAN.md
+  - September 2026 audit: research-audit-2026-09-29/README.md
+  - How to add to these docs: contributing.md

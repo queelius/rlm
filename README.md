@@ -14,6 +14,10 @@ The public surface is deliberately narrow:
 - `RLM.run_direct(request)` is the explicit, attested direct-model baseline. The RLM loop
   never falls back to it, retries a request, or substitutes an alternate answer.
 
+## Documentation site
+
+https://queelius.github.io/rlm/ renders this repository's docs: a primer, the claims ledger, the experiments, the lab notebook, the plan of record and links to our models and data on Hugging Face.
+
 ## Install
 
 ```bash

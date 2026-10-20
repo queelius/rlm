@@ -19,7 +19,7 @@ rlm/
   experiments/INDEX.md       one line per experiment: id, question, status, verdict
   experiments/E##-slug/      EXPERIMENT.md, manifest.json, scripts/, results/, analysis/, env/
   docs/RESULTS.md            claims ledger: claim, status, evidence, caveats, what overturns it
-  docs/notebook/             dated checkpoint notes (today's docs/research-checkpoints)
+  docs/notebook/             dated checkpoint notes (today's docs/notebook)
   docs/operations/           RESEARCH_OPERATIONS.md, A100 quickstart
   paper/ slides/
 ```
@@ -62,7 +62,7 @@ inside files, not in folder names.
 1. Write `docs/RESULTS.md` (claims ledger) and `experiments/INDEX.md`.
 2. Create `E##-slug` folders alongside the dated ones with manifests; add a machine-readable
    path map `docs/PATH_MAP.json` (old path -> new path) before removing anything.
-3. Move `docs/research-checkpoints` to `docs/notebook` (git mv, history follows).
+3. Move `docs/notebook` to `docs/notebook` (git mv, history follows).
 4. Create the two reproduction repositories from the existing folders (SPO alone; R1 + CURL),
    with the CURL raw curves as a release asset, not tracked files; then remove those folders here.
    **Done locally 2026-10-20** (`/project/alex_phd/repos/spo-gsm8k-reproduction`, 110 commits;
