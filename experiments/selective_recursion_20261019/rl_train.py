@@ -165,6 +165,26 @@ def collect_rollouts(args, step: int, controller_model: str, out: Path) -> list[
             n = len(rs)
             r["advantage"] = (r["reward"] - (sum(rs) - r["reward"]) / (n - 1)) if n > 1 else 0.0
             r["group_mean_reward"] = sum(rs) / n
+    if args.balance_coef > 0:
+        # Outcome-gated route balance (Kassenaar et al. 2026): nudge advantages toward a target
+        # batch share of the direct route; positive nudges only on correct rollouts, negative only
+        # on incorrect ones; coefficient annealed to zero from --balance-anneal-from to --steps.
+        coef = args.balance_coef
+        if args.balance_anneal_from and step >= args.balance_anneal_from:
+            coef *= max(0.0, (args.steps - step) / max(args.steps - args.balance_anneal_from, 1))
+        routed = [r for r in rows if r.get("question_type") != "lookup_day" and not r.get("error")]
+        for r in routed:
+            r["route"] = "direct" if (r.get("turns") == 2 and r.get("calls") == 3) else "decompose"
+        if routed:
+            f_direct = sum(r["route"] == "direct" for r in routed) / len(routed)
+            for r in routed:
+                target = args.balance_target if r["route"] == "direct" else 1.0 - args.balance_target
+                share = f_direct if r["route"] == "direct" else 1.0 - f_direct
+                nudge = coef * (target - share)
+                if (nudge > 0 and r.get("correct")) or (nudge < 0 and not r.get("correct")):
+                    r["advantage"] += nudge
+                    r["balance_nudge"] = nudge
+            rows[0]["balance_direct_share"] = f_direct
     return rows
 
 
@@ -375,6 +395,9 @@ def main():
     p.add_argument("--lr", type=float, default=2e-5)
     p.add_argument("--kl-coef", type=float, default=0.0, help="k3 KL penalty to the warm start per token")
     p.add_argument("--seq-norm", action="store_true", help="per-sequence mean log-prob (GRPO-style) instead of token sum")
+    p.add_argument("--balance-target", type=float, default=0.3, help="target batch share of the direct route")
+    p.add_argument("--balance-coef", type=float, default=0.0, help="outcome-gated route-balance coefficient (0 = off)")
+    p.add_argument("--balance-anneal-from", type=int, default=0, help="step from which the balance coefficient anneals to zero")
     p.add_argument("--lora-r", type=int, default=32)
     p.add_argument("--grad-clip", type=float, default=1.0)
     p.add_argument("--max-seq-len", type=int, default=12000)
