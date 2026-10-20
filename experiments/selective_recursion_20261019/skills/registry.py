@@ -9,6 +9,19 @@ LIBRARY = {
     "eventlog": dict(path=SKILLS_DIR / "eventlog.py", families={"eventlog"}),
     "oolong": dict(path=SKILLS_DIR / "oolong.py", families={"oolong"}),
 }
+LEARNED_DIR = SKILLS_DIR / "learned"
+
+
+def learned_skills() -> dict:
+    """Skills written by the librarian (E08): `skills/learned/<family>_<name>.py` with a
+    `# families: a,b` header line; listed after the shipped skills so their helpers are bound."""
+    out = {}
+    for path in sorted(LEARNED_DIR.glob("*.py")) if LEARNED_DIR.exists() else []:
+        head = path.read_text().splitlines()[:5]
+        fams = next((l.split(":", 1)[1] for l in head if l.startswith("# families:")), "")
+        if fams.strip():
+            out[path.stem] = dict(path=path, families={f.strip() for f in fams.split(",")})
+    return out
 
 
 def signature(task) -> dict:
@@ -24,8 +37,12 @@ def signature(task) -> dict:
     return dict(family=family, length=length, question_type=qt or None)
 
 
+def all_skills() -> dict:
+    return {**LIBRARY, **learned_skills()}
+
+
 def retrieve(sig: dict) -> list[str]:
-    return [name for name, s in LIBRARY.items() if sig["family"] in s["families"]]
+    return [name for name, s in all_skills().items() if sig["family"] in s["families"]]
 
 
 def note_of(path: Path) -> str:
@@ -51,23 +68,26 @@ def prelude_for(names: list[str]):
 
     if not names:
         return None
-    source = "\n\n".join(LIBRARY[n]["path"].read_text() for n in names)
-    exports = tuple(e for n in names for e in exports_of(LIBRARY[n]["path"]))
+    lib = all_skills()
+    source = "\n\n".join(lib[n]["path"].read_text() for n in names)
+    exports = tuple(e for n in names for e in exports_of(lib[n]["path"]))
     return PreludeSpec(source=source, exports=exports)
 
 
 def policy_note(names: list[str]) -> str:
-    return "\n".join(
-        f"Library skill `{n}` is already defined (see the harness prelude list above); "
-        f"typical use:\n{[l for l in note_of(LIBRARY[n]['path']).splitlines() if l.startswith('Typical use')][0] if any(l.startswith('Typical use') for l in note_of(LIBRARY[n]['path']).splitlines()) else ''}"
-        for n in names
-    )
+    lib = all_skills()
+    parts = []
+    for n in names:
+        typical = [l for l in note_of(lib[n]["path"]).splitlines() if l.startswith("Typical use")]
+        parts.append(f"Library skill `{n}` is already defined (see the harness prelude list above); "
+                     f"typical use:\n{typical[0] if typical else ''}")
+    return "\n".join(parts)
 
 
 def hint_block(names: list[str]) -> str:
     parts = []
     for name in names:
-        path = LIBRARY[name]["path"]
+        path = all_skills()[name]["path"]
         parts.append(
             f"Library skill `{name}` (verified on inputs like this one). Define its functions with\n"
             f"    exec(open({str(path)!r}).read())\n"

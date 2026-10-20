@@ -77,6 +77,9 @@ FILLER = [
 
 QUESTION_TYPES = ("count_buyers", "both_items", "net_units", "bought_then_returned", "lookup_day")
 AGGREGATE_TYPES = QUESTION_TYPES[:4]
+# Held-out types for the library-growth experiment (E08): not covered by the taught routines or the
+# shipped library, generated under the same schema so prior task ids are unchanged.
+HELDOUT_TYPES = ("top_buyer", "purchase_span")
 
 
 def plural(item: str, q: int) -> str:
@@ -146,6 +149,17 @@ def _answer(question_type: str, events: list[Event], a: str, b: str | None) -> t
             {e.person for e in rets if e.item == a and e.person in first_buy and e.day > first_buy[e.person]}
         )
         return (", ".join(people) if people else "none"), "name_list", sum(e.item == a for e in buys + rets)
+    if question_type == "top_buyer":
+        totals: dict[str, int] = {}
+        for e in buys:
+            if e.item == a:
+                totals[e.person] = totals.get(e.person, 0) + e.qty
+        top = max(totals.values())
+        winners = sorted(p for p, q in totals.items() if q == top)
+        return winners[0], "name_list", sum(e.item == a for e in buys)
+    if question_type == "purchase_span":
+        days = [e.day for e in buys if e.item == a]
+        return str(max(days) - min(days)), "integer", len(days)
     raise ValueError(question_type)
 
 
@@ -165,11 +179,17 @@ def _question(question_type: str, a: str, b: str | None) -> tuple[str, str]:
     if question_type == "bought_then_returned":
         return (f"Which people bought a {a} and later (on a strictly later day) returned a {a}?",
                 "the names in alphabetical order separated by commas, or the word none")
+    if question_type == "top_buyer":
+        return (f"Which single person bought the most units of {a} in total (returns do not count)?",
+                "the name only")
+    if question_type == "purchase_span":
+        return (f"How many days passed between the earliest purchase of a {a} and the latest purchase of a {a}?",
+                "a single integer")
     raise ValueError(question_type)
 
 
 def make_task(seed: int, n_records: int, question_type: str, *, split: str = "train") -> Task:
-    if question_type not in QUESTION_TYPES:
+    if question_type not in QUESTION_TYPES + HELDOUT_TYPES:
         raise ValueError(question_type)
     rng = random.Random(f"{SCHEMA}:{split}:{seed}:{n_records}:{question_type}")
     n_people = max(4, min(len(NAMES), n_records // 3))
@@ -201,6 +221,20 @@ def make_task(seed: int, n_records: int, question_type: str, *, split: str = "tr
             if ev.item == a and ev.person == b and ev.kind == "buy":
                 events[k] = Event("buy", rng.choice([p for p in people if p != b]), a, ev.qty, ev.day)
         events[0] = Event("buy", b, a, rng.randint(1, 6), rng.randrange(len(DAYS)))
+    if question_type == "top_buyer":
+        # break ties for the top buyer of item a with one extra unit for the alphabetically first leader
+        totals: dict[str, int] = {}
+        for ev in events:
+            if ev.kind == "buy" and ev.item == a:
+                totals[ev.person] = totals.get(ev.person, 0) + ev.qty
+        top = max(totals.values())
+        leaders = sorted(p for p, q in totals.items() if q == top)
+        if len(leaders) > 1:
+            k = next(i for i, ev in enumerate(events) if ev.kind == "buy" and ev.item == a and ev.person == leaders[0])
+            if events[k].qty < 6:
+                events[k] = Event("buy", leaders[0], a, events[k].qty + 1, events[k].day)
+            else:
+                events.append(Event("buy", leaders[0], a, 1, rng.randrange(len(DAYS))))
     if question_type == "bought_then_returned":
         for k in range(6, min(9, n_records)):
             buyer = events[k - 6]

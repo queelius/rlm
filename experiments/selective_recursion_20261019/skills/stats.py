@@ -174,6 +174,9 @@ def note_for(sig: dict, table: dict, lam: float = 0.05, min_n: int = 4) -> str:
     for rt, c in rows:
         label = LABELS.get(rt, rt.replace("lib:", "").replace("+", " + "))
         recipe = RECIPES.get(rt, "")
+        if not recipe and rt.startswith("lib:answer_"):
+            recipe = ("lines, question = split_log(request['input']); events = extract_events(lines); "
+                      f"FINAL_TEXT({rt[4:]}(events, question))")
         lines.append(f"  - {label}: {c['correct']}/{c['n']} correct, ~{c['tokens'] / c['n'] / 1000:.1f}k tokens"
                      + (f"  [{recipe}]" if recipe else ""))
         if best is None and c["n"] >= min_n:
