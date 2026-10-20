@@ -497,6 +497,18 @@ length guaranteed in the first slot). Pipeline 20 reruns the remedies on this fo
 concurrent lanes, all with the relative cost and sequence-normalized loss: plain, balance term,
 strong KL; and short-weighted, short-weighted plus balance.
 
+Interim, stratified lanes at steps 3 to 4 (06:57 UTC). With every step containing short tasks, the
+dynamics invert: the direct route now spreads instead of dying. Lane A (plain): 8 records 12/12
+direct and correct at step 2, 4/4 at step 3, while OOLONG 1k is already 10/16 and 4/8 direct and
+2k 3/4. Lane B (short-weighted): by step 4, 8 records 16/16 direct, but also 32 records 1/8 direct
+(wrong), OOLONG 1k 9/16 and 2k 4/12 direct. So the policy is not learning a length-conditional
+rule; it is flipping the route globally toward whichever mode has the edge in the current draw, the
+mirror image of the earlier collapse. This is the "all-one-mode states are stable, mixed splits are
+not" dynamic of Kassenaar et al. in both directions, and it argues that the missing piece is
+conditioning on length, not reward shaping: the consistent-teacher SFT-008 test and the
+library-with-bandit design (route chosen per input bucket from verified statistics) address that
+directly. To be confirmed at steps 10 and 30 with held-out numbers.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
