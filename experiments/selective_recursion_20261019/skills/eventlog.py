@@ -2,8 +2,8 @@
 
 split_log(text) -> (lines, question)          # numbered log lines and the question
 extract_events(lines, chunk=12) -> list[dict]  # helper calls per chunk; dicts: kind buy/return, person, item, qty, day
-answer_eventlog(events, question) -> str      # exact aggregation in Python; returns "ANSWER: ..."
-lookup_day(lines, question) -> str            # one helper call on the lines naming the person; "ANSWER: <day>"
+answer_eventlog(events, question) -> str      # exact aggregation in Python for every question type, lookups included; returns "ANSWER: ..."
+lookup_day(lines, question) -> str            # cheaper alternative for "On which day did X buy a Y?": one helper call on the lines naming the person
 Typical use: lines, question = split_log(request["input"]); events = extract_events(lines);
 FINAL_TEXT(answer_eventlog(events, question)). For "On which day did X buy a Y?" use lookup_day.
 """
@@ -67,6 +67,11 @@ def _day(e):
 def answer_eventlog(events, question):
     buys = [e for e in events if e.get("kind") == "buy"]
     rets = [e for e in events if e.get("kind") == "return"]
+    if m := re.search(r"did (\w+) buy an? (\w+)\?", question):
+        # lookup question answered from the extracted events: the earliest matching completed purchase
+        person, item = m.groups()
+        days = sorted(_day(e) for e in buys if _who(e).lower() == person.lower() and _is_item(e, item) and _day(e) >= 0)
+        return "ANSWER: " + (str(days[0]) if days else "unknown")
     if m := re.search(r"at least one (\w+) and also bought at least one (\w+)\?", question):
         a, b = m.groups()
         both = sorted({_who(e) for e in buys if _is_item(e, a)} & {_who(e) for e in buys if _is_item(e, b)})

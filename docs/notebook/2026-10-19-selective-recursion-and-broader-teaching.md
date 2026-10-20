@@ -574,6 +574,19 @@ aggregation instead of calling `answer_eventlog` (smoke: 1 of 8 correct), as a c
 on the full routine would; the untrained base is evaluated next, and a controller taught on
 library-calling trajectories (SFT-009) is being built from the oracle's native replay.
 
+Untrained controller plus prebound library (08:50 UTC). The untrained Qwen3-4B controller, with
+the event-log skills prebound through the prelude and listed in its prompt, uses the library on
+every task and scores 87/96 on aggregation on the event-log dev split (16/16 at 8, 32 and 128
+records; 13/16 at 64, 256 and 512), against 46/192 for the same model without the library in the
+baseline sweep (0 of 32 at 128 records and above), and equal to the scripted expert and to the
+taught SFT-005 controller. Its cells are three lines, so total tokens at 8 records are about 1k
+against 5k for the taught decomposition. Lookups were 0/24 because the controller always chose
+`extract_events` plus `answer_eventlog`, and `answer_eventlog` returned "unknown" for lookup
+questions; the library was repaired so `answer_eventlog` answers lookups from the extracted
+events (earliest matching purchase), and the evaluation is being rerun. This is the first
+"small model plus library" number: with the routine in the library, no training of the controller
+was needed for the decomposition itself.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
