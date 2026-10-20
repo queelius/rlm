@@ -42,8 +42,7 @@ inside files, not in folder names.
 
 ## Hugging Face plan and constraints
 
-- Namespace: the user's personal account (`queelius`). No login exists on the cluster yet; the
-  user runs `hf auth login` (interactive) before any upload.
+- Namespace: the user's personal account (`queelius`); logged in on the cluster 2026-10-20.
 - Models (LoRA adapters, about 130 MB each at rank 32, Apache-2.0 with the Qwen3 base noted):
   `rlm-qwen3-4b-sft-005` (taught warm start), `rlm-qwen3-4b-rl-mixed-001` (best RL controller),
   `rlm-qwen3-4b-sft-007` (route-balanced warm start), and the most informative routing arm. Each
@@ -68,7 +67,7 @@ inside files, not in folder names.
    with the CURL raw curves as a release asset, not tracked files; then remove those folders here.
    **Done locally 2026-10-20** (`/project/alex_phd/repos/spo-gsm8k-reproduction`, 110 commits;
    `/project/alex_phd/repos/rl-reproductions`, 76 commits; history filtered with git filter-repo;
-   see `docs/PATH_MAP.json`). Pushed 2026-10-20 as private repositories `queelius/spo-gsm8k-reproduction` and `queelius/rl-reproductions` (release v0.1.0 with the CURL curves). Both reviewed and made public on 2026-10-20; the folders were removed from this repository in the same step.
+   see `docs/PATH_MAP.json`). Pushed 2026-10-20 and made **public** after review: `queelius/spo-gsm8k-reproduction` (with a MkDocs guide site on GitHub Pages) and `queelius/rl-reproductions` (release v0.1.0 with the CURL curves). Both reviewed and made public on 2026-10-20; the folders were removed from this repository in the same step.
 5. Fast-forward `main` to the research branch; remove stale worktrees after confirming no live
    process uses them.
 6. Hugging Face: model cards and dataset cards for the salient adapters and teaching/eval sets.

@@ -48,7 +48,7 @@ by the claims ledger), **prune** (keep final and referenced checkpoints, delete 
 | reproduction environments (`envs/prime-rl-*`, `envs/r1-zero-*`, `envs/spo-*`, `envs/curl-*`, `cache/uv-prime`) | 49 GB | delete | After each reproduction repository carries an exported lock. |
 | `~/research-runs/selective-recursion-20261019/rl-*` (per-step adapters, 7.5 GB per run) | about 60 GB | prune later | After the campaign: keep the final adapter and any step cited in the ledger or `manifest.json`. |
 
-**Suggested first tranche (safe, about 450 GB on the project volume):** the HF hub cache (98 GB),
+**First tranche, approved by the user on 2026-10-20 and executed the same day (log: `/project/alex_phd/runs/DELETIONS-2026-10-20.jsonl`; small CURL metadata files preserved under `~/research-runs/archive/curl-runs-metadata-20261020`):** the HF hub cache (98 GB),
 the CURL runs (234 GB, after the GitHub push), the prime pilot (67 GB) and renderer-gate (16 GB),
 and the reproduction environments (49 GB). Everything in it is either re-downloadable,
 reconstructible from a lock, or uncited by any claim.
