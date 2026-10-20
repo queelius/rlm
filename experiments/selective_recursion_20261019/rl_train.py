@@ -246,7 +246,7 @@ class Trainer:
             ref_logp = None
             if self.kl:
                 with torch.no_grad():
-                    self.model.set_adapter("ref")
+                    self.model.set_adapter("ref", inference_mode=True)  # keep the reference frozen
                     ref_logp = completion_logprobs(self.model, prompt, comp, torch).detach()
                     self.model.set_adapter("default")
             tok_logp = completion_logprobs(self.model, prompt, comp, torch)
