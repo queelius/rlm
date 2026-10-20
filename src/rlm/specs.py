@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Any
@@ -128,6 +129,39 @@ class ContextSpec:
 
 
 @dataclass(frozen=True, slots=True)
+class PreludeSpec:
+    """Python source the environment executes once before the first controller cell.
+
+    The names it defines are part of the harness, not of the controller's work: they are listed
+    in the rendered prompt with one-line descriptions, hidden from ``SHOW_VARS`` and restored
+    before every cell. The source digest is part of the harness identity.
+    """
+
+    source: str
+    exports: tuple[tuple[str, str], ...]
+    version: str = "1"
+
+    def __post_init__(self) -> None:
+        _nonempty(self.source, field_name="source")
+        _nonempty(self.version, field_name="version")
+        if not isinstance(self.exports, tuple) or not self.exports:
+            raise TypeError("exports must be a non-empty tuple of (name, description) pairs")
+        for item in self.exports:
+            if (
+                not isinstance(item, tuple)
+                or len(item) != 2
+                or not all(isinstance(part, str) for part in item)
+            ):
+                raise TypeError("each export must be a (name, description) pair of strings")
+            if not item[0].isidentifier():
+                raise ValueError(f"export name is not an identifier: {item[0]!r}")
+            _nonempty(item[1], field_name="export description")
+
+    def digest(self) -> str:
+        return hashlib.sha256(self.source.encode("utf-8")).hexdigest()
+
+
+@dataclass(frozen=True, slots=True)
 class HarnessSpec:
     prompt: PromptSpec
     rendered_prompts: PromptDigests
@@ -138,6 +172,7 @@ class HarnessSpec:
     recovery: RecoverySpec = field(default_factory=RecoverySpec)
     observation: ObservationSpec = field(default_factory=ObservationSpec)
     context: ContextSpec = field(default_factory=ContextSpec)
+    prelude: PreludeSpec | None = None
 
     def __post_init__(self) -> None:
         if not isinstance(self.prompt, PromptSpec):
@@ -154,9 +189,18 @@ class HarnessSpec:
             raise TypeError("observation must be an ObservationSpec")
         if not isinstance(self.context, ContextSpec):
             raise TypeError("context must be a ContextSpec")
+        if self.prelude is not None and not isinstance(self.prelude, PreludeSpec):
+            raise TypeError("prelude must be a PreludeSpec or None")
+
+    def _snapshot(self) -> dict[str, Any]:
+        value = _jsonable(asdict(self))
+        if value.get("prelude") is None:
+            # A harness without a prelude keeps the identity it had before preludes existed.
+            value.pop("prelude", None)
+        return value
 
     def canonical_json(self) -> str:
-        return strict_json_dumps(asdict(self), sort_keys=True, separators=(",", ":"))
+        return strict_json_dumps(self._snapshot(), sort_keys=True, separators=(",", ":"))
 
     def to_dict(self) -> dict[str, Any]:
         value = strict_json_loads(self.canonical_json())
@@ -165,7 +209,16 @@ class HarnessSpec:
         return value
 
     def fingerprint(self) -> str:
-        return strict_json_sha256(asdict(self))
+        return strict_json_sha256(self._snapshot())
+
+
+def _jsonable(value: Any) -> Any:
+    """Turn dataclass tuples (prelude exports) into lists so the snapshot stays strict JSON."""
+    if isinstance(value, dict):
+        return {key: _jsonable(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_jsonable(item) for item in value]
+    return value
 
 
 def harness_spec_from_dict(value: dict[str, Any]) -> HarnessSpec:
@@ -196,6 +249,15 @@ def harness_spec_from_dict(value: dict[str, Any]) -> HarnessSpec:
         observation=ObservationSpec(
             type=ObservationType(observation["type"]),
             schema_version=observation["schema_version"],
+        ),
+        prelude=(
+            PreludeSpec(
+                source=value["prelude"]["source"],
+                exports=tuple(tuple(item) for item in value["prelude"]["exports"]),
+                version=value["prelude"]["version"],
+            )
+            if value.get("prelude") is not None
+            else None
         ),
         context=ContextSpec(
             history=HistoryMode(context["history"]),

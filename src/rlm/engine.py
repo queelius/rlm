@@ -380,12 +380,16 @@ class RLM:
         recovery_policy = RecoveryPolicy(config.harness.recovery)
         conversation_parent_id = branch_event_id
 
+        factory_kwargs: dict[str, Any] = {}
+        if config.harness.prelude is not None:
+            factory_kwargs["prelude_source"] = config.harness.prelude.source
         with self.execution_factory(
             request=request,
             allow_recursion=allow_recursion,
             working_directory=config.execution.working_directory,
             startup_timeout=ledger.timeout(_action_timeout_cap(20.0, action_deadline)),
             max_output_chars=config.limits.max_execution_output_chars,
+            **factory_kwargs,
         ) as executor:
             if executor.abi_version != config.harness.abi_version:
                 raise HarnessContractError(

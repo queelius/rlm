@@ -10,7 +10,7 @@ from rlm.abi import ENVIRONMENT_ABI, EnvironmentABI
 from rlm.errors import HarnessContractError
 from rlm.json import strict_json_dumps
 from rlm.response import requires_complete_response
-from rlm.specs import HarnessSpec, PromptDigests, PromptSpec, SubmissionKind
+from rlm.specs import HarnessSpec, PreludeSpec, PromptDigests, PromptSpec, SubmissionKind
 
 _REQUEST_BINDING = ENVIRONMENT_ABI.request_name
 
@@ -94,7 +94,9 @@ def validate_harness_contract(spec: HarnessSpec) -> None:
         (False, spec.rendered_prompts.nonrecursive),
         (True, spec.rendered_prompts.recursive),
     ):
-        rendered = _render_prompt(spec.prompt, allow_recursion=allow_recursion)
+        rendered = _render_prompt(
+            spec.prompt, allow_recursion=allow_recursion, prelude=spec.prelude
+        )
         if _prompt_digest(rendered) != digest:
             variant = "recursive" if allow_recursion else "nonrecursive"
             raise HarnessContractError(f"rendered prompt {variant} digest does not match harness")
@@ -103,7 +105,9 @@ def validate_harness_contract(spec: HarnessSpec) -> None:
 def render_prompt(harness: HarnessSpec, *, allow_recursion: bool) -> str:
     """Render and verify the controller prompt selected for one branch."""
 
-    rendered = _render_prompt(harness.prompt, allow_recursion=allow_recursion)
+    rendered = _render_prompt(
+        harness.prompt, allow_recursion=allow_recursion, prelude=harness.prelude
+    )
     expected = (
         harness.rendered_prompts.recursive
         if allow_recursion
@@ -120,6 +124,7 @@ def _render_prompt(
     *,
     allow_recursion: bool,
     environment_abi: EnvironmentABI = ENVIRONMENT_ABI,
+    prelude: PreludeSpec | None = None,
 ) -> str:
     """Pure prompt materialization used to calculate reviewed identities."""
 
@@ -127,9 +132,18 @@ def _render_prompt(
         f"- {item.render()}: {item.metadata.description}"
         for item in environment_abi.enabled_functions(allow_recursion=allow_recursion)
     )
+    prelude_section = ""
+    if prelude is not None:
+        exports = "\n".join(f"- {name}: {description}" for name, description in prelude.exports)
+        prelude_section = (
+            f"\n\nHarness prelude v{prelude.version} (sha256 {prelude.digest()[:16]}), already "
+            "defined in the environment; call these directly and do not import or redefine "
+            f"them:\n{exports}"
+        )
     return (
         f"{prompt.protocol.rstrip()}\n\nEnvironment ABI v{environment_abi.version} "
-        f"({environment_abi.request_name}):\n{functions}\n\nPolicy:\n{prompt.policy.strip()}"
+        f"({environment_abi.request_name}):\n{functions}{prelude_section}\n\nPolicy:\n"
+        f"{prompt.policy.strip()}"
     )
 
 

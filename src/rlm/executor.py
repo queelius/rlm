@@ -420,6 +420,7 @@ def _worker_main(
     public_request_json: bytes,
     allow_recursion: bool,
     max_output_chars: int,
+    prelude_source: str | None = None,
 ) -> None:
     # Put the kernel and model-spawned descendants in their own POSIX process
     # group so the host can tear down the complete branch.
@@ -721,11 +722,36 @@ def _worker_main(
         allow_recursion=allow_recursion,
     )
 
+    prelude_bindings: dict[str, Any] = {}
+
     def restore_namespace() -> None:
         shell.user_ns.update(reserved)
+        shell.user_ns.update(prelude_bindings)
         shell.user_ns[ENVIRONMENT_ABI.request_name] = state["public_request"]
 
     restore_namespace()
+    if prelude_source:
+        # The harness prelude runs once, before any controller cell, with the ABI bound. Its
+        # names belong to the harness: hidden from SHOW_VARS and restored before every cell.
+        before = set(shell.user_ns)
+        try:
+            exec(compile(prelude_source, "<harness-prelude>", "exec"), shell.user_ns)
+        except BaseException as exc:  # noqa: BLE001 - reported as a startup failure
+            _send_message(
+                connection,
+                {
+                    "type": IPCMessageKind.STARTUP_ERROR.value,
+                    "error": f"harness prelude failed: {type(exc).__name__}: {exc}",
+                },
+            )
+            connection.close()
+            return
+        prelude_bindings = {
+            name: value
+            for name, value in shell.user_ns.items()
+            if name not in before and not name.startswith("_")
+        }
+        ignored = frozenset(ignored | set(prelude_bindings))
     _send_message(
         connection,
         {
@@ -887,9 +913,12 @@ class IPythonExecutor:
         working_directory: str | Path | None = None,
         startup_timeout: float = 20.0,
         max_output_chars: int = 1_000_000,
+        prelude_source: str | None = None,
     ) -> None:
         if max_output_chars < 1:
             raise ValueError("max_output_chars must be at least 1")
+        if prelude_source is not None and not isinstance(prelude_source, str):
+            raise TypeError("prelude_source must be a string or None")
         self.startup_timeout = startup_timeout
         self._temporary_directory: tempfile.TemporaryDirectory[str] | None = None
         if working_directory is None:
@@ -914,6 +943,7 @@ class IPythonExecutor:
                 request_json,
                 allow_recursion,
                 max_output_chars,
+                prelude_source,
             ),
             name="rlm-ipython",
             daemon=True,

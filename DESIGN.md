@@ -145,3 +145,14 @@ The executor is process-isolated, not sandboxed: it must never run untrusted
 code in a security-sensitive environment. On POSIX the worker must establish a
 dedicated process group during bootstrap; failure is fatal because descendant
 containment would otherwise be unverifiable.
+
+## Harness prelude
+
+A harness may carry a `PreludeSpec`: Python source the environment executes once, with the ABI
+bound, before the first controller cell. Its names are part of the harness, not of the
+controller's work: they are listed in the rendered prompt with one-line descriptions (so they
+enter the prompt digest), hidden from `SHOW_VARS`, restored before every cell, and the source
+digest is part of the harness fingerprint. A harness without a prelude keeps the identity it had
+before preludes existed. A failing prelude is an executor startup error, never a silent
+degradation. This is how a library of verified routines is made available to a controller without
+asking it to reproduce or import code.
