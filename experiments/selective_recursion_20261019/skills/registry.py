@@ -12,10 +12,16 @@ LIBRARY = {
 
 
 def signature(task) -> dict:
+    """Family, length and question type of a task, from whichever task object the harness uses."""
     row = getattr(task, "row", None)
-    family = "oolong" if row is not None else "eventlog"
-    length = row["context_len"] if row is not None else task.n_records
-    return dict(family=family, length=length, question_type=getattr(task, "question_type", None))
+    qt = getattr(task, "question_type", None) or ""
+    is_oolong = row is not None or getattr(task, "context_len", None) is not None or str(qt).startswith("TASK_TYPE")
+    family = "oolong" if is_oolong else "eventlog"
+    if row is not None:
+        length = row["context_len"]
+    else:
+        length = getattr(task, "context_len", None) or getattr(task, "n_records", None)
+    return dict(family=family, length=length, question_type=qt or None)
 
 
 def retrieve(sig: dict) -> list[str]:
