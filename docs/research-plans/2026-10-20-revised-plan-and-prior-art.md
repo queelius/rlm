@@ -12,6 +12,7 @@ Revision log:
 - 2026-10-20 06:45: distillation and model-capacity analysis added.
 - 2026-10-20 06:05: harness-side learning (retrieval, GEPA, Meta-Harness) and role adapters added.
 - 2026-10-20 06:15: queues merged into one ranked list with status; revisit rule stated.
+- 2026-10-20 06:45: library-learning thread (L1 to L4) added from the user's RAG proposal.
 - 2026-10-20 06:28: cyclic task-sampling artifact found (short lengths absent for several steps at a
   time); confounded arms stopped; remedies requeued under stratified sampling in two lanes.
 
@@ -35,6 +36,10 @@ Revision log:
 | 10 | X2 | 64k to 128k OOLONG-synth for the RL controllers | ready | budget-safe chunking at length |
 | 11 | G-dec | decoupled route-token loss (Thinkless-style) | only if G-bal fails | last RL remedy |
 | 12 | G-alpha | length-weighting sweep (alpha = 0.5) | after G-seq | fills the tradeoff curve |
+| 2b | L1 | static skill library retrieved by input signature (see the library section) | ready after H1's harness injection exists | routine in the library vs in the weights |
+| 3b | L3 | bandit routing over verified options per input bucket | after L1 | selective recursion without gradients |
+| 6b | L2 | library growth and OOD transfer | after L1 | does the library generalize |
+| 9b | L4 | train the controller to use the library | after L2 | small model plus library |
 | retired | absolute cost 0.3 from SFT-007; weak KL; more seeds beyond two per arm | | |
 
 ## What the last 24 hours established
@@ -214,6 +219,50 @@ sub-problem in a recursive call.
 Recursive calls at depth above one are not exercised by the current expert (helpers are
 `ask_batch` calls, not nested controllers); H1 and H2 apply unchanged to a nested controller because
 the retrieval key is the state shape, which is worth testing once a depth-2 teacher exists.
+
+## Library learning for RLM controllers (added 06:45 UTC after the user's RAG proposal)
+
+Proposal: make the decomposition routine, and every other reusable pattern, a *retrievable,
+executable program* keyed by properties of the input, grown automatically from successful runs,
+rather than something the weights must memorize. The controller's job shrinks to: characterize
+the input, retrieve candidate programs, adapt and run them, and submit. Capacity moves from
+weights into a library of verified programs, which is the right place for it when the model is
+small.
+
+Why it fits the RLM kernel specifically: the environment is a stateful Python process, so a
+"skill" is a function that can be defined once and reused across turns and across recursive calls;
+the peek cell already computes the natural retrieval key (size, line structure, markers, the
+question); helper outputs can be cached in the namespace; and every run is verified and traced, so
+admission to the library can be evidence-gated. The routing decision (direct answer versus a
+routine) can live in the library's outcome statistics per input bucket, a bandit over verified
+options, which cannot collapse the way a policy gradient does; this is a principled version of the
+small-policy idea the user once abandoned, restricted to choosing among programs the LLM executes.
+
+Prior art: Voyager's skill library of executable code (Wang et al. 2023, arXiv:2305.16291),
+DreamCoder and LILO on learning program libraries by abstraction (arXiv:2310.19791), Agent
+Workflow Memory (arXiv:2409.07429), the self-generated in-context exemplar result (NeurIPS 2025),
+SkillRL, AutoRefine and SkillsVote (2026) on distilling trajectories into evidence-gated skills.
+Our angle is new in three ways: skills are typed programs over a versioned ABI in a persistent
+REPL, the retrieval key is the input signature produced by the agent's own first cell, and
+selection statistics replace gradient routing.
+
+Patterns beyond decomposition that the library should hold: regex-first extraction before any
+model call (Prime Intellect reports OOLONG-synth-with-labels solved by regex); chunk-size
+estimation from a cost model before committing a budget; index building over the input for
+repeated lookups; memoized helper calls; verification routines (re-ask a sample, consistency
+checks); recovery routines after a helper budget error; and recursion (call the kernel on a
+sub-problem with the same library).
+
+Ranked experiments (added to the queue as L1 to L4):
+
+| Id | Question | Design | Cost | Decision |
+| --- | --- | --- | --- | --- |
+| L1 | Does a static library of our expert cells, retrieved by input signature and injected as prebound functions plus a usage note, let the untrained 4B and SFT-005 match or beat the RL controllers? | Library from `expert_cells/` and `oolong_cells/` as functions with notes; signature = peek output features; top-1 injection through the harness first, an ABI helper (`skills_search`, `skills_load`) second | about 1 GPU-hour per evaluation, no training | within 5 points of the best RL controller at equal or lower tokens means the routine belongs in the library |
+| L2 | Does the library grow and transfer? | Admit programs from successful runs on the teaching split only (generalize constants to parameters, store outcome stats); evaluate on a new family never seen (OOLONG-real, or a new synthetic family) with and without growth | about 3 GPU-hours | OOD gain over the frozen library |
+| L3 | Does bandit selection over (direct, routine) per signature bucket give selective recursion without gradients? | Thompson sampling on verified outcomes minus cost, bucketed by length and family, frozen policy weights | about 1 GPU-hour | direct share at 8 records, none at 32 and OOLONG 2k, no accuracy loss |
+| L4 | Is a controller trained to *use* the library better than one trained to *contain* the routine? | SFT on library-using traces vs SFT-005; then RL from each | one SFT plus one RL run | accuracy, tokens, and robustness to a new family |
+
+Leakage rule: the library is built only from the teaching split; held-out windows never seed it.
 
 ## Time budget
 
