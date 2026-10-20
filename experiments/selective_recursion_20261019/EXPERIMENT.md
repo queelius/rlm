@@ -26,6 +26,6 @@ helper calls, and route shares classified from traces (`route_analysis.py`, `rou
 **Compute.** Two A100 40GB MIG instances (GPU 0 training, GPU 1 vLLM). An RL run is about 2.5 h.
 
 **Status.** E06 replicated (four RL runs); E07 in progress. The narrative record is
-`docs/research-checkpoints/2026-10-19-selective-recursion-and-broader-teaching.md`; the claims
+`docs/notebook/2026-10-19-selective-recursion-and-broader-teaching.md`; the claims
 are in `docs/RESULTS.md`. Run outputs, traces and adapters are in the run store named in
 `manifest.json` (not in git); pipeline scripts there are copied under `scripts/` at campaign end.
