@@ -727,6 +727,30 @@ which is exactly the direct-versus-routine question by length; statistics are po
 lengths within a form as a prior worth four observations. The streams are running with this
 design.
 
+Caller capacity, first rung (S1, 2026-10-21 11:30 UTC). The controller was served separately
+(non-thinking Qwen3) while the helpers stayed the 4B. The untrained Qwen3-1.7B cannot follow the
+kernel protocol without help: on event-log dev it scores 0/120, echoing the bootstrap envelope as
+its cell until the turn limit. With the prebound library and the statistics note it scores 77/120.
+Every task on which it wrote the recommended library call was correct (77 of 77); the 43 failures
+are protocol loops (35 out of turns) and all 24 lookups, where it never wrote the cheap lookup cell.
+On the four grown held-out forms it scores 28/96, again correct whenever it calls the learned
+routine (19 of 19), and on OOLONG 1/72. A LoRA fine-tune of the 1.7B on the 651 event-log
+library-calling pairs (S1b) changes the profile rather than the level: 91/96 on the held-out
+forms and 19/24 on lookups, but 55/120 on dev (both-items 0/24) because it imitates the teacher's
+inspect-then-act cells and loses track across turns (54 out of turns), and 12/72 on OOLONG, a
+family it never saw. The first S1b evaluation was invalid (every row a connection failure: the
+chain read an old startup line before the restarted server with the adapter was up) and is
+preserved with a note; readiness is now checked through the model list.
+
+Routine variants on OOLONG (E12, 12:05 UTC). The library's weak OOLONG type is numeric-one-class
+(24/71 on the held-out set), off by small counts, so classification noise rather than aggregation
+logic. Six classification variants were scored end to end on 96 OOLONG teaching rows, weighted to
+that type: shipped 12-row chunks 0.552, 6-row 0.469, 24-row 0.531, task description added 0.562,
+three-chunking vote 0.521, description plus vote 0.583 (paired against the shipped routine: 10
+wins, 7 losses, not distinguishable). Numeric-one-class stays at 21 to 27 of 60 under every
+variant. So this error is a helper-quality ceiling that no routine choice removes; the next arm
+(E12b) keeps the routine and swaps in the 8B as helper to measure that ceiling directly.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
