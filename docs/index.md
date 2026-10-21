@@ -3,21 +3,28 @@
 This site documents a PhD research program on **Recursive Language Models** (RLMs): language
 models that do not read a long input directly but write code to inspect it, delegate pieces to
 helper model calls, and submit an answer. The runtime in this repository is a small,
-request-preserving RLM kernel; the research asks whether a *small* model can be taught and then
-trained by reinforcement learning to use that kernel well.
+request-preserving RLM kernel; the research asks how a *small* model can use that kernel well: by training it, or by giving it a
+verified library of routines and a record of what worked.
 
 !!! tip "If you are new here"
     Read the [Primer](primer.md) first: what an RLM is, how our kernel works, one worked
     trajectory, and the vocabulary used everywhere else.
 
-## Headline results (as of 20 October 2026)
+## Headline results (as of 21 October 2026)
+
+The study set out to train a small controller to decompose long inputs, and found that the
+capability is better placed outside the weights. The full assessment, with limits and the next
+research questions, is the [synthesis of 21 October](notebook/2026-10-21-synthesis-and-next-questions.md).
 
 | Finding | Status | Where |
 | --- | --- | --- |
-| A 4B controller taught by replaying a scripted expert through the real kernel executes the decomposition routine, and 30 updates of on-policy RL raise held-out OOLONG-synth accuracy from 0.567 to 0.63 to 0.65 (direct answering 0.21, expert 0.67), replicated across four RL runs | replicated | [Claims ledger](RESULTS.md), [note of 19 October](notebook/2026-10-19-selective-recursion-and-broader-teaching.md) |
-| The RL gain is a length-generalizing fix of helper budgets at 32k tokens; the token-cost term is nearly inert | replicated | same |
-| Learning *when not to decompose* fails by routing collapse: from a warm start that holds both routes, RL removes the direct route within a few updates under every reward tried; the mechanism (gradient from lengths where direct answering fails, token weighting, bursty task sampling) is being dissected and remedies are running | in progress | [Plan of record](research-plans/2026-10-20-revised-plan-and-prior-art.md) |
-| Teaching-history repair on TextCraft beats a weak teacher but not stronger controls; every pre-October attempt to learn routing by RL was exploratory or null | replicated / null | [Full ledgers](results/) |
+| Teaching then on-policy RL lifts a 4B controller from 0.567 to about 0.65 on held-out OOLONG-synth (direct answering 0.21) | replicated | [Claims ledger](RESULTS.md) |
+| RL cannot hold the choice of *when* to decompose: every variant collapses to one route, even from a correct router | replicated | [note of 19 October](notebook/2026-10-19-selective-recursion-and-broader-teaching.md) |
+| With the routines prebound as a library, the **untrained** 4B scores 0.672 on the 293 held-out rows, equal to the scripted expert and row by row to the best RL controller | replication-grade n | ledger L1, E09 |
+| A table of verified outcomes keyed by the input (retrieval, RAG-style) recovers route choice with no training; the controller's own hidden state works as the key | exploratory | ledger L3a, E13 |
+| Verified library growth recovers new question forms without training; a stronger proposer fixes what a weak one cannot | exploratory | ledger E08, E11 |
+| With library and table, caller size stops mattering: a 0.6B caller tuned on 436 of the 4B's own calls is right on exactly the same 293 rows as the 4B; the recipe transfers to Phi-4-mini | replication-grade n | ledger S1 to S4 |
+| The 0.6B caller works at 64k to 512k tokens (and beyond), cost linear in length; the remaining error is per-row label ambiguity in the helpers | exploratory | ledger E14, E15 |
 
 ## How this site is organized
 

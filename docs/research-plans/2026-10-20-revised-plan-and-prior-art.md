@@ -7,6 +7,12 @@ evidence or new prior art suggests, and append a line to the revision log. The q
 by expected information per GPU-hour and readiness, not by when an idea arrived.
 
 Revision log:
+- 2026-10-21 18:00: synthesis written ([note](../notebook/2026-10-21-synthesis-and-next-questions.md)).
+  Since 15:00: S2 (0.6B and 1.7B callers 0.672 on 293 rows, identical rows to the 4B), S3 (Phi-4-mini),
+  S4 (55 in-family traces suffice), E13 (learned key), E14 (64k to 512k), E15 and E16 (count ceiling is
+  per-row label ambiguity). The queue below is superseded by the synthesis's ranked questions: (1) bootstrap
+  a library for a new family, (2) train the helper against per-row labels, (3) external RLM baselines,
+  (4) recursive routines, (5) continual library learning, (6) learned retrieval at scale, (7) smaller callers.
 - 2026-10-21 15:00: S1 complete: with the library and table, caller size stops mattering (4B = 8B),
   and a 0.6B tuned on 436 of the 4B's one-cell library calls matches both (one seed, 72-row OOLONG).
   E13: the controller's own hidden state plus length is as good a retrieval key as the hand signature.
