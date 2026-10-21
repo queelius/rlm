@@ -790,6 +790,32 @@ controller's own representation, with length appended, is as good a retrieval ke
 features without any feature engineering, and slightly better at moderate cost pressure; neither
 closes the gap to the oracle, which is the direct route on short tasks where both routes are right.
 
+Caller-capacity ladder, complete (S1, S1e; 2026-10-21 14:40 UTC). Controllers served separately
+(non-thinking Qwen3), helpers fixed at the 4B, the prebound library plus the statistics note (v4)
+throughout. Correct answers:
+
+| Caller | event-log dev, no library | dev, library + note | four grown forms | OOLONG-72 |
+| --- | --- | --- | --- | --- |
+| 0.6B untrained | 35/85 (stopped early) | 11/120 | 18/96 | 1/72 |
+| 0.6B one-cell fine-tune | | 110/120 | 94/96 | 43/72 |
+| 1.7B untrained | 0/120 | 77/120 | 28/96 | 1/72 |
+| 1.7B three-cell fine-tune | | 109/120 | 70/96 | 3/72 |
+| 1.7B one-cell fine-tune | | 109/120 | 93/96 | 42/72 |
+| 4B untrained | 46/192 (train split) | 111/120 | 94/96 | 43/72 |
+| 8B (4-bit) untrained | 48/120 | 112/120 | 93/96 | 43/72 |
+
+Once the routines live in the library and the route choice in the table, the caller's size stops
+mattering from 4B to 8B, and a 0.6B caller fine-tuned on 436 of the untrained 4B's own correct
+one-cell library calls (teaching splits of both families; LoRA r32, three epochs, about six
+minutes) matches them on every column. What the small model lacks untrained is protocol
+discipline, not capability: the untrained 1.7B is right on every task where it writes the
+recommended call, and the untrained 0.6B does better without the library (35/85) than with it
+(11/120), its longer prompt derailing it. The teacher's form matters: the same 1.7B fine-tuned on
+the scripted three-cell teacher (inspect, extract, answer) reaches 109/120 on dev but only 70/96
+on the grown forms and 3/72 on OOLONG, a family absent from that teacher's data; the one-cell
+teacher covered both families. The OOLONG 293-row runs and a second 0.6B seed are running to
+confirm the 72-row sample.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
