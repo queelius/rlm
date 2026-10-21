@@ -937,6 +937,23 @@ For very small callers the format of the retrieved payload matters: an imperativ
 cell is followed far more reliably than a ranked table, though a strongly trained pattern can still
 override it.
 
+External baseline: the RLM paper's released RLM-Qwen3-8B (E18, 22:45 UTC). The released
+post-trained model (mit-oasys/rlm-qwen3-8b-v0.1) was run in its authors' scaffold
+(alexzhang13/rlm at 854e688; settings from the scaffold's OOLONG environment: context in the REPL,
+root prompt = dataset instruction plus question, 12 iterations, sub-call max_tokens 4096, local REPL,
+depth 1, the same model for root and sub-calls), served by vLLM at its native 40,960-token window
+with an fp8 KV cache, on the same 293 held-out OOLONG rows. It scores 85/293 = 0.290 exact (0.321
+with OOLONG partial credit; 94 with a lenient bare-answer parse): better than direct answering
+(0.208; 59 to 35 discordant rows, p = 0.017) and far below the untrained 4B with the library (0.672;
+130 to 18, p below 1e-21), at about 460 seconds per row. 59 rows failed outright, 48 because the
+scaffold's growing root conversation exceeded the model's window, and the rest by timeout; even if
+every failed row had been correct the score would be 0.49, so the gap is not a window artefact.
+Caveats: one run; the spam instruction is our adaptation of the scaffold's TREC wording; the
+scaffold's local REPL is not thread-safe (the first attempt, with threads, is preserved as failed;
+the reported run used 16 single-row processes); the model may have been trained on OOLONG-synth
+windows, which would favour it. The released model cannot run our kernel's protocol (four of four
+smoke tasks out of turns).
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.

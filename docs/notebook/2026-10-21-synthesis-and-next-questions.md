@@ -27,6 +27,8 @@ Qwen3-4B-Instruct-2507; scoring is exact match.
 | The recipe is not specific to Qwen | one seed | Phi-4-mini 0/72 untrained, 43/72 after the same 436 traces |
 | A 0.6B caller handles inputs far beyond any model's window | 80 rows, 64k to 512k; 1M and 2M in progress | cost linear in length; accuracy falls through count questions |
 | OOLONG count errors are per-row label ambiguity, not routine choice | measured against per-row gold | helper agrees 0.903 (spam), 0.789 (TREC); systematic; not correctable by inversion |
+| The paper's released RLM-Qwen3-8B, in its own scaffold, is far behind the library | 293 rows, paired | 0.290 vs 0.672 (130 to 18 discordant); above direct (0.208) |
+| On the paper's own 131K TREC setting, a 0.6B caller with the library is level with GPT-5 base | 50 tasks | 45.3 vs 44.0 (RLM with GPT-5: 56 to 58) |
 
 ## 2. What the results mean
 
@@ -58,7 +60,7 @@ verifiable per-row labels) has a clear, measurable target.
   extraction step, not for bootstrapping a whole new family.
 - **Narrow external validity.** Two task families; OOLONG-synth's validation split covers only
   two label sets (SMS spam, TREC coarse) at every length; no OOLONG-real, no multi-hop or retrieval benchmark, no
-  comparison with the RLM paper's released RLM-Qwen3-8B or its frontier-model numbers.
+  comparison with frontier-model RLMs beyond the paper's published numbers (the released RLM-Qwen3-8B was run, E18).
 - **Small samples outside OOLONG-293.** Most event-log and 72-row OOLONG comparisons are single
   seeds; differences of a few rows are within noise (the 293-row interval is about plus or
   minus 0.054).
@@ -118,3 +120,32 @@ The allocation ends 22 October 00:39 UTC. Running: OOLONG at 1M and 2M tokens wi
 caller. Feasible before the end: question 2 in its supervised form (helper SFT on teaching-window
 labels with an overlap filter, then the 293-row and 64k to 512k evaluations), and the external
 baseline of question 3 at up to 32k. Questions 1, 4 and 5 need a fresh allocation.
+
+## 6. Handoff at the end of the allocation (22 October 00:39 UTC)
+
+**Where things are.**
+
+- Code: `experiments/selective_recursion_20261019/` in this repository (all scripts named in the
+  ledger); kernel prelude in `src/rlm/`.
+- Run outputs: `/project/alex_phd/runs/selective-recursion-20261019/` (symlinks into
+  `/home/atowell/research-runs/selective-recursion-20261019/`), one directory per run named as in
+  the ledger; failed and partial attempts carry `FAILED.txt`, `STOPPED.txt` or `NOTE.txt`.
+- Adapters: `.../adapters/` (SFT adapters; RL runs keep step 0, every fifth and final step after
+  storage tranche 3). Statistics tables: `stats-teach-v0.json` to `stats-teach-v5.json`. Distillation
+  sets: `sft-data/`.
+- Datasets: `/project/alex_phd/research-cache/datasets/oolong-synth-20261019/` (up to 32k),
+  `oolong-synth-20261021-long/` (pinned revision f0d59eaf, 64k to 2M exports),
+  `helper-label-sources-20261021/` (SMS spam, TREC). Models: `/project/alex_phd/research-cache/models/`
+  with `PROVENANCE.json` beside the newly downloaded ones (Qwen3 0.6B, 1.7B, 8B-AWQ, SmolLM2-360M).
+- Environments: training `/project/alex_phd/envs/selective-recursion-train-5b1e2b4` (rebuild recipe in
+  `EXPERIMENT.md`), serving `/project/alex_phd/envs/vllm`, official RLM scaffold
+  `/project/alex_phd/envs/rlm-official-854e688`.
+
+**Resuming.** On a new allocation, serve Qwen3-4B-Instruct-2507 as in `EXPERIMENT.md` (port 8001,
+LoRA enabled), serve small callers with thinking disabled, and run any ledger entry's command from
+the pipeline scripts in the run directory (`*_gpu0.sh`, `*_gpu1.sh`, `s*.sh`, `e*.sh`). The first
+experiments to run are questions 1 (bootstrap a library for a new family) and 4 (recursive
+routines), which this allocation did not reach.
+
+**Pending decisions.** Hugging Face release of the distilled 0.6B caller and its 436 traces (cards in
+`docs/hf/drafts/`).
