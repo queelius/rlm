@@ -909,6 +909,16 @@ which points to instance-level ambiguity of the TREC coarse categories as the ce
 shortage of supervision. Training the helper is still the right place for training in this
 system, but on these two label sets the gold labels themselves bound what it can reach.
 
+The paper's OOLONG setting, and beyond (E14b, E14c, E19; 19:00 UTC). The RLM paper's Table 1 reports
+OOLONG trec_coarse at 131K tokens on 50 tasks; OOLONG-synth's validation split has exactly 50
+trec_coarse rows at that length, so the task set is very likely the same. With the distilled 0.6B
+caller, the library, and 4B helpers, all 50 score 0.440 exact match and 0.453 with OOLONG's partial
+credit for numeric answers (0.75 to the power of the absolute error; the paper does not state its
+rule). For reference, the paper reports GPT-5 base 44.0, RLM(GPT-5) 56.0 to 58.0 depending on
+recursion depth, and Qwen3-Coder-480B base 36.0 and RLM 26.0 to 48.0. The 50 spam rows at 131K score
+0.760 (0.805 partial). At 1M tokens the 0.6B caller is correct on 5 of 8 rows (about 1,460 helper
+calls and 6.8 minutes per row) and at 2M on 2 of 4. Scoring script: `oolong_score.py`.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
