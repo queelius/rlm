@@ -40,9 +40,9 @@ def main():
     gold = gold_rows()
     for run in sys.argv[1:]:
         d = Path(run)
-        f = d / "rows.jsonl" if (d / "rows.jsonl").exists() else d / "raw.jsonl"
+        files = [d / "rows.jsonl"] if (d / "rows.jsonl").exists() else sorted(d.glob("raw-shard*.jsonl"))
         by = collections.defaultdict(lambda: [0, 0.0, 0.0])
-        for line in open(f):
+        for line in (l for f in files for l in open(f)):
             x = json.loads(line)
             r = gold[x["id"]]
             text = x.get("output_text") or ""

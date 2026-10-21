@@ -33,16 +33,18 @@ def main():
     p.add_argument("--model", default="rlm-qwen3-8b")
     p.add_argument("--concurrency", type=int, default=4)
     p.add_argument("--limit", type=int, default=0)
+    p.add_argument("--shard", type=int, default=0)
+    p.add_argument("--nshards", type=int, default=1, help="run shards in separate processes: the scaffold's local REPL changes the process-wide working directory, so threads race")
     a = p.parse_args()
     ids = [json.loads(l)["id"] for l in open(a.ids_from)]
     rows = {json.loads(l)["id"]: json.loads(l) for l in open(a.rows)}
-    todo = [rows[i] for i in ids]
+    todo = [rows[i] for k, i in enumerate(ids) if k % a.nshards == a.shard]
     if a.limit:
         todo = todo[: a.limit]
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     done = set()
-    rp = out / "raw.jsonl"
+    rp = out / f"raw-shard{a.shard}.jsonl"
     if rp.exists():
         done = {json.loads(l)["id"] for l in open(rp)}
     todo = [r for r in todo if r["id"] not in done]

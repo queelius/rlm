@@ -10,7 +10,7 @@ import oolong_eval  # noqa: E402
 
 S = Path("/project/alex_phd/runs/selective-recursion-20261019")
 rows = {json.loads(l)["id"]: json.loads(l) for l in open(oolong_eval.ROWS)}
-raw = [json.loads(l) for l in open(S / "e18-official-rlm8b" / "raw.jsonl")]
+raw = [json.loads(l) for f in sorted((S / "e18-official-rlm8b").glob("raw-shard*.jsonl")) for l in open(f)]
 
 
 def lenient(r, text):
