@@ -7,6 +7,16 @@ evidence or new prior art suggests, and append a line to the revision log. The q
 by expected information per GPU-hour and readiness, not by when an idea arrived.
 
 Revision log:
+- 2026-10-21 15:00: S1 complete: with the library and table, caller size stops mattering (4B = 8B),
+  and a 0.6B tuned on 436 of the 4B's one-cell library calls matches both (one seed, 72-row OOLONG).
+  E13: the controller's own hidden state plus length is as good a retrieval key as the hand signature.
+  E12/E12b: the OOLONG count ceiling is not removable by routine choice or a larger helper.
+  First small-caller fine-tunes voided by a chat-template mismatch (fixed). Running: S2 (293-row
+  OOLONG for the distilled 0.6B and 1.7B; second 0.6B seed). Next, ranked: (1) S2 confirmation;
+  (2) a different model family as caller (Phi-4-mini, cached) untrained and one-cell-distilled, to
+  test whether the recipe is model-agnostic; (3) end-of-allocation handoff from 21:00 UTC (training
+  env rebuilt in the monorepo, adapter pruning, release of the distilled 0.6B caller and the
+  one-cell dataset on Hugging Face with the user's approval).
 - 2026-10-21 10:55: resumed after an avoidable 16.5 h idle interval (logged). E07-10 closes gradient
   routing (balance arms always-decompose). Now running S1, the caller-capacity ladder (Qwen3 0.6B,
   1.7B, 8B-AWQ controllers, non-thinking, helpers fixed at the 4B; with and without the library and
