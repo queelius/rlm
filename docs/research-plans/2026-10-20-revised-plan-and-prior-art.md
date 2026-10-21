@@ -7,6 +7,11 @@ evidence or new prior art suggests, and append a line to the revision log. The q
 by expected information per GPU-hour and readiness, not by when an idea arrived.
 
 Revision log:
+- 2026-10-21 10:55: resumed after an avoidable 16.5 h idle interval (logged). E07-10 closes gradient
+  routing (balance arms always-decompose). Now running S1, the caller-capacity ladder (Qwen3 0.6B,
+  1.7B, 8B-AWQ controllers, non-thinking, helpers fixed at the 4B; with and without the library and
+  table), and S1b, LoRA SFT of the 1.7B caller on library-calling trajectories. First rows: the
+  untrained 1.7B cannot follow the kernel protocol without help (echoes the bootstrap); the 8B can.
 - 2026-10-20 12:25: growth and the paper-grade numbers landed. L3a: statistics note gives the
   untrained controller the best dev accuracy and lowest cost (87/96, 24/24, 14.3k). E08: verified
   growth takes 0/48 to 48/48 on two held-out forms with the 4B proposer; the third form was kept

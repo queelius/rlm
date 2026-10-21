@@ -108,6 +108,7 @@ def main():
     p.add_argument("--base-url", default="http://127.0.0.1:8001/v1")
     p.add_argument("--api-key", default="local")
     p.add_argument("--public-model", default="qwen3-4b")
+    p.add_argument("--controller-base-url", default=None)
     args = p.parse_args()
     lens = {int(x) for x in args.lens.split(",")}
     rows = [json.loads(l) for l in ROWS.read_text().splitlines()]
@@ -124,7 +125,7 @@ def main():
         cell = sorted(by_cell[k], key=lambda r: r["id"])
         rng.shuffle(cell)
         selected += cell[: args.per_cell]
-    ra = SimpleNamespace(base_url=args.base_url, api_key=args.api_key, public_model=args.public_model,
+    ra = SimpleNamespace(controller_base_url=args.controller_base_url, base_url=args.base_url, api_key=args.api_key, public_model=args.public_model,
                          controller_model=args.controller_model, temperature=args.temperature, harness=args.harness,
                          direct_max_output=4096, controller_max_output=1024, max_turns=10, max_model_calls=96,
                          max_subcalls=80, max_total_tokens=600_000, deadline=1200.0, exec_timeout=900.0)

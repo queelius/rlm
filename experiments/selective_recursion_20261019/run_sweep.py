@@ -170,7 +170,34 @@ def make_rlm(args, trace_dir: Path, controller_model: str, task=None) -> RLM:
         execution=ExecutionConfig(working_directory=None),
         tracing=TraceConfig(enabled=True, directory=str(trace_dir), markdown=False),
     )
-    return RLM(OpenAIEndpoint(base_url=args.base_url, api_key=args.api_key, timeout=args.deadline), config=config)
+    helpers = OpenAIEndpoint(base_url=args.base_url, api_key=args.api_key, timeout=args.deadline)
+    cbu = getattr(args, "controller_base_url", None)
+    if cbu:
+        ctrl = OpenAIEndpoint(base_url=cbu, api_key=args.api_key, timeout=args.deadline)
+        return RLM(RouterBackend(ctrl, helpers, controller_model), config=config)
+    return RLM(helpers, config=config)
+
+
+class RouterBackend:
+    """Send the controller's model to one server and every helper call to another (capacity ladder:
+    the caller changes, the helpers stay the 4B)."""
+
+    def __init__(self, controller, helpers, controller_model: str):
+        self.controller, self.helpers, self.controller_model = controller, helpers, controller_model
+
+    def _pick(self, request):
+        return self.controller if request.get("model") == self.controller_model else self.helpers
+
+    def complete(self, request, *, timeout, context):
+        return self._pick(request).complete(request, timeout=timeout, context=context)
+
+    def list_models(self):
+        a, b = self.helpers.list_models(), self.controller.list_models()
+        return dict(a, data=list(a.get("data", [])) + list(b.get("data", [])))
+
+    def close(self):
+        self.controller.close()
+        self.helpers.close()
 
 
 def run_direct(args, task, trace_dir):
@@ -372,6 +399,7 @@ def main():
     p.add_argument("--temperature", type=float, default=0.7)
     p.add_argument("--direct-max-output", type=int, default=4096)
     p.add_argument("--harness", default="default", choices=("default", "hinted", "skills", "exemplars"))
+    p.add_argument("--controller-base-url", default=None, help="serve the controller model from another server")
     p.add_argument("--stats-file", default=None, help="routine statistics table for the skills harness note")
     p.add_argument("--stats-lam", type=float, default=0.05)
     p.add_argument("--controller-max-output", type=int, default=1024)
