@@ -43,10 +43,8 @@ def main():
         todo = todo[: a.limit]
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    done = set()
-    rp = out / f"raw-shard{a.shard}.jsonl"
-    if rp.exists():
-        done = {json.loads(l)["id"] for l in open(rp)}
+    rp = out / f"raw-shard{a.shard}-of{a.nshards}.jsonl"
+    done = {json.loads(l)["id"] for f in out.glob("raw-shard*.jsonl") for l in open(f)}  # any shard layout
     todo = [r for r in todo if r["id"] not in done]
     print(len(todo), "rows to run", flush=True)
 
