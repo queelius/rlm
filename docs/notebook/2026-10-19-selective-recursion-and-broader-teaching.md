@@ -954,6 +954,15 @@ the reported run used 16 single-row processes); the model may have been trained 
 windows, which would favour it. The released model cannot run our kernel's protocol (four of four
 smoke tasks out of turns).
 
+Long store logs (E20, 23:25 UTC). Event-log tasks at 1,024, 2,048 and 4,096 records (about 1,300 to
+5,100 lines, 20k to 80k tokens), all nine question forms including the four grown ones, four dev
+seeds: the untrained 4B with the library and the v5 note scores 98/108 (32/36, 34/36, 32/36 by
+length) with no errors, at 90k to 363k tokens per task; the direct answer scores 3/108 (2/36, 1/36,
+and 0/36 at 4,096 records, where every input exceeds the 4B's window). Every form is at 9 to 12 of
+12, the grown routines included. With OOLONG (E14), the long-context result now holds in both
+families: in the event-log family, whose labels are unambiguous, accuracy does not fall with
+length at all.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
