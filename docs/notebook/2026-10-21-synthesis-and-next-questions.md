@@ -104,6 +104,13 @@ Ranked by expected information per GPU-hour and by how directly they test the th
 Hygiene to apply before any claim is promoted: two or more seeds per arm, the 293-row OOLONG set
 or equivalent n for every headline comparison, paired tests, and the helper fixed and recorded.
 
+**Update, 18:05 UTC (E17).** Question 2 was tried in supervised form. OOLONG-synth's windows
+share one item pool, so its teaching labels leak into every evaluation window; a helper LoRA was
+instead trained on SMS-spam and TREC items absent from all OOLONG windows. It did not help (TREC
+per-row agreement 0.759 to 0.750; spam collapsed from a 12-spam training pool). For these two label
+sets the gold labels themselves bound the helper; the question needs label sets with less
+instance-level ambiguity, or tasks whose per-row verification is exact.
+
 ## 5. Remaining time on this allocation
 
 The allocation ends 22 October 00:39 UTC. Running: OOLONG at 1M and 2M tokens with the 0.6B

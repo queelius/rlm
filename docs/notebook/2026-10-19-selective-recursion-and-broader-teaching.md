@@ -893,6 +893,22 @@ answering is impossible. Accuracy falls with length through the count questions
 over more rows. A first 1M-token row with the 0.6B caller was correct (1,457 helper calls, about
 1.01M tokens, 6.8 minutes); the remaining 1M rows are running.
 
+Training the helper on disjoint items does not help (E17, 18:05 UTC). OOLONG-synth builds every
+window from one pool of SMS-spam and TREC items: all 863 spam and 1,135 TREC instances in the
+teaching windows also occur in held-out or long-context windows, so the helper cannot be trained
+on OOLONG teaching labels without label leakage. Instead the original datasets were downloaded
+(ucirvine/sms_spam at cae486f9; TREC train_5500 and TREC_10 from the CogComp source, checksums in
+the provenance file) and only items absent from every OOLONG window kept: 172 SMS items (160 ham,
+12 spam) and 1,735 TREC questions, formatted as 320 classify-routine chunks for a LoRA on the 4B
+helper. Held-out per-row agreement with gold: spam 0.907 base against 0.562 tuned (the tuned
+helper calls spam ham 452 times, the cost of a 12-spam training pool), TREC 0.759 against 0.750.
+On the 293 held-out OOLONG rows with the tuned helper: 143/293 (spam 68/143, TREC 75/150) against
+197/293 (112/143, 85/150) with the base helper. The spam drop is a data-imbalance artefact; the TREC
+result is the informative one: 1,735 disjoint items labelled with the same scheme give no gain,
+which points to instance-level ambiguity of the TREC coarse categories as the ceiling, not to a
+shortage of supervision. Training the helper is still the right place for training in this
+system, but on these two label sets the gold labels themselves bound what it can reach.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
