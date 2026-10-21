@@ -816,6 +816,12 @@ on the grown forms and 3/72 on OOLONG, a family absent from that teacher's data;
 teacher covered both families. The OOLONG 293-row runs and a second 0.6B seed are running to
 confirm the 72-row sample.
 
+Confirmed on the full held-out set (S2, 14:46 UTC). On the 293-row held-out OOLONG set the
+one-cell-distilled 0.6B and 1.7B callers each score 197/293 = 0.672 with no errors at about 10.5k
+tokens, identical to the untrained 4B caller with the library (197/293) and the scripted expert
+(0.672), and above the best RL-trained 4B controller (0.652). A 0.6B controller with a verified
+library therefore matches everything the RL campaign produced at 4B.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
