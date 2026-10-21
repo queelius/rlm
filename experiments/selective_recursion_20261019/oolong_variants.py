@@ -162,7 +162,10 @@ def main():
             rows, labels, question = ns["parse_oolong"](r["context"] + "\n" + r["question"])
             header = r["context"].split("\nDate:", 1)[0]
             f(ns, rows, labels, header)
-            ans = ns["answer_oolong"](rows, labels, question)
+            try:
+                ans = ns["answer_oolong"](rows, labels, question)
+            except Exception as e:  # a routine that raises is a wrong answer, as it would be for the controller
+                ans = f"error: {type(e).__name__}"
             ok = oolong_eval.verify(r, ans)
             return dict(variant=name, id=r["id"], context_len=r["context_len"], task=r["task"], answer=ans, gold=r["answer"], correct=ok)
         with ThreadPoolExecutor(4) as ex:
