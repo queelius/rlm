@@ -87,6 +87,7 @@ def hinted_harness_spec():
 
 STATS_TABLE = None  # routine-outcome statistics table (skills.stats), set from --stats-file
 STATS_LAM = 0.05
+FORCE_RECOMMENDED = False  # render the note as one explicit routine and its cell (--force-recommended)
 
 
 def skills_harness_spec(task=None):
@@ -104,6 +105,11 @@ def skills_harness_spec(task=None):
     policy = P.DEFAULT_POLICY + ("\n" + note + "\n" if note else "")
     version = "2"
     forced = getattr(task, "forced_routine", None) if task is not None else None
+    if forced is None and FORCE_RECOMMENDED and STATS_TABLE is not None and task is not None:
+        from skills import stats as _st
+
+        _sig = _st.signature_from_input(getattr(task, "prompt", "")) or registry.signature(task)
+        forced = _st.best_routine(_sig, STATS_TABLE, lam=STATS_LAM)
     if (STATS_TABLE is not None or forced) and task is not None:
         from skills import stats
 
@@ -402,6 +408,7 @@ def main():
     p.add_argument("--controller-base-url", default=None, help="serve the controller model from another server")
     p.add_argument("--stats-file", default=None, help="routine statistics table for the skills harness note")
     p.add_argument("--stats-lam", type=float, default=0.05)
+    p.add_argument("--force-recommended", action="store_true", help="note states one routine and the exact cell to write")
     p.add_argument("--controller-max-output", type=int, default=1024)
     p.add_argument("--max-turns", type=int, default=10)
     p.add_argument("--max-model-calls", type=int, default=96)
@@ -417,6 +424,8 @@ def main():
         global STATS_TABLE, STATS_LAM
         STATS_TABLE = _stats.load(args.stats_file)
         STATS_LAM = args.stats_lam
+    global FORCE_RECOMMENDED
+    FORCE_RECOMMENDED = args.force_recommended
 
     args.out.mkdir(parents=True, exist_ok=True)
     trace_dir = args.out / "traces"

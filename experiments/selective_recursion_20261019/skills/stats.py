@@ -221,6 +221,17 @@ def label_of(rt: str) -> str:
     return LABELS.get(rt, rt.replace("lib:", "").replace("+", " + "))
 
 
+def best_routine(sig: dict, table: dict, lam: float = 0.05, min_n: int = 4) -> str | None:
+    """The routine the note would recommend for this signature (None when no history)."""
+    _, hist = lookup(sig, table)
+    if not hist:
+        return None
+    for rt, c in sorted(hist.items(), key=lambda kv: -score(kv[1], lam)):
+        if c["n"] >= min_n:
+            return rt
+    return None
+
+
 def note_for(sig: dict, table: dict, lam: float = 0.05, min_n: int = 4, force: str | None = None) -> str:
     """The verified-history note; `force` names the routine to recommend (online selection)."""
     key, hist = lookup(sig, table)
