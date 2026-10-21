@@ -822,6 +822,22 @@ tokens, identical to the untrained 4B caller with the library (197/293) and the 
 (0.672), and above the best RL-trained 4B controller (0.652). A 0.6B controller with a verified
 library therefore matches everything the RL campaign produced at 4B.
 
+Another model family and a second seed (S2, S3; 15:20 UTC). Phi-4-mini-instruct (3.8B, Microsoft,
+not Qwen) as caller with the Qwen 4B helpers: untrained with the library and note it scores 69/120
+on event-log dev, 94/96 on the grown forms and 0/72 on OOLONG (every OOLONG task a protocol loop);
+LoRA-tuned on the same 436 one-cell traces (fused-projection targets, three epochs) it scores
+105/120, 94/96 and 43/72, matching the Qwen callers. A second seed of the 0.6B one-cell adapter
+scores 107/120, 93/96 and 42/72 (first seed 110/120, 94/96, 43/72). The recipe (prebound library,
+outcome note, distil the strong caller's one-cell calls) is therefore not specific to the Qwen
+family or to one training seed.
+
+What the small caller learns (S4, interim): a 0.6B tuned only on the 220 event-log traces writes
+well-formed cells that call the OOLONG library it has never been trained on, but composes them
+wrongly (it submits the return value of `classify_rows`, which returns nothing, instead of passing
+the rows to `answer_oolong`), so OOLONG is 0/42 so far. Protocol discipline transfers across
+families; composing an unfamiliar library does not. A mixed subset of only 55 traces (19 of them
+OOLONG) already gives 25/33 on OOLONG so far.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
