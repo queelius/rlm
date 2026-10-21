@@ -881,6 +881,18 @@ to remove; the correction trims spam's mean absolute error from 3.4 to 2.9 but d
 to 21.4), the six-label confusion matrix being too ill-conditioned to invert. The count ceiling is
 per-question variance from row-level label ambiguity, not a correctable bias.
 
+Long contexts, 64k to 512k (E14, 17:25 UTC). OOLONG-synth rows at 64k, 128k, 256k and 512k tokens
+(spam and TREC coarse, 10 per length and dataset, re-downloaded at the pinned revision) with the
+library and note, helpers the 4B, budgets raised to 4,000 helper calls. The untrained 4B and the
+distilled 0.6B and 1.7B callers score identically: 15/20, 16/20, 12/20 and 7/20 (50/80), at about
+1.0 token per input token (65k to 515k mean) and 49 to 386 seconds per row; every caller wrote the
+same library call, so the outcome is set by the helpers. The controller never sees the input, so
+a 0.6B caller handles inputs eight times longer than the 4B's own 64k window, where direct
+answering is impossible. Accuracy falls with length through the count questions
+(numeric-one-class 2/17; relative frequency 34/43), the per-row label noise of E15 accumulating
+over more rows. A first 1M-token row with the 0.6B caller was correct (1,457 helper calls, about
+1.01M tokens, 6.8 minutes); the remaining 1M rows are running.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
