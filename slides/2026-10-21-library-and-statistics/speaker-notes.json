@@ -21,6 +21,10 @@
    "notes": "Propose, verify on the model's own extractions, register with its record. Two forms recovered from zero to perfect with no training. Third form: all 24 of the 4B's candidates had the same sort-direction bug; verification kept them out; showing it the failures did not help. The 8B proposer, reasoning for about 5k tokens first, got it right on all eight candidates, and the 4B caller is then perfect on dev. Ceiling is the proposer, not the loop."
   },
   {
+   "title": "How small can the caller be? A 0.6B, if it learns the call.",
+   "notes": "Helpers stay the 4B. With the library and table, 4B and 8B are identical, so capacity of the caller stops mattering. Untrained 0.6B and 1.7B fail on protocol, not capability. Six minutes of LoRA on 436 of the 4B's own one-cell calls makes a 0.6B match the 4B everywhere. The scripted three-cell teacher is worse: form of the teacher matters. Confirmation runs in progress."
+  },
+  {
    "title": "What this changes, and what to test next.",
    "notes": "Sharpened claim: capability in the library, selection in statistics, weights call and compose. Limits are real: synthetic, one seed, greedy table. Next tests are small and ready; the harder form and the 8B proposer come first."
   },

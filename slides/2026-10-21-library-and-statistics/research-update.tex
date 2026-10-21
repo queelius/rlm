@@ -15,7 +15,7 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=9mm,text margin right=9mm}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
-\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Library and statistics for recursive language models | advisor update, 21 Oct 2026\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Library and statistics for recursive language models | advisor update, 21 Oct 2026 (rev. 15:00 UTC)\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
 \newcommand{\source}[1]{\vfill{\scriptsize\color{Gray}#1\par}}
 \hypersetup{pdftitle={Where should a small controller's skill live?},pdfauthor={Alex Towell}}
 \title{Where should a small controller's skill live?}
@@ -121,8 +121,8 @@ Scripted expert & 88/96 & 24/24 & 17.0k \\
 \end{tabular}
 \medskip
 
-\begin{block}{Online version (240-task streams)}
-Thompson 0.84, greedy 0.80, random 0.80; greedy warm-started from the table \textbf{0.87} with the lowest regret. No weights change; one bucket cannot move another.
+\begin{block}{Online, and with a learned key}
+Online streams: greedy warm-started from the table \textbf{0.87}, lowest regret. Learned key (the controller's own hidden state + length, nearest neighbours) matches the hand signature on 413 held-out tasks.
 \end{block}
 \end{column}
 \end{columns}
@@ -179,6 +179,30 @@ join (bought on a day someone else returned) 0 $\to$ \textbf{22}/24 (4B, 43/48 v
 \end{frame}
 
 \begin{frame}[t]
+\frametitle{How small can the caller be? A 0.6B, if it learns the call.}
+Helpers fixed at the 4B; library and statistics note throughout. Correct answers:
+\begin{center}\footnotesize
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Caller & Dev, no library & Dev, library & Grown forms & OOLONG-72 \\
+\midrule
+0.6B untrained & 35/85 & 11/120 & 18/96 & 1/72 \\
+1.7B untrained & 0/120 & 77/120 & 28/96 & 1/72 \\
+4B untrained & --- & 111/120 & 94/96 & 43/72 \\
+8B (4-bit) untrained & 48/120 & 112/120 & 93/96 & 43/72 \\
+\midrule
+1.7B tuned on scripted three-cell teacher & & 109/120 & 70/96 & 3/72 \\
+1.7B tuned on the 4B's one-cell calls & & 109/120 & 93/96 & 42/72 \\
+\textbf{0.6B tuned on the 4B's one-cell calls} & & \textbf{110/120} & \textbf{94/96} & \textbf{43/72} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\small 436 correct one-cell library calls by the untrained 4B (teaching splits, both families), LoRA, six minutes.
+Untrained small models lack protocol discipline, not capability. The teacher's form matters.
+\source{Ledger S1. One seed; 72-row OOLONG sample (293-row runs and a second seed in progress). First fine-tunes voided by a chat-template mismatch.}
+\end{frame}
+
+\begin{frame}[t]
 \frametitle{What this changes, and what to test next.}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.48\textwidth}
@@ -201,7 +225,7 @@ Question & Smallest test \\
 Harder growth? & multi-step forms and a second family; proposer size vs acceptance \\[1mm]
 Learned signature? & router over the controller's own state instead of hand-chosen features \\[1mm]
 External validity? & OOLONG-real with the library; the 293-row held-out run \\[1mm]
-A smaller caller? & 1.7B with the same library and table \\
+Confirm the 0.6B? & 293-row OOLONG; second seed; other model families \\
 \bottomrule
 \end{tabular}
 \end{column}
