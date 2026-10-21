@@ -751,6 +751,19 @@ wins, 7 losses, not distinguishable). Numeric-one-class stays at 21 to 27 of 60 
 variant. So this error is a helper-quality ceiling that no routine choice removes; the next arm
 (E12b) keeps the routine and swaps in the 8B as helper to measure that ceiling directly.
 
+Helper size does not lift the OOLONG count ceiling (E12b, 12:45 UTC). With the routine fixed and
+the helper swapped for the 4-bit Qwen3-8B (non-thinking), the shipped routine scores 0.521 on the
+same 96 teaching rows (4B helper 0.552) and numeric-one-class 22/60 (4B 23/60); the
+description-prompt variant drops to 0.406. On the 293-row held-out run the numeric answers miss by
+a median of about 10 percent of the true count already at 1k tokens (about ten rows), and exact
+accuracy falls from about half at 1k to 1 of 11 and 2 of 12 at 16k and 32k. About one row in ten is
+labelled differently from the gold label by both helpers, and an exact count over many rows needs
+all of them right, so the ceiling is structural for exact-match counts. Label ambiguity in the
+source datasets (TREC coarse categories, SMS spam) would explain why a larger helper does not help,
+but that is not verified here. Consequence for the plan: this error is not removable by routine
+choice, routine growth, or a modestly larger helper; it is a measurement ceiling to report, not a
+target for the library.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
