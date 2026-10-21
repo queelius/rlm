@@ -860,6 +860,18 @@ that need no labels). Untrained 0.6B, 1.7B and Phi-4-mini stay at 0/72 with the 
 loops), and the 4B is unchanged (42/72 against 43/72). Retrieval of a recipe does not replace a
 handful of in-family traces for a 0.6B caller.
 
+Why OOLONG counts miss (E15, 17:20 UTC). OOLONG-synth's labelled context
+(`context_window_text_with_labels`, re-downloaded at the pinned revision) gives a gold label per
+row, so the library's `classify_rows` (4B helper, 12-row chunks) was scored row by row on 2,537
+teaching-window rows. Agreement with gold is 0.903 on SMS spam and 0.789 on TREC coarse, and the
+disagreements are systematic, not noise: spam is called ham 77 times against 23 the other way, and
+TREC abbreviation and entity questions are called "description and abstract concept" 144 times
+(location called entity 41 times). An exact count over tens to hundreds of rows with a directional
+per-row error of 10 to 20 percent is wrong almost surely, which is the numeric-one-class ceiling
+of E12 and E12b, and explains why neither routine variants nor a larger helper moved it. The bias
+is consistent enough to correct: a counting routine that inverts the confusion matrix estimated on
+teaching labels is the obvious library-level repair, and verification can decide whether it pays.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
