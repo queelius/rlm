@@ -21,8 +21,12 @@
    "notes": "Propose, verify on the model's own extractions, register with its record. Two forms recovered from zero to perfect with no training. Third form: all 24 of the 4B's candidates had the same sort-direction bug; verification kept them out; showing it the failures did not help. The 8B proposer, reasoning for about 5k tokens first, got it right on all eight candidates, and the 4B caller is then perfect on dev. Ceiling is the proposer, not the loop."
   },
   {
-   "title": "How small can the caller be? A 0.6B, if it learns the call.",
-   "notes": "Helpers stay the 4B. With the library and table, 4B and 8B are identical, so capacity of the caller stops mattering. Untrained 0.6B and 1.7B fail on protocol, not capability. Six minutes of LoRA on 436 of the 4B's own one-cell calls makes a 0.6B match the 4B everywhere. The scripted three-cell teacher is worse: form of the teacher matters. Confirmation runs in progress."
+   "title": "How small can the caller be? Down to 0.6B, if it learns the call.",
+   "notes": "Library and table make caller size irrelevant from 4B to 8B. A 0.6B tuned on 436 of the 4B's own one-cell calls matches them, two seeds; on 293 held-out rows the tuned 0.6B, 1.7B and untrained 4B are right on identical rows. Phi-4-mini shows the recipe is not Qwen-specific. At 360M protocol is learned but the note's routine is misread on two new forms: the first capacity limit."
+  },
+  {
+   "title": "The caller never reads the input: from 1k to 2M tokens.",
+   "notes": "Controller sees metadata only, so a 0.6B handles 2M-token inputs; cost linear. Accuracy falls via count questions, where per-row label ambiguity accumulates. On the paper's own setting (TREC 131K, 50 tasks) we are level with GPT-5 base and below RLM(GPT-5). The official RLM-Qwen3-8B baseline run is in progress."
   },
   {
    "title": "What this changes, and what to test next.",

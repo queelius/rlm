@@ -919,6 +919,15 @@ recursion depth, and Qwen3-Coder-480B base 36.0 and RLM 26.0 to 48.0. The 50 spa
 0.760 (0.805 partial). At 1M tokens the 0.6B caller is correct on 5 of 8 rows (about 1,460 helper
 calls and 6.8 minutes per row) and at 2M on 2 of 4. Scoring script: `oolong_score.py`.
 
+Below 0.6B: SmolLM2-360M (S5, 19:35 UTC). SmolLM2-360M-Instruct (Llama architecture, 8k window,
+Hugging Face revision a10cc151) as caller: untrained it never submits (every task out of turns);
+LoRA-tuned on the same 436 one-cell traces it scores 109/120 on event-log dev and 42/72 on OOLONG,
+level with the 0.6B and the 4B, but 48/96 on the four grown forms: perfect on busiest day and
+purchase span, 0/24 on top buyer and same-day cross, where it writes the busiest-day routine instead
+of the routine the statistics note recommends. At 360M the calling discipline is still learnable
+from traces; reading the retrieved recommendation and copying the right routine name is where
+capacity first runs out.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.

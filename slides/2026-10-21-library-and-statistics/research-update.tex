@@ -15,7 +15,7 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=9mm,text margin right=9mm}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
-\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Library and statistics for recursive language models | advisor update, 21 Oct 2026 (rev. 15:00 UTC)\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Library and statistics for recursive language models | advisor update, 21 Oct 2026 (rev. 19:40 UTC)\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
 \newcommand{\source}[1]{\vfill{\scriptsize\color{Gray}#1\par}}
 \hypersetup{pdftitle={Where should a small controller's skill live?},pdfauthor={Alex Towell}}
 \title{Where should a small controller's skill live?}
@@ -179,27 +179,61 @@ join (bought on a day someone else returned) 0 $\to$ \textbf{22}/24 (4B, 43/48 v
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{How small can the caller be? A 0.6B, if it learns the call.}
+\frametitle{How small can the caller be? Down to 0.6B, if it learns the call.}
 Helpers fixed at the 4B; library and statistics note throughout. Correct answers:
 \begin{center}\footnotesize
-\begin{tabular}{@{}lrrrr@{}}
+\begin{tabular}{@{}lrrr@{}}
 \toprule
-Caller & Dev, no library & Dev, library & Grown forms & OOLONG-72 \\
+Caller & Dev (120) & Grown forms (96) & OOLONG-72 \\
 \midrule
-0.6B untrained & 35/85 & 11/120 & 18/96 & 1/72 \\
-1.7B untrained & 0/120 & 77/120 & 28/96 & 1/72 \\
-4B untrained & --- & 111/120 & 94/96 & 43/72 \\
-8B (4-bit) untrained & 48/120 & 112/120 & 93/96 & 43/72 \\
+0.6B / 1.7B untrained & 11 / 77 & 18 / 28 & 1 / 1 \\
+4B untrained & 111 & 94 & 43 \\
+8B (4-bit) untrained & 112 & 93 & 43 \\
+Phi-4-mini (3.8B) untrained & 69 & 94 & 0 \\
 \midrule
-1.7B tuned on scripted three-cell teacher & & 109/120 & 70/96 & 3/72 \\
-1.7B tuned on the 4B's one-cell calls & & 109/120 & 93/96 & 42/72 \\
-\textbf{0.6B tuned on the 4B's one-cell calls} & & \textbf{110/120} & \textbf{94/96} & \textbf{43/72} \\
+\textbf{0.6B tuned on the 4B's one-cell calls} (two seeds) & \textbf{110 / 107} & \textbf{94 / 93} & \textbf{43 / 42} \\
+Phi-4-mini tuned, same 436 traces & 105 & 94 & 43 \\
+SmolLM2-360M tuned, same traces & 109 & 48 & 42 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\small 436 correct one-cell library calls by the untrained 4B (teaching splits, both families), LoRA, six minutes.
-Untrained small models lack protocol discipline, not capability. The teacher's form matters.
-\source{Ledger S1. One seed; 72-row OOLONG sample (293-row runs and a second seed in progress). First fine-tunes voided by a chat-template mismatch.}
+\small On all 293 held-out OOLONG rows the tuned 0.6B and 1.7B and the untrained 4B are right on \emph{identical} rows (0.672).
+55 traces suffice; they must include the family. At 360M the caller misreads the note's routine on two of four new forms.
+\source{Ledger S1 to S5. First fine-tunes voided by a chat-template mismatch.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{The caller never reads the input: from 1k to 2M tokens.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.5\textwidth}
+\footnotesize
+\begin{tabular}{@{}lrr@{}}
+\toprule
+OOLONG-synth, 0.6B caller & Correct & Tokens/row \\
+\midrule
+64k (20 rows) & 15 & 65k \\
+128k (20) & 16 & 134k \\
+256k (20) & 12 & 265k \\
+512k (20) & 7 & 515k \\
+1M (8) & 5 & 1.0M \\
+2M (4) & 2 & 2.0M \\
+\bottomrule
+\end{tabular}
+\medskip
+
+\small Cost is linear in length. The decline comes from count questions: the helper labels about one row in ten (spam) to one in five (TREC) differently from gold, systematically.
+\end{column}
+\begin{column}{.46\textwidth}
+\begin{block}{The RLM paper's setting}
+OOLONG trec\_coarse, 131K tokens, 50 tasks:\\[1mm]
+0.6B caller + library: \textbf{45.3} (exact 44.0)\\
+GPT-5 base (paper): 44.0\\
+RLM(GPT-5) (paper): 56.0 to 58.0
+\end{block}
+\small Neither routine variants, a larger helper, count correction nor helper fine-tuning lifted the count ceiling.
+\end{column}
+\end{columns}
+\source{Ledger E14, E15 to E17, E19. Paper numbers from its Table 1; its scoring rule is not stated (ours: OOLONG partial credit).}
 \end{frame}
 
 \begin{frame}[t]
