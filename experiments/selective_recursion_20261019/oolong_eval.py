@@ -109,7 +109,14 @@ def main():
     p.add_argument("--api-key", default="local")
     p.add_argument("--public-model", default="qwen3-4b")
     p.add_argument("--controller-base-url", default=None)
+    p.add_argument("--stats-file", default=None, help="routine statistics table for the skills harness note")
+    p.add_argument("--stats-lam", type=float, default=0.05)
     args = p.parse_args()
+    if args.stats_file:
+        from skills import stats as _stats
+
+        run_sweep.STATS_TABLE = _stats.load(args.stats_file)
+        run_sweep.STATS_LAM = args.stats_lam
     lens = {int(x) for x in args.lens.split(",")}
     rows = [json.loads(l) for l in ROWS.read_text().splitlines()]
     rows = [r for r in rows if r["context_len"] in lens and not r["answer_type"].endswith("MONTH_YEAR")]

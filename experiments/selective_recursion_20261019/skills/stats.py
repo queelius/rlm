@@ -66,12 +66,26 @@ def length_bucket(lines: int) -> int:
     return 1 << max(int(lines).bit_length() - 1, 0)
 
 
+OOLONG_LENGTHS = (1024, 2048, 4096, 8192, 16384, 32768)
+
+
+def oolong_length(chars: int) -> int:
+    """Nearest OOLONG context length for a text of this many characters (median 2.4 characters per
+    unit of OOLONG's context_len, range 1.9 to 2.7), on a log scale."""
+    import math
+
+    est = chars / 2.4
+    return min(OOLONG_LENGTHS, key=lambda L: abs(math.log2(L) - math.log2(max(est, 1))))
+
+
 def signature_from_input(text: str) -> dict | None:
-    """Signature computed from the request input alone (event-log family); None when unknown."""
+    """Signature computed from the request input alone (event-log or OOLONG); None when unknown."""
     m = re.search(r"LOG \((\d+) lines\)", text or "")
     if m and "QUESTION:" in text:
         question = text.split("QUESTION:", 1)[1].split("\n", 1)[0].strip()
         return dict(family="eventlog", length=length_bucket(int(m.group(1))), question_type=question_kind(question))
+    if text and re.search(r"Date: .*? \|\| User: \d+ \|\| Instance: ", text):
+        return dict(family="oolong", length=oolong_length(len(text)), question_type="any")
     return None
 
 
@@ -126,7 +140,7 @@ def _row_signature(r: dict, family: str) -> dict:
             if sig:
                 return sig
         return dict(family=family, length=r.get("n"), question_type=r.get("question_type"))
-    return dict(family=family, length=r.get("context_len"), question_type=r.get("question_type"))
+    return dict(family=family, length=int(r.get("context_len")), question_type="any")
 
 
 def collect(run_dir: Path, routine: str | None = None, source: str | None = None) -> list[dict]:
