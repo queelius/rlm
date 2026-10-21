@@ -56,8 +56,8 @@ verifiable per-row labels) has a clear, measurable target.
   written by us; "untrained 4B equals the expert" is partly by construction. The open question
   is where libraries come from. Growth has only been shown for new aggregators over an existing
   extraction step, not for bootstrapping a whole new family.
-- **Narrow external validity.** Two task families; OOLONG-synth at up to 32k covers only two
-  label sets (SMS spam, TREC coarse); no OOLONG-real, no multi-hop or retrieval benchmark, no
+- **Narrow external validity.** Two task families; OOLONG-synth's validation split covers only
+  two label sets (SMS spam, TREC coarse) at every length; no OOLONG-real, no multi-hop or retrieval benchmark, no
   comparison with the RLM paper's released RLM-Qwen3-8B or its frontier-model numbers.
 - **Small samples outside OOLONG-293.** Most event-log and 72-row OOLONG comparisons are single
   seeds; differences of a few rows are within noise (the 293-row interval is about plus or
@@ -76,8 +76,9 @@ Ranked by expected information per GPU-hour and by how directly they test the th
    question). Give the librarian (8B proposer, thinking on) a new family with only teaching
    examples: it must propose the parse, extraction and aggregation routines, verified end to
    end on the teaching split, then the 0.6B caller is distilled from the 4B's calls. Candidates:
-   OOLONG-synth's other label sets above 32k (more datasets appear there), a structured family
-   from LongBench-v2, or OOLONG-real after a licence check. Decision: held-out accuracy of the
+   OOLONG-synth's test split if it carries other label sets (the validation split used throughout
+   has only SMS spam and TREC coarse, 650 rows each, at every length), a structured family from
+   LongBench-v2, or OOLONG-real after a licence check. Decision: held-out accuracy of the
    bootstrapped library against a hand-written one and against direct answering.
 2. **Does training the helper, not the controller, move the remaining error?** OOLONG supplies
    per-row gold labels for teaching windows, a verifiable per-row reward. Fine-tune (SFT, then
