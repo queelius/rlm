@@ -29,6 +29,7 @@ def main():
     p.add_argument("--model", default="qwen3-4b")
     p.add_argument("--per-len", type=int, default=4)
     p.add_argument("--chunk", type=int, default=12)
+    p.add_argument("--split", default="train", choices=("train", "test"))
     a = p.parse_args()
     import pyarrow.parquet as pq
     from openai import OpenAI
@@ -42,7 +43,7 @@ def main():
     split = oolong_eval.window_split([dict(context_len=k[0], context_window_id=k[2]) for k in wins])
     chosen = collections.defaultdict(list)
     for k in sorted(wins):
-        if split[(k[0], k[2])] == "train" and len(chosen[(k[0], k[1])]) < a.per_len:
+        if split[(k[0], k[2])] == a.split and len(chosen[(k[0], k[1])]) < a.per_len:
             chosen[(k[0], k[1])].append(wins[k])
     client = OpenAI(base_url=a.base_url, api_key="local", timeout=600)
     pool = ThreadPoolExecutor(16)
