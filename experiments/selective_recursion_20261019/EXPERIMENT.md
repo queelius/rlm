@@ -29,3 +29,26 @@ helper calls, and route shares classified from traces (`route_analysis.py`, `rou
 `docs/notebook/2026-10-19-selective-recursion-and-broader-teaching.md`; the claims
 are in `docs/RESULTS.md`. Run outputs, traces and adapters are in the run store named in
 `manifest.json` (not in git); pipeline scripts there are copied under `scripts/` at campaign end.
+
+## Environments (rebuilt 2026-10-21)
+
+- **Training** (SFT, RL, embeddings): `/project/alex_phd/envs/selective-recursion-train-5b1e2b4`,
+  Python 3.12.12, built with uv from `env/training-requirements-monorepo.txt` (frozen; torch
+  2.13.0+cu130, transformers 5.15.1, peft 0.20.0) plus this repository's `rlm` in editable mode.
+  Rebuild:
+
+  ```bash
+  uv venv --python 3.12.12 /project/alex_phd/envs/selective-recursion-train-<commit>
+  uv pip install --python <env>/bin/python -r env/training-requirements-monorepo.txt \
+      --extra-index-url https://download.pytorch.org/whl/cu130 --index-strategy unsafe-best-match
+  uv pip install --python <env>/bin/python --no-deps -e <repo root>
+  ```
+
+  Verified by a one-epoch 0.6B LoRA fine-tune. It replaces the training venv inside the archived
+  `rlm-bootstrap` clone (`training-requirements.txt` is that environment's original freeze, kept for
+  provenance; its `rlm` and `rlm-bootstrap` pins are local packages).
+- **Serving**: `/project/alex_phd/envs/vllm` (vLLM 0.27.1). Hybrid-thinking callers (Qwen3 0.6B,
+  1.7B, 8B) are served with `--default-chat-template-kwargs '{"enable_thinking": false}'` and must be
+  trained with `SR_NO_THINK=1` so the training prompt matches; non-Qwen callers need
+  `SR_LORA_TARGETS` (Phi-4-mini: `qkv_proj,o_proj,gate_up_proj,down_proj`).
+- **Evaluation and orchestration**: the repository `.venv` (`uv sync --extra dev`).
