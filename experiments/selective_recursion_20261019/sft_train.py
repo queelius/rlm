@@ -67,7 +67,8 @@ def main():
     model.gradient_checkpointing_enable()
     model.config.use_cache = False
     cfg = LoraConfig(r=args.lora_r, lora_alpha=2 * args.lora_r, lora_dropout=0.0, bias="none",
-                     target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+                     target_modules=(os.environ["SR_LORA_TARGETS"].split(",") if os.environ.get("SR_LORA_TARGETS") else
+                                     ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]),
                      task_type="CAUSAL_LM")
     model = get_peft_model(model, cfg)
     model.enable_input_require_grads()
