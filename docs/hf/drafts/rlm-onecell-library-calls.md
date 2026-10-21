@@ -4,7 +4,7 @@ task_categories: [text-generation]
 tags: [recursive-language-model, rlm, tool-use, distillation]
 ---
 
-# rlm-onecell-library-calls (draft, not yet published)
+# rlm-onecell-library-calls (published 2026-10-21; the live card on Hugging Face is authoritative)
 
 436 (messages, completion) pairs: the controller turns of correct runs of the untrained
 Qwen3-4B-Instruct-2507 controller calling the prebound routine library of

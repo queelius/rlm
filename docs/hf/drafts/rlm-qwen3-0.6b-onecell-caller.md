@@ -5,7 +5,7 @@ library_name: peft
 tags: [recursive-language-model, rlm, lora, long-context, tool-use]
 ---
 
-# rlm-qwen3-0.6b-onecell-caller (draft, not yet published)
+# rlm-qwen3-0.6b-onecell-caller (published 2026-10-21; the live card on Hugging Face is authoritative)
 
 A LoRA adapter (r 32) for Qwen3-0.6B that acts as the **controller** of a recursive language model
 (RLM) from [queelius/rlm](https://github.com/queelius/rlm): it reads only metadata about the input,

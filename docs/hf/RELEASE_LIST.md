@@ -21,3 +21,12 @@ definition and 1,758 per-row verdicts for the six full held-out evaluations). Pl
 | `queelius/rlm-teaching-oolong-ids` | `teach-oolong-004/005` with OOLONG text replaced by row id and window id |
 | `queelius/rlm-oolong-split` | window-id split definition and per-row verdicts for every evaluated controller |
 | `queelius/rlm-eval-traces` | kernel traces for the headline comparisons (OOLONG text stripped) |
+
+## Released 2026-10-21 (public)
+
+| HF repo | Content | Local source | sha256 (first 16) |
+| --- | --- | --- | --- |
+| [`queelius/rlm-qwen3-0.6b-onecell-caller`](https://huggingface.co/queelius/rlm-qwen3-0.6b-onecell-caller) (model, Apache-2.0, commit 79789fc0) | LoRA r32 on Qwen3-0.6B, distilled from the untrained 4B's 436 one-cell library calls; event-log dev 110/120, grown forms 94/96, OOLONG-293 0.672 (rows identical to the 4B); 64k to 2M-token OOLONG; paper's 131K TREC setting 45.3 | `adapters/sft-06-onecell-v2/final` (base path rewritten to `Qwen/Qwen3-0.6B`) | `8902798fa4920ca8` |
+| [`queelius/rlm-onecell-library-calls`](https://huggingface.co/datasets/queelius/rlm-onecell-library-calls) (dataset, MIT, commit 5aed956f) | 436 (messages, completion) pairs, one controller turn each, from correct teaching-split runs of both families; no task input text (checked: no OOLONG instance lines, no log lines, no local paths) | `sft-data/onecell-4b-lib.jsonl` | `0d0c96a0133f142d` |
+
+Uploaded files were downloaded again and their hashes matched the staged copies.

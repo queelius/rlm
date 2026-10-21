@@ -9,6 +9,9 @@ controller). Datasets (CC-BY-4.0):
 [rlm-teaching-eventlog](https://huggingface.co/datasets/queelius/rlm-teaching-eventlog),
 [rlm-teaching-oolong-cells](https://huggingface.co/datasets/queelius/rlm-teaching-oolong-cells),
 [rlm-oolong-split-and-verdicts](https://huggingface.co/datasets/queelius/rlm-oolong-split-and-verdicts).
+Small caller (21 October): [rlm-qwen3-0.6b-onecell-caller](https://huggingface.co/queelius/rlm-qwen3-0.6b-onecell-caller)
+(LoRA for Qwen3-0.6B that matches the 4B caller with the library) and its training set
+[rlm-onecell-library-calls](https://huggingface.co/datasets/queelius/rlm-onecell-library-calls) (MIT).
 Reproductions: [SPO on GSM8K](https://github.com/queelius/spo-gsm8k-reproduction) with its
 [walkthrough](https://queelius.github.io/spo-gsm8k-reproduction/) and
 [checkpoint](https://huggingface.co/queelius/spo-chain-rho1.1b-gsm8k-reproduction);

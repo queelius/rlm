@@ -148,5 +148,5 @@ the pipeline scripts in the run directory (`*_gpu0.sh`, `*_gpu1.sh`, `s*.sh`, `e
 experiments to run are questions 1 (bootstrap a library for a new family) and 4 (recursive
 routines), which this allocation did not reach.
 
-**Pending decisions.** Hugging Face release of the distilled 0.6B caller and its 436 traces (cards in
-`docs/hf/drafts/`).
+**Released.** The distilled 0.6B caller (`queelius/rlm-qwen3-0.6b-onecell-caller`) and its 436 training
+pairs (`queelius/rlm-onecell-library-calls`), public on Hugging Face since 21 October; see the release list.
