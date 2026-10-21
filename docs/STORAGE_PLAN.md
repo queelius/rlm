@@ -114,7 +114,7 @@ before anything in it is removed.
 2. Write `MANIFEST.json` (path, size, sha256 of small files, citation) for each archive class.
 3. User approves a deletion list; deletions run with the list recorded in this file.
 
-## Tranche 3 proposal (2026-10-21, awaiting approval)
+## Tranche 3 (2026-10-21, approved and executed)
 
 Per-step LoRA adapters of the selective-recursion RL runs under
 `/home/atowell/research-runs/selective-recursion-20261019/rl-*/adapters/` take about 90 GB. The
@@ -124,4 +124,7 @@ proposal keeps every run's step 0, every fifth step (the steps evaluated on dev)
 (ledger evidence points to final or every-fifth adapters), and the published Hugging Face
 adapters are finals. Deletions would be logged to `/project/alex_phd/runs/DELETIONS-2026-10-21.jsonl`
 with path, size and sha256 of `adapter_model.safetensors` before removal, as in tranches 1 and 2.
-Not executed: requires the user's approval.
+**Executed 2026-10-21 ~19:55 UTC with the user's approval:** 292 directories, 77.2 GB, each logged
+(path, bytes, sha256 of `adapter_model.safetensors`) to `/project/alex_phd/runs/DELETIONS-2026-10-21.jsonl`
+before removal; the selective-recursion run store went from 107 GB to 36 GB. Pre-deletion checks:
+every path matched the rule, none was cited outside the candidate list, none was held open.
