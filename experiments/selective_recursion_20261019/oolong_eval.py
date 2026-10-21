@@ -109,6 +109,12 @@ def main():
     p.add_argument("--api-key", default="local")
     p.add_argument("--public-model", default="qwen3-4b")
     p.add_argument("--controller-base-url", default=None)
+    p.add_argument("--rows-file", type=Path, default=None, help="alternative OOLONG export (e.g. 64k to 512k rows)")
+    p.add_argument("--max-subcalls", type=int, default=80)
+    p.add_argument("--max-model-calls", type=int, default=96)
+    p.add_argument("--max-total-tokens", type=int, default=600_000)
+    p.add_argument("--deadline", type=float, default=1200.0)
+    p.add_argument("--exec-timeout", type=float, default=900.0)
     p.add_argument("--stats-file", default=None, help="routine statistics table for the skills harness note")
     p.add_argument("--stats-lam", type=float, default=0.05)
     args = p.parse_args()
@@ -118,7 +124,7 @@ def main():
         run_sweep.STATS_TABLE = _stats.load(args.stats_file)
         run_sweep.STATS_LAM = args.stats_lam
     lens = {int(x) for x in args.lens.split(",")}
-    rows = [json.loads(l) for l in ROWS.read_text().splitlines()]
+    rows = [json.loads(l) for l in (args.rows_file or ROWS).read_text().splitlines()]
     rows = [r for r in rows if r["context_len"] in lens and not r["answer_type"].endswith("MONTH_YEAR")]
     split = window_split(rows)
     if args.split != "all":
@@ -134,8 +140,9 @@ def main():
         selected += cell[: args.per_cell]
     ra = SimpleNamespace(controller_base_url=args.controller_base_url, base_url=args.base_url, api_key=args.api_key, public_model=args.public_model,
                          controller_model=args.controller_model, temperature=args.temperature, harness=args.harness,
-                         direct_max_output=4096, controller_max_output=1024, max_turns=10, max_model_calls=96,
-                         max_subcalls=80, max_total_tokens=600_000, deadline=1200.0, exec_timeout=900.0)
+                         direct_max_output=4096, controller_max_output=1024, max_turns=10, max_model_calls=args.max_model_calls,
+                         max_subcalls=args.max_subcalls, max_total_tokens=args.max_total_tokens, deadline=args.deadline,
+                         exec_timeout=args.exec_timeout)
     args.out.mkdir(parents=True, exist_ok=True)
     trace_dir = args.out / "traces"
     rows_path = args.out / "rows.jsonl"
