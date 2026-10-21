@@ -15,7 +15,7 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=9mm,text margin right=9mm}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
-\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Library and statistics for recursive language models | advisor update, 21 Oct 2026 (rev. 19:40 UTC)\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Library and statistics for recursive language models | advisor update, 21 Oct 2026 (rev. 22:50 UTC)\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
 \newcommand{\source}[1]{\vfill{\scriptsize\color{Gray}#1\par}}
 \hypersetup{pdftitle={Where should a small controller's skill live?},pdfauthor={Alex Towell}}
 \title{Where should a small controller's skill live?}
@@ -230,7 +230,8 @@ OOLONG trec\_coarse, 131K tokens, 50 tasks:\\[1mm]
 GPT-5 base (paper): 44.0\\
 RLM(GPT-5) (paper): 56.0 to 58.0
 \end{block}
-\small Neither routine variants, a larger helper, count correction nor helper fine-tuning lifted the count ceiling.
+\small \textbf{Released RLM-Qwen3-8B} in its own scaffold, our 293 held-out rows: 0.290 (library: 0.672; direct: 0.208).\par\smallskip
+\small No routine variant, larger helper, correction or helper tuning lifted the count ceiling.
 \end{column}
 \end{columns}
 \source{Ledger E14, E15 to E17, E19. Paper numbers from its Table 1; its scoring rule is not stated (ours: OOLONG partial credit).}

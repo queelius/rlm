@@ -87,9 +87,10 @@ Ranked by expected information per GPU-hour and by how directly they test the th
    RL) the 4B helper on teaching-window rows, after removing any instance text that also occurs
    in held-out windows, and measure held-out numeric-one-class and long-context accuracy.
    This is the test of "RL belongs where verification is local".
-3. **How does this compare with RL-trained RLMs from the literature?** Run the RLM paper's
-   released RLM-Qwen3-8B (cached locally) on the same 293 held-out rows and long contexts, in
-   its own scaffold and as a caller in ours, against our 0.6B caller plus library.
+3. **How does this compare with RL-trained RLMs from the literature?** Done in part (E18, E19):
+   the released RLM-Qwen3-8B in its own scaffold scores 0.290 on the 293 held-out rows against 0.672
+   for the library, and on the paper's 131K TREC setting the 0.6B caller is level with GPT-5 base.
+   Open: frontier-model RLMs on the same rows, and OOLONG-real.
 4. **Recursion.** Add library routines that call the kernel on a sub-problem (depth one): for
    example per-document multi-hop reasoning over MuSiQue or HotpotQA contexts (cached), where
    per-chunk work itself needs decomposition. Question: does the library-plus-table recipe
