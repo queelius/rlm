@@ -872,6 +872,15 @@ of E12 and E12b, and explains why neither routine variants nor a larger helper m
 is consistent enough to correct: a counting routine that inverts the confusion matrix estimated on
 teaching labels is the obvious library-level repair, and verification can decide whether it pays.
 
+Confusion-corrected counting does not help (E16, 17:45 UTC). On the 71 held-out numeric-one-class
+rows, the library with the 4B helper scores 24/71 (reproducing the 293-row run exactly); inverting
+the teaching-window confusion matrix on the subset's predicted counts also scores 24/71 (6 wins, 6
+losses). The plain counts are already unbiased on average across questions (mean signed error
+-0.12 on spam, -0.18 on TREC, since questions ask about different labels), so there is little bias
+to remove; the correction trims spam's mean absolute error from 3.4 to 2.9 but doubles TREC's (11.3
+to 21.4), the six-label confusion matrix being too ill-conditioned to invert. The count ceiling is
+per-question variance from row-level label ambiguity, not a correctable bias.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
