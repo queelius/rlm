@@ -764,6 +764,17 @@ but that is not verified here. Consequence for the plan: this error is not remov
 choice, routine growth, or a modestly larger helper; it is a measurement ceiling to report, not a
 target for the library.
 
+Train/serve template mismatch voids the first small-caller fine-tunes (13:10 UTC). The 0.6B and
+1.7B are hybrid-thinking models; served with thinking disabled, vLLM's chat template appends an
+empty think block after the assistant header, but `sft_train.py` formatted training prompts
+without it (the 4B Instruct model has no thinking mode, so this never mattered before). A one-cell
+distillation adapter trained this way wrote the correct OOLONG cell but dropped the opening code
+fence on 63 of 63 tasks, which the strict protocol rejects. The S1b numbers above (fine-tuned 1.7B:
+dev 55/120, held-out forms 91/96, OOLONG 12/72) are therefore confounded and kept only as a failed
+attempt (`NOTE.txt` beside each run). `SR_NO_THINK=1` now formats training prompts with the
+serving template; the 1.7B library and one-cell adapters and a 0.6B one-cell adapter are being
+retrained and re-evaluated (S1e).
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
