@@ -15,7 +15,7 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=9mm,text margin right=9mm}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
-\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Library and statistics for recursive language models | advisor update, 21 Oct 2026 (rev. 22:50 UTC)\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Library and statistics for recursive language models | advisor update, 21 Oct 2026 (rev. 23:50 UTC)\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
 \newcommand{\source}[1]{\vfill{\scriptsize\color{Gray}#1\par}}
 \hypersetup{pdftitle={Where should a small controller's skill live?},pdfauthor={Alex Towell}}
 \title{Where should a small controller's skill live?}
@@ -221,7 +221,7 @@ OOLONG-synth, 0.6B caller & Correct & Tokens/row \\
 \end{tabular}
 \medskip
 
-\small Cost is linear in length. The decline comes from count questions: the helper labels about one row in ten (spam) to one in five (TREC) differently from gold, systematically.
+\small Cost is linear in length. Store logs of 20k to 80k tokens: library 98/108, direct 3/108. OOLONG declines through count questions: the helper mislabels about 1 row in 10 (spam) to 1 in 5 (TREC).
 \end{column}
 \begin{column}{.46\textwidth}
 \begin{block}{The RLM paper's setting}
@@ -230,11 +230,11 @@ OOLONG trec\_coarse, 131K tokens, 50 tasks:\\[1mm]
 GPT-5 base (paper): 44.0\\
 RLM(GPT-5) (paper): 56.0 to 58.0
 \end{block}
-\small \textbf{Released RLM-Qwen3-8B} in its own scaffold, our 293 held-out rows: 0.290 (library: 0.672; direct: 0.208).\par\smallskip
+\small \textbf{Released RLM-Qwen3-8B} in its own scaffold, our 293 held-out rows: 0.290, about 0.32 with a 131k window (library: 0.672; direct: 0.208).\par\smallskip
 \small No routine variant, larger helper, correction or helper tuning lifted the count ceiling.
 \end{column}
 \end{columns}
-\source{Ledger E14, E15 to E17, E19. Paper numbers from its Table 1; its scoring rule is not stated (ours: OOLONG partial credit).}
+\source{Ledger E14 to E20. Paper numbers from its Table 1; its scoring rule is not stated (ours: OOLONG partial credit).}
 \end{frame}
 
 \begin{frame}[t]

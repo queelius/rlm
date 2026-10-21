@@ -963,6 +963,14 @@ and 0/36 at 4,096 records, where every input exceeds the 4B's window). Every for
 families: in the event-log family, whose labels are unambiguous, accuracy does not fall with
 length at all.
 
+Window sensitivity for the external baseline (E18b, partial at the allocation's end). The 48
+rows on which RLM-Qwen3-8B overflowed its 40,960-token window were rerun with the window extended
+to 131,072 tokens (YaRN rope scaling, factor 4 over 32,768). At 23:41 UTC, 32 of the 48 had
+finished: 10 correct (one error), against 23 for the library on the same rows. Substituting these
+into the full run raises the baseline only from 0.290 to 0.324 (95/293); the remaining 16 rows were
+still running when the allocation ended, and could add at most 16 more (0.379). The window was not
+what held the baseline back.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.

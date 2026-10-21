@@ -25,9 +25,9 @@ Qwen3-4B-Instruct-2507; scoring is exact match.
 | With library and table, caller size stops mattering | 293 rows, two seeds, two families | 0.6B, 1.7B and 4B correct on **identical** rows (0 discordant of 293) |
 | A 0.6B caller learns the calling discipline from a few in-family traces | one to two seeds | 55 traces (19 OOLONG) suffice; event-log-only traces do not transfer |
 | The recipe is not specific to Qwen | one seed | Phi-4-mini 0/72 untrained, 43/72 after the same 436 traces |
-| A 0.6B caller handles inputs far beyond any model's window | 80 rows, 64k to 512k; 1M and 2M in progress | cost linear in length; accuracy falls through count questions |
+| A 0.6B caller handles inputs far beyond any model's window | OOLONG 64k to 2M; event-log 20k to 80k tokens | cost linear in length; OOLONG falls through count questions; event-log 98/108 with no loss by length (direct 3/108) |
 | OOLONG count errors are per-row label ambiguity, not routine choice | measured against per-row gold | helper agrees 0.903 (spam), 0.789 (TREC); systematic; not correctable by inversion |
-| The paper's released RLM-Qwen3-8B, in its own scaffold, is far behind the library | 293 rows, paired | 0.290 vs 0.672 (130 to 18 discordant); above direct (0.208) |
+| The paper's released RLM-Qwen3-8B, in its own scaffold, is far behind the library | 293 rows, paired | 0.290 vs 0.672 (130 to 18 discordant); above direct (0.208); a 131k window lifts it only to about 0.32 |
 | On the paper's own 131K TREC setting, a 0.6B caller with the library is level with GPT-5 base | 50 tasks | 45.3 vs 44.0 (RLM with GPT-5: 56 to 58) |
 
 ## 2. What the results mean
@@ -141,6 +141,16 @@ baseline of question 3 at up to 32k. Questions 1, 4 and 5 need a fresh allocatio
 - Environments: training `/project/alex_phd/envs/selective-recursion-train-5b1e2b4` (rebuild recipe in
   `EXPERIMENT.md`), serving `/project/alex_phd/envs/vllm`, official RLM scaffold
   `/project/alex_phd/envs/rlm-official-854e688`.
+
+**State at the end.** Every run reported in the ledger finished and is recorded, except the
+window-sensitivity rerun of the external baseline (32 of 48 rows, recorded as partial in E18).
+GPU 1 was idle from 23:22 UTC, when the long store-log run finished, to the end of the allocation;
+no ready job could have been completed and recorded in the remaining hour. The idle log has the entry.
+
+**Next allocation.** A single A100 suffices for questions 1, 4 and 5 (inference dominated): serve the
+4B helper at about 0.55 of the card, the 8B-AWQ proposer at 0.28 when the librarian runs, and the
+0.6B caller at 0.08; run small-caller fine-tunes between evaluations. A second card mainly buys
+throughput; ask for two again only if helper training at scale or large 8B experiments resume.
 
 **Resuming.** On a new allocation, serve Qwen3-4B-Instruct-2507 as in `EXPERIMENT.md` (port 8001,
 LoRA enabled), serve small callers with thinking disabled, and run any ledger entry's command from

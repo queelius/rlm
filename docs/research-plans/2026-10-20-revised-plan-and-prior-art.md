@@ -7,6 +7,12 @@ evidence or new prior art suggests, and append a line to the revision log. The q
 by expected information per GPU-hour and readiness, not by when an idea arrived.
 
 Revision log:
+- 2026-10-21 23:45 (end of allocation): completed since 18:00: E17 (helper training negative), E18
+  (released RLM-Qwen3-8B 0.290 vs library 0.672), E18b (131k window, partial, about 0.32), E19 (paper's
+  131K TREC setting 45.3, GPT-5 base 44.0), S5 and S5b (360M caller), E20 (long store logs 98/108).
+  Storage tranche 3 executed; distilled 0.6B caller and dataset released on Hugging Face. Next
+  allocation (one A100 is enough): question 1 (bootstrap a library for a new family), then 4
+  (recursive routines), then 5 (continual library learning); see the synthesis for designs.
 - 2026-10-21 18:00: synthesis written ([note](../notebook/2026-10-21-synthesis-and-next-questions.md)).
   Since 15:00: S2 (0.6B and 1.7B callers 0.672 on 293 rows, identical rows to the 4B), S3 (Phi-4-mini),
   S4 (55 in-family traces suffice), E13 (learned key), E14 (64k to 512k), E15 and E16 (count ceiling is
