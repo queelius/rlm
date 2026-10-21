@@ -33,10 +33,11 @@ def main():
     p.add_argument("--model", default="rlm-qwen3-8b")
     p.add_argument("--concurrency", type=int, default=4)
     p.add_argument("--limit", type=int, default=0)
+    p.add_argument("--ids-file", default=None, help="JSON list of row ids to run (e.g. the window-overflow rows)")
     p.add_argument("--shard", type=int, default=0)
     p.add_argument("--nshards", type=int, default=1, help="run shards in separate processes: the scaffold's local REPL changes the process-wide working directory, so threads race")
     a = p.parse_args()
-    ids = [json.loads(l)["id"] for l in open(a.ids_from)]
+    ids = json.load(open(a.ids_file)) if a.ids_file else [json.loads(l)["id"] for l in open(a.ids_from)]
     rows = {json.loads(l)["id"]: json.loads(l) for l in open(a.rows)}
     todo = [rows[i] for k, i in enumerate(ids) if k % a.nshards == a.shard]
     if a.limit:
