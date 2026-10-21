@@ -1,10 +1,41 @@
 # rlm
 
-`rlm` is a small, request-preserving Recursive Language Model runtime for the
-non-streaming OpenAI **Responses** API. A private controller writes exactly one
-Python cell per turn in a persistent IPython process; that cell can inspect the
-unchanged public request, use the versioned helper ABI, and submit a final
-Responses result.
+`rlm` is a small, request-preserving Recursive Language Model (RLM) runtime for the
+non-streaming OpenAI **Responses** API, and the research codebase built on it. A private
+controller writes exactly one Python cell per turn in a persistent IPython process; that cell can
+inspect the unchanged public request, call helper models through a versioned ABI, use a prebound
+library of routines, and submit a final Responses result.
+
+**Documentation, results and lab notebook:** https://queelius.github.io/rlm/
+
+## What the research has found (October 2026)
+
+The question is how a *small* controller (Qwen3-4B) should learn to decompose long-context tasks,
+and in particular when to decompose at all. Short version:
+
+- **Teaching then RL works for the routine.** Imitating a scripted expert and then RL with a
+  verifiable reward lifts held-out OOLONG-synth from 0.567 to 0.652 (direct answering: 0.208).
+- **RL does not hold the route choice.** Every policy-gradient variant we tried collapses to a
+  single route: cost penalties, KL to the warm start, stratified sampling, short-task weighting
+  and a balance term. Starting from a model that already routes correctly does not help either.
+- **Put the routine in a library instead.** With the routines bound through the kernel's harness
+  prelude, the *untrained* 4B controller matches every trained controller. On the 293-row held-out
+  OOLONG set it scores 0.672 with no errors, equal to the scripted expert.
+- **Put the route choice in a table.** Outcomes of past verified runs, keyed by a signature
+  computed from the input (RAG-style retrieval), are rendered as a short note. The untrained
+  controller follows it on every task and gets the best accuracy at the lowest cost.
+- **Grow the library by verification.** A proposer model writes a routine for a new question
+  form, and it is accepted only if it verifies on teaching data. Four held-out forms went from 0
+  to 22 to 24 of 24 with no training. Verification kept out a buggy 4B routine that a stronger
+  (8B) proposer then fixed.
+
+Evidence for each claim, with run locations and caveats, is in the
+[results ledger](docs/RESULTS.md); the narrative is in the
+[lab notebook](docs/notebook/) and the plan in [docs/research-plans/](docs/research-plans/).
+The experiment code is in `experiments/selective_recursion_20261019/`; released models and data
+are listed in [docs/hf/RELEASE_LIST.md](docs/hf/RELEASE_LIST.md).
+
+## The runtime
 
 The public surface is deliberately narrow:
 
@@ -13,10 +44,6 @@ The public surface is deliberately narrow:
 - Chat Completions, streaming, and background Responses are unsupported.
 - `RLM.run_direct(request)` is the explicit, attested direct-model baseline. The RLM loop
   never falls back to it, retries a request, or substitutes an alternate answer.
-
-## Documentation site
-
-https://queelius.github.io/rlm/ renders this repository's docs: a primer, the claims ledger, the experiments, the lab notebook, the plan of record and links to our models and data on Hugging Face.
 
 ## Install
 
@@ -28,9 +55,6 @@ uv run pytest
 For a GPU-hosted Hugging Face workflow, including vLLM serving, an A100 smoke test, and a
 trace-to-LoRA iteration loop, see [A100 Experiment Quickstart](docs/A100_EXPERIMENTS.md).
 
-Research questions, findings, and experiment notes are available in the
-[public research notebook](https://github.com/queelius/rlm-research).
-It is a dated publication snapshot; large datasets and checkpoints are not included.
 
 ## Library usage
 
@@ -122,7 +146,10 @@ followed by this runtime item; IPython itself is durable working memory.
 
 The versioned environment ABI provides `model_complete`, `ask`, their batch
 variants, `FINAL_TEXT`, `FINAL_RESPONSE`, and `SHOW_VARS`; recursive helpers
-are present only when the depth limit permits them. `FINAL_TEXT` synthesizes a
+are present only when the depth limit permits them. A harness may also carry a
+`PreludeSpec`: library source executed once before the first cell, whose exported
+names are listed in the prompt by contract, hidden from `SHOW_VARS`, restored
+before every cell, and included in the harness fingerprint (see `DESIGN.md`). `FINAL_TEXT` synthesizes a
 minimal completed text response only when that can faithfully satisfy the
 public request. Its argument must already be a string; invalid values become a
 typed repair observation and are never coerced. `FINAL_RESPONSE` accepts an
@@ -187,11 +214,13 @@ budget. It keeps transport/decode/provenance failures separate from verifier
 scores, groups split data by context digest, records repetitions and complete
 provenance, and audits RLM aggregate usage rather than a leaf response.
 
-The intended sequence is fixed-harness evaluation, successful-trajectory
-self-SFT, later fixed-harness RL with verifiable rewards, and only then
-symbolic harness search under held-out, paired, fixed-budget evaluation. A
-harness optimizer never receives verifier answers or authority to alter held-out
-splits, global budgets, trace semantics, or fatal-error handling.
+The original plan was fixed-harness evaluation, then self-SFT on successful
+trajectories, then RL with verifiable rewards, and only then harness search. The
+evidence above revised it: routines and route selection now live outside the
+weights (prelude library, outcome statistics, verified growth), and training is
+reserved for what verification cannot supply. Whatever optimizes the harness or
+library never receives verifier answers for held-out splits, and cannot alter
+budgets, trace semantics, or fatal-error handling.
 
 ## Security
 
