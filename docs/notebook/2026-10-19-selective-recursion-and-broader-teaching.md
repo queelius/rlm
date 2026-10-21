@@ -928,6 +928,15 @@ of the routine the statistics note recommends. At 360M the calling discipline is
 from traces; reading the retrieved recommendation and copying the right routine name is where
 capacity first runs out.
 
+An explicit payload helps the 360M (S5b, 19:35 UTC). With the note rendered as one instruction
+("Routine to use for this input: X. Write it as the first cell: ...", `--force-recommended`)
+instead of the table of verified history, the tuned 360M scores 76/96 on the grown forms (48/96
+with the table): top buyer 24/24 (from 0), busiest day and purchase span 24/24, same-day cross 4/24
+(from 0), where it still writes the busiest-day routine on 20 of 24 tasks despite the instruction.
+For very small callers the format of the retrieved payload matters: an imperative with the exact
+cell is followed far more reliably than a ranked table, though a strongly trained pattern can still
+override it.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
