@@ -12,6 +12,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+# Match the serving template: a hybrid-thinking model served with enable_thinking=false gets an empty
+# think block after the assistant header, so training must see the same prefix (SR_NO_THINK=1).
+TEMPLATE_KWARGS = {"enable_thinking": False} if os.environ.get("SR_NO_THINK") == "1" else {}
 MODEL = os.environ.get("SR_MODEL", "/project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554")
 DEVICE = os.environ.get("SR_DEVICE", "cuda:0")
 
@@ -50,7 +53,7 @@ def main():
     eos = tok.convert_tokens_to_ids("<|im_end|>")
     encoded = []
     for r in pairs:
-        ids = tok.apply_chat_template(r["messages"], add_generation_prompt=True, tokenize=True)
+        ids = tok.apply_chat_template(r["messages"], add_generation_prompt=True, tokenize=True, **TEMPLATE_KWARGS)
         if hasattr(ids, "input_ids"):
             ids = ids["input_ids"]
         comp = tok(r["completion"], add_special_tokens=False)["input_ids"] + [eos]
