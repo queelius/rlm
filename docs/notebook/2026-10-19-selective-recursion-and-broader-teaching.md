@@ -775,6 +775,21 @@ attempt (`NOTE.txt` beside each run). `SR_NO_THINK=1` now formats training promp
 serving template; the 1.7B library and one-cell adapters and a 0.6B one-cell adapter are being
 retrained and re-evaluated (S1e).
 
+Learned retrieval key (E13, 2026-10-21 14:30 UTC). Each task input was embedded with the 4B
+controller's own last hidden layer (mean over the first 768 and last 256 tokens) and the route
+(direct answer or library) chosen by its 8 nearest neighbours among 540 teaching-split tasks of
+both families with logged outcomes under both routes, by mean accuracy minus a token penalty.
+Evaluated offline on 413 held-out tasks (120 event-log dev, 293 OOLONG held-out) whose outcomes
+under both routes are logged. With the default small penalty (0.05 per 10k tokens) the library
+dominates and every policy, learned or hand-built, reduces to it: always-library 0.738, hand
+signature 0.736, learned key 0.738, oracle 0.768. Under cost pressure the choice matters: at 0.3
+the learned key (hidden state plus log length) scores 0.705 at 11.2k tokens against 0.695 at 11.0k
+for the hand signature and 0.734 at 10.7k for the oracle (event-log 0.783, 0.750, 0.792); the
+hidden state alone misses length (0.702 at 11.7k); at 1.0 the two are level (0.639, 0.644). So the
+controller's own representation, with length appended, is as good a retrieval key as hand-chosen
+features without any feature engineering, and slightly better at moderate cost pressure; neither
+closes the gap to the oracle, which is the direct route on short tasks where both routes are right.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
