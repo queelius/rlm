@@ -838,6 +838,28 @@ the rows to `answer_oolong`), so OOLONG is 0/42 so far. Protocol discipline tran
 families; composing an unfamiliar library does not. A mixed subset of only 55 traces (19 of them
 OOLONG) already gives 25/33 on OOLONG so far.
 
+What the 0.6B learns, and how many traces it needs (S4, L3b; 15:50 UTC). Adapters of the 0.6B on
+subsets of the 436 one-cell traces (same recipe):
+
+| Training traces | event-log dev | grown forms | OOLONG-72 |
+| --- | --- | --- | --- |
+| 55 mixed (19 OOLONG) | 87/120 | 93/96 | 42/72 |
+| 110 mixed | 91/120 | 94/96 | 43/72 |
+| 220 mixed | 110/120 | 94/96 | 43/72 |
+| 436 mixed (S1e) | 110/120 | 94/96 | 43/72 |
+| 220 event-log only | 95/120 | 94/96 | 0/72 |
+
+OOLONG saturates with 19 in-family traces and event-log dev at about 220; the grown forms, whose
+routines are absent from every training trace, are solved by all of them. An adapter that never
+saw OOLONG writes protocol-correct cells against the OOLONG library but composes them wrongly. With
+OOLONG outcomes added to the statistics table (v5), the note now carries the OOLONG recipe; that
+lifts the event-log-only 0.6B from 0/72 to 11/72 but no further: it writes `parse_oolong` then
+`answer_oolong` and drops the `classify_rows` step the recipe shows, reproducing the two-step shape
+of its event-log training rather than the recipe in front of it (it is right only on questions
+that need no labels). Untrained 0.6B, 1.7B and Phi-4-mini stay at 0/72 with the note (protocol
+loops), and the 4B is unchanged (42/72 against 43/72). Retrieval of a recipe does not replace a
+handful of in-family traces for a 0.6B caller.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
