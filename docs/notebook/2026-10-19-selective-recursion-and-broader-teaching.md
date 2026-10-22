@@ -1054,6 +1054,21 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Proposer ladder on MRCR (E21b, 04:48 UTC). Bootstrap seeds (8 candidates, two repair rounds, 24 at most;
+seeds differ in the three shown examples and in sampling), accepted if the teaching mean reaches 0.9:
+
+| Proposer | seeds accepted | best teaching mean per seed |
+| --- | --- | --- |
+| Qwen3-4B-Instruct-2507 (no thinking) | 0 of 1 | 0.000 |
+| Qwen3-4B hybrid, thinking off | 0 of 1 | 0.000 |
+| Qwen3-4B hybrid, thinking on | 0 of 2 | 0.214, 0.214 |
+| Qwen3-8B-AWQ, thinking off | 0 of 2 (one confounded seed rerun) | 0.214, 0.154 |
+| Qwen3-8B-AWQ, thinking on | 1 of 2 (third running) | 1.000, 0.000 |
+
+Discovering the MRCR program needs both the 8B and thinking, and even then succeeds on some seeds and not
+others; a single success is a sample, not a capability. The generated-family discovery benchmark (37 held-out
+families per proposer) measures the same ladder with more resolution and is running.
+
 Documentation form (E25d, 04:42 UTC). The 8B-written MRCR library with four docstrings, untrained 4B caller,
 64 held-out 2-needle rows each:
 
