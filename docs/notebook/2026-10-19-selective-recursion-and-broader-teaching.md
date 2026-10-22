@@ -1054,6 +1054,15 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+MuSiQue bootstrap and the verification distribution (E22b, 07:13 UTC). The 8B proposer's MuSiQue bootstrap
+ended below its threshold (best 0.429 of 0.6 over 24 candidates), but the cause is the design: all 30 teaching
+tasks were 8k haystacks, where reading everything works, so verification ranked first a candidate that sends
+the whole haystack to the helper, cut at 150,000 characters. On a mixed teaching set (10 tasks each at 8k, 32k,
+128k) that candidate scores 0.30/0.45/0.00 (all 128k tasks overflow), against 0.45/0.75/0.65 for the reference
+v3 routine (0.617 overall). Verification has to cover the lengths a library will face, or it selects
+libraries that fail silently at scale. The bootstrap is being rerun on the mixed set; a library within 0.05 of
+the reference (0.57) counts as accepted.
+
 Routing by length on fresh questions (E31, 05:12 UTC; pre-registered at 04:50, see
 [the pre-registration](assets-e31-preregistration.md)). Rule read off E22d: filter+BM25 at 8k and 128k, BM25
 top 60 at 32k. Test: 90 new dev questions (3 shared with the earlier sample), the fixed reader, one server.
