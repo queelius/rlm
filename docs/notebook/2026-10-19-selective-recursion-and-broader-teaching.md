@@ -1054,6 +1054,23 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Retrieval depth (E22h, 10:52 UTC). BM25 top 60, two rounds and three rounds in one run, both samples (180),
+fault-tolerant follow-up queries:
+
+| Arm | 8k | 32k | 128k | all | recall | paragraphs | tokens |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| BM25 top 60 | 0.479 | 0.257 | 0.413 | 0.383 | 0.91 | 59 | 8.3k |
+| Two rounds | 0.490 | 0.374 | 0.486 | 0.450 | 0.90 | 38 | 8.5k |
+| Three rounds | 0.493 | 0.346 | 0.493 | 0.444 | 0.94 | 53 | 15.7k |
+
+Two rounds over BM25: +0.067 (paired se 0.028), replicating E22f (+0.058). A third round adds nothing (-0.006,
+se 0.025; +0.006 at 128k) at twice the helper tokens. The earlier tie at 128k (E22f) was sample noise: here two
+rounds gain there too. Two rounds are enough.
+
+Round-two distillation on MRCR (10:52 UTC): with 68 pairs including 13 chat-format libraries, the tuned 4B reaches
+0.214, 0.214 and 0.152 on the three MRCR seeds (round one: 0.000 to 0.034), the same partial solution the
+non-thinking 8B and the thinking 4B found, and no accepted library.
+
 Scale (E22g, 10:13 UTC). At 512k tokens (about 4,000 paragraphs), 30 held-out questions, both routines run alone
 under kernel semantics on one helper server: two-round retrieval (v4b) 0.381 F1 at 8k helper tokens and 91 s
 per question; filter+BM25 (v3) 0.326 at 498k tokens and 209 s (+0.056, paired se 0.086). v4b's cost does not
