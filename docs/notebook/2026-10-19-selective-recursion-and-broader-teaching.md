@@ -1096,8 +1096,11 @@ the same sparse-success problem as RL without SFT (E26c ablation).
 Worked example in the prompt (E26f, 18:25 UTC). The RL-trained 4B with one verified ask_batch library in its contract,
 against the same prompt without it, on 18 helper families (10 semantic_top_user, 8 held-out semantic_total): 0 of 18
 in both arms; none of 144 candidates per arm calls ask or ask_batch (the 8B on the helper families: 113 of 160 do).
-The RL-trained 4B is a parser writer that a single example does not redirect. The 8B arm (e26f-8b-exemplar) was still
-running at the end of this session.
+The RL-trained 4B is a parser writer that a single example does not redirect. The thinking 8B with the same example
+(finished about 19:25 UTC): 10 of 18 families at a teaching score of 0.7 or more (7 of 10 semantic_top_user, 3 of 8
+held-out semantic_total), against 6 of 18 without it (4 of 10, 2 of 8); 124 of 132 candidates call the helper. A
+worked example helps a capable proposer write helper-using libraries, and is a cheap way to make more training data
+for the 4B.
 
 Test-time RL on MRCR (E26d, 14:00 UTC). RL on MRCR's own 30 teaching rows (held-out rows untouched), from the
 first RL-trained proposer: 8 prompts per step (three different shown examples each), 4 samples, reward on 12
