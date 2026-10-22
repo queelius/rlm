@@ -1070,6 +1070,10 @@ for both, both question samples (180):
 | v4b | 0.530 | 0.392 | 0.502 | 0.475 | 0 | 10k |
 
 +0.045 (paired se 0.034) at a sixth of the tokens and with no routine faults. v4b becomes the MuSiQue library.
+With v4b the untrained 4B caller scores 0.575/0.387/0.560 (0.507) on the first sample against 0.524 for the
+distilled 0.6B (-0.017, se 0.028), with no faults in either; the untrained 4B with the first library had scored
+0.459 with 14 routine faults. A library that does not fault makes caller size nearly irrelevant here, as on
+OOLONG and MRCR.
 Taken with E22c to E22f: on MuSiQue the useful capacity is in choosing evidence (a second, targeted
 retrieval), not in a learned filter over every paragraph nor in a bigger reader, and the cheapest library that
 does this is also the best.
