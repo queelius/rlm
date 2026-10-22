@@ -75,7 +75,12 @@ def family_api(family: str):
 
 def build_prompt(entry: str, examples: list[str]) -> str:
     ex = "\n\n".join(f"=== Example {k + 1} ===\n{e}" for k, e in enumerate(examples))
-    return CONTRACT.format(entry=entry) + "\n\nTeaching examples (inputs abbreviated):\n\n" + ex
+    contract = CONTRACT.format(entry=entry)
+    prims = os.environ.get("BOOT_PRIMITIVES")  # E34: a module of preloaded primitives, described to the proposer
+    if prims:
+        doc = Path(prims).read_text().split('"""', 2)[1].strip().split("\n", 1)[1].strip()
+        contract += ("\n\nThese functions are also preloaded and may be called directly (do not redefine them):\n" + doc)
+    return contract + "\n\nTeaching examples (inputs abbreviated):\n\n" + ex
 
 
 def extract_code(text: str) -> str:

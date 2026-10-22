@@ -57,6 +57,9 @@ def main():
     entry = meta["entry"]
     ns = {"ask": ask, "ask_batch": ask_batch}
     out = {"load_error": None, "results": []}
+    prims = os.environ.get("BOOT_PRIMITIVES")  # E34: preloaded primitives, bound before the candidate
+    if prims:
+        exec(compile(open(prims).read(), "primitives", "exec"), ns)
     try:
         exec(compile(open(cand).read(), "candidate", "exec"), ns)
         fn = ns[entry]
