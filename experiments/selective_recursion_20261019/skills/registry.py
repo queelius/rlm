@@ -17,6 +17,9 @@ VARIANTS = {
     "musique_ref": {"musique": dict(path=SKILLS_DIR / "reference" / "musique_filter_read.py", families={"musique"})},
     "musique_rec": {"musique": dict(path=SKILLS_DIR / "reference" / "musique_recursive.py", families={"musique"})},
     "mrcr_ref": {"mrcr": dict(path=SKILLS_DIR / "reference" / "mrcr_handwritten.py", families={"mrcr"})},
+    # libraries written by a proposer model (bootstrap_library.py), reviewed before use; kept out of
+    # skills/learned/ so they never shadow a variant in a running job
+    "mrcr_boot8b": {"mrcr": dict(path=SKILLS_DIR / "bootstrapped" / "mrcr_8b.py", families={"mrcr"})},
 }
 LEARNED_DIR = SKILLS_DIR / "learned"
 
