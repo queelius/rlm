@@ -1054,6 +1054,25 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+LongBench-v2 (E32, external validity, 09:15 UTC). 150 questions stratified by length class (Apache-2.0,
+revision 2b48e494), four options, chance 0.25; direct answering reads the context cut to its first and last
+24k tokens (exact, Qwen3 tokenizer); the generic library takes brief notes from every 24k-character part with the
+4B helper and chooses over the notes.
+
+| Arm | short | medium | long | all | tokens per question |
+| --- | --- | --- | --- | --- | --- |
+| Direct, truncated | 0.46 | 0.36 | 0.28 | 0.367 | 42k |
+| Map-reduce library, run alone | 0.42 | 0.32 | 0.34 | 0.360 | 366k |
+| RLM, untrained 4B, no library | 0.34 | 0.02 | 0.00 | 0.120 | 10k (83 overflow errors) |
+
+The library ties direct reading (-0.007, paired se 0.051) at nine times the tokens; its only positive class
+(long, +0.06, se 0.072) is within noise, and long questions sit near chance for every arm. By domain it helps
+single-document QA and structured data (0.32 to 0.39, 0.33 to 0.42) and hurts multi-document QA (0.44 to
+0.28), all on small cells. A boundary for the thesis: libraries pay where the task decomposes into local
+judgments (aggregation, lookup, retrieval of a few supporting passages); LongBench-v2's whole-document
+reasoning questions do not, and a 4B helper's notes lose what the choice needs. The paper-style RLM without a
+library is far below both.
+
 Scripted evaluation versus the kernel (09:10 UTC). With the 0.6B caller, the two-round library (v4) scored
 0.328 against 0.507 for v3 on the same questions (-0.179, se 0.045), although the routine run alone matched or
 beat its alternatives. The cause is a difference of semantics: in the RLM kernel `ask` raises a typed fault
