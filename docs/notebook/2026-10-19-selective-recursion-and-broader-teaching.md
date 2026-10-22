@@ -1054,6 +1054,15 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Helper ceiling for the semantic families (E26, 09:20 UTC). The thinking 8B solved 20 of 37 held-out generated
+families, none of the 8 that need the helper (semantic_total: sum the units of items of a category). Those are
+near misses, not proposer failures: the best libraries call the helper 40 to 60 times per task and score 0.77
+(chat), 0.83 (csv), 0.67 (table), 0.47 (pipe). The 4B helper classifies the 75 lexicon items with accuracy
+0.973 (a drill as an instrument; one verbose reply), so a task built on about 30 items is fully right with
+probability near 0.44 if errors were spread evenly; an exact-match threshold of 0.9 is out of reach, as with
+OOLONG's label ceiling. Helper-dependent families are scored against a threshold set from the helper's
+accuracy (0.7 here: 2 of 8 for the 8B), and the benchmark reports them separately.
+
 LongBench-v2 (E32, external validity, 09:15 UTC). 150 questions stratified by length class (Apache-2.0,
 revision 2b48e494), four options, chance 0.25; direct answering reads the context cut to its first and last
 24k tokens (exact, Qwen3 tokenizer); the generic library takes brief notes from every 24k-character part with the
