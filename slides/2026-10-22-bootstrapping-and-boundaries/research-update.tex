@@ -71,7 +71,7 @@ found no published note saying so.
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Discovery on 37 generated families: thinking and scale gate it.}
+\frametitle{Discovery on 37 generated families: thinking, scale, and training.}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.55\textwidth}
 \footnotesize
@@ -83,8 +83,8 @@ Proposer & Solved / 37 & Tokens \\
 8B, no thinking & 4 & 4k \\
 4B, thinking (30 done) & 13 / 30 & \\
 8B, thinking & \textbf{20} & 49k \\
-4B + SFT on 8B's code (2 seeds) & 9, 7 & 3k \\
-4B + SFT round two + RL (2 seeds) & \textbf{16, 14} & 2k \\
+4B + SFT (2 seeds) & 9, 7 & 3k \\
+4B + SFT + RL (2 seeds) & \textbf{16, 14} & 2k \\
 \bottomrule
 \end{tabular}
 \medskip
@@ -100,7 +100,7 @@ score as reward: 9 to 30 of 74 attempts (p $<$ 0.001); string formats 1 to 22 of
 labels items at 0.973, and an exact total over 30 items fails often.
 \end{column}
 \end{columns}
-\source{Ledger E26, E26b; runs e26-disc-*. Generator: family\_gen.py (procedural, answers exact).}
+\source{Ledger E26, E26b, E26c; runs e26-disc-*, e26c-proposer-rl. Generator: family\_gen.py (procedural, answers exact).}
 \end{frame}
 
 \begin{frame}[t]
