@@ -1066,11 +1066,14 @@ output by hand in a second cell. Swapping only that line, 4B caller, MRCR held-o
 | Hand-written reference, 2 needles | 0.215 (35 errors) | 0.952 (0 errors) |
 
 The distilled 0.6B caller scores 1.000 without the line. The bootstrapper now inserts the line into accepted
-libraries that omit it. Whether distillation or size makes the 0.6B immune is being tested with the untrained
-0.6B. Separately, one thinking-off 8B bootstrap seed was confounded by a harness fault (an all-zero degenerate
+libraries that omit it. The untrained 0.6B fails with or without the line (0.205 and 0.125; it overflows a sub-model
+or never submits an answer), so it is distillation, not size, that makes the 0.6B caller immune. Separately, one thinking-off 8B bootstrap seed was confounded by a harness fault (an all-zero degenerate
 16k-token first candidate stayed best and overflowed every repair prompt; fixed by tie-breaking toward
-loadable short code and capping quoted code) and is being rerun; the clean thinking-off seed failed (best
-0.214 in 24 candidates).
+loadable short code and capping quoted code) and was rerun: thinking off failed on both clean seeds (best 0.214 and 0.154 in 24
+candidates each), against success on the one thinking-on seed so far (two more running). GPU1 then had no
+server for about 17 minutes (02:57 to 03:14 UTC): the re-split script started vLLM without the
+environment's `bin` on PATH, the engine needed `ninja`, and the readiness loop waited instead of checking
+the process (recorded in IDLE-LOG; the retry script fails fast).
 
 Workflow (02:10 UTC). A job queue (`experiments/ops/queue.py`) with a detached dispatcher, a checked
 launcher (`launch.py`: argument dry run, manifest, early health check) and one status view (`status.py`)
