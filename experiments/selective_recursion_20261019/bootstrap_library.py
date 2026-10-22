@@ -80,6 +80,11 @@ def build_prompt(entry: str, examples: list[str]) -> str:
     if prims:
         doc = Path(prims).read_text().split('"""', 2)[1].strip().split("\n", 1)[1].strip()
         contract += ("\n\nThese functions are also preloaded and may be called directly (do not redefine them):\n" + doc)
+    exemplar = os.environ.get("BOOT_EXEMPLAR")  # E26f: one verified library from another family, as a worked example
+    if exemplar:
+        contract += ("\n\nFor illustration, here is a complete library written for a DIFFERENT family (records in key=value "
+                     "lines; it asks the helper for a judgment code cannot make). Do not copy it; write the library for the "
+                     "examples below.\n```python\n" + Path(exemplar).read_text().strip() + "\n```")
     return contract + "\n\nTeaching examples (inputs abbreviated):\n\n" + ex
 
 
