@@ -1097,7 +1097,11 @@ RL over SFT: +13/-3 families (exact McNemar p 0.021), string formats +10/-1 (p 0
 +25/-4 (p < 0.001). On string formats the 4B reaches 52 percent of attempts against the 8B's 57 percent, at a
 fraction of the proposer tokens. MRCR is still out of reach (0 of 3 seeds; best 0.154). Replication (12:32 UTC): a second RL seed from the same SFT adapter (training reward by blocks 0.358, 0.444,
 0.423, 0.527) also reaches 30 of 74 (string 19, chat 11): +15/-5 over SFT round two (exact McNemar p 0.041); the two
-RL seeds tie (+11/-11 between them) and solve partly different families; MRCR 0.214, not accepted. Training with the
+RL seeds tie (+11/-11 between them) and solve partly different families; MRCR 0.214, not accepted. Ablation without SFT
+(13:30 UTC): RL from the untrained 4B (fresh LoRA, same 40 steps) stays near its start (training reward by blocks
+0.088, 0.126, 0.161, 0.102; solved 16, 11, 32, 16 of 320) and reaches 12 of 74 held out (untrained 9; +6/-3, p 0.51;
+MRCR 0.0). Per attempt: untrained 0.12, RL alone 0.16, SFT 0.27, SFT then RL 0.41. With so few solving samples RL
+from scratch has little to reinforce; the teacher's verified code supplies them. Training with the
 verified teaching score as reward makes a small proposer a much better library writer on families like the ones
 it trained on and on new formats of them, but it does not carry to the real benchmark.
 
