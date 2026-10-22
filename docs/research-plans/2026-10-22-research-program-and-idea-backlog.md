@@ -55,9 +55,46 @@ anything once routines and selection live outside the weights.
 | E34 | **Combinator library plus learned composition** (λ-RLM primitives with the small caller composing them) | same families, compare with routine-per-family libraries | fixed primitives vs learned routines |
 | E35 | **Library portability across helper models** (routines written against Qwen helpers run with other helpers) | swap helpers to Phi-4-mini or the 8B | is a library tied to its helper |
 
+## How the research workflow itself should improve
+
+The costliest failures of 19 to 22 October were operational, not scientific: GPUs idle for 16.5 hours
+between sessions and an hour at the end of an allocation; launches that failed silently (scrambled
+arguments, 288 rows of connection errors from a stale readiness check); a train/serve chat-template
+mismatch that voided a set of fine-tunes; kill patterns matching their own shell; ledger numbers typed
+by hand. Changes, in order of value:
+
+1. **A job queue that never lets a lane idle** (built: `experiments/ops/queue.py`). Ready jobs are JSON
+   specs with a GPU lane, a priority and optional dependencies; a detached dispatcher starts them when a
+   lane has a free slot, so follow-on work starts while no one is watching. Every session should end
+   with the queue holding at least two decision-relevant jobs per lane.
+2. **Checked launches** (built: `experiments/ops/launch.py`). Argument dry run, a manifest (command,
+   commit, dirty flag, lanes), detached start, and an early health check that marks the run FAILED and
+   stops it if the process dies or every early row is an error.
+3. **One status view** (built: `experiments/ops/status.py`): rows, score per arm, errors and age for
+   every recent run; monitors call it instead of bespoke one-liners.
+4. **A results registry** (next): each ledger claim as a small JSON (claim, run directories, metric,
+   comparison) from which a script recomputes the numbers, intervals and paired tests and renders the
+   ledger table. No hand-copied numbers; every claim reproducible from its runs.
+5. **Pre-registered experiment cards** (next): question, arms, primary metric, sample size and the
+   decision rule written in the backlog before launch; the analysis states which branch fired.
+6. **A declarative serving plan** (next): models, lanes, memory shares, ports, adapters and chat-template
+   flags in one file, with a check that the shares fit and a canary request after start; training jobs
+   read the same template flags, which closes the mismatch that voided the first small-caller fine-tunes.
+7. **Review of generated code before it enters a library**: an independent reviewer (subagent or the
+   8B) reads every accepted routine for side effects and leakage of teaching specifics (one 4B
+   candidate hard-coded a teaching example's string) before registration.
+8. **A live status page for the user**: a periodically republished artifact with the queue, running
+   arms and latest ledger rows, so progress is visible without reading the terminal.
+9. **Scheduled reflection**: at every plan revision and at least every 12 GPU-hours, a short entry in
+   the reflection log below, an idea added or retired, and a related-work check.
+
 ## Reflection log
 
 - 2026-10-22 02:30: first entry. Running: E21 (MRCR bootstrap; the hand-written routine scores 1.000 at
   every length, so MRCR is program-solvable), E22 (MuSiQue bootstraps; reference filter-then-read 0.66 vs
   direct 0.32 on teaching at 32k, 0.56 at 128k where direct is impossible), E23 (recursion arms). Next
   ready: E24 (evolve the MuSiQue routine configuration), then E25 (payload format per caller size).
+- 2026-10-22 02:20: E23 first arm done: the paper-style depth-1 RLM without a library scores 0.254 F1 on
+  MuSiQue (depth 0: 0.245; overflow at 128k in both), so recursion alone does not help an untrained 4B.
+  Started E24 (routine evolution) and, through the new queue, E25 (does the distilled 0.6B caller call
+  libraries of families it never saw: MRCR and MuSiQue reference libraries) and MuSiQue at 512k.
