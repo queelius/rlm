@@ -54,6 +54,12 @@ def family_api(family: str):
         teach = F.load("teach", 2)
         return dict(teach=teach, describe=F.describe, as_task=F.as_task,
                     grade=lambda out, t: F.grade(out or "", t.answer, t.prefix))
+    if family == "musique":
+        import musique_tasks as F
+
+        teach = F.make("teach", 8192, 30, seed=0)
+        return dict(teach=teach, describe=F.describe, as_task=lambda t: t,
+                    grade=lambda out, t: F.grade(out or "", t)["f1"])
     raise ValueError(family)
 
 
@@ -135,6 +141,7 @@ def main():
     tasks = [api["as_task"](r) for r in teach_rows]
     shown = rng.sample(teach_rows, a.n_examples)
     prompt = build_prompt(entry, [api["describe"](r) for r in shown])
+    shown_ids = [getattr(r, "task_id", None) or r["row_id"] for r in shown]
     a.out.mkdir(parents=True, exist_ok=True)
     (a.out / "prompt.txt").write_text(prompt)
     client = OpenAI(base_url=a.base_url, api_key="local", timeout=1800)
@@ -178,7 +185,7 @@ def main():
     summary = dict(family=a.family, proposer=a.model, best_mean=best["mean"] if best else None,
                    best_exact=best["exact"] if best else None, best_round=best["round"] if best else None,
                    best_k=best["k"] if best else None, accepted=accepted, threshold=a.threshold,
-                   shown_examples=[r["row_id"] for r in shown], teaching_tasks=len(tasks))
+                   shown_examples=shown_ids, teaching_tasks=len(tasks))
     (a.out / "summary.json").write_text(json.dumps(summary, indent=1))
     print(json.dumps(summary))
     if accepted and a.register:
