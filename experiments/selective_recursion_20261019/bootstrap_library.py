@@ -9,6 +9,7 @@ Held-out rows are never shown or used.
 """
 
 import argparse
+import os
 import json
 import random
 import re
@@ -57,7 +58,11 @@ def family_api(family: str):
     if family == "musique":
         import musique_tasks as F
 
-        teach = F.make("teach", 8192, 30, seed=0)
+        # E22b: teaching sizes must cover the deployment regime; with 8k-only teaching the 8B proposer's best
+        # library sent the whole haystack to the helper (fine at 8k, silently truncated at 128k)
+        sizes = [int(x) for x in os.environ.get("BOOT_MUSIQUE_SIZES", "8192").split(",")]
+        per = 30 // len(sizes)
+        teach = [t for sz in sizes for t in F.make("teach", sz, per, seed=0)]
         return dict(teach=teach, describe=F.describe, as_task=lambda t: t,
                     grade=lambda out, t: F.grade(out or "", t)["f1"])
     if family.startswith("gen-"):
