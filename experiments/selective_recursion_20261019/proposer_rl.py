@@ -76,7 +76,14 @@ class Policy:
                                                     attn_implementation="sdpa", device_map={"": DEVICE})
         base.gradient_checkpointing_enable()
         base.config.use_cache = False
-        self.model = PeftModel.from_pretrained(base, args.init_adapter, is_trainable=True)
+        if args.init_adapter == "none":  # RL from the untrained model: a fresh LoRA, zero-initialized B
+            from peft import LoraConfig, get_peft_model
+
+            cfg = LoraConfig(r=32, lora_alpha=64, lora_dropout=0.0, bias="none", task_type="CAUSAL_LM",
+                             target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"])
+            self.model = get_peft_model(base, cfg)
+        else:
+            self.model = PeftModel.from_pretrained(base, args.init_adapter, is_trainable=True)
         self.model.enable_input_require_grads()
         self.params = [p for p in self.model.parameters() if p.requires_grad]
         self.opt = torch.optim.AdamW(self.params, lr=args.lr, weight_decay=0.0)
@@ -124,7 +131,7 @@ def swap_adapter(args, name: str, path: Path, previous: str | None):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--out", type=Path, required=True)
-    p.add_argument("--init-adapter", required=True)
+    p.add_argument("--init-adapter", required=True, help='a LoRA directory, or "none" for a fresh LoRA on the base model')
     p.add_argument("--start-name", default="proposer-4b-8bcode-r2", help="the init adapter's name in vLLM (kept loaded)")
     p.add_argument("--steps", type=int, default=40)
     p.add_argument("--families-per-step", type=int, default=8)
