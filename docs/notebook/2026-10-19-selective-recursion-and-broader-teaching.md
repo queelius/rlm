@@ -1054,6 +1054,20 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Scripted evaluation versus the kernel (09:10 UTC). With the 0.6B caller, the two-round library (v4) scored
+0.328 against 0.507 for v3 on the same questions (-0.179, se 0.045), although the routine run alone matched or
+beat its alternatives. The cause is a difference of semantics: in the RLM kernel `ask` raises a typed fault
+when a reply is not "completed" (for example cut off at its token cap) or is empty, while the scripted
+harnesses returned the partial text. v4's follow-up query had a 200-token cap, the 4B often explains before its
+QUERY line, so in the kernel the call raised, the routine crashed, and the caller fell back to sending the whole
+request to the helper. Traces with a routine fault: v1 10 of 90, v3 4, v4 46. This also explains why v3 beat v1
+under the caller (fewer cut-off reads), and means the reader fallback of E22d never runs inside the kernel (the
+cut-off read raises first). Fixes: scripted harnesses can now mirror the kernel (`run_routine.py
+--kernel-semantics`; `KERNEL_SEMANTICS=1` for the bootstrap verifier, which also swallowed request errors),
+and v4b allows 800 tokens for the follow-up and treats a fault as "no text". Rule: a routine is verified
+under the semantics it will run under. The v4 caller runs are marked superseded; v4b and v3 are being rerun on
+one helper server, both samples.
+
 Two-round retrieval (E22f, 08:41 UTC). Putting capacity into selection: BM25 top 20 for the question, then
 the 4B helper reads those and writes one query for the missing fact (usually the bridge entity), BM25 top 20
 new paragraphs for that query, and the same 4B reader over the union. Both question samples (180), paired
