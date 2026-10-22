@@ -144,7 +144,7 @@ by hand. Changes, in order of value:
   decides whether a library is used at all (E25c/d, 0.18 to 0.95); (4) recursion, paper-style or per hop,
   does not help a small model on MuSiQue (E23); (5) library discovery is gated by the proposer: on 37
   generated families thinking 8B 73 percent, thinking 4B 44 percent, non-thinking 4B and 8B 11 to 14 percent;
-  on MRCR only the thinking 8B, on 1 of 3 seeds.
+  on MRCR only the thinking 8B, on 1 of 3 seeds (2 of 5 after two more seeds, 12:56).
   **What was withdrawn:** the "distractor-limited reader" reading and length routing (E31, pre-registered):
   30-question cells cannot separate close routines; per-length claims now need pooled samples.
   **What changed in method:** paired tests over all questions, pre-registration for selection claims, exit
