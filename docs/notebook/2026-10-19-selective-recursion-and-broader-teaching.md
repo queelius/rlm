@@ -1054,6 +1054,27 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Routine evolution (E24, complete 05:02 UTC). GEPA-style reflective search over the MuSiQue routine's two
+prompts and four numbers (filter chunk size, BM25 depth, keep cap, reader token cap): an 8B reflector (thinking
+on) saw the parent's failures on an 8-question teaching minibatch and proposed one configuration; a child that
+beat its parent on the minibatch was scored on 24 teaching selection questions (32k and 128k). 20 iterations,
+2.1 hours, 7 children accepted. The reflector rewrote the prompts in 16 of 20 proposals, and every accepted
+child with rewritten prompts scored below the seed on the selection set (0.38 to 0.54 vs 0.556); the only
+child to beat it changed numbers alone (chunk 15 to 6, BM25 depth 15 to 20, keep cap 60 to 40, reader cap
+600 to 800): 0.636 on the selection set. Held out (90 questions, the three routines run alone on one server):
+
+| Routine | 8k | 32k | 128k | all | tokens |
+| --- | --- | --- | --- | --- | --- |
+| Seed (reference v1) | 0.457 | 0.366 | 0.464 | 0.429 | 57k |
+| Hand fix v3 (reader 1,500 + fallback) | 0.507 | 0.354 | 0.497 | 0.453 | 57k |
+| Evolved (node 6) | 0.533 | 0.403 | 0.495 | 0.477 | 61k |
+
+Evolved minus seed +0.048 (paired se 0.039), evolved minus v3 +0.024 (se 0.038), v3 minus seed +0.024 (se
+0.025). The selection-set gain (+0.080) shrank by about 40 percent held out, and the search's useful finding
+was the reader cap that the component ablation had already exposed. With a 4B helper, an 8B reflector's
+prompt rewrites hurt; search over the routine's numbers helped. Comparison arms from the literature not yet
+run: one offline pass over saved traces (CASD) and an RLM as the optimizer (RLMOpt).
+
 Proposer ladder on MRCR (E21b, 04:48 UTC). Bootstrap seeds (8 candidates, two repair rounds, 24 at most;
 seeds differ in the three shown examples and in sampling), accepted if the teaching mean reaches 0.9:
 
