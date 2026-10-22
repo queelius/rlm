@@ -1067,6 +1067,26 @@ Two rounds over BM25: +0.067 (paired se 0.028), replicating E22f (+0.058). A thi
 se 0.025; +0.006 at 128k) at twice the helper tokens. The earlier tie at 128k (E22f) was sample noise: here two
 rounds gain there too. Two rounds are enough.
 
+RL for the proposer (E26c, 11:38 UTC). On-policy policy gradient from the round-two SFT adapter (proposer_rl.py,
+after SMITH): each step 8 training families, 4 sampled libraries each, reward = the verified score on 12
+teaching tasks not shown in the prompt, leave-one-out advantage, one LoRA update; 40 steps in 30 minutes on half an
+A100 slice, rollouts served by vLLM with the adapter hot-swapped each step. Training reward by ten-step blocks:
+0.340, 0.408, 0.439, 0.504 (solved 99, 116, 119, 141 of 320). Held out, two discovery seeds per arm:
+
+| Proposer | all (74) | string formats (42) | chat (16) | semantic (16) |
+| --- | --- | --- | --- | --- |
+| 4B Instruct, untrained | 9 | 1 | 8 | 0 |
+| + SFT round one | 16 | 13 | 3 | 0 |
+| + SFT round two | 20 | 13 | 7 | 0 |
+| + SFT round two + RL | 30 | 22 | 8 | 0 |
+| 8B thinking, the teacher (one seed: 37) | 20 of 37 | 12 of 21 | 8 of 8 | 0 of 8 |
+
+RL over SFT: +13/-3 families (exact McNemar p 0.021), string formats +10/-1 (p 0.012); over the untrained 4B
++25/-4 (p < 0.001). On string formats the 4B reaches 52 percent of attempts against the 8B's 57 percent, at a
+fraction of the proposer tokens. MRCR is still out of reach (0 of 3 seeds; best 0.154). Training with the
+verified teaching score as reward makes a small proposer a much better library writer on families like the ones
+it trained on and on new formats of them, but it does not carry to the real benchmark.
+
 Round-two distillation, held-out discovery (10:58 UTC). Two discovery seeds per arm, 74 family attempts:
 
 | Proposer | all | string formats (42) | chat (16) | semantic (16) |
