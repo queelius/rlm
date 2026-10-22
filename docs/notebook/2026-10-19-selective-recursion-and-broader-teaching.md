@@ -1080,7 +1080,8 @@ but the best scores 0.183 (0.20 / 0.35 / 0.00), so primitives reliably change wh
 sometimes yield a routine that holds at 128k (1 of 2 seeds). The RL-trained 4B proposer with the same primitives
 (14:08 UTC) never calls BM25 or the helper: all 24 candidates are pure parsers (best 0.0). Its training families
 were all solvable by code alone, so training made it a parser writer; library writing that needs a helper or a
-search strategy would need training families that require them.
+search strategy would need training families that require them. The thinking hybrid 4B with primitives (15:02 UTC)
+uses BM25 in only 4 of 24 candidates; best 0.372 on the mixed set (the 8B: 0.464 and 0.183 on two seeds).
 
 Test-time RL on MRCR (E26d, 14:00 UTC). RL on MRCR's own 30 teaching rows (held-out rows untouched), from the
 first RL-trained proposer: 8 prompts per step (three different shown examples each), 4 samples, reward on 12
