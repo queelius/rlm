@@ -14,24 +14,48 @@ import time
 from pathlib import Path
 
 QUEUE = Path("/project/alex_phd/runs/selective-recursion-20261019/queue")
+HOME = Path("/home/atowell/research-runs/selective-recursion-20261019")
 SLOTS = {"gpu0": 3, "gpu1": 4}
 LAUNCH = Path(__file__).resolve().parent / "launch.py"
 PY = Path(__file__).resolve().parents[2] / ".venv" / "bin" / "python"
 
 
 def alive(pid: int) -> bool:
+    """True for a live process; a zombie (state Z) counts as exited."""
     try:
         os.kill(pid, 0)
-        return True
+    except OSError:
+        return False
+    try:
+        return Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()[0] != "Z"
     except OSError:
         return False
 
 
+def job_pid(j):
+    """The experiment's own PID (written by launch.py), not the short-lived launch wrapper's."""
+    f = HOME / j["name"] / "PID"
+    return int(f.read_text()) if f.exists() else j.get("pid")
+
+
+def reap():
+    """Collect exited launch wrappers so they do not linger as zombies that still look alive."""
+    while True:
+        try:
+            pid, _ = os.waitpid(-1, os.WNOHANG)
+        except ChildProcessError:
+            return
+        if pid == 0:
+            return
+
+
 def running():
+    reap()
     out = []
     for f in sorted((QUEUE / "running").glob("*.json")):
         j = json.loads(f.read_text())
-        if j.get("pid") and alive(j["pid"]):
+        pid = job_pid(j)
+        if pid and alive(pid):
             out.append(j)
         else:
             j["finished"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
