@@ -7,6 +7,9 @@ check records its queries and date.
 
 Novelty status: `unchecked`; `checked: open` (no close prior art found); `checked: partial` (related work
 exists, a stated gap remains); `checked: prior art` (answered; follow-ups listed if any remain open).
+Ownership and the registry session's loop are described in [README](README.md); new ideas arrive through
+[the inbox](inbox.md).
+
 Promotion: an entry that is `open` or `partial` with a cheap smallest test moves to the backlog in
 [the research program page](../research-plans/2026-10-22-research-program-and-idea-backlog.md).
 
