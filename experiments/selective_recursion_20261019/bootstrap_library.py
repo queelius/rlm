@@ -115,6 +115,16 @@ def _question_of(prompt) -> str:
     return text[text.rfind("QUESTION:"):] if "QUESTION:" in text else text[-300:]
 
 
+REPAIR_CODE_CHARS = 12000
+
+
+def _rank(rec: dict) -> tuple:
+    """Best candidate: higher teaching mean, then one that loads, then shorter code. Without the
+    tie-breaks a degenerate first candidate (all zero, 16k tokens) became the repair base and its
+    code overflowed the proposer's window in every repair prompt (e21-boot-8b-nothink-s0)."""
+    return (rec["mean"], not rec.get("load_error"), -len(rec.get("code") or ""))
+
+
 def normalize_doc(code: str, entry: str) -> tuple[str, bool]:
     """Insert the contract's typical-use line into the module docstring when the proposer left it out.
     E25c: without it the untrained 4B caller often bypassed the library (0.60 vs 0.95 on MRCR)."""
@@ -176,7 +186,7 @@ def main():
         for line in (a.out / "candidates.jsonl").read_text().splitlines():
             rec = json.loads(line)
             done[(rec["round"], rec["k"])] = rec
-            if best is None or rec["mean"] > best["mean"]:
+            if best is None or _rank(rec) > _rank(best):
                 best = rec
         print(f"resuming with {len(done)} verified candidates, best {best['mean'] if best else None}", flush=True)
     log = open(a.out / "candidates.jsonl", "a")
@@ -188,7 +198,7 @@ def main():
                 break
             rp = (prompt + "\n\nA previous module was run on the teaching tasks and scored "
                   f"{best['mean']:.2f} on average ({best['exact']}/{best['n']} exact). Its code:\n```python\n"
-                  f"{best['code'].strip()}\n```\nWorst teaching cases:\n{failing_cases(best['details'], tasks)}\n"
+                  f"{best['code'].strip()[:REPAIR_CODE_CHARS]}\n```\nWorst teaching cases:\n{failing_cases(best['details'], tasks)}\n"
                   + (f"Load error: {best['load_error'][-600:]}\n" if best.get("load_error") else "")
                   + "\nFind the mistake, fix it, and return the complete corrected module in one ```python block.")
             (a.out / f"repair-prompt-{rnd}.txt").write_text(rp)
@@ -211,7 +221,7 @@ def main():
             log.flush()
             print(f"round {rnd} candidate {k}: mean {v['mean']:.3f} exact {v['exact']}/{v['n']} "
                   f"load_error={bool(v['load_error'])} timeout={v['timed_out']} verify {v['seconds']}s", flush=True)
-            if best is None or v["mean"] > best["mean"]:
+            if best is None or _rank(rec) > _rank(best):
                 best = dict(rec, code=code)
             if best["mean"] >= 0.999:
                 break
