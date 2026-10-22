@@ -66,6 +66,22 @@ def grader_for(fid: str):
     return lambda out, t: G.grade(out, t)
 
 
+def generate_ids(args, model_name: str, prompt_ids: list, n: int) -> list[tuple]:
+    """I-019: sample from the exact prompt token ids through /v1/completions and keep the sampled token ids, their
+    sampler log-probabilities and the finish reason, so the update trains on what was sampled (not re-tokenized text)."""
+    def one(_):
+        r = httpx.post(f"{args.base_url}/completions", headers={"Authorization": "Bearer local"}, timeout=1800,
+                       json={"model": model_name, "prompt": list(prompt_ids), "temperature": args.temperature,
+                             "max_tokens": args.max_output, "logprobs": 0, "return_tokens_as_token_ids": True})
+        r.raise_for_status()
+        c = r.json()["choices"][0]
+        lp = c.get("logprobs") or {}
+        ids = [int(t.split(":", 1)[1]) for t in lp.get("tokens", [])]
+        return c.get("text") or "", ids, lp.get("token_logprobs") or [], c.get("finish_reason")
+    with ThreadPoolExecutor(n) as ex:
+        return list(ex.map(one, range(n)))
+
+
 def generate(args, model_name: str, prompt: str, n: int) -> list[str]:
     def one(_):
         r = httpx.post(f"{args.base_url}/responses", headers={"Authorization": "Bearer local"}, timeout=1800,
@@ -113,8 +129,13 @@ class Policy:
         self.eos = self.tok.convert_tokens_to_ids("<|im_end|>")
         self.args = args
 
-    def update(self, items: list[tuple[str, str, float]]) -> dict:
-        """items: (prompt, completion, advantage); loss = -sum A * mean token log-prob, averaged over items."""
+    def prompt_ids(self, prompt: str) -> list:
+        ids = self.tok.apply_chat_template([{"role": "user", "content": prompt}], add_generation_prompt=True, tokenize=True)
+        return list(ids["input_ids"] if hasattr(ids, "input_ids") else ids)
+
+    def update(self, items: list[tuple]) -> dict:
+        """items: (prompt, completion, advantage) where completion is text, or (sampled ids, finish reason) with
+        --sample-ids; loss = -sum A * mean token log-prob, averaged over items."""
         from rl_train import completion_logprobs
 
         torch = self.torch
@@ -122,10 +143,14 @@ class Policy:
         self.opt.zero_grad(set_to_none=True)
         total, used = 0.0, 0
         for prompt, comp, adv in items:
-            p_ids = self.tok.apply_chat_template([{"role": "user", "content": prompt}], add_generation_prompt=True, tokenize=True)
-            if hasattr(p_ids, "input_ids"):
-                p_ids = p_ids["input_ids"]
-            c_ids = self.tok(comp, add_special_tokens=False)["input_ids"] + [self.eos]
+            p_ids = self.prompt_ids(prompt)
+            if isinstance(comp, tuple):  # sampled ids: train on exactly what was sampled
+                ids, finish = comp
+                c_ids = list(ids) + ([self.eos] if finish == "stop" else [])
+            else:
+                c_ids = self.tok(comp, add_special_tokens=False)["input_ids"] + [self.eos]
+            if not c_ids:
+                continue
             if len(p_ids) + len(c_ids) > self.args.max_seq_len:
                 continue
             logp = completion_logprobs(self.model, list(p_ids), c_ids, torch)
@@ -170,6 +195,8 @@ def main():
                    "a real family such as mrcr uses its own teaching rows")
     p.add_argument("--keep-solutions", action="store_true", help="save every sample whose reward reaches 0.9")
     p.add_argument("--with-helper-families", action="store_true", help="add the helper-dependent training families (E26e)")
+    p.add_argument("--sample-ids", action="store_true",
+                   help="I-019: sample through /v1/completions from the prompt token ids and train on the sampled ids")
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
     work = a.out / "verify"
@@ -188,8 +215,16 @@ def main():
         for fid in picks:
             prompt, entry, tasks = prompt_for(fid, random.Random(f"{a.seed}:{step}:{fid}:{len(groups)}"), a.n_teach)
             groups.append((fid, prompt, entry, tasks))
-        with ThreadPoolExecutor(len(groups)) as ex:
-            samples = list(ex.map(lambda g: generate(a, current, g[1], a.group), groups))
+        if a.sample_ids:
+            pids = [policy.prompt_ids(g[1]) for g in groups]  # tokenize outside the threads
+            with ThreadPoolExecutor(len(groups)) as ex:
+                raw = list(ex.map(lambda gi: generate_ids(a, current, pids[gi], a.group), range(len(groups))))
+            samples = [[x[0] for x in g] for g in raw]
+            sampled = [[(x[1], x[3]) for x in g] for g in raw]
+        else:
+            with ThreadPoolExecutor(len(groups)) as ex:
+                samples = list(ex.map(lambda g: generate(a, current, g[1], a.group), groups))
+            sampled = samples
         t_gen = time.time() - t0
         jobs = [(gi, k) for gi in range(len(groups)) for k in range(a.group)]
         with ThreadPoolExecutor(8) as ex:
@@ -208,7 +243,7 @@ def main():
                 continue
             for k, r in enumerate(rs):
                 adv = r - (sum(rs) - r) / (len(rs) - 1)
-                items.append((groups[gi][1], samples[gi][k], adv))
+                items.append((groups[gi][1], sampled[gi][k], adv))
         upd = policy.update(items) if items else dict(loss=0.0, used=0, grad_norm=0.0)
         ckpt = a.out / f"step-{step}"
         policy.save(ckpt)
