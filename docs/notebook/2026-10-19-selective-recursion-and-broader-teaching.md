@@ -1054,6 +1054,20 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+The two-round library through a caller (E25e, 09:36 UTC). v4b (two-round retrieval, 800-token follow-up,
+tolerant of helper faults) against v3 (filter + BM25, fixed reader), distilled 0.6B caller, one helper server
+for both, both question samples (180):
+
+| Library | 8k | 32k | 128k | all | routine faults | tokens per question |
+| --- | --- | --- | --- | --- | --- | --- |
+| v3 | 0.517 | 0.312 | 0.460 | 0.430 | 8 | 57k |
+| v4b | 0.530 | 0.392 | 0.502 | 0.475 | 0 | 10k |
+
++0.045 (paired se 0.034) at a sixth of the tokens and with no routine faults. v4b becomes the MuSiQue library.
+Taken with E22c to E22f: on MuSiQue the useful capacity is in choosing evidence (a second, targeted
+retrieval), not in a learned filter over every paragraph nor in a bigger reader, and the cheapest library that
+does this is also the best.
+
 Distilling library writing into the 4B (E26b, 09:21 UTC). A LoRA (rank 32, 3 epochs, 4.5 minutes on half an
 A100 slice) on 42 verified (prompt, library) pairs that the thinking 8B wrote for training families (formats
 pipe, kv, jsonl, csv, table; code only, the thinking dropped; repair-round successes paired with the round-0
