@@ -1165,8 +1165,10 @@ Component ablation of filter-then-read (E22c, complete 03:36 UTC). Scripted, 90 
 | 60 random paragraphs | 0.438 | 0.132 | 0.080 | 0.03 | 8k |
 
 Paired over all 90: reference minus BM25-60 +0.031 (se 0.034), minus filter only +0.049 (se 0.038), minus
-random +0.218 (se 0.050). Readings: (1) the 4B reader is distractor-limited: at 128k the precise filter
-alone (12 paragraphs, recall 0.72) beats the union (23 paragraphs, recall 0.89), 0.501 vs 0.413; (2) BM25
+random +0.218 (se 0.050). Readings: (1) [withdrawn 05:15 UTC after E31: on a fresh question sample the filter alone is the
+worst arm at 128k (0.309 vs 0.453 for the union), so the per-length ordering below was sample noise and does
+not show a distractor-limited reader] at 128k the precise filter alone (12 paragraphs, recall 0.72) beat the
+union (23 paragraphs, recall 0.89), 0.501 vs 0.413, on this sample; (2) BM25
 top 60 is within noise of the full routine at a fifteenth of the tokens; (3) even with only the gold
 paragraphs the reader reaches 0.65, and 12 to 19 percent of answers in every arm are fragments of
 reasoning (the 600-token reader cap cut the reasoning before the ANSWER line, and the fallback took the last
