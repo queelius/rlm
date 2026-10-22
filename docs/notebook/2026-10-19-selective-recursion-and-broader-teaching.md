@@ -1075,7 +1075,9 @@ reference scores 0.617 on this set) takes BM25's top 15 paragraphs and reads the
 composes a retrieval routine that survives long inputs; it does not find the second, targeted retrieval round that
 makes the reference better. Library discovery for helper-dependent families needs either primitives (a
 combinator library in the sense of lambda-RLM) or a stronger proposer; with primitives the remaining gap is the
-composition, which RL on the proposer might close.
+composition, which RL on the proposer might close. Second seed (13:03 UTC): 15 of 24 candidates again call BM25,
+but the best scores 0.183 (0.20 / 0.35 / 0.00), so primitives reliably change what the proposer tries and only
+sometimes yield a routine that holds at 128k (1 of 2 seeds).
 
 RL for the proposer (E26c, 11:38 UTC). On-policy policy gradient from the round-two SFT adapter (proposer_rl.py,
 after SMITH): each step 8 training families, 4 sampled libraries each, reward = the verified score on 12
