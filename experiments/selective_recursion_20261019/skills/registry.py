@@ -40,6 +40,9 @@ def learned_question_kinds() -> list[tuple[str, str]]:
 
 def signature(task) -> dict:
     """Family, length and question type of a task, from whichever task object the harness uses."""
+    if getattr(task, "family", None):  # tasks that name their family (MRCR and later families)
+        return dict(family=task.family, length=getattr(task, "n_records", None),
+                    question_type=getattr(task, "question_type", None))
     row = getattr(task, "row", None)
     qt = getattr(task, "question_type", None) or ""
     is_oolong = row is not None or getattr(task, "context_len", None) is not None or str(qt).startswith("TASK_TYPE")
