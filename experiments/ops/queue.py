@@ -72,9 +72,38 @@ def slots():
         return SLOTS
 
 
+IDLE_SINCE: dict = {}
+IDLE_ALARM_MIN = 10
+
+
+def idle_alarm(run, lanes, log):
+    """Lab suggestion I-007: alarm when a lane has run nothing for IDLE_ALARM_MIN minutes (log line and IDLE-ALARM file).
+    Jobs launched outside the queue are invisible here, so the alarm means 'nothing queued is running', a prompt to look."""
+    now = time.time()
+    active = {j["lane"] for j in run}
+    lines = []
+    for lane in lanes:
+        if lane in active:
+            IDLE_SINCE.pop(lane, None)
+            continue
+        since = IDLE_SINCE.setdefault(lane, now)
+        if now - since >= IDLE_ALARM_MIN * 60:
+            lines.append(f"{lane} idle for {int((now - since) / 60)} min")
+    alarm = QUEUE / "IDLE-ALARM"
+    if lines:
+        stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        alarm.write_text(f"[{stamp}] " + "; ".join(lines) + "\n")
+        if int(now) % 600 < 60:  # at most about one log line per ten minutes
+            log.write(f"[{stamp}] IDLE ALARM: " + "; ".join(lines) + "\n")
+            log.flush()
+    elif alarm.exists():
+        alarm.unlink()
+
+
 def dispatch_once(log):
     SLOTS = slots()  # noqa: N806
     run = running()
+    idle_alarm(run, list(SLOTS), log)
     busy = {lane: sum(1 for j in run if j["lane"] == lane) for lane in SLOTS}
     pending = []
     for f in (QUEUE / "pending").glob("*.json"):
