@@ -15,6 +15,7 @@ VARIANTS = {
     "honest": {"eventlog": dict(path=SKILLS_DIR / "eventlog_honest.py", families={"eventlog"})},
     # hand-written reference libraries for the new families (E21 to E23), selected per run
     "musique_ref": {"musique": dict(path=SKILLS_DIR / "reference" / "musique_filter_read.py", families={"musique"})},
+    "longbench_ret": {"longbench": dict(path=SKILLS_DIR / "reference" / "longdoc_retrieve.py", families={"longbench"})},
     "longbench_ref": {"longbench": dict(path=SKILLS_DIR / "reference" / "longdoc_mapreduce.py", families={"longbench"})},
     "musique_ref4b": {"musique": dict(path=SKILLS_DIR / "reference" / "musique_iter2_v4b.py", families={"musique"})},
     "musique_ref4": {"musique": dict(path=SKILLS_DIR / "reference" / "musique_iter2_v4.py", families={"musique"})},
