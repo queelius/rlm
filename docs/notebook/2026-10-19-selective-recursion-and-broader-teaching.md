@@ -1079,6 +1079,15 @@ composition, which RL on the proposer might close. Second seed (13:03 UTC): 15 o
 but the best scores 0.183 (0.20 / 0.35 / 0.00), so primitives reliably change what the proposer tries and only
 sometimes yield a routine that holds at 128k (1 of 2 seeds).
 
+Test-time RL on MRCR (E26d, 14:00 UTC). RL on MRCR's own 30 teaching rows (held-out rows untouched), from the
+first RL-trained proposer: 8 prompts per step (three different shown examples each), 4 samples, reward on 12
+unseen teaching rows; 30 steps, then 30 more from step 30. Mean reward by five-step blocks 0.022, 0.026, 0.025,
+0.045, 0.070, 0.098, then by ten-step blocks 0.141, 0.190, 0.199; no sample reached 0.9 in 60 steps (1,920
+libraries). The policy converged on the partial program that the other proposers also find (0.214: right
+parsing, wrong selection of the requested reply), and once most samples in a group score alike the advantages
+vanish (1 of 8 groups usable at the last step), so RL stalls in that local optimum. On MRCR the 4B, however
+trained, does not discover the program; the thinking 8B does on 2 of 5 seeds.
+
 RL for the proposer (E26c, 11:38 UTC). On-policy policy gradient from the round-two SFT adapter (proposer_rl.py,
 after SMITH): each step 8 training families, 4 sampled libraries each, reward = the verified score on 12
 teaching tasks not shown in the prompt, leave-one-out advantage, one LoRA update; 40 steps in 30 minutes on half an
