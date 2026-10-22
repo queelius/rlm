@@ -1101,6 +1101,13 @@ was the reader cap that the component ablation had already exposed. With a 4B he
 prompt rewrites hurt; search over the routine's numbers helped. Comparison arms from the literature not yet
 run: one offline pass over saved traces (CASD) and an RLM as the optimizer (RLMOpt).
 
+Random-search null (E24c, 06:38 UTC): the same protocol and budget (20 iterations, minibatch acceptance,
+24-question selection set) with children drawn uniformly over the four numbers and the prompts fixed at the
+seed: 6 children accepted, none above the seed on the selection set (best 0.535 vs 0.556), 1.5 hours. The
+reflective search found one configuration that beat the seed (0.636) in 20 iterations and random search none;
+one search seed each, and the reflective winner's held-out gain was itself not significant, so this is weak
+evidence that the reflector helps and none that it beats a hand fix guided by the component ablation.
+
 Proposer ladder on MRCR (E21b, 04:48 UTC). Bootstrap seeds (8 candidates, two repair rounds, 24 at most;
 seeds differ in the three shown examples and in sampling), accepted if the teaching mean reaches 0.9:
 
