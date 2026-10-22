@@ -1054,6 +1054,21 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Documentation form (E25d, 04:42 UTC). The 8B-written MRCR library with four docstrings, untrained 4B caller,
+64 held-out 2-needle rows each:
+
+| Docstring | score | errors |
+| --- | --- | --- |
+| signature only | 0.184 | 35 |
+| description + signature (as the 8B wrote it) | 0.592 | 23 |
+| signature + usage line | 0.951 | 0 |
+| description + signature + usage line | 0.953 | 1 |
+
+The usage line alone carries the effect; a description helps somewhat when the usage line is missing and adds
+nothing when it is present. With the reader fix (v3) as its library, the distilled 0.6B caller scores
+0.611/0.433/0.475 on MuSiQue at 8k/32k/128k, +0.047 over v1 (paired se 0.020, n 90) at the same 53k tokens
+per question, so the scripted gain carries through the caller.
+
 Reader fix (E22d, 04:14 UTC). The same four arms run twice on the same server, the reader capped at 600 output
 tokens as before, and at 1,500 with one short-answer follow-up when no ANSWER line appears. Answer F1, 90
 held-out questions:
