@@ -1054,6 +1054,25 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Routing by length on fresh questions (E31, 05:12 UTC; pre-registered at 04:50, see
+[the pre-registration](assets-e31-preregistration.md)). Rule read off E22d: filter+BM25 at 8k and 128k, BM25
+top 60 at 32k. Test: 90 new dev questions (3 shared with the earlier sample), the fixed reader, one server.
+
+| Arm, fresh sample | 8k | 32k | 128k | tokens at 128k |
+| --- | --- | --- | --- | --- |
+| BM25 top 60 | 0.467 | 0.178 | 0.426 | 8k |
+| Filter only | 0.224 | 0.328 | 0.309 | 124k |
+| Filter + BM25 | 0.378 | 0.228 | 0.453 | 126k |
+| Gold paragraphs | 0.626 | 0.484 | 0.687 | 1k |
+
+Primary: routed minus filter+BM25 everywhere -0.017 (paired se 0.023, z -0.73, n 90), so the pre-registered
+"retire" branch fired: the 32k gap seen on the first sample (+0.063 for BM25-60) reversed (-0.050). The
+rankings move as much at the other lengths (at 128k the filter alone was best on the first sample and is worst
+here). With 30 questions per cell, the differences between these routines are smaller than the variation
+between question samples, so a statistics table built from cells of this size would choose by noise; selection
+memory for close routines needs larger cells or pooled priors (as in the hierarchical bandit, E10). Routing
+did save tokens (48k vs 57k per question) at no measurable loss.
+
 Routine evolution (E24, complete 05:02 UTC). GEPA-style reflective search over the MuSiQue routine's two
 prompts and four numbers (filter chunk size, BM25 depth, keep cap, reader token cap): an 8B reflector (thinking
 on) saw the parent's failures on an 8-question teaching minibatch and proposed one configuration; a child that
