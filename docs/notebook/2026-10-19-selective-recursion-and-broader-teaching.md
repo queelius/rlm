@@ -971,6 +971,39 @@ into the full run raises the baseline only from 0.290 to 0.334 (98/293); the rem
 still running when the allocation ended, and could add at most 8 more (0.362). The window was not
 what held the baseline back.
 
+## 22 October 2026 (allocation 6599)
+
+Housekeeping. The second 0.6B one-cell seed scores 197/293 = 0.672 on the held-out OOLONG set (identical to
+seed 0). The external baseline's window rerun completed: 16 of the 48 overflow rows correct at a 131k
+window, which puts the released RLM-Qwen3-8B at 101/293 = 0.345 (from 0.290); the library is 0.672.
+
+MRCR as a new family (E21, 02:00 UTC). OpenAI MRCR (MIT; long multi-turn chats in which one writing ask
+recurs 2 or 4 times and the last message asks for the i-th reply with a random string prepended; official
+SequenceMatcher grader). The two source files hold different length bins, so rows were split within each
+of the eight official bins (recovered by length rank): 30 teaching rows from the bins up to 32k tokens,
+and disjoint held-out sets of 64 rows (8 per bin) for 2 and 4 needles. Results so far:
+
+| MRCR held-out | 2 needles | 4 needles |
+| --- | --- | --- |
+| Direct answer, 4B (fails above its 64k window) | 0.23 | 0.15 |
+| RLM, untrained 4B, no library | 0.18 | 0.11 |
+| Hand-written routine, no model at all | 1.000 | 1.000 |
+
+A 20-line deterministic routine (parse the final instruction, count exact matches of the ask among user
+turns after the few-shot message, return the string plus the next assistant turn) scores 1.000 at every
+length up to 1M tokens. MRCR is therefore solvable by a program; for an RLM the open question is whether
+the system finds that program. The 4B as library proposer (bootstrap_library.py: contract, three teaching
+examples with gold answers, candidates verified end to end in a separate process on all 30 teaching rows,
+two repair rounds) produced no working library in 24 candidates: first-round code misparsed the
+instruction or hard-coded an example's string, and repair rounds returned fragments that failed to load.
+The 4-bit 8B proposer (thinking on) is running.
+
+MuSiQue long haystacks (E22). MuSiQue answerable questions (CC BY 4.0) embedded among paragraphs of other
+questions of the same split up to 8k, 32k and 128k tokens (teaching from MuSiQue train, held-out from dev);
+answer F1. Baselines, 30 dev questions per size: direct 0.52, 0.25, and overflow at 128k; the untrained 4B
+in the RLM without a library delegates the whole input and scores the same (0.48, 0.25, overflow). Library
+bootstraps with the 8B and 4B proposers are running.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.
