@@ -155,3 +155,18 @@ by hand. Changes, in order of value:
   it; (c) does the generic map-reduce library carry to a heterogeneous benchmark (E32 LongBench-v2, running);
   (d) is the LLM reflector worth its cost over random search on the routine's numbers (E24c, running);
   (e) the MRCR shortcut (I-001) as a short benchmark note, since nobody has published it.
+- 2026-10-22 11:00: step back.
+  **New solid results:** two-round retrieval is the MuSiQue library (E22f/h replicated; E25e through both callers;
+  512k at 8k tokens per question); with it, caller size stops mattering (untrained 4B = distilled 0.6B).
+  Distilling the 8B's libraries into the 4B transfers parsing to unseen string formats (1 to 13 of 42, p 0.0005)
+  but not to MRCR (round two with chat data: best 0.214, 0 of 3 seeds). The 8B never invents retrieval for
+  MuSiQue (pass-through wins even on mixed-length teaching).
+  **Boundaries found:** LongBench-v2 (generic library ties direct reading); semantic families capped by the
+  helper; routing by length is noise at 30 per cell.
+  **Method lessons that cost the most today:** scripted harnesses must mirror the kernel's fault semantics;
+  verification sets must span deployment lengths.
+  **Where the thesis now stands:** capability in verified routines; capacity in evidence selection and in the
+  proposer; the proposer is the bottleneck. Two levers on the proposer remain untested: giving it parts (E34,
+  running: retrieval primitives in the contract) and training it with the verified teaching score as reward
+  (E26c, next: RL on generated training families from the round-two SFT adapter, SMITH-style; held-out families
+  and MRCR as tests). Allocation ends 2026-10-25 00:52 UTC, so E26c is the last large build of this allocation.
