@@ -1093,6 +1093,12 @@ families; then 40 RL steps over all training families. RL reward on helper famil
 (round two: 0 on all). Seven examples and a reward that is almost always zero do not teach a 4B to call the helper;
 the same sparse-success problem as RL without SFT (E26c ablation).
 
+Worked example in the prompt (E26f, 18:25 UTC). The RL-trained 4B with one verified ask_batch library in its contract,
+against the same prompt without it, on 18 helper families (10 semantic_top_user, 8 held-out semantic_total): 0 of 18
+in both arms; none of 144 candidates per arm calls ask or ask_batch (the 8B on the helper families: 113 of 160 do).
+The RL-trained 4B is a parser writer that a single example does not redirect. The 8B arm (e26f-8b-exemplar) was still
+running at the end of this session.
+
 Test-time RL on MRCR (E26d, 14:00 UTC). RL on MRCR's own 30 teaching rows (held-out rows untouched), from the
 first RL-trained proposer: 8 prompts per step (three different shown examples each), 4 samples, reward on 12
 unseen teaching rows; 30 steps, then 30 more from step 30. Mean reward by five-step blocks 0.022, 0.026, 0.025,
