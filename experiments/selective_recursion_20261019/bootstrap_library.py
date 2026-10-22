@@ -101,6 +101,15 @@ def verify(code: str, tasks: list, grade, workdir: Path, tag: str, base_url: str
                 load_error=res.get("load_error"), timed_out=timed_out, seconds=round(time.time() - t0, 1), details=details)
 
 
+def _question_of(prompt) -> str:
+    """The part of a task input that states what is asked: the last message of a chat input, or the
+    text from QUESTION: onwards (else the tail) of a plain-text input."""
+    if isinstance(prompt, list):
+        return str(prompt[-1].get("content", ""))
+    text = str(prompt)
+    return text[text.rfind("QUESTION:"):] if "QUESTION:" in text else text[-300:]
+
+
 def failing_cases(details, tasks, k=3):
     by = {t.task_id: t for t in tasks}
     out = []
@@ -108,7 +117,7 @@ def failing_cases(details, tasks, k=3):
         if d["score"] >= 0.999:
             continue
         t = by[d["task_id"]]
-        out.append(f"- Final message: {t.prompt[-1]['content'][:200]!r}\n  expected (first 150 chars): {t.answer[:150]!r}\n"
+        out.append(f"- Final message: {_question_of(t.prompt)[:200]!r}\n  expected (first 150 chars): {str(t.answer)[:150]!r}\n"
                    f"  your output (first 150 chars): {str(d['output'])[:150]!r}\n  error: {(d['error'] or '')[-400:]!r}\n"
                    f"  score {d['score']:.3f}")
     return "\n".join(out)
@@ -131,6 +140,7 @@ def main():
     p.add_argument("--timeout", type=float, default=1200.0)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--register", action="store_true")
+    p.add_argument("--prompt-suffix", default="", help='appended to every proposer prompt, e.g. " /no_think" for Qwen3 hybrids')
     a = p.parse_args()
     from openai import OpenAI
 
@@ -146,6 +156,14 @@ def main():
     (a.out / "prompt.txt").write_text(prompt)
     client = OpenAI(base_url=a.base_url, api_key="local", timeout=1800)
     best = None
+    done = {}
+    if (a.out / "candidates.jsonl").exists():  # resume: keep verified candidates, continue after them
+        for line in (a.out / "candidates.jsonl").read_text().splitlines():
+            rec = json.loads(line)
+            done[(rec["round"], rec["k"])] = rec
+            if best is None or rec["mean"] > best["mean"]:
+                best = rec
+        print(f"resuming with {len(done)} verified candidates, best {best['mean'] if best else None}", flush=True)
     log = open(a.out / "candidates.jsonl", "a")
     for rnd in range(1 + a.repair_rounds):
         if rnd == 0:
@@ -160,9 +178,12 @@ def main():
                   + "\nFind the mistake, fix it, and return the complete corrected module in one ```python block.")
             (a.out / f"repair-prompt-{rnd}.txt").write_text(rp)
         for k in range(a.candidates):
+            if (rnd, k) in done:
+                continue
             t0 = time.time()
             try:
-                r = client.responses.create(model=a.model, input=rp, temperature=a.temperature, max_output_tokens=a.max_output_tokens)
+                r = client.responses.create(model=a.model, input=rp + a.prompt_suffix, temperature=a.temperature,
+                                            max_output_tokens=a.max_output_tokens)
                 text, usage = r.output_text or "", dict(input=r.usage.input_tokens, output=r.usage.output_tokens)
             except Exception as e:  # noqa: BLE001
                 text, usage = "", dict(error=f"{type(e).__name__}: {e}"[:300])
