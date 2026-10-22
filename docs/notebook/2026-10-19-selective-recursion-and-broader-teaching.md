@@ -1193,6 +1193,9 @@ Retrieve-then-read beats direct reading by +0.113 (paired se 0.043) and map-redu
 quarter of direct's tokens; by domain it helps everywhere but long-dialogue history (code repositories 0.33 to
 0.61, structured data 0.33 to 0.50). E32's conclusion that libraries stop helping on LongBench-v2 is withdrawn:
 the map-reduce routine was the wrong routine. As on MuSiQue, selecting evidence beats summarizing everything.
+Through the distilled 0.6B caller (E32c, 13:47 UTC; the caller never saw LongBench): 0.50 / 0.48 / 0.46, 0.480
+overall, identical to the routine run alone (paired 0.000, se 0.019), no errors and no routine faults; +0.113 over
+the 4B reading the truncated document (se 0.043).
 
 LongBench-v2 (E32, external validity, 09:15 UTC). 150 questions stratified by length class (Apache-2.0,
 revision 2b48e494), four options, chance 0.25; direct answering reads the context cut to its first and last
