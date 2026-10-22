@@ -23,6 +23,9 @@ VARIANTS = {
     "mrcr_boot8b": {"mrcr": dict(path=SKILLS_DIR / "bootstrapped" / "mrcr_8b.py", families={"mrcr"})},
     # E25c: the docstring's typical-use line, added to the 8B library and removed from the reference
     "mrcr_boot8b_use": {"mrcr": dict(path=SKILLS_DIR / "bootstrapped" / "mrcr_8b_use.py", families={"mrcr"})},
+    # E25d: documentation form, signature only, and signature plus the usage line without a description
+    "mrcr_boot8b_sigonly": {"mrcr": dict(path=SKILLS_DIR / "bootstrapped" / "mrcr_8b_sigonly.py", families={"mrcr"})},
+    "mrcr_boot8b_sigusage": {"mrcr": dict(path=SKILLS_DIR / "bootstrapped" / "mrcr_8b_sigusage.py", families={"mrcr"})},
     "mrcr_ref_nouse": {"mrcr": dict(path=SKILLS_DIR / "reference" / "mrcr_handwritten_nouse.py", families={"mrcr"})},
 }
 LEARNED_DIR = SKILLS_DIR / "learned"
