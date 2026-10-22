@@ -41,6 +41,7 @@ def main():
     p.add_argument("--model", default="qwen3-4b")
     p.add_argument("--concurrency", type=int, default=4)
     p.add_argument("--arms", default=",".join(ARMS))
+    p.add_argument("--task-seed", type=int, default=0, help="which sample of questions (0 = the held-out set used so far)")
     p.add_argument("--read-max-tokens", type=int, default=600)
     p.add_argument("--fallback", action="store_true",
                    help="when the reader gives no ANSWER line, ask once more for the short answer only")
@@ -71,7 +72,7 @@ def main():
         return SimpleNamespace(texts=list(pool.map(go, prompts)))
 
     items = {x["id"]: x for x in M._items(a.split)}
-    tasks = [t for s in a.sizes.split(",") for t in M.make(a.split, int(s), a.per_size)]
+    tasks = [t for s in a.sizes.split(",") for t in M.make(a.split, int(s), a.per_size, seed=a.task_seed)]
     a.out.mkdir(parents=True, exist_ok=True)
     rows_path = a.out / "rows.jsonl"
     done = {(r["task_id"], r["arm"]) for r in map(json.loads, rows_path.read_text().splitlines())} if rows_path.exists() else set()
