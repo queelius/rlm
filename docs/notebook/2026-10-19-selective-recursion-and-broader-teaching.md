@@ -1054,6 +1054,12 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Scale (E22g, 10:13 UTC). At 512k tokens (about 4,000 paragraphs), 30 held-out questions, both routines run alone
+under kernel semantics on one helper server: two-round retrieval (v4b) 0.381 F1 at 8k helper tokens and 91 s
+per question; filter+BM25 (v3) 0.326 at 498k tokens and 209 s (+0.056, paired se 0.086). v4b's cost does not
+grow with the haystack (retrieval is BM25 on the CPU); v3's filter reads every paragraph, so its cost is linear.
+At 512k the cheap routine is sixty times cheaper and at least as accurate.
+
 The two-round library through a caller (E25e, 09:36 UTC). v4b (two-round retrieval, 800-token follow-up,
 tolerant of helper faults) against v3 (filter + BM25, fixed reader), distilled 0.6B caller, one helper server
 for both, both question samples (180):
