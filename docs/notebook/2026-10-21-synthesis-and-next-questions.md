@@ -160,3 +160,37 @@ routines), which this allocation did not reach.
 
 **Released.** The distilled 0.6B caller (`queelius/rlm-qwen3-0.6b-onecell-caller`) and its 436 training
 pairs (`queelius/rlm-onecell-library-calls`), public on Hugging Face since 21 October; see the release list.
+
+## 7. Update after 22 October (allocation 6599, to 15:30 UTC)
+
+The questions of section 4 now have answers or sharper forms. Ledger rows E21 to E34 carry the numbers.
+
+**Where libraries come from (question 1).** A capable proposer can write a verified library for a new real family
+from three examples: the thinking Qwen3-8B wrote MRCR's library on 2 of 5 seeds (1.000 held out to 1M tokens). A 4B
+proposer cannot, however trained (SFT on the 8B's code, RL with the verified teaching score as reward, test-time RL on
+MRCR's own teaching rows: 0 accepted). On 37 generated held-out families, training does work: SFT then RL takes the
+4B from 9 to 30 of 74 attempts (replicated with a second RL seed; RL without SFT does not help), matching the
+thinking 4B at a twenty-fifth of the tokens. Trained only on code-solvable families the 4B becomes a parser writer
+that ignores the helper; helper-dependent training families are being added (E26e). For helper-dependent real
+families (MuSiQue), even the 8B does not invent retrieval unless given retrieval primitives, and then composes a
+working routine on 1 of 2 seeds. Verification must cover the lengths the library will face, and run under the
+kernel's semantics.
+
+**Selection and composition (questions 2, 3).** Routing by length among close routines failed a pre-registered test
+(30-question cells are noise). Recursion does not help a small model on MuSiQue, paper-style or per hop.
+
+**The caller (question 3).** A thin caller is enough: the distilled 0.6B uses libraries of families it never saw
+(MRCR 1.000, MuSiQue and LongBench-v2 level with the 4B). For an untrained caller, one usage line in the docstring
+decides whether the library is used at all.
+
+**Where capacity belongs.** In choosing evidence: two-round retrieval is the best and cheapest MuSiQue library (also
+at 512k), an 8B reader adds nothing on MuSiQue or LongBench-v2, and on LongBench-v2 a retrieve-then-read library
+beats direct reading by 0.11 at a quarter of the tokens, through the 0.6B caller. Map-reduce notes do not help.
+
+**Withdrawn on 22 October:** the distractor-limited reader (E22c), length routing (E31), and "libraries stop helping
+on LongBench-v2" (E32; it was the map-reduce routine).
+
+**Open, ranked:** (1) proposer training with helper-dependent families (running); (2) primitives plus proposer
+training for retrieval families; (3) why MRCR resists small proposers (the 0.214 partial program is a local optimum
+that RL does not leave); (4) selection memory with pooled priors; (5) a note on program-solvable long-context
+benchmarks (idea lab I-001).
