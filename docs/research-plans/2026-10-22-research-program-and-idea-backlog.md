@@ -77,7 +77,8 @@ anything once routines and selection live outside the weights.
 - **Recursion:** a reproduction (arXiv 2603.02615) finds depth-2 recursion overthinks and hurts on
   retrieval; a theory paper (arXiv 2609.20831) argues recursion helps out of distribution, not within it.
   Both agree with E23 so far (recursive library below depth-0 library).
-- **MRCR:** no published critique showing MRCR is parser-solvable was found; registered as idea I-001.
+- **MRCR:** no published critique showing MRCR is parser-solvable was found; registered as an idea in the
+  idea lab.
 
 ## How the research workflow itself should improve
 
@@ -109,8 +110,11 @@ by hand. Changes, in order of value:
    candidate hard-coded a teaching example's string) before registration.
 8. **A live status page for the user**: a periodically republished artifact with the queue, running
    arms and latest ledger rows, so progress is visible without reading the terminal.
-9. **An idea registry** ([ideas/registry.md](../ideas/registry.md)) for questions noticed along the way,
-   including ones outside RLMs, each with a prior-art verdict, the queries behind it and a smallest test.
+9. **An idea lab** (private repository `queelius/idea-lab`, run by its own Claude Code session) for
+   questions noticed along the way, including ones outside RLMs, each with a prior-art verdict, the queries
+   behind it and a smallest test. This session only appends to its inbox; RLM-relevant experiments it
+   proposes come back as rows in the backlog above. GPU sharing: one priority-aware queue for both
+   projects, lab jobs filling idle capacity, when the user allots lab time.
 10. **Scheduled reflection**: at every plan revision and at least every 12 GPU-hours, a short entry in
    the reflection log below, an idea added or retired, and a related-work check.
 
