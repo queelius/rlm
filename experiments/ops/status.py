@@ -53,7 +53,9 @@ def main():
         except OSError:
             continue
         if s:
+            code = (d / "EXIT").read_text().strip() if (d / "EXIT").exists() else None
             flag = " FAILED" if (d / "FAILED.txt").exists() else (" stopped" if (d / "STOPPED.txt").exists() else "")
+            flag += f" EXIT={code}" if code not in (None, "0") else ""
             out.append((s["age"], f"{d.name:<34} {s['n']:>5} rows  err {s['errors']:<4} updated {s['age']:5.0f} min ago{flag}  {s['arms']}"))
     for _, line in sorted(out):
         print(line)

@@ -67,7 +67,11 @@ def main():
     (run / "MANIFEST.json").write_text(json.dumps(manifest, indent=1))
     # 3. start detached
     log = open(run / "launch.log", "a")
-    proc = subprocess.Popen(cmd, cwd=EXP, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+    # The job's exit code goes to EXIT in the run directory, so a crash after the early check is visible
+    # (status.py flags nonzero codes); a detached job otherwise ends silently.
+    wrapped = ["bash", "-c", f'{shlex.join(cmd)}; echo $? > {shlex.quote(str(run / "EXIT"))}']
+    (run / "EXIT").unlink(missing_ok=True)
+    proc = subprocess.Popen(wrapped, cwd=EXP, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
     (run / "PID").write_text(str(proc.pid))
     if a.no_wait:
         print(f"LAUNCHED {a.name} pid {proc.pid} (no wait)")
