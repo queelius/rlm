@@ -87,7 +87,9 @@ def main():
     rows = rows_of(run)
     errs = sum(1 for r in rows if r.get("error") or r.get("load_error"))
     dead = proc.poll() is not None
-    if dead and not rows:
+    if dead and not rows and proc.returncode == 0:
+        verdict = "OK: finished (exit 0) before the early check found rows (results may be in subdirectories)"
+    elif dead and not rows:
         verdict = f"FAILED: process exited with code {proc.returncode} before any row"
     elif rows and errs == len(rows) and len(rows) >= a.min_rows:
         verdict = f"FAILED: all {len(rows)} early rows are errors: {str(rows[0].get('error') or rows[0].get('load_error'))[:200]}"
