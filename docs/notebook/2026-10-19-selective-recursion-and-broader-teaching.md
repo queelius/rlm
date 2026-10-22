@@ -1212,7 +1212,11 @@ Through the distilled 0.6B caller (E32c, 13:47 UTC; the caller never saw LongBen
 overall, identical to the routine run alone (paired 0.000, se 0.019), no errors and no routine faults; +0.113 over
 the 4B reading the truncated document (se 0.043). An 8B thinking reader for the same retrieved passages scores
 0.427 (-0.053 vs the 4B reader, se 0.044; 7 unanswered vs 2): as on MuSiQue (E22e), reader capacity is not where
-the gain is.
+the gain is. Variants (E32d, 14:23 UTC), paired against the one-round 30-passage routine (0.480): 60 passages
+0.427 (-0.053, se 0.035; long 0.48 to 0.36) at 17.8k tokens; two rounds (the helper names the missing information,
+20 more passages) 0.460 (-0.020, se 0.035) at 15.5k; the untrained 4B as caller 0.453 vs 0.480 for the 0.6B (-0.027,
+se 0.021), no faults. On LongBench-v2 a second round does not help, unlike multi-hop MuSiQue, whose questions turn
+on a bridge entity a follow-up query can name; wider reading hurts. The one-round routine stays best.
 
 LongBench-v2 (E32, external validity, 09:15 UTC). 150 questions stratified by length class (Apache-2.0,
 revision 2b48e494), four options, chance 0.25; direct answering reads the context cut to its first and last
