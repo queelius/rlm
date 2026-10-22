@@ -34,6 +34,8 @@ def main():
     p.add_argument("--base-url", default="http://127.0.0.1:8001/v1")
     p.add_argument("--model", default="qwen3-4b")
     p.add_argument("--concurrency", type=int, default=4)
+    p.add_argument("--kernel-semantics", action="store_true",
+                   help="as in the RLM kernel: ask raises on a reply that is cut off or empty; ask_batch gives None")
     a = p.parse_args()
     from openai import OpenAI
 
@@ -51,10 +53,16 @@ def main():
         st = local.stats
         st["calls"] += 1
         st["tokens"] += r.usage.input_tokens + r.usage.output_tokens
-        return r.output_text or ""
+        text = r.output_text or ""
+        if a.kernel_semantics and (r.status != "completed" or not text.strip()):
+            return None
+        return text
 
     def ask(prompt, system=None, options=None):
-        return _one(prompt, system, options)
+        out = _one(prompt, system, options)
+        if out is None:
+            raise RuntimeError("ask returned no usable text")
+        return out
 
     def ask_batch(prompts, system=None, options=None):
         st = local.stats

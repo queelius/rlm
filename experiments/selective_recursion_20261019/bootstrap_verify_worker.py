@@ -7,6 +7,7 @@ enforces a wall-clock timeout on this process; scoring happens in the parent.
 """
 
 import json
+import os
 import sys
 import time
 import traceback
@@ -22,6 +23,11 @@ def main():
     pool = ThreadPoolExecutor(16)
     calls = {"n": 0}
 
+    # KERNEL_SEMANTICS=1 mirrors the RLM kernel (src/rlm/executor.py): ask raises when the reply is not
+    # "completed" or is empty (a reply cut at its token cap is a fault, not partial text), and ask_batch gives
+    # None for such items. Without it (the default, kept for runs started earlier) partial text is returned.
+    kernel = os.environ.get("KERNEL_SEMANTICS") == "1"
+
     def _one(p, system, options):
         options = options or {}
         calls["n"] += 1
@@ -29,12 +35,20 @@ def main():
             r = client.responses.create(model=model, input=p, instructions=system,
                                         temperature=options.get("temperature", 0),
                                         max_output_tokens=options.get("max_output_tokens", 1024))
-            return r.output_text or ""
         except Exception:  # noqa: BLE001
+            if kernel:
+                raise
             return ""
+        text = r.output_text or ""
+        if kernel and (r.status != "completed" or not text.strip()):
+            return None
+        return text
 
     def ask(prompt, system=None, options=None):
-        return _one(prompt, system, options)
+        out = _one(prompt, system, options)
+        if out is None:
+            raise RuntimeError("ask returned no usable text")
+        return out
 
     def ask_batch(prompts, system=None, options=None):
         return SimpleNamespace(texts=list(pool.map(lambda p: _one(p, system, options), prompts)))
