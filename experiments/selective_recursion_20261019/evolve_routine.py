@@ -164,6 +164,8 @@ def main():
     p.add_argument("--reflector-max-tokens", type=int, default=12000)
     p.add_argument("--lam", type=float, default=0.05, help="fitness = F1 - lam * tokens / 100k")
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--mode", default="reflect", choices=("reflect", "random"),
+                   help="random: children are uniform draws of the numeric parameters, prompts fixed at the seed")
     a = p.parse_args()
     from openai import OpenAI
 
@@ -191,7 +193,11 @@ def main():
         parent = rng.choice(sorted(population, key=lambda c: -c["fitness"])[:4])
         batch = rng.sample(pool_tasks, a.minibatch)
         pres = evaluate(runner, parent["cfg"], batch, items)
-        child_cfg, text = reflect(reflector, a.reflector_model, parent["cfg"], pres, a.reflector_max_tokens)
+        if a.mode == "random":
+            child_cfg = dict(BASE, **{k: rng.randint(lo, hi) for k, (lo, hi) in BOUNDS.items()})
+            text = "random draw"
+        else:
+            child_cfg, text = reflect(reflector, a.reflector_model, parent["cfg"], pres, a.reflector_max_tokens)
         rec = dict(event="iteration", it=it, parent=parent["id"], parent_mb_f1=pres["f1"], parent_mb_tokens=pres["tokens"],
                    child=child_cfg, reflection=text[-3000:])
         if child_cfg is None or child_cfg == parent["cfg"]:
