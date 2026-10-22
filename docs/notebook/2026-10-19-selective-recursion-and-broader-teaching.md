@@ -1067,6 +1067,18 @@ Two rounds over BM25: +0.067 (paired se 0.028), replicating E22f (+0.058). A thi
 se 0.025; +0.006 at 128k) at twice the helper tokens. The earlier tie at 128k (E22f) was sample noise: here two
 rounds gain there too. Two rounds are enough.
 
+Round-two distillation, held-out discovery (10:58 UTC). Two discovery seeds per arm, 74 family attempts:
+
+| Proposer | all | string formats (42) | chat (16) | semantic (16) |
+| --- | --- | --- | --- | --- |
+| 4B Instruct, untrained | 9 | 1 | 8 | 0 |
+| + SFT round one (42 pairs, no chat) | 16 | 13 | 3 | 0 |
+| + SFT round two (68 pairs, 13 chat) | 20 | 13 | 7 | 0 |
+
+Adding chat-format libraries repaired the chat loss without giving back the string-format gain. Round two's
+chat families share their question types with the chat training families, so chat is no longer a clean
+held-out test of a new format.
+
 Round-two distillation on MRCR (10:52 UTC): with 68 pairs including 13 chat-format libraries, the tuned 4B reaches
 0.214, 0.214 and 0.152 on the three MRCR seeds (round one: 0.000 to 0.034), the same partial solution the
 non-thinking 8B and the thinking 4B found, and no accepted library.
