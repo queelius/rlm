@@ -1195,7 +1195,9 @@ quarter of direct's tokens; by domain it helps everywhere but long-dialogue hist
 the map-reduce routine was the wrong routine. As on MuSiQue, selecting evidence beats summarizing everything.
 Through the distilled 0.6B caller (E32c, 13:47 UTC; the caller never saw LongBench): 0.50 / 0.48 / 0.46, 0.480
 overall, identical to the routine run alone (paired 0.000, se 0.019), no errors and no routine faults; +0.113 over
-the 4B reading the truncated document (se 0.043).
+the 4B reading the truncated document (se 0.043). An 8B thinking reader for the same retrieved passages scores
+0.427 (-0.053 vs the 4B reader, se 0.044; 7 unanswered vs 2): as on MuSiQue (E22e), reader capacity is not where
+the gain is.
 
 LongBench-v2 (E32, external validity, 09:15 UTC). 150 questions stratified by length class (Apache-2.0,
 revision 2b48e494), four options, chance 0.25; direct answering reads the context cut to its first and last
