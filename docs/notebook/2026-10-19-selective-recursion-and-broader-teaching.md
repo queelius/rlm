@@ -1054,6 +1054,22 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Reader fix (E22d, 04:14 UTC). The same four arms run twice on the same server, the reader capped at 600 output
+tokens as before, and at 1,500 with one short-answer follow-up when no ANSWER line appears. Answer F1, 90
+held-out questions:
+
+| Arm | 8k: 600 / fixed | 32k | 128k | paired gain (se) | reasoning fragments |
+| --- | --- | --- | --- | --- | --- |
+| BM25 top 60 | 0.495 / 0.498 | 0.362 / 0.443 | 0.353 / 0.417 | +0.050 (0.027) | 13 to 1 |
+| Filter only | 0.383 / 0.415 | 0.224 / 0.231 | 0.473 / 0.534 | +0.033 (0.022) | 12 to 0 |
+| Filter + BM25 | 0.469 / 0.563 | 0.369 / 0.380 | 0.457 / 0.535 | +0.061 (0.028) | 11 to 1 |
+| Gold paragraphs | 0.680 / 0.668 | 0.634 / 0.627 | 0.672 / 0.660 | -0.010 (0.008) | 5 to 1 |
+
+The fix removes nearly every truncated answer and gains about two standard errors on each retrieval arm; the
+gold-paragraph arm, whose reasoning was short, does not move. With it the routine reaches 0.535 at 128k against
+a reader ceiling of about 0.66. Saved as reference v3 (`skills/reference/musique_filter_read_v3.py`, registry
+variant `musique_ref3`); the original stays unchanged because earlier results cite it.
+
 Compute-matched null (E28, 03:42 UTC). Direct answering by the 4B sampled three times at temperature 0.7 and
 combined by majority over normalized answers, on the same 30 held-out questions per length:
 
