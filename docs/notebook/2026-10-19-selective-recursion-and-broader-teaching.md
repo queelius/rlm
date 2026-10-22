@@ -1054,6 +1054,31 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Component ablation of filter-then-read (E22c, complete 03:36 UTC). Scripted, 90 held-out questions, the same
+4B reader for every arm; answer F1, gold-support recall, paragraphs kept, helper tokens per question:
+
+| Arm | 8k | 32k | 128k | recall at 128k | tokens at 128k |
+| --- | --- | --- | --- | --- | --- |
+| BM25 top 15 | 0.411 | 0.312 | 0.324 | 0.63 | 2k |
+| BM25 top 60 | 0.502 | 0.341 | 0.365 | 0.84 | 8k |
+| Helper filter only | 0.416 | 0.240 | 0.501 | 0.72 | 125k |
+| Filter + BM25 top 15 (reference) | 0.543 | 0.346 | 0.413 | 0.89 | 126k |
+| Gold supporting paragraphs only | 0.668 | 0.649 | 0.640 | 1.00 | 1k |
+| 60 random paragraphs | 0.438 | 0.132 | 0.080 | 0.03 | 8k |
+
+Paired over all 90: reference minus BM25-60 +0.031 (se 0.034), minus filter only +0.049 (se 0.038), minus
+random +0.218 (se 0.050). Readings: (1) the 4B reader is distractor-limited: at 128k the precise filter
+alone (12 paragraphs, recall 0.72) beats the union (23 paragraphs, recall 0.89), 0.501 vs 0.413; (2) BM25
+top 60 is within noise of the full routine at a fifteenth of the tokens; (3) even with only the gold
+paragraphs the reader reaches 0.65, and 12 to 19 percent of answers in every arm are fragments of
+reasoning (the 600-token reader cap cut the reasoning before the ANSWER line, and the fallback took the last
+line), scoring near zero: a fixable loss now tested in E22d (1,500-token cap plus a short-answer fallback,
+paired against the 600 cap on the same server); (4) the position trim in the reference routine never fired
+(the union never exceeded 60). Noise calibration: the two arms with identical inputs (reference and its
+rank-trimmed twin) produced different outputs on 24 of 90 questions and different F1 on 6, from serving
+nondeterminism at temperature 0; per-length cells of 30 can differ by 0.07 from identical inputs, so only
+paired comparisons over all 90 are read.
+
 Documentation decides whether an untrained caller uses a library (E25c, 02:45 UTC). The 8B-written MRCR
 library omitted the contract's "Typical use: FINAL_TEXT(answer_mrcr(request))." line. Without it the untrained
 4B often sent the whole input to `model_complete` (overflowing at 128k and above) or retyped the routine's
