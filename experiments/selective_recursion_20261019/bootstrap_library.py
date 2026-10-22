@@ -115,6 +115,16 @@ def _question_of(prompt) -> str:
     return text[text.rfind("QUESTION:"):] if "QUESTION:" in text else text[-300:]
 
 
+def normalize_doc(code: str, entry: str) -> tuple[str, bool]:
+    """Insert the contract's typical-use line into the module docstring when the proposer left it out.
+    E25c: without it the untrained 4B caller often bypassed the library (0.60 vs 0.95 on MRCR)."""
+    m = re.match(r'(\s*""")(.*?)(""")', code, re.S)
+    if not m or "Typical use:" in m.group(2):
+        return code, False
+    doc = m.group(2).rstrip("\n") + f"\nTypical use: FINAL_TEXT({entry}(request)).\n"
+    return code[: m.start(2)] + doc + code[m.end(2):], True
+
+
 def failing_cases(details, tasks, k=3):
     by = {t.task_id: t for t in tasks}
     out = []
@@ -214,11 +224,15 @@ def main():
                    shown_examples=shown_ids, teaching_tasks=len(tasks))
     (a.out / "summary.json").write_text(json.dumps(summary, indent=1))
     print(json.dumps(summary))
+    if accepted:
+        code, added = normalize_doc(best["code"], entry)
+        (a.out / "accepted.py").write_text(code.strip() + "\n")
+        print(f"accepted library written to {a.out / 'accepted.py'} (typical-use line added: {added})")
     if accepted and a.register:
         path = HERE / "skills" / "learned" / f"{a.family}.py"
         header = (f"# families: {a.family}\n# bootstrapped by bootstrap_library.py (proposer {a.model}; "
                   f"teaching mean {best['mean']:.3f}, {best['exact']}/{best['n']} exact)\n")
-        path.write_text(header + best["code"].strip() + "\n")
+        path.write_text(header + normalize_doc(best["code"], entry)[0].strip() + "\n")
         print(f"registered {path}")
 
 
