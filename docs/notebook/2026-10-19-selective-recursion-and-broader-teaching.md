@@ -1084,6 +1084,10 @@ established; the pattern is clearer: every gain is a string format (prose, XML-l
 solved before and unlike the training formats only in surface, and every loss is the chat format, which no
 training family used. On MRCR (a chat format) it fails all three seeds (best 0.034). Distillation transfers
 parsing skill across string formats and erodes message-list handling, at a twentieth of the teacher's tokens.
+Second discovery seed (09:49 UTC): untrained 4 of 37, tuned 7. Over both seeds (74 family attempts): untrained 9,
+tuned 16 (p 0.19); on string formats 1 vs 13 of 42 (12 gained, none lost, exact McNemar p 0.0005); on chat 8 vs
+3 of 16 (p 0.18). The string-format gain is established; the chat loss is the price of a training set without
+chat.
 Next: a second round with more pairs (the seed-variant training run) plus the model's own verified
 successes as a guard against forgetting, and two discovery seeds per arm to tighten the comparison.
 
