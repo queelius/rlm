@@ -1083,6 +1083,16 @@ were all solvable by code alone, so training made it a parser writer; library wr
 search strategy would need training families that require them. The thinking hybrid 4B with primitives (15:02 UTC)
 uses BM25 in only 5 of 24 candidates; best 0.372 on the mixed set (0.25 / 0.65 / 0.22; the best does use BM25) (the 8B: 0.464 and 0.183 on two seeds).
 
+Proposer round three with helper-dependent families (E26e, 18:18 UTC). Two new training question types need the
+helper's judgment of item categories (semantic_count, semantic_top_user; 20 families in the training formats;
+semantic_total stays held out). The thinking 8B solved 5 of 20 at a teaching score of 0.7 or more and the thinking 4B 1
+(the helper's labelling ceiling caps these families below 0.9), so round-three SFT had 75 pairs, 7 of them for helper
+families; then 40 RL steps over all training families. RL reward on helper families stayed near zero (0.018, 0.054,
+0.009, 0.024 by ten-step blocks) while code-only families rose (0.257 to 0.438). Held out: 27 of 74 family attempts
+(round two with RL: 30 and 30); on the 8 semantic families the best library scores 0.27 on one and 0 on the rest
+(round two: 0 on all). Seven examples and a reward that is almost always zero do not teach a 4B to call the helper;
+the same sparse-success problem as RL without SFT (E26c ablation).
+
 Test-time RL on MRCR (E26d, 14:00 UTC). RL on MRCR's own 30 teaching rows (held-out rows untouched), from the
 first RL-trained proposer: 8 prompts per step (three different shown examples each), 4 samples, reward on 12
 unseen teaching rows; 30 steps, then 30 more from step 30. Mean reward by five-step blocks 0.022, 0.026, 0.025,
