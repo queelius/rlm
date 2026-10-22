@@ -28,7 +28,7 @@ def select_relevant(paragraphs, question, chunk=6):
     for s, out in zip(starts, outs):
         for n in re.findall(r"\d+", out or ""):
             i = int(n) - 1
-            if s <= i < s + chunk:
+            if s <= i < min(s + chunk, len(paragraphs)):  # the last chunk can be short
                 keep.add(i)
     return sorted(keep)
 

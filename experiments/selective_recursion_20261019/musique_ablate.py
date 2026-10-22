@@ -88,7 +88,7 @@ def main():
         sup_text = {f"{x['title']}: {x['paragraph_text']}".strip() for x in it["paragraphs"] if x["is_supporting"]}
         gold = [i for i, para in enumerate(paras) if para.strip() in sup_text]
         local.stats = {"tokens": 0}
-        filt = ns["select_relevant"](paras, q)
+        filt = [i for i in ns["select_relevant"](paras, q) if i < len(paras)]  # the last chunk is short
         filter_tokens = local.stats["tokens"]
         rank = ns["bm25"](paras, q, k=len(paras))
         union = set(filt) | set(rank[:15])
@@ -124,9 +124,17 @@ def main():
                 with rows_path.open("a") as f:
                     f.write(json.dumps(row) + "\n")
 
+    def safe(t):
+        try:
+            work(t)
+        except Exception as e:  # noqa: BLE001  one bad question must not stop the run
+            with lock:
+                with rows_path.open("a") as f:
+                    f.write(json.dumps(dict(task_id=t.task_id, size=t.n_records, arm="error", error=f"{type(e).__name__}: {e}"[:300])) + "\n")
+
     with ThreadPoolExecutor(a.concurrency) as ex:
-        list(ex.map(work, tasks))
-    rows = [json.loads(l) for l in rows_path.read_text().splitlines()]
+        list(ex.map(safe, tasks))
+    rows = [r for r in map(json.loads, rows_path.read_text().splitlines()) if r["arm"] != "error"]
     for arm in arms:
         for s in sorted({r["size"] for r in rows}):
             rs = [r for r in rows if r["arm"] == arm and r["size"] == s]
