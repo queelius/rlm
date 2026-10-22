@@ -42,6 +42,8 @@ def main():
     p.add_argument("--concurrency", type=int, default=4)
     p.add_argument("--arms", default=",".join(ARMS))
     p.add_argument("--task-seed", type=int, default=0, help="which sample of questions (0 = the held-out set used so far)")
+    p.add_argument("--reader-base-url", default=None, help="a different server for the reader only (default: --base-url)")
+    p.add_argument("--reader-model", default=None)
     p.add_argument("--read-max-tokens", type=int, default=600)
     p.add_argument("--fallback", action="store_true",
                    help="when the reader gives no ANSWER line, ask once more for the short answer only")
@@ -50,6 +52,16 @@ def main():
     from openai import OpenAI
 
     client = OpenAI(base_url=a.base_url, api_key="local", timeout=900)
+    reader = OpenAI(base_url=a.reader_base_url or a.base_url, api_key="local", timeout=1800)
+    reader_model = a.reader_model or a.model
+
+    def read(prompt, system=None, options=None):
+        options = options or {}
+        r = reader.responses.create(model=reader_model, input=prompt, instructions=system, temperature=options.get("temperature", 0),
+                                    max_output_tokens=options.get("max_output_tokens", 1024))
+        local.stats["tokens"] += r.usage.input_tokens + r.usage.output_tokens
+        text = r.output_text or ""
+        return text.split("</think>")[-1]  # a thinking reader: keep only the final text
     pool = ThreadPoolExecutor(32)
     local = threading.local()
 
@@ -88,7 +100,8 @@ def main():
         sup_text = {f"{x['title']}: {x['paragraph_text']}".strip() for x in it["paragraphs"] if x["is_supporting"]}
         gold = [i for i, para in enumerate(paras) if para.strip() in sup_text]
         local.stats = {"tokens": 0}
-        filt = [i for i in ns["select_relevant"](paras, q) if i < len(paras)]  # the last chunk is short
+        need_filter = any(x in arms for x in ("filter", "both", "both_rank"))
+        filt = [i for i in ns["select_relevant"](paras, q) if i < len(paras)] if need_filter else []  # last chunk is short
         filter_tokens = local.stats["tokens"]
         rank = ns["bm25"](paras, q, k=len(paras))
         union = set(filt) | set(rank[:15])
@@ -103,13 +116,13 @@ def main():
             local.stats = {"tokens": 0}
             ctx = "\n\n".join(f"[{i + 1}] {paras[i]}" for i in keep) or "(no paragraphs)"
             t0 = time.time()
-            out = ask(f"Paragraphs:\n{ctx}\n\nQuestion: {q}", system=READER,
+            out = read(f"Paragraphs:\n{ctx}\n\nQuestion: {q}", system=READER,
                       options={"temperature": 0, "max_output_tokens": a.read_max_tokens})
             m = re.findall(r"ANSWER:\s*(.+)", out or "")
             fell_back = False
             if not m and a.fallback:
                 fell_back = True
-                out2 = ask(f"Question: {q}\n\nNotes from reading the evidence:\n{(out or '')[-3000:]}\n\n"
+                out2 = read(f"Question: {q}\n\nNotes from reading the evidence:\n{(out or '')[-3000:]}\n\n"
                            "Give the final answer as a short phrase (a name, place, date or number) on one line "
                            "of the form 'ANSWER: <answer>'.", options={"temperature": 0, "max_output_tokens": 40})
                 m = re.findall(r"ANSWER:\s*(.+)", out2 or "") or ([out2.strip().splitlines()[0]] if (out2 or "").strip() else [])
