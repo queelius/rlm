@@ -41,6 +41,17 @@ def adapter(family: str):
             return dict(score=g["f1"], em=g["em"])
 
         return tasks, score, lambda t: dict(size=t.n_records, hops=t.question_type)
+    if family in ("longbench", "longbench_trunc"):
+        import longbench_tasks as F
+
+        def tasks(split, a):
+            return F.make(per_length=a.per_size, seed=a.seed, truncated=family == "longbench_trunc")
+
+        def score(out, t):
+            return dict(score=F.grade(out or "", t))
+
+        return tasks, score, lambda t: dict(length_class=t.length_class, domain=t.domain, difficulty=t.difficulty,
+                                            size=t.n_records)
     raise ValueError(family)
 
 
