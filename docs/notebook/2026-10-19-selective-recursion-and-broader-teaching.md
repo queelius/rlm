@@ -1175,6 +1175,21 @@ probability near 0.44 if errors were spread evenly; an exact-match threshold of 
 OOLONG's label ceiling. Helper-dependent families are scored against a threshold set from the helper's
 accuracy (0.7 here: 2 of 8 for the 8B), and the benchmark reports them separately.
 
+LongBench-v2 with a retrieval library (E32b, 13:06 UTC), revising E32. The same 150 questions, a second generic
+library: split the document into 1,000-character passages, score them with BM25 against the question and against
+the question with each option, read the 30 best once (in document order), kernel semantics:
+
+| Arm | short | medium | long | all | tokens per question |
+| --- | --- | --- | --- | --- | --- |
+| Direct, truncated to 48k tokens | 0.46 | 0.36 | 0.28 | 0.367 | 42k |
+| Map-reduce notes (E32) | 0.42 | 0.32 | 0.34 | 0.360 | 366k |
+| Retrieve-then-read | 0.46 | 0.50 | 0.48 | 0.480 | 10k |
+
+Retrieve-then-read beats direct reading by +0.113 (paired se 0.043) and map-reduce by +0.120 (se 0.053), at a
+quarter of direct's tokens; by domain it helps everywhere but long-dialogue history (code repositories 0.33 to
+0.61, structured data 0.33 to 0.50). E32's conclusion that libraries stop helping on LongBench-v2 is withdrawn:
+the map-reduce routine was the wrong routine. As on MuSiQue, selecting evidence beats summarizing everything.
+
 LongBench-v2 (E32, external validity, 09:15 UTC). 150 questions stratified by length class (Apache-2.0,
 revision 2b48e494), four options, chance 0.25; direct answering reads the context cut to its first and last
 24k tokens (exact, Qwen3 tokenizer); the generic library takes brief notes from every 24k-character part with the
@@ -1189,7 +1204,8 @@ revision 2b48e494), four options, chance 0.25; direct answering reads the contex
 The library ties direct reading (-0.007, paired se 0.051) at nine times the tokens; its only positive class
 (long, +0.06, se 0.072) is within noise, and long questions sit near chance for every arm. By domain it helps
 single-document QA and structured data (0.32 to 0.39, 0.33 to 0.42) and hurts multi-document QA (0.44 to
-0.28), all on small cells. A boundary for the thesis: libraries pay where the task decomposes into local
+0.28), all on small cells. [Revised at 13:06 by E32b: a retrieval library beats direct reading here; the boundary is the map-reduce
+routine, not libraries.] A boundary for the thesis: libraries pay where the task decomposes into local
 judgments (aggregation, lookup, retrieval of a few supporting passages); LongBench-v2's whole-document
 reasoning questions do not, and a 4B helper's notes lose what the choice needs. The paper-style RLM without a
 library is far below both.

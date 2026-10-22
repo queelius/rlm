@@ -30,7 +30,7 @@
 \begin{block}{In one sentence}
 A 4-bit 8B model wrote a verified library for a new benchmark from three examples, and a 0.6B caller that never saw
 the benchmark uses it correctly to 1M tokens; the useful capacity is in the proposer and in choosing evidence, not in
-readers, recursion or larger controllers; and on whole-document reasoning (LongBench-v2) libraries stop helping.
+readers, recursion or larger controllers; a retrieval library also beats direct reading on LongBench-v2.
 \end{block}
 \end{frame}
 
@@ -163,18 +163,19 @@ reader); more sampling (majority of 3 at 88k tokens: 0.22 vs 0.35 for the librar
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Boundaries, and what we withdrew.}
+\frametitle{External validity, and what we withdrew.}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.48\textwidth}
 \begin{block}{LongBench-v2 (150 questions, chance 0.25)}
 \footnotesize
-Direct, truncated to 48k tokens: 0.367\\
-Generic map-reduce library: 0.360 (9 times the tokens)\\
+Direct, truncated to 48k tokens: 0.367 (42k tokens)\\
+Map-reduce notes library: 0.360 (366k tokens)\\
+\textbf{Retrieve-then-read library: 0.480 (10k tokens)}\\
 RLM without a library: 0.120\\[1mm]
-Libraries pay where a task splits into local judgments; whole-document reasoning does not.
+Selecting evidence beats summarizing everything, as on MuSiQue.
 \end{block}
 \footnotesize \textbf{Withdrawn:} ``the reader is distractor-limited''; length routing (pre-registered: the
-ordering reversed on fresh questions).
+ordering reversed on fresh questions); ``libraries stop helping on LongBench-v2'' (it was the map-reduce routine).
 \end{column}
 \begin{column}{.48\textwidth}
 \footnotesize
@@ -187,7 +188,7 @@ scores 0 at 128k.\par\smallskip
 random search found nothing.
 \end{column}
 \end{columns}
-\source{Ledger E32, E31, E22b, E24, E24c. LongBench-v2: zai-org (Apache-2.0).}
+\source{Ledger E32, E32b, E31, E22b, E24, E24c. LongBench-v2: zai-org (Apache-2.0).}
 \end{frame}
 
 \begin{frame}[t]

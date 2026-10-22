@@ -17,8 +17,8 @@
    "notes": "MuSiQue is where the routine needs helper calls. The two-round library wins on accuracy and cost through the 0.6B caller. Everything that adds capacity elsewhere (recursion, bigger reader, more samples) does not help. The gap to gold paragraphs (about 0.2) is evidence selection."
   },
   {
-   "title": "Boundaries, and what we withdrew.",
-   "notes": "Honesty slide. LongBench-v2 bounds the claim: a generic map-reduce library ties direct reading at nine times the cost. Two earlier readings were withdrawn after a fresh question sample. The method lessons are the ones that cost us most: scripted harnesses that did not match the kernel, and verification sets that did not span deployment lengths."
+   "title": "External validity, and what we withdrew.",
+   "notes": "LongBench-v2 is the external-validity check. The first generic library (map-reduce notes) tied direct reading at nine times the cost; a retrieval library (BM25 over passages for the question and each option, one read) beats direct reading by 0.11 at a quarter of its tokens. The lesson matches MuSiQue: choose evidence, do not summarize everything. Two earlier readings were withdrawn after fresh samples. The method lessons are the ones that cost most: scripted harnesses that did not match the kernel, verification sets that did not span deployment lengths."
   },
   {
    "title": "What this changes, and what to test next.",
