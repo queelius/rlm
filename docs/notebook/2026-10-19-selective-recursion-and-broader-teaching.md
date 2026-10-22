@@ -1004,6 +1004,43 @@ answer F1. Baselines, 30 dev questions per size: direct 0.52, 0.25, and overflow
 in the RLM without a library delegates the whole input and scores the same (0.48, 0.25, overflow). Library
 bootstraps with the 8B and 4B proposers are running.
 
+MRCR bootstrapped by the 8B (E21, 02:15 UTC). The 4-bit Qwen3-8B proposer (thinking on) produced an
+accepted library on its fourteenth candidate (repair round 1, candidate 5; earlier best 0.214): 30/30 exact
+on teaching. It was reviewed before use: 40 lines of pure string parsing (the "Prepend ... to the Nth ..."
+instruction, user turns that begin "write a <topic>", the next assistant turn), no imports, no I/O, no
+helper calls, nothing copied from the three shown examples. It matches asks by prefix where the hand-written
+routine matches exactly. Held out:
+
+| MRCR held-out, 64 rows per column, 8k to 1M tokens | 2 needles | 4 needles |
+| --- | --- | --- |
+| Direct answer, 4B | 0.23 | 0.15 |
+| RLM, untrained 4B, no library | 0.18 | 0.11 |
+| 8B-written library run alone (no model) | 1.000 | 1.000 |
+| Distilled 0.6B caller (trained on event-log and OOLONG only) + 8B-written library | 1.000 | 1.000 |
+| Untrained 4B caller + 8B-written library | running | running |
+
+The whole chain now runs without hand-written code for a new family: a proposer writes the library from
+three examples, verification on 30 teaching rows accepts it, and a 0.6B caller that never saw MRCR calls it
+correctly at every length to 1M tokens. The library also covers 4 needles though it was taught only on 2.
+Two caveats keep the claim honest: MRCR is solvable by a short program, so this measures whether the
+system finds the program, not long-context reading; and proposer capacity is decisive (the 4B failed all
+24 candidates; the 8B succeeded on the fourteenth, at about 180k proposer tokens). Bootstrapped libraries
+are kept in `skills/bootstrapped/` and selected as registry variants, because a file in `skills/learned/`
+would shadow a variant mid-run.
+
+MuSiQue interim (E22, E23). The reference filter-then-read routine run alone on the 90 held-out questions:
+0.434 F1 overall. Paper-style recursion without a library (depth 1, untrained 4B): 0.254 (depth 0: 0.245;
+both overflow at 128k), so recursion alone does not help. A component ablation (BM25 only, filter only,
+both, both trimmed by rank, gold paragraphs only, random paragraphs) is queued to locate the gain; the
+reference routine trims its union by position, which may drop gold paragraphs at long lengths.
+
+Workflow (02:10 UTC). A job queue (`experiments/ops/queue.py`) with a detached dispatcher, a checked
+launcher (`launch.py`: argument dry run, manifest, early health check) and one status view (`status.py`)
+replace hand launches; the dispatcher's first version never reaped its wrappers and so never freed a
+lane, fixed at 02:17. MIG slices report no utilization, so load is read from vLLM's running and waiting
+counts: GPU1's 4B (port 8001) was saturated with 90 waiting while GPU0's replica (8006) ran 5, so new
+helper-heavy jobs go to 8006.
+
 Design lesson, stated once: a taught option that the warm start assigns near-zero probability cannot
 be found by on-policy RL, so the teaching prior over alternatives has to be balanced before RL is
 asked to choose between them.

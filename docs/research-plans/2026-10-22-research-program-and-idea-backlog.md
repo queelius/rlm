@@ -90,7 +90,7 @@ by hand. Changes, in order of value:
 
 ## Reflection log
 
-- 2026-10-22 02:30: first entry. Running: E21 (MRCR bootstrap; the hand-written routine scores 1.000 at
+- 2026-10-22 02:10: first entry. Running: E21 (MRCR bootstrap; the hand-written routine scores 1.000 at
   every length, so MRCR is program-solvable), E22 (MuSiQue bootstraps; reference filter-then-read 0.66 vs
   direct 0.32 on teaching at 32k, 0.56 at 128k where direct is impossible), E23 (recursion arms). Next
   ready: E24 (evolve the MuSiQue routine configuration), then E25 (payload format per caller size).
@@ -98,3 +98,11 @@ by hand. Changes, in order of value:
   MuSiQue (depth 0: 0.245; overflow at 128k in both), so recursion alone does not help an untrained 4B.
   Started E24 (routine evolution) and, through the new queue, E25 (does the distilled 0.6B caller call
   libraries of families it never saw: MRCR and MuSiQue reference libraries) and MuSiQue at 512k.
+- 2026-10-22 02:25: E21 succeeded: the 8B wrote a reviewed MRCR library (1.000 held out to 1M tokens, 2 and
+  4 needles) and the distilled 0.6B caller calls it for 1.000. Proposer capacity is the gate (4B 0/24).
+  New questions this opens: (a) proposer scaling: the smallest proposer that succeeds, and with how many
+  candidates (sample efficiency of library discovery as a metric); (b) E26 gets a concrete target:
+  train the 4B proposer by rejection sampling on synthetic families until it bootstraps MRCR; (c) harder
+  program-solvable variants (MRCR 8-needle, paraphrased asks) to find where a parser stops sufficing and
+  helper calls become necessary; (d) libraries whose code depends on the helper (MuSiQue) are the real test
+  of bootstrapping, since there the program alone cannot answer.
