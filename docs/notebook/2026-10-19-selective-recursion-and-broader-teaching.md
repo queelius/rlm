@@ -1093,7 +1093,9 @@ A100 slice, rollouts served by vLLM with the adapter hot-swapped each step. Trai
 
 RL over SFT: +13/-3 families (exact McNemar p 0.021), string formats +10/-1 (p 0.012); over the untrained 4B
 +25/-4 (p < 0.001). On string formats the 4B reaches 52 percent of attempts against the 8B's 57 percent, at a
-fraction of the proposer tokens. MRCR is still out of reach (0 of 3 seeds; best 0.154). Training with the
+fraction of the proposer tokens. MRCR is still out of reach (0 of 3 seeds; best 0.154). Replication (12:32 UTC): a second RL seed from the same SFT adapter (training reward by blocks 0.358, 0.444,
+0.423, 0.527) also reaches 30 of 74 (string 19, chat 11): +15/-5 over SFT round two (exact McNemar p 0.041); the two
+RL seeds tie (+11/-11 between them) and solve partly different families; MRCR 0.214, not accepted. Training with the
 verified teaching score as reward makes a small proposer a much better library writer on families like the ones
 it trained on and on new formats of them, but it does not carry to the real benchmark.
 
