@@ -38,6 +38,8 @@ TRAIN_FORMATS = ("pipe", "kv", "jsonl", "csv", "table")
 HELDOUT_FORMATS = ("prose", "xmlish", "chat")
 TRAIN_QUESTIONS = ("count", "total", "top_user", "nth_item", "last_city", "first_after", "distinct")
 HELDOUT_QUESTIONS = ("day_span", "semantic_total")
+# E26e: training questions that need the helper's judgment (item categories); semantic_total stays held out
+HELPER_TRAIN_QUESTIONS = ("semantic_count", "semantic_top_user")
 ANSWER_FORMATS = ("plain", "answer_line", "prefix", "json")
 ORD = {1: "1st", 2: "2nd", 3: "3rd"}
 
@@ -58,6 +60,12 @@ def family_ids(split: str, seeds=(0,)) -> list[str]:
             a = ANSWER_FORMATS[(len(f) + len(q) + s) % len(ANSWER_FORMATS)]  # deterministic spread over formats
             out.append(f"gen-{f}-{q}-{a}-s{s}")
     return out
+
+
+def helper_training_family_ids(seeds=(0, 1)) -> list[str]:
+    """Training families whose questions need the helper (E26e); formats are the training formats."""
+    return [f"gen-{f}-{q}-{ANSWER_FORMATS[(len(f) + len(q) + s) % len(ANSWER_FORMATS)]}-s{s}"
+            for f in TRAIN_FORMATS for q in HELPER_TRAIN_QUESTIONS for s in seeds]
 
 
 def parse_family(fid: str):
@@ -161,6 +169,18 @@ class Family:
             mine = [x for x in recs if x["user"] == u]
             return (f"How many whole days are there between the dates of {u}'s first and last records?",
                     str((mine[-1]["ts"].date() - mine[0]["ts"].date()).days))
+        if q == "semantic_count":
+            cat = r.choice(sorted(CATEGORIES))
+            return (f"How many records with action bought involve a {cat} item?",
+                    str(sum(x["action"] == "bought" and ITEM_CATEGORY[x["item"]] == cat for x in recs)))
+        if q == "semantic_top_user":
+            cat = r.choice(sorted(CATEGORIES))
+            c = {u: sum(x["qty"] for x in recs if x["user"] == u and x["action"] == "bought" and ITEM_CATEGORY[x["item"]] == cat)
+                 for u in users}
+            best = sorted(c.items(), key=lambda kv: -kv[1])
+            if len(best) > 1 and best[0][1] == best[1][1]:
+                return None
+            return f"Which user bought the most units of {cat} items in total?", best[0][0]
         if q == "semantic_total":
             cat = r.choice(sorted(CATEGORIES))
             return (f"How many units of {cat} items were bought in total (action bought only)?",
