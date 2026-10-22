@@ -1104,10 +1104,13 @@ A100 slice, rollouts served by vLLM with the adapter hot-swapped each step. Trai
 | + SFT round two | 20 | 13 | 7 | 0 |
 | + SFT round two + RL | 30 | 22 | 8 | 0 |
 | 8B thinking, the teacher (one seed: 37) | 20 of 37 | 12 of 21 | 8 of 8 | 0 of 8 |
+| Qwen3-4B hybrid, thinking, untrained (one seed: 37) | 14 of 37 | 8 of 21 | 6 of 8 | 0 of 8 |
 
 RL over SFT: +13/-3 families (exact McNemar p 0.021), string formats +10/-1 (p 0.012); over the untrained 4B
 +25/-4 (p < 0.001). On string formats the 4B reaches 52 percent of attempts against the 8B's 57 percent, at a
-fraction of the proposer tokens. MRCR is still out of reach (0 of 3 seeds; best 0.154). Replication (12:32 UTC): a second RL seed from the same SFT adapter (training reward by blocks 0.358, 0.444,
+fraction of the proposer tokens. The thinking 4B (hybrid, untrained) solves 14 of 37 at about 55k proposer tokens per
+family; the SFT+RL 4B without thinking solves 15 per seed on average at about 2k, so training buys what thinking
+buys at a twenty-fifth of the tokens. MRCR is still out of reach (0 of 3 seeds; best 0.154). Replication (12:32 UTC): a second RL seed from the same SFT adapter (training reward by blocks 0.358, 0.444,
 0.423, 0.527) also reaches 30 of 74 (string 19, chat 11): +15/-5 over SFT round two (exact McNemar p 0.041); the two
 RL seeds tie (+11/-11 between them) and solve partly different families; MRCR 0.214, not accepted. Ablation without SFT
 (13:30 UTC): RL from the untrained 4B (fresh LoRA, same 40 steps) stays near its start (training reward by blocks
