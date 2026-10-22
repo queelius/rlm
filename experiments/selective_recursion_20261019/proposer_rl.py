@@ -35,12 +35,35 @@ def training_families(seeds=(0, 1, 2)) -> list[str]:
     return fams
 
 
+_REAL = {}
+
+
+def _real_family(fid: str):
+    """A real family's teaching rows (bootstrap_library.family_api), cached; held-out rows are never loaded."""
+    if fid not in _REAL:
+        api = B.family_api(fid)
+        _REAL[fid] = (api, [api["as_task"](r) for r in api["teach"]], list(api["teach"]))
+    return _REAL[fid]
+
+
 def prompt_for(fid: str, rng: random.Random, n_teach: int):
+    if not fid.startswith("gen-"):  # a real family (e.g. mrcr): its own teaching rows
+        api, tasks, rows = _real_family(fid)
+        idx = rng.sample(range(len(rows)), 3)
+        rest = [t for i, t in enumerate(tasks) if i not in idx]
+        entry = "answer_" + fid
+        return B.build_prompt(entry, [api["describe"](rows[i]) for i in idx]), entry, rng.sample(rest, min(n_teach, len(rest)))
     tasks = G.make(fid, "teach", 30)
     shown = rng.sample(tasks, 3)
     rest = [t for t in tasks if t not in shown]
     entry = "answer_" + fid.replace("-", "_")
     return B.build_prompt(entry, [G.describe(t) for t in shown]), entry, rng.sample(rest, n_teach)
+
+
+def grader_for(fid: str):
+    if not fid.startswith("gen-"):
+        return _real_family(fid)[0]["grade"]
+    return lambda out, t: G.grade(out, t)
 
 
 def generate(args, model_name: str, prompt: str, n: int) -> list[str]:
@@ -56,9 +79,9 @@ def generate(args, model_name: str, prompt: str, n: int) -> list[str]:
         return list(ex.map(one, range(n)))
 
 
-def reward(args, text: str, tasks, entry: str, workdir: Path, tag: str) -> float:
+def reward(args, text: str, tasks, entry: str, workdir: Path, tag: str, grade=None) -> float:
     code = B.extract_code(text)
-    v = B.verify(code, tasks, lambda out, t: G.grade(out, t), workdir, tag, args.base_url, "qwen3-4b", 120, entry)
+    v = B.verify(code, tasks, grade or (lambda out, t: G.grade(out, t)), workdir, tag, args.base_url, "qwen3-4b", 120, entry)
     for suffix in (".py", ".out.json"):
         (workdir / f"{tag}{suffix}").unlink(missing_ok=True)
     return v["mean"]
@@ -143,21 +166,24 @@ def main():
     p.add_argument("--max-seq-len", type=int, default=10000)
     p.add_argument("--base-url", default="http://127.0.0.1:8001/v1")
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--families", default="", help="comma-separated families to train on (default: all generated training families); "
+                   "a real family such as mrcr uses its own teaching rows")
+    p.add_argument("--keep-solutions", action="store_true", help="save every sample whose reward reaches 0.9")
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
     work = a.out / "verify"
     work.mkdir(exist_ok=True)
     rng = random.Random(a.seed)
-    fams = training_families()
+    fams = a.families.split(",") if a.families else training_families()
     policy = Policy(a)
     current = a.start_name
     log = open(a.out / "steps.jsonl", "a")
     for step in range(1, a.steps + 1):
         t0 = time.time()
-        picks = rng.sample(fams, a.families_per_step)
+        picks = rng.sample(fams, a.families_per_step) if len(fams) >= a.families_per_step else [rng.choice(fams) for _ in range(a.families_per_step)]
         groups = []
         for fid in picks:
-            prompt, entry, tasks = prompt_for(fid, random.Random(f"{a.seed}:{step}:{fid}"), a.n_teach)
+            prompt, entry, tasks = prompt_for(fid, random.Random(f"{a.seed}:{step}:{fid}:{len(groups)}"), a.n_teach)
             groups.append((fid, prompt, entry, tasks))
         with ThreadPoolExecutor(len(groups)) as ex:
             samples = list(ex.map(lambda g: generate(a, current, g[1], a.group), groups))
@@ -165,8 +191,14 @@ def main():
         jobs = [(gi, k) for gi in range(len(groups)) for k in range(a.group)]
         with ThreadPoolExecutor(8) as ex:
             rewards = list(ex.map(lambda gk: reward(a, samples[gk[0]][gk[1]], groups[gk[0]][3], groups[gk[0]][2], work,
-                                                    f"s{step}g{gk[0]}k{gk[1]}"), jobs))
+                                                    f"s{step}g{gk[0]}k{gk[1]}", grader_for(groups[gk[0]][0])), jobs))
         R = [[rewards[gi * a.group + k] for k in range(a.group)] for gi in range(len(groups))]
+        if a.keep_solutions:
+            for gi, rs in enumerate(R):
+                for k, r in enumerate(rs):
+                    if r >= 0.9:
+                        (a.out / "solutions").mkdir(exist_ok=True)
+                        (a.out / "solutions" / f"step{step}-g{gi}-k{k}-{groups[gi][0]}.py").write_text(B.extract_code(samples[gi][k]))
         items = []
         for gi, rs in enumerate(R):
             if max(rs) - min(rs) < 1e-9:
