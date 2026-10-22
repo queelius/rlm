@@ -7,6 +7,11 @@ evidence or new prior art suggests, and append a line to the revision log. The q
 by expected information per GPU-hour and readiness, not by when an idea arrived.
 
 Revision log:
+- 2026-10-22 02:10 (allocation 6599, two A100s to 25 Oct 00:52 UTC): prior-art pass (below, "Prior art
+  for questions 1, 4, 5"). Started E21 (bootstrap a library for MRCR; 4B and 8B proposers; direct and
+  no-library baselines) and E22 (long-haystack MuSiQue, a family that needs semantic helper calls and
+  the recursion testbed). Hygiene added from the critiques of library learning: report per-routine reuse
+  and a compute-matched no-library baseline for every library claim.
 - 2026-10-21 23:45 (end of allocation): completed since 18:00: E17 (helper training negative), E18
   (released RLM-Qwen3-8B 0.290 vs library 0.672), E18b (131k window, partial, about 0.32), E19 (paper's
   131K TREC setting 45.3, GPT-5 base 44.0), S5 and S5b (360M caller), E20 (long store logs 98/108).
@@ -360,3 +365,30 @@ statistics and growth evaluation, which are the binding constraint now (six to e
 sweeps share it). After the RL lanes end, GPU 0 is free for an 8B serving slot (librarian proposer,
 capacity study C1) or the OOLONG 293-row library run. Before the allocation ends: rebuild the
 training environment inside the monorepo, prune per-step adapters, publish the handoff.
+
+## Prior art for questions 1, 4, 5 (searched 2026-10-22)
+
+Closest work, to position against:
+- **Recursive Language Models v3** (arXiv 2512.24601, May 2026): adds `rlm_query` child RLMs; depth 2 to 3
+  helps GPT-5 on OOLONG-Pairs but mostly hurts Qwen3-Coder; RLVR on Qwen3-4B for MRCRv2 at depth 1 (numbers
+  only in a figure). Our MRCR comparison: a bootstrapped library with an untrained or distilled caller, no RL.
+- **λ-RLM** (arXiv 2603.20105): a fixed hand-written combinator library (Split, Map, Filter, Reduce, Cross)
+  chosen by one LLM call; Qwen3-8B 35.7 vs 13.8 for free-form RLM. Nearest to our prebound library; it does
+  not learn, bootstrap or grow the library, and has no distilled small caller.
+- **Recursive Agent Optimization** (arXiv 2605.06639): end-to-end RL for recursive sub-agents, depth up to 12;
+  OOLONG-Real 0.203 to 0.320 with depth 2. The main evidence that depth helps (under RL).
+- **SRLM** (arXiv 2603.15653): program sampling plus self-consistency beats RLM and argues recursion is not
+  the driver: the null hypothesis for question 4.
+- **PEEK** (arXiv 2605.19932) and **Prime Agent** (arXiv 2608.23552): continual context maps and saved skills
+  in RLM harnesses, ungated; baselines for question 5. **GRASP** (arXiv 2605.29668) and **SkillGen**
+  (arXiv 2605.10999): gated skill acceptance outside long context; report repairs and regressions per routine.
+- **ARISE** (arXiv 2606.02994): natural-language subroutines executed by an LLM beat code tools by 8 to 19
+  points; an "LLM-executed vs code routine" ablation belongs in question 1.
+- Critiques: library learning rarely reuses its library and gains vanish under matched compute
+  (arXiv 2410.20274, 2504.03048, 2507.22069; ContinualSkillBench 2608.03874). Every library claim reports
+  reuse and a compute-matched baseline.
+- MRCR baselines for small models: QwenLong-L1.5 (arXiv 2512.12967) reports Qwen3-4B-Thinking 39.85 on MRCR
+  0 to 128K. No program-based MRCR work was found; reviewers may call MRCR string-matchable, so MuSiQue
+  (semantic, multi-hop) is the stronger test of bootstrapping.
+- Frontier long-context agents to frame against (cost and size, not raw accuracy): coding agents
+  (arXiv 2603.20432), Recursive Agent Harnesses (arXiv 2606.13643), LCM (arXiv 2605.04050).

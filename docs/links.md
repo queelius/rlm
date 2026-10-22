@@ -70,3 +70,15 @@ notebook: [rlm-research](https://github.com/queelius/rlm-research). Prior study:
 - SkillRL [arXiv:2602.08234](https://arxiv.org/pdf/2602.08234); AutoRefine
   [arXiv:2601.22758](https://www.alphaxiv.org/abs/2601.22758); survey of agent adaptation
   [arXiv:2512.16301](https://arxiv.org/pdf/2512.16301).
+
+## Prior art added 22 October 2026
+
+λ-RLM, a fixed combinator library for RLMs (https://arxiv.org/abs/2603.20105); Recursive Agent
+Optimization (https://arxiv.org/abs/2605.06639); SRLM (https://arxiv.org/abs/2603.15653); PEEK
+(https://arxiv.org/abs/2605.19932); Prime Agent (https://arxiv.org/abs/2608.23552); GRASP
+(https://arxiv.org/abs/2605.29668); SkillGen (https://arxiv.org/abs/2605.10999); ARISE
+(https://arxiv.org/abs/2606.02994); library-learning critiques (https://arxiv.org/abs/2410.20274,
+https://arxiv.org/abs/2504.03048, https://arxiv.org/abs/2507.22069); ContinualSkillBench
+(https://arxiv.org/abs/2608.03874); QwenLong-L1.5 (https://arxiv.org/abs/2512.12967); coding agents as
+long-context processors (https://arxiv.org/abs/2603.20432); Recursive Agent Harnesses
+(https://arxiv.org/abs/2606.13643); LCM (https://arxiv.org/abs/2605.04050).
