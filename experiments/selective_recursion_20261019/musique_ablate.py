@@ -28,7 +28,7 @@ import musique_tasks as M  # noqa: E402
 ROUTINE = (HERE / "skills" / "reference" / "musique_filter_read.py").read_text()
 READER = ("Answer the multi-step question from the paragraphs. Work out each step briefly, then finish with one line "
           "'ANSWER: <short answer>' giving a short phrase (a name, place, date or number). Always give your best answer.")
-ARMS = ("bm25_15", "bm25_60", "filter", "both", "both_rank", "oracle", "random60", "iter2")
+ARMS = ("bm25_15", "bm25_60", "filter", "both", "both_rank", "oracle", "random60", "iter2", "iter3")
 FOLLOWUP = ("You help answer a multi-step question from a large collection of paragraphs. You are shown the paragraphs "
             "found so far. Name the one fact that is still missing (usually about an entity found in these paragraphs) "
             "and write a short search query for it, on one line 'QUERY: <query>'. If nothing is missing, write "
@@ -109,21 +109,28 @@ def main():
         filter_tokens = local.stats["tokens"]
         rank = ns["bm25"](paras, q, k=len(paras))
         union = set(filt) | set(rank[:15])
-        iter_tokens = 0
-        if "iter2" in arms and (t.task_id, "iter2") not in done:  # two-round retrieval: question, then the missing fact
-            r1 = rank[:20]
+        iter_tokens = {"iter2": 0, "iter3": 0}
+        iter_keeps = {"iter2": [], "iter3": []}
+        for arm_name, rounds in (("iter2", 2), ("iter3", 3)):
+            if arm_name not in arms or (t.task_id, arm_name) in done:
+                continue
+            keep_set = list(rank[:20])  # round 1: the question; later rounds: the helper's query for the missing fact
             local.stats = {"tokens": 0}
-            ctx1 = "\n\n".join(f"[{i + 1}] {paras[i]}" for i in sorted(r1))
-            fq = ask(f"Paragraphs found so far:\n{ctx1}\n\nQuestion: {q}", system=FOLLOWUP,
-                     options={"temperature": 0, "max_output_tokens": 200})
-            iter_tokens = local.stats["tokens"]
-            mq = re.findall(r"QUERY:\s*(.+)", fq or "")
-            q2 = mq[-1].strip() if mq else ""
-            r2 = [i for i in ns["bm25"](paras, q2 + " " + q, k=60) if i not in set(r1)][:20] if q2 and q2.upper() != "DONE" else []
-            iter_keep = sorted(set(r1) | set(r2))
-        else:
-            iter_keep = []
-        keeps = dict(iter2=iter_keep, 
+            for _ in range(rounds - 1):
+                ctx1 = "\n\n".join(f"[{i + 1}] {paras[i]}" for i in sorted(keep_set))
+                try:
+                    fq = ask(f"Paragraphs found so far:\n{ctx1}\n\nQuestion: {q}", system=FOLLOWUP,
+                             options={"temperature": 0, "max_output_tokens": 800})
+                except Exception:  # noqa: BLE001
+                    fq = ""
+                mq = re.findall(r"QUERY:\s*(.+)", fq or "")
+                q2 = mq[-1].strip() if mq else ""
+                if not q2 or q2.upper() == "DONE":
+                    break
+                keep_set += [i for i in ns["bm25"](paras, q2 + " " + q, k=80) if i not in set(keep_set)][:20]
+            iter_tokens[arm_name] = local.stats["tokens"]
+            iter_keeps[arm_name] = sorted(keep_set)
+        keeps = dict(iter2=iter_keeps["iter2"], iter3=iter_keeps["iter3"], 
             bm25_15=sorted(rank[:15]), bm25_60=sorted(rank[:60]), filter=sorted(filt),
             both=sorted(union)[:60], both_rank=sorted(sorted(union, key=rank.index)[:60]), oracle=sorted(gold),
             random60=sorted(random.Random(hash(t.task_id) % 2**32).sample(range(len(paras)), min(60, len(paras)))))
@@ -149,7 +156,7 @@ def main():
             row = dict(task_id=t.task_id, size=t.n_records, arm=arm, hops=len(gold), n_paragraphs=len(paras), kept=len(keep),
                        support_recall=(len(set(keep) & set(gold)) / len(gold)) if gold else None,
                        read_tokens=local.stats["tokens"],
-                       filter_tokens=filter_tokens if arm in ("filter", "both", "both_rank") else (iter_tokens if arm == "iter2" else 0),
+                       filter_tokens=filter_tokens if arm in ("filter", "both", "both_rank") else iter_tokens.get(arm, 0),
                        output_text=ans, fell_back=fell_back, seconds=round(time.time() - t0, 1), **g)
             with lock:
                 with rows_path.open("a") as f:
