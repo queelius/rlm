@@ -40,7 +40,12 @@ def main():
     p.add_argument("--base-url", default="http://127.0.0.1:8006/v1")
     p.add_argument("--model", default="qwen3-4b")
     p.add_argument("--concurrency", type=int, default=4)
+    p.add_argument("--arms", default=",".join(ARMS))
+    p.add_argument("--read-max-tokens", type=int, default=600)
+    p.add_argument("--fallback", action="store_true",
+                   help="when the reader gives no ANSWER line, ask once more for the short answer only")
     a = p.parse_args()
+    arms = tuple(a.arms.split(","))
     from openai import OpenAI
 
     client = OpenAI(base_url=a.base_url, api_key="local", timeout=900)
@@ -73,7 +78,7 @@ def main():
     lock = threading.Lock()
 
     def work(t):
-        if all((t.task_id, arm) in done for arm in ARMS):
+        if all((t.task_id, arm) in done for arm in arms):
             return
         ns = {"ask": ask, "ask_batch": ask_batch}
         exec(compile(ROUTINE, "routine", "exec"), ns)
@@ -90,22 +95,30 @@ def main():
             bm25_15=sorted(rank[:15]), bm25_60=sorted(rank[:60]), filter=sorted(filt),
             both=sorted(union)[:60], both_rank=sorted(sorted(union, key=rank.index)[:60]), oracle=sorted(gold),
             random60=sorted(random.Random(hash(t.task_id) % 2**32).sample(range(len(paras)), min(60, len(paras)))))
-        for arm in ARMS:
+        for arm in arms:
             if (t.task_id, arm) in done:
                 continue
             keep = keeps[arm]
             local.stats = {"tokens": 0}
             ctx = "\n\n".join(f"[{i + 1}] {paras[i]}" for i in keep) or "(no paragraphs)"
             t0 = time.time()
-            out = ask(f"Paragraphs:\n{ctx}\n\nQuestion: {q}", system=READER, options={"temperature": 0, "max_output_tokens": 600})
+            out = ask(f"Paragraphs:\n{ctx}\n\nQuestion: {q}", system=READER,
+                      options={"temperature": 0, "max_output_tokens": a.read_max_tokens})
             m = re.findall(r"ANSWER:\s*(.+)", out or "")
+            fell_back = False
+            if not m and a.fallback:
+                fell_back = True
+                out2 = ask(f"Question: {q}\n\nNotes from reading the evidence:\n{(out or '')[-3000:]}\n\n"
+                           "Give the final answer as a short phrase (a name, place, date or number) on one line "
+                           "of the form 'ANSWER: <answer>'.", options={"temperature": 0, "max_output_tokens": 40})
+                m = re.findall(r"ANSWER:\s*(.+)", out2 or "") or ([out2.strip().splitlines()[0]] if (out2 or "").strip() else [])
             ans = "ANSWER: " + (m[-1].strip() if m else (out or "unknown").strip().splitlines()[-1] if out else "unknown")
             g = M.grade(ans, t)
             row = dict(task_id=t.task_id, size=t.n_records, arm=arm, hops=len(gold), n_paragraphs=len(paras), kept=len(keep),
                        support_recall=(len(set(keep) & set(gold)) / len(gold)) if gold else None,
                        read_tokens=local.stats["tokens"],
                        filter_tokens=filter_tokens if arm in ("filter", "both", "both_rank") else 0,
-                       output_text=ans, seconds=round(time.time() - t0, 1), **g)
+                       output_text=ans, fell_back=fell_back, seconds=round(time.time() - t0, 1), **g)
             with lock:
                 with rows_path.open("a") as f:
                     f.write(json.dumps(row) + "\n")
@@ -113,7 +126,7 @@ def main():
     with ThreadPoolExecutor(a.concurrency) as ex:
         list(ex.map(work, tasks))
     rows = [json.loads(l) for l in rows_path.read_text().splitlines()]
-    for arm in ARMS:
+    for arm in arms:
         for s in sorted({r["size"] for r in rows}):
             rs = [r for r in rows if r["arm"] == arm and r["size"] == s]
             if rs:
