@@ -1054,6 +1054,22 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Two-round retrieval (E22f, 08:41 UTC). Putting capacity into selection: BM25 top 20 for the question, then
+the 4B helper reads those and writes one query for the missing fact (usually the bridge entity), BM25 top 20
+new paragraphs for that query, and the same 4B reader over the union. Both question samples (180), paired
+against one-round BM25 top 60 in the same run:
+
+| Arm | 8k | 32k | 128k | all | recall | paragraphs read | tokens |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| BM25 top 60 | 0.464 | 0.286 | 0.437 | 0.396 | 0.91 | 59 | 8.3k |
+| Two-round retrieval | 0.543 | 0.378 | 0.438 | 0.453 | 0.87 | 31 | 7.5k |
+
++0.058 (paired se 0.033, n 180; +0.024 and +0.091 on the two samples) with fewer tokens and half the
+paragraphs: a targeted second query beats a wider net, and it beats the filter+BM25 routine (0.423 pooled) at a
+seventh of its cost. The gain is at 8k and 32k; at 128k the two tie, so the follow-up query does not yet find
+the bridge paragraph in a thousand-paragraph haystack. Next: two-round retrieval as the MuSiQue library (v4)
+with the callers, and a third round or query rewriting at 128k.
+
 Reader capacity (E22e, 08:12 UTC). The 4-bit Qwen3-8B with thinking as the reader (6,000-token cap,
 same fallback), on both question samples (180 questions), against the 4B reader on the same questions:
 
