@@ -1067,6 +1067,16 @@ Two rounds over BM25: +0.067 (paired se 0.028), replicating E22f (+0.058). A thi
 se 0.025; +0.006 at 128k) at twice the helper tokens. The earlier tie at 128k (E22f) was sample noise: here two
 rounds gain there too. Two rounds are enough.
 
+Primitives for the proposer (E34, 12:01 UTC). The same 8B MuSiQue bootstrap on the mixed-length teaching set,
+with three primitives described in the contract and preloaded (numbered_paragraphs, chunks, bm25). 17 of 24
+candidates call BM25 (none did without primitives). The best (0.464 vs 0.383 without primitives; the two-round
+reference scores 0.617 on this set) takes BM25's top 15 paragraphs and reads them in chunks: 0.35 / 0.59 / 0.45 at
+8k / 32k / 128k, where the best candidate without primitives scored 0 at 128k. Given the parts, the proposer
+composes a retrieval routine that survives long inputs; it does not find the second, targeted retrieval round that
+makes the reference better. Library discovery for helper-dependent families needs either primitives (a
+combinator library in the sense of lambda-RLM) or a stronger proposer; with primitives the remaining gap is the
+composition, which RL on the proposer might close.
+
 RL for the proposer (E26c, 11:38 UTC). On-policy policy gradient from the round-two SFT adapter (proposer_rl.py,
 after SMITH): each step 8 training families, 4 sampled libraries each, reward = the verified score on 12
 teaching tasks not shown in the prompt, leave-one-out advantage, one LoRA update; 40 steps in 30 minutes on half an
