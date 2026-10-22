@@ -136,3 +136,22 @@ by hand. Changes, in order of value:
   program-solvable variants (MRCR 8-needle, paraphrased asks) to find where a parser stops sufficing and
   helper calls become necessary; (d) libraries whose code depends on the helper (MuSiQue) are the real test
   of bootstrapping, since there the program alone cannot answer.
+- 2026-10-22 06:20: step back after a dense night.
+  **What now looks solid:** (1) a library beats reading once the input outgrows the window, and the gain is
+  not bought by compute (E28: majority-of-3 sampling at 2.3 times the tokens does worse); (2) the calling
+  policy is thin and transfers: a 0.6B caller distilled on two families calls libraries of families it never
+  saw (MRCR 1.000, MuSiQue level with the 4B); (3) for an untrained caller, one usage line in the docstring
+  decides whether a library is used at all (E25c/d, 0.18 to 0.95); (4) recursion, paper-style or per hop,
+  does not help a small model on MuSiQue (E23); (5) library discovery is gated by the proposer: on 37
+  generated families thinking 8B 73 percent, thinking 4B 44 percent, non-thinking 4B and 8B 11 to 14 percent;
+  on MRCR only the thinking 8B, on 1 of 3 seeds.
+  **What was withdrawn:** the "distractor-limited reader" reading and length routing (E31, pre-registered):
+  30-question cells cannot separate close routines; per-length claims now need pooled samples.
+  **What changed in method:** paired tests over all questions, pre-registration for selection claims, exit
+  codes on every job, a reader-truncation check (fragments) on every QA routine.
+  **New questions, ranked:** (a) can library writing be distilled into a non-thinking 4B (E26b, training
+  now) and does it reach MRCR; (b) where should capacity go in a QA routine: the reader (gold-paragraph
+  ceiling 0.63 with a 4B) or the selector (BM25 alone is as good as a 4B filter): an 8B-reader arm answers
+  it; (c) does the generic map-reduce library carry to a heterogeneous benchmark (E32 LongBench-v2, running);
+  (d) is the LLM reflector worth its cost over random search on the routine's numbers (E24c, running);
+  (e) the MRCR shortcut (I-001) as a short benchmark note, since nobody has published it.
