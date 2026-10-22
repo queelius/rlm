@@ -1054,6 +1054,25 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Distilling library writing into the 4B (E26b, 09:21 UTC). A LoRA (rank 32, 3 epochs, 4.5 minutes on half an
+A100 slice) on 42 verified (prompt, library) pairs that the thinking 8B wrote for training families (formats
+pipe, kv, jsonl, csv, table; code only, the thinking dropped; repair-round successes paired with the round-0
+prompt). Held-out discovery, the same 37 families and settings as the untrained 4B:
+
+| Proposer | solved | of which string formats | chat | proposer tokens per family |
+| --- | --- | --- | --- | --- |
+| 4B Instruct, untrained | 5 | 0 | 5 of 9 | 4.0k |
+| 4B Instruct + LoRA on the 8B's libraries | 9 | 7 | 2 of 9 | 2.6k |
+| Qwen3-8B-AWQ, thinking (the teacher) | 20 | 12 | 8 of 9 | 49k |
+
+Paired by family the tuned model gains 8 and loses 4 (exact McNemar p 0.39), so the net gain is not
+established; the pattern is clearer: every gain is a string format (prose, XML-like, table), formats never
+solved before and unlike the training formats only in surface, and every loss is the chat format, which no
+training family used. On MRCR (a chat format) it fails all three seeds (best 0.034). Distillation transfers
+parsing skill across string formats and erodes message-list handling, at a twentieth of the teacher's tokens.
+Next: a second round with more pairs (the seed-variant training run) plus the model's own verified
+successes as a guard against forgetting, and two discovery seeds per arm to tighten the comparison.
+
 Helper ceiling for the semantic families (E26, 09:20 UTC). The thinking 8B solved 20 of 37 held-out generated
 families, none of the 8 that need the helper (semantic_total: sum the units of items of a category). Those are
 near misses, not proposer failures: the best libraries call the helper 40 to 60 times per task and score 0.77
