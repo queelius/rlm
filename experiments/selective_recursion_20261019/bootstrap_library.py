@@ -60,6 +60,11 @@ def family_api(family: str):
         teach = F.make("teach", 8192, 30, seed=0)
         return dict(teach=teach, describe=F.describe, as_task=lambda t: t,
                     grade=lambda out, t: F.grade(out or "", t)["f1"])
+    if family.startswith("gen-"):
+        import family_gen as F
+
+        teach = F.make(family, "teach", 30)
+        return dict(teach=teach, describe=F.describe, as_task=lambda t: t, grade=lambda out, t: F.grade(out, t))
     raise ValueError(family)
 
 
@@ -145,7 +150,7 @@ def main():
     from openai import OpenAI
 
     api = family_api(a.family)
-    entry = f"answer_{a.family}"
+    entry = "answer_" + re.sub(r"\W", "_", a.family)
     rng = random.Random(a.seed)
     teach_rows = api["teach"]
     tasks = [api["as_task"](r) for r in teach_rows]

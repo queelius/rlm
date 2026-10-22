@@ -28,8 +28,9 @@ def summarize(d: Path):
         return dict(kind="bootstrap", n=len(rows), arms=f"best teaching {best:.3f}", errors=sum(bool(r.get("load_error")) for r in rows), age=age)
     arms = collections.defaultdict(lambda: [0, 0.0, 0])
     for r in rows:
-        k = r.get("policy", "?") + ("/" + r["harness"] if r.get("harness") else "")
-        v = r.get("score", r.get("correct", 0))
+        k = r.get("policy") or r.get("arm") or "?"
+        k += "/" + r["harness"] if r.get("harness") else ""
+        v = r.get("score", r.get("f1", r.get("correct", 0)))
         arms[k][0] += 1
         arms[k][1] += float(v or 0)
         arms[k][2] += bool(r.get("error"))

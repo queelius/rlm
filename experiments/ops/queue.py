@@ -64,7 +64,16 @@ def running():
     return out
 
 
+def slots():
+    """Lane capacities, re-read every loop from QUEUE/slots.json so they change without a restart."""
+    try:
+        return {**SLOTS, **json.loads((QUEUE / "slots.json").read_text())}
+    except (OSError, json.JSONDecodeError):
+        return SLOTS
+
+
 def dispatch_once(log):
+    SLOTS = slots()  # noqa: N806
     run = running()
     busy = {lane: sum(1 for j in run if j["lane"] == lane) for lane in SLOTS}
     pending = []

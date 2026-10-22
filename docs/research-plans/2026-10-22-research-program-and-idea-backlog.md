@@ -55,6 +55,30 @@ anything once routines and selection live outside the weights.
 | E34 | **Combinator library plus learned composition** (λ-RLM primitives with the small caller composing them) | same families, compare with routine-per-family libraries | fixed primitives vs learned routines |
 | E35 | **Library portability across helper models** (routines written against Qwen helpers run with other helpers) | swap helpers to Phi-4-mini or the 8B | is a library tied to its helper |
 
+## Related work found at the 22 October scan, and what it changes
+
+- **SMITH** (arXiv 2608.24571, Aug 2026) trains Qwen3-4B-Instruct with LoRA and DAPO (about 60 steps) to
+  write tools from 4 examples, rewarded by the tool's pass rate on 16 held-out items; tools from the trained
+  4B lift a frozen 350M model from 11.6 to 42.9 on unseen tasks. E26 is therefore not novel as "RL makes a
+  small model a tool writer". What remains ours: libraries for long-context RLM families, including
+  helper-dependent routines (MuSiQue, OOLONG) where the program alone cannot answer; the separation of
+  reasoning from scale (E21b ladder); and transfer to real benchmarks through a distilled caller. First arm:
+  rejection-sampling fine-tuning on the 8B's verified libraries for generated families (SOAR, arXiv
+  2507.14172, does this for ARC), before any RL.
+- **CASD** (arXiv 2609.26261) optimizes prompts with one offline pass of a coding agent over saved traces
+  and beats GEPA on average at a fraction of the cost; **RLMOpt** (arXiv 2608.10471) runs the prompt search
+  with an RLM. Both are comparison arms for E24. No work found on whether optimized prompts must differ by
+  caller size (GEPA's smallest model was 8B), which E25 tests.
+- **PARSER** (arXiv 2609.06702): parallel 4B chunk readers plus an RL-trained 4B lead over several rounds,
+  85.4 on HotpotQA at 112k; our filter-then-read is the one-round version. Knobs worth adding to E22c:
+  rounds and reader size. Coding agents (arXiv 2603.20432) found BM25 hurt on every benchmark tested, which
+  E22c checks for our routine; tuned deeper BM25 matches dense retrieval on BrowseComp-Plus (arXiv
+  2605.10848).
+- **Recursion:** a reproduction (arXiv 2603.02615) finds depth-2 recursion overthinks and hurts on
+  retrieval; a theory paper (arXiv 2609.20831) argues recursion helps out of distribution, not within it.
+  Both agree with E23 so far (recursive library below depth-0 library).
+- **MRCR:** no published critique showing MRCR is parser-solvable was found; registered as idea I-001.
+
 ## How the research workflow itself should improve
 
 The costliest failures of 19 to 22 October were operational, not scientific: GPUs idle for 16.5 hours
@@ -85,7 +109,9 @@ by hand. Changes, in order of value:
    candidate hard-coded a teaching example's string) before registration.
 8. **A live status page for the user**: a periodically republished artifact with the queue, running
    arms and latest ledger rows, so progress is visible without reading the terminal.
-9. **Scheduled reflection**: at every plan revision and at least every 12 GPU-hours, a short entry in
+9. **An idea registry** ([ideas/registry.md](../ideas/registry.md)) for questions noticed along the way,
+   including ones outside RLMs, each with a prior-art verdict, the queries behind it and a smallest test.
+10. **Scheduled reflection**: at every plan revision and at least every 12 GPU-hours, a short entry in
    the reflection log below, an idea added or retired, and a related-work check.
 
 ## Reflection log

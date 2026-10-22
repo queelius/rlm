@@ -20,6 +20,9 @@ VARIANTS = {
     # libraries written by a proposer model (bootstrap_library.py), reviewed before use; kept out of
     # skills/learned/ so they never shadow a variant in a running job
     "mrcr_boot8b": {"mrcr": dict(path=SKILLS_DIR / "bootstrapped" / "mrcr_8b.py", families={"mrcr"})},
+    # E25c: the docstring's typical-use line, added to the 8B library and removed from the reference
+    "mrcr_boot8b_use": {"mrcr": dict(path=SKILLS_DIR / "bootstrapped" / "mrcr_8b_use.py", families={"mrcr"})},
+    "mrcr_ref_nouse": {"mrcr": dict(path=SKILLS_DIR / "reference" / "mrcr_handwritten_nouse.py", families={"mrcr"})},
 }
 LEARNED_DIR = SKILLS_DIR / "learned"
 
