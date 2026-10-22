@@ -29,6 +29,7 @@ def main():
     p.add_argument("--max-output-tokens", type=int, default=8192)
     p.add_argument("--prompt-suffix", default="")
     p.add_argument("--concurrency", type=int, default=4)
+    p.add_argument("--boot-seed", type=int, default=0, help="bootstrap seed: which teaching examples are shown, and sampling")
     a = p.parse_args()
     fams = a.families.split(",") if a.families else G.family_ids(a.split, tuple(int(s) for s in a.seeds.split(",")))
     a.out.mkdir(parents=True, exist_ok=True)
@@ -40,7 +41,7 @@ def main():
             return fid
         cmd = [py, str(HERE / "bootstrap_library.py"), "--family", fid, "--out", str(d), "--model", a.model, "--base-url", a.base_url,
                "--helper-base-url", a.helper_base_url, "--max-output-tokens", str(a.max_output_tokens), "--candidates", str(a.candidates),
-               "--repair-rounds", str(a.repair_rounds), "--threshold", "0.9", "--timeout", "600"]
+               "--repair-rounds", str(a.repair_rounds), "--threshold", "0.9", "--timeout", "600", "--seed", str(a.boot_seed)]
         if a.prompt_suffix:
             cmd += ["--prompt-suffix", a.prompt_suffix]
         d.mkdir(parents=True, exist_ok=True)
