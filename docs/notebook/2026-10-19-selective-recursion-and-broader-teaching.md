@@ -1054,6 +1054,18 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Compute-matched null (E28, 03:42 UTC). Direct answering by the 4B sampled three times at temperature 0.7 and
+combined by majority over normalized answers, on the same 30 held-out questions per length:
+
+| MuSiQue | direct, T=0 | majority of 3, T=0.7 (tokens) | best of 3, chosen with gold (bound) | 4B + library (tokens) |
+| --- | --- | --- | --- | --- |
+| 8k | 0.515 | 0.499 (23k) | 0.603 | 0.549 (13k) |
+| 32k | 0.248 | 0.217 (88k) | 0.258 | 0.353 (39k) |
+
+At 32k the library beats majority-of-3 by +0.136 (paired se 0.084, n 30) at less than half the tokens, and
+even choosing the best of three samples with the gold answer reaches only 0.258: the library's gain is not
+bought by more compute spent reading. At 8k there is no difference.
+
 Component ablation of filter-then-read (E22c, complete 03:36 UTC). Scripted, 90 held-out questions, the same
 4B reader for every arm; answer F1, gold-support recall, paragraphs kept, helper tokens per question:
 
