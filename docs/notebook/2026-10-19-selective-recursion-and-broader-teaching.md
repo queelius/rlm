@@ -1034,6 +1034,44 @@ both overflow at 128k), so recursion alone does not help. A component ablation (
 both, both trimmed by rank, gold paragraphs only, random paragraphs) is queued to locate the gain; the
 reference routine trims its union by position, which may drop gold paragraphs at long lengths.
 
+MuSiQue with the library, and recursion (E22, E23, E25; complete at 02:57 UTC). Answer F1, 30 held-out dev
+questions per cell (helper tokens per question in brackets):
+
+| Arm | 8k | 32k | 128k |
+| --- | --- | --- | --- |
+| Direct answer, 4B | 0.515 | 0.248 | overflow |
+| RLM, no library, depth 0 | 0.485 | 0.251 | overflow |
+| RLM, no library, depth 1 (paper-style recursion) | 0.514 | 0.250 | overflow |
+| Reference routine alone (no controller) | 0.439 | 0.399 | 0.464 |
+| Untrained 4B + reference library | 0.549 (13k) | 0.353 (39k) | 0.475 (133k) |
+| Distilled 0.6B + reference library | 0.574 | 0.356 | 0.448 |
+| 4B + recursive library (child RLM per hop) | 0.289 (41k) | 0.290 (140k) | 0.340 (513k) |
+
+At 8k direct reading is as good as any routine; the library pays from 32k and is the only way to answer at
+128k (0.45 to 0.48); at 512k the reference routine still scores 0.355 (20 questions). The distilled 0.6B
+caller matches the untrained 4B on a family it never saw. Recursion does not help: paper-style depth 1 is
+level with depth 0, and a library that hands each hop to a child RLM is worse at every length at three to
+four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
+(arXiv 2603.02615).
+
+Documentation decides whether an untrained caller uses a library (E25c, 02:45 UTC). The 8B-written MRCR
+library omitted the contract's "Typical use: FINAL_TEXT(answer_mrcr(request))." line. Without it the untrained
+4B often sent the whole input to `model_complete` (overflowing at 128k and above) or retyped the routine's
+output by hand in a second cell. Swapping only that line, 4B caller, MRCR held-out (64 rows each):
+
+| Library | without the usage line | with it |
+| --- | --- | --- |
+| 8B-written, 2 needles | 0.592 (23 errors) | 0.953 (1 error) |
+| 8B-written, 4 needles | 0.576 (22 errors) | 0.875 (3 errors) |
+| Hand-written reference, 2 needles | 0.215 (35 errors) | 0.952 (0 errors) |
+
+The distilled 0.6B caller scores 1.000 without the line. The bootstrapper now inserts the line into accepted
+libraries that omit it. Whether distillation or size makes the 0.6B immune is being tested with the untrained
+0.6B. Separately, one thinking-off 8B bootstrap seed was confounded by a harness fault (an all-zero degenerate
+16k-token first candidate stayed best and overflowed every repair prompt; fixed by tie-breaking toward
+loadable short code and capping quoted code) and is being rerun; the clean thinking-off seed failed (best
+0.214 in 24 candidates).
+
 Workflow (02:10 UTC). A job queue (`experiments/ops/queue.py`) with a detached dispatcher, a checked
 launcher (`launch.py`: argument dry run, manifest, early health check) and one status view (`status.py`)
 replace hand launches; the dispatcher's first version never reaped its wrappers and so never freed a
