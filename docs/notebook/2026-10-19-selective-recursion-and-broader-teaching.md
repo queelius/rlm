@@ -1054,6 +1054,20 @@ level with depth 0, and a library that hands each hop to a child RLM is worse at
 four times the tokens, in line with a reproduction that found deeper recursion overthinks on retrieval
 (arXiv 2603.02615).
 
+Reader capacity (E22e, 08:12 UTC). The 4-bit Qwen3-8B with thinking as the reader (6,000-token cap,
+same fallback), on both question samples (180 questions), against the 4B reader on the same questions:
+
+| Reader | BM25 top 60: 8k / 32k / 128k / all | gold paragraphs: all |
+| --- | --- | --- |
+| 4B | 0.483 / 0.311 / 0.422 / 0.405 | 0.625 |
+| 8B, thinking | 0.566 / 0.310 / 0.382 / 0.419 | 0.666 |
+
+Paired 8B minus 4B: +0.014 with BM25 retrieval (se 0.032), +0.041 with gold paragraphs (se 0.029). A bigger
+reader does not close the 0.2 to 0.25 gap between gold paragraphs and retrieved ones; that gap is in
+selecting the two to four supporting paragraphs among 60 candidates, which neither BM25 nor the 4B filter does
+well. Capacity in a MuSiQue routine belongs in selection (multi-hop retrieval, iterative query reformulation),
+not in reading.
+
 MuSiQue bootstrap and the verification distribution (E22b, 07:13 UTC). The 8B proposer's MuSiQue bootstrap
 ended below its threshold (best 0.429 of 0.6 over 24 candidates), but the cause is the design: all 30 teaching
 tasks were 8k haystacks, where reading everything works, so verification ranked first a candidate that sends
