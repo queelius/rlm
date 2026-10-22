@@ -61,7 +61,8 @@ Untrained 4B + library & 0.95 & 0.88 \\
 4B Instruct: 0 of 1\\
 4B, thinking off / on: 0 of 1 / 0 of 2\\
 8B, thinking off: 0 of 2\\
-8B, thinking on: \textbf{2 of 5}
+8B, thinking on: \textbf{2 of 5}\\
+4B after SFT + RL: 0 of 4; test-time RL on MRCR: 0 in 1,920 samples
 \end{block}
 \small \alert{Caveat:} MRCR is solvable by a short parser, so this measures program discovery, not reading. We
 found no published note saying so.
@@ -195,14 +196,15 @@ random search found nothing.
 \frametitle{What this changes, and what to test next.}
 \small
 \textbf{The thesis, sharpened.} For small recursive models, capability lives outside the weights: verified
-routines (bootstrapped by a capable proposer, or distilled into a small one), documentation that a thin caller can
-act on, and evidence selection inside the routine. Training pays where verification is local: in the proposer
-and in the caller's call discipline.\par\medskip
+routines (bootstrapped by a capable proposer, or by a small one trained on verified code and rewarded by verification),
+documentation a thin caller can act on, and evidence selection inside the routine. A 0.6B caller with a retrieval
+library beats a 4B reading the document on MuSiQue and on LongBench-v2.\par\medskip
 \textbf{Next}
 \begin{enumerate}\setlength\itemsep{1mm}
-\item Second distillation round: more of the 8B's libraries plus the model's own verified successes, chat
-included; two discovery seeds per arm.
-\item Bootstrap MuSiQue on mixed-length teaching (running) and against the two-round reference.
+\item Train the proposer on families that need the helper or a search strategy: trained only on code-solvable
+families, the 4B became a parser writer and ignores retrieval primitives.
+\item Primitives plus proposer training for MuSiQue-like families (the 8B composes BM25 into a working routine on 1
+of 2 seeds).
 \item Selection memory with pooled priors, since 30-question cells choose by noise.
 \item A short note on program-solvable long-context benchmarks (MRCR; candidates: Michelangelo, RULER).
 \end{enumerate}
