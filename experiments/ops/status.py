@@ -22,7 +22,6 @@ def summarize(d: Path):
     if not rows:
         return None
     age = (time.time() - f.stat().st_mtime) / 60
-    first = min(r.get("started") or 0 for r in rows) or None
     if name == "candidates.jsonl":
         best = max(r.get("mean", 0) for r in rows)
         return dict(kind="bootstrap", n=len(rows), arms=f"best teaching {best:.3f}", errors=sum(bool(r.get("load_error")) for r in rows), age=age)

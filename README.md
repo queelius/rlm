@@ -29,6 +29,21 @@ and in particular when to decompose at all. Short version:
   to 22 to 24 of 24 with no training. Verification kept out a buggy 4B routine that a stronger
   (8B) proposer then fixed.
 
+Added on 22 October (new families: OpenAI MRCR, MuSiQue in long haystacks, LongBench-v2, and 37 generated
+families for library discovery):
+
+- **Libraries can be bootstrapped, by a capable enough proposer.** A 4-bit Qwen3-8B with thinking wrote a
+  verified MRCR library from three examples (2 of 5 seeds) that scores 1.000 held out up to 1M tokens; a 0.6B
+  caller that never saw MRCR calls it correctly. No 4B proposer found it, however trained.
+- **Training the proposer works on families like its training ones.** SFT on the 8B's verified code, then RL
+  with the verified teaching score as reward, lifts a 4B from 9 to 30 of 74 held-out family attempts
+  (replicated; RL without SFT does not help). It does not transfer to MRCR or teach helper use.
+- **Choose evidence, do not summarize it.** Two-round retrieval is the best and cheapest MuSiQue library (also
+  at 512k tokens); on LongBench-v2 a retrieve-then-read library beats direct reading, 0.48 against 0.37, at a
+  quarter of the tokens, through the 0.6B caller. Bigger readers, map-reduce notes and recursion do not help.
+- **One line of documentation decides whether an untrained caller uses a library** (0.18 to 0.95 on MRCR);
+  a distilled caller does not need it.
+
 Evidence for each claim, with run locations and caveats, is in the
 [results ledger](docs/RESULTS.md); the narrative is in the
 [lab notebook](docs/notebook/) and the plan in [docs/research-plans/](docs/research-plans/).

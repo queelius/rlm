@@ -10,11 +10,12 @@ verified library of routines and a record of what worked.
     Read the [Primer](primer.md) first: what an RLM is, how our kernel works, one worked
     trajectory, and the vocabulary used everywhere else.
 
-## Headline results (as of 21 October 2026)
+## Headline results (as of 22 October 2026)
 
 The study set out to train a small controller to decompose long inputs, and found that the
 capability is better placed outside the weights. The full assessment, with limits and the next
-research questions, is the [synthesis of 21 October](notebook/2026-10-21-synthesis-and-next-questions.md).
+research questions, is the [synthesis of 21 October](notebook/2026-10-21-synthesis-and-next-questions.md)
+(section 7 updates it after 22 October).
 
 | Finding | Status | Where |
 | --- | --- | --- |
@@ -26,6 +27,10 @@ research questions, is the [synthesis of 21 October](notebook/2026-10-21-synthes
 | With library and table, caller size stops mattering: a 0.6B caller tuned on 436 of the 4B's own calls is right on exactly the same 293 rows as the 4B; the recipe transfers to Phi-4-mini | replication-grade n | ledger S1 to S4 |
 | The 0.6B caller works from 64k to 2M tokens on OOLONG (cost linear in length) and the library holds at 20k to 80k-token store logs (98/108 against 3/108 direct); OOLONG's remaining error is per-row label ambiguity in the helpers | exploratory | ledger E14, E15 to E17, E20 |
 | The RLM paper's released RLM-Qwen3-8B, run in its own scaffold, scores 0.290 on the same 293 rows (library: 0.672); on the paper's 131K TREC setting the 0.6B caller with the library scores 45.3, level with GPT-5 base (44.0) | exploratory | ledger E18, E19 |
+| A 4-bit Qwen3-8B with thinking writes a verified MRCR library from three examples (2 of 5 seeds; 1.000 held out to 1M tokens), and the 0.6B caller, never trained on MRCR, calls it correctly; no 4B proposer finds it | exploratory | ledger E21, E21b, E26b to E26d |
+| Training the proposer: SFT on the 8B's verified code then RL with the verified teaching score as reward lifts a 4B from 9 to 30 of 74 held-out family attempts (two RL seeds); RL without SFT does not help | replicated | ledger E26b, E26c |
+| Choose evidence: two-round retrieval is the best and cheapest MuSiQue library (512k tokens at 8k helper tokens per question); a retrieve-then-read library beats direct reading on LongBench-v2 (0.48 vs 0.37) through the 0.6B caller; bigger readers, map-reduce and recursion do not help | exploratory | ledger E22c to E22h, E23, E25e, E32 to E32d |
+| One docstring usage line decides whether an untrained caller uses a library (0.18 to 0.95 on MRCR); the distilled caller does not need it | exploratory | ledger E25c, E25d |
 
 ## How this site is organized
 

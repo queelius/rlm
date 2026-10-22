@@ -11,6 +11,16 @@ evidence or new prior art suggests, and append a line to the revision log. The q
 by expected information per GPU-hour and readiness, not by when an idea arrived.
 
 Revision log:
+- 2026-10-22 23:40: re-ranked after the day's results (ledger E21 to E34; synthesis section 7). Answered or
+  closed: bootstrapping (8B yes on 2 of 5 MRCR seeds, 4B no), recursion (no help), length routing (noise,
+  pre-registered), reader capacity (no help), routine evolution (numbers only, weak), proposer training (SFT then RL
+  works on generated families, replicated; not on MRCR; does not teach helper use with thin data). New lead
+  queue: (1) full LongBench-v2 (503) for the retrieval library, direct and through the 0.6B caller (running);
+  (2) RL with sampled token ids (lab I-019, running) as the standard for any further proposer RL; (3) helper-use
+  data from the 8B with a worked example (running) and a fourth proposer round on it; (4) primitives plus
+  proposer training for retrieval families; (5) lab proposals I-018 (decision swap for the distilled caller) and
+  I-004 (counterfactual route sampling). GPUs were idle about 3 to 4 h this evening after a usage-limit stop
+  with nothing queued (logged); the dispatcher's idle alarm exists but needs a watching session.
 - 2026-10-22 02:10 (allocation 6599, two A100s to 25 Oct 00:52 UTC): prior-art pass (below, "Prior art
   for questions 1, 4, 5"). Started E21 (bootstrap a library for MRCR; 4B and 8B proposers; direct and
   no-library baselines) and E22 (long-haystack MuSiQue, a family that needs semantic helper calls and

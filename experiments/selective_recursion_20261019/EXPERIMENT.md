@@ -25,10 +25,12 @@ helper calls, and route shares classified from traces (`route_analysis.py`, `rou
 
 **Compute.** Two A100 40GB MIG instances (GPU 0 training, GPU 1 vLLM). An RL run is about 2.5 h.
 
-**Status.** E06 replicated (four RL runs); E07 in progress. The narrative record is
+**Status.** E06 replicated (four RL runs); E07 closed (route RL collapses; see the ledger). The study then
+moved the routine into a library (E08 to E20) and, on 22 October, to where libraries come from and where they
+help (E21 to E34; section below). The narrative record is
 `docs/notebook/2026-10-19-selective-recursion-and-broader-teaching.md`; the claims
 are in `docs/RESULTS.md`. Run outputs, traces and adapters are in the run store named in
-`manifest.json` (not in git); pipeline scripts there are copied under `scripts/` at campaign end.
+`manifest.json` (not in git); pipeline scripts there are copied under `scripts/` (snapshot of 22 October; see `scripts/README.md`).
 
 ## Environments (rebuilt 2026-10-21)
 
@@ -52,3 +54,18 @@ are in `docs/RESULTS.md`. Run outputs, traces and adapters are in the run store 
   trained with `SR_NO_THINK=1` so the training prompt matches; non-Qwen callers need
   `SR_LORA_TARGETS` (Phi-4-mini: `qkv_proj,o_proj,gate_up_proj,down_proj`).
 - **Evaluation and orchestration**: the repository `.venv` (`uv sync --extra dev`).
+
+## Extensions of 21 and 22 October (E21 to E34)
+
+| Purpose | Code |
+| --- | --- |
+| New families: OpenAI MRCR, MuSiQue in long haystacks, LongBench-v2 (exact Qwen3 truncation) | `mrcr_tasks.py`, `musique_tasks.py`, `longbench_tasks.py`, `make_longbench_trunc.py` |
+| Evaluate direct and RLM policies on any family; run a library routine alone (optionally with the kernel's fault semantics) | `family_eval.py`, `run_routine.py` (`--kernel-semantics`) |
+| Bootstrap a library from teaching examples, verify in a subprocess, repair; optional primitives and worked example | `bootstrap_library.py`, `bootstrap_verify_worker.py` (`BOOT_PRIMITIVES`, `BOOT_EXEMPLAR`, `KERNEL_SEMANTICS`) |
+| Generated families for library discovery (formats x questions x answer formats; helper-dependent questions) | `family_gen.py`, `discovery_bench.py` |
+| Proposer training: SFT pairs from verified libraries; on-policy RL with the verified teaching score as reward | `build_proposer_sft.py`, `sft_train.py`, `proposer_rl.py` (`--sample-ids`, `--families mrcr`, `--with-helper-families`) |
+| Routine search and ablations | `evolve_routine.py` (reflective or random), `musique_ablate.py` (retrieval arms, reader server, iterative rounds) |
+| Reference, bootstrapped and evolved libraries | `skills/reference/`, `skills/bootstrapped/`, `skills/evolved/`, `skills/primitives/`, `skills/exemplars/`; selected with `RLM_SKILLS_VARIANT` (`skills/registry.py`) |
+
+Runs were launched through the job queue and checked launcher in `../ops/` (see its README). Results, with
+caveats and withdrawn claims, are ledger rows E21 to E34 in `docs/RESULTS.md`.
