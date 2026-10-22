@@ -169,12 +169,15 @@ def main():
     p.add_argument("--families", default="", help="comma-separated families to train on (default: all generated training families); "
                    "a real family such as mrcr uses its own teaching rows")
     p.add_argument("--keep-solutions", action="store_true", help="save every sample whose reward reaches 0.9")
+    p.add_argument("--with-helper-families", action="store_true", help="add the helper-dependent training families (E26e)")
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
     work = a.out / "verify"
     work.mkdir(exist_ok=True)
     rng = random.Random(a.seed)
     fams = a.families.split(",") if a.families else training_families()
+    if a.with_helper_families:
+        fams += G.helper_training_family_ids()
     policy = Policy(a)
     current = a.start_name
     log = open(a.out / "steps.jsonl", "a")
