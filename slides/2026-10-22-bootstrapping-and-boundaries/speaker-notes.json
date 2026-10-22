@@ -1,0 +1,32 @@
+{
+ "slides": [
+  {
+   "title": "Libraries can be bootstrapped: an 8B wrote MRCR's library.",
+   "notes": "The chain now runs without hand-written code for a new family: proposer writes, verification accepts, a 0.6B caller trained on other families calls it. Stress the caveat: MRCR is a parsing task in disguise, so this is program discovery. The ladder: only the 8B with thinking succeeded, and on one seed in three; a single success is a sample, not a capability."
+  },
+  {
+   "title": "Discovery on 37 generated families: thinking and scale gate it.",
+   "notes": "Generated families give resolution MRCR cannot: 37 held-out families per proposer. Thinking and scale both matter. Distillation is cheap (4.5 minutes) and moves skill to unseen string formats but erodes chat handling, which was absent from training; the net change is not yet significant. The semantic families are capped by the helper, not the proposer: say this before anyone asks why the 8B got none of them."
+  },
+  {
+   "title": "One line of documentation decides whether an untrained caller uses a library.",
+   "notes": "The cleanest result of the day. Same code, four docstrings. The usage line alone carries the effect. The practical rule: every library ships with a usage line; the bootstrapper now inserts one. The deeper point: an untrained caller reads documentation, a distilled caller has learned the call."
+  },
+  {
+   "title": "MuSiQue in long haystacks: capacity belongs in choosing evidence.",
+   "notes": "MuSiQue is where the routine needs helper calls. The two-round library wins on accuracy and cost through the 0.6B caller. Everything that adds capacity elsewhere (recursion, bigger reader, more samples) does not help. The gap to gold paragraphs (about 0.2) is evidence selection."
+  },
+  {
+   "title": "Boundaries, and what we withdrew.",
+   "notes": "Honesty slide. LongBench-v2 bounds the claim: a generic map-reduce library ties direct reading at nine times the cost. Two earlier readings were withdrawn after a fresh question sample. The method lessons are the ones that cost us most: scripted harnesses that did not match the kernel, and verification sets that did not span deployment lengths."
+  },
+  {
+   "title": "What this changes, and what to test next.",
+   "notes": "The sharpened thesis in one breath, then the four next steps. If time is short, skip the list and ask the advisor which of the four matters most for the thesis."
+  },
+  {
+   "title": "Appendix: protocol and provenance.",
+   "notes": "For questions only."
+  }
+ ]
+}

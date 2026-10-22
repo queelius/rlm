@@ -1,0 +1,223 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,booktabs,array}
+\definecolor{Ink}{HTML}{17324D}
+\definecolor{Teal}{HTML}{007F7B}
+\definecolor{Gray}{HTML}{657483}
+\definecolor{Rust}{HTML}{B5533C}
+\definecolor{Soft}{HTML}{EEF3F6}
+\setbeamercolor{alerted text}{fg=Rust}
+\setbeamercolor{normal text}{fg=Ink,bg=white}
+\setbeamercolor{frametitle}{fg=Ink}
+\setbeamercolor{structure}{fg=Teal}
+\setbeamercolor{block title}{fg=white,bg=Teal}
+\setbeamercolor{block body}{fg=Ink,bg=Soft}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=9mm,text margin right=9mm}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Bootstrapping libraries and their boundaries | advisor update, 22 Oct 2026\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\newcommand{\source}[1]{\vfill{\scriptsize\color{Gray}#1\par}}
+\hypersetup{pdftitle={Where do libraries come from, and where do they stop helping?},pdfauthor={Alex Towell}}
+\title{Where do libraries come from, and where do they stop helping?}
+\subtitle{Bootstrapped libraries, documentation, evidence selection, and boundaries}
+\author{Alex Towell}
+\date{Advisor update, 22 October 2026}
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\vfill
+\begin{block}{In one sentence}
+A 4-bit 8B model wrote a verified library for a new benchmark from three examples, and a 0.6B caller that never saw
+the benchmark uses it correctly to 1M tokens; the useful capacity is in the proposer and in choosing evidence, not in
+readers, recursion or larger controllers; and on whole-document reasoning (LongBench-v2) libraries stop helping.
+\end{block}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Libraries can be bootstrapped: an 8B wrote MRCR's library.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.58\textwidth}
+\footnotesize
+\begin{tabular}{@{}lrr@{}}
+\toprule
+MRCR held out (8k to 1M tokens) & 2 needles & 4 needles \\
+\midrule
+Direct answer, 4B & 0.23 & 0.15 \\
+RLM, untrained 4B, no library & 0.18 & 0.11 \\
+8B-written library, run alone & 1.000 & 1.000 \\
+0.6B caller + library & \textbf{1.000} & \textbf{1.000} \\
+Untrained 4B + library & 0.95 & 0.88 \\
+\bottomrule
+\end{tabular}
+\medskip
+
+\small 64 rows per column. The 0.6B caller never saw MRCR. The proposer saw the contract and three solved examples; candidates run on 30 teaching tasks; the best scored
+30/30 and was reviewed before use (40 lines of parsing, nothing copied from the examples).
+\end{column}
+\begin{column}{.38\textwidth}
+\begin{block}{Who can write it (seeds accepted)}
+\small
+4B Instruct: 0 of 1\\
+4B, thinking off / on: 0 of 1 / 0 of 2\\
+8B, thinking off: 0 of 2\\
+8B, thinking on: \textbf{1 of 3}
+\end{block}
+\small \alert{Caveat:} MRCR is solvable by a short parser, so this measures program discovery, not reading. We
+found no published note saying so.
+\end{column}
+\end{columns}
+\source{Ledger E21, E21b; runs e21-*. MRCR: openai/mrcr (MIT), official SequenceMatcher grader.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Discovery on 37 generated families: thinking and scale gate it.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.55\textwidth}
+\footnotesize
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Proposer & Solved / 37 & Tokens \\
+\midrule
+4B Instruct (2 seeds) & 5, 4 & 4k \\
+8B, no thinking & 4 & 4k \\
+4B, thinking (30 done) & 13 / 30 & \\
+8B, thinking & \textbf{20} & 49k \\
+4B + LoRA, 8B's code (2 seeds) & 9, 7 & 3k \\
+\bottomrule
+\end{tabular}
+\medskip
+
+\small Tokens: proposer output per family. Families vary record format (pipe, kv, csv, prose, XML-like, chat),
+question and answer format; held-out families use a new format or a new question.
+\end{column}
+\begin{column}{.41\textwidth}
+\small
+\textbf{Distillation:} 4.5 minutes of LoRA on the 8B's verified code. Gains are all string formats never solved
+before; losses are all chat (absent from training). Net not yet significant (McNemar p 0.39, first seed).\par\medskip
+\textbf{Helper ceiling:} the 8 families that need the helper's judgment score 0.47 to 0.83, not 0.9: the 4B
+labels items at 0.973, and an exact total over 30 items fails often.
+\end{column}
+\end{columns}
+\source{Ledger E26, E26b; runs e26-disc-*. Generator: family\_gen.py (procedural, answers exact).}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{One line of documentation decides whether an untrained caller uses a library.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.5\textwidth}
+\footnotesize
+\begin{tabular}{@{}lr@{}}
+\toprule
+MRCR, untrained 4B caller, docstring & Score \\
+\midrule
+Signature only & 0.18 \\
+Description + signature (as the 8B wrote it) & 0.59 \\
+Signature + usage line & 0.95 \\
+Description + signature + usage line & 0.95 \\
+\midrule
+Hand-written library, usage line removed & 0.22 \\
+Hand-written library, as written & 0.95 \\
+\bottomrule
+\end{tabular}
+\end{column}
+\begin{column}{.46\textwidth}
+\small
+Usage line: \texttt{Typical use: FINAL\_TEXT(answer\_mrcr(request)).}\par\medskip
+Without it the untrained 4B hands the whole input to a sub-model (overflowing at 128k and above) or retypes the
+routine's output by hand.\par\medskip
+\textbf{The distilled 0.6B scores 1.000 without the line; the untrained 0.6B fails either way (0.21, 0.13).}
+Robustness comes from distillation, not size. The bootstrapper now inserts the line.
+\end{column}
+\end{columns}
+\source{Ledger E25c, E25d; runs e25c-*, e25d-*. One family, one library, one seed per arm.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{MuSiQue in long haystacks: capacity belongs in choosing evidence.}
+\centering\footnotesize
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Answer F1 (90 to 180 held-out questions per row) & 8k & 32k & 128k & tokens \\
+\midrule
+Direct answer, 4B & 0.52 & 0.25 & overflow & \\
+RLM without a library, depth 0 / depth 1 & 0.49 / 0.51 & 0.25 / 0.25 & overflow & \\
+Library that hands each hop to a child RLM & 0.29 & 0.29 & 0.34 & 3 to 4 times \\
+0.6B caller + filter, BM25, read & 0.52 & 0.31 & 0.46 & 57k \\
+0.6B caller + two-round retrieval & \textbf{0.53} & \textbf{0.39} & \textbf{0.50} & 10k \\
+\bottomrule
+\end{tabular}
+\par\medskip\raggedright
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\small \textbf{What helps:} a second, targeted retrieval (BM25 for the question, the helper names the missing
+fact, BM25 again, one read): +0.058 over BM25 alone, +0.045 over filter+BM25 at a sixth of the tokens.
+\end{column}
+\begin{column}{.48\textwidth}
+\small \textbf{What does not:} recursion; an 8B reader (+0.01; gold paragraphs reach 0.63 to 0.67 with either
+reader); more sampling (majority of 3 at 88k tokens: 0.22 vs 0.35 for the library at 32k).
+\end{column}
+\end{columns}
+\source{Ledger E22c to E22f, E23, E25e, E28. MuSiQue (CC BY 4.0) dev questions in haystacks of other questions' paragraphs.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Boundaries, and what we withdrew.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\begin{block}{LongBench-v2 (150 questions, chance 0.25)}
+\footnotesize
+Direct, truncated to 48k tokens: 0.367\\
+Generic map-reduce library: 0.360 (9 times the tokens)\\
+RLM without a library: 0.120\\[1mm]
+Libraries pay where a task splits into local judgments; whole-document reasoning does not.
+\end{block}
+\footnotesize \textbf{Withdrawn:} ``the reader is distractor-limited''; length routing (pre-registered: the
+ordering reversed on fresh questions).
+\end{column}
+\begin{column}{.48\textwidth}
+\footnotesize
+\textbf{Method lessons}\par\smallskip
+\textbullet\ Verify under the semantics you run under: the kernel's \texttt{ask} raises on a cut-off reply,
+scripted harnesses returned partial text (one routine crashed in 46 of 90 caller runs).\par\smallskip
+\textbullet\ Verification must span deployment lengths: 8k-only teaching selected a pass-through routine that
+scores 0 at 128k.\par\smallskip
+\textbullet\ Routine evolution (GEPA-style): prompt rewrites by the 8B hurt; numbers helped (+0.048, ns);
+random search found nothing.
+\end{column}
+\end{columns}
+\source{Ledger E32, E31, E22b, E24, E24c. LongBench-v2: zai-org (Apache-2.0).}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{What this changes, and what to test next.}
+\small
+\textbf{The thesis, sharpened.} For small recursive models, capability lives outside the weights: verified
+routines (bootstrapped by a capable proposer, or distilled into a small one), documentation that a thin caller can
+act on, and evidence selection inside the routine. Training pays where verification is local: in the proposer
+and in the caller's call discipline.\par\medskip
+\textbf{Next}
+\begin{enumerate}\setlength\itemsep{1mm}
+\item Second distillation round: more of the 8B's libraries plus the model's own verified successes, chat
+included; two discovery seeds per arm.
+\item Bootstrap MuSiQue on mixed-length teaching (running) and against the two-round reference.
+\item Selection memory with pooled priors, since 30-question cells choose by noise.
+\item A short note on program-solvable long-context benchmarks (MRCR; candidates: Michelangelo, RULER).
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Appendix: protocol and provenance.}
+\footnotesize
+Models: Qwen3-4B-Instruct-2507 (helper, caller), Qwen3-0.6B + LoRA (distilled caller), Qwen3-4B hybrid and
+Qwen3-8B-AWQ (proposers), all served with vLLM 0.27.1 on two A100 MIG 7g.40gb slices.\par\smallskip
+Data: OpenAI MRCR (MIT; within-bin split, 30 teaching rows, 64 held out per needle count); MuSiQue v1.0 (CC BY
+4.0; teaching from train, held out from dev; two samples of 90); LongBench-v2 (Apache-2.0, revision 2b48e494);
+generated families (family\_gen.py, exact answers).\par\smallskip
+Statistics: paired differences with standard errors over all questions; exact McNemar for family counts;
+the routing test was pre-registered.\par\smallskip
+Every number above has a ledger row in docs/RESULTS.md and a run directory in the run store; the lab notebook
+(docs/notebook/2026-10-19-...) records failures and corrections in time order.
+\end{frame}
+
+\end{document}
