@@ -1,5 +1,9 @@
 # Research plan of record (living document; revised 2026-10-20 12:25 UTC)
 
+**Companion:** the big picture, research pillars and ranked idea backlog live in
+[the research program and idea backlog](2026-10-22-research-program-and-idea-backlog.md), revisited with
+this plan; new ideas, ablations, related work and follow-ups go there first.
+
 **Rule: revisit this plan periodically.** At every completed or failed arm, at every session start
 or resumption, and at least once per 12 hours of GPU time, re-rank the queue below against the
 newest evidence in `docs/RESULTS.md`, retire what stopped producing information, add what the
