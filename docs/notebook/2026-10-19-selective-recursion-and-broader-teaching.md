@@ -1073,6 +1073,13 @@ between question samples, so a statistics table built from cells of this size wo
 memory for close routines needs larger cells or pooled priors (as in the hierarchical bandit, E10). Routing
 did save tokens (48k vs 57k per question) at no measurable loss.
 
+Pooling both samples (180 questions, fixed reader) gives the comparisons that do replicate: filter+BM25 0.423,
+BM25 top 60 0.405, filter alone 0.340, gold paragraphs 0.625. Filter+BM25 beats the filter alone by +0.083
+(paired se 0.029) and does not measurably beat BM25 top 60 (+0.018, se 0.031), which costs about a seventh of
+the tokens (8k vs 57k per question). The expensive helper filter earns little on top of BM25; the cheap
+retrieve-then-read routine is the efficient MuSiQue library, and the remaining gap to the gold-paragraph
+ceiling (about 0.2) is in retrieval and multi-hop reading, not in the reader's answer formatting.
+
 Routine evolution (E24, complete 05:02 UTC). GEPA-style reflective search over the MuSiQue routine's two
 prompts and four numbers (filter chunk size, BM25 depth, keep cap, reader token cap): an 8B reflector (thinking
 on) saw the parent's failures on an 8-question teaching minibatch and proposed one configuration; a child that
