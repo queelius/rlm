@@ -1077,7 +1077,10 @@ makes the reference better. Library discovery for helper-dependent families need
 combinator library in the sense of lambda-RLM) or a stronger proposer; with primitives the remaining gap is the
 composition, which RL on the proposer might close. Second seed (13:03 UTC): 15 of 24 candidates again call BM25,
 but the best scores 0.183 (0.20 / 0.35 / 0.00), so primitives reliably change what the proposer tries and only
-sometimes yield a routine that holds at 128k (1 of 2 seeds).
+sometimes yield a routine that holds at 128k (1 of 2 seeds). The RL-trained 4B proposer with the same primitives
+(14:08 UTC) never calls BM25 or the helper: all 24 candidates are pure parsers (best 0.0). Its training families
+were all solvable by code alone, so training made it a parser writer; library writing that needs a helper or a
+search strategy would need training families that require them.
 
 Test-time RL on MRCR (E26d, 14:00 UTC). RL on MRCR's own 30 teaching rows (held-out rows untouched), from the
 first RL-trained proposer: 8 prompts per step (three different shown examples each), 4 samples, reward on 12
