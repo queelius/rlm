@@ -1106,6 +1106,15 @@ exactly the 4 correct libraries reproduce their shown examples. On program-solva
 three labels the prompt already has. Where answers are noisy (MuSiQue F1; OOLONG's per-record classification),
 nothing reproduces three examples exactly, so these families need graded verification over more labels.
 
+Cheap verification makes best-of-k a fair use of a small proposer (E38, 23 October 07:35 UTC). From the same draws,
+the expected number of held-out families the round-four 4B solves with k round-0 samples is 9.8, 14.7, 19.4 and 23.0
+of 37 for k = 1, 2, 4, 8: at k = 8 it matches the thinking 8B (22.5 per seed, with repair) at about 3.9k instead of
+48k proposer tokens per family (its candidates are about 500 tokens). Sampling does not reach the helper families:
+with 32 samples on the 8 held-out semantic families, one family reaches 0.7 (0.80; none with 8), against 5 for the
+8B and 6 for the 14B; only 28 of 256 candidates call the helper. The helper gap is what the proposer writes, not how
+often it samples. (The 8B reached 1.00 on one helper family, so the helper's labelling does not cap every family
+below 0.9.)
+
 Proposer ladder on held-out discovery (two seeds each; 23 October 06:25 UTC): round-four 4B 42 of 74, thinking 8B
 45, thinking 14B 47 (14B vs 8B +11/-9, p 0.82; 14B vs 4B +14/-9, p 0.41), at 2k, 48k and 30k proposer tokens per
 family. Scale shows only where the helper is needed: semantic families at 0.7 or more, 1, 5 and 6 of 8.
