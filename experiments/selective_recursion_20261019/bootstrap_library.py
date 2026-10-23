@@ -65,18 +65,26 @@ def family_api(family: str):
         teach = [t for sz in sizes for t in F.make("teach", sz, per, seed=0)]
         return dict(teach=teach, describe=F.describe, as_task=lambda t: t,
                     grade=lambda out, t: F.grade(out or "", t)["f1"])
-    if family == "oolong":  # E35: OOLONG-synth teaching rows (training windows), 5 per dataset at 4k, 8k and 16k tokens
+    if family == "oolong" or family.startswith("oolong-"):
+        # E35: OOLONG-synth teaching rows (training windows), 5 per dataset at 4k, 8k and 16k tokens. E35c: "oolong-<task
+        # group>" (counting, timeline, user) narrows the family to one group of question templates, 30 rows at those lengths.
         import oolong_eval as O
 
         rows = [json.loads(line) for line in O.ROWS.read_text().splitlines()]
         rows = [r for r in rows if not r["answer_type"].endswith("MONTH_YEAR")]
         split = O.window_split(rows)
         teach_rows = []
-        for ds in ("spam", "trec_coarse"):
-            for n in (4096, 8192, 16384):
-                cell = sorted((r for r in rows if r["dataset"] == ds and r["context_len"] == n
-                               and split[(r["context_len"], r["context_window_id"])] == "train"), key=lambda r: r["id"])
-                teach_rows += random.Random(f"oolong:{ds}:{n}").sample(cell, 5)
+        if family == "oolong":
+            for ds in ("spam", "trec_coarse"):
+                for n in (4096, 8192, 16384):
+                    cell = sorted((r for r in rows if r["dataset"] == ds and r["context_len"] == n
+                                   and split[(r["context_len"], r["context_window_id"])] == "train"), key=lambda r: r["id"])
+                    teach_rows += random.Random(f"oolong:{ds}:{n}").sample(cell, 5)
+        else:
+            group = family.split("-", 1)[1]
+            pool = sorted((r for r in rows if r["task_group"] == group and r["context_len"] in (4096, 8192, 16384)
+                           and split[(r["context_len"], r["context_window_id"])] == "train"), key=lambda r: r["id"])
+            teach_rows = random.Random(f"oolong:{group}").sample(pool, min(30, len(pool)))
         from types import SimpleNamespace as _NS
 
         tasks = [_NS(task_id=f"oolong-{r['id']}", prompt=r["context"] + "\n" + r["question"], answer=str(r["answer"][0]),
