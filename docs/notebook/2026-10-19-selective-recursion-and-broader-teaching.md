@@ -1088,7 +1088,7 @@ inputs; the bootstrapper uses 30. To ask whether agreement could replace labels 
 MBR-exec, AlphaCode clustering and CodeT for program selection), three 4B proposers drew 8 round-0 candidates per
 held-out family with no early stopping. Candidates that error or give one output for every input are ignored.
 
-| proposer | random valid candidate correct | plurality agreement: precision, recall | reproduces the 3 shown examples: correct | shown examples, then plurality: precision, recall |
+| proposer | random valid candidate correct | plurality agreement: precision, recall | valid and reproduces the 3 shown examples: correct | shown examples, then plurality: precision, recall |
 | --- | --- | --- | --- | --- |
 | round four | 78/147 (0.53) | 0.65, 0.74 | 78/78 | 1.00, 1.00 |
 | SFT only | 36/99 (0.36) | 0.33, 0.33 | 36/37 | 1.00, 1.00 |
@@ -1097,9 +1097,12 @@ held-out family with no early stopping. Candidates that error or give one output
 Agreement alone is weak: the RL-trained proposer repeats its wrong programs (five identical candidates at 0.73
 while the one correct candidate stands alone), the SFT proposer's plurality is no better than chance, agreement
 across the three proposers does no better (0.62), and on helper families it accepts only wrong libraries. But the
-three worked examples already in the proposer's prompt verify almost perfectly: a candidate that reproduces them is
-correct on all 30 in 127 of 129 cases. The same holds on MRCR: of 646 saved candidates from every proposer, exactly
-the 4 correct libraries reproduce their shown examples. On program-solvable families, verification costs the
+three worked examples already in the proposer's prompt verify almost perfectly: among valid candidates (they run on
+all 30 inputs and give varied outputs, a check that needs no labels), 129 reproduce the three examples and 127 of
+them score 0.9 or more (the other two 0.73 and 0.83). Precision rises with labels at recall 1.00: none 0.44, one
+shown example 0.81, two 0.88, three 0.98 (random teaching labels instead: 0.79, 0.88, 0.94; five 0.98). Without
+the validity check, three examples give 0.89. The same holds on MRCR: of 646 saved candidates from every proposer,
+exactly the 4 correct libraries reproduce their shown examples. On program-solvable families, verification costs the
 three labels the prompt already has. Where answers are noisy (MuSiQue F1; OOLONG's per-record classification),
 nothing reproduces three examples exactly, so these families need graded verification over more labels.
 
