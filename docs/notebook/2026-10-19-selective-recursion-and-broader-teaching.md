@@ -1083,6 +1083,14 @@ were all solvable by code alone, so training made it a parser writer; library wr
 search strategy would need training families that require them. The thinking hybrid 4B with primitives (15:02 UTC)
 uses BM25 in only 5 of 24 candidates; best 0.372 on the mixed set (0.25 / 0.65 / 0.22; the best does use BM25) (the 8B: 0.464 and 0.183 on two seeds).
 
+Bootstrapping OOLONG (E35, 23 October 04:10 UTC). The study's original family, where a library must have the helper
+label every record. 30 teaching rows from training windows (spam and TREC, 4k, 8k and 16k tokens); the shipped
+library scores 0.600 on them (0.672 on the 293 held-out rows), so 0.55 counts as matching it. No proposer comes
+close: the thinking 8B 0.200 and 0.067 (two seeds; all candidates call the helper, about 128 calls per task in the
+best), the thinking 14B 0.000 (it looks for the question on the input's first line, so every candidate answers "task
+not recognized" before reaching its helper calls). A run with the shipped parsing and classification functions given as
+primitives (the proposer writes only the question handling and aggregation) is queued.
+
 Proposer round four (E26g, 23 October 02:29 UTC). Helper-family data from four runs (the thinking 8B with and without a
 worked example of a helper-calling library, two bootstrap seeds, and the thinking 4B; the example stripped from the
 saved prompts so the pairs use the plain contract): 88 SFT pairs, 20 of them helper families (round three: 7). Fresh
