@@ -1168,7 +1168,9 @@ third and fourth RL seeds: 22 and 33. Over four seeds round four's recipe averag
 42), the round-five recipe 33.7 over three (sd 2.1). The headline 42 was the best of four draws. With seed variance
 accounted for, more helper-family teacher data did not cost code generalization: the round-five recipe matches round
 four on solves, reaches the 8B on helper families, and is far less seed-sensitive. The single-seed readings of
-rounds five to seven (E36, E41, E42) are superseded.
+rounds five to seven (E36, E41, E42) are superseded. E47 (23:25 UTC): round four retrained with only the SFT seed changed
+(data order) and the original RL seed 5 gives 33 of 74, not 42, so the variance is not in RL alone; over five runs
+the recipe gives 42, 29, 22, 33, 33.
 
 Pause (23 October 18:30 UTC). Job 6599 was cancelled about 30 hours early so the user could take up new preemptible
 GPU access. Before the stop: round four's RL repeated with a fresh seed (E43 A) finished training (reward by block
