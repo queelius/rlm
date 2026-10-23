@@ -1164,7 +1164,9 @@ separately), nothing on the most and least frequent label (0 of 10 vs 8 of 10; i
 templates). The 8B's counting library also clears the teaching bar (0.500) but held out falls to 0.397 against
 0.551 (+6/-18, p 0.023): on a noisy family, 30 teaching rows did not separate a good library from a weaker one.
 The 14B's user library reaches 0.40 against 0.93; timeline libraries stay at 0 (date windows defeat
-question parsing). Narrowing the family made one group bootstrappable, not all.
+question parsing). Narrowing the family made one group bootstrappable, not all. Final (11:45 UTC), teaching
+scores against the shipped library's 0.533, 0.733 and 0.933: counting 8B 0.500 and 0.000, 14B 0.533; timeline 8B
+0.100 and 0.133, 14B 0.000 (13 candidates, cut off by the round-five pipeline); user 8B 0.233 and 0.200, 14B 0.400.
 
 Proposer round four (E26g, 23 October 02:29 UTC). Helper-family data from four runs (the thinking 8B with and without a
 worked example of a helper-calling library, two bootstrap seeds, and the thinking 4B; the example stripped from the
