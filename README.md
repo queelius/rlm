@@ -40,7 +40,8 @@ families for library discovery):
   with the verified teaching score as reward, lifts a 4B from 9 to 30 of 74 held-out family attempts
   (replicated; RL without SFT does not help), and to 42 with more varied teacher data, level with the 8B teacher on
   code-solvable families. Three times the helper-family teacher data brings it to the 8B on families that need the
-  helper's judgment, at a small, non-significant cost on code. It does not transfer to MRCR.
+  helper's judgment, at a small, non-significant cost on code; more than that lowers held-out code success further
+  without helping helper families (113 pairs: 29 against 42 of 74, p 0.007). It does not transfer to MRCR.
 - **Where answers are exact, bootstrapping needs three labels.** A candidate that runs cleanly and reproduces the
   three examples in its prompt is almost always correct (127 of 129, all generalizing to fresh, longer inputs).
   Pre-registered on 30 unseen families, the trained 4B with eight samples and three labels bootstrapped as many
