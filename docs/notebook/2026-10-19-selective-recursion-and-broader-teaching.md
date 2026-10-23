@@ -1141,6 +1141,24 @@ five +8/-4, p 0.39), so round five's drop was partly an unlucky seed. From round
 +7/-13, p 0.26), which traces to the SFT mixture (51 percent code pairs against 77). Single RL seeds have misled us
 twice in this campaign; comparisons of RL recipes need at least two RL seeds.
 
+Round seven (E42, 23 October 17:40 UTC): round five's data plus helper libraries for three new helper question types
+(semantic_distinct, semantic_last_city, semantic_nth; 48 more pairs from the 14B and 8B), the 68 code pairs included
+twice, mixed RL (seed 26). Training reward was the highest of any round (helper 0.56 to 0.65, code 0.60 to 0.69), and
+held out it is the worst:
+
+| held out, two seeds | helper pairs | solved of 74 | code of 58 | helper mean best | helper at 0.7+ of 8 |
+| --- | --- | --- | --- | --- | --- |
+| round four | 20 | 42 | 42 | 0.098 | 1 |
+| E41 B | 65 | 36 | 34 | 0.458 | 3 |
+| round seven | 113 (code pairs twice) | 29 | 28 | 0.379 | 3 |
+| round seven, SFT only | 113 (code pairs twice) | 20 | 20 | 0.335 | 3 |
+
+Round seven against round four +4/-17 (p 0.007). Held-out code success falls with every increase in helper-family
+data (42, 34, 28), helper skill does not improve past 65 pairs, and repeating the code pairs did not protect code.
+Training reward on the training families now runs opposite to held-out success: the proposer fits the training
+distribution. For a 4B with LoRA rank 32, about 20 helper pairs with the code pairs gave the best held-out total;
+the helper gap is not closed by more of the same kind of data. A second RL seed for round seven runs in E43.
+
 How many labels does verification need? (E37, 23 October 06:30 UTC.) Accepting a library needs labelled teaching
 inputs; the bootstrapper uses 30. To ask whether agreement could replace labels (consensus as verification, as in
 MBR-exec, AlphaCode clustering and CodeT for program selection), three 4B proposers drew 8 round-0 candidates per
