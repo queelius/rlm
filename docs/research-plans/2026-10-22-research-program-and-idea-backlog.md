@@ -40,22 +40,22 @@ anything once routines and selection live outside the weights.
 
 ## Idea backlog (ranked by information per GPU-hour and readiness)
 
-Note on ids: backlog ids E24 to E35 were assigned when this page was written; ledger rows E31 and E32 in
-`docs/RESULTS.md` later reused those numbers for different experiments (routing by length; LongBench-v2). Backlog
-E31 and E32 below are still untested ideas.
+Note on ids: backlog ids E24 to E35 were assigned when this page was written; ledger rows E31, E32 and E35 in
+`docs/RESULTS.md` later reused those numbers for different experiments (routing by length; LongBench-v2; OOLONG
+bootstrapping). Backlog E31 and E35 below are still untested ideas; backlog E32 runs as ledger E37.
 
 | Id | Idea | Smallest informative test | Decision it informs |
 | --- | --- | --- | --- |
 | E24 | **Evolve the routine and harness configuration** (GEPA-style reflective search over the text and numeric parameters of a routine: filter and reader prompts, chunk size, retrieval depth, keep cap) **Status: done: E24, E24c (numbers helped weakly, prompt rewrites hurt, random search nothing).** | MuSiQue filter-then-read at 32k and 128k: an 8B reflector mutates a population on teaching minibatches (F1 and tokens as a Pareto front); best candidate on the 90 held-out questions against the hand-tuned reference | does automated harness search beat hand design, and at what search cost |
 | E25 | **Evolve the retrieved payload format per caller size** (table of history, imperative cell, exemplar trajectory, docstring only, and LLM-mutated variants) **Status: partly done: E25c, E25d (usage line), E25e.** | 360M, 0.6B and 4B callers on the event-log grown forms and MRCR; fitness = caller accuracy | does the injection format need to adapt to caller capacity (S5b says yes at 360M) |
-| E26 | **Train the proposer, not the controller**: RLVR (or rejection-sampling SFT) on a procedural generator of many synthetic task families, reward = verified teaching score of the written library **Status: done: E26b to E26f (SFT then RL works on generated families; not MRCR; not helper use yet).** | 4B proposer, about 50 generated families for training; test bootstrapping on MRCR and MuSiQue, held out | can a small model learn to write libraries, the place where RL has a verifiable target |
+| E26 | **Train the proposer, not the controller**: RLVR (or rejection-sampling SFT) on a procedural generator of many synthetic task families, reward = verified teaching score of the written library **Status: done: E26b to E26g (SFT then RL works on generated families; round four 42 of 74 held out, not distinguishable from the thinking 8B teacher, p 0.66; not MRCR; helper use the gap left). Round five (ledger E36, more helper-family teacher data from the 8B and 14B) running.** | 4B proposer, about 50 generated families for training; test bootstrapping on MRCR and MuSiQue, held out | can a small model learn to write libraries, the place where RL has a verifiable target |
 | E27 | **Code routine vs natural-language routine executed by the helper** (ARISE-style ablation) | same families, same decomposition, routine as Python vs as an NL procedure the helper follows | is the gain from code, from decomposition, or from verification |
 | E28 | **Reuse and compute-matched audit** of every library result (answering the library-learning critiques) **Status: partly done: E28 (sampling null at 32k).** | per-routine call counts; no-library baselines given the same helper-call budget (self-consistency, more chunks) | are library gains real once compute is matched |
 | E29 | **Continual library learning in a stream** of mixed families, failures triggering the librarian, the table updating online | event-log, OOLONG, MRCR and MuSiQue in one shuffled stream; time to recover per new family | does the full system learn new families online without training |
 | E30 | **Depth as a route**: recursion against a compute-matched self-consistency null (SRLM), chosen per signature by the table **Status: done: E23 (recursion does not help).** | E23 arms plus k-sample filter-then-read at matched tokens | does recursion add anything a cheaper search does not |
 | E31 | **Frontier of routines per signature** (MAP-Elites over accuracy and cost) with the table choosing per input | keep several accepted routines per family; route by length | selection among cheap and thorough routines |
-| E32 | **Consensus as verification** when no gold exists: accept a routine when independent routines agree | MuSiQue and OOLONG without labels | bootstrapping on unlabelled families |
-| E33 | **Program-solvability of long-context benchmarks**: for each benchmark, the score of the best short program, the best frontier model, and our small RLM **Status: MRCR shown program-solvable (E21); audit of other benchmarks in the idea lab (I-001).** | MRCR (program 1.0), OOLONG (counting ceiling), MuSiQue | positions RLM results honestly against "a regex solves it" |
+| E32 | **Consensus as verification** when no gold exists: accept a routine when independent routines agree **Status: running as ledger E37 (8 round-0 candidates per held-out family, no early stopping; exact-agreement and MBR-exec rules). Prior art for program selection: MBR-exec, AlphaCode clustering, CodeT; the open part is library acceptance on unlabelled long-context families.** | MuSiQue and OOLONG without labels | bootstrapping on unlabelled families |
+| E33 | **Program-solvability of long-context benchmarks**: for each benchmark, the score of the best short program, the best frontier model, and our small RLM **Status: MRCR shown program-solvable (E21); audit of other benchmarks in the idea lab (I-001). OOLONG: no proposer bootstraps it (ledger E35: 30 rows span 11 question templates); per-task-group families running (E35c).** | MRCR (program 1.0), OOLONG (counting ceiling), MuSiQue | positions RLM results honestly against "a regex solves it" |
 | E34 | **Combinator library plus learned composition** (λ-RLM primitives with the small caller composing them) **Status: done: E34 (primitives change what the 8B tries; composition hit or miss).** | same families, compare with routine-per-family libraries | fixed primitives vs learned routines |
 | E35 | **Library portability across helper models** (routines written against Qwen helpers run with other helpers) | swap helpers to Phi-4-mini or the 8B | is a library tied to its helper |
 | I-004 | **Keep input-conditioned routes through RL** (proposed by the lab session): the 13 route-RL runs of E06/E07 lost the warm start's split (direct on short, decompose on long) in every run without strong KL. Stored advantages show why: direct was positive on short inputs but never sampled on long ones, so it leaked there unopposed, failed, drew zero advantage in all-direct groups (leave-one-out baseline), then bled back and vanished everywhere. Forced per-route groups are prior art (CounterRoute, arXiv 2609.29109); the mechanism and a cheap variant are not | rl-s7-strat setup, 30 steps, 2 seeds: null vs forced route per group vs forced route only in unanimous groups vs KL 1; metric: short-minus-long direct share over the last 5 steps; about 64 GPU-h | whether route RL needs counterfactual samples where the warm start has zero mass |
@@ -178,3 +178,19 @@ by hand. Changes, in order of value:
   running: retrieval primitives in the contract) and training it with the verified teaching score as reward
   (E26c, next: RL on generated training families from the round-two SFT adapter, SMITH-style; held-out families
   and MRCR as tests). Allocation ends 2026-10-25 00:52 UTC, so E26c is the last large build of this allocation.
+- 2026-10-23 05:40: step back.
+  **New solid results:** proposer training works as far as code goes: the round-four 4B (more varied helper-family
+  teacher data, then RL on sampled ids) solves 42 of 74 held-out family attempts, not distinguishable from its
+  thinking 8B teacher (45; +9/-12, p 0.66) at a twenty-fourth of the tokens. Scale does not make MRCR discovery
+  reliable: the 14B also succeeds on 2 of 5 seeds (both libraries 1.000 held out to 1M tokens).
+  **Boundaries found:** helper-dependent families (8B 5 of 8 semantic families at 0.7, round-four 4B 1 of 8);
+  OOLONG, the study's own family, is not bootstrapped by any proposer (8B 0.20, 14B 0.00 against the shipped
+  library's 0.60 on the same teaching rows), and giving the shipped parsing and classification as primitives does
+  not fix it (0.13 to 0.17): one library must cover 11 question templates from 30 examples.
+  **Running, each with its decision:** (1) round five (E36): does more helper-family teacher data close the helper
+  gap (semantic families at 0.7 or more, held out, against round four's 1 of 8)? (2) consensus (E37): can
+  agreement among independent candidates replace gold labels when accepting a library (precision near 1 at a
+  useful recall would make bootstrapping on unlabelled families possible)? (3) OOLONG by task group (E35c): is
+  breadth the barrier (a group library reaching its group's reference score)?
+  **Method lessons:** a "dry run" must never execute a shell pipeline (the launcher ran one for 120 s; fixed);
+  early-stopped runs cannot answer agreement questions (all candidates after the first success are missing).
