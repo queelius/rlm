@@ -1425,6 +1425,7 @@ seeds differ in the three shown examples and in sampling), accepted if the teach
 | Qwen3-4B hybrid, thinking on | 0 of 2 | 0.214, 0.214 |
 | Qwen3-8B-AWQ, thinking off | 0 of 2 (one confounded seed rerun) | 0.214, 0.154 |
 | Qwen3-8B-AWQ, thinking on | 2 of 5 | 1.000, 0.000, 0.000, 0.214, 1.000 |
+| Qwen3-14B-AWQ, thinking on (23 October) | 2 of 5 | 1.000, 1.000, 0.000, 0.000, 0.000 |
 
 Discovering the MRCR program needs both the 8B and thinking, and even then succeeds on some seeds and not
 others; a single success is a sample, not a capability. The generated-family discovery benchmark (37 held-out
