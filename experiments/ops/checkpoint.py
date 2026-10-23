@@ -49,7 +49,9 @@ def servers() -> list[dict]:
                 models = sorted(m["id"] for m in json.load(urllib.request.urlopen(req, timeout=10))["data"])
             except Exception as e:  # noqa: BLE001 - a dead server is recorded, not fatal
                 models = f"unreachable: {e}"
-        out.append(dict(pid=int(pid), port=port, cuda_visible_devices=env.get("CUDA_VISIBLE_DEVICES"), command=cmd, served_models=models))
+        # VLLM_* variables matter for a restart (VLLM_ALLOW_RUNTIME_LORA_UPDATING enables load_lora_adapter)
+        out.append(dict(pid=int(pid), port=port, cuda_visible_devices=env.get("CUDA_VISIBLE_DEVICES"),
+                        vllm_env={k: v for k, v in env.items() if k.startswith("VLLM_")}, command=cmd, served_models=models))
     return sorted(out, key=lambda s: s["port"] or "")
 
 

@@ -109,6 +109,10 @@ normal two), which required cancelling job 6599 about 30 hours early. Work was c
    `/project/alex_phd/runs/selective-recursion-20261019/serving/servers-at-handoff-2026-10-23.txt`. Put
    `/project/alex_phd/envs/vllm/bin` on PATH, and set `CUDA_VISIBLE_DEVICES` to the new job's GPU for each lane
    (GPU0 lane: 8002 8B, 8004 0.6B, 8006 4B; GPU1 lane: 8001 4B with LoRA). Check each server answers a real request.
+   Lessons from the 2026-10-23 restart: launch servers that take adapters (8001, 8004) with
+   `VLLM_ALLOW_RUNTIME_LORA_UPDATING=True`, or `load_lora_adapter` returns Not Found; start the GPU0 servers one at a
+   time and wait for each to answer (8006 ran out of memory twice while the 8B was still starting; it now runs at
+   `--gpu-memory-utilization 0.36`).
 2. On 8001, load the adapter the pending evaluations use:
    `curl -s -X POST http://127.0.0.1:8001/v1/load_lora_adapter -H "Authorization: Bearer local" -H "Content-Type: application/json" -d '{"lora_name": "proposer-rl-6-40", "lora_path": "/home/atowell/research-runs/selective-recursion-20261019/e43-rl-r4-s6/step-40"}'`
 3. Start the dispatcher from the repository root: `nohup .venv/bin/python experiments/ops/queue.py run > /dev/null 2>&1 &`.
@@ -118,3 +122,9 @@ normal two), which required cancelling job 6599 about 30 hours early. Work was c
 4. When they finish: compare E43 A with round four (42 of 74) as the second RL seed of the headline result; score
    E39 arm C with `e39_analysis.py --a RUNS/e39c-8b-best8 --b RUNS/e39b-8b-standard ...` (C against B) and the
    arm A rule on both A and C (A against C).
+
+### Resumed 2026-10-23 ~18:55 UTC on job 6618 (an21, partition gpu, ends 2026-10-24 18:38 UTC)
+
+Servers 8001, 8002, 8004, 8006 restarted (logs in `RUNS/serving/restart-2026-10-23/`), `proposer-rl-6-40` loaded on
+8001, the dispatcher restarted on the default queue; the four pending jobs resumed. A second allocation on the
+preemptible partition must use its own queue (`RLM_QUEUE`).
