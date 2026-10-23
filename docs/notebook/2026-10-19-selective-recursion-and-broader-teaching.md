@@ -1083,6 +1083,25 @@ were all solvable by code alone, so training made it a parser writer; library wr
 search strategy would need training families that require them. The thinking hybrid 4B with primitives (15:02 UTC)
 uses BM25 in only 5 of 24 candidates; best 0.372 on the mixed set (0.25 / 0.65 / 0.22; the best does use BM25) (the 8B: 0.464 and 0.183 on two seeds).
 
+Proposer round four (E26g, 23 October 02:29 UTC). Helper-family data from four runs (the thinking 8B with and without a
+worked example of a helper-calling library, two bootstrap seeds, and the thinking 4B; the example stripped from the
+saved prompts so the pairs use the plain contract): 88 SFT pairs, 20 of them helper families (round three: 7). Fresh
+LoRA, then 40 RL steps on sampled token ids over code-only and helper families (helper-family reward by ten-step blocks
+0.057, 0.088, 0.167, 0.080; round three 0.018 to 0.054). Held out, two discovery seeds:
+
+| 4B proposer | solved of 74 | non-semantic of 58 | semantic families at 0.7+ of 8 |
+| --- | --- | --- | --- |
+| untrained | 9 | 9 | 0 |
+| SFT round two | 20 | 20 | 0 |
+| SFT + RL, sampled ids | 34 | 34 | 0 |
+| round three | 27 | 27 | 0 |
+| round four | 42 | 42 | 1 |
+
+Round four over the sampled-id RL proposer: +12/-4 (exact McNemar p 0.077); over the untrained 4B +36/-3 (p < 0.001).
+Per seed on the 29 non-semantic families it solves 22 and 20, level with the thinking 8B teacher (20 on its one
+finished seed) at about a twentieth of the proposer tokens. Helper use has begun but is rare: 10 of 128 semantic
+candidates call the helper, one held-out semantic family reaches 0.8. MRCR still 0.0.
+
 RL on sampled token ids (E26c-ids, 23 October 01:22 UTC; idea-lab I-019). The same RL from the round-two SFT adapter,
 sampling through /v1/completions from the exact prompt token ids and training on the sampled ids (the lab found that
 re-tokenized text differs from the sampled tokens on 12.8 percent of turns). Training reward by ten-step blocks 0.349,
