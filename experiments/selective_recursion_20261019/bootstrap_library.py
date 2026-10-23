@@ -269,9 +269,9 @@ def main():
                   f"load_error={bool(v['load_error'])} timeout={v['timed_out']} verify {v['seconds']}s", flush=True)
             if best is None or _rank(rec) > _rank(best):
                 best = dict(rec, code=code)
-            if best["mean"] >= 0.999:
+            if best["mean"] >= 0.999 and a.threshold <= 1:  # a threshold above 1 draws every candidate (E37)
                 break
-        if best and best["mean"] >= 0.999:
+        if best and best["mean"] >= 0.999 and a.threshold <= 1:
             break
     accepted = best is not None and best["mean"] >= a.threshold
     summary = dict(family=a.family, proposer=a.model, best_mean=best["mean"] if best else None,
