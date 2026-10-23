@@ -1104,7 +1104,12 @@ shown example 0.81, two 0.88, three 0.98 (random teaching labels instead: 0.79, 
 the validity check, three examples give 0.89. The same holds on MRCR: of 646 saved candidates from every proposer,
 exactly the 4 correct libraries reproduce their shown examples. On program-solvable families, verification costs the
 three labels the prompt already has. Where answers are noisy (MuSiQue F1; OOLONG's per-record classification),
-nothing reproduces three examples exactly, so these families need graded verification over more labels.
+nothing reproduces three examples exactly, so these families need graded verification over more labels. How many:
+re-sampling the saved MuSiQue ablation (six real retrieval routines on the same 90 questions, full-set F1 0.217 to
+0.434, the top three within 0.03), choosing by mean F1 on k labelled questions picks the full-set best with
+probability 0.22, 0.27, 0.47 and 0.80 at k = 3, 10, 30, 60, at an expected F1 loss of 0.047, 0.033, 0.018 and 0.006
+(in-sample, so optimistic). Exact families need about three labels to accept a library; noisy ones need tens to rank
+close routines, though a wrong pick among close routines costs little.
 
 Cheap verification makes best-of-k a fair use of a small proposer (E38, 23 October 07:35 UTC). From the same draws,
 the expected number of held-out families the round-four 4B solves with k round-0 samples is 9.8, 14.7, 19.4 and 23.0
