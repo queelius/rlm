@@ -184,8 +184,9 @@ kernel's semantics.
 decides whether the library is used at all.
 
 **Where capacity belongs.** In choosing evidence: two-round retrieval is the best and cheapest MuSiQue library (also
-at 512k), an 8B reader adds nothing on MuSiQue or LongBench-v2, and on LongBench-v2 a retrieve-then-read library
-beats direct reading by 0.11 at a quarter of the tokens, through the 0.6B caller. Map-reduce notes do not help.
+at 512k), an 8B reader adds nothing on MuSiQue or LongBench-v2, and on all 503 LongBench-v2 questions a
+retrieve-then-read library beats direct reading by 0.07 (se 0.02) at a quarter of the tokens, also through the 0.6B
+caller (the first 150-question sample had suggested 0.11). Map-reduce notes do not help.
 
 **Withdrawn on 22 October:** the distractor-limited reader (E22c), length routing (E31), and "libraries stop helping
 on LongBench-v2" (E32; it was the map-reduce routine).

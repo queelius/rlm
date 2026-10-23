@@ -1288,6 +1288,20 @@ seventh of its cost. The gain is at 8k and 32k; at 128k the two tie, so the foll
 the bridge paragraph in a thousand-paragraph haystack. Next: two-round retrieval as the MuSiQue library (v4)
 with the callers, and a third round or query rewriting at 128k.
 
+LongBench-v2 in full (E32e, 23 October 01:09 UTC). All 503 questions, the one-round retrieval routine alone and through
+the distilled 0.6B caller, against direct reading of the truncated document:
+
+| Arm | short (180) | medium (215) | long (108) | all | tokens per question |
+| --- | --- | --- | --- | --- | --- |
+| Direct, truncated to 48k tokens | 0.461 | 0.279 | 0.333 | 0.356 | 42k |
+| Retrieve-then-read, alone | 0.456 | 0.405 | 0.426 | 0.427 | 10k |
+| Distilled 0.6B caller + retrieval | 0.478 | 0.372 | 0.435 | 0.423 | 11k |
+
+Retrieval beats direct reading by +0.072 (paired se 0.022), the 0.6B caller by +0.068 (se 0.023); on the 353
+questions outside the first sample +0.062 (se 0.027). The 150-question estimate (+0.113) was optimistic; the
+effect holds at about +0.07. No gain on short documents (they fit the window); +0.13 on medium, +0.09 on long. By
+domain it helps everywhere except long-dialogue history (0.49 to 0.33).
+
 Reader capacity (E22e, 08:12 UTC). The 4-bit Qwen3-8B with thinking as the reader (6,000-token cap,
 same fallback), on both question samples (180 questions), against the 4B reader on the same questions:
 

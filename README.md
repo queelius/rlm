@@ -39,8 +39,8 @@ families for library discovery):
   with the verified teaching score as reward, lifts a 4B from 9 to 30 of 74 held-out family attempts
   (replicated; RL without SFT does not help). It does not transfer to MRCR or teach helper use.
 - **Choose evidence, do not summarize it.** Two-round retrieval is the best and cheapest MuSiQue library (also
-  at 512k tokens); on LongBench-v2 a retrieve-then-read library beats direct reading, 0.48 against 0.37, at a
-  quarter of the tokens, through the 0.6B caller. Bigger readers, map-reduce notes and recursion do not help.
+  at 512k tokens); on all 503 LongBench-v2 questions a retrieve-then-read library beats direct reading, 0.43 against
+  0.36, at a quarter of the tokens, also through the 0.6B caller. Bigger readers, map-reduce notes and recursion do not help.
 - **One line of documentation decides whether an untrained caller uses a library** (0.18 to 0.95 on MRCR);
   a distilled caller does not need it.
 

@@ -167,16 +167,15 @@ reader); more sampling (majority of 3 at 88k tokens: 0.22 vs 0.35 for the librar
 \frametitle{External validity, and what we withdrew.}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.48\textwidth}
-\begin{block}{LongBench-v2 (150 questions, chance 0.25)}
+\begin{block}{LongBench-v2 (all 503 questions, chance 0.25)}
 \footnotesize
-Direct, truncated to 48k tokens: 0.367 (42k tokens)\\
-Map-reduce notes library: 0.360 (366k tokens)\\
-\textbf{Retrieve-then-read library: 0.480 (10k tokens)}\\
-RLM without a library: 0.120\\[1mm]
-Selecting evidence beats summarizing everything, as on MuSiQue.
+Direct (truncated): 0.356, 42k tokens\\
+\textbf{Retrieve-then-read: 0.427, 10k tokens}\\
+via the 0.6B caller: 0.423 (+0.07, se 0.02)\\[1mm]
+Selecting evidence beats summarizing (map-reduce: no gain).
 \end{block}
-\footnotesize \textbf{Withdrawn:} ``the reader is distractor-limited''; length routing (pre-registered: the
-ordering reversed on fresh questions); ``libraries stop helping on LongBench-v2'' (it was the map-reduce routine).
+\footnotesize \textbf{Withdrawn:} distractor-limited reader; length routing (pre-registered); ``no help on
+LongBench-v2'' (it was map-reduce).
 \end{column}
 \begin{column}{.48\textwidth}
 \footnotesize
@@ -189,7 +188,7 @@ scores 0 at 128k.\par\smallskip
 random search found nothing.
 \end{column}
 \end{columns}
-\source{Ledger E32, E32b, E31, E22b, E24, E24c. LongBench-v2: zai-org (Apache-2.0).}
+\source{Ledger E32 to E32e, E31, E22b, E24, E24c. LongBench-v2: zai-org (Apache-2.0).}
 \end{frame}
 
 \begin{frame}[t]
