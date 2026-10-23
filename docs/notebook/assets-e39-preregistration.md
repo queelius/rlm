@@ -36,3 +36,12 @@ isolates the protocol (three labels and sampling against thirty labels and repai
 
 Arm C with boot seed 1 (`e39rc-8b-best8`, added 2026-10-23 19:50 UTC before the run; exploratory) completes the
 arms across both seeds.
+
+## Checkpoint robustness (added 2026-10-23 22:00 UTC, before the runs; exploratory)
+
+E43, E45 and E46 showed that arm A's checkpoint (round four, RL seed 5) is the best of four RL seeds of its recipe
+(42 of 74 held out; the others 29, 22, 33). Arm A is therefore rerun unchanged (boot seed 0, same 30 families, same
+acceptance rule and fresh-task scoring) with round four's other checkpoints (`proposer-rl-6-40`, `-9-40`, `-10-40`)
+and the round-five recipe's seed-17 checkpoint (`proposer-rl-17-40`): runs `e39a-4br4-s{6,9,10}-best8` and
+`e39a-4br5b-s17-best8`, each scored against arm B with `e39_analysis.py`. Question: does the three-label 4B match the
+8B with thirty labels for a typical checkpoint, or only for the best one?
