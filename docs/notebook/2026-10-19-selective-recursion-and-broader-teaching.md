@@ -1097,9 +1097,20 @@ is a trade, not a gain:
 | helper families at 0.7 or more, of 8 | 1 | 2 | 5 |
 
 Round five against round four: +4/-14, exact McNemar p 0.031. The extra helper data moved the 4B toward the 8B on
-helper families and cost it code generalization, mostly on a held-out question type. MRCR still 0.152. Whether the
-loss comes from the SFT mixture (51 percent code pairs, against 77 percent in round four) or from RL is being
-separated by evaluating both rounds' SFT-only adapters.
+helper families and cost it code generalization, mostly on a held-out question type. MRCR still 0.152. The
+SFT-only adapters (held-out seed 0) locate the loss in RL, not in the data:
+
+| held-out seed 0 | round four SFT | + RL | round five SFT | + RL |
+| --- | --- | --- | --- | --- |
+| code families solved, of 29 | 11 | 22 | 11 | 16 |
+| helper families: mean best | 0.100 | 0.117 | 0.362 | 0.312 |
+| helper families at 0.7 or more, of 8 | 1 | 1 | 3 | 1 |
+
+Round five's SFT data gave helper skill (mean best 0.10 to 0.36) at no cost to code; round four's RL added 11 code
+families, round five's only 5, and eroded the helper skill. Two explanations: in round four almost every helper
+rollout scored 0, so those groups had no advantage and RL's updates went to code families, while in round five
+they compete for the update; or RL seed noise. E41 separates them: from round five's SFT adapter, RL on code-only
+families (seed 25) and RL as in round five with a new seed (16).
 
 How many labels does verification need? (E37, 23 October 06:30 UTC.) Accepting a library needs labelled teaching
 inputs; the bootstrapper uses 30. To ask whether agreement could replace labels (consensus as verification, as in
