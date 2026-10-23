@@ -1083,6 +1083,21 @@ were all solvable by code alone, so training made it a parser writer; library wr
 search strategy would need training families that require them. The thinking hybrid 4B with primitives (15:02 UTC)
 uses BM25 in only 5 of 24 candidates; best 0.372 on the mixed set (0.25 / 0.65 / 0.22; the best does use BM25) (the 8B: 0.464 and 0.183 on two seeds).
 
+A small proposer with three labels matches the 8B with thirty (E39, pre-registered, 23 October 13:50 UTC; protocol in
+`assets-e39-preregistration.md`, committed before either run). On the 30 held-out families of data seed 1 that no
+earlier run touched, arm A (round-four 4B, 8 round-0 samples, accept the first valid candidate that reproduces the 3
+examples in its prompt) against arm B (thinking 8B, standard protocol, acceptance over 30 labels with labelled
+repair feedback), each accepted library scored on 30 fresh 400-record tasks:
+
+| | accepted | correct on fresh tasks | false acceptances | proposer tokens per family |
+| --- | --- | --- | --- | --- |
+| A: 4B, best of 8, three labels | 12 | 12 | 0 | 4.0k |
+| B: thinking 8B, thirty labels | 13 | 13 | 0 | 54.1k |
+
+A against B: +3/-4, exact McNemar p 1.0. All three pre-registered predictions hold: A within 3 of B (12 vs 13),
+at under a tenth of the tokens (7 percent), with at most one false acceptance (none). On exact families, library
+bootstrapping needs a trained 4B, eight samples and three labels, not a thinking 8B and thirty.
+
 Proposer round five (E36, 23 October 11:35 UTC): round four's recipe with 65 helper-family pairs instead of 20 (40
 new helper training families from the thinking 8B and 20 from the thinking 14B, both with the worked example
 stripped from the saved prompts; 133 pairs in all), RL seed 15. Training reward on helper families rose to 0.36,
