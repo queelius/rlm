@@ -1125,7 +1125,21 @@ Round five's SFT data gave helper skill (mean best 0.10 to 0.36) at no cost to c
 families, round five's only 5, and eroded the helper skill. Two explanations: in round four almost every helper
 rollout scored 0, so those groups had no advantage and RL's updates went to code families, while in round five
 they compete for the update; or RL seed noise. E41 separates them: from round five's SFT adapter, RL on code-only
-families (seed 25) and RL as in round five with a new seed (16).
+families (seed 25) and RL as in round five with a new seed (16). Two seeds each (14:15 UTC):
+
+| held out, two seeds | solved of 74 | code of 58 | helper mean best | helper at 0.7+ of 8 |
+| --- | --- | --- | --- | --- |
+| round four (its SFT; mixed RL, seed 5) | 42 | 42 | 0.098 | 1 |
+| round five (mixed RL, seed 15) | 32 | 32 | 0.331 | 2 |
+| E41 B (mixed RL, seed 16) | 36 | 34 | 0.458 | 3 |
+| E41 A (code-only RL, seed 25) | 36 | 34 | 0.425 | 3 |
+| thinking 8B | 45 | 44 | 0.462 | 5 |
+
+The RL family mix does not matter (A against B +7/-7); the RL seed moves the total by about four (B against round
+five +8/-4, p 0.39), so round five's drop was partly an unlucky seed. From round five's SFT adapter, RL reaches the
+8B's helper-family mean best (0.46) and gives up about six code families against round four (B against round four
++7/-13, p 0.26), which traces to the SFT mixture (51 percent code pairs against 77). Single RL seeds have misled us
+twice in this campaign; comparisons of RL recipes need at least two RL seeds.
 
 How many labels does verification need? (E37, 23 October 06:30 UTC.) Accepting a library needs labelled teaching
 inputs; the bootstrapper uses 30. To ask whether agreement could replace labels (consensus as verification, as in
