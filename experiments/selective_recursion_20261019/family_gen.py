@@ -40,6 +40,8 @@ TRAIN_QUESTIONS = ("count", "total", "top_user", "nth_item", "last_city", "first
 HELDOUT_QUESTIONS = ("day_span", "semantic_total")
 # E26e: training questions that need the helper's judgment (item categories); semantic_total stays held out
 HELPER_TRAIN_QUESTIONS = ("semantic_count", "semantic_top_user")
+# E40: more helper question types for training (classify items, then aggregate differently); semantic_total stays held out
+HELPER_TRAIN_QUESTIONS_EXTRA = ("semantic_distinct", "semantic_last_city", "semantic_nth")
 ANSWER_FORMATS = ("plain", "answer_line", "prefix", "json")
 ORD = {1: "1st", 2: "2nd", 3: "3rd"}
 
@@ -62,10 +64,10 @@ def family_ids(split: str, seeds=(0,)) -> list[str]:
     return out
 
 
-def helper_training_family_ids(seeds=(0, 1)) -> list[str]:
+def helper_training_family_ids(seeds=(0, 1), questions=HELPER_TRAIN_QUESTIONS) -> list[str]:
     """Training families whose questions need the helper (E26e); formats are the training formats."""
     return [f"gen-{f}-{q}-{ANSWER_FORMATS[(len(f) + len(q) + s) % len(ANSWER_FORMATS)]}-s{s}"
-            for f in TRAIN_FORMATS for q in HELPER_TRAIN_QUESTIONS for s in seeds]
+            for f in TRAIN_FORMATS for q in questions for s in seeds]
 
 
 def parse_family(fid: str):
@@ -181,6 +183,24 @@ class Family:
             if len(best) > 1 and best[0][1] == best[1][1]:
                 return None
             return f"Which user bought the most units of {cat} items in total?", best[0][0]
+        if q == "semantic_distinct":
+            u, cat = r.choice(users), r.choice(sorted(CATEGORIES))
+            return (f"How many different {cat} items did {u} have records for (any action)?",
+                    str(len({x["item"] for x in recs if x["user"] == u and ITEM_CATEGORY[x["item"]] == cat})))
+        if q == "semantic_last_city":
+            cat = r.choice(sorted(CATEGORIES))
+            mine = [x for x in recs if ITEM_CATEGORY[x["item"]] == cat]
+            if not mine:
+                return None
+            return f"In which city was the most recent record involving a {cat} item?", mine[-1]["city"]
+        if q == "semantic_nth":
+            cat = r.choice(sorted(CATEGORIES))
+            mine = [x for x in recs if x["action"] == "bought" and ITEM_CATEGORY[x["item"]] == cat]
+            if not mine:
+                return None
+            n = r.randint(1, min(len(mine), 5))
+            return (f"What was the {ordinal(n)} {cat} item bought (action bought only, counting from the start of the log)?",
+                    mine[n - 1]["item"])
         if q == "semantic_total":
             cat = r.choice(sorted(CATEGORIES))
             return (f"How many units of {cat} items were bought in total (action bought only)?",
