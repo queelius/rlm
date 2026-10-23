@@ -1083,6 +1083,24 @@ were all solvable by code alone, so training made it a parser writer; library wr
 search strategy would need training families that require them. The thinking hybrid 4B with primitives (15:02 UTC)
 uses BM25 in only 5 of 24 candidates; best 0.372 on the mixed set (0.25 / 0.65 / 0.22; the best does use BM25) (the 8B: 0.464 and 0.183 on two seeds).
 
+Proposer round five (E36, 23 October 11:35 UTC): round four's recipe with 65 helper-family pairs instead of 20 (40
+new helper training families from the thinking 8B and 20 from the thinking 14B, both with the worked example
+stripped from the saved prompts; 133 pairs in all), RL seed 15. Training reward on helper families rose to 0.36,
+0.48, 0.33 and 0.60 by ten-step block (round four 0.06 to 0.17), so the helper libraries were learned. Held out it
+is a trade, not a gain:
+
+| held out, two seeds | round four | round five | thinking 8B |
+| --- | --- | --- | --- |
+| solved of 74 | 42 | 32 | 45 |
+| day_span (a held-out code question) solved of 16 | 6 | 2 | 9 |
+| helper families: mean best score | 0.098 | 0.331 | 0.462 |
+| helper families at 0.7 or more, of 8 | 1 | 2 | 5 |
+
+Round five against round four: +4/-14, exact McNemar p 0.031. The extra helper data moved the 4B toward the 8B on
+helper families and cost it code generalization, mostly on a held-out question type. MRCR still 0.152. Whether the
+loss comes from the SFT mixture (51 percent code pairs, against 77 percent in round four) or from RL is being
+separated by evaluating both rounds' SFT-only adapters.
+
 How many labels does verification need? (E37, 23 October 06:30 UTC.) Accepting a library needs labelled teaching
 inputs; the bootstrapper uses 30. To ask whether agreement could replace labels (consensus as verification, as in
 MBR-exec, AlphaCode clustering and CodeT for program selection), three 4B proposers drew 8 round-0 candidates per
