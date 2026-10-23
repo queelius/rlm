@@ -1100,7 +1100,11 @@ bootstrapping needs a trained 4B, eight samples and three labels, not a thinking
 Replication (boot seed 1, registered in the same file before the runs; 17:45 UTC): A 14 and B 16 correct of 30, one
 false acceptance in A (an XML-format first-at-or-after family, 0.4 on fresh tasks; B found nothing there), 3.5k
 against 50.7k tokens; all three predictions met again. Pooled over 60 family attempts: 26 against 29 (+6/-9, p 0.61),
-at 7.1 percent of the tokens, one false acceptance against none.
+at 7.1 percent of the tokens, one false acceptance against none. Exploratory arm C (21:05 UTC; the thinking 8B under arm A's protocol, boot
+seed 0) separates proposer from protocol: C 13 correct with 2 false acceptances at 76.3k tokens per family, B 13 with
+none at 54.1k, A 12 with none at 4.0k. Protocol (C against B, +3/-3) and proposer (A against C, +4/-5, p 1.0) effects
+are both undetectable at 30 families; the 8B's two false acceptances under three labels are libraries that fit the
+shown examples without generalizing. The saving comes from both changes together.
 
 Proposer round five (E36, 23 October 11:35 UTC): round four's recipe with 65 helper-family pairs instead of 20 (40
 new helper training families from the thinking 8B and 20 from the thinking 14B, both with the worked example

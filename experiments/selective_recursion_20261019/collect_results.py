@@ -45,8 +45,8 @@ def sources() -> list[tuple[Path, str]]:
     out += [(f, f"rl/{f.parent.name}.steps.jsonl") for f in sorted(HOME.glob("e*proposer-rl*/steps.jsonl"))
             + sorted(HOME.glob("e4*-rl-*/steps.jsonl"))]
     out += [(f, f"analyses/e37-consensus/{f.parent.name}.consensus.jsonl") for f in sorted(RUNS.glob("e37*/consensus.jsonl"))]
-    for d in ("e39-analysis", "e39r-analysis"):
-        out += [(HOME / d / "e39_rows.jsonl", f"analyses/{d}/e39_rows.jsonl"), (HOME / d / "analysis.log", f"analyses/{d}/analysis.log")]
+    for d in ("e39-analysis", "e39r-analysis", "e39c-analysis"):
+        out += [(HOME / d / "e39_rows.jsonl", f"analyses/{d}/e39_rows.jsonl"), (HOME / d / "analysis.log", f"analyses/{d}/analysis.log"), (HOME / d / "analysis-c-vs-b.log", f"analyses/{d}/analysis-c-vs-b.log")]
     out += [(f, f"analyses/{f.parent.name}/run.log") for f in sorted(HOME.glob("e35c-heldout-*/run.log"))]
     out += [(HOME / "e35c-CALIBRATION.txt", "calibration/e35c-CALIBRATION.txt"),
             (HOME / "e35-boot-8b-oolong-s0" / "CALIBRATION.txt", "calibration/e35-CALIBRATION.txt")]
