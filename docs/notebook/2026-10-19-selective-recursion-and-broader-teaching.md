@@ -1101,7 +1101,9 @@ three worked examples already in the proposer's prompt verify almost perfectly: 
 all 30 inputs and give varied outputs, a check that needs no labels), 129 reproduce the three examples and 127 of
 them score 0.9 or more (the other two 0.73 and 0.83). Precision rises with labels at recall 1.00: none 0.44, one
 shown example 0.81, two 0.88, three 0.98 (random teaching labels instead: 0.79, 0.88, 0.94; five 0.98). Without
-the validity check, three examples give 0.89. The same holds on MRCR: of 646 saved candidates from every proposer,
+the validity check, three examples give 0.89. On 30 fresh tasks per family with twice the records (400), every one
+of the 127 teaching-correct libraries scores 0.9 or more and both near misses fail: three labels plus a label-free
+validity check accept libraries that generalize, 127 times in 129. The same holds on MRCR: of 646 saved candidates from every proposer,
 exactly the 4 correct libraries reproduce their shown examples. On program-solvable families, verification costs the
 three labels the prompt already has. Where answers are noisy (MuSiQue F1; OOLONG's per-record classification),
 nothing reproduces three examples exactly, so these families need graded verification over more labels. How many:
