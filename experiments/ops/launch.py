@@ -48,11 +48,17 @@ def main():
     a = p.parse_args(argv[:i])
     cmd = argv[i + 1:]
     env = dict(os.environ, **dict(kv.split("=", 1) for kv in a.env))
-    # 1. argument dry run
-    dry = subprocess.run(cmd + ["--help"], cwd=EXP, env=env, capture_output=True, text=True, timeout=120)
-    if dry.returncode != 0:
-        print(f"LAUNCH REFUSED {a.name}: argument check failed:\n{dry.stderr[-800:]}")
-        sys.exit(2)
+    # 1. argument dry run, for Python scripts only: "--help" is not a dry run for a shell script, which would
+    # simply start (E36: a pipeline ran for 120 s under the check and the launcher crashed on the timeout)
+    if len(cmd) > 1 and cmd[1].endswith(".py"):
+        try:
+            dry = subprocess.run(cmd + ["--help"], cwd=EXP, env=env, capture_output=True, text=True, timeout=120)
+        except subprocess.TimeoutExpired:
+            print(f"LAUNCH REFUSED {a.name}: argument check did not finish in 120 s")
+            sys.exit(2)
+        if dry.returncode != 0:
+            print(f"LAUNCH REFUSED {a.name}: argument check failed:\n{dry.stderr[-800:]}")
+            sys.exit(2)
     # 2. run directory and manifest
     run = HOME / a.name
     run.mkdir(parents=True, exist_ok=True)

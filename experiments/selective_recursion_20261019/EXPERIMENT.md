@@ -69,4 +69,4 @@ are in `docs/RESULTS.md`. Run outputs, traces and adapters are in the run store 
 
 Runs were launched through the job queue and checked launcher in `../ops/` (see its README). Results, with
 caveats and withdrawn claims, are ledger rows E21 to E36 in `docs/RESULTS.md`. Proposer round five (E36) runs from
-`scripts/e36_round5.sh` behind three queued helper-data runs (`e36-*-exemplar-helper-train-*`).
+`scripts/e36_round5b.sh` (the first copy, `e36_round5.sh`, never ran; see the ops README) behind three queued helper-data runs (`e36-*-exemplar-helper-train-*`).

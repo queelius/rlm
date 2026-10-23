@@ -7,7 +7,8 @@ failures of the campaign turned out to be operational).
   `after`) in `RUNS/queue/pending`; `queue.py run` (a detached dispatcher) starts the highest-priority job whenever
   its lane has a free slot (capacities in `RUNS/queue/slots.json`, re-read every minute), tracks the job's own PID,
   and writes `RUNS/queue/IDLE-ALARM` when a lane has run nothing for 10 minutes. `queue.py add SPEC`, `queue.py ls`.
-- `launch.py`: checked launch. Dry-runs the command's argument parsing, writes `MANIFEST.json` (command, commit,
+- `launch.py`: checked launch. Dry-runs the argument parsing of Python scripts (`COMMAND --help`; skipped for shell
+  pipelines, which `--help` would simply start, as happened once on 23 October), writes `MANIFEST.json` (command, commit,
   dirty flag, lanes), starts the job detached with its exit code recorded in `EXIT`, and marks the run FAILED if
   it dies or every early row is an error.
 - `status.py`: one table of every recent run (rows, score per arm, errors, age, nonzero exits).
