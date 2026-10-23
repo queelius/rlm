@@ -38,11 +38,10 @@ families for library discovery):
   however trained.
 - **Training the proposer works on families like its training ones.** SFT on the 8B's verified code, then RL
   with the verified teaching score as reward, lifts a 4B from 9 to 30 of 74 held-out family attempts
-  (replicated; RL without SFT does not help). With more varied teacher data one RL seed reached 42, level with the 8B
-  teacher (45), but a second RL seed of the same recipe reached only 29 (p 0.004 between seeds): the RL seed moves the
-  result by up to 13 of 74, more than any recipe change we tested. More helper-family teacher data brings the 4B close
-  to the 8B on families that need the helper's judgment (mean best 0.46 against 0.46); effects on code families are
-  within seed noise. It does not transfer to MRCR.
+  (replicated; RL without SFT does not help). Results swing with the RL seed: one seed of the round-four recipe
+  reached 42, level with the 8B teacher (45), but four seeds average 31.5 (range 22 to 42). A recipe with three times
+  the helper-family teacher data averages 33.7 over three seeds (range 32 to 36) and matches the 8B on families that
+  need the helper's judgment (mean best 0.46). It does not transfer to MRCR.
 - **Where answers are exact, bootstrapping needs three labels.** A candidate that runs cleanly and reproduces the
   three examples in its prompt is almost always correct (127 of 129, all generalizing to fresh, longer inputs).
   Pre-registered on 30 unseen families and replicated, the trained 4B with eight samples and three labels

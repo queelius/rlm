@@ -1157,7 +1157,12 @@ result by 13 of 74, more than any recipe change tested in rounds five to seven (
 and stands as stated; and the round-to-round differences are not recipe effects until each recipe has several RL
 seeds. A third seed of round four and a second of E41 B are the next GPU1 jobs. E44 (20:20 UTC): the round-five recipe's third RL seed
 (17) gives 33 of 74 with helper mean best 0.467; over seeds 15, 16, 17 the recipe is stable at 32, 36, 33 of 74 and
-0.33, 0.46, 0.47 on helper families, while round four's seeds gave 42 and 29.
+0.33, 0.46, 0.47 on helper families, while round four's seeds gave 42 and 29. E45 and E46 (21:50 UTC), round four's
+third and fourth RL seeds: 22 and 33. Over four seeds round four's recipe averages 31.5 of 74 (sd 8.3, range 22 to
+42), the round-five recipe 33.7 over three (sd 2.1). The headline 42 was the best of four draws. With seed variance
+accounted for, more helper-family teacher data did not cost code generalization: the round-five recipe matches round
+four on solves, reaches the 8B on helper families, and is far less seed-sensitive. The single-seed readings of
+rounds five to seven (E36, E41, E42) are superseded.
 
 Pause (23 October 18:30 UTC). Job 6599 was cancelled about 30 hours early so the user could take up new preemptible
 GPU access. Before the stop: round four's RL repeated with a fresh seed (E43 A) finished training (reward by block
