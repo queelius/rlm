@@ -1139,7 +1139,12 @@ primitives (E35b; the proposer writes only the question handling and aggregation
 Scored by question type, the 30 teaching rows span 11 templates (1 to 7 rows each) and no candidate handles more
 than a few; many answer "unknown question" on the rest. The barrier is the breadth of question handling, not
 classification. Per task group (E35c: counting, timeline, user; 30 teaching rows each), the shipped library scores
-0.533, 0.733 and 0.933; group bootstraps are running.
+0.533, 0.733 and 0.933; group bootstraps are running. Interim (09:40 UTC): the 14B's counting library reaches
+0.533 on its teaching rows, level with the shipped library, and on the 78 held-out counting rows at the same lengths
+scores 0.500 against 0.551 (+5/-9, p 0.42): better on comparing two labels (0.86 vs 0.77, it classifies every record
+separately), nothing on the most and least frequent label (0 of 10 vs 8 of 10; it handles two of the four question
+templates). The 14B's user library reaches 0.40 against 0.93; timeline libraries stay at 0 (date windows defeat
+question parsing). Narrowing the family made one group bootstrappable, not all.
 
 Proposer round four (E26g, 23 October 02:29 UTC). Helper-family data from four runs (the thinking 8B with and without a
 worked example of a helper-calling library, two bootstrap seeds, and the thinking 4B; the example stripped from the
