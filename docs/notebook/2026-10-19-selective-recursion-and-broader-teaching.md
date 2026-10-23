@@ -1083,6 +1083,30 @@ were all solvable by code alone, so training made it a parser writer; library wr
 search strategy would need training families that require them. The thinking hybrid 4B with primitives (15:02 UTC)
 uses BM25 in only 5 of 24 candidates; best 0.372 on the mixed set (0.25 / 0.65 / 0.22; the best does use BM25) (the 8B: 0.464 and 0.183 on two seeds).
 
+How many labels does verification need? (E37, 23 October 06:30 UTC.) Accepting a library needs labelled teaching
+inputs; the bootstrapper uses 30. To ask whether agreement could replace labels (consensus as verification, as in
+MBR-exec, AlphaCode clustering and CodeT for program selection), three 4B proposers drew 8 round-0 candidates per
+held-out family with no early stopping. Candidates that error or give one output for every input are ignored.
+
+| proposer | random valid candidate correct | plurality agreement: precision, recall | reproduces the 3 shown examples: correct | shown examples, then plurality: precision, recall |
+| --- | --- | --- | --- | --- |
+| round four | 78/147 (0.53) | 0.65, 0.74 | 78/78 | 1.00, 1.00 |
+| SFT only | 36/99 (0.36) | 0.33, 0.33 | 36/37 | 1.00, 1.00 |
+| untrained | 13/42 (0.31) | 1.00 (3 of 3), 0.50 | 13/14 | 1.00, 1.00 |
+
+Agreement alone is weak: the RL-trained proposer repeats its wrong programs (five identical candidates at 0.73
+while the one correct candidate stands alone), the SFT proposer's plurality is no better than chance, agreement
+across the three proposers does no better (0.62), and on helper families it accepts only wrong libraries. But the
+three worked examples already in the proposer's prompt verify almost perfectly: a candidate that reproduces them is
+correct on all 30 in 127 of 129 cases. The same holds on MRCR: of 646 saved candidates from every proposer, exactly
+the 4 correct libraries reproduce their shown examples. On program-solvable families, verification costs the
+three labels the prompt already has. Where answers are noisy (MuSiQue F1; OOLONG's per-record classification),
+nothing reproduces three examples exactly, so these families need graded verification over more labels.
+
+Proposer ladder on held-out discovery (two seeds each; 23 October 06:25 UTC): round-four 4B 42 of 74, thinking 8B
+45, thinking 14B 47 (14B vs 8B +11/-9, p 0.82; 14B vs 4B +14/-9, p 0.41), at 2k, 48k and 30k proposer tokens per
+family. Scale shows only where the helper is needed: semantic families at 0.7 or more, 1, 5 and 6 of 8.
+
 Bootstrapping OOLONG (E35, 23 October 04:10 UTC). The study's original family, where a library must have the helper
 label every record. 30 teaching rows from training windows (spam and TREC, 4k, 8k and 16k tokens); the shipped
 library scores 0.600 on them (0.672 on the 293 held-out rows), so 0.55 counts as matching it. No proposer comes
