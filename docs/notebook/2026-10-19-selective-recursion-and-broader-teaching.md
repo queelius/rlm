@@ -1145,6 +1145,14 @@ five +8/-4, p 0.39), so round five's drop was partly an unlucky seed. From round
 +7/-13, p 0.26), which traces to the SFT mixture (51 percent code pairs against 77). Single RL seeds have misled us
 twice in this campaign; comparisons of RL recipes need at least two RL seeds.
 
+RL seed variance (E43, 23 October 19:05 UTC, run after resuming on job 6618). Round four's RL repeated with seed 6
+instead of 5, same SFT adapter and settings: held out 29 of 74 (16 and 13) against seed 5's 42 (22 and 20); +3/-16,
+exact McNemar p 0.004. Against the 8B the seed-6 proposer is clearly worse (+4/-20, p 0.002). The RL seed moves the
+result by 13 of 74, more than any recipe change tested in rounds five to seven (32, 36, 29 on single seeds). So the
+"round four is level with the 8B" result describes the seed-5 checkpoint, not the recipe; E39 used that checkpoint
+and stands as stated; and the round-to-round differences are not recipe effects until each recipe has several RL
+seeds. A third seed of round four and a second of E41 B are the next GPU1 jobs.
+
 Pause (23 October 18:30 UTC). Job 6599 was cancelled about 30 hours early so the user could take up new preemptible
 GPU access. Before the stop: round four's RL repeated with a fresh seed (E43 A) finished training (reward by block
 close to seed 5's), its held-out evaluations are queued, not run; E39 arm C (the 8B under the three-label protocol)
@@ -1163,8 +1171,9 @@ held out it is the worst:
 | round seven | 113 (code pairs twice) | 29 | 28 | 0.379 | 3 |
 | round seven, SFT only | 113 (code pairs twice) | 20 | 20 | 0.335 | 3 |
 
-Round seven against round four +4/-17 (p 0.007). Held-out code success falls with every increase in helper-family
-data (42, 34, 28), helper skill does not improve past 65 pairs, and repeating the code pairs did not protect code.
+Round seven against round four +4/-17 (p 0.007). On single RL seeds, held-out code success fell with every increase
+in helper-family data (42, 34, 28), helper skill did not improve past 65 pairs, and repeating the code pairs did not
+protect code. (Revised after E43, below: RL seed variance alone is 13 of 74, so this dose-response is not established.)
 Training reward on the training families now runs opposite to held-out success: the proposer fits the training
 distribution. For a 4B with LoRA rank 32, about 20 helper pairs with the code pairs gave the best held-out total;
 the helper gap is not closed by more of the same kind of data. A second RL seed for round seven runs in E43.

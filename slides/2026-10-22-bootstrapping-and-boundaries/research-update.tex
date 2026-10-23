@@ -89,6 +89,7 @@ Proposer & Solved / 37 & Tokens \\
 4B + SFT (2 seeds) & 9, 7 & 3k \\
 4B + SFT + RL (2 seeds) & 16, 14 & 2k \\
 4B, round four (2 seeds) & \textbf{22, 20} & 2k \\
+\quad same recipe, RL seed 6 & 16, 13 & 3k \\
 \bottomrule
 \end{tabular}
 \medskip
@@ -99,14 +100,12 @@ question and answer format; held-out families use a new format or a new question
 \begin{column}{.41\textwidth}
 \small
 \textbf{Training the proposer:} SFT on the 8B's verified code, then 40 steps of RL with the verified teaching
-score as reward: 9 to 30 of 74 attempts (p $<$ 0.001); with more varied teacher data, 42: no different from
-the 8B (45) or 14B (47). Scale shows only where the helper is needed (families at 0.7+: 1, 5, 6 of 8). MRCR
-still fails.\par\medskip
-\textbf{Helper gap:} 3x the helper teacher data brings the 4B to the 8B on helper families (mean 0.46), at
-about 6 code families (ns).
+score as reward: 9 to 30 of 74 attempts (p $<$ 0.001); with more varied data, 42 (8B 45), but a second RL
+seed of the same recipe gives 29 (p 0.004): \alert{RL seed variance exceeds recipe effects.} MRCR still fails.\par\medskip
+\textbf{Helper gap:} 3x the helper teacher data brings the 4B to the 8B on helper families (mean 0.46).
 \end{column}
 \end{columns}
-\source{Ledger E26 to E26g, E36, E41; runs e26-disc-*, e41*. Generator: family\_gen.py (answers exact).}
+\source{Ledger E26 to E26g, E36, E41, E43; runs e26-disc-*, e41*, e43*. Generator: family\_gen.py (answers exact).}
 \end{frame}
 
 \begin{frame}[t]
@@ -239,8 +238,8 @@ documentation a thin caller can act on, and evidence selection inside the routin
 library beats a 4B reading the document on MuSiQue and on LongBench-v2.\par\medskip
 \textbf{Next}
 \begin{enumerate}\setlength\itemsep{1mm}
-\item Helper gap: more of the same teacher data stops helping (held-out code falls 42, 34, 28 of 58 as helper pairs
-grow 20, 65, 113); next try more varied helper questions per pair, not more pairs, with two RL seeds per recipe.
+\item Proposer RL is seed-sensitive (42 vs 29 of 74 for one recipe): compare recipes over 3+ RL seeds, and select
+checkpoints by held-out discovery, not training reward.
 \item Labels on noisy families: graded verification for MuSiQue- and OOLONG-like families.
 \item Breadth: split a broad family into question templates automatically (OOLONG: counting yes, timeline and
 user no).
