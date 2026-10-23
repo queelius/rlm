@@ -33,3 +33,6 @@ E39 changed the proposer and the protocol together. Arm C (`e39c-8b-best8`) runs
 protocol (8 round-0 candidates, no repair, no early stopping, acceptance by the 3 shown examples), boot seed 0, same
 30 families, scored with the same acceptance rule and fresh tasks. A against C isolates the proposer; C against B
 isolates the protocol (three labels and sampling against thirty labels and repair).
+
+Arm C with boot seed 1 (`e39rc-8b-best8`, added 2026-10-23 19:50 UTC before the run; exploratory) completes the
+arms across both seeds.
