@@ -26,3 +26,10 @@ E39r repeats E39 unchanged except `--boot-seed 1` in both arms (different shown 
 repair draws), on the same 30 families: arm A `e39r-a-4brl4-best8`, arm B `e39r-b-8b-standard`, analysed with the
 same `e39_analysis.py`. The same three predictions apply. The pooled result (60 family attempts per arm) is reported
 alongside each seed.
+
+## Exploratory arm C (added 2026-10-23 17:55 UTC, before the run; not part of the registered predictions)
+
+E39 changed the proposer and the protocol together. Arm C (`e39c-8b-best8`) runs the thinking 8B under arm A's
+protocol (8 round-0 candidates, no repair, no early stopping, acceptance by the 3 shown examples), boot seed 0, same
+30 families, scored with the same acceptance rule and fresh tasks. A against C isolates the proposer; C against B
+isolates the protocol (three labels and sampling against thirty labels and repair).
