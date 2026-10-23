@@ -12,5 +12,7 @@ failures of the campaign turned out to be operational).
   dirty flag, lanes), starts the job detached with its exit code recorded in `EXIT`, and marks the run FAILED if
   it dies or every early row is an error.
 - `status.py`: one table of every recent run (rows, score per arm, errors, age, nonzero exits).
+- `checkpoint.py`: writes a JSON resume manifest (git state, Slurm job, servers with devices and command lines,
+  loaded adapters, queue specs, versions, in-flight run progress) before a job is cancelled or ends.
 
 Check `IDLE-ALARM` and `queue.py ls` first when resuming a session.

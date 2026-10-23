@@ -2,7 +2,7 @@
 date: 2026-10-24
 status: allocation_ending
 allocation: job 6599, two A100 40GB (MIG 7g.40gb each), ends 2026-10-25 00:52 UTC
-research_cutoff: 2026-10-23 (draft 14:45 UTC; final section added at handoff)
+research_cutoff: 2026-10-23 18:20 UTC (job cancelled early; see Handoff status)
 branch: research/r1-replication-20261007, pushed to origin/main
 ---
 
@@ -77,6 +77,42 @@ adapters hot-loaded), 8008 Qwen3-14B-AWQ (fp8 KV). Restart commands are in the p
 5. Idea lab I-018 (few decisions carry the distilled caller's gain), I-004 (keeping input-conditioned routes
    through RL); the RL-correlated-errors question sent to the lab inbox on 23 October.
 
-## Handoff status
+## Handoff status (2026-10-23 18:20 UTC; job 6599 cancelled early for the new gpu-preempt access)
 
-(Filled in at the end of the allocation: which runs finished, which were cut off, and the last commit.)
+The user is moving to the new preemptible partition (`gpu-preempt`, QoS `gpu-preempt-qos`, two GPUs on top of the
+normal two), which required cancelling job 6599 about 30 hours early. Work was checkpointed first:
+
+- Finished and recorded before the stop: E35 to E42, E39 and its replication (pooled 26 vs 29 of 60).
+- E43 A (round four's RL repeated with seed 6) finished training; adapter `e43-rl-r4-s6/step-40`, served name
+  `proposer-rl-6-40`. Its held-out evaluations are queued, not run.
+- E43 B (round seven's RL with seed 27) was never started. Optional.
+- E39 arm C (exploratory: the 8B under the three-label protocol) paused at 7 of 30 families (71 of 240 candidates);
+  it resumes from its saved candidates.
+
+### Machine-readable state
+
+- `docs/checkpoints/2026-10-23-job6599.json` (copy of `RUNS/CHECKPOINT-2026-10-23.json`), written by
+  `experiments/ops/checkpoint.py`: git HEAD, Slurm job facts, every server with its device, full command line and
+  served models or adapters, the queue (pending and running specs in full), environment and package versions, and
+  the progress of the in-flight runs.
+- `RUNS/RESUME-HERE.md`: an agent-neutral pointer back to this document.
+- `RUNS/queue/specs-archive-2026-10-23/`: every job spec of the campaign (the originals lived in a temporary
+  scratch directory).
+- Versions at the stop: Python 3.12.12; serving vLLM 0.27.1, torch 2.13.0+cu130, transformers 5.15.1; training torch
+  2.13.0+cu130, transformers 5.15.1, peft 0.20.0; uv 0.9.7; NVIDIA driver 580.126.09.
+
+### To resume
+
+1. Start the model servers. Exact command lines, devices and loaded adapters at the stop are in
+   `/project/alex_phd/runs/selective-recursion-20261019/serving/servers-at-handoff-2026-10-23.txt`. Put
+   `/project/alex_phd/envs/vllm/bin` on PATH, and set `CUDA_VISIBLE_DEVICES` to the new job's GPU for each lane
+   (GPU0 lane: 8002 8B, 8004 0.6B, 8006 4B; GPU1 lane: 8001 4B with LoRA). Check each server answers a real request.
+2. On 8001, load the adapter the pending evaluations use:
+   `curl -s -X POST http://127.0.0.1:8001/v1/load_lora_adapter -H "Authorization: Bearer local" -H "Content-Type: application/json" -d '{"lora_name": "proposer-rl-6-40", "lora_path": "/home/atowell/research-runs/selective-recursion-20261019/e43-rl-r4-s6/step-40"}'`
+3. Start the dispatcher from the repository root: `nohup .venv/bin/python experiments/ops/queue.py run > /dev/null 2>&1 &`.
+   It launches what is in `RUNS/queue/pending/`: `e39c-8b-best8` (resumes) and the E43 A evaluations
+   (`e21-boot-4br4-s6-s0`, `e26-disc-4br4-s6-heldout{,-r2}`). Lanes `gpu0` and `gpu1` assume both GPUs are on one
+   node with the ports above; for jobs on separate nodes, start one server set and one dispatcher per node.
+4. When they finish: compare E43 A with round four (42 of 74) as the second RL seed of the headline result; score
+   E39 arm C with `e39_analysis.py --a RUNS/e39c-8b-best8 --b RUNS/e39b-8b-standard ...` (C against B) and the
+   arm A rule on both A and C (A against C).

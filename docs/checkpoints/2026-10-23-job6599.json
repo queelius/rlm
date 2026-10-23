@@ -1,0 +1,348 @@
+{
+ "written": "2026-10-23T18:20:29Z",
+ "note": "Job 6599 (an21) cancelled early by the user on 2026-10-23 for the new gpu-preempt access. Dispatcher stopped; pending = e39c-8b-best8 (resumes from saved candidates) and the E43 A evaluations (load proposer-rl-6-40 from e43-rl-r4-s6/step-40 on 8001 first). E43 B (round seven RL, seed 27) never ran. Resume steps: docs/RESEARCH_RESUME_2026-10-24.md, Handoff status.",
+ "git": {
+  "worktree": "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007",
+  "branch": "research/r1-replication-20261007",
+  "head": "b072e40fbf00642f1e12b3c4c02a408baa835b4d",
+  "remote": "https://github.com/queelius/rlm.git",
+  "pushed_to": "origin/main",
+  "dirty": [
+   "M docs/RESEARCH_RESUME_2026-10-24.md",
+   " M docs/RESULTS.md",
+   " M experiments/ops/README.md",
+   "?? experiments/ops/checkpoint.py"
+  ]
+ },
+ "slurm": {
+  "SLURM_JOB_USER": "atowell",
+  "SLURM_JOB_UID": "1523821556",
+  "SLURM_JOB_GPUS": "0,1",
+  "SLURMD_NODENAME": "an21",
+  "SLURM_JOB_START_TIME": "1792630362",
+  "SLURM_JOB_END_TIME": "1792889562",
+  "SLURM_JOB_CPUS_PER_NODE": "64",
+  "SLURM_JOB_PARTITION": "gpu",
+  "SLURM_JOB_NUM_NODES": "1",
+  "SLURM_JOBID": "6599",
+  "SLURM_JOB_QOS": "gpu-qos",
+  "SLURM_NODELIST": "an21",
+  "SLURM_JOB_ACCOUNT": "alex_phd",
+  "SLURM_JOB_ID": "6599",
+  "SLURM_JOB_NAME": "sys/dashboard/sys/codeserver",
+  "SLURM_JOB_GID": "1523800513",
+  "SLURM_JOB_NODELIST": "an21"
+ },
+ "host": "an21",
+ "servers": [
+  {
+   "pid": 1858941,
+   "port": "8001",
+   "cuda_visible_devices": "MIG-43a3375a-1942-592d-accf-d0884164dcb8",
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554 --served-model-name qwen3-4b --host 127.0.0.1 --port 8001 --api-key local --dtype bfloat16 --max-model-len 65536 --gpu-memory-utilization 0.50 --max-num-seqs 64 --enable-prefix-caching --seed 0 --enable-lora --max-lora-rank 64 --max-loras 2",
+   "served_models": [
+    "proposer-4b-8bcode",
+    "proposer-4b-8bcode-r2",
+    "proposer-4b-r3",
+    "proposer-4b-r4",
+    "proposer-4b-r5",
+    "proposer-4b-r7",
+    "proposer-rl-0-40",
+    "proposer-rl-1-40",
+    "proposer-rl-15-40",
+    "proposer-rl-16-40",
+    "proposer-rl-2-40",
+    "proposer-rl-25-40",
+    "proposer-rl-26-40",
+    "proposer-rl-3-40",
+    "proposer-rl-4-40",
+    "proposer-rl-5-40",
+    "proposer-rl-6-40",
+    "proposer-rl-7-30",
+    "proposer-rl-8-30",
+    "proposer-rl-98-1",
+    "proposer-rl-99-1",
+    "qwen3-4b"
+   ]
+  },
+  {
+   "pid": 1814896,
+   "port": "8002",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5",
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-8B-AWQ --served-model-name qwen3-8b-awq --host 127.0.0.1 --port 8002 --api-key local --max-model-len 24576 --gpu-memory-utilization 0.45 --max-num-seqs 16 --enable-prefix-caching --seed 0",
+   "served_models": [
+    "qwen3-8b-awq"
+   ]
+  },
+  {
+   "pid": 1803657,
+   "port": "8004",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5",
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-0.6B --served-model-name qwen3-0.6b-nt --host 127.0.0.1 --port 8004 --api-key local --max-model-len 16384 --gpu-memory-utilization 0.12 --max-num-seqs 32 --enable-prefix-caching --seed 0 --default-chat-template-kwargs {\"enable_thinking\": false} --enable-lora --max-lora-rank 64 --max-loras 2 --lora-modules ctrl-06-onecell-v2=/project/alex_phd/runs/selective-recursion-20261019/adapters/sft-06-onecell-v2/final ctrl-06-onecell-v2-s1=/project/alex_phd/runs/selective-recursion-20261019/adapters/sft-06-onecell-v2-s1/final",
+   "served_models": [
+    "ctrl-06-onecell-v2",
+    "ctrl-06-onecell-v2-s1",
+    "qwen3-0.6b-nt"
+   ]
+  },
+  {
+   "pid": 1818264,
+   "port": "8006",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5",
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554 --served-model-name qwen3-4b --host 127.0.0.1 --port 8006 --api-key local --dtype bfloat16 --max-model-len 32768 --gpu-memory-utilization 0.39 --max-num-seqs 48 --enable-prefix-caching --seed 0",
+   "served_models": [
+    "qwen3-4b"
+   ]
+  }
+ ],
+ "queue": {
+  "pending": [
+   {
+    "name": "e21-boot-4br4-s6-s0",
+    "lane": "gpu1",
+    "priority": 9,
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "bootstrap_library.py",
+     "--family",
+     "mrcr",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e21-boot-4br4-s6-s0",
+     "--model",
+     "proposer-rl-6-40",
+     "--base-url",
+     "http://127.0.0.1:8001/v1",
+     "--helper-base-url",
+     "http://127.0.0.1:8001/v1",
+     "--max-output-tokens",
+     "4096",
+     "--candidates",
+     "8",
+     "--repair-rounds",
+     "2",
+     "--timeout",
+     "1200",
+     "--seed",
+     "0"
+    ]
+   },
+   {
+    "name": "e26-disc-4br4-s6-heldout-r2",
+    "lane": "gpu1",
+    "priority": 9,
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "discovery_bench.py",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e26-disc-4br4-s6-heldout-r2",
+     "--candidates",
+     "4",
+     "--repair-rounds",
+     "1",
+     "--concurrency",
+     "4",
+     "--model",
+     "proposer-rl-6-40",
+     "--base-url",
+     "http://127.0.0.1:8001/v1",
+     "--helper-base-url",
+     "http://127.0.0.1:8001/v1",
+     "--split",
+     "heldout",
+     "--max-output-tokens",
+     "4096",
+     "--boot-seed",
+     "1"
+    ]
+   },
+   {
+    "name": "e26-disc-4br4-s6-heldout",
+    "lane": "gpu1",
+    "priority": 9,
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "discovery_bench.py",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e26-disc-4br4-s6-heldout",
+     "--candidates",
+     "4",
+     "--repair-rounds",
+     "1",
+     "--concurrency",
+     "4",
+     "--model",
+     "proposer-rl-6-40",
+     "--base-url",
+     "http://127.0.0.1:8001/v1",
+     "--helper-base-url",
+     "http://127.0.0.1:8001/v1",
+     "--split",
+     "heldout",
+     "--max-output-tokens",
+     "4096",
+     "--boot-seed",
+     "0"
+    ]
+   },
+   {
+    "name": "e39c-8b-best8",
+    "lane": "gpu0",
+    "priority": 7,
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "discovery_bench.py",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e39c-8b-best8",
+     "--candidates",
+     "8",
+     "--repair-rounds",
+     "0",
+     "--concurrency",
+     "4",
+     "--model",
+     "qwen3-8b-awq",
+     "--base-url",
+     "http://127.0.0.1:8002/v1",
+     "--helper-base-url",
+     "http://127.0.0.1:8006/v1",
+     "--families",
+     "gen-prose-count-json-s1,gen-prose-total-json-s1,gen-prose-top_user-prefix-s1,gen-prose-nth_item-prefix-s1,gen-prose-last_city-json-s1,gen-prose-first_after-answer_line-s1,gen-prose-distinct-prefix-s1,gen-prose-day_span-prefix-s1,gen-prose-semantic_total-plain-s1,gen-xmlish-count-plain-s1,gen-xmlish-total-plain-s1,gen-xmlish-top_user-json-s1,gen-xmlish-nth_item-json-s1,gen-xmlish-last_city-plain-s1,gen-xmlish-first_after-prefix-s1,gen-xmlish-distinct-json-s1,gen-xmlish-day_span-json-s1,gen-xmlish-semantic_total-answer_line-s1,gen-chat-day_span-answer_line-s1,gen-chat-semantic_total-json-s1,gen-pipe-day_span-answer_line-s1,gen-pipe-semantic_total-json-s1,gen-kv-day_span-json-s1,gen-kv-semantic_total-answer_line-s1,gen-jsonl-day_span-prefix-s1,gen-jsonl-semantic_total-plain-s1,gen-csv-day_span-plain-s1,gen-csv-semantic_total-prefix-s1,gen-table-day_span-prefix-s1,gen-table-semantic_total-plain-s1",
+     "--max-output-tokens",
+     "16000",
+     "--boot-seed",
+     "0",
+     "--threshold",
+     "2"
+    ]
+   }
+  ],
+  "running": [],
+  "slots": {
+   "gpu0": 6,
+   "gpu1": 8
+  },
+  "dispatcher": []
+ },
+ "versions": {
+  "serving": "{'python': '3.12.12', 'vllm': '0.27.1', 'torch': '2.13.0+cu130', 'transformers': '5.15.1', 'openai': '3.3.1'}",
+  "training": "{'python': '3.12.12', 'torch': '2.13.0+cu130', 'transformers': '5.15.1', 'peft': '0.20.0', 'openai': '2.53.0'}",
+  "evaluation": "{'python': '3.12.12', 'openai': '2.53.0'}",
+  "uv": "uv 0.9.7",
+  "nvidia_driver": [
+   "580.126.09"
+  ],
+  "gpus": [
+   "GPU 0: NVIDIA A100-PCIE-40GB (UUID: GPU-ad3b3f73-6016-89ee-6e2b-0a8cc96f4e32)",
+   "  MIG 7g.40gb     Device  0: (UUID: MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5)",
+   "GPU 1: NVIDIA A100-PCIE-40GB (UUID: GPU-a19c2dd7-9f2a-9529-9658-3f246796aeb7)",
+   "  MIG 7g.40gb     Device  0: (UUID: MIG-43a3375a-1942-592d-accf-d0884164dcb8)"
+  ]
+ },
+ "runs": [
+  {
+   "run": "e39c-8b-best8",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e39c-8b-best8",
+   "exists": true,
+   "families_started": 11,
+   "families_finished": 7,
+   "candidates": 71,
+   "PAUSED-not-failed.txt": "Paused (not failed) 2026-10-23 18:15 UTC to checkpoint before cancelling job 6599 (new gpu-preempt access). discovery_bench skips finished families and bootstrap_library resumes from candidates.jsonl; the spec is back in RUNS/queue/pending, so restarting the dispatcher resumes it."
+  },
+  {
+   "run": "e43-rl-r4-s6",
+   "path": "/home/atowell/research-runs/selective-recursion-20261019/e43-rl-r4-s6",
+   "exists": true,
+   "steps.jsonl": 40,
+   "FINAL": "proposer-rl-6-40",
+   "last_adapter": "/home/atowell/research-runs/selective-recursion-20261019/e43-rl-r4-s6/step-40"
+  },
+  {
+   "run": "e42-rl-r7",
+   "path": "/home/atowell/research-runs/selective-recursion-20261019/e42-rl-r7",
+   "exists": true,
+   "steps.jsonl": 40,
+   "FINAL": "proposer-rl-26-40",
+   "last_adapter": "/home/atowell/research-runs/selective-recursion-20261019/e42-rl-r7/step-40"
+  },
+  {
+   "run": "e41-rl-r5sft-a",
+   "path": "/home/atowell/research-runs/selective-recursion-20261019/e41-rl-r5sft-a",
+   "exists": true,
+   "steps.jsonl": 40,
+   "FINAL": "proposer-rl-25-40",
+   "last_adapter": "/home/atowell/research-runs/selective-recursion-20261019/e41-rl-r5sft-a/step-40"
+  },
+  {
+   "run": "e41-rl-r5sft-b",
+   "path": "/home/atowell/research-runs/selective-recursion-20261019/e41-rl-r5sft-b",
+   "exists": true,
+   "steps.jsonl": 40,
+   "FINAL": "proposer-rl-16-40",
+   "last_adapter": "/home/atowell/research-runs/selective-recursion-20261019/e41-rl-r5sft-b/step-40"
+  },
+  {
+   "run": "e36-proposer-rl-r5",
+   "path": "/home/atowell/research-runs/selective-recursion-20261019/e36-proposer-rl-r5",
+   "exists": true,
+   "steps.jsonl": 40,
+   "FINAL": "proposer-rl-15-40",
+   "last_adapter": "/home/atowell/research-runs/selective-recursion-20261019/e36-proposer-rl-r5/step-40"
+  },
+  {
+   "run": "e26g-proposer-rl-r4",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e26g-proposer-rl-r4",
+   "exists": true,
+   "steps.jsonl": 40,
+   "FINAL": "proposer-rl-5-40",
+   "last_adapter": "/project/alex_phd/runs/selective-recursion-20261019/e26g-proposer-rl-r4/step-40"
+  },
+  {
+   "run": "e39a-4brl4-best8",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e39a-4brl4-best8",
+   "exists": true,
+   "families_started": 30,
+   "families_finished": 30,
+   "candidates": 240,
+   "bench.jsonl": "{\"family\": \"gen-prose-count-json-s1\", \"format\": \"prose\", \"question\": \"count\", \"answer_format\": \"json\", \"n_candidates\": 8, \"best\": 1.0, \"success\": true, \"candidates_to_success\": 6, \"proposer_output_tokens\": 2317}\n{\"family\": \"gen-prose-total-json-s1\", \"format\": \"prose\", \"question\": \"total\", \"answer_format\": \"json\", \"n_candidates\": 8, \"best\": 0.8666666666666667, \"success\": false, \"candidates_to_success\": null, \"proposer_output_tokens\": 2861}\n{\"family\": \"gen-prose-top_user-prefix-s1\", \"format\": \"prose\", \"question\": \"top_user\", \"answer_format\": \"prefix\", \"n_candidates\": 8, \"best\": 1.0, \"success\": t",
+   "EXIT": "0"
+  },
+  {
+   "run": "e39b-8b-standard",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e39b-8b-standard",
+   "exists": true,
+   "families_started": 30,
+   "families_finished": 30,
+   "candidates": 179,
+   "bench.jsonl": "{\"family\": \"gen-prose-count-json-s1\", \"format\": \"prose\", \"question\": \"count\", \"answer_format\": \"json\", \"n_candidates\": 2, \"best\": 1.0, \"success\": true, \"candidates_to_success\": 2, \"proposer_output_tokens\": 11030}\n{\"family\": \"gen-prose-total-json-s1\", \"format\": \"prose\", \"question\": \"total\", \"answer_format\": \"json\", \"n_candidates\": 5, \"best\": 1.0, \"success\": true, \"candidates_to_success\": 5, \"proposer_output_tokens\": 37142}\n{\"family\": \"gen-prose-top_user-prefix-s1\", \"format\": \"prose\", \"question\": \"top_user\", \"answer_format\": \"prefix\", \"n_candidates\": 2, \"best\": 1.0, \"success\": true, \"candidates_",
+   "EXIT": "0"
+  },
+  {
+   "run": "e39r-a-4brl4-best8",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e39r-a-4brl4-best8",
+   "exists": true,
+   "families_started": 30,
+   "families_finished": 30,
+   "candidates": 240,
+   "bench.jsonl": "{\"family\": \"gen-prose-count-json-s1\", \"format\": \"prose\", \"question\": \"count\", \"answer_format\": \"json\", \"n_candidates\": 8, \"best\": 0.1, \"success\": false, \"candidates_to_success\": null, \"proposer_output_tokens\": 2217}\n{\"family\": \"gen-prose-total-json-s1\", \"format\": \"prose\", \"question\": \"total\", \"answer_format\": \"json\", \"n_candidates\": 8, \"best\": 1.0, \"success\": true, \"candidates_to_success\": 5, \"proposer_output_tokens\": 3183}\n{\"family\": \"gen-prose-top_user-prefix-s1\", \"format\": \"prose\", \"question\": \"top_user\", \"answer_format\": \"prefix\", \"n_candidates\": 8, \"best\": 1.0, \"success\": true, \"candidate",
+   "EXIT": "0"
+  },
+  {
+   "run": "e39r-b-8b-standard",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e39r-b-8b-standard",
+   "exists": true,
+   "families_started": 30,
+   "families_finished": 30,
+   "candidates": 161,
+   "bench.jsonl": "{\"family\": \"gen-prose-count-json-s1\", \"format\": \"prose\", \"question\": \"count\", \"answer_format\": \"json\", \"n_candidates\": 1, \"best\": 1.0, \"success\": true, \"candidates_to_success\": 1, \"proposer_output_tokens\": 9151}\n{\"family\": \"gen-prose-total-json-s1\", \"format\": \"prose\", \"question\": \"total\", \"answer_format\": \"json\", \"n_candidates\": 1, \"best\": 1.0, \"success\": true, \"candidates_to_success\": 1, \"proposer_output_tokens\": 6727}\n{\"family\": \"gen-prose-top_user-prefix-s1\", \"format\": \"prose\", \"question\": \"top_user\", \"answer_format\": \"prefix\", \"n_candidates\": 3, \"best\": 1.0, \"success\": true, \"candidates_to",
+   "EXIT": "0"
+  }
+ ],
+ "stores": {
+  "runs": "/project/alex_phd/runs/selective-recursion-20261019",
+  "homes": "/home/atowell/research-runs/selective-recursion-20261019",
+  "adapters": "/home/atowell/research-runs/selective-recursion-20261019/adapters",
+  "sft_data": "/home/atowell/research-runs/selective-recursion-20261019/sft-data",
+  "models": "/project/alex_phd/research-cache/models",
+  "datasets": "/project/alex_phd/research-cache/datasets"
+ }
+}
