@@ -1088,8 +1088,12 @@ label every record. 30 teaching rows from training windows (spam and TREC, 4k, 8
 library scores 0.600 on them (0.672 on the 293 held-out rows), so 0.55 counts as matching it. No proposer comes
 close: the thinking 8B 0.200 and 0.067 (two seeds; all candidates call the helper, about 128 calls per task in the
 best), the thinking 14B 0.000 (it looks for the question on the input's first line, so every candidate answers "task
-not recognized" before reaching its helper calls). A run with the shipped parsing and classification functions given as
-primitives (the proposer writes only the question handling and aggregation) is queued.
+not recognized" before reaching its helper calls). With the shipped parsing and classification functions given as
+primitives (E35b; the proposer writes only the question handling and aggregation), still no: 8B 0.167 and 0.133.
+Scored by question type, the 30 teaching rows span 11 templates (1 to 7 rows each) and no candidate handles more
+than a few; many answer "unknown question" on the rest. The barrier is the breadth of question handling, not
+classification. Per task group (E35c: counting, timeline, user; 30 teaching rows each), the shipped library scores
+0.533, 0.733 and 0.933; group bootstraps are running.
 
 Proposer round four (E26g, 23 October 02:29 UTC). Helper-family data from four runs (the thinking 8B with and without a
 worked example of a helper-calling library, two bootstrap seeds, and the thinking 4B; the example stripped from the
