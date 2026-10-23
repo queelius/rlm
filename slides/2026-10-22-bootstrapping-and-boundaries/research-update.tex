@@ -116,16 +116,16 @@ about 6 code families (ns).
 \footnotesize
 \begin{tabular}{@{}lrrr@{}}
 \toprule
-30 unseen families & Correct & False acc. & Tokens \\
+30 unseen families, 2 seeds & Correct & False acc. & Tokens \\
 \midrule
-4B, best of 8, 3 labels & \textbf{12} & 0 & 4.0k \\
-8B thinking, 30 labels & 13 & 0 & 54.1k \\
+4B, best of 8, 3 labels & \textbf{12, 14} & 0, 1 & 3.7k \\
+8B thinking, 30 labels & 13, 16 & 0, 0 & 52.4k \\
 \bottomrule
 \end{tabular}
 \medskip
 
-\small Correct = accepted library scores 0.9+ on 30 fresh tasks with twice the records. +3/$-$4, p 1.0. Protocol,
-prediction and analysis committed before either run; all three predictions met.
+\small Correct = accepted library scores 0.9+ on 30 fresh tasks with twice the records. Pooled 26 vs 29 of 60,
+p 0.61. Protocol, predictions and analysis committed before the runs; all predictions met in both seeds.
 \end{column}
 \begin{column}{.40\textwidth}
 \begin{block}{Why three labels suffice}

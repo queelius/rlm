@@ -1097,6 +1097,10 @@ repair feedback), each accepted library scored on 30 fresh 400-record tasks:
 A against B: +3/-4, exact McNemar p 1.0. All three pre-registered predictions hold: A within 3 of B (12 vs 13),
 at under a tenth of the tokens (7 percent), with at most one false acceptance (none). On exact families, library
 bootstrapping needs a trained 4B, eight samples and three labels, not a thinking 8B and thirty.
+Replication (boot seed 1, registered in the same file before the runs; 17:45 UTC): A 14 and B 16 correct of 30, one
+false acceptance in A (an XML-format first-at-or-after family, 0.4 on fresh tasks; B found nothing there), 3.5k
+against 50.7k tokens; all three predictions met again. Pooled over 60 family attempts: 26 against 29 (+6/-9, p 0.61),
+at 7.1 percent of the tokens, one false acceptance against none.
 
 Proposer round five (E36, 23 October 11:35 UTC): round four's recipe with 65 helper-family pairs instead of 20 (40
 new helper training families from the thinking 8B and 20 from the thinking 14B, both with the worked example

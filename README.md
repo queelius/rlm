@@ -44,8 +44,9 @@ families for library discovery):
   without helping helper families (113 pairs: 29 against 42 of 74, p 0.007). It does not transfer to MRCR.
 - **Where answers are exact, bootstrapping needs three labels.** A candidate that runs cleanly and reproduces the
   three examples in its prompt is almost always correct (127 of 129, all generalizing to fresh, longer inputs).
-  Pre-registered on 30 unseen families, the trained 4B with eight samples and three labels bootstrapped as many
-  correct libraries as the thinking 8B with thirty (12 against 13) at 7 percent of the tokens. Agreement among
+  Pre-registered on 30 unseen families and replicated, the trained 4B with eight samples and three labels
+  bootstrapped about as many correct libraries as the thinking 8B with thirty (26 against 29 of 60 attempts, p 0.61)
+  at 7 percent of the tokens. Agreement among
   candidates is no substitute, and noisy families (MuSiQue, OOLONG) need tens of labels.
 - **Boundary: broad families.** No proposer bootstraps OOLONG, the study's own family, as one library (eleven
   question templates from thirty examples); narrowed to one task group, the 14B writes a counting library level
