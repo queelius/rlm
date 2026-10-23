@@ -1151,7 +1151,9 @@ exact McNemar p 0.004. Against the 8B the seed-6 proposer is clearly worse (+4/-
 result by 13 of 74, more than any recipe change tested in rounds five to seven (32, 36, 29 on single seeds). So the
 "round four is level with the 8B" result describes the seed-5 checkpoint, not the recipe; E39 used that checkpoint
 and stands as stated; and the round-to-round differences are not recipe effects until each recipe has several RL
-seeds. A third seed of round four and a second of E41 B are the next GPU1 jobs.
+seeds. A third seed of round four and a second of E41 B are the next GPU1 jobs. E44 (20:20 UTC): the round-five recipe's third RL seed
+(17) gives 33 of 74 with helper mean best 0.467; over seeds 15, 16, 17 the recipe is stable at 32, 36, 33 of 74 and
+0.33, 0.46, 0.47 on helper families, while round four's seeds gave 42 and 29.
 
 Pause (23 October 18:30 UTC). Job 6599 was cancelled about 30 hours early so the user could take up new preemptible
 GPU access. Before the stop: round four's RL repeated with a fresh seed (E43 A) finished training (reward by block
