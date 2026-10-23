@@ -58,7 +58,8 @@ families for library discovery):
   a distilled caller does not need it.
 
 Evidence for each claim, with run locations and caveats, is in the
-[results ledger](docs/RESULTS.md); the narrative is in the
+[results ledger](docs/RESULTS.md), with the result data behind rows E21 onward in
+`experiments/selective_recursion_20261019/results/`; the narrative is in the
 [lab notebook](docs/notebook/) and the plan in [docs/research-plans/](docs/research-plans/).
 The experiment code is in `experiments/selective_recursion_20261019/`; released models and data
 are listed in [docs/hf/RELEASE_LIST.md](docs/hf/RELEASE_LIST.md).

@@ -1145,6 +1145,12 @@ five +8/-4, p 0.39), so round five's drop was partly an unlucky seed. From round
 +7/-13, p 0.26), which traces to the SFT mixture (51 percent code pairs against 77). Single RL seeds have misled us
 twice in this campaign; comparisons of RL recipes need at least two RL seeds.
 
+Pause (23 October 18:30 UTC). Job 6599 was cancelled about 30 hours early so the user could take up new preemptible
+GPU access. Before the stop: round four's RL repeated with a fresh seed (E43 A) finished training (reward by block
+close to seed 5's), its held-out evaluations are queued, not run; E39 arm C (the 8B under the three-label protocol)
+paused at 7 of 30 families. Resume steps: `docs/RESEARCH_RESUME_2026-10-24.md`; result data behind the ledger:
+`experiments/selective_recursion_20261019/results/`.
+
 Round seven (E42, 23 October 17:40 UTC): round five's data plus helper libraries for three new helper question types
 (semantic_distinct, semantic_last_city, semantic_nth; 48 more pairs from the 14B and 8B), the 68 code pairs included
 twice, mixed RL (seed 26). Training reward was the highest of any round (helper 0.56 to 0.65, code 0.60 to 0.69), and

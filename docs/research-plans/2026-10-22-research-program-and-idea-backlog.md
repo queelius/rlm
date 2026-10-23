@@ -210,3 +210,13 @@ by hand. Changes, in order of value:
   **Next, conditional:** if round five transfers, replicate it with a second RL seed and run it in E39 as a third arm;
   if not, the helper gap is generalization across questions, and the next lever is more helper question types in
   family_gen (only semantic_count and semantic_top_user train; semantic_total is held out).
+- 2026-10-23 18:30: pause (job 6599 cancelled early for new preemptible GPU access; resume steps in
+  `docs/RESEARCH_RESUME_2026-10-24.md`). Since 10:50: E39 replicated (pooled 26 vs 29 of 60 at 7 percent of the
+  tokens; three-label bootstrapping holds); more helper-family teacher data trades held-out code for helper skill and
+  then stops helping (E36, E41, E42: code 42, 34, 28 of 58 at 20, 65, 113 helper pairs; training reward rises while
+  held-out success falls); RL seed variance is about four families of 74, so RL recipes need two or more seeds.
+  **Re-ranked queue for the next allocation:** (1) finish the pending E43 A evaluations and E39 arm C (cheap, queued);
+  (2) helper gap with varied helper questions per pair rather than more pairs, two RL seeds per recipe; (3) graded
+  verification and label needs on noisy families; (4) automatic splitting of broad families into templates;
+  (5) the program-solvability note (MRCR) and idea-lab I-018 and I-004. With four GPUs on separate nodes, run one
+  server set and dispatcher per node.

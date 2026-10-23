@@ -96,6 +96,8 @@ normal two), which required cancelling job 6599 about 30 hours early. Work was c
   served models or adapters, the queue (pending and running specs in full), environment and package versions, and
   the progress of the in-flight runs.
 - `RUNS/RESUME-HERE.md`: an agent-neutral pointer back to this document.
+- `experiments/selective_recursion_20261019/results/`: the result data behind the ledger, in git (rerun
+  `collect_results.py` after new runs finish to refresh it).
 - `RUNS/queue/specs-archive-2026-10-23/`: every job spec of the campaign (the originals lived in a temporary
   scratch directory).
 - Versions at the stop: Python 3.12.12; serving vLLM 0.27.1, torch 2.13.0+cu130, transformers 5.15.1; training torch
