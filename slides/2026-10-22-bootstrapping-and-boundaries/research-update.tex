@@ -102,11 +102,42 @@ question and answer format; held-out families use a new format or a new question
 score as reward: 9 to 30 of 74 attempts (p $<$ 0.001); with more varied teacher data, 42: no different from
 the 8B (45) or 14B (47). Scale shows only where the helper is needed (families at 0.7+: 1, 5, 6 of 8). MRCR
 still fails.\par\medskip
-\textbf{Verification is cheap:} a cleanly running candidate that reproduces the prompt's 3 examples scores 0.9+ in
-127 of 129 cases (MRCR: exactly the 4 correct of 646). Agreement among candidates is no substitute.
+\textbf{Helper gap:} more helper-family teacher data lifts the 4B on helper families (mean best 0.10 to 0.33; 8B
+0.46), but RL results swing with the seed (details next update).
 \end{column}
 \end{columns}
 \source{Ledger E26, E26b, E26c, E26g, E37; runs e26-disc-*, e37*. Generator: family\_gen.py (procedural, answers exact).}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Bootstrapping is cheap where answers are exact (pre-registered).}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.56\textwidth}
+\footnotesize
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+30 unseen families & Correct & False acc. & Tokens \\
+\midrule
+4B, best of 8, 3 labels & \textbf{12} & 0 & 4.0k \\
+8B thinking, 30 labels & 13 & 0 & 54.1k \\
+\bottomrule
+\end{tabular}
+\medskip
+
+\small Correct = accepted library scores 0.9+ on 30 fresh tasks with twice the records. +3/$-$4, p 1.0. Protocol,
+prediction and analysis committed before either run; all three predictions met.
+\end{column}
+\begin{column}{.40\textwidth}
+\begin{block}{Why three labels suffice}
+\small
+Candidates that run cleanly and reproduce the prompt's examples are correct: precision 0.81, 0.88, 0.98 with 1, 2,
+3 labels (127 of 129 at three, all generalizing). Agreement among candidates is no substitute: an RL-trained
+proposer repeats its wrong programs.
+\end{block}
+\small \alert{Limit:} on noisy families (MuSiQue F1) ranking close routines takes tens of labels.
+\end{column}
+\end{columns}
+\source{Ledger E37, E38, E39; runs e37*, e39*; docs/notebook/assets-e39-preregistration.md.}
 \end{frame}
 
 \begin{frame}[t]
