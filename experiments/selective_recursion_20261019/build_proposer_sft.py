@@ -9,6 +9,7 @@ writing; repair-round successes are paired with the round-0 prompt (hindsight re
 """
 import argparse
 import json
+import re
 from pathlib import Path
 
 
@@ -31,6 +32,10 @@ def main():
                 continue
             best = max(ok, key=lambda c: (c["mean"], -len(c["code"])))
             prompt = (fam / "prompt.txt").read_text()
+            # a worked example shown to the proposer (BOOT_EXEMPLAR) is removed: the student learns to write the
+            # library from the plain contract, as it will be prompted at evaluation
+            prompt = re.sub(r"\n\nFor illustration, here is a complete library.*?\n```(?=\n\nTeaching examples)", "",
+                            prompt, flags=re.S)
             pairs.append(dict(family=fam.name, source=str(fam), teaching_mean=best["mean"], round=best["round"],
                               messages=[dict(role="user", content=prompt)],
                               completion="```python\n" + best["code"].strip() + "\n```", correct=True))
