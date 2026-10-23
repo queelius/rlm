@@ -1083,6 +1083,14 @@ were all solvable by code alone, so training made it a parser writer; library wr
 search strategy would need training families that require them. The thinking hybrid 4B with primitives (15:02 UTC)
 uses BM25 in only 5 of 24 candidates; best 0.372 on the mixed set (0.25 / 0.65 / 0.22; the best does use BM25) (the 8B: 0.464 and 0.183 on two seeds).
 
+RL on sampled token ids (E26c-ids, 23 October 01:22 UTC; idea-lab I-019). The same RL from the round-two SFT adapter,
+sampling through /v1/completions from the exact prompt token ids and training on the sampled ids (the lab found that
+re-tokenized text differs from the sampled tokens on 12.8 percent of turns). Training reward by ten-step blocks 0.349,
+0.412, 0.452, 0.469 (text-trained runs: 0.340 to 0.504 and 0.358 to 0.527). Held out: 34 of 74 family attempts
+(text-trained seeds 30 and 30), +16/-2 over SFT round two (exact McNemar p 0.001), +11/-7 against the first
+text-trained run (p 0.48, not distinguishable); MRCR 0.0. The RL gain stands with on-policy tokens; sampled ids are
+the default for further proposer RL.
+
 Proposer round three with helper-dependent families (E26e, 18:18 UTC). Two new training question types need the
 helper's judgment of item categories (semantic_count, semantic_top_user; 20 families in the training formats;
 semantic_total stays held out). The thinking 8B solved 5 of 20 at a teaching score of 0.7 or more and the thinking 4B 1
