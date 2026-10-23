@@ -29,16 +29,26 @@ and in particular when to decompose at all. Short version:
   to 22 to 24 of 24 with no training. Verification kept out a buggy 4B routine that a stronger
   (8B) proposer then fixed.
 
-Added on 22 October (new families: OpenAI MRCR, MuSiQue in long haystacks, LongBench-v2, and 37 generated
+Added on 22 and 23 October (new families: OpenAI MRCR, MuSiQue in long haystacks, LongBench-v2, and 37 generated
 families for library discovery):
 
 - **Libraries can be bootstrapped, by a capable enough proposer.** A 4-bit Qwen3-8B with thinking wrote a
   verified MRCR library from three examples (2 of 5 seeds) that scores 1.000 held out up to 1M tokens; a 0.6B
-  caller that never saw MRCR calls it correctly. No 4B proposer found it, however trained.
+  caller that never saw MRCR calls it correctly. A 4-bit 14B does no better (2 of 5). No 4B proposer found it,
+  however trained.
 - **Training the proposer works on families like its training ones.** SFT on the 8B's verified code, then RL
   with the verified teaching score as reward, lifts a 4B from 9 to 30 of 74 held-out family attempts
   (replicated; RL without SFT does not help), and to 42 with more varied teacher data, level with the 8B teacher on
-  code-solvable families. It does not transfer to MRCR or teach helper use.
+  code-solvable families. Three times the helper-family teacher data brings it to the 8B on families that need the
+  helper's judgment, at a small, non-significant cost on code. It does not transfer to MRCR.
+- **Where answers are exact, bootstrapping needs three labels.** A candidate that runs cleanly and reproduces the
+  three examples in its prompt is almost always correct (127 of 129, all generalizing to fresh, longer inputs).
+  Pre-registered on 30 unseen families, the trained 4B with eight samples and three labels bootstrapped as many
+  correct libraries as the thinking 8B with thirty (12 against 13) at 7 percent of the tokens. Agreement among
+  candidates is no substitute, and noisy families (MuSiQue, OOLONG) need tens of labels.
+- **Boundary: broad families.** No proposer bootstraps OOLONG, the study's own family, as one library (eleven
+  question templates from thirty examples); narrowed to one task group, the 14B writes a counting library level
+  with the hand-written one, but not the timeline or user groups.
 - **Choose evidence, do not summarize it.** Two-round retrieval is the best and cheapest MuSiQue library (also
   at 512k tokens); on all 503 LongBench-v2 questions a retrieve-then-read library beats direct reading, 0.43 against
   0.36, at a quarter of the tokens, also through the 0.6B caller. Bigger readers, map-reduce notes and recursion do not help.
