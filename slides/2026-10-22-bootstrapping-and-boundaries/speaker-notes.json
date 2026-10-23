@@ -2,11 +2,11 @@
  "slides": [
   {
    "title": "Libraries can be bootstrapped: an 8B wrote MRCR's library.",
-   "notes": "The chain now runs without hand-written code for a new family: proposer writes, verification accepts, a 0.6B caller trained on other families calls it. Stress the caveat: MRCR is a parsing task in disguise, so this is program discovery. The ladder: only the 8B with thinking succeeded, and on one seed in three; a single success is a sample, not a capability."
+   "notes": "The chain now runs without hand-written code for a new family: proposer writes, verification accepts, a 0.6B caller trained on other families calls it. Stress the caveat: MRCR is a parsing task in disguise, so this is program discovery. The ladder: the 8B and a 4-bit 14B, both thinking, each succeed on 2 of 5 seeds; scale does not make discovery reliable, though the 14B succeeds sooner when it does. Every trained 4B fails."
   },
   {
    "title": "Discovery on 37 generated families: thinking, scale, and training.",
-   "notes": "Generated families give resolution MRCR cannot: 37 held-out families per proposer. Thinking and scale both matter. Training the 4B works: SFT on the 8B's verified code transfers parsing to new string formats, and 40 steps of RL with the verified teaching score as reward lift held-out discovery from 9 to 30 of 74 attempts (p < 0.001), close to the 8B on string formats. It does not reach MRCR. The semantic families are capped by the helper's labelling accuracy, not the proposer."
+   "notes": "Generated families give resolution MRCR cannot: 37 held-out families per proposer. Thinking and scale both matter. Training the 4B works: SFT on the 8B's verified code transfers parsing to new string formats, and 40 steps of RL with the verified teaching score as reward lift held-out discovery from 9 to 30 of 74 attempts (p < 0.001), close to the 8B on string formats. Round four, with more varied helper-family teacher data, reaches 42 of 74, statistically level with the 8B (45) and 14B (47) at a twentieth of the tokens. The remaining gap is helper use: the 4B rarely writes helper calls. Verification: with all candidates drawn, a candidate that reproduces the three worked examples in its prompt is almost always fully correct, so on program-solvable families the label cost is three examples; agreement among candidates fails because a trained proposer repeats its mistakes. It does not reach MRCR."
   },
   {
    "title": "One line of documentation decides whether an untrained caller uses a library.",

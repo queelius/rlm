@@ -1113,7 +1113,7 @@ library scores 0.600 on them (0.672 on the 293 held-out rows), so 0.55 counts as
 close: the thinking 8B 0.200 and 0.067 (two seeds; all candidates call the helper, about 128 calls per task in the
 best), the thinking 14B 0.000 (it looks for the question on the input's first line, so every candidate answers "task
 not recognized" before reaching its helper calls). With the shipped parsing and classification functions given as
-primitives (E35b; the proposer writes only the question handling and aggregation), still no: 8B 0.167 and 0.133.
+primitives (E35b; the proposer writes only the question handling and aggregation), still no: 8B 0.167 and 0.133, 14B 0.167.
 Scored by question type, the 30 teaching rows span 11 templates (1 to 7 rows each) and no candidate handles more
 than a few; many answer "unknown question" on the rest. The barrier is the breadth of question handling, not
 classification. Per task group (E35c: counting, timeline, user; 30 teaching rows each), the shipped library scores

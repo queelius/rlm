@@ -62,6 +62,7 @@ Untrained 4B + library & 0.95 & 0.88 \\
 4B, thinking off / on: 0 of 1 / 0 of 2\\
 8B, thinking off: 0 of 2\\
 8B, thinking on: \textbf{2 of 5}\\
+14B (4-bit), thinking on: \textbf{2 of 5}\\
 4B after SFT + RL: 0 of 4; test-time RL on MRCR: 0 in 1,920 samples
 \end{block}
 \small \alert{Caveat:} MRCR is solvable by a short parser, so this measures program discovery, not reading. We
@@ -83,7 +84,8 @@ Proposer & Solved / 37 & Tokens \\
 4B Instruct (2 seeds) & 5, 4 & 4k \\
 8B, no thinking & 4 & 4k \\
 4B, thinking & 14 & 55k \\
-8B, thinking & \textbf{20} & 49k \\
+8B, thinking (2 seeds) & 20, 25 & 48k \\
+14B, thinking (2 seeds) & 21, 26 & 30k \\
 4B + SFT (2 seeds) & 9, 7 & 3k \\
 4B + SFT + RL (2 seeds) & 16, 14 & 2k \\
 4B, round four (2 seeds) & \textbf{22, 20} & 2k \\
@@ -97,13 +99,14 @@ question and answer format; held-out families use a new format or a new question
 \begin{column}{.41\textwidth}
 \small
 \textbf{Training the proposer:} SFT on the 8B's verified code, then 40 steps of RL with the verified teaching
-score as reward: 9 to 30 of 74 attempts (p $<$ 0.001); with more varied teacher data, 42, level with the 8B on
-code-solvable families. MRCR still fails.\par\medskip
-\textbf{Helper ceiling:} the 8 families that need the helper's judgment score 0.47 to 0.83, not 0.9: the 4B
-labels items at 0.973, and an exact total over 30 items fails often.
+score as reward: 9 to 30 of 74 attempts (p $<$ 0.001); with more varied teacher data, 42: no different from
+the 8B (45) or 14B (47). Scale shows only where the helper is needed (families at 0.7+: 1, 5, 6 of 8). MRCR
+still fails.\par\medskip
+\textbf{Verification is cheap:} a candidate that reproduces the prompt's 3 examples is correct on all 30 in 127
+of 129 cases (MRCR: exactly the 4 correct of 646). Agreement among candidates is no substitute.
 \end{column}
 \end{columns}
-\source{Ledger E26, E26b, E26c, E26g; runs e26-disc-*, e26c-proposer-rl. Generator: family\_gen.py (procedural, answers exact).}
+\source{Ledger E26, E26b, E26c, E26g, E37; runs e26-disc-*, e37*. Generator: family\_gen.py (procedural, answers exact).}
 \end{frame}
 
 \begin{frame}[t]
@@ -176,7 +179,9 @@ Direct (truncated): 0.356, 42k tokens\\
 via the 0.6B caller: 0.423 (+0.07, se 0.02)\\[1mm]
 Selecting evidence beats summarizing (map-reduce: no gain).
 \end{block}
-\footnotesize \textbf{Withdrawn:} distractor-limited reader; length routing (pre-registered); ``no help on
+\footnotesize \textbf{Boundary:} no proposer bootstraps OOLONG, our own family (8B 0.20, 14B 0.00; shipped
+library 0.60): 30 examples span 11 question templates.\par\smallskip
+\textbf{Withdrawn:} distractor-limited reader; length routing (pre-registered); ``no help on
 LongBench-v2'' (it was map-reduce).
 \end{column}
 \begin{column}{.48\textwidth}
@@ -190,7 +195,7 @@ scores 0 at 128k.\par\smallskip
 random search found nothing.
 \end{column}
 \end{columns}
-\source{Ledger E32 to E32e, E31, E22b, E24, E24c. LongBench-v2: zai-org (Apache-2.0).}
+\source{Ledger E32 to E32e, E31, E22b, E24, E24c, E35. LongBench-v2: zai-org (Apache-2.0).}
 \end{frame}
 
 \begin{frame}[t]
@@ -202,10 +207,10 @@ documentation a thin caller can act on, and evidence selection inside the routin
 library beats a 4B reading the document on MuSiQue and on LongBench-v2.\par\medskip
 \textbf{Next}
 \begin{enumerate}\setlength\itemsep{1mm}
-\item Train the proposer on families that need the helper or a search strategy: trained only on code-solvable
-families, the 4B became a parser writer and ignores retrieval primitives.
-\item Primitives plus proposer training for MuSiQue-like families (the 8B composes BM25 into a working routine on 1
-of 2 seeds).
+\item Close the helper gap (running): round five trains the 4B on 60 more helper-family libraries from the 8B and
+14B.
+\item Family breadth (running): bootstrap OOLONG per task group (counting, timeline, user) against the shipped
+library's 0.53, 0.73, 0.93.
 \item Selection memory with pooled priors, since 30-question cells choose by noise.
 \item A short note on program-solvable long-context benchmarks (MRCR; candidates: Michelangelo, RULER).
 \end{enumerate}
