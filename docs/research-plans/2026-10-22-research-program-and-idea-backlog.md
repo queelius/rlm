@@ -194,3 +194,19 @@ by hand. Changes, in order of value:
   breadth the barrier (a group library reaching its group's reference score)?
   **Method lessons:** a "dry run" must never execute a shell pipeline (the launcher ran one for 120 s; fixed);
   early-stopped runs cannot answer agreement questions (all candidates after the first success are missing).
+- 2026-10-23 10:50: re-rank after a morning of results.
+  **New:** verification is cheap where answers are exact (E37: three shown examples plus a label-free validity
+  check accept libraries that generalize to fresh, longer inputs 127 times in 129; MRCR exactly the 4 correct of 646)
+  and expensive where they are noisy (MuSiQue: tens of labels to rank close routines; OOLONG counting: a library that
+  cleared 30 teaching rows was worse held out, p 0.023). Agreement is no substitute (RL-trained proposers repeat their
+  wrong programs; sent to the idea lab). Sampling does not reach the helper families (E38: 1 of 8 at 32 samples) and a
+  worked example makes the 4B call the helper without adapting the pattern (E38b). OOLONG narrowed to one task group
+  is bootstrappable where its questions are simple (14B counting library level with the shipped one held out), not
+  where they involve date windows (timeline 0).
+  **Running, ranked by what they decide:** (1) round five (E36): RL reward on helper families 0.36 and 0.48 in the
+  first two blocks against round four's 0.06 to 0.17, so the extra helper libraries were learned; held-out discovery
+  decides whether they transfer. (2) E39 (pre-registered): best-of-8 4B with three labels against the 8B with 30 on 30
+  unseen families. (3) the remaining 8B OOLONG group seeds.
+  **Next, conditional:** if round five transfers, replicate it with a second RL seed and run it in E39 as a third arm;
+  if not, the helper gap is generalization across questions, and the next lever is more helper question types in
+  family_gen (only semantic_count and semantic_top_user train; semantic_total is held out).
