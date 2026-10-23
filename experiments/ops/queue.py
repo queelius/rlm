@@ -13,7 +13,9 @@ import sys
 import time
 from pathlib import Path
 
-QUEUE = Path("/project/alex_phd/runs/selective-recursion-20261019/queue")
+# One dispatcher per queue: a second allocation (another node, e.g. the preemptible partition) must set RLM_QUEUE
+# to its own directory, or both dispatchers launch the same pending jobs.
+QUEUE = Path(os.environ.get("RLM_QUEUE", "/project/alex_phd/runs/selective-recursion-20261019/queue"))
 HOME = Path("/home/atowell/research-runs/selective-recursion-20261019")
 SLOTS = {"gpu0": 3, "gpu1": 4}
 LAUNCH = Path(__file__).resolve().parent / "launch.py"
