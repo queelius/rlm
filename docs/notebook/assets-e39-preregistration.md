@@ -19,3 +19,10 @@ Primary outcome: families with an accepted library whose score on 30 fresh tasks
 >= 0.9. Secondary: proposer output tokens per family; false acceptances (accepted but fresh < 0.9).
 Prediction: A >= B - 3 (non-inferior within 3 families) at <= 1/10 of B's tokens; A's false acceptances <= 1.
 Test: exact McNemar on per-family success. A result outside the prediction is reported as such.
+
+## Replication addendum (written 2026-10-23 15:05 UTC, before either replication run started)
+
+E39r repeats E39 unchanged except `--boot-seed 1` in both arms (different shown examples, sampling and, for arm B,
+repair draws), on the same 30 families: arm A `e39r-a-4brl4-best8`, arm B `e39r-b-8b-standard`, analysed with the
+same `e39_analysis.py`. The same three predictions apply. The pooled result (60 family attempts per arm) is reported
+alongside each seed.
