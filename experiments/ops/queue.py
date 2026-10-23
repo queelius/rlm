@@ -76,6 +76,25 @@ IDLE_SINCE: dict = {}
 IDLE_ALARM_MIN = 10
 
 
+LANE_PORTS = {"gpu0": (8002, 8004, 8006), "gpu1": (8001, 8007, 8008)}  # model servers on each lane
+
+
+def lane_serving(lane: str) -> bool:
+    """True if any model server on the lane has requests running (work launched outside the queue, such as
+    pipeline scripts and RL rollouts, shows up here)."""
+    import urllib.request
+
+    for port in LANE_PORTS.get(lane, ()):
+        try:
+            text = urllib.request.urlopen(f"http://127.0.0.1:{port}/metrics", timeout=3).read().decode()
+        except OSError:
+            continue
+        for line in text.splitlines():
+            if line.startswith("vllm:num_requests_running") and float(line.rsplit(" ", 1)[1]) > 0:
+                return True
+    return False
+
+
 def idle_alarm(run, lanes, log):
     """Lab suggestion I-007: alarm when a lane has run nothing for IDLE_ALARM_MIN minutes (log line and IDLE-ALARM file).
     Jobs launched outside the queue are invisible here, so the alarm means 'nothing queued is running', a prompt to look."""
@@ -83,7 +102,7 @@ def idle_alarm(run, lanes, log):
     active = {j["lane"] for j in run}
     lines = []
     for lane in lanes:
-        if lane in active:
+        if lane in active or lane_serving(lane):
             IDLE_SINCE.pop(lane, None)
             continue
         since = IDLE_SINCE.setdefault(lane, now)
