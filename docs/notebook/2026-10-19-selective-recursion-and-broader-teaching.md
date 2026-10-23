@@ -1112,7 +1112,10 @@ of 37 for k = 1, 2, 4, 8: at k = 8 it matches the thinking 8B (22.5 per seed, wi
 48k proposer tokens per family (its candidates are about 500 tokens). Sampling does not reach the helper families:
 with 32 samples on the 8 held-out semantic families, one family reaches 0.7 (0.80; none with 8), against 5 for the
 8B and 6 for the 14B; only 28 of 256 candidates call the helper. The helper gap is what the proposer writes, not how
-often it samples. (The 8B reached 1.00 on one helper family, so the helper's labelling does not cap every family
+often it samples. With the 8B's worked helper example in its prompt (E38b, 8 samples per family), 63 of 64 candidates
+call the helper but score near 0 (mean best 0.013): they copy the example's parsing and question handling instead of
+adapting them. The gap has two parts: deciding to call the helper (an example fixes it in context) and adapting the
+pattern to a new format and question (it does not). (The 8B reached 1.00 on one helper family, so the helper's labelling does not cap every family
 below 0.9.)
 
 Proposer ladder on held-out discovery (two seeds each; 23 October 06:25 UTC): round-four 4B 42 of 74, thinking 8B
