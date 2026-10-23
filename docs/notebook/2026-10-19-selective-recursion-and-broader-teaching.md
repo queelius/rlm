@@ -1098,8 +1098,9 @@ LoRA, then 40 RL steps on sampled token ids over code-only and helper families (
 | round four | 42 | 42 | 1 |
 
 Round four over the sampled-id RL proposer: +12/-4 (exact McNemar p 0.077); over the untrained 4B +36/-3 (p < 0.001).
-Per seed on the 29 non-semantic families it solves 22 and 20, level with the thinking 8B teacher (20 on its one
-finished seed) at about a twentieth of the proposer tokens. Helper use has begun but is rare: 10 of 128 semantic
+Against the thinking 8B teacher over two seeds (8B: 45 of 74, non-semantic 44 of 58; 4B: 42 and 42): +9/-12, exact
+McNemar p 0.66, at 2k against 48k proposer tokens per family. The remaining gap is helper use: the 8B reaches 0.7 on
+5 of the 8 semantic families, the 4B on 1. Helper use has begun but is rare: 10 of 128 semantic
 candidates call the helper, one held-out semantic family reaches 0.8. MRCR still 0.0.
 
 RL on sampled token ids (E26c-ids, 23 October 01:22 UTC; idea-lab I-019). The same RL from the round-two SFT adapter,
