@@ -1143,7 +1143,9 @@ classification. Per task group (E35c: counting, timeline, user; 30 teaching rows
 0.533 on its teaching rows, level with the shipped library, and on the 78 held-out counting rows at the same lengths
 scores 0.500 against 0.551 (+5/-9, p 0.42): better on comparing two labels (0.86 vs 0.77, it classifies every record
 separately), nothing on the most and least frequent label (0 of 10 vs 8 of 10; it handles two of the four question
-templates). The 14B's user library reaches 0.40 against 0.93; timeline libraries stay at 0 (date windows defeat
+templates). The 8B's counting library also clears the teaching bar (0.500) but held out falls to 0.397 against
+0.551 (+6/-18, p 0.023): on a noisy family, 30 teaching rows did not separate a good library from a weaker one.
+The 14B's user library reaches 0.40 against 0.93; timeline libraries stay at 0 (date windows defeat
 question parsing). Narrowing the family made one group bootstrappable, not all.
 
 Proposer round four (E26g, 23 October 02:29 UTC). Helper-family data from four runs (the thinking 8B with and without a
