@@ -1115,7 +1115,9 @@ all at 3.6k to 3.8k tokens per family. Every checkpoint meets all three predicti
 held-out discovery (22 of 74). Eight samples with three-label acceptance absorb the RL-seed spread that dominates the
 standard discovery evaluation. Three more checkpoints (01:05 UTC on 24 October): the round-five recipe's seeds 16 and
 25 give 14 and 16, round seven's seed 27 gives 13. Over eight checkpoints: 12 to 16 correct, at most one false
-acceptance each; by recipe 12.5 (round four, four seeds), 15.3 (round five, three), 13 (round seven, one).
+acceptance each; by recipe 12.5 (round four, four seeds), 15.3 (round five, three), 13 (round seven, one). With 32 samples instead of 8 (E51, 02:20 UTC), the weakest
+checkpoint reaches 16 and the strongest 18 correct libraries, against the 8B's 13 with thirty labels (+6/-1, p 0.125
+for the strongest), at about 15k tokens per family, still under a third of the 8B's.
 
 Proposer round five (E36, 23 October 11:35 UTC): round four's recipe with 65 helper-family pairs instead of 20 (40
 new helper training families from the thinking 8B and 20 from the thinking 14B, both with the worked example
