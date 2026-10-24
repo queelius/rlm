@@ -432,3 +432,27 @@ stronger proposer.
 - Question: does a stronger proposer adopt helper question parsing, and does adoption bring robust yield?
 - Prediction: adoption in at least 5 of the 8B's accepted libraries (against the 4B's 1 of 11), and robust yield at
   least 4 of 30.
+
+## E69: can a small proposer edit a working library to use helper question parsing? (added 2026-10-24 10:50 UTC, before the run; exploratory)
+
+This follows E60 H, where a 4B writing from scratch adopted helper parsing in 1 of 11 accepted libraries. It is
+Codex's "repair frozen successes" alternative.
+
+**Setup** (`e69_refactor.py`).
+- For each of E39 arm A's 12 accepted libraries (boot seed 0), the proposer (`proposer-rl-5-40`) is shown the
+  library's code, the same three examples it was bootstrapped from, and an instruction. The instruction: replace
+  question parsing with one `ask()` call (the question only, JSON parameters out), and keep the rest.
+- Up to 8 candidates per library. Accept the first that is valid and reproduces the shown examples (arm A's rule).
+- The accepted edit is scored on all six stress conditions.
+- Run: `e69-refactor-4brl4`, after H2.
+
+**Smoke test (1 family, 2 candidates).** Both edits adopted the recipe. Both failed teaching (0.1 and 0.0), because
+`json.loads` was called on the helper's raw reply with no handling of code fences.
+
+**Outcome.** Among the 12 families: accepted edits; adoption (ask plus json.loads); robust yield (accepted, and 0.9
+or more on control and on paraphrase 2). The comparison is A0 (0) and H (1 of 30 overall).
+
+**Predictions.**
+- At least 8 of the accepted edits use the helper.
+- Acceptance is at most 8 of 12, because brittle JSON handling breaks many edits.
+- Robust yield is at least 3 of 12.
