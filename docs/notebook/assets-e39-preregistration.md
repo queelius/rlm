@@ -49,3 +49,12 @@ and the round-five recipe's seed-17 checkpoint (`proposer-rl-17-40`): runs `e39a
 Further checkpoints (added 2026-10-24 00:20 UTC, before the runs; exploratory): arm A unchanged with the round-five
 recipe's other checkpoints (`proposer-rl-16-40`, mixed RL; `proposer-rl-25-40`, code-only RL) and round seven's seed
 27 (`proposer-rl-27-40`): runs `e39a-4br5b-s16-best8`, `e39a-4br5a-s25-best8`, `e39a-4br7-s27-best8`.
+
+## E50: the cheap protocol on a real family (added 2026-10-24 01:00 UTC, before the runs; exploratory)
+
+MRCR is program-solvable with exact answers. Under the standard protocol (8 candidates, 2 labelled repair rounds,
+30 labels) the thinking 8B found a correct library on 2 of 5 bootstrap seeds (E21). E50 gives the same 8B, on the same
+five seeds (0 to 4), 16 round-0 candidates with no repair and no early stopping (`bootstrap_library.py --candidates 16
+--repair-rounds 0 --threshold 2`): runs `e50-mrcr-8b-best16-s{0..4}`. Accept, per seed, the first valid candidate that
+reproduces the 3 shown examples; check accepted libraries held out (`run_routine.py --family mrcr`, 2 and 4 needles).
+Question: does three-label acceptance find MRCR's library as often as the labelled protocol, without false acceptances?
