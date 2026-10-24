@@ -58,6 +58,8 @@ research questions, is the [synthesis of 21 October](notebook/2026-10-21-synthes
 - **[Lab notebook](notebook/)**: dated notes in the order the work happened, including failures.
 - **[Plan of record](research-plans/2026-10-20-revised-plan-and-prior-art.md)**: the ranked queue,
   revised at every completed arm, with a revision log and the prior art that shaped it.
+- **[24 October: discussion summary and lessons learned](notebook/2026-10-24-discussion-summary-and-lessons-learned.md)**:
+  what the big-picture discussion concluded, the novelty challenge, the decisive next experiment, and lessons.
 - **[Decomposition: brainstorm and prior art](research-plans/2026-10-24-decomposition-brainstorm-and-prior-art.md)**:
   how a small RLM should choose decompositions, a decomposability framework, competitors (λ-RLM, SRLM, RL-trained
   RLMs), gaps, and the ranked next experiments.
