@@ -605,3 +605,8 @@ human-written interface around acquired executors is robust to the tested shifts
   - This strengthens rank 4 in the resume doc: acceptance must span deployment lengths. A label-free version
     would run candidates on unlabelled long inputs and check output well-formedness or agreement between
     candidates.
+- **15:12 UTC, E70 OOLONG reference.** A 4B with generic REPL tools scores 0.150, below direct reading (0.208), while
+  the same runtime with the library scores 0.672.
+  - For this model and task, the 'generic tools match the full system' outcome is clearly false: the leverage is
+    in the procedures.
+  - It does not yet separate REPL from tool-calling; that is E70's interface factor.

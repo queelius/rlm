@@ -541,3 +541,8 @@ tokens) editing the same frozen 4B libraries (E39 arm A, boot seed 0), with adop
 - The s5 library's held-out scores equal E52b s0's exactly, so the same flawed algorithm was found
   independently.
 - Pooled with E57: 3-label 2 of 10 correct (2 false acceptances); 30-label 1 of 10 (none).
+
+**E70 OOLONG reference cell, result (15:12 UTC).**
+- 0.150 over 293 rows (library 0.672, paired +6/-159; direct 0.208). Prediction met.
+- By length: 0.26, 0.22, 0.18, 0.10, 0.08 and 0.08 at 1k to 32k tokens.
+- 48 rows stopped at the 10-turn cap (`LimitExceededError`). Mean 2.3 turns, 3.6 calls and 17.5k tokens per row.
