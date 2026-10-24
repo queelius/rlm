@@ -106,6 +106,8 @@ E51r (added 2026-10-24 04:10 UTC, before the runs; exploratory): E51 repeated wi
 `e51r-4br4-s9-best32`), scored against arm B's boot-seed-1 run (`e39r-b-8b-standard`); pooled with E51 over 60 family
 attempts per checkpoint.
 
+**E51r result (2026-10-24 08:55 UTC).** Boot seed 1, against the 8B's 16 of 30: seed 9 scores 16 (+4/-4, p 1.0), seed 17 scores 19 (+6/-3, p 0.51, one false acceptance). Pooled with E51 against the 8B's 29 of 60: seed 9 gets 32 (+9/-6, p 0.61), seed 17 gets 37 (+12/-4, p 0.077). The 60 attempts are 30 families under two boot seeds, and these are exploratory comparisons after E39; E58 is the powered test.
+
 ## E57: repair feedback with sampling luck removed (added 2026-10-24 05:20 UTC, before the runs; exploratory)
 
 Following the independent review's third recommendation: for MRCR seeds 10 to 14, the thinking 8B draws one shared
