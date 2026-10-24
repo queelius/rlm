@@ -24,6 +24,76 @@ model weights and adapters live only on `/project/alex_phd` and `/home/atowell` 
 4. `slides/2026-10-22-bootstrapping-and-boundaries/research-update.pdf` (9 slides, notes in `speaker-notes.json`
    and `research-update.pdfpc`): the advisor summary.
 
+## Working principles (user's standing instructions)
+
+- **Independent review (avoid monoculture).** Get a read-only Codex review of each new design before launch, of each
+  pre-registered analysis before unblinding, of every changed headline claim, and of what to run next.
+  - Command: `codex exec -s read-only -C <worktree> --skip-git-repo-check -o <run store>/codex-reviews/<date>-<topic>.md "<prompt>"`.
+  - Verify its findings before acting, and record what changed and any disagreement.
+  - Reviews so far are in `codex-reviews/` in the run store.
+- **Never leave a turn unwatched.** While jobs run, keep a monitor on `queue/dispatcher.log`, covering started, FAILED,
+  SLOW and IDLE ALARM lines. GPU1 idled 70 minutes on 2026-10-24 because this was missing.
+
+## Start here: handoff from job 6618 (latest; supersedes the 2026-10-23 handoff below)
+
+Use the newest checkpoint manifest, `RUNS/CHECKPOINT-2026-10-24-*.json`, written by `experiments/ops/checkpoint.py`.
+It records every server's command line and device, the queue in full, and per-run progress.
+`RUNS` = `/project/alex_phd/runs/selective-recursion-20261019`; `H` = `/home/atowell/research-runs/selective-recursion-20261019`.
+
+### State at the 08:50 UTC checkpoint
+
+- **Finished, not yet analysed:**
+  - E58 arm A (`e58a-4br5b-s16-best8`, 141/141).
+  - The E58 secondary arm (`e58a2-4br4-s9-best8`, 141/141).
+  - E54's finished runs (labelled4 s5, s7, s8; shown4 s5, s6, s8, s9).
+- **Being scored:** E51r seed 17 (`H/e51r-4br5b-s17-analysis`).
+- **Running:**
+  - E58 arm B (`e58b-8b-standard`, 94/141 families). It resumes per family: finished families are skipped, and
+    unfinished ones continue from their saved candidates.
+  - The E57 pools (`e57-mrcr-8b-pool-s10..14`, on the second 8B server, port 8010).
+- **Queued:**
+  - E54 labelled4 s6, s9 and shown4 s7, after `e58b`. They resume from saved candidates.
+  - The E57 labelled and shown branches, each after its pool.
+- **Servers:**
+  - GPU0: 8002 8B (E58 B, E54), 8004 0.6B, 8006 4B helper (used by every verification).
+  - GPU1: 8001 4B with LoRA adapters, 8010 second 8B for E57 (`--gpu-memory-utilization 0.44`). The 14B (8008) is
+    stopped; it is only needed for new 14B work.
+- **No-8010 case:** if a new allocation has only one 8B, rewrite the E57 specs' `8010` to `8002`. Keep pool and both
+  branches of a seed on the same server.
+
+### On return: finish these analyses first
+
+1. Read `H/codex-reviews/2026-10-24-design-and-next-experiments.md`. It is a blind review of the E58 analysis code
+   against its pre-registration, of E57's design, and of proposed experiments. Fix anything it flags in the E58
+   analysis before unblinding. Record such a fix in `docs/notebook/assets-e58-preregistration.md` as an amendment made
+   before unblinding.
+2. E58 primary, as pre-registered (report whatever the outcome), from `experiments/selective_recursion_20261019/`:
+   `e39_analysis.py --a RUNS/e58a-4br5b-s16-best8 --b RUNS/e58b-8b-standard --families H/e58-prereg/families.txt --work H/e58-analysis --margin 0.10`.
+   Secondary: the same with `--a RUNS/e58a2-4br4-s9-best8 --work H/e58a2-analysis`.
+3. E51r: pool seed 17 with seed 9 (16 vs 16) and E51 (32 vs 29 of 60).
+4. E54 and E57 held out: `mrcr_heldout_batch.py --work H/mrcr-heldout/work --out H/mrcr-heldout/<name>.jsonl RUNS/e54-* RUNS/e57-*-labelled-* RUNS/e57-*-shown-*`.
+   E57 compares labelled and shown branches per seed on the same pool.
+5. Record in `docs/RESULTS.md`, the notebook, the E39 pre-registration addenda and the deck.
+6. Run `collect_results.py`, get a Codex review of the changed claims, then push.
+
+### Finding new work (ranked; re-rank after E58 and the Codex review)
+
+1. **Act on E58's outcome.**
+   - If the 4B three-label protocol is non-inferior: freeze accepted libraries and test generalization on a withheld
+     stress panel (longer inputs, paraphrased questions, format variation, edge cases). Then bootstrap one genuinely
+     new real exact-answer family. This is the earlier Codex review's priority 2.
+   - If it is not non-inferior: find which family types the 4B loses, and test whether best-of-32 (E51) closes the
+     gap on the 141-family panel.
+2. **Repair attribution (E57).** With 5 seeds, read it as an estimate, not a test. If labelled and shown repair
+   differ, repeat E57 on another day and with the 14B. The 14B's round-0 success varied across days (7/41 vs 1/35).
+3. **Label needs on noisy families.** E49's curve is specific to OOLONG counting, with prefiltered candidates. Rerun
+   the curve without the prefilter, and on a second noisy family.
+4. **Helper breadth.** The round-seven recipe (extra helper question types) needs at least three RL seeds before any
+   recipe claim; RL seed variance dominates recipe effects.
+5. **Idea lab items:** I-018 (whether a few decisions carry the distilled caller's gain), I-004 (keeping
+   input-conditioned routes through RL), and RL-correlated errors.
+6. **Codex proposals:** whatever the review above ranks highest, verified first.
+
 ## What this allocation established (details and caveats in the ledger)
 
 - Libraries can be bootstrapped, and a 0.6B caller uses them: MRCR's library was written by a thinking 8B
@@ -65,7 +135,7 @@ ctrl-06-onecell-v2 adapters, 8006 Qwen3-4B Instruct (32k); GPU1 8001 Qwen3-4B In
 adapters hot-loaded), 8008 Qwen3-14B-AWQ (fp8 KV). Restart commands are in the pipeline scripts
 (`scripts/e27b_gpu1_servers.sh`, `scripts/e42_round7b.sh`).
 
-## Open questions, ranked
+## Open questions, ranked (as of 2026-10-23; superseded by "Finding new work" above)
 
 1. Does the 4B's helper skill reach the 8B's breadth (semantic families at 0.7: 3 vs 5 of 8) with more helper
    question types (E42, round seven), and can code generalization be kept by weighting code pairs?

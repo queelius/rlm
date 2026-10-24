@@ -114,3 +114,8 @@ branches that resume from it with 4 repair rounds: labelled (`e57-mrcr-8b-labell
 0.9 or more, repair shows failing teaching cases with answers) and three-label (`e57-mrcr-8b-shown-s{sd}`,
 `--shown-labels-only`). Both branches see identical round-0 candidates, so differences come from repair and acceptance
 alone. Measure: per seed and arm, an accepted library correct held out (0.9 or more at 2 and 4 needles).
+
+**E57 serving change (2026-10-24 08:36 UTC, before any E57 run started).** GPU1 was idle while E57 waited behind E58's
+8B arm on GPU0, so all 15 E57 runs now use a second copy of the same 8B server on GPU1 (`qwen3-8b-awq`, same weights,
+vLLM build and flags, port 8010, gpu-memory-utilization 0.44 instead of 0.45). Pools and both branches of every seed use
+this one server, so the within-seed matched comparison is unaffected. Pools no longer wait for E58.
