@@ -627,3 +627,8 @@ human-written interface around acquired executors is robust to the tested shifts
   - hand-written wrapper with a 4B parser: about 12 (54 of 55 libraries).
 
   The harness-supplied interface dominates.
+- **16:24 UTC, E70 LongBench reference.** Generic REPL tools give the 4B 0.135, against 0.356 for direct reading and
+  0.427 for the retrieval library. Most failures are the model pushing the whole document through one call.
+  - Together with OOLONG (0.150 against 0.672), the 'small model plus generic harness' baseline is far below both
+    direct reading and procedure-equipped runs.
+  - The open question for E70 is the interface factor *with procedures held fixed*.

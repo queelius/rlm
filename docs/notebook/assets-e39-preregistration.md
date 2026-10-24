@@ -561,3 +561,9 @@ tokens) editing the same frozen 4B libraries (E39 arm A, boot seed 0), with adop
 
 - Robust on paraphrase 2: 3. Robust on nuisance 2: 3.
 - Predictions: not met.
+
+**E70 LongBench reference cell, result (16:24 UTC).**
+- 0.135 over 503 questions. Prediction met.
+- Errors: 273. Of these, 261 are `RemoteRLMError` (the 65,536-token window was exceeded) and 12 are turn-cap
+  stops.
+- On the 230 questions that finished: 0.296.
