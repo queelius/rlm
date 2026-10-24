@@ -173,3 +173,9 @@ primitive available. Fresh scoring also loads the primitive.
 **E74b (added 2026-10-24 15:35 UTC, before the run).** E74 with the thinking 8B proposer (`qwen3-8b-awq`, E39 arm C's
 settings: 8 candidates, no repair, no early stop), the same 32 families and the same primitive. Helper on 8006. Run:
 `e74b-typedleaf-8b-best8`. Prediction: at least 16 of 32 correct.
+
+**E74 paused (16:06 UTC).** The run would not finish before the allocation ends (3 of 32 families in 43 minutes; port
+8001 is shared). It is requeued after the LongBench reference cell, and resumes from saved candidates.
+- Interim (not the registered outcome): 0 of 33 candidates from the trained 4B call the documented `classify`
+  primitive.
+- E74b interim (8B): 56 of 59 do, and 11 reach a teaching mean of 0.9 or more.
