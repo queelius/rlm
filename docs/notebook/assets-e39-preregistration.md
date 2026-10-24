@@ -567,3 +567,9 @@ tokens) editing the same frozen 4B libraries (E39 arm A, boot seed 0), with adop
 - Errors: 273. Of these, 261 are `RemoteRLMError` (the 65,536-token window was exceeded) and 12 are turn-cap
   stops.
 - On the 230 questions that finished: 0.296.
+
+**E60 H8 result (17:17 UTC; `H/e60/analysis-h8.txt`).**
+- 11 accepted (C8 15).
+- Robust on paraphrase 2: 4 (C8 1; +4/-1). Robust on nuisance 2: 4 (C8 3).
+- Adoption: 7 of 11 accepted; 160 of 240 candidates.
+- Predictions met.

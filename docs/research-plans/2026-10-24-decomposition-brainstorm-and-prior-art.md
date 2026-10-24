@@ -632,3 +632,10 @@ human-written interface around acquired executors is robust to the tested shifts
   - Together with OOLONG (0.150 against 0.672), the 'small model plus generic harness' baseline is far below both
     direct reading and procedure-equipped runs.
   - The open question for E70 is the interface factor *with procedures held fixed*.
+- **17:17 UTC, H8.** The 8B adopts helper question parsing when told (7 of 11 accepted libraries) and reaches 4 of 30
+  robust families, against 1 of 30 for the 4B.
+  - The who-supplies-the-interface table is complete. Proposers, even an 8B, produce robust interfaces rarely;
+    the harness-supplied wrapper repairs nearly everything (E68).
+  - The same pattern shows at the leaf level (E74, interim): the 8B uses a documented typed primitive, while the
+    trained 4B ignores it. An untrained base 4B used it in its first candidates (E74u, running), which suggests
+    proposer training reduced tool adoption.
