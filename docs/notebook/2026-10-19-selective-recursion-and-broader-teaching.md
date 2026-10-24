@@ -1128,7 +1128,13 @@ With the standard budget but repair and acceptance using only the three shown la
 inputs, and returns nothing on 3 of 30; the rule, which demands an answer on every input, held it back. Held out it
 scores 1.000 at 2 needles and 0.953 at 4, at every length to 1M tokens. On a hard exact family, repair finds the
 program, and three labels plus "does it answer every input" are nearly enough to steer it. E52b continues the five
-runs to four repair rounds.
+runs to four repair rounds. Result (03:10 UTC): with four rounds the three-label rule accepted libraries on seeds 0, 1
+and 2. Seeds 1 and 2 are fully correct held out (1.000 at 2 and 4 needles to 1M tokens); seed 0's is correct on all 30
+teaching inputs but scores 0.79 and 0.81 held out, failing at 512k and 1M tokens, lengths the teaching set (8k to
+32k, 2 needles) never shows, so no number of teaching labels would have caught it. Fully correct libraries: 2 of 5,
+as for the standard protocol with thirty labels, though at twice its repair rounds; E54 compares the two at a
+matched budget. For the 4B on generated families (E53), three-label repair adds nothing to best-of-8 (16 and 16
+correct) and two false acceptances.
 
 Proposer round five (E36, 23 October 11:35 UTC): round four's recipe with 65 helper-family pairs instead of 20 (40
 new helper training families from the thinking 8B and 20 from the thinking 14B, both with the worked example
