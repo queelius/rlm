@@ -66,12 +66,14 @@ Added on 24 October:
 - **Libraries are template-bound; the question is the fragile part.** Of 55 libraries correct on fresh tasks,
   55 survive inputs 5 times longer, 3 survive a reworded question and 11 a changed question label or field
   order (E59). Teaching on varied wordings or a prompt note did not make a 4B proposer write robust libraries
-  (E60). A 4B reading only the question returns the family's parameters 96 percent of the time on unseen
-  rewordings (E61): question handling belongs to a small neural parser, computation to code.
+  (E60). Given the family's parameter schema, a 4B reading only the question fills it correctly 96 percent of the
+  time on unseen rewordings, a 0.6B 58 percent (E61). That is slot filling with a supplied schema, not yet an
+  end-to-end repair of E59.
 - **Framing.** "RLM" remains the community's term, but the evidence here (and the RLM authors' own 2026 framing)
   treats it as a harness: context offloading into a REPL plus model calls from code. Recursion is not what
   helps. The working thesis is about allocating competence for small models among weights, verified routines
-  and selection memory; see [the decomposition brainstorm](docs/research-plans/2026-10-24-decomposition-brainstorm-and-prior-art.md).
+  and selection memory. A skeptical review lists the prior art each contribution must be distinguished from; see
+  [the decomposition brainstorm](docs/research-plans/2026-10-24-decomposition-brainstorm-and-prior-art.md).
 
 Evidence for each claim, with run locations and caveats, is in the
 [results ledger](docs/RESULTS.md), with the result data behind rows E21 onward in

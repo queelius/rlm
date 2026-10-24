@@ -11,8 +11,10 @@ verified library of routines and a record of what worked.
     follow-ups λ-RLM, SRLM and RL-trained RLMs). Its mechanisms are *context offloading* (the input lives in a REPL
     variable) and *sub-calls* (model calls made from code). Our evidence, and the RLM authors' own 2026 framing,
     treat it as a **harness**, not a claim that recursion matters: recursion and map-reduce summaries did not help on
-    our tasks. The working thesis is about **allocating competence for small models** among weights, verified
-    executable routines and selection memory, so that every model call stays small and *locally in distribution*.
+    our tasks. The working thesis is about **allocating competence for small models** among weights, tested
+    executable routines and selection memory. The mechanisms themselves (code actions, context offloading, skill
+    libraries) are prior art; what may be new is measured, on small models, about acquiring such routines and
+    where they break.
     See the [decomposition brainstorm and prior art](research-plans/2026-10-24-decomposition-brainstorm-and-prior-art.md).
 
 !!! tip "If you are new here"
@@ -45,7 +47,7 @@ research questions, is the [synthesis of 21 October](notebook/2026-10-21-synthes
 | Boundary: OOLONG is not bootstrapped as one family (eleven question templates from thirty examples); narrowed to one task group, the 14B writes a counting library level with the hand-written one, not timeline or user | exploratory | ledger E35, E35c |
 | With 32 samples, the 4B's three-label libraries match or pass the 8B on both bootstrap seeds (best checkpoint 37 vs 29 of 60, p 0.077; weakest 32) | exploratory (same 30 families, outcome-chosen checkpoint) | ledger E51, E51r |
 | Bootstrapped libraries are template-bound: 55 of 55 survive 5x longer inputs, but 3 of 55 a reworded question and 11 of 55 a changed label or field order; teaching on varied wordings or a prompt note does not fix this for a 4B proposer (0 robust of 30) | exploratory (E59 predictions after a one-library smoke test; E60 pre-registered) | ledger E59, E60 |
-| The fragile part is the question, not the data: a 4B parses unseen rewordings into the family's parameters 96 percent of the time (a 0.6B 58 percent), so question handling belongs to a small neural parser and computation to code | exploratory | ledger E61 |
+| Given the family's parameter schema, a 4B reading only the question fills it correctly on 96 percent of unseen rewordings (a 0.6B 58 percent): slot filling with a supplied schema, a diagnostic for E59, not yet an end-to-end fix | exploratory | ledger E61 |
 
 ## How this site is organized
 

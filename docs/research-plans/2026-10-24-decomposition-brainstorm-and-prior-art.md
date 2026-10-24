@@ -424,3 +424,78 @@ Models should learn under RL to use the environment well. SFT needs traces, whic
 
 These points sharpen the thesis: the REPL is the environment for both training and inference. The research is in
 the interface it exposes and in what the model must learn within it, as a function of model size.
+
+## Red-team review (Codex as a skeptical committee member, 2026-10-24 ~11:10 UTC)
+
+Full text: `codex-reviews/2026-10-24-red-team-novelty.md` in the run store.
+
+**Verdict.** A REPL with variables, helpers and reusable routines is not by itself a thesis contribution, and most
+mechanisms in this project have prior art:
+- CodeAct, RLM and Anthropic's code execution with MCP;
+- λ-RLM, for prebound verified combinators;
+- Adaptive-RAG and bandits, for outcome-table selection;
+- TroVE, LILO, Voyager and Evaporate, for growing libraries;
+- FlashExtract, for programs from a few examples;
+- LOTUS, for semantic leaves;
+- semantic parser plus query engine, for E59 to E61;
+- PAL and Program of Thoughts.
+
+Its harshest summary: "you moved the solution into a library, then showed that a small model can invoke the
+solution."
+
+**Missing critiques we must address.**
+- "Library Learning Doesn't" ([2410.20274](https://arxiv.org/abs/2410.20274)): reported gains came from
+  self-correction and self-consistency, not reuse.
+- A compute-matched re-evaluation of TroVE ([2507.22069](https://arxiv.org/abs/2507.22069)): most of its advantage
+  on MATH disappeared once compute was matched.
+
+**What survives as narrow original findings.**
+- E59 and E60, with E61 as a diagnostic: length generalization hides severe brittleness at the question interface.
+- E39 (with E37, E38 and the E49 bound): a cheap acquisition protocol works within one program distribution.
+- E26c, read with E43 to E48: proposer training improves discovery, with large seed dependence.
+
+**Corrections to this page's reframes.**
+- **"Locally in-distribution" is borrowed and unmeasured.** It is Zhang and Khattab's thesis. Operationalize it, or
+  stop using it as an explanation.
+- **Caller size is not system capability.** E14's equal callers share the library and the helpers' compute, and
+  E61's gap between the 4B and the 0.6B argues against "size matters little".
+- **E61 is slot filling with a supplied schema** and an already located question. It is not a question compiler.
+- **"Verification" is used too strongly.** Passing three examples and running on more inputs is testing.
+- **Partition invariance does not establish truth.** Doubled counts, or a consistently wrong classifier, pass it.
+- **The granularity law is unsupported, and E65 confounds several factors:** semantic unit, number of calls,
+  symbolic aggregation and supplied knowledge.
+- **The RL-collapse claim is broader than the evidence.** E07's mechanism is unresolved.
+- **E66 must specify downstream semantics.** After a leaf is swapped, do downstream calls reuse their old outputs or
+  resample? Serving is nondeterministic (E22c).
+- **Renaming familiar architectures is drift.** "Nobody combined these at 4B" is weak novelty, and the "nobody
+  checks..." claims above need stronger literature support.
+
+**Accepted research questions (alternatives, not all at once).**
+1. Can cheap probes choose a decomposition that beats a fixed pipeline or a cheap feature router, given measured
+   headroom over an oracle?
+2. Can a local 4B proposer acquire procedures that stay useful under meaning-preserving shifts and repay their
+   acquisition cost? Compare with an 8B proposer, primitive-only code generation and a TroVE- or Evaporate-style
+   baseline.
+3. Do label-free checks reduce false acceptance under held-out shifts, at matched cost and coverage?
+
+**Decisive experiment (supersedes the E64 sketch above).**
+- Hold the 4B controller and helper fixed, and cross two factors:
+  - interface: a conventional iterative harness (read and search tools, scratch files, script execution) or a
+    persistent Python REPL;
+  - procedural knowledge: generic primitives, human-written routines, or model-acquired routines.
+- Add a host pipeline that invokes the same routines through a cheap selector or typed parser, with no
+  conversational controller, plus direct answering.
+- Tasks: MRCR, OOLONG, LongBench-v2 or MuSiQue, and held-out generated families with rewording, layout and
+  composition shifts.
+- Measure device-seconds at two compute caps, the amortized cost C(N) = C_training + C_acquisition + N·C_solving,
+  robust yield and false acceptance.
+- Reading the outcomes:
+  - REPL ≈ conventional harness and acquired routines robust and amortizing → the thesis is about acquisition.
+  - Human-written routines work but acquired ones fail under shifts → task-specific programming, with acquisition
+    unsolved.
+  - Host pipeline ≈ the best controller → conversational control adds little.
+  - Generic tools ≈ the full system → the distinctive claim is gone.
+
+**Our response.** We accept the critique of the reframes and narrowed the README and index the same day. The thesis
+is now centred on **acquiring robust procedures cheaply, and the boundaries of that acquisition**, with the interface
+question settled by the crossed experiment rather than asserted.
