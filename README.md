@@ -49,9 +49,13 @@ families for library discovery):
   longer instances of the same family). Pre-registered on 30 new families from the same generator, the trained 4B
   with eight samples and three labels bootstrapped 26 correct libraries against the thinking 8B's 29 with thirty
   labels (two bootstrap seeds on the same families; p 0.61), at 7 percent of the proposer's output tokens, and all
-  eight trained checkpoints land at 12 to 16 against 13 of 30. This is a narrow result: it does not yet establish
-  non-inferiority (a powered test is next), and "new" means new variants of a studied generator. Agreement among
-  candidates is no substitute; on OOLONG counting, choosing among libraries needed tens of labels.
+  eight trained checkpoints land at 12 to 16 against 13 of 30. "New" means new variants of a studied generator.
+  The powered pre-registered test (E58): on 141 generated families, the selected three-label 4B met the registered
+  10-point family-level non-inferiority criterion against the 30-label 8B (75 versus 73 successes), but
+  non-inferiority was not established under template clustering, and false acceptances were 10 versus 0. Its
+  combined proposer tokens are a third of the 8B's, and the weakest trained checkpoint did not show
+  non-inferiority. Agreement among candidates is no substitute; on OOLONG counting, choosing among libraries
+  needed tens of labels.
 - **Boundary: broad families.** No proposer bootstraps OOLONG, the study's own family, as one library (eleven
   question templates from thirty examples); narrowed to one task group, the 14B writes a counting library level
   with the hand-written one, but not the timeline or user groups.
