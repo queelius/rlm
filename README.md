@@ -33,22 +33,25 @@ Added on 22 and 23 October (new families: OpenAI MRCR, MuSiQue in long haystacks
 families for library discovery):
 
 - **Libraries can be bootstrapped, by a capable enough proposer.** A 4-bit Qwen3-8B with thinking wrote a
-  verified MRCR library from three examples (2 of 5 seeds) that scores 1.000 held out up to 1M tokens; a 0.6B
+  verified MRCR library from three shown examples plus labelled repair feedback on 30 teaching tasks (2 of 5 seeds)
+  that scores 1.000 held out up to 1M tokens; a 0.6B
   caller that never saw MRCR calls it correctly. A 4-bit 14B does no better (2 of 5). No 4B proposer found it,
   however trained.
 - **Training the proposer works on families like its training ones.** SFT on the 8B's verified code, then RL
   with the verified teaching score as reward, lifts a 4B from 9 to 30 of 74 held-out family attempts
   (replicated; RL without SFT does not help). Results swing with the RL seed: one seed of the round-four recipe
   reached 42, level with the 8B teacher (45), but four seeds average 31.5 (range 22 to 42). A recipe with three times
-  the helper-family teacher data averages 33.7 over three seeds (range 32 to 36) and matches the 8B on families that
-  need the helper's judgment (mean best 0.46). It does not transfer to MRCR.
-- **Where answers are exact, bootstrapping needs three labels.** A candidate that runs cleanly and reproduces the
-  three examples in its prompt is almost always correct (127 of 129, all generalizing to fresh, longer inputs).
-  Pre-registered on 30 unseen families and replicated, the trained 4B with eight samples and three labels
-  bootstrapped about as many correct libraries as the thinking 8B with thirty (26 against 29 of 60 attempts, p 0.61)
-  at 7 percent of the tokens, and every one of eight trained checkpoints does (12 to 16 against 13 of 30), including
-  the weakest. Agreement among
-  candidates is no substitute, and noisy families (MuSiQue, OOLONG) need tens of labels.
+  the helper-family teacher data averages 33.7 over three seeds (range 32 to 36) and comes close to the 8B on
+  families that need the helper's judgment (mean best 0.42 over its three seeds; the 8B 0.46). It does not transfer
+  to MRCR.
+- **Where answers are exact, a few labels go a long way.** On generated families, a candidate that runs cleanly
+  and reproduces the three examples in its prompt is almost always correct (127 of 129, all generalizing to fresh,
+  longer instances of the same family). Pre-registered on 30 new families from the same generator, the trained 4B
+  with eight samples and three labels bootstrapped 26 correct libraries against the thinking 8B's 29 with thirty
+  labels (two bootstrap seeds on the same families; p 0.61), at 7 percent of the proposer's output tokens, and all
+  eight trained checkpoints land at 12 to 16 against 13 of 30. This is a narrow result: it does not yet establish
+  non-inferiority (a powered test is next), and "new" means new variants of a studied generator. Agreement among
+  candidates is no substitute; on OOLONG counting, choosing among libraries needed tens of labels.
 - **Boundary: broad families.** No proposer bootstraps OOLONG, the study's own family, as one library (eleven
   question templates from thirty examples); narrowed to one task group, the 14B writes a counting library level
   with the hand-written one, but not the timeline or user groups.
