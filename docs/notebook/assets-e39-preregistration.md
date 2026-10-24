@@ -249,3 +249,8 @@ compared paired by family: discordances and exact McNemar.
 
 About 12 accepted libraries per arm can show a difference from 0 but cannot establish equivalence. Thirty tasks per
 library are not independent replicates. Each shift has one wording per question form.
+
+**E60 arm MC (added 2026-10-24 09:24 UTC; E60 M and C were still running and no E60 library had been scored or
+inspected).** Mixed teaching and the contract note together (`e60mc-mixcontract-4brl4-best8`). Everything else is the
+same as M and C. It completes the 2x2 design: neither (A0), mixed teaching only (M), contract note only (C), both (MC).
+It is scored and analysed the same way. No directional prediction beyond M's.
