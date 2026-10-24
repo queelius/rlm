@@ -105,3 +105,12 @@ plus per-candidate rates of correct libraries in round 0 and in repair rounds.
 E51r (added 2026-10-24 04:10 UTC, before the runs; exploratory): E51 repeated with boot seed 1 (`e51r-4br5b-s17-best32`,
 `e51r-4br4-s9-best32`), scored against arm B's boot-seed-1 run (`e39r-b-8b-standard`); pooled with E51 over 60 family
 attempts per checkpoint.
+
+## E57: repair feedback with sampling luck removed (added 2026-10-24 05:20 UTC, before the runs; exploratory)
+
+Following the independent review's third recommendation: for MRCR seeds 10 to 14, the thinking 8B draws one shared
+pool of 8 round-0 candidates (`e57-mrcr-8b-pool-s{sd}`, no repair, no early stopping). Each pool is copied into two
+branches that resume from it with 4 repair rounds: labelled (`e57-mrcr-8b-labelled-s{sd}`, acceptance at teaching mean
+0.9 or more, repair shows failing teaching cases with answers) and three-label (`e57-mrcr-8b-shown-s{sd}`,
+`--shown-labels-only`). Both branches see identical round-0 candidates, so differences come from repair and acceptance
+alone. Measure: per seed and arm, an accepted library correct held out (0.9 or more at 2 and 4 needles).
