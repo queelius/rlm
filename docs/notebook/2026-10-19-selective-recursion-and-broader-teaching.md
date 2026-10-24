@@ -1119,6 +1119,17 @@ acceptance each; by recipe 12.5 (round four, four seeds), 15.3 (round five, thre
 checkpoint reaches 16 and the strongest 18 correct libraries, against the 8B's 13 with thirty labels (+6/-1, p 0.125
 for the strongest), at about 15k tokens per family, still under a third of the 8B's.
 
+The cheap protocol on MRCR (E50, E52; 24 October 01:00 to 02:40 UTC). MRCR is exact but hard: under the standard
+protocol the thinking 8B found its library on 2 of 5 seeds, and both times in the first labelled repair round (no
+correct candidate in round 0 on any seed). With 16 round-0 candidates and no repair (E50) it found nothing on 5 of 5.
+With the standard budget but repair and acceptance using only the three shown labels plus label-free signals (E52;
+`bootstrap_library.py --shown-labels-only`), nothing was accepted, but on seed 1, where labelled repair had scored
+0.0, the second repair round produced a library that reproduces all three shown examples, scores 0.9 on the teaching
+inputs, and returns nothing on 3 of 30; the rule, which demands an answer on every input, held it back. Held out it
+scores 1.000 at 2 needles and 0.953 at 4, at every length to 1M tokens. On a hard exact family, repair finds the
+program, and three labels plus "does it answer every input" are nearly enough to steer it. E52b continues the five
+runs to four repair rounds.
+
 Proposer round five (E36, 23 October 11:35 UTC): round four's recipe with 65 helper-family pairs instead of 20 (40
 new helper training families from the thinking 8B and 20 from the thinking 14B, both with the worked example
 stripped from the saved prompts; 133 pairs in all), RL seed 15. Training reward on helper families rose to 0.36,
