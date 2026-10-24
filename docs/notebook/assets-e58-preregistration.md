@@ -212,3 +212,14 @@ To finish on return:
 - E74b3: E74b with bootstrap seed 2 on gpu0.
 
 Both carry E74b's prediction.
+
+**E74 and E74b results (17:53 UTC; fresh scoring with the primitive loaded, `--require-complete`).**
+
+| Run | Accepted | Correct on fresh tasks | False acceptances | Tokens per family (output / input) |
+| --- | --- | --- | --- | --- |
+| E74, trained 4B | 6 | 0 of 32 | 6 | 4.3k / 17.6k |
+| E74b, 8B | 21 | **20 of 32** | 1 | 56.6k / 17.6k |
+| E58 arm B, 30-label 8B, same families | 0 | 0 | 0 | |
+
+- E74b against E58 arm B: +20/-0, exact McNemar p < 0.001.
+- Predictions: E74 (at least 10) not met; E74b (at least 16) met.

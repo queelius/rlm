@@ -49,6 +49,7 @@ research questions, is the [synthesis of 21 October](notebook/2026-10-21-synthes
 | With 32 samples, the 4B's three-label libraries match or pass the 8B on both bootstrap seeds (best checkpoint 37 vs 29 of 60, p 0.077; weakest 32) | exploratory (same 30 families, outcome-chosen checkpoint) | ledger E51, E51r |
 | Bootstrapped libraries are template-bound: 55 of 55 survive 5x longer inputs, but 3 of 55 a reworded question and 11 of 55 a changed question prefix or field order; teaching on varied wordings or a prompt note does not fix this for a 4B proposer (0 robust of 30) | exploratory (E59 predictions after a one-library smoke test; E60 pre-registered) | ledger E59, E60 |
 | Given the family's parameter schema, a 4B reading only the question fills it correctly on 96 percent of unseen rewordings (a 0.6B 58 percent): slot filling with a supplied schema, a diagnostic for E59, not yet an end-to-end fix | exploratory | ledger E61 |
+| The harness can supply the semantic interfaces small proposers do not write: a 4B question canonicalizer repairs 54 of 55 template-bound libraries; a typed category primitive (category set induced without labels) lets an 8B proposer with three labels solve 20 of 32 semantic-total families that no proposer had solved (0 of 32); a trained 4B ignores the primitive | exploratory, pre-registered predictions | ledger E68, E73, E74 |
 
 ## How this site is organized
 

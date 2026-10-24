@@ -639,3 +639,11 @@ human-written interface around acquired executors is robust to the tested shifts
   - The same pattern shows at the leaf level (E74, interim): the 8B uses a documented typed primitive, while the
     trained 4B ignores it. An untrained base 4B used it in its first candidates (E74u, running), which suggests
     proposer training reduced tool adoption.
+- **17:53 UTC, E74 (end of job 6618).** A harness-supplied typed leaf turns the hardest helper family from 0 of 32
+  to 20 of 32 correct for an 8B proposer with three labels, with the category set induced without labels.
+  - With E68 (question interface), this is the day's strongest evidence for the revised thesis. The harness should
+    supply the semantic interfaces (typed question parameters, typed leaf decisions), induced cheaply from
+    unlabelled inputs; proposers write executors against them.
+  - The trained 4B's refusal to adopt a new primitive (2 of 211) is a cost of proposer training worth
+    investigating.
+  - These results validate the student's System One and Jev intuition in a measured way.
