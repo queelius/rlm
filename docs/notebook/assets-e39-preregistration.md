@@ -486,3 +486,21 @@ E69b. It is a replication across checkpoints and carries E69b's prediction.
 - Nuisance 2 scores: 0.97, 0.0 and 0.87.
 - 22 of 78 drawn edits adopt.
 - Predictions: not met.
+
+**E57 result (12:35 UTC; `H/mrcr-heldout/e57.jsonl`).**
+- **Pools:** every branch's first 8 rows are identical to its pool (checked). No pool candidate is correct
+  (best teaching scores 0.214, 0.214, 0.076, 0.000, 0.214).
+
+| Seed | 30-label branch | 3-label branch |
+| --- | --- | --- |
+| s10 | not accepted (40 rows) | accepted in round 3; false acceptance (0.786, 0.789) |
+| s11 | not accepted | not accepted |
+| s12 | not accepted | not accepted |
+| s13 | not accepted | accepted in round 4; correct (1.0, 1.0; 64 of 64 exact at both needle counts) |
+| s14 | accepted in round 2; correct (1.0, 1.0) | accepted in round 1; correct (1.0, 1.0) |
+
+- **Correct:** 30-label 1 of 5, 3-label 2 of 5. Discordant pairs: +1/-0 for 3-label; p 1.0.
+- **New output tokens per branch:** 30-label 104k to 332k; 3-label 68k to 351k.
+- **Reading** (descriptive, as pre-registered): with sampling luck removed at round 0, three-label repair
+  matched or exceeded thirty-label repair on these five seeds, and admitted one library that fails beyond the
+  teaching lengths.
