@@ -101,3 +101,7 @@ seeds 5 to 9: `e56-mrcr-14b-labelled4-s{5..9}` against `e56-mrcr-14b-shown4-s{5.
 The 14B finds MRCR's program more often, which gives the protocol comparison more power. Primary measure for E54 and
 E56 (decided now, before results): seeds with a library correct held out (0.9 or more at 2 and 4 needles), per arm,
 plus per-candidate rates of correct libraries in round 0 and in repair rounds.
+
+E51r (added 2026-10-24 04:10 UTC, before the runs; exploratory): E51 repeated with boot seed 1 (`e51r-4br5b-s17-best32`,
+`e51r-4br4-s9-best32`), scored against arm B's boot-seed-1 run (`e39r-b-8b-standard`); pooled with E51 over 60 family
+attempts per checkpoint.
