@@ -317,3 +317,79 @@ mechanism.
   GPU-seconds.
 - Optional: Jev itself, if the user has access and agrees to send synthetic data.
 - Promote a cheap typer if it comes within 2 points of (d) at 10 times lower cost.
+
+## The REPL as a structured, reproducible harness (user prompt, 2026-10-24 ~10:40 UTC)
+
+**The user's thought.** Perhaps the Python REPL is just a very structured, reproducible harness: variables instead
+of files, functions instead of tool calls.
+
+**The field has converged on code as the harness interface.**
+- CodeAct ([2402.01030](https://arxiv.org/abs/2402.01030)): code actions beat JSON tool calls, with the largest
+  gains for open models.
+- Anthropic, "Code execution with MCP" (engineering blog): tools become code APIs. "The agent only sees what you
+  explicitly log or return." Saved working functions become skills.
+- Cloudflare's "Code Mode", smolagents' CodeAgent, and `dspy.RLM` take the same approach.
+- **Zhang and Khattab's July 2026 harness post** (https://alexzhang13.github.io/blog/2026/harness/) reframes RLMs
+  in almost exactly the user's terms:
+  - The harness supplies compositional generalization through *context offloading* (input held in a variable) and
+    *programmatic sub-calling* (outputs stored in variables).
+  - A good harness keeps every LM call "locally in-distribution", resembling the model's training data.
+  - Recursion "is not strictly necessary".
+  - They used one 30B-A3B model and make no claims about small models.
+
+So the reframe is right and is now the RLM authors' own view. Novelty must come from the small-model regime,
+verified procedural memory, selection memory, and measured principles.
+
+**What a REPL harness gives that files and tool calls do not, for small models specifically.**
+- **Typed state that never enters the context.** Counters and dicts, not serialized files.
+- **Control flow in code.** Fewer model decisions per task; one preprint says agents decay with step count.
+- **Functions with contracts.** These make routines verifiable units, which is why library verification works.
+- **A trace that is itself a program.** It can be replayed, diffed, minimized, and lifted into a reusable routine.
+  Turning a trajectory into a routine is library learning.
+- **Loud failures.** Exceptions surface, unlike silent prose errors.
+
+The costs are a sandbox and the security work that comes with it.
+
+**"Locally in-distribution" unifies our results.**
+- **E59 and E61.** Regex libraries fail once the question leaves its template's distribution. A 4B parsing a single
+  question is in distribution, so it is robust.
+- **OOLONG.** Per-item classification calls are in distribution for a 4B; reading the whole context is not.
+- **Route choice.** RL route choice from raw long inputs collapsed, while an outcome-table lookup works.
+- **Hypothesis: the smaller the model, the narrower its in-distribution region, so the finer the harness's
+  decomposition must be.** With a fine enough harness, model size matters little; E14 found a 0.6B caller equal to
+  the 4B with the library.
+
+**Systems analogies with prior art.**
+- ClawVM ([2604.10352](https://arxiv.org/abs/2604.10352), EuroMLSys 2026): harness-managed virtual memory.
+- Pichay, "The Missing Memory Hierarchy" ([2603.09023](https://arxiv.org/abs/2603.09023)): demand paging of
+  context, reporting 21.8% structural waste.
+- MemGPT.
+- Record and replay: agrepl ([2607.16200](https://arxiv.org/abs/2607.16200)) has a determinism invariant and
+  replay fidelity 1.0. Also harnix and Belay.
+- LongHarness Bench ([2609.38137](https://arxiv.org/abs/2609.38137), to verify): decomposition reduces the context
+  per call "without sufficiently reducing the final decision space".
+
+**Thesis statement, draft (2026-10-24).** Small language models can solve tasks over inputs they cannot read when a
+programmable harness keeps every model call locally in distribution:
+- code holds the state and the control flow;
+- verified routines carry procedures;
+- an input-keyed memory selects among the routines;
+- the model is called only for small, typed decisions it can make reliably.
+
+Recursion is one way to produce such calls but is rarely necessary. What matters is the granularity and verification
+of the interface.
+
+**New experiments this suggests.**
+- **E65: harness-granularity scaling.**
+  - Callers 0.6B, 1.7B, 4B and 8B, crossed with four granularities: direct; a coarse chunk map; a per-record neural
+    map; library code with per-item neural leaves.
+  - Families: OOLONG and the event log.
+  - Prediction: the best granularity gets finer as the model gets smaller, and the curves converge at the finest
+    granularity.
+  - The figure, accuracy against granularity for each model size, could be the thesis's central plot.
+- **E66: trajectory surgery.** Replay recorded REPL trajectories deterministically, swap one leaf result for the
+  oracle or a perturbation, and re-execute the rest. This attributes errors to leaves, plan or merge. It is a
+  methodological contribution enabled by the reproducible harness; the runtime already records traces and
+  attestations.
+- **E67: lifting trajectories into routines.** Turn successful REPL traces into verified library functions, as with
+  TroVE or LILO, and compare them with proposer-written routines on yield and robustness.
