@@ -223,3 +223,8 @@ Both carry E74b's prediction.
 
 - E74b against E58 arm B: +20/-0, exact McNemar p < 0.001.
 - Predictions: E74 (at least 10) not met; E74b (at least 16) met.
+
+**E74c (added 2026-10-24 18:11 UTC, before the run; resumable, partial on job 6618).** E74 (trained 4B) with one usage
+line added to the primitive's documentation (`skills/primitives/typed_classify_usage.py`; compare E25c-d).
+- Question: can documentation fix the trained 4B's non-adoption (2 of 211)?
+- Prediction: at least a third of its candidates call `classify` or `classify_many`.
