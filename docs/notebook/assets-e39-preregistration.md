@@ -254,3 +254,26 @@ library are not independent replicates. Each shift has one wording per question 
 inspected).** Mixed teaching and the contract note together (`e60mc-mixcontract-4brl4-best8`). Everything else is the
 same as M and C. It completes the 2x2 design: neither (A0), mixed teaching only (M), contract note only (C), both (MC).
 It is scored and analysed the same way. No directional prediction beyond M's.
+
+**E60 result, arms M and C (2026-10-24 09:31 UTC; `H/e60/analysis-m-c.txt`).** All counts are out of 30 families.
+
+| Measure | A0 | M | C |
+| --- | --- | --- | --- |
+| Accepted | 12 | 4 (+1/-9 vs A0, p 0.021) | 14 (+2/-0, p 0.5) |
+| All accepted libraries correct on control | yes | yes | yes |
+| Robust, control + paraphrase 2 (primary) | 0 | 0 | 0 |
+| Robust, control + nuisance 2 | 2 | 0 | 7 (+5/-0, p 0.062) |
+| Known variants (paraphrase 1 and nuisance 1) | 0 | 4 | 0 |
+| Long | 12 | 4 | 14 |
+| Execution faults | 0 | 0 | 0 |
+
+Predictions:
+- A0's yield is 0: met.
+- M's yield is above 0: not met.
+- M's nuisance-2 yield exceeds its paraphrase-2 yield: not met (both 0).
+- M accepts fewer libraries: met.
+
+Reading: M's four accepted libraries handle exactly the wordings they were shown. Varied demonstrations made
+the 4B enumerate templates rather than abstract over them, and the varied validity filter rejected most
+candidates. The contract note leaves acceptance unchanged and makes some parsers tolerant of labels and field
+order, but no arm survives an unseen rewording.
