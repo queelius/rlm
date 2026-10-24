@@ -1175,7 +1175,11 @@ accounted for, more helper-family teacher data did not cost code generalization:
 four on solves, reaches the 8B on helper families, and is far less seed-sensitive. The single-seed readings of
 rounds five to seven (E36, E41, E42) are superseded. E47 (23:25 UTC): round four retrained with only the SFT seed changed
 (data order) and the original RL seed 5 gives 33 of 74, not 42, so the variance is not in RL alone; over five runs
-the recipe gives 42, 29, 22, 33, 33.
+the recipe gives 42, 29, 22, 33, 33. E48 (01:05 UTC on 24 October): round seven's recipe with RL seeds 27 and 28
+gives 33 and 33 (helper mean best 0.39 and 0.58), so over three seeds 29, 33, 33. On solves the three recipes are
+indistinguishable (means 31.8, 33.7, 31.7); the two with more helper-family data are clearly better on helper
+families (0.33 to 0.58 against 0.10 to 0.25; the 8B 0.46). More, and more varied, helper data helps helper families
+and costs nothing measurable elsewhere.
 
 Pause (23 October 18:30 UTC). Job 6599 was cancelled about 30 hours early so the user could take up new preemptible
 GPU access. Before the stop: round four's RL repeated with a fresh seed (E43 A) finished training (reward by block
