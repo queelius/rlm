@@ -65,3 +65,14 @@ Arm A's protocol with 32 round-0 candidates instead of 8 (boot seed 0, same 30 f
 fresh-task scoring), for the strongest checkpoint under E39 (`proposer-rl-17-40`) and the weakest on held-out
 discovery (`proposer-rl-9-40`): runs `e51-4br5b-s17-best32`, `e51-4br4-s9-best32`. Question: does sampling more push
 the 4B past the 8B with thirty labels (13 of 30), and does it close the gap between checkpoints?
+
+## E52: three-label repair on MRCR (added 2026-10-24 01:55 UTC, before the runs; exploratory)
+
+E50 found no MRCR library in 4 of 4 finished seeds with 16 round-0 candidates, and both standard-protocol successes
+(E21, seeds 0 and 4) came from the first repair round, which showed failing teaching cases with their answers. E52
+keeps the standard budget (8 candidates, 2 repair rounds, same 8B, seeds 0 to 4) but uses only the three shown
+examples' labels: `bootstrap_library.py --shown-labels-only` ranks candidates by shown examples reproduced, inputs
+answered and varied outputs, repairs with the failing shown examples plus inputs that crash or return nothing (no other
+expected answers), and accepts a candidate that reproduces all three shown examples, answers every input and varies.
+Runs `e52-mrcr-8b-shownrepair-s{0..4}`; accepted libraries checked held out (`run_routine.py --family mrcr`, 2 and 4
+needles). Question: does three-label repair recover what labelled repair finds (2 of 5)?

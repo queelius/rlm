@@ -181,6 +181,45 @@ def normalize_doc(code: str, entry: str) -> tuple[str, bool]:
     return code[: m.start(2)] + doc + code[m.end(2):], True
 
 
+def label_free(rec: dict, shown_ids) -> tuple:
+    """E52: signals that use only the shown examples' labels. Fraction of the shown examples reproduced, fraction of
+    all teaching inputs that run with a non-empty output, and whether those outputs vary (a constant is degenerate)."""
+    ds = rec.get("details") or []
+    outs = [None if d.get("error") or d.get("output") is None or not str(d["output"]).strip() else str(d["output"]).strip() for d in ds]
+    shown = [d for d in ds if d["task_id"] in shown_ids]
+    shown_fit = sum(d["score"] >= 0.999 for d in shown) / max(len(shown), 1)
+    clean = sum(o is not None for o in outs) / max(len(outs), 1)
+    return shown_fit, clean, len({o for o in outs if o is not None}) > 1
+
+
+def _rank_shown(rec: dict, shown_ids) -> tuple:
+    fit, clean, varied = label_free(rec, shown_ids)
+    return (fit, clean, varied, not rec.get("load_error"), -len(rec.get("code") or ""))
+
+
+def accepted_shown(rec: dict, shown_ids) -> bool:
+    fit, clean, varied = label_free(rec, shown_ids)
+    return fit >= 0.999 and clean >= 0.999 and varied
+
+
+def failing_shown(details, tasks, shown_ids, k_unlabelled=2):
+    """Repair feedback without labels beyond the shown examples: the shown examples it gets wrong (their answers are in
+    the prompt anyway) and a few other inputs where it crashes or returns nothing (no expected answer given)."""
+    by = {t.task_id: t for t in tasks}
+    out = []
+    for d in details:
+        if d["task_id"] in shown_ids and d["score"] < 0.999:
+            t = by[d["task_id"]]
+            out.append(f"- Worked example: {_question_of(t.prompt)[:200]!r}\n  expected (first 150 chars): {str(t.answer)[:150]!r}\n"
+                       f"  your output (first 150 chars): {str(d['output'])[:150]!r}\n  error: {(d['error'] or '')[-400:]!r}")
+    bad = [d for d in details if d["task_id"] not in shown_ids and (d.get("error") or d.get("output") is None or not str(d["output"]).strip())]
+    for d in bad[:k_unlabelled]:
+        t = by[d["task_id"]]
+        out.append(f"- Another input (no expected answer available): {_question_of(t.prompt)[:200]!r}\n"
+                   f"  your output (first 150 chars): {str(d['output'])[:150]!r}\n  error: {(d['error'] or '')[-400:]!r}")
+    return "\n".join(out) or "- (all worked examples reproduced; no crashes on other inputs)"
+
+
 def failing_cases(details, tasks, k=3):
     by = {t.task_id: t for t in tasks}
     out = []
@@ -212,6 +251,9 @@ def main():
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--register", action="store_true")
     p.add_argument("--prompt-suffix", default="", help='appended to every proposer prompt, e.g. " /no_think" for Qwen3 hybrids')
+    p.add_argument("--shown-labels-only", action="store_true",
+                   help="E52: rank, accept and repair using only the shown examples' labels plus label-free signals "
+                        "(runs on every input, outputs vary); teaching scores are still logged, never used")
     a = p.parse_args()
     from openai import OpenAI
 
@@ -223,6 +265,9 @@ def main():
     shown = rng.sample(teach_rows, a.n_examples)
     prompt = build_prompt(entry, [api["describe"](r) for r in shown])
     shown_ids = [getattr(r, "task_id", None) or r["row_id"] for r in shown]
+    rank = (lambda rec: _rank_shown(rec, set(shown_ids))) if a.shown_labels_only else _rank
+    done_ok = (lambda rec: accepted_shown(rec, set(shown_ids))) if a.shown_labels_only else (
+        lambda rec: rec["mean"] >= 0.999 and a.threshold <= 1)
     a.out.mkdir(parents=True, exist_ok=True)
     (a.out / "prompt.txt").write_text(prompt)
     client = OpenAI(base_url=a.base_url, api_key="local", timeout=1800)
@@ -232,7 +277,7 @@ def main():
         for line in (a.out / "candidates.jsonl").read_text().splitlines():
             rec = json.loads(line)
             done[(rec["round"], rec["k"])] = rec
-            if best is None or _rank(rec) > _rank(best):
+            if best is None or rank(rec) > rank(best):
                 best = rec
         print(f"resuming with {len(done)} verified candidates, best {best['mean'] if best else None}", flush=True)
     log = open(a.out / "candidates.jsonl", "a")
@@ -240,8 +285,19 @@ def main():
         if rnd == 0:
             rp = prompt
         else:
-            if best is None or best["mean"] >= a.threshold:
+            if best is None or (done_ok(best) if a.shown_labels_only else best["mean"] >= a.threshold):
                 break
+            if a.shown_labels_only:
+                fit, clean, _ = label_free(best, set(shown_ids))
+                rp = (prompt + f"\n\nA previous module reproduced {round(fit * len(shown_ids))} of the {len(shown_ids)} worked examples and "
+                      f"ran with an answer on {clean:.0%} of {len(tasks)} other inputs. Its code:\n```python\n"
+                      f"{best['code'].strip()[:REPAIR_CODE_CHARS]}\n```\nProblems:\n{failing_shown(best['details'], tasks, set(shown_ids))}\n"
+                      + (f"Load error: {best['load_error'][-600:]}\n" if best.get("load_error") else "")
+                      + "\nFind the mistake, fix it, and return the complete corrected module in one ```python block.")
+                (a.out / f"repair-prompt-{rnd}.txt").write_text(rp)
+            else:
+                rp = None
+        if rnd > 0 and rp is None:
             rp = (prompt + "\n\nA previous module was run on the teaching tasks and scored "
                   f"{best['mean']:.2f} on average ({best['exact']}/{best['n']} exact). Its code:\n```python\n"
                   f"{best['code'].strip()[:REPAIR_CODE_CHARS]}\n```\nWorst teaching cases:\n{failing_cases(best['details'], tasks)}\n"
@@ -267,17 +323,18 @@ def main():
             log.flush()
             print(f"round {rnd} candidate {k}: mean {v['mean']:.3f} exact {v['exact']}/{v['n']} "
                   f"load_error={bool(v['load_error'])} timeout={v['timed_out']} verify {v['seconds']}s", flush=True)
-            if best is None or _rank(rec) > _rank(best):
+            if best is None or rank(rec) > rank(best):
                 best = dict(rec, code=code)
-            if best["mean"] >= 0.999 and a.threshold <= 1:  # a threshold above 1 draws every candidate (E37)
+            if done_ok(best):  # a threshold above 1 draws every candidate (E37)
                 break
-        if best and best["mean"] >= 0.999 and a.threshold <= 1:
+        if best and done_ok(best):
             break
-    accepted = best is not None and best["mean"] >= a.threshold
+    accepted = best is not None and (accepted_shown(best, set(shown_ids)) if a.shown_labels_only else best["mean"] >= a.threshold)
     summary = dict(family=a.family, proposer=a.model, best_mean=best["mean"] if best else None,
                    best_exact=best["exact"] if best else None, best_round=best["round"] if best else None,
                    best_k=best["k"] if best else None, accepted=accepted, threshold=a.threshold,
-                   shown_examples=shown_ids, teaching_tasks=len(tasks))
+                   shown_examples=shown_ids, teaching_tasks=len(tasks),
+                   protocol="shown-labels-only" if a.shown_labels_only else "teaching-labels")
     (a.out / "summary.json").write_text(json.dumps(summary, indent=1))
     print(json.dumps(summary))
     if accepted:
