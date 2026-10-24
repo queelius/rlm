@@ -422,3 +422,13 @@ Predictions:
 - 4B at least 44: met;
 - 0.6B below 30: met;
 - nuisance oracle between 11 and 40: not met (48).
+
+**E60 arm H8 (added 2026-10-24 10:46 UTC; queued after E57 on the second 8B server).** Arm H's instruction given to a
+stronger proposer.
+- Setup: `qwen3-8b-awq` with thinking, and E39 arm C's exact spec (`e39c-8b-best8`: 8 round-0 candidates, no
+  repair) plus H's prompt suffix. Run: `e60h8-helperparse-8b-best8`.
+- Baseline: E39 arm C, the same protocol without the suffix. Its libraries are scored on the stress conditions in
+  the same way.
+- Question: does a stronger proposer adopt helper question parsing, and does adoption bring robust yield?
+- Prediction: adoption in at least 5 of the 8B's accepted libraries (against the 4B's 1 of 11), and robust yield at
+  least 4 of 30.
