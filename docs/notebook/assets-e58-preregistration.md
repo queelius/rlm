@@ -149,3 +149,23 @@ No correct semantic-total library exists in any run (17 accepted, all wrong).
 - The 4B's yes/no errors: awl, drill, pliers, saw, screwdriver, trowel and wrench answered yes for 'instrument';
   wardrobe answered no for 'furniture'. All 32 families, 30 fresh tasks each.
 - Predictions: yes/no at least 0.95 met; yes/no ceiling at most 0.6 not met (0.74); choice better met.
+
+## E74: does a harness-supplied typed leaf make semantic-total libraries succeed? (added 2026-10-24 15:21 UTC, before the run; exploratory)
+
+This follows E73.
+
+**Category induction, label-free.** The 4B helper read each of the 30 unlabelled teaching questions of each of the
+32 semantic-total families and named the category asked about (JSON reply). The union was exactly the five
+categories in all 32 families (`H/e73/induced_categories.json`).
+
+**Primitive** (`skills/primitives/typed_classify.py`, given via `BOOT_PRIMITIVES` and documented in the proposer's
+contract): `CATEGORIES` (the induced set), plus `classify(item)` and `classify_many(items)`. Each asks one cached
+five-way choice per distinct item.
+
+**Run** (`e74-typedleaf-4br5b-s16-best8`). E58 arm A's exact protocol (`proposer-rl-16-40`, 8 candidates, no
+repair, acceptance by the 3 shown examples, boot seed 0) on the 32 semantic-total families of E58's panel, with the
+primitive available. Fresh scoring also loads the primitive.
+
+**Comparison.** E58 arm A on the same 32 families: 6 accepted, 0 correct. Arm B: 0 accepted.
+
+**Prediction.** At least 10 of 32 correct (0.9 or more on fresh tasks), with false acceptances at most 3.
