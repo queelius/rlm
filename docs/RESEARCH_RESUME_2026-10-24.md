@@ -78,6 +78,15 @@ It records every server's command line and device, the queue in full, and per-ru
 
 ### Finding new work (ranked; re-rank after E58 and the Codex review)
 
+**Top priority for the next allocation: E70, the crossed experiment (interface × source of procedures).**
+- The design and its confound fixes are in
+  `docs/research-plans/2026-10-24-decomposition-brainstorm-and-prior-art.md` (section E70).
+- Build the JSON-tool adapter in the repository runtime first, on CPU.
+- Context: the 24 October discussion and red-team review re-centred the thesis on acquiring robust procedures
+  (`docs/notebook/2026-10-24-discussion-summary-and-lessons-learned.md`).
+- E59, E60, E61 and E68 in the ledger show that executors generalize and a 4B can supply the question
+  interface, but a 4B proposer does not write that interface itself.
+
 0. **Template robustness (E59, E60; running since 09:05 UTC on lane `gpu1b`, port 8001).**
    E59 found the accepted libraries template-bound: 55 of 55 survive 5 times longer inputs, but 3 of 55 a
    reworded question and 11 of 55 a changed label or field order. E60 tests two fixes against frozen E39 A:

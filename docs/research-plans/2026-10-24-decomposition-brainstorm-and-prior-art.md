@@ -519,3 +519,44 @@ question settled by the crossed experiment rather than asserted.
     cost. The interface itself is the known semantic-parser-plus-executor pattern.
   - This is also a concrete datum for the crossed experiment's knowledge factor: a human-written interface plus
     acquired executors already works on these shifts.
+
+## E70, the decisive crossed experiment: revised design after Codex's review (2026-10-24 ~11:00 UTC)
+
+Review: `codex-reviews/2026-10-24-e70-design-review.md`. This is the plan for the next allocation; it is built on CPU
+first.
+
+- **Use the repository runtime, not smolagents, for the primary comparison.** smolagents' CodeAgent and
+  ToolCallingAgent differ in prompts, history handling and a fallback answer call. Build an experiment adapter that
+  decodes JSON tool calls into the same executor, helper ABI, observation encoder and accounting. The public
+  Responses contract stays unchanged.
+- **Define the treatment as a persistent REPL against scripts with explicit storage.**
+  - Both arms see the same immutable request, MRCR message boundaries included.
+  - Both keep large results through handles, and both have `submit(handle)`.
+  - The same routine code sits behind both, through handles, with the same helper semantics (`ask_batch(...).texts`,
+    system and options).
+  - Both get the same truncation (6,000 characters) and the same history-retention rule.
+  - Budgets are aggregate compute and helper calls, not turn caps.
+- **Matched semantic demonstrations** are rendered into each action format, with no planning and no fallback answer
+  call. The model revision, sampling and output limits are frozen.
+- **Routine access.** Every arm uses the same input-only retriever, with no `task.family` metadata. Routine
+  documentation is normalized across human-written and acquired routines, since one usage line can dominate (E25c-d).
+- **Incomplete factorial.**
+
+  | Task group | Arms | Sample |
+  | --- | --- | --- |
+  | OOLONG | JSON or REPL × primitives or human-written routines, plus host with human-written routines | all 293 rows (12 contexts; clustered uncertainty) |
+  | LongBench-v2 | the same five arms | all 503 questions (462 contexts; clustered) |
+  | Generated families | all six controller arms, plus host arms with human-written and with acquired routines | 30 families × 10 fresh instances × control, paraphrase 2 and nuisance 2 |
+  | MRCR | adapter and ceiling check | 32–64 cases |
+
+- **Failed acquisition** counts as zero robust yield, with no manual repair. Conditional utility is reported
+  separately from yield.
+- **Power.** At 25% discordance, about 200 independent pairs detect 10 points and about 400 detect 7. Generated
+  families have only 30 independent units.
+- **Budget.** About 100M processed tokens per compute cap: 18–55 GPU-hours for two caps on two slices. Start with one
+  generous cap.
+- **What each outcome licenses.** See the review's table. A null interface difference is inconclusive unless its
+  interval excludes a prespecified meaningful advantage.
+
+**Built on today's results.** E68 already gives the knowledge factor one datum for generated families: a
+human-written interface around acquired executors is robust to the tested shifts.
