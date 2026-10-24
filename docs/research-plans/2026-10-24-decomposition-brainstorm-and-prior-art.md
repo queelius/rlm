@@ -592,3 +592,10 @@ human-written interface around acquired executors is robust to the tested shifts
     time?
   - Semantic totals (6 of 6 accepted were wrong in E58) need a different relation, such as helper
     classification consistency or invariance of category membership.
+- **13:37 UTC, E58 diagnosis.** False acceptances have two causes: logic bugs, caught by invariances (E72), and
+  unreliable neural leaves (semantic totals, 6 of 6). Three-label acceptance cannot detect leaf noise; thirty labels
+  can.
+  - This ties the acquisition thread to the System One leaf idea: a calibrated leaf, or a consistency check on
+    the leaf, is what makes cheap acceptance safe for helper families.
+  - Concrete next test: a leaf-consistency check (two phrasings, plus category exclusivity) as a label-free
+    filter on E58 arm A's semantic-total libraries.

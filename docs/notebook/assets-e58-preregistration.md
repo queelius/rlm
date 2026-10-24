@@ -110,3 +110,15 @@ one targeted check, not a change to E58.
   The last scores 0.5 on fresh tasks and changed 4 of 30 answers.
 - Flagged 0 of 22 correct libraries (arm A 4, arm B 18).
 - Prediction met.
+
+**Diagnosis of the semantic-total false acceptances (13:37 UTC, post hoc).**
+- No library in either arm solved semantic_total: 0 of 32 families.
+- Arm B accepted none: its 30 labels showed the teaching mean below 0.9.
+- Arm A accepted 6, scoring 0.67 to 0.87 on fresh tasks. Their logic is sound. They ask the 4B helper a yes/no
+  category question per item (`ask_batch`), and the helper's errors make 13% to 33% of totals wrong.
+- Three shown examples cannot detect a neural leaf that errs on that scale; thirty labels can (compare E49).
+
+So E58's false acceptances have two mechanisms:
+1. A logic bug (day spans): caught by an invariance check (E72).
+2. An unreliable leaf (semantic totals): needs more labels, or a label-free consistency check on the leaf. For
+   example, the same classification asked twice, or exclusivity across the five categories.
