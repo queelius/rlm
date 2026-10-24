@@ -104,3 +104,9 @@ output changes. No labels are used.
 one targeted check, not a change to E58.
 
 **Prediction.** It flags all 3 wrong arm-A libraries and none of the correct ones.
+
+**E72 result (13:37 UTC).**
+- Flagged 3 of 3 wrong libraries: `gen-pipe-day_span-*`, `gen-csv-day_span-*` and `gen-table-day_span-plain-s3`.
+  The last scores 0.5 on fresh tasks and changed 4 of 30 answers.
+- Flagged 0 of 22 correct libraries (arm A 4, arm B 18).
+- Prediction met.

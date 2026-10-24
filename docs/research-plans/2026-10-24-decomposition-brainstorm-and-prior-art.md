@@ -584,3 +584,11 @@ human-written interface around acquired executors is robust to the tested shifts
     (10 of 85).
   - That raises the value of label-free checks that catch wrong libraries: accepted research question 3, and
     partition invariance.
+- **13:37 UTC, E72.** A hand-written metamorphic check separates E58's wrong day-span libraries from the correct ones
+  perfectly (3 of 3 against 0 of 22), with no labels.
+  - This is the first evidence for research question 3: label-free checks can cut false acceptance.
+  - The open, thesis-relevant version is automatic: can a small model derive invariances from the question
+    (dates not times; renaming items keeps counts; duplicating records doubles sums) and run them at acceptance
+    time?
+  - Semantic totals (6 of 6 accepted were wrong in E58) need a different relation, such as helper
+    classification consistency or invariance of category membership.
