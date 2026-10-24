@@ -60,6 +60,9 @@ and servers are restarted:
 - `e74b2-typedleaf-8b-best8-boot1`: 8B, lane gpu1 (8010); just started.
 
 All three need `BOOT_PRIMITIVES=experiments/selective_recursion_20261019/skills/primitives/typed_classify.py`.
+When the job ends their specs stay in `RUNS/queue/running/`. Before starting the dispatcher, move them back:
+`mv RUNS/queue/running/*.json RUNS/queue/pending/`. Point each spec's ports and lanes at the new allocation's
+servers if they differ.
 Their specs carry it in `bash -c`. E74u (base 4B, 12 families) finished.
 
 Interim adoption of the typed primitive:
