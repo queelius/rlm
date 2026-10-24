@@ -610,3 +610,12 @@ human-written interface around acquired executors is robust to the tested shifts
   - For this model and task, the 'generic tools match the full system' outcome is clearly false: the leverage is
     in the procedures.
   - It does not yet separate REPL from tool-calling; that is E70's interface factor.
+- **15:14 UTC, E73.** The semantic-total failures were the *leaf's question form*. A 4B is 97.9% right on yes/no and
+  100% right on a typed five-way choice, so the task ceilings are 0.74 and 1.00. The yes/no errors are systematic
+  (tools read as 'instruments').
+  - This supports the user's System One point: typed choice decisions, as in Jev, beat free-standing binary
+    questions.
+  - It also says which label-free check can work: exclusivity across the choice set, not resampling.
+  - For acquisition: proposers should be steered toward typed-choice leaves, or the harness should supply a typed
+    `classify(item, options)` primitive. This is the leaf analogue of E68's question interface.
+  - The 0.6B is not a usable leaf here (choice 0.87, ceiling 0.25).

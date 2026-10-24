@@ -138,3 +138,14 @@ No correct semantic-total library exists in any run (17 accepted, all wrong).
 - Yes/no accuracy per pair at least 0.95, but a yes/no ceiling at most 0.6: exact totals need every bought item of
   the category classified correctly.
 - The choice form is more accurate than yes/no, with a higher ceiling.
+
+**E73 result (15:14 UTC).**
+
+| Helper | Yes/no pair accuracy | Choice item accuracy | Yes/no ceiling | Choice ceiling |
+| --- | --- | --- | --- | --- |
+| `qwen3-4b` | 0.979 | 1.000 | 0.736 | 1.000 |
+| `qwen3-0.6b-nt` | 0.200 | 0.867 | 0.000 | 0.247 |
+
+- The 4B's yes/no errors: awl, drill, pliers, saw, screwdriver, trowel and wrench answered yes for 'instrument';
+  wardrobe answered no for 'furniture'. All 32 families, 30 fresh tasks each.
+- Predictions: yes/no at least 0.95 met; yes/no ceiling at most 0.6 not met (0.74); choice better met.
