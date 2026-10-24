@@ -200,3 +200,45 @@ library.
 5. **Reproduce λ-RLM and SRLM at 4B** on our tasks, as competitor baselines.
 6. **The frozen-executor interface test.** Swap regex, helper and oracle question parsers inside frozen libraries.
    E61 measured the parsing half.
+
+## Reframe (user, 2026-10-24 ~10:30 UTC): maybe it is not about recursion
+
+**The user's observation.** With enough interrogation of the input, frontier models in a good harness do much of
+this without sub-agents. They iterate on external state (files, notes, variables) and update their context as they
+go.
+
+**What supports it.**
+- Our own results: recursion did not help (E23); programmatic access, verified routines and selection memory did.
+- RLM runs at depth 1, and its models mostly chunk and grep.
+- SRLM: recursion is not the main driver.
+- Depth 2 hurts in a reproduction.
+- Agentic search over a filesystem gives large gains with no recursion
+  ([2603.20432](https://arxiv.org/abs/2603.20432)).
+- Practitioners: Manus rewrites a todo file to keep the goal in attention. Prime Intellect's RLM "never summarizes",
+  building the answer in a Python variable.
+
+**The recentred thesis.** For small models on large inputs, the active ingredients are:
+1. programmatic access, with intermediate state held outside the context window (REPL variables or files) and
+   updated iteratively;
+2. fresh LLM calls only as neural functions, applied from code to small pieces where code cannot decide (semantic
+   maps such as OOLONG's per-item labels);
+3. verified routines, selection memory, and narrow trained skills (question to parameters, probes to plan) that
+   substitute for the open-ended control frontier models do zero-shot and small models do not.
+
+Recursion becomes an ablation.
+
+**Decisive positioning experiment (ranked above E62).** A 4B model in a frontier-style iterative harness, at matched
+cost:
+- a Python REPL with grep and read-range helpers;
+- a scratch state the model rewrites (notes, a todo list, variables);
+- no sub-calls.
+
+It is compared with the same harness plus a neural `map` helper, with a sub-calling RLM, and with our library and
+selection-memory system, on OOLONG, MRCR and LongBench-v2.
+
+**What the outcomes would mean.**
+- If tools and state alone match the library system, that is the finding.
+- If not, the comparison shows what the library and the narrow skills add.
+
+**One risk.** Small models may decay over many iterations: one preprint reports that step count, not context
+length, drives decay ([2609.01660](https://arxiv.org/abs/2609.01660), preprint).
