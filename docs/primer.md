@@ -73,6 +73,27 @@ accurate on short inputs and fails on long ones. Choosing between them by input 
   window into teaching and held-out halves; **event-log tasks**: our synthetic family with an
   exact verifier.
 - **Claims ledger**: `docs/RESULTS.md`, where each result carries a status and evidence.
+- **Library**: a Python module written for one task family and preloaded into the controller's REPL. Its entry
+  point `answer_<family>(request) -> str` returns the final answer. It may use the standard library and the helper
+  functions `ask()` and `ask_batch()`. The caller usually solves a task with one call, for example
+  `FINAL_TEXT(answer_<family>(request))`.
+- **Roles in library bootstrapping**:
+  - the **proposer** writes candidate libraries from worked examples;
+  - verification runs each candidate on teaching tasks;
+  - the **helper** is the model a library calls;
+  - the **caller** (controller) invokes the accepted library.
+- **Label**: always the gold answer of a teaching example (supervision).
+  - The *standard protocol* accepts a library by its mean score over 30 labelled teaching tasks.
+  - The *three-label protocol* uses only the labels of the 3 examples shown to the proposer, plus label-free checks
+    (it runs on all 30 teaching inputs, and its outputs vary).
+- **Question prefix**: the marker before a task's question ("QUESTION:", "Q:", "Task:"). It is a surface setting of
+  a generated family, changed by the nuisance stress shifts. It is not a label.
+- **Stress conditions** (E59 to E68):
+  - *control*: as generated;
+  - *paraphrase*: the question reworded, with the same records and answer;
+  - *nuisance*: the question prefix, field order and separator redrawn;
+  - *long*: 2,000 records;
+  - *paraphrase 2* and *nuisance 2*: a second rewording and redraw that no teaching set ever used.
 
 ## Reproducing the setup
 

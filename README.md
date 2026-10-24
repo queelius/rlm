@@ -64,7 +64,7 @@ families for library discovery):
 Added on 24 October:
 
 - **Libraries are template-bound; the question is the fragile part.** Of 55 libraries correct on fresh tasks,
-  55 survive inputs 5 times longer, 3 survive a reworded question and 11 a changed question label or field
+  55 survive inputs 5 times longer, 3 survive a reworded question and 11 a changed question prefix or field
   order (E59). Teaching on varied wordings or a prompt note did not make a 4B proposer write robust libraries
   (E60). Given the family's parameter schema, a 4B reading only the question fills it correctly 96 percent of the
   time on unseen rewordings, a 0.6B 58 percent (E61). That is slot filling with a supplied schema, not yet an

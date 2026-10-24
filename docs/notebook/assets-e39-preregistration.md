@@ -169,15 +169,15 @@ libraries of E39's pre-registered arms and scores each one on 30 tasks per condi
 Conditions:
 - **control:** as generated, 400 records.
 - **paraphrase:** the same records and answers, with the question reworded once per question form.
-- **nuisance:** the same records and answers, with field order, separator and question label redrawn. For prose and
-  chat, only the label changes.
+- **nuisance:** the same records and answers, with field order, separator and question prefix redrawn. For prose and
+  chat, only the question prefix changes.
 - **long:** 2000 records.
 
 Success is 0.9 or more. Outcome: among libraries that succeed on control, the share that also succeeds under each
 shift, by arm.
 
 Predictions, written after a single-library smoke test that scored 1.0 on control, 0 on paraphrase, 0 on nuisance
-(only the label changed) and 1.0 on long:
+(only the question prefix changed) and 1.0 on long:
 - **Long:** at least 80% retained.
 - **Paraphrase:** at most 30% retained.
 - **Nuisance:** at most 50% retained.
@@ -196,7 +196,7 @@ condition:
 | Paraphrase | 0 | 3 | 0.24 |
 | Nuisance | 4 | 7 | 0.51 |
 
-- **Label only:** on prose and chat, where nuisance changes only the question label, 5 of 26 are retained.
+- **Question prefix only:** on prose and chat, where nuisance changes only the question prefix, 5 of 26 are retained.
 - **Paraphrase survivors:** day span (2 of 12) and first-after (1 of 5). Their single slot (a name or a time) is
   extracted by a generic pattern.
 - **Errors:** 13 library-condition runs raised errors (8 nuisance, 5 paraphrase). They are counted as failures.
@@ -224,7 +224,7 @@ the 3 shown examples.
   shown tasks, one per wording (`stress_gen.make_teach`, family `mix:<fid>`). This tests the mixed package as a
   whole: demonstrations and the validity filter both change.
 - **C (contract only):** E39's teaching set and shown examples exactly. The proposer prompt ends with a note that
-  question wording, question label and field order or separator may differ in use, and that it should extract the
+  question wording, question prefix and field order or separator may differ in use, and that it should extract the
   question's parameters in a way that survives rewording.
 - **Baseline (A0):** E39 arm A's frozen boot-seed-0 libraries (`e39a-4brl4-best8`).
 
@@ -386,7 +386,7 @@ writes the hybrid interface, so the harness supplies it.
 
 **Wrapper** (`e68_canon.py`).
 - Each frozen E59 library (arms A and B, both boot seeds) is kept unchanged.
-- The final paragraph or message of each task is replaced by: the family's original label, the question re-rendered
+- The final paragraph or message of each task is replaced by: the family's original question prefix, the question re-rendered
   in the original template from parsed parameters, and the task's own answer instruction. The instruction is located
   by the generator's four forms; this is family-level template knowledge a library-specific wrapper would have.
 - Records are untouched, so under nuisance 2 the field-order or separator change still reaches the library. The
@@ -403,7 +403,7 @@ nuisance 2, for no wrapper (E59) and for each parser.
 **Predictions.**
 - Paraphrase 2: oracle 55 of 55. 4B wrapper at least 44 of 55 (80%), with first-after the expected loss (E61's 4B
   parses it at 52%). 0.6B wrapper below 30 of 55.
-- Nuisance 2: label-only families (prose and chat) mostly repaired by the oracle and 4B wrappers. Structured formats
+- Nuisance 2: prefix-only families (prose and chat) mostly repaired by the oracle and 4B wrappers. Structured formats
   stay limited by record parsing, so total oracle retention is between 11 (E59) and 40 of 55.
 
 **E68 result (10:44 UTC; `H/e68/rows.jsonl`).** Libraries still correct, out of 55 correct on control:

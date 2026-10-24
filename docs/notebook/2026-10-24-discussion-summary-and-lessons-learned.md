@@ -30,12 +30,12 @@ Companion pages:
   checkpoint rationale.
 - **E59** (stress test of frozen libraries).
   - 55 of 55 survive inputs 5 times longer.
-  - 3 of 55 survive a reworded question, and 11 of 55 a changed label or field order.
+  - 3 of 55 survive a reworded question, and 11 of 55 a changed question prefix or field order.
   - Changing "QUESTION:" to "Q:" breaks 21 of 26 on prose and chat.
 - **E60** (can bootstrapping produce robust libraries?).
   - Mixed-wording teaching and a prompt note both gave 0 of 30 robust libraries.
   - Mixed teaching cut acceptance from 12 to 4, and those 4 fit only the demonstrated renderings.
-  - The note gave a suggestive gain on label and order shifts (7 against 2).
+  - The note gave a suggestive gain on question-prefix and field-order shifts (7 against 2).
   - Arms MC (both), H (the helper parses the question) and H2 (H with a second checkpoint) were queued or running.
 - **E61** (can a small model parse reworded questions?). Given the family's parameter schema, a 4B fills it from
   the question alone on 96% of unseen rewordings; a 0.6B on 58%. This is slot filling with a supplied schema, a
