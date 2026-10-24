@@ -25,35 +25,41 @@
       "idx": 3,
       "label": "4",
       "overlay": 0,
-      "note": "The day's main result, tested prospectively and replicated with a second bootstrap seed (pooled 26 against 29 of 60, one false acceptance in 60). On 30 families neither proposer had seen, a 4B trained on the 8B's verified libraries, sampling eight candidates and accepting by the three worked examples in its own prompt, bootstraps as many correct libraries as the thinking 8B with the full protocol and thirty labels, at a fourteenth of the tokens and with no false acceptances. The mechanism is the label curve: on exact families a program that reproduces three examples and runs cleanly on the other inputs is almost always right. The limit matters: on noisy families (MuSiQue F1, OOLONG classification) a few labels cannot rank close candidates."
+      "note": "Two pre-registered tests. E39 on 30 families with two seeds: the trained 4B with eight samples and three labels lands near the thinking 8B with thirty labels (26 vs 29 pooled). E58 is the powered follow-up on 141 untouched families: 75 vs 73; it met the registered 10-point non-inferiority margin with families as the unit, but not with the 37 templates as the unit, and only for the chosen (best) checkpoint; the weakest checkpoint scores 67 vs 73. The price is false acceptance: 10 of 85 accepted libraries are wrong (all six semantic totals; three day spans that subtract timestamps instead of dates), against none for the labelled protocol. Combined proposer tokens are about a third of the 8B's. Mechanism: on exact families, reproducing three examples and running cleanly is nearly sufficient."
     },
     {
       "idx": 4,
       "label": "5",
       "overlay": 0,
-      "note": "The cleanest result of the day. Same code, four docstrings. The usage line alone carries the effect. The practical rule: every library ships with a usage line; the bootstrapper now inserts one. The deeper point: an untrained caller reads documentation, a distilled caller has learned the call."
+      "note": "New on 24 October. Frozen libraries survive five-times-longer inputs (55 of 55) but not a reworded question (3 of 55) or even 'QUESTION:' changed to 'Q:'. Teaching on varied wordings or telling the proposer did not fix it. A 4B reading only the question returns the family's parameters 96 percent of the time on unseen rewordings; wrapping the same frozen libraries in that parser repairs 54 of 55. But a 4B proposer told to write such an interface almost never does (1 of 11, 0 of 18), and editing a working library gets 3 of 12. Executors generalize; small proposers do not write robust interfaces: acquisition is the open problem. Caveat: the wrapper is the known semantic-parser-plus-executor pattern, hand-written here with the family's template."
     },
     {
       "idx": 5,
       "label": "6",
       "overlay": 0,
-      "note": "MuSiQue is where the routine needs helper calls. The two-round library wins on accuracy and cost through the 0.6B caller. Everything that adds capacity elsewhere (recursion, bigger reader, more samples) does not help. The gap to gold paragraphs (about 0.2) is evidence selection."
+      "note": "The cleanest result of the day. Same code, four docstrings. The usage line alone carries the effect. The practical rule: every library ships with a usage line; the bootstrapper now inserts one. The deeper point: an untrained caller reads documentation, a distilled caller has learned the call."
     },
     {
       "idx": 6,
       "label": "7",
       "overlay": 0,
-      "note": "LongBench-v2 is the external-validity check. The first generic library (map-reduce notes) tied direct reading at nine times the cost; a retrieval library (BM25 over passages for the question and each option, one read) beats direct reading on all 503 questions, 0.427 against 0.356 (+0.07, se 0.02), at a quarter of its tokens, also through the 0.6B caller; the first 150-question sample had suggested +0.11. The lesson matches MuSiQue: choose evidence, do not summarize everything. Two earlier readings were withdrawn after fresh samples. The method lessons are the ones that cost most: scripted harnesses that did not match the kernel, verification sets that did not span deployment lengths."
+      "note": "MuSiQue is where the routine needs helper calls. The two-round library wins on accuracy and cost through the 0.6B caller. Everything that adds capacity elsewhere (recursion, bigger reader, more samples) does not help. The gap to gold paragraphs (about 0.2) is evidence selection."
     },
     {
       "idx": 7,
       "label": "8",
       "overlay": 0,
-      "note": "The sharpened thesis in one breath, then the four next steps. If time is short, skip the list and ask the advisor which of the four matters most for the thesis."
+      "note": "LongBench-v2 is the external-validity check. The first generic library (map-reduce notes) tied direct reading at nine times the cost; a retrieval library (BM25 over passages for the question and each option, one read) beats direct reading on all 503 questions, 0.427 against 0.356 (+0.07, se 0.02), at a quarter of its tokens, also through the 0.6B caller; the first 150-question sample had suggested +0.11. The lesson matches MuSiQue: choose evidence, do not summarize everything. Two earlier readings were withdrawn after fresh samples. The method lessons are the ones that cost most: scripted harnesses that did not match the kernel, verification sets that did not span deployment lengths."
     },
     {
       "idx": 8,
       "label": "9",
+      "overlay": 0,
+      "note": "The thesis moved today. A skeptical review (Codex, as a committee member) listed prior art for almost every mechanism; the defensible contribution is measured on small models: acquiring robust procedures cheaply, and where it breaks. Item 1 decides the framing: if a tool loop ties the REPL and acquired routines hold up and amortize, the thesis is about acquisition; if plain tools match the library, the distinctive claim is gone. Ask the advisor whether that framing is the right one."
+    },
+    {
+      "idx": 9,
+      "label": "10",
       "overlay": 0,
       "note": "For questions only."
     }

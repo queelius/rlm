@@ -15,22 +15,23 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamersize{text margin left=9mm,text margin right=9mm}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
-\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Bootstrapping libraries and their boundaries | advisor update, 22 Oct 2026\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
+\setbeamertemplate{footline}{\hspace{9mm}\scriptsize Bootstrapping libraries and their boundaries | advisor update, 24 Oct 2026\hfill\insertframenumber/\inserttotalframenumber\hspace{9mm}\vspace{3mm}}
 \newcommand{\source}[1]{\vfill{\scriptsize\color{Gray}#1\par}}
 \hypersetup{pdftitle={Where do libraries come from, and where do they stop helping?},pdfauthor={Alex Towell}}
 \title{Where do libraries come from, and where do they stop helping?}
 \subtitle{Bootstrapped libraries, documentation, evidence selection, and boundaries}
 \author{Alex Towell}
-\date{Advisor update, 22 October 2026}
+\date{Advisor update, 24 October 2026 (revised from 22 October)}
 \begin{document}
 
 \begin{frame}[plain]
 \titlepage
 \vfill
 \begin{block}{In one sentence}
-A 4-bit 8B model wrote a verified library for a new benchmark from three examples, and a 0.6B caller that never saw
-the benchmark uses it correctly to 1M tokens; the useful capacity is in the proposer and in choosing evidence, not in
-readers, recursion or larger controllers; a retrieval library also beats direct reading on LongBench-v2.
+Small models handle inputs they cannot read when code holds the work: a 0.6B caller runs an 8B-written MRCR library
+to 1M tokens; a trained 4B with three labels met a pre-registered 10-point non-inferiority margin against an 8B with
+thirty (75 vs 73 of 141, not under template clustering); bootstrapped libraries break when the question is reworded,
+and a 4B question parser repairs them. Recursion is not the active ingredient; acquisition is the open problem.
 \end{block}
 \end{frame}
 
@@ -117,17 +118,21 @@ best of four RL seeds (22 to 42). MRCR still fails.\par\medskip
 \footnotesize
 \begin{tabular}{@{}lrrr@{}}
 \toprule
-30 unseen families, 2 seeds & Correct & False acc. & Tokens \\
+ & Correct & False acc. & Tokens \\
 \midrule
-4B, best of 8, 3 labels & \textbf{12, 14} & 0, 1 & 3.7k \\
+\multicolumn{4}{@{}l}{\emph{E39: 30 new families, 2 seeds}} \\
+4B, best of 8, 3 labels & 12, 14 & 0, 1 & 3.7k \\
 8B thinking, 30 labels & 13, 16 & 0, 0 & 52.4k \\
+\multicolumn{4}{@{}l}{\emph{E58: 141 untouched families (powered)}} \\
+4B, best of 8, 3 labels & \textbf{75} & \alert{10} & 21k \\
+8B thinking, 30 labels & 73 & 0 & 64k \\
 \bottomrule
 \end{tabular}
 \medskip
 
-\small Correct = accepted library scores 0.9+ on 30 fresh tasks with twice the records. Pooled 26 vs 29 of 60,
-p 0.61. Protocol, predictions and analysis committed before the runs; met in both seeds and for all eight trained
-4B checkpoints (12 to 16 vs 13).
+\scriptsize Correct = 0.9+ on 30 fresh tasks; tokens per family (E39: output only). E58 met the registered 10-point
+non-inferiority margin with families as the unit (95\% CI $-0.078$ to $+0.106$), not with templates as the unit; the
+weakest checkpoint did not (67 vs 73).
 \end{column}
 \begin{column}{.40\textwidth}
 \begin{block}{Why three labels suffice}
@@ -136,10 +141,45 @@ Candidates that run cleanly and reproduce the prompt's examples are correct: pre
 3 labels (127 of 129 at three, all generalizing). Agreement among candidates is no substitute: an RL-trained
 proposer repeats its wrong programs.
 \end{block}
-\small \alert{Limit:} on noisy families (MuSiQue F1) ranking close routines takes tens of labels.
+\small \alert{Limits:} noisy families need tens of labels; E58's false acceptances: all 6 semantic totals, 3 of 7
+day spans.
 \end{column}
 \end{columns}
-\source{Ledger E37, E38, E39; runs e37*, e39*; docs/notebook/assets-e39-preregistration.md.}
+\source{Ledger E37 to E39, E58; notebook assets-e39- and assets-e58-preregistration.md.}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Libraries generalize in length, not in wording; the harness can fix that.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.52\textwidth}
+\footnotesize
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Unseen shift (of 55) & As is & 4B & 0.6B \\
+\midrule
+Inputs 5$\times$ longer & 55 & & \\
+Question reworded & 3 & \textbf{54} & 22 \\
+Prefix, field order & 11 & \textbf{48} & 26 \\
+\bottomrule
+\end{tabular}
+\medskip
+
+\small The parser wrapper: a 4B reads only the question, returns the family's parameters (96\% exact on unseen
+rewordings), and the question is re-rendered in the original template; the frozen library runs unchanged.
+Remaining failures are structured formats whose records changed.
+\end{column}
+\begin{column}{.44\textwidth}
+\begin{block}{Who can supply the robust interface?}
+\small
+4B proposer, told how, writing from scratch: 1 of 11 and 0 of 18 accepted libraries adopt it.\\
+4B editing a working library: working edits for 3 of 12 families (2 robust).\\
+Hand-written wrapper + 4B parser: 54 of 55.
+\end{block}
+\small Executors generalize; a 4B parses well; a small proposer rarely writes the interface. \alert{Acquisition is
+the open problem.}
+\end{column}
+\end{columns}
+\source{Ledger E59 to E61, E68, E69; stress\_gen.py, e68\_canon.py.}
 \end{frame}
 
 \begin{frame}[t]
@@ -170,7 +210,7 @@ routine's output by hand.\par\medskip
 Robustness comes from distillation, not size. The bootstrapper now inserts the line.
 \end{column}
 \end{columns}
-\source{Ledger E25c, E25d; runs e25c-*, e25d-*. One family, one library, one seed per arm.}
+\source{Ledger E25c, E25d. One family, one library, one seed per arm.}
 \end{frame}
 
 \begin{frame}[t]
@@ -198,7 +238,7 @@ fact, BM25 again, one read): +0.058 over BM25 alone, +0.045 over filter+BM25 at 
 reader); more sampling (majority of 3 at 88k tokens: 0.22 vs 0.35 for the library at 32k).
 \end{column}
 \end{columns}
-\source{Ledger E22c to E22f, E23, E25e, E28. MuSiQue (CC BY 4.0) dev questions in haystacks of other questions' paragraphs.}
+\source{Ledger E22c to E22f, E23, E25e, E28. MuSiQue (CC BY 4.0) dev questions in haystacks.}
 \end{frame}
 
 \begin{frame}[t]
@@ -234,19 +274,18 @@ random search found nothing.
 \begin{frame}[t]
 \frametitle{What this changes, and what to test next.}
 \small
-\textbf{The thesis, sharpened.} For small recursive models, capability lives outside the weights: verified
-routines (bootstrapped by a capable proposer, or by a small one trained on verified code and rewarded by verification;
-on exact families three labels suffice),
-documentation a thin caller can act on, and evidence selection inside the routine. A 0.6B caller with a retrieval
-library beats a 4B reading the document on MuSiQue and on LongBench-v2.\par\medskip
+\textbf{The thesis, revised.} For small models on large inputs, capability comes from code with programmatic access
+and tested routines, plus narrow neural decisions (parse a question, classify an item). Recursion is not the active
+ingredient; we keep the term RLM and frame it as a harness. The mechanisms are prior art (CodeAct, RLM,
+skill libraries, FlashExtract, Evaporate); what is new is measured on small models: \alert{acquiring} robust routines
+cheaply, and where that breaks (wording, lengths beyond teaching, false acceptance).\par\medskip
 \textbf{Next}
 \begin{enumerate}\setlength\itemsep{1mm}
-\item Proposer RL is seed-sensitive (22 to 42 of 74 for one recipe): compare recipes over 3+ RL seeds, and select
-checkpoints by held-out discovery, not training reward.
-\item Labels on noisy families: graded verification for MuSiQue- and OOLONG-like families.
-\item Breadth: split a broad family into question templates automatically (OOLONG: counting yes, timeline and
-user no).
-\item A short note on program-solvable long-context benchmarks (MRCR; candidates: Michelangelo, RULER).
+\item The deciding experiment: interface (tool loop vs REPL) $\times$ source of procedures (primitives,
+human-written, acquired), plus a host pipeline with no controller. Is the thesis about the harness or acquisition?
+\item False acceptance without labels: metamorphic checks (shift times, keep dates) and helper consistency.
+\item Who writes the interface: an 8B proposer (running), or the harness supplies it.
+\item Acceptance must span deployment lengths and wordings (E52b, E57, E59).
 \end{enumerate}
 \end{frame}
 
