@@ -89,3 +89,18 @@ Full output: `H/e58-analysis/RESULT.txt`.
 this protocol and this generator panel, with families as the unit. It is not established with templates as the
 unit, not for the weakest checkpoint, and not as equivalence or general label efficiency. It comes at the cost of
 10 false acceptances, against none for the labelled protocol.
+
+## E72: a label-free metamorphic check for day-span libraries (added 2026-10-24 13:36 UTC, before the run; exploratory, after E58's unblinding)
+
+This follows Codex's E58 review. All three of E58 arm A's day-span false acceptances subtract full timestamps
+instead of calendar dates.
+
+**Check** (`e72_metamorphic.py`). For each accepted day-span library in E58 arms A and B, generate 30 tasks on a
+new split, "metamorphic", with 400 records. Then make a variant of each task with the same records, dates, order,
+question and answer, but each record's time of day redrawn (sorted within its date). The library is flagged if any
+output changes. No labels are used.
+
+**Outcome.** Flags on wrong libraries (from E58's fresh scoring) and on correct ones. A posthoc exploratory test of
+one targeted check, not a change to E58.
+
+**Prediction.** It flags all 3 wrong arm-A libraries and none of the correct ones.
