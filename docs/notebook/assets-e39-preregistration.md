@@ -281,7 +281,7 @@ Reading, revised after the Codex review (`codex-reviews/2026-10-24-e60-results-a
   against 12 acceptances is not shown to differ.
 - No arm produced a library robust to the unseen rewording.
 
-## E60 arm H: the helper parses the question, code computes the answer (added 2026-10-24 09:45 UTC, before the run)
+## E60 arm H: the helper parses the question, code computes the answer (added 2026-10-24 09:38 UTC, before the run)
 
 The draft was revised after the Codex review (`codex-reviews/2026-10-24-e60-results-and-h-arm.md`).
 
