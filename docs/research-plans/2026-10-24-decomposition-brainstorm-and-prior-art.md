@@ -599,3 +599,9 @@ human-written interface around acquired executors is robust to the tested shifts
     the leaf, is what makes cheap acceptance safe for helper families.
   - Concrete next test: a leaf-consistency check (two phrasings, plus category exclusivity) as a label-free
     filter on E58 arm A's semantic-total libraries.
+- **14:35 UTC, E54.** MRCR at a matched budget: 0 against 0 correct, plus a three-label false acceptance with the same
+  held-out signature (0.786) as E52b s0. The same plausible-but-wrong algorithm keeps passing short teaching
+  inputs.
+  - This strengthens rank 4 in the resume doc: acceptance must span deployment lengths. A label-free version
+    would run candidates on unlabelled long inputs and check output well-formedness or agreement between
+    candidates.

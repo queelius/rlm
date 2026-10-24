@@ -532,3 +532,12 @@ tokens) editing the same frozen 4B libraries (E39 arm A, boot seed 0), with adop
 - Together with H8 (the 8B writing from scratch), it completes the who-can-supply-the-interface table: {4B, 8B} ×
   {write, edit}.
 - Prediction: working adopting edits for at least 8 of 12 families, at least 6 of them robust on paraphrase 2.
+
+**E54 result (14:35 UTC; `H/mrcr-heldout/e54.jsonl`).**
+- 30-label branch (seeds 5 to 9): none accepted. Best rounds 4, 4, 1, 3, 4.
+- 3-label branch: s5 accepted in round 2, a false acceptance (0.786 at 2 needles, 0.807 at 4; 50 and 51 of 64
+  exact). The rest were not accepted.
+- Correct: 0 against 0.
+- The s5 library's held-out scores equal E52b s0's exactly, so the same flawed algorithm was found
+  independently.
+- Pooled with E57: 3-label 2 of 10 correct (2 false acceptances); 30-label 1 of 10 (none).
