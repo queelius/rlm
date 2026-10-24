@@ -13,6 +13,8 @@ import json
 from math import comb
 from pathlib import Path
 
+import stress_gen as S
+
 
 def mcnemar(x: int, y: int) -> float:
     m = x + y
@@ -33,8 +35,17 @@ def main():
     for label, run in arms:
         for r in rows:
             if r["run"] == run:
-                ok[(label, r["family"], r["condition"])] = r["success"]
-                faults[(label, r["family"], r["condition"])] = bool(r["errors"] or r["load_error"] or r["timed_out"])
+                key = (label, r["family"], r["condition"])
+                if key in ok:
+                    raise SystemExit(f"duplicate stress row {key}")
+                ok[key] = r["success"]
+                faults[key] = bool(r["errors"] or r["load_error"] or r["timed_out"])
+    # every scored library must have all six conditions (missing rows would silently count as failures)
+    for label, _ in arms:
+        for f in fams:
+            have = {c for (lb, fam, c) in ok if lb == label and fam == f}
+            if have and have != set(S.CONDITIONS):
+                raise SystemExit(f"{label} {f}: incomplete conditions {sorted(have)}")
 
     def outcome(label, fid, conds):
         return all(ok.get((label, fid, c), False) for c in conds)

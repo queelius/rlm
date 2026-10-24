@@ -63,6 +63,7 @@ def main():
                      a.helper_base_url, "qwen3-4b", 900, entry)
         row = dict(run=run.name, rule=rule, family=fid, condition=cond, round=c["round"], k=c["k"], mean=v["mean"],
                    success=v["mean"] >= 0.9, n=v["n"], errors=sum(bool(d.get("error")) for d in v["details"]),
+                   helper_calls=sum(d.get("helper_calls") or 0 for d in v["details"]),
                    load_error=v.get("load_error"), timed_out=v.get("timed_out"), seconds=v["seconds"])
         with lock, a.out.open("a") as f:
             f.write(json.dumps(row) + "\n")

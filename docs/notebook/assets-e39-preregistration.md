@@ -273,7 +273,41 @@ Predictions:
 - M's nuisance-2 yield exceeds its paraphrase-2 yield: not met (both 0).
 - M accepts fewer libraries: met.
 
-Reading: M's four accepted libraries handle exactly the wordings they were shown. Varied demonstrations made
-the 4B enumerate templates rather than abstract over them, and the varied validity filter rejected most
-candidates. The contract note leaves acceptance unchanged and makes some parsers tolerant of labels and field
-order, but no arm survives an unseen rewording.
+Reading, revised after the Codex review (`codex-reviews/2026-10-24-e60-results-and-h-arm.md`):
+- M's four accepted libraries fit the demonstrated renderings and fail both unseen shifts. They are regex
+  alternatives for the two demonstrated phrasings (one uses a shared substring, one adds a looser pattern), and
+  none calls the helper. The data do not show that the varied demonstrations caused this.
+- C's 7 against 2 on nuisance 2 is suggestive (five gains, no losses, p 0.0625), not established. Its 14
+  against 12 acceptances is not shown to differ.
+- No arm produced a library robust to the unseen rewording.
+
+## E60 arm H: the helper parses the question, code computes the answer (added 2026-10-24 09:45 UTC, before the run)
+
+The draft was revised after the Codex review (`codex-reviews/2026-10-24-e60-results-and-h-arm.md`).
+
+**Setup.** As arm C (E39's teaching set and shown examples, `proposer-rl-5-40`, 8 round-0 candidates, arm A's
+acceptance rule), with a different prompt suffix. The suffix asks the proposer to:
+- define the parameter keys its code needs;
+- call `ask()` once for question parsing, passing only the question and that schema, without the records;
+- request JSON parameter values only, decode them with `json.loads`, and compute and format the answer in Python;
+- make further `ask()` calls only for judgments code cannot make.
+
+Run: `e60h-helperparse-4brl4-best8`.
+
+**Primary comparison:** H against C, paired by family, with A0 also reported. The outcome is the E60 robust yield
+(accepted, and 0.9 or more on control and on paraphrase 2), over all 30 families.
+
+**Prediction (unconditional):** H's robust yield is at least 5 of 30.
+
+**Also reported:**
+- adoption: the share of accepted libraries whose code sends the question alone to `ask()` and decodes JSON, judged
+  by reading the code;
+- helper calls per task on each condition (now logged in the stress rows);
+- acceptance and execution faults.
+
+**Analysis requirements:**
+- every accepted library must have all six condition rows, with no duplicates (enforced by `e60_analysis.py`);
+- each run must have finished all 30 families before scoring.
+
+A failure would not show that neural question parsing cannot work. It jointly tests whether the 4B adopts the recipe,
+finds the question, and implements the parser and the computation.
