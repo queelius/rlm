@@ -78,6 +78,16 @@ It records every server's command line and device, the queue in full, and per-ru
 
 ### Finding new work (ranked; re-rank after E58 and the Codex review)
 
+0. **Template robustness (E59, E60; running since 09:05 UTC on lane `gpu1b`, port 8001).**
+   E59 found the accepted libraries template-bound: 55 of 55 survive 5 times longer inputs, but 3 of 55 a
+   reworded question and 11 of 55 a changed label or field order. E60 tests two fixes against frozen E39 A:
+   mixed-wording teaching (M) and a contract note (C).
+   - Score with `e59_stress.py --prefix mix: ...` for M, and without a prefix for C and A0, on all six
+     conditions, with output to `H/e60/rows.jsonl`.
+   - The primary outcome is robust yield over all 30 families, as pre-registered.
+   - Next candidates: Codex's repair-of-frozen-successes arm (96 candidates), the M+C combination, and the 8B
+     under mixed teaching.
+
 1. **Act on E58's outcome.**
    - If the 4B three-label protocol is non-inferior: freeze accepted libraries and test generalization on a withheld
      stress panel (longer inputs, paraphrased questions, format variation, edge cases). Then bootstrap one genuinely

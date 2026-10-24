@@ -158,7 +158,7 @@ Recomputing the earlier E52b, E55 and E56 checks changes no conclusion:
 - E52b s0 scores 0.786 and 0.807 (exactly correct on 50 and 51 of 64).
 - E55 s0's work directories had held each row twice, from a rerun; all rows scored 1.0, so its mean was unaffected.
 
-## E59: do accepted libraries survive meaning-preserving shifts? (added 2026-10-24 09:00 UTC; exploratory)
+## E59: do accepted libraries survive meaning-preserving shifts? (added 2026-10-24 08:52 UTC, launched in the same step; exploratory)
 
 This was proposed by the Codex design review (priority 2 in both reviews). E39's "unseen" families are new variants
 of the same generator, and fresh tasks keep each family's wording and nuisance settings. E59 freezes the accepted
@@ -187,7 +187,7 @@ If paraphrase or nuisance retention is low, then "bootstrapped library" means a 
 generalization claim must say so. Possible follow-ups are teaching sets that vary wording and nuisance settings, or a
 helper-mediated question parser. Run: `RUNS/../e59-stress` in the run store (`H/e59-stress/rows.jsonl`).
 
-**E59 result (2026-10-24 09:05 UTC).** Of 55 libraries correct on control, the number still correct under each
+**E59 result (2026-10-24 08:53 UTC).** Of 55 libraries correct on control, the number still correct under each
 condition:
 
 | Condition | Arm A (4B, 26) | Arm B (8B, 29) | Fisher p |
@@ -204,7 +204,9 @@ condition:
 All three predictions were met. The libraries are template-bound programs. Generalization claims for bootstrapping
 must say "to new instances and lengths of the same template", not "to the task".
 
-## E60: can bootstrapping produce template-robust libraries? (added 2026-10-24 09:25 UTC, before the runs; exploratory)
+## E60: can bootstrapping produce template-robust libraries? (added 2026-10-24 09:03 UTC, before the runs started at 09:05; exploratory)
+
+(The comment in `stress_gen.py` dating paraphrase 2 to 09:10 is wrong: it was drafted at 08:58 and revised at 09:04, before any E60 run.)
 
 The design was revised after a Codex review of a draft (`codex-reviews/2026-10-24-e59-e60-review.md`). In the draft,
 seed 0's three shown examples were all in the original wording. Nuisance 2 repeated nuisance 1's rendering on four
