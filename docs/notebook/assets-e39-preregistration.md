@@ -517,3 +517,11 @@ E69b. It is a replication across checkpoints and carries E69b's prediction.
   plain 'tools alone' reference for OOLONG.
 - Reference points: direct 0.208, library 0.672, and this harness on a 72-row sample 0.111.
 - Prediction: at most 0.25.
+
+**E70 second cell (added 2026-10-24 12:41 UTC, before the run): REPL with primitives only, LongBench-v2, all 503
+questions.**
+- Setup: the untrained 4B, default harness (no library), `family_eval.py --family longbench --per-size 300`.
+  Queued after the OOLONG cell. Run: `e70-longbench-repl-prims-4b`.
+- Reference points: direct reading 0.356 (E32e), the retrieve-then-read library 0.427 (E32e, 0.6B caller), and this
+  harness on 150 questions 0.120 (E32).
+- Prediction: at most 0.30, below direct reading.
