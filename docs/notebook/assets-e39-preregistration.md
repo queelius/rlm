@@ -546,3 +546,18 @@ tokens) editing the same frozen 4B libraries (E39 arm A, boot seed 0), with adop
 - 0.150 over 293 rows (library 0.672, paired +6/-159; direct 0.208). Prediction met.
 - By length: 0.26, 0.22, 0.18, 0.10, 0.08 and 0.08 at 1k to 32k tokens.
 - 48 rows stopped at the 10-turn cap (`LimitExceededError`). Mean 2.3 turns, 3.6 calls and 17.5k tokens per row.
+
+**E69b8 result (15:36 UTC).** Working adopting edits for 7 of 12 families:
+
+| Family | Control | Paraphrase 2 | Nuisance 2 |
+| --- | --- | --- | --- |
+| prose-count | 0.83 | 0.2 | 0.83 |
+| prose-last_city | 1.0 | 1.0 | 1.0 |
+| xmlish-count | 1.0 | 0 | 0 |
+| xmlish-first_after | 1.0 | 0.77 | 1.0 |
+| xmlish-nth_item | 1.0 | 1.0 | 0.83 |
+| xmlish-top_user | 0.73 | 0 | 0.73 |
+| xmlish-total | 1.0 | 1.0 | 1.0 |
+
+- Robust on paraphrase 2: 3. Robust on nuisance 2: 3.
+- Predictions: not met.

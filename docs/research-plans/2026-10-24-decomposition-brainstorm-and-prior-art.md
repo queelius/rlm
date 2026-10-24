@@ -619,3 +619,11 @@ human-written interface around acquired executors is robust to the tested shifts
   - For acquisition: proposers should be steered toward typed-choice leaves, or the harness should supply a typed
     `classify(item, options)` primitive. This is the leaf analogue of E68's question interface.
   - The 0.6B is not a usable leaf here (choice 0.87, ceiling 0.25).
+- **15:36 UTC, E69b8.** The 8B editing: 7 of 12 working adopting edits, but only 3 robust; the 4B got 3 and 2. Who
+  supplies a robust interface, out of 12 families (H8, the 8B writing from scratch, is still pending):
+  - 4B writing: under 1;
+  - 4B editing: 2;
+  - 8B editing: 3;
+  - hand-written wrapper with a 4B parser: about 12 (54 of 55 libraries).
+
+  The harness-supplied interface dominates.
