@@ -76,3 +76,8 @@ answered and varied outputs, repairs with the failing shown examples plus inputs
 expected answers), and accepts a candidate that reproduces all three shown examples, answers every input and varies.
 Runs `e52-mrcr-8b-shownrepair-s{0..4}`; accepted libraries checked held out (`run_routine.py --family mrcr`, 2 and 4
 needles). Question: does three-label repair recover what labelled repair finds (2 of 5)?
+
+E53 (added 2026-10-24 02:20 UTC, before the run; exploratory): arm A's families and checkpoint `proposer-rl-17-40` with
+three-label repair (`discovery_bench.py --candidates 8 --repair-rounds 2 --shown-labels-only`, boot seed 0): run
+`e53-4br5b-s17-shownrepair`, scored with the arm A rule on its accepted libraries. Question: does three-label repair
+add to best-of-8 for the 4B on exact families, as labelled repair did for the 8B on MRCR?
