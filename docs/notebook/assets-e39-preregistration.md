@@ -479,3 +479,10 @@ reproduces the shown examples, and uses ask() plus json.loads. Run: `e69b-refact
 **E69b2 (added 2026-10-24 11:51 UTC, before the run).** E69b with the round-five seed-16 checkpoint
 (`proposer-rl-16-40`), editing the same frozen E39 arm A libraries. Run: `e69b2-refactor-adopt-4br5b-s16`, after
 E69b. It is a replication across checkpoints and carries E69b's prediction.
+
+**E69b result (12:13 UTC).**
+- Accepted adopting edits: 3 of 12 families (prose-count, xmlish-count, xmlish-total).
+- Paraphrase 2 scores: 0.63, 0.93 and 1.0, so 2 robust.
+- Nuisance 2 scores: 0.97, 0.0 and 0.87.
+- 22 of 78 drawn edits adopt.
+- Predictions: not met.

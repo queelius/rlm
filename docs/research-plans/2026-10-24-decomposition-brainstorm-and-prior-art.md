@@ -563,3 +563,8 @@ human-written interface around acquired executors is robust to the tested shifts
 - **11:12 UTC, E60 H2.** The adoption bottleneck replicates on a second 4B checkpoint: 0 of 18 accepted libraries.
   The acquisition framing is reinforced. Small proposers fit the shown templates even when told how to
   generalize. Open: does a stronger proposer (H8), or editing a working library (E69), change that?
+- **12:13 UTC, E69 and E69b.** Editing helps a little: a working adopting edit for 3 of 12 families, against
+  near zero when writing from scratch. Compare the hand-written wrapper: 54 of 55.
+  - A 4B proposer is a poor source of robust interfaces; a 4B *parser* inside a supplied interface is a good one.
+  - For the thesis: put the interface in the harness, and spend acquisition effort on executors, which do
+    generalize. Or test whether the 8B proposer (H8) closes the gap.
