@@ -96,6 +96,12 @@ def family_api(family: str):
             return (f"Input: a string of {len(t.prompt)} characters (request['input']):\n{shown}\n"
                     f"Expected output (the key prefix the question asks for, e.g. 'Label: ', 'Answer: ', 'User: '): {t.answer!r}")
         return dict(teach=tasks, describe=describe, as_task=lambda t: t, grade=lambda out, t: float(O.verify(t.row, out or "")))
+    if family.startswith("mix:gen-"):  # E60: teaching mixes the original wording, one paraphrase and one nuisance redraw
+        import family_gen as F
+        import stress_gen as S
+
+        teach = S.make_teach(family.split(":", 1)[1])
+        return dict(teach=teach, describe=F.describe, as_task=lambda t: t, grade=lambda out, t: F.grade(out, t))
     if family.startswith("gen-"):
         import family_gen as F
 
@@ -130,6 +136,7 @@ def verify(code: str, tasks: list, grade, workdir: Path, tag: str, base_url: str
     tj = workdir / f"{tag}.tasks.json"
     tj.write_text(json.dumps(dict(entry=entry, tasks=[dict(task_id=t.task_id, input=t.prompt) for t in tasks])))
     oj = workdir / f"{tag}.out.json"
+    oj.unlink(missing_ok=True)  # never read a stale output from an earlier run with the same tag
     py = str(HERE.parent.parent / ".venv" / "bin" / "python")
     t0 = time.time()
     try:

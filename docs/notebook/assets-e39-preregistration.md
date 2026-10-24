@@ -157,3 +157,93 @@ Recomputing the earlier E52b, E55 and E56 checks changes no conclusion:
 - Every library that scored 1.0 matched all 64 held-out tasks exactly at both needle counts.
 - E52b s0 scores 0.786 and 0.807 (exactly correct on 50 and 51 of 64).
 - E55 s0's work directories had held each row twice, from a rerun; all rows scored 1.0, so its mean was unaffected.
+
+## E59: do accepted libraries survive meaning-preserving shifts? (added 2026-10-24 09:00 UTC; exploratory)
+
+This was proposed by the Codex design review (priority 2 in both reviews). E39's "unseen" families are new variants
+of the same generator, and fresh tasks keep each family's wording and nuisance settings. E59 freezes the accepted
+libraries of E39's pre-registered arms and scores each one on 30 tasks per condition from a new split, "stress"
+(`stress_gen.py`). The arms are A (`e39a-4brl4-best8`, `e39r-a-4brl4-best8`, rule a) and B (`e39b-8b-standard`,
+`e39r-b-8b-standard`, rule b).
+
+Conditions:
+- **control:** as generated, 400 records.
+- **paraphrase:** the same records and answers, with the question reworded once per question form.
+- **nuisance:** the same records and answers, with field order, separator and question label redrawn. For prose and
+  chat, only the label changes.
+- **long:** 2000 records.
+
+Success is 0.9 or more. Outcome: among libraries that succeed on control, the share that also succeeds under each
+shift, by arm.
+
+Predictions, written after a single-library smoke test that scored 1.0 on control, 0 on paraphrase, 0 on nuisance
+(only the label changed) and 1.0 on long:
+- **Long:** at least 80% retained.
+- **Paraphrase:** at most 30% retained.
+- **Nuisance:** at most 50% retained.
+- **A vs B:** no directional prediction. Retention is compared with Fisher's exact test.
+
+If paraphrase or nuisance retention is low, then "bootstrapped library" means a template-bound program, and every
+generalization claim must say so. Possible follow-ups are teaching sets that vary wording and nuisance settings, or a
+helper-mediated question parser. Run: `RUNS/../e59-stress` in the run store (`H/e59-stress/rows.jsonl`).
+
+**E59 result (2026-10-24 09:05 UTC).** Of 55 libraries correct on control, the number still correct under each
+condition:
+
+| Condition | Arm A (4B, 26) | Arm B (8B, 29) | Fisher p |
+| --- | --- | --- | --- |
+| Long | 26 | 29 | 1.0 |
+| Paraphrase | 0 | 3 | 0.24 |
+| Nuisance | 4 | 7 | 0.51 |
+
+- **Label only:** on prose and chat, where nuisance changes only the question label, 5 of 26 are retained.
+- **Paraphrase survivors:** day span (2 of 12) and first-after (1 of 5). Their single slot (a name or a time) is
+  extracted by a generic pattern.
+- **Errors:** 13 library-condition runs raised errors (8 nuisance, 5 paraphrase). They are counted as failures.
+
+All three predictions were met. The libraries are template-bound programs. Generalization claims for bootstrapping
+must say "to new instances and lengths of the same template", not "to the task".
+
+## E60: can bootstrapping produce template-robust libraries? (added 2026-10-24 09:25 UTC, before the runs; exploratory)
+
+The design was revised after a Codex review of a draft (`codex-reviews/2026-10-24-e59-e60-review.md`). In the draft,
+seed 0's three shown examples were all in the original wording. Nuisance 2 repeated nuisance 1's rendering on four
+families. The teaching tasks differed from E39's, and the outcome was conditional on control survivors. All four
+problems are fixed below.
+
+Families: E39's 30, boot seed 0. The proposer and protocol match E39 arm A: `proposer-rl-5-40`, helper `qwen3-4b`
+on 8001, 8 round-0 candidates, no repair, no early stop, and acceptance by the first valid candidate that reproduces
+the 3 shown examples.
+
+**Arms:**
+
+- **M (mixed demonstrations and validation):** E39's own 30 teaching tasks (same records, slots, answers and order),
+  re-rendered 10 each in the original wording, paraphrase 1 and nuisance 1. The three shown positions are E39's
+  shown tasks, one per wording (`stress_gen.make_teach`, family `mix:<fid>`). This tests the mixed package as a
+  whole: demonstrations and the validity filter both change.
+- **C (contract only):** E39's teaching set and shown examples exactly. The proposer prompt ends with a note that
+  question wording, question label and field order or separator may differ in use, and that it should extract the
+  question's parameters in a way that survives rewording.
+- **Baseline (A0):** E39 arm A's frozen boot-seed-0 libraries (`e39a-4brl4-best8`).
+
+**Scoring.** Every accepted library is scored on 30 stress-split tasks under control, paraphrase 1 and nuisance 1
+(variants the M arm was shown), paraphrase 2 and nuisance 2 (never shown to any arm), and long. Paraphrase 2 is
+frozen at this commit, with "qty" and "a furniture" reworded.
+
+**Primary outcome:** robust yield over all 30 families, counting non-acceptance as failure. A family counts as robust
+when the library is accepted and scores 0.9 or more on both control and paraphrase 2. M vs A0 and C vs A0 are
+compared paired by family: discordances and exact McNemar.
+
+**Secondary outcomes:**
+- the same yield with nuisance 2 in place of paraphrase 2;
+- known-variant correctness (paraphrase 1, nuisance 1);
+- acceptance, control correctness, long, and execution faults.
+
+**Predictions:**
+- A0's robust yield is 0, since E59 found 0 of 26 arm A libraries survived paraphrase 2.
+- M's yield is above 0, with nuisance-2 yield higher than paraphrase-2 yield.
+- M accepts fewer libraries than A0's 12, because the validity filter now runs on varied inputs.
+- C: no directional prediction.
+
+About 12 accepted libraries per arm can show a difference from 0 but cannot establish equivalence. Thirty tasks per
+library are not independent replicates. Each shift has one wording per question form.
