@@ -242,3 +242,78 @@ selection-memory system, on OOLONG, MRCR and LongBench-v2.
 
 **One risk.** Small models may decay over many iterations: one preprint reports that step count, not context
 length, drives decay ([2609.01660](https://arxiv.org/abs/2609.01660), preprint).
+
+## System One classifiers and cheap structure inference (user prompt: "Jev-like" and universal classifiers)
+
+**Jev** (TypeSafe AI, September 2026; https://docs.typesafe.ai) is a closed, hosted classifier. It takes a state plus
+typed questions (choice, score, yes/no) and returns calibrated probabilities instead of text, at $0.042 per million
+input tokens. It is said to be trained with "RL for calibrated decisions". There is no paper and there are no
+weights.
+
+Independent tests are mixed:
+- Parallel: it matched an in-house reranker but lost to specialised classifiers.
+- Qdrant: it gained +0.067 nDCG@10 in reranking. A chunker that cuts where Jev's "starts a new topic" probability
+  passes a threshold beat other chunkers on QASPER.
+- A blogger's roundup: complementary probabilities summed to 1.19.
+
+**Open analogues** (found by the search, not yet checked by us):
+- Simple Jev (`featherless-ai/simple-jev`): scores any Hugging Face LLM's answer options in one forward pass.
+- Cloudflare Clef and Clef-flash (Apache-2.0): a Qwen base with LoRA and an option-scoring head.
+- OpenJev (MIT): trained on some benchmarks' test splits; do not use it for evaluation.
+
+**Universal and few-shot classifiers.**
+- Laurer et al.'s NLI zero-shot models ([2312.17543](https://arxiv.org/abs/2312.17543)); ModernBERT-large zero-shot
+  runs about 1,000 pairs per second.
+- GLiClass ([2508.07662](https://arxiv.org/abs/2508.07662)) scores all labels in one pass.
+- SetFit.
+- Fine-tuned small encoders beat zero-shot LLMs at classification.
+- Calibration: contextual calibration ([2102.09690](https://arxiv.org/abs/2102.09690)) and batch calibration
+  ([2309.17249](https://arxiv.org/abs/2309.17249)). Batch calibration needs mixed-context batches, because windows
+  of one document share a type.
+- JEPA text encoders: no usable checkpoints, and one report says they collapse
+  ([2607.23531](https://arxiv.org/abs/2607.23531)).
+
+**Classical structure inference.** These are prior art for "probe, then write a splitter", and for library
+bootstrapping:
+- TextTiling and C99 for topic boundaries; Koshorek et al. 2018 for supervised sections, with Wiki-727K as free
+  labels.
+- Drain and LILAC (LLM plus template cache) for log templates.
+- PADS, "From Dirt to Shovels", POPL 2008: infers a data format's grammar from a small sample.
+- Datamaran, SIGMOD 2018: infers records and fields without supervision.
+- CleverCSV for CSV dialects.
+- Wrapper induction (Kushmerick) for delimiter-based extraction.
+- FlashExtract, PLDI 2014: synthesizes extraction programs from about 2 examples per field. This is the
+  programming-by-example precedent for bootstrapping libraries from three examples.
+- Evaporate, PVLDB 2023 ([2304.09433](https://arxiv.org/abs/2304.09433)): an LLM writes extraction code from sampled
+  documents, using 110 times fewer LLM tokens. This is the closest precedent to our proposer-writes-library approach
+  and must be cited.
+- Magika, for content-type detection.
+
+**Routers and cascades.**
+- RouteLLM gates work when labels are crisp.
+- Adaptive-RAG's complexity classifier is only 54.5% accurate; an oracle router adds 9 to 12 F1.
+- Online cascade learning (logistic regression → BERT → LLM) nearly matches the LLM at up to 90% lower cost.
+- Escalating only low-confidence cases is the proven pattern.
+
+**Where it fits.** Most neural leaf calls in long-context pipelines are decisions, not generation:
+- window typing for probing;
+- OOLONG per-item labels;
+- choosing a plan from probes;
+- relevance filtering;
+- the choice-type parameters of a question.
+
+A calibrated System One leaf can abstain and escalate to the generative 4B, which gives a label-free reliability
+mechanism.
+
+**Experiment (E63, to design and review).**
+- Tasks: window typing over about 12 structural types, and OOLONG per-item labels.
+- Conditions:
+  - (a) character n-grams with logistic regression;
+  - (b) a small embedding model with a linear probe, or SetFit;
+  - (c) zero-shot GLiClass or ModernBERT;
+  - (d) the local 4B with Simple-Jev-style calibrated option scoring;
+  - (e) a cascade from (a) or (b) to (d).
+- Measures: window macro-F1, decision accuracy, end-task accuracy inside a code-orchestrated map, ECE, and
+  GPU-seconds.
+- Optional: Jev itself, if the user has access and agrees to send synthetic data.
+- Promote a cheap typer if it comes within 2 points of (d) at 10 times lower cost.
