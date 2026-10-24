@@ -1,0 +1,40 @@
+
+accepted
+  A0   12/30
+  M     4/30   vs A0: +1/-9, exact McNemar p 0.021
+  C    14/30   vs A0: +2/-0, exact McNemar p 0.500
+
+control
+  A0   12/30
+  M     4/30   vs A0: +1/-9, exact McNemar p 0.021
+  C    14/30   vs A0: +2/-0, exact McNemar p 0.500
+
+robust: control + paraphrase2 (primary)
+  A0    0/30
+  M     0/30   vs A0: +0/-0, exact McNemar p 1.000
+  C     0/30   vs A0: +0/-0, exact McNemar p 1.000
+
+robust: control + nuisance2
+  A0    2/30
+  M     0/30   vs A0: +0/-2, exact McNemar p 0.500
+  C     7/30   vs A0: +5/-0, exact McNemar p 0.062
+
+robust: control + paraphrase2 + nuisance2
+  A0    0/30
+  M     0/30   vs A0: +0/-0, exact McNemar p 1.000
+  C     0/30   vs A0: +0/-0, exact McNemar p 1.000
+
+known variants: paraphrase1, nuisance1
+  A0    0/30
+  M     4/30   vs A0: +4/-0, exact McNemar p 0.125
+  C     0/30   vs A0: +0/-0, exact McNemar p 1.000
+
+long
+  A0   12/30
+  M     4/30   vs A0: +1/-9, exact McNemar p 0.021
+  C    14/30   vs A0: +2/-0, exact McNemar p 0.500
+
+execution faults (library-condition scorings with errors, load errors or timeouts)
+  A0   0 of 72
+  M    0 of 24
+  C    0 of 84

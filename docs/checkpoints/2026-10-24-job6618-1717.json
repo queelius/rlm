@@ -1,0 +1,228 @@
+{
+ "written": "2026-10-24T17:17:43Z",
+ "note": "Final checkpoint of job 6618 (ends 18:38 UTC). Running at the stop: E74 (trained 4B, typed classify primitive; 24/32 families), E74b (8B; 25/32), E74b2 (8B boot seed 1; just started); E74u (base 4B, 12 families) finished. All resume from saved candidates via queue/pending specs. Servers: gpu0 8002 8B, 8004 0.6B, 8006 4B helper; gpu1 8001 4B+LoRA (--max-loras 2), 8010 second 8B. Lanes gpu0/gpu1/gpu1b (slots.json).",
+ "git": {
+  "worktree": "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007",
+  "branch": "research/r1-replication-20261007",
+  "head": "6148b41d57947c699e131b7eda6aefd1b4dec97b",
+  "remote": "https://github.com/queelius/rlm.git",
+  "pushed_to": "origin/main",
+  "dirty": []
+ },
+ "slurm": {
+  "SLURM_JOB_USER": "atowell",
+  "SLURM_JOB_UID": "1523821556",
+  "SLURM_JOB_GPUS": "0,1",
+  "SLURMD_NODENAME": "an21",
+  "SLURM_JOB_START_TIME": "1792780702",
+  "SLURM_JOB_END_TIME": "1792867102",
+  "SLURM_JOB_CPUS_PER_NODE": "32",
+  "SLURM_JOB_PARTITION": "gpu",
+  "SLURM_JOB_NUM_NODES": "1",
+  "SLURM_JOBID": "6618",
+  "SLURM_JOB_QOS": "gpu-qos",
+  "SLURM_NODELIST": "an21",
+  "SLURM_JOB_ACCOUNT": "alex_phd",
+  "SLURM_JOB_ID": "6618",
+  "SLURM_JOB_NAME": "sys/dashboard/sys/codeserver",
+  "SLURM_JOB_GID": "1523800513",
+  "SLURM_JOB_NODELIST": "an21"
+ },
+ "host": "an21",
+ "servers": [
+  {
+   "pid": 2695967,
+   "port": "8001",
+   "cuda_visible_devices": "MIG-43a3375a-1942-592d-accf-d0884164dcb8",
+   "vllm_env": {
+    "VLLM_ALLOW_RUNTIME_LORA_UPDATING": "True"
+   },
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554 --served-model-name qwen3-4b --host 127.0.0.1 --port 8001 --api-key local --dtype bfloat16 --max-model-len 65536 --gpu-memory-utilization 0.50 --max-num-seqs 64 --enable-prefix-caching --seed 0 --enable-lora --max-lora-rank 64 --max-loras 2",
+   "served_models": [
+    "proposer-4b-r4",
+    "proposer-4b-r4-sft1",
+    "proposer-4b-r5",
+    "proposer-4b-r7",
+    "proposer-rl-10-40",
+    "proposer-rl-16-40",
+    "proposer-rl-17-40",
+    "proposer-rl-25-40",
+    "proposer-rl-27-40",
+    "proposer-rl-28-40",
+    "proposer-rl-5-40",
+    "proposer-rl-6-40",
+    "proposer-rl-9-40",
+    "qwen3-4b"
+   ]
+  },
+  {
+   "pid": 2692574,
+   "port": "8002",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5",
+   "vllm_env": {},
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-8B-AWQ --served-model-name qwen3-8b-awq --host 127.0.0.1 --port 8002 --api-key local --max-model-len 24576 --gpu-memory-utilization 0.45 --max-num-seqs 16 --enable-prefix-caching --seed 0",
+   "served_models": [
+    "qwen3-8b-awq"
+   ]
+  },
+  {
+   "pid": 2692338,
+   "port": "8004",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5",
+   "vllm_env": {},
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-0.6B --served-model-name qwen3-0.6b-nt --host 127.0.0.1 --port 8004 --api-key local --max-model-len 16384 --gpu-memory-utilization 0.12 --max-num-seqs 32 --enable-prefix-caching --seed 0 --default-chat-template-kwargs {\"enable_thinking\": false} --enable-lora --max-lora-rank 64 --max-loras 2 --lora-modules ctrl-06-onecell-v2=/project/alex_phd/runs/selective-recursion-20261019/adapters/sft-06-onecell-v2/final ctrl-06-onecell-v2-s1=/project/alex_phd/runs/selective-recursion-20261019/adapters/sft-06-onecell-v2-s1/final",
+   "served_models": [
+    "ctrl-06-onecell-v2",
+    "ctrl-06-onecell-v2-s1",
+    "qwen3-0.6b-nt"
+   ]
+  },
+  {
+   "pid": 2696478,
+   "port": "8006",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5",
+   "vllm_env": {
+    "VLLM_ALLOW_RUNTIME_LORA_UPDATING": "True"
+   },
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554 --served-model-name qwen3-4b --host 127.0.0.1 --port 8006 --api-key local --dtype bfloat16 --max-model-len 32768 --gpu-memory-utilization 0.36 --max-num-seqs 48 --enable-prefix-caching --seed 0",
+   "served_models": [
+    "qwen3-4b"
+   ]
+  },
+  {
+   "pid": 3061170,
+   "port": "8010",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5,MIG-43a3375a-1942-592d-accf-d0884164dcb8",
+   "vllm_env": {},
+   "command": "/bin/bash -c source /home/atowell/.claude/shell-snapshots/snapshot-bash-1792781105875-eo8anz.sh 2>/dev/null || true && shopt -u extglob 2>/dev/null || true && { \\builtin unalias -- 'unsetenv'; \\builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && eval 'L=/project/alex_phd/runs/selective-recursion-20261019/serving/vllm-8010-8b-gpu1.log; cd /project/alex_phd/runs/selective-recursion-20261019/serving && CUDA_VISIBLE_DEVICES=MIG-43a3375a-1942-592d-accf-d0884164dcb8 PATH=/project/alex_phd/envs/vllm/bin:$PATH setsid nohup /project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-8B-AWQ --served-model-name qwen3-8b-awq --host 127.0.0.1 --port 8010 --api-key local --max-model-len 24576 --gpu-memory-utilization 0.44 --max-num-seqs 16 --enable-prefix-caching --seed 0 > $L 2>&1 < /dev/null & echo \"pid $!\"' && pwd -P >| /tmp/claude-30a1-cwd",
+   "served_models": [
+    "qwen3-8b-awq"
+   ]
+  },
+  {
+   "pid": 3061171,
+   "port": "8010",
+   "cuda_visible_devices": "MIG-43a3375a-1942-592d-accf-d0884164dcb8",
+   "vllm_env": {},
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-8B-AWQ --served-model-name qwen3-8b-awq --host 127.0.0.1 --port 8010 --api-key local --max-model-len 24576 --gpu-memory-utilization 0.44 --max-num-seqs 16 --enable-prefix-caching --seed 0",
+   "served_models": [
+    "qwen3-8b-awq"
+   ]
+  }
+ ],
+ "queue": {
+  "pending": [],
+  "running": [
+   {
+    "name": "e74-typedleaf-4br5b-s16-best8",
+    "lane": "gpu1b",
+    "priority": 6,
+    "cmd": [
+     "bash",
+     "-c",
+     "BOOT_PRIMITIVES=/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/selective_recursion_20261019/skills/primitives/typed_classify.py /project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python discovery_bench.py --out /project/alex_phd/runs/selective-recursion-20261019/e74-typedleaf-4br5b-s16-best8 --candidates 8 --repair-rounds 0 --threshold 2 --concurrency 4 --model proposer-rl-16-40 --base-url http://127.0.0.1:8001/v1 --helper-base-url http://127.0.0.1:8001/v1 --families gen-prose-semantic_total-answer_line-s2,gen-prose-semantic_total-prefix-s3,gen-prose-semantic_total-json-s4,gen-prose-semantic_total-plain-s5,gen-xmlish-semantic_total-prefix-s2,gen-xmlish-semantic_total-json-s3,gen-xmlish-semantic_total-plain-s4,gen-xmlish-semantic_total-answer_line-s5,gen-chat-semantic_total-plain-s2,gen-chat-semantic_total-answer_line-s3,gen-chat-semantic_total-prefix-s4,gen-chat-semantic_total-json-s5,gen-pipe-semantic_total-plain-s2,gen-pipe-semantic_total-answer_line-s3,gen-pipe-semantic_total-prefix-s4,gen-pipe-semantic_total-json-s5,gen-kv-semantic_total-prefix-s2,gen-kv-semantic_total-json-s3,gen-kv-semantic_total-plain-s4,gen-kv-semantic_total-answer_line-s5,gen-jsonl-semantic_total-answer_line-s2,gen-jsonl-semantic_total-prefix-s3,gen-jsonl-semantic_total-json-s4,gen-jsonl-semantic_total-plain-s5,gen-csv-semantic_total-json-s2,gen-csv-semantic_total-plain-s3,gen-csv-semantic_total-answer_line-s4,gen-csv-semantic_total-prefix-s5,gen-table-semantic_total-answer_line-s2,gen-table-semantic_total-prefix-s3,gen-table-semantic_total-json-s4,gen-table-semantic_total-plain-s5 --max-output-tokens 4096 --boot-seed 0"
+    ],
+    "pid": 3097292,
+    "started": "2026-10-24T16:24:09Z",
+    "after": [
+     "e70-longbench-repl-prims-4b"
+    ],
+    "note": "PAUSED 2026-10-24 ~16:10 UTC to let the LongBench reference cell finish; resumes from saved candidates (finished families skipped)."
+   },
+   {
+    "name": "e74b-typedleaf-8b-best8",
+    "lane": "gpu0",
+    "priority": 6,
+    "cmd": [
+     "bash",
+     "-c",
+     "BOOT_PRIMITIVES=/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/selective_recursion_20261019/skills/primitives/typed_classify.py /project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python discovery_bench.py --out /project/alex_phd/runs/selective-recursion-20261019/e74b-typedleaf-8b-best8 --candidates 8 --repair-rounds 0 --threshold 2 --concurrency 4 --model qwen3-8b-awq --base-url http://127.0.0.1:8002/v1 --helper-base-url http://127.0.0.1:8006/v1 --families gen-prose-semantic_total-answer_line-s2,gen-prose-semantic_total-prefix-s3,gen-prose-semantic_total-json-s4,gen-prose-semantic_total-plain-s5,gen-xmlish-semantic_total-prefix-s2,gen-xmlish-semantic_total-json-s3,gen-xmlish-semantic_total-plain-s4,gen-xmlish-semantic_total-answer_line-s5,gen-chat-semantic_total-plain-s2,gen-chat-semantic_total-answer_line-s3,gen-chat-semantic_total-prefix-s4,gen-chat-semantic_total-json-s5,gen-pipe-semantic_total-plain-s2,gen-pipe-semantic_total-answer_line-s3,gen-pipe-semantic_total-prefix-s4,gen-pipe-semantic_total-json-s5,gen-kv-semantic_total-prefix-s2,gen-kv-semantic_total-json-s3,gen-kv-semantic_total-plain-s4,gen-kv-semantic_total-answer_line-s5,gen-jsonl-semantic_total-answer_line-s2,gen-jsonl-semantic_total-prefix-s3,gen-jsonl-semantic_total-json-s4,gen-jsonl-semantic_total-plain-s5,gen-csv-semantic_total-json-s2,gen-csv-semantic_total-plain-s3,gen-csv-semantic_total-answer_line-s4,gen-csv-semantic_total-prefix-s5,gen-table-semantic_total-answer_line-s2,gen-table-semantic_total-prefix-s3,gen-table-semantic_total-json-s4,gen-table-semantic_total-plain-s5 --boot-seed 0"
+    ],
+    "pid": 3094687,
+    "started": "2026-10-24T15:36:08Z"
+   },
+   {
+    "name": "e74b2-typedleaf-8b-best8-boot1",
+    "lane": "gpu1",
+    "priority": 6,
+    "after": [
+     "e60h8-helperparse-8b-best8"
+    ],
+    "cmd": [
+     "bash",
+     "-c",
+     "BOOT_PRIMITIVES=/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/experiments/selective_recursion_20261019/skills/primitives/typed_classify.py /project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python discovery_bench.py --out /project/alex_phd/runs/selective-recursion-20261019/e74b2-typedleaf-8b-best8-boot1 --candidates 8 --repair-rounds 0 --threshold 2 --concurrency 4 --model qwen3-8b-awq --base-url http://127.0.0.1:8010/v1 --helper-base-url http://127.0.0.1:8006/v1 --families gen-prose-semantic_total-answer_line-s2,gen-prose-semantic_total-prefix-s3,gen-prose-semantic_total-json-s4,gen-prose-semantic_total-plain-s5,gen-xmlish-semantic_total-prefix-s2,gen-xmlish-semantic_total-json-s3,gen-xmlish-semantic_total-plain-s4,gen-xmlish-semantic_total-answer_line-s5,gen-chat-semantic_total-plain-s2,gen-chat-semantic_total-answer_line-s3,gen-chat-semantic_total-prefix-s4,gen-chat-semantic_total-json-s5,gen-pipe-semantic_total-plain-s2,gen-pipe-semantic_total-answer_line-s3,gen-pipe-semantic_total-prefix-s4,gen-pipe-semantic_total-json-s5,gen-kv-semantic_total-prefix-s2,gen-kv-semantic_total-json-s3,gen-kv-semantic_total-plain-s4,gen-kv-semantic_total-answer_line-s5,gen-jsonl-semantic_total-answer_line-s2,gen-jsonl-semantic_total-prefix-s3,gen-jsonl-semantic_total-json-s4,gen-jsonl-semantic_total-plain-s5,gen-csv-semantic_total-json-s2,gen-csv-semantic_total-plain-s3,gen-csv-semantic_total-answer_line-s4,gen-csv-semantic_total-prefix-s5,gen-table-semantic_total-answer_line-s2,gen-table-semantic_total-prefix-s3,gen-table-semantic_total-json-s4,gen-table-semantic_total-plain-s5 --boot-seed 1"
+    ],
+    "pid": 3100660,
+    "started": "2026-10-24T17:01:09Z"
+   }
+  ],
+  "slots": {
+   "gpu0": 6,
+   "gpu1": 8,
+   "gpu1b": 2
+  },
+  "dispatcher": [
+   "2697506 .venv/bin/python experiments/ops/queue.py run"
+  ]
+ },
+ "versions": {
+  "serving": "{'python': '3.12.12', 'vllm': '0.27.1', 'torch': '2.13.0+cu130', 'transformers': '5.15.1', 'openai': '3.3.1'}",
+  "training": "{'python': '3.12.12', 'torch': '2.13.0+cu130', 'transformers': '5.15.1', 'peft': '0.20.0', 'openai': '2.53.0'}",
+  "evaluation": "{'python': '3.12.12', 'openai': '2.53.0'}",
+  "uv": "uv 0.9.7",
+  "nvidia_driver": [
+   "580.126.09"
+  ],
+  "gpus": [
+   "GPU 0: NVIDIA A100-PCIE-40GB (UUID: GPU-ad3b3f73-6016-89ee-6e2b-0a8cc96f4e32)",
+   "  MIG 7g.40gb     Device  0: (UUID: MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5)",
+   "GPU 1: NVIDIA A100-PCIE-40GB (UUID: GPU-a19c2dd7-9f2a-9529-9658-3f246796aeb7)",
+   "  MIG 7g.40gb     Device  0: (UUID: MIG-43a3375a-1942-592d-accf-d0884164dcb8)"
+  ]
+ },
+ "runs": [
+  {
+   "run": "e74-typedleaf-4br5b-s16-best8",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e74-typedleaf-4br5b-s16-best8",
+   "exists": true,
+   "families_started": 29,
+   "families_finished": 25,
+   "candidates": 213
+  },
+  {
+   "run": "e74b-typedleaf-8b-best8",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e74b-typedleaf-8b-best8",
+   "exists": true,
+   "families_started": 29,
+   "families_finished": 25,
+   "candidates": 211
+  },
+  {
+   "run": "e74b2-typedleaf-8b-best8-boot1",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e74b2-typedleaf-8b-best8-boot1",
+   "exists": true,
+   "families_started": 5,
+   "families_finished": 1,
+   "candidates": 29
+  },
+  {
+   "run": "e74u-typedleaf-4bbase-best8",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e74u-typedleaf-4bbase-best8",
+   "exists": true,
+   "families_started": 12,
+   "families_finished": 12,
+   "candidates": 96,
+   "bench.jsonl": "{\"family\": \"gen-prose-semantic_total-answer_line-s2\", \"format\": \"prose\", \"question\": \"semantic_total\", \"answer_format\": \"answer_line\", \"n_candidates\": 8, \"best\": 0.0, \"success\": false, \"candidates_to_success\": null, \"proposer_output_tokens\": 5690}\n{\"family\": \"gen-prose-semantic_total-prefix-s3\", \"format\": \"prose\", \"question\": \"semantic_total\", \"answer_format\": \"prefix\", \"n_candidates\": 8, \"best\": 0.0, \"success\": false, \"candidates_to_success\": null, \"proposer_output_tokens\": 6531}\n{\"family\": \"gen-prose-semantic_total-json-s4\", \"format\": \"prose\", \"question\": \"semantic_total\", \"answer_format\": \"",
+   "EXIT": "0"
+  }
+ ],
+ "stores": {
+  "runs": "/project/alex_phd/runs/selective-recursion-20261019",
+  "homes": "/home/atowell/research-runs/selective-recursion-20261019",
+  "adapters": "/home/atowell/research-runs/selective-recursion-20261019/adapters",
+  "sft_data": "/home/atowell/research-runs/selective-recursion-20261019/sft-data",
+  "models": "/project/alex_phd/research-cache/models",
+  "datasets": "/project/alex_phd/research-cache/datasets"
+ }
+}

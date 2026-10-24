@@ -40,6 +40,49 @@ Use the newest checkpoint manifest, `RUNS/CHECKPOINT-2026-10-24-*.json`, written
 It records every server's command line and device, the queue in full, and per-run progress.
 `RUNS` = `/project/alex_phd/runs/selective-recursion-20261019`; `H` = `/home/atowell/research-runs/selective-recursion-20261019`.
 
+### Final state of job 6618 (checkpoint 1717 UTC; supersedes everything below)
+
+Machine-readable: `RUNS/CHECKPOINT-2026-10-24-1717.json`, also `docs/checkpoints/2026-10-24-job6618-1717.json`.
+
+**Finished and in the ledger today:**
+- E51r, E54, E57, E58 (pre-registered);
+- E59, and E60 arms M, C, MC, H, H2 and H8;
+- E61, E68, E69, E69b, E69b2, E69b8;
+- the E70 tools-only references (OOLONG 0.150, LongBench 0.135);
+- E72, E73.
+
+The day's narrative and lessons: `docs/notebook/2026-10-24-discussion-summary-and-lessons-learned.md`.
+
+**Still running at the stop.** Each resumes from saved candidates via `RUNS/queue/pending` once the dispatcher
+and servers are restarted:
+- `e74-typedleaf-4br5b-s16-best8`: trained 4B, lane gpu1b (8001, adapter `proposer-rl-16-40`); 24 of 32 families.
+- `e74b-typedleaf-8b-best8`: 8B, lane gpu0 (8002); 25 of 32.
+- `e74b2-typedleaf-8b-best8-boot1`: 8B, lane gpu1 (8010); just started.
+
+All three need `BOOT_PRIMITIVES=experiments/selective_recursion_20261019/skills/primitives/typed_classify.py`.
+Their specs carry it in `bash -c`. E74u (base 4B, 12 families) finished.
+
+Interim adoption of the typed primitive:
+
+| Proposer | Candidates using it | Passing teaching |
+| --- | --- | --- |
+| trained 4B | 2 of 211 | 2 |
+| base 4B | 91 of 96 | 0 |
+| 8B | 198 of 208 | 53 |
+
+**Analyses to run on return.**
+- **E74, E74b, E74b2.** `e39_analysis.py --a RUNS/<run> --b RUNS/e58b-8b-standard --families
+  H/e73/semantic_total_families.txt --work H/<run>-analysis`, with `BOOT_PRIMITIVES` set; fresh scoring must load
+  the primitive.
+- **E74u.** The same, but only its 12 families finished.
+
+**Servers to restart** (the GPU1 8B is new today):
+- GPU0: 8002 8B, 8004 0.6B, 8006 4B helper.
+- GPU1: 8001 4B with LoRA; load `proposer-rl-16-40` and `proposer-rl-5-40`, and use `--max-loras 4`.
+- GPU1: 8010, a second copy of `qwen3-8b-awq` at `--gpu-memory-utilization 0.44`. The 14B (8008) is stopped.
+
+**Lanes** (`RUNS/queue/slots.json`): gpu0 6, gpu1 8, gpu1b 2. Keep two follow-ons per lane.
+
 ### Update at the 1324 UTC checkpoint (supersedes the 08:50 state below)
 
 **Finished and recorded in the ledger:**

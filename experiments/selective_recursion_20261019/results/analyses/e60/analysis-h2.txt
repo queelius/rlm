@@ -1,0 +1,40 @@
+
+accepted
+  C    14/30
+  H    11/30   vs C: +0/-3, exact McNemar p 0.250
+  H2   18/30   vs C: +4/-0, exact McNemar p 0.125
+
+control
+  C    14/30
+  H    11/30   vs C: +0/-3, exact McNemar p 0.250
+  H2   18/30   vs C: +4/-0, exact McNemar p 0.125
+
+robust: control + paraphrase2 (primary)
+  C     0/30
+  H     1/30   vs C: +1/-0, exact McNemar p 1.000
+  H2    0/30   vs C: +0/-0, exact McNemar p 1.000
+
+robust: control + nuisance2
+  C     7/30
+  H     4/30   vs C: +1/-4, exact McNemar p 0.375
+  H2    3/30   vs C: +1/-5, exact McNemar p 0.219
+
+robust: control + paraphrase2 + nuisance2
+  C     0/30
+  H     0/30   vs C: +0/-0, exact McNemar p 1.000
+  H2    0/30   vs C: +0/-0, exact McNemar p 1.000
+
+known variants: paraphrase1, nuisance1
+  C     0/30
+  H     0/30   vs C: +0/-0, exact McNemar p 1.000
+  H2    0/30   vs C: +0/-0, exact McNemar p 1.000
+
+long
+  C    14/30
+  H    11/30   vs C: +0/-3, exact McNemar p 0.250
+  H2   18/30   vs C: +4/-0, exact McNemar p 0.125
+
+execution faults (library-condition scorings with errors, load errors or timeouts)
+  C    0 of 84
+  H    0 of 66
+  H2   0 of 108

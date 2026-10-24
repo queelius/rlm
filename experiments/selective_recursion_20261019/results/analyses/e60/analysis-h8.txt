@@ -1,0 +1,32 @@
+
+accepted
+  C8   15/30
+  H8   11/30   vs C8: +2/-6, exact McNemar p 0.289
+
+control
+  C8   13/30
+  H8    8/30   vs C8: +1/-6, exact McNemar p 0.125
+
+robust: control + paraphrase2 (primary)
+  C8    1/30
+  H8    4/30   vs C8: +4/-1, exact McNemar p 0.375
+
+robust: control + nuisance2
+  C8    3/30
+  H8    4/30   vs C8: +4/-3, exact McNemar p 1.000
+
+robust: control + paraphrase2 + nuisance2
+  C8    0/30
+  H8    2/30   vs C8: +2/-0, exact McNemar p 0.500
+
+known variants: paraphrase1, nuisance1
+  C8    1/30
+  H8    3/30   vs C8: +3/-1, exact McNemar p 0.625
+
+long
+  C8   13/30
+  H8    8/30   vs C8: +1/-6, exact McNemar p 0.125
+
+execution faults (library-condition scorings with errors, load errors or timeouts)
+  C8   17 of 90
+  H8   6 of 66

@@ -50,6 +50,18 @@ def sources() -> list[tuple[Path, str]]:
         out += [(HOME / d / "e39_rows.jsonl", f"analyses/{d}/e39_rows.jsonl"), (HOME / d / "analysis.log", f"analyses/{d}/analysis.log"), (HOME / d / "analysis-c-vs-b.log", f"analyses/{d}/analysis-c-vs-b.log")]
     out += [(f, f"analyses/{f.parent.name}/run.log") for f in sorted(HOME.glob("e35c-heldout-*/run.log"))]
     out += [(f, f"analyses/mrcr-heldout/{f.name}") for f in sorted((HOME / "mrcr-heldout").glob("*.jsonl"))]
+    # 24 October: E58 and its secondary arm, stress tests and interface/leaf experiments (rows and analyses, no work dirs)
+    for d in ("e58-analysis", "e58a2-analysis"):
+        out += [(f, f"analyses/{d}/{f.name}") for f in sorted((HOME / d).glob("*")) if f.is_file()]
+    for d, pats in (("e59-stress", ("rows*.jsonl",)), ("e60", ("rows.jsonl", "analysis*.txt")), ("e61", ("*.jsonl",)),
+                    ("e68", ("rows.jsonl",)), ("e72", ("rows.jsonl",)), ("e73", ("*.json", "*.txt"))):
+        for pat in pats:
+            out += [(f, f"analyses/{d}/{f.name}") for f in sorted((HOME / d).glob(pat)) if f.is_file()]
+    out += [(f, f"runs-summary/{f.parent.parent.name}/{f.parent.name}.summary.json")
+            for run in ("e69-refactor-4brl4", "e69b-refactor-adopt-4brl4", "e69b2-refactor-adopt-4br5b-s16", "e69b8-refactor-adopt-8b")
+            for f in sorted((RUNS / run).glob("*/summary.json"))]
+    out += [(f, f"analyses/e70-ref/{f.parent.name}.rows.jsonl") for f in
+            (RUNS / "e70-oolong-repl-prims-4b" / "rows.jsonl", RUNS / "e70-longbench-repl-prims-4b" / "rows.jsonl") if f.exists()]
     out += [(HOME / "e49-noisy-labels-heldout" / "launch.log", "analyses/e49-noisy-labels/heldout.log"),
             (HOME / "e49-noisy-labels-heldout" / "e49_label_curve.json", "analyses/e49-noisy-labels/e49_label_curve.json")]
     out += [(HOME / "e35c-CALIBRATION.txt", "calibration/e35c-CALIBRATION.txt"),
