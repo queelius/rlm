@@ -499,3 +499,15 @@ solution."
 **Our response.** We accept the critique of the reframes and narrowed the README and index the same day. The thesis
 is now centred on **acquiring robust procedures cheaply, and the boundaries of that acquisition**, with the interface
 question settled by the crossed experiment rather than asserted.
+
+## Revisits as results arrive
+
+- **10:37 UTC, E60 arms MC and H.** These results support the red-team reading that the thesis is about
+  *acquisition*. Told to use helper question parsing, the 4B proposer adopted it in 1 of 11 accepted libraries,
+  and that library was the only one robust to an unseen rewording.
+  - The interface works when present (E61, and this library), but a small proposer does not reliably produce it.
+  - This weakens 'teach or instruct the small proposer to write robust interfaces'.
+  - It strengthens two alternatives: supply the interface as a fixed harness component (a question-canonicalization
+    or typed-parameter wrapper around frozen routines), or acquire routines with a stronger proposer.
+  - Next test: a canonicalization wrapper around E39's frozen libraries, using E61's 4B parses. This is the
+    end-to-end frozen-executor test both Codex reviews ranked first.

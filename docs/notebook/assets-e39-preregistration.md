@@ -359,3 +359,22 @@ feasible with a 4B helper, not with this 0.6B prompt. Whether the proposer *writ
   `e60h2-helperparse-4br5b-s16-best8`. It is queued to run after H.
 - It is scored the same way. Its baseline is C, and it is compared with H for checkpoint dependence.
 - No new prediction: H's prediction (robust yield at least 5 of 30) applies.
+
+**E60 result, arms MC and H (10:37 UTC; `H/e60/analysis-all.txt`).** All counts are out of 30 families.
+
+| Measure | MC | H |
+| --- | --- | --- |
+| Accepted | 9 | 11 |
+| Robust, control + paraphrase 2 (primary) | 1 | 1 (C 0; pre-registered prediction of at least 5 not met) |
+| Robust, control + nuisance 2 | 8 (vs A0 +7/-1, p 0.070) | 4 (vs C +1/-4) |
+| Known variants | 7 (+7/-0, p 0.016) | 0 |
+| Execution faults | 0 | 0 |
+
+Adoption in H:
+- 41 of 240 candidates contain `ask(`.
+- 1 of 11 accepted libraries uses ask() plus json.loads on the question.
+- That library (`gen-xmlish-total-plain-s1`) is H's only robust success: 0.9 on paraphrase 2, with 30 helper calls
+  over 30 tasks.
+
+Reading: the hybrid design works when it is written, but the 4B proposer rarely adopts it, and its attempts rarely
+pass acceptance. The bottleneck is acquisition, not the interface.
