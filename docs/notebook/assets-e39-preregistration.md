@@ -95,3 +95,9 @@ but the budgets differ. E54 compares the protocols at a matched budget on fresh 
 three-label (`e54-mrcr-8b-shown4-s{5..9}`, `--shown-labels-only`). E55 runs the 14B with three-label repair, 4 rounds,
 seeds 0 to 4 (`e55-mrcr-14b-shown4-s{0..4}`; the 14B had 2 of 5 under the standard protocol). Accepted libraries are
 checked held out at 2 and 4 needles; success = 0.9 or more held out at both.
+
+E56 (added 2026-10-24 03:45 UTC, before the runs; exploratory): E54's matched-budget comparison with the 14B (8008),
+seeds 5 to 9: `e56-mrcr-14b-labelled4-s{5..9}` against `e56-mrcr-14b-shown4-s{5..9}`; same rules and held-out check.
+The 14B finds MRCR's program more often, which gives the protocol comparison more power. Primary measure for E54 and
+E56 (decided now, before results): seeds with a library correct held out (0.9 or more at 2 and 4 needles), per arm,
+plus per-candidate rates of correct libraries in round 0 and in repair rounds.
