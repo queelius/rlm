@@ -47,6 +47,8 @@ def main():
     p.add_argument("--candidates", type=int, default=8)
     p.add_argument("--max-output-tokens", type=int, default=4096)
     p.add_argument("--concurrency", type=int, default=4)
+    p.add_argument("--require-helper", action="store_true",
+                   help="E69b: accept only an edit that also calls ask() and json.loads (adopts helper parsing)")
     a = p.parse_args()
     fams = a.families.read_text().strip().split(",")
     client = OpenAI(base_url=a.base_url, api_key="local", timeout=1800)
@@ -75,7 +77,8 @@ def main():
             rec = dict(round=0, k=k, code=code, usage=dict(input=r.usage.input_tokens, output=r.usage.output_tokens), **v)
             log.write(json.dumps(rec, default=str) + "\n")
             log.flush()
-            if accepted is None and E.valid(rec) and all(
+            adopts = "ask(" in code and "json.loads" in code
+            if accepted is None and E.valid(rec) and (adopts or not a.require_helper) and all(
                     dd["score"] >= 0.999 for dd in rec["details"] if dd["task_id"] in shown_ids):
                 accepted = rec
                 break

@@ -462,3 +462,16 @@ or more on control and on paraphrase 2). The comparison is A0 (0) and H (1 of 30
 - Robust on paraphrase 2: 0. Robust on nuisance 2: 3.
 - Adoption: 0 of 18 accepted libraries; 30 of 240 candidates call `ask(`.
 - Baseline for H8: E39 arm C (8B, no instruction) has 15 accepted, robust 1 on paraphrase 2 and 3 on nuisance 2.
+
+**E69 result (11:50 UTC).**
+- 11 of 12 accepted.
+- Adoption: 2 of 11 accepted edits use the helper; 16 of the 29 drawn edits do.
+- Robust (control and paraphrase 2): 1 of 12 (`gen-xmlish-total-plain-s1`).
+- Predictions: none met.
+
+The acceptance rule takes the first edit that reproduces the shown examples, which is usually a non-adopting one.
+
+**E69b (added 11:50 UTC, before the run).** The same, with `--require-helper`: accept only an edit that is valid,
+reproduces the shown examples, and uses ask() plus json.loads. Run: `e69b-refactor-adopt-4brl4`.
+- Question: can a 4B produce a *working* helper-parsing edit?
+- Prediction: at least 6 of 12 families get an accepted adopting edit, and at least 4 are robust on paraphrase 2.
