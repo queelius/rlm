@@ -456,3 +456,9 @@ or more on control and on paraphrase 2). The comparison is A0 (0) and H (1 of 30
 - At least 8 of the accepted edits use the helper.
 - Acceptance is at most 8 of 12, because brittle JSON handling breaks many edits.
 - Robust yield is at least 3 of 12.
+
+**E60 result, arm H2 (11:12 UTC; `H/e60/analysis-h2.txt`).**
+- 18 of 30 accepted.
+- Robust on paraphrase 2: 0. Robust on nuisance 2: 3.
+- Adoption: 0 of 18 accepted libraries; 30 of 240 candidates call `ask(`.
+- Baseline for H8: E39 arm C (8B, no instruction) has 15 accepted, robust 1 on paraphrase 2 and 3 on nuisance 2.

@@ -560,3 +560,6 @@ first.
 
 **Built on today's results.** E68 already gives the knowledge factor one datum for generated families: a
 human-written interface around acquired executors is robust to the tested shifts.
+- **11:12 UTC, E60 H2.** The adoption bottleneck replicates on a second 4B checkpoint: 0 of 18 accepted libraries.
+  The acquisition framing is reinforced. Small proposers fit the shown templates even when told how to
+  generalize. Open: does a stronger proposer (H8), or editing a working library (E69), change that?
