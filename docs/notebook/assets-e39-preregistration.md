@@ -378,3 +378,30 @@ Adoption in H:
 
 Reading: the hybrid design works when it is written, but the 4B proposer rarely adopts it, and its attempts rarely
 pass acceptance. The bottleneck is acquisition, not the interface.
+
+## E68: does a question-canonicalization wrapper repair the template-bound libraries end to end? (added 2026-10-24 10:38 UTC, before the run; exploratory)
+
+This is the frozen-executor test both Codex reviews ranked first, and it follows from E60 arm H: the proposer rarely
+writes the hybrid interface, so the harness supplies it.
+
+**Wrapper** (`e68_canon.py`).
+- Each frozen E59 library (arms A and B, both boot seeds) is kept unchanged.
+- The final paragraph or message of each task is replaced by: the family's original label, the question re-rendered
+  in the original template from parsed parameters, and the task's own answer instruction. The instruction is located
+  by the generator's four forms; this is family-level template knowledge a library-specific wrapper would have.
+- Records are untouched, so under nuisance 2 the field-order or separator change still reaches the library. The
+  wrapper repairs the question interface only.
+
+**Parameters.**
+- Oracle: from the task's original wording. On paraphrase 2 this reproduces the control prompt exactly (0
+  mismatches in 90 checks).
+- E61's 4B parses and E61's 0.6B parses, for the same stress tasks; no new helper calls.
+
+**Outcome.** Among libraries correct on control (55), the number still correct (0.9 or more) on paraphrase 2 and on
+nuisance 2, for no wrapper (E59) and for each parser.
+
+**Predictions.**
+- Paraphrase 2: oracle 55 of 55. 4B wrapper at least 44 of 55 (80%), with first-after the expected loss (E61's 4B
+  parses it at 52%). 0.6B wrapper below 30 of 55.
+- Nuisance 2: label-only families (prose and chat) mostly repaired by the oracle and 4B wrappers. Structured formats
+  stay limited by record parsing, so total oracle retention is between 11 (E59) and 40 of 55.
