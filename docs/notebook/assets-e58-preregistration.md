@@ -179,3 +179,9 @@ settings: 8 candidates, no repair, no early stop), the same 32 families and the 
 - Interim (not the registered outcome): 0 of 33 candidates from the trained 4B call the documented `classify`
   primitive.
 - E74b interim (8B): 56 of 59 do, and 11 reach a teaching mean of 0.9 or more.
+
+**E74u and E74b2 (added 2026-10-24 16:36 UTC, before the runs).**
+- **E74u:** the untrained base 4B (`qwen3-4b`) as proposer with the typed primitive, on the first 12 of the 32
+  families (time-limited), otherwise as E74. Question: is the trained 4B's zero adoption caused by its training?
+  Prediction: the base 4B uses `classify` in at least half of its candidates.
+- **E74b2:** E74b with bootstrap seed 1 on the second 8B server, after H8. A replication; same prediction as E74b.
