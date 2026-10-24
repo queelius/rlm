@@ -6,11 +6,20 @@ helper model calls, and submit an answer. The runtime in this repository is a sm
 request-preserving RLM kernel; the research asks how a *small* model can use that kernel well: by training it, or by giving it a
 verified library of routines and a record of what worked.
 
+!!! note "Terminology and framing (24 October 2026)"
+    We keep the community's term *RLM*, which in 2026 still names this line of work (the original paper and its
+    follow-ups λ-RLM, SRLM and RL-trained RLMs). Its mechanisms are *context offloading* (the input lives in a REPL
+    variable) and *sub-calls* (model calls made from code). Our evidence, and the RLM authors' own 2026 framing,
+    treat it as a **harness**, not a claim that recursion matters: recursion and map-reduce summaries did not help on
+    our tasks. The working thesis is about **allocating competence for small models** among weights, verified
+    executable routines and selection memory, so that every model call stays small and *locally in distribution*.
+    See the [decomposition brainstorm and prior art](research-plans/2026-10-24-decomposition-brainstorm-and-prior-art.md).
+
 !!! tip "If you are new here"
     Read the [Primer](primer.md) first: what an RLM is, how our kernel works, one worked
     trajectory, and the vocabulary used everywhere else.
 
-## Headline results (as of 22 October 2026)
+## Headline results (as of 24 October 2026)
 
 The study set out to train a small controller to decompose long inputs, and found that the
 capability is better placed outside the weights. The full assessment, with limits and the next
@@ -31,9 +40,12 @@ research questions, is the [synthesis of 21 October](notebook/2026-10-21-synthes
 | Training the proposer: SFT on the 8B's verified code then RL with the verified teaching score as reward lifts a 4B from 9 to 30 of 74 held-out family attempts (two RL seeds), and, with more varied teacher data, to 42 on one RL seed (level with the 8B) but 31.5 on average over four seeds (range 22 to 42); RL without SFT does not help | replicated (9 to 30); 42 is the best of four RL seeds | ledger E26b, E26c, E26g, E43, E45, E46 |
 | Choose evidence: two-round retrieval is the best and cheapest MuSiQue library (512k tokens at 8k helper tokens per question); a retrieve-then-read library beats direct reading on all 503 LongBench-v2 questions (0.43 vs 0.36, +0.07, se 0.02), also through the 0.6B caller; bigger readers, map-reduce and recursion do not help | exploratory | ledger E22c to E22h, E23, E25e, E32 to E32e |
 | One docstring usage line decides whether an untrained caller uses a library (0.18 to 0.95 on MRCR); the distilled caller does not need it | exploratory | ledger E25c, E25d |
-| Where answers are exact, bootstrapping needs three labels: a cleanly running candidate that reproduces the three examples in its prompt is almost always correct (127 of 129, generalizing to fresh inputs); pre-registered on 30 unseen families, the trained 4B with eight samples and three labels matches the thinking 8B with thirty (12 vs 13) at 7 percent of the tokens; agreement among candidates is no substitute | pre-registered, replicated on the same 30 families (26 vs 29, p 0.61; non-inferiority not yet established), 8 checkpoints 12 to 16 vs 13 | ledger E37, E39 |
+| Where answers are exact, bootstrapping needs three labels: a cleanly running candidate that reproduces the three examples in its prompt is almost always correct (127 of 129, generalizing to fresh inputs); pre-registered on 30 new families from the same generator, the trained 4B with eight samples and three labels gets similar counts to the thinking 8B with thirty (12 vs 13) at 7 percent of the proposer's output tokens; agreement among candidates is no substitute | pre-registered, replicated on the same 30 families (26 vs 29, p 0.61; non-inferiority not yet established), 8 checkpoints 12 to 16 vs 13 | ledger E37, E39 |
 | More helper-family teacher data gives recipes that match round four on solves (means 33.7 and 31.7 vs 31.8 of 74, over three to five runs each) and reach the 8B on helper families (mean best 0.33 to 0.58 vs 0.10 to 0.25; 8B 0.46); round four varies far more across RL seeds; training reward does not track held-out success | exploratory (multi-seed) | ledger E36, E41, E43 to E48 |
 | Boundary: OOLONG is not bootstrapped as one family (eleven question templates from thirty examples); narrowed to one task group, the 14B writes a counting library level with the hand-written one, not timeline or user | exploratory | ledger E35, E35c |
+| With 32 samples, the 4B's three-label libraries match or pass the 8B on both bootstrap seeds (best checkpoint 37 vs 29 of 60, p 0.077; weakest 32) | exploratory (same 30 families, outcome-chosen checkpoint) | ledger E51, E51r |
+| Bootstrapped libraries are template-bound: 55 of 55 survive 5x longer inputs, but 3 of 55 a reworded question and 11 of 55 a changed label or field order; teaching on varied wordings or a prompt note does not fix this for a 4B proposer (0 robust of 30) | exploratory (E59 predictions after a one-library smoke test; E60 pre-registered) | ledger E59, E60 |
+| The fragile part is the question, not the data: a 4B parses unseen rewordings into the family's parameters 96 percent of the time (a 0.6B 58 percent), so question handling belongs to a small neural parser and computation to code | exploratory | ledger E61 |
 
 ## How this site is organized
 

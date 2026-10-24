@@ -6,6 +6,19 @@ revisited at every plan revision, and new ideas, related work and follow-ups are
 
 ## The big picture
 
+**Revision, 24 October 2026.** The thesis below still holds, but its emphasis has moved:
+- **Recursion is not the active ingredient.** It and map-reduce summaries did not help here; the RLM paper runs
+  at depth 1; SRLM and a 2026 reproduction agree.
+- **The working frame is harness design for small models.** Context is offloaded into a REPL and code calls
+  the model only for small, typed decisions that stay locally in distribution. The question is how to
+  allocate competence among weights, verified routines and selection memory as the model shrinks.
+- **New evidence locates the fragile interface in question interpretation:** E59 to E61.
+- **Two experiments must come first.** The positioning test against a plain tool harness (E64), and a
+  factorial separating the harness, the library content and the model's own skill.
+
+Details, prior art and the challenges raised are in
+[2026-10-24-decomposition-brainstorm-and-prior-art.md](2026-10-24-decomposition-brainstorm-and-prior-art.md).
+
 The evidence of 19 to 21 October reframed the thesis. Training a small controller to decompose long
 inputs works, but every attempt to learn the *choice* of when to decompose collapsed, and putting the
 routines in a verified, prebound library made the untrained controller as good as every trained one. A
