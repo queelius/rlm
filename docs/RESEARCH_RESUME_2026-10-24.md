@@ -94,7 +94,36 @@ idle fast.
 5. Record in `docs/RESULTS.md`, the notebook, the E39 pre-registration addenda and the deck.
 6. Run `collect_results.py`, get a Codex review of the changed claims, then push.
 
-### Finding new work (ranked; re-rank after E58 and the Codex review)
+### Finding new work (re-ranked 2026-10-24 14:10 UTC, after E58, E68, E69b and E72)
+
+**Thesis centre (provisional).** Acquiring robust procedures cheaply with small models, and where that breaks. The
+REPL or harness mechanism is prior art. See `docs/notebook/2026-10-24-discussion-summary-and-lessons-learned.md`.
+
+Ranked:
+1. **E70, the crossed experiment** (interface × source of procedures, plus a host pipeline). It decides the
+   framing. Design: brainstorm doc, section E70. Two tools-only reference cells ran on 24 October
+   (`e70-oolong-repl-prims-4b`, `e70-longbench-repl-prims-4b`).
+2. **Label-free acceptance checks (research question 3).** False acceptance is three-label acquisition's main cost
+   (E58: 10 of 85). It has two mechanisms:
+   - logic bugs: a hand-written invariance check caught 3 of 3 with 0 false flags (E72);
+   - unreliable neural leaves: semantic totals, 6 of 6.
+
+   Next:
+   - (a) Have a small model derive invariances from the question automatically, and test them on E58 and E39
+     candidates.
+   - (b) A leaf-consistency check: the same classification asked two ways, category exclusivity, or helper
+     resampling. Correct semantic-total libraries are needed as controls; E58 has none, so look in E39, E26 or
+     the 8B runs.
+3. **Who supplies the robust interface.** A 4B writing from scratch adopts it in 1 of 11 and 0 of 18 accepted
+   libraries; a 4B editing gets 3 of 12 working; a hand-written wrapper with a 4B parser repairs 54 of 55.
+   Results pending: H8 (8B writing) and E69b8 (8B editing). If the 8B succeeds, the interface can be acquired
+   with a stronger proposer; if not, the harness should supply it.
+4. **Acceptance must span deployment lengths and wordings** (E52b, E57: false acceptances beyond the teaching
+   lengths). Test MRCR teaching that includes 64k to 128k bins; use held-out rows drawn from the tail of each
+   bin to stay disjoint.
+5. **Probe-to-plan and System One leaves** (brainstorm doc). Only after E70 shows the harness question matters.
+
+Older list (kept for reference):
 
 **Top priority for the next allocation: E70, the crossed experiment (interface × source of procedures).**
 - The design and its confound fixes are in
