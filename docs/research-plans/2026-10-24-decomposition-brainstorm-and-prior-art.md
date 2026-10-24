@@ -568,3 +568,11 @@ human-written interface around acquired executors is robust to the tested shifts
   - A 4B proposer is a poor source of robust interfaces; a 4B *parser* inside a supplied interface is a good one.
   - For the thesis: put the interface in the harness, and spend acquisition effort on executors, which do
     generalize. Or test whether the 8B proposer (H8) closes the gap.
+- **12:35 UTC, E57.** From matched MRCR pools, three-label repair did at least as well as thirty-label repair (2 against 1
+  of 5). This supports cheap acquisition on exact families, but descriptively only.
+  - The new false acceptance is again a *length* gap (teaching at 8k to 32k, failure at the longest held-out
+    inputs), as in E52b s0.
+  - The two boundaries now on record: robustness to *wording* (E59) and to *length beyond teaching* (E52b, E57).
+  - Both are about the teaching distribution, not the executor, and both point to the same acquisition rule:
+    acceptance must cover the deployment distribution (lengths, wordings), or the interface must normalize it
+    (E68).
