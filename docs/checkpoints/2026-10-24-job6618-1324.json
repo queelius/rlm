@@ -1,0 +1,393 @@
+{
+ "written": "2026-10-24T13:24:52Z",
+ "note": "Milestone checkpoint after E58 unblinding (primary met at family level; not under template clustering). Running: H8 (8B helper-parsing, gpu1/8010), E70 OOLONG primitives cell (gpu1b/8001) then LongBench cell, E54 x3 (gpu0). Done today: E51r, E57, E58, E59, E60 (M,C,MC,H,H2), E61, E68, E69, E69b, E69b2.",
+ "git": {
+  "worktree": "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007",
+  "branch": "research/r1-replication-20261007",
+  "head": "7ca884990608dcfcdd6070691d857e689843c27f",
+  "remote": "https://github.com/queelius/rlm.git",
+  "pushed_to": "origin/main",
+  "dirty": []
+ },
+ "slurm": {
+  "SLURM_JOB_USER": "atowell",
+  "SLURM_JOB_UID": "1523821556",
+  "SLURM_JOB_GPUS": "0,1",
+  "SLURMD_NODENAME": "an21",
+  "SLURM_JOB_START_TIME": "1792780702",
+  "SLURM_JOB_END_TIME": "1792867102",
+  "SLURM_JOB_CPUS_PER_NODE": "32",
+  "SLURM_JOB_PARTITION": "gpu",
+  "SLURM_JOB_NUM_NODES": "1",
+  "SLURM_JOBID": "6618",
+  "SLURM_JOB_QOS": "gpu-qos",
+  "SLURM_NODELIST": "an21",
+  "SLURM_JOB_ACCOUNT": "alex_phd",
+  "SLURM_JOB_ID": "6618",
+  "SLURM_JOB_NAME": "sys/dashboard/sys/codeserver",
+  "SLURM_JOB_GID": "1523800513",
+  "SLURM_JOB_NODELIST": "an21"
+ },
+ "host": "an21",
+ "servers": [
+  {
+   "pid": 2695967,
+   "port": "8001",
+   "cuda_visible_devices": "MIG-43a3375a-1942-592d-accf-d0884164dcb8",
+   "vllm_env": {
+    "VLLM_ALLOW_RUNTIME_LORA_UPDATING": "True"
+   },
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554 --served-model-name qwen3-4b --host 127.0.0.1 --port 8001 --api-key local --dtype bfloat16 --max-model-len 65536 --gpu-memory-utilization 0.50 --max-num-seqs 64 --enable-prefix-caching --seed 0 --enable-lora --max-lora-rank 64 --max-loras 2",
+   "served_models": [
+    "proposer-4b-r4",
+    "proposer-4b-r4-sft1",
+    "proposer-4b-r5",
+    "proposer-4b-r7",
+    "proposer-rl-10-40",
+    "proposer-rl-16-40",
+    "proposer-rl-17-40",
+    "proposer-rl-25-40",
+    "proposer-rl-27-40",
+    "proposer-rl-28-40",
+    "proposer-rl-5-40",
+    "proposer-rl-6-40",
+    "proposer-rl-9-40",
+    "qwen3-4b"
+   ]
+  },
+  {
+   "pid": 2692574,
+   "port": "8002",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5",
+   "vllm_env": {},
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-8B-AWQ --served-model-name qwen3-8b-awq --host 127.0.0.1 --port 8002 --api-key local --max-model-len 24576 --gpu-memory-utilization 0.45 --max-num-seqs 16 --enable-prefix-caching --seed 0",
+   "served_models": [
+    "qwen3-8b-awq"
+   ]
+  },
+  {
+   "pid": 2692338,
+   "port": "8004",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5",
+   "vllm_env": {},
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-0.6B --served-model-name qwen3-0.6b-nt --host 127.0.0.1 --port 8004 --api-key local --max-model-len 16384 --gpu-memory-utilization 0.12 --max-num-seqs 32 --enable-prefix-caching --seed 0 --default-chat-template-kwargs {\"enable_thinking\": false} --enable-lora --max-lora-rank 64 --max-loras 2 --lora-modules ctrl-06-onecell-v2=/project/alex_phd/runs/selective-recursion-20261019/adapters/sft-06-onecell-v2/final ctrl-06-onecell-v2-s1=/project/alex_phd/runs/selective-recursion-20261019/adapters/sft-06-onecell-v2-s1/final",
+   "served_models": [
+    "ctrl-06-onecell-v2",
+    "ctrl-06-onecell-v2-s1",
+    "qwen3-0.6b-nt"
+   ]
+  },
+  {
+   "pid": 2696478,
+   "port": "8006",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5",
+   "vllm_env": {
+    "VLLM_ALLOW_RUNTIME_LORA_UPDATING": "True"
+   },
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-4B-Instruct-2507--cdbee75f17c01a7cc42f958dc650907174af0554 --served-model-name qwen3-4b --host 127.0.0.1 --port 8006 --api-key local --dtype bfloat16 --max-model-len 32768 --gpu-memory-utilization 0.36 --max-num-seqs 48 --enable-prefix-caching --seed 0",
+   "served_models": [
+    "qwen3-4b"
+   ]
+  },
+  {
+   "pid": 3061170,
+   "port": "8010",
+   "cuda_visible_devices": "MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5,MIG-43a3375a-1942-592d-accf-d0884164dcb8",
+   "vllm_env": {},
+   "command": "/bin/bash -c source /home/atowell/.claude/shell-snapshots/snapshot-bash-1792781105875-eo8anz.sh 2>/dev/null || true && shopt -u extglob 2>/dev/null || true && { \\builtin unalias -- 'unsetenv'; \\builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && eval 'L=/project/alex_phd/runs/selective-recursion-20261019/serving/vllm-8010-8b-gpu1.log; cd /project/alex_phd/runs/selective-recursion-20261019/serving && CUDA_VISIBLE_DEVICES=MIG-43a3375a-1942-592d-accf-d0884164dcb8 PATH=/project/alex_phd/envs/vllm/bin:$PATH setsid nohup /project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-8B-AWQ --served-model-name qwen3-8b-awq --host 127.0.0.1 --port 8010 --api-key local --max-model-len 24576 --gpu-memory-utilization 0.44 --max-num-seqs 16 --enable-prefix-caching --seed 0 > $L 2>&1 < /dev/null & echo \"pid $!\"' && pwd -P >| /tmp/claude-30a1-cwd",
+   "served_models": [
+    "qwen3-8b-awq"
+   ]
+  },
+  {
+   "pid": 3061171,
+   "port": "8010",
+   "cuda_visible_devices": "MIG-43a3375a-1942-592d-accf-d0884164dcb8",
+   "vllm_env": {},
+   "command": "/project/alex_phd/envs/vllm/bin/python /project/alex_phd/envs/vllm/bin/vllm serve /project/alex_phd/research-cache/models/Qwen--Qwen3-8B-AWQ --served-model-name qwen3-8b-awq --host 127.0.0.1 --port 8010 --api-key local --max-model-len 24576 --gpu-memory-utilization 0.44 --max-num-seqs 16 --enable-prefix-caching --seed 0",
+   "served_models": [
+    "qwen3-8b-awq"
+   ]
+  }
+ ],
+ "queue": {
+  "pending": [
+   {
+    "name": "e70-longbench-repl-prims-4b",
+    "lane": "gpu1b",
+    "priority": 5,
+    "after": [
+     "e70-oolong-repl-prims-4b"
+    ],
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "family_eval.py",
+     "--family",
+     "longbench",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e70-longbench-repl-prims-4b",
+     "--per-size",
+     "300",
+     "--policies",
+     "rlm",
+     "--harness",
+     "default",
+     "--concurrency",
+     "6"
+    ]
+   }
+  ],
+  "running": [
+   {
+    "name": "e54-mrcr-8b-labelled4-s6",
+    "lane": "gpu0",
+    "priority": 6,
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "bootstrap_library.py",
+     "--family",
+     "mrcr",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e54-mrcr-8b-labelled4-s6",
+     "--model",
+     "qwen3-8b-awq",
+     "--base-url",
+     "http://127.0.0.1:8002/v1",
+     "--helper-base-url",
+     "http://127.0.0.1:8006/v1",
+     "--max-output-tokens",
+     "16000",
+     "--candidates",
+     "8",
+     "--repair-rounds",
+     "4",
+     "--threshold",
+     "0.9",
+     "--timeout",
+     "1200",
+     "--seed",
+     "6"
+    ],
+    "after": [
+     "e58b-8b-standard"
+    ],
+    "pid": 3085342,
+    "started": "2026-10-24T12:56:06Z"
+   },
+   {
+    "name": "e54-mrcr-8b-labelled4-s9",
+    "lane": "gpu0",
+    "priority": 6,
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "bootstrap_library.py",
+     "--family",
+     "mrcr",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e54-mrcr-8b-labelled4-s9",
+     "--model",
+     "qwen3-8b-awq",
+     "--base-url",
+     "http://127.0.0.1:8002/v1",
+     "--helper-base-url",
+     "http://127.0.0.1:8006/v1",
+     "--max-output-tokens",
+     "16000",
+     "--candidates",
+     "8",
+     "--repair-rounds",
+     "4",
+     "--threshold",
+     "0.9",
+     "--timeout",
+     "1200",
+     "--seed",
+     "9"
+    ],
+    "after": [
+     "e58b-8b-standard"
+    ],
+    "pid": 3085344,
+    "started": "2026-10-24T12:56:06Z"
+   },
+   {
+    "name": "e54-mrcr-8b-shown4-s7",
+    "lane": "gpu0",
+    "priority": 6,
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "bootstrap_library.py",
+     "--family",
+     "mrcr",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e54-mrcr-8b-shown4-s7",
+     "--model",
+     "qwen3-8b-awq",
+     "--base-url",
+     "http://127.0.0.1:8002/v1",
+     "--helper-base-url",
+     "http://127.0.0.1:8006/v1",
+     "--max-output-tokens",
+     "16000",
+     "--candidates",
+     "8",
+     "--repair-rounds",
+     "4",
+     "--threshold",
+     "0.9",
+     "--timeout",
+     "1200",
+     "--seed",
+     "7",
+     "--shown-labels-only"
+    ],
+    "after": [
+     "e58b-8b-standard"
+    ],
+    "pid": 3085343,
+    "started": "2026-10-24T12:56:06Z"
+   },
+   {
+    "name": "e60h8-helperparse-8b-best8",
+    "lane": "gpu1",
+    "priority": 5,
+    "after": [
+     "e57-mrcr-8b-labelled-s10",
+     "e57-mrcr-8b-labelled-s11",
+     "e57-mrcr-8b-labelled-s12",
+     "e57-mrcr-8b-shown-s10",
+     "e57-mrcr-8b-shown-s11",
+     "e57-mrcr-8b-shown-s12"
+    ],
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "discovery_bench.py",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e60h8-helperparse-8b-best8",
+     "--candidates",
+     "8",
+     "--repair-rounds",
+     "0",
+     "--concurrency",
+     "4",
+     "--model",
+     "qwen3-8b-awq",
+     "--base-url",
+     "http://127.0.0.1:8010/v1",
+     "--helper-base-url",
+     "http://127.0.0.1:8006/v1",
+     "--families",
+     "gen-prose-count-json-s1,gen-prose-total-json-s1,gen-prose-top_user-prefix-s1,gen-prose-nth_item-prefix-s1,gen-prose-last_city-json-s1,gen-prose-first_after-answer_line-s1,gen-prose-distinct-prefix-s1,gen-prose-day_span-prefix-s1,gen-prose-semantic_total-plain-s1,gen-xmlish-count-plain-s1,gen-xmlish-total-plain-s1,gen-xmlish-top_user-json-s1,gen-xmlish-nth_item-json-s1,gen-xmlish-last_city-plain-s1,gen-xmlish-first_after-prefix-s1,gen-xmlish-distinct-json-s1,gen-xmlish-day_span-json-s1,gen-xmlish-semantic_total-answer_line-s1,gen-chat-day_span-answer_line-s1,gen-chat-semantic_total-json-s1,gen-pipe-day_span-answer_line-s1,gen-pipe-semantic_total-json-s1,gen-kv-day_span-json-s1,gen-kv-semantic_total-answer_line-s1,gen-jsonl-day_span-prefix-s1,gen-jsonl-semantic_total-plain-s1,gen-csv-day_span-plain-s1,gen-csv-semantic_total-prefix-s1,gen-table-day_span-prefix-s1,gen-table-semantic_total-plain-s1",
+     "--max-output-tokens",
+     "16000",
+     "--boot-seed",
+     "0",
+     "--threshold",
+     "2",
+     "--prompt-suffix",
+     "\n\nImportant: in use, inputs will ask the same kinds of questions as these examples, but the question may be worded differently (a paraphrase with the same meaning), its label may differ (for example 'Question:', 'QUESTION:', 'Q:' or 'Task:'), and record fields may appear in a different order or with a different separator. Do not parse the question with patterns copied from these examples. Instead: define the parameter keys your Python needs; find the question (the final paragraph or message); call ask() once for question parsing, passing only the question text and your key schema, without the records, and request a JSON object of parameter values only, not an answer or code; decode it with json.loads; then compute and format the answer exactly in Python from the records. Further ask() calls are allowed only for judgments code cannot make (such as an item's category). Keep the record parsing independent of field order."
+    ],
+    "pid": 3083871,
+    "started": "2026-10-24T12:34:05Z"
+   },
+   {
+    "name": "e70-oolong-repl-prims-4b",
+    "lane": "gpu1b",
+    "priority": 5,
+    "cmd": [
+     "/project/alex_phd/repos/rlm/.worktrees/r1-replication-20261007/.venv/bin/python",
+     "oolong_eval.py",
+     "--out",
+     "/project/alex_phd/runs/selective-recursion-20261019/e70-oolong-repl-prims-4b",
+     "--policies",
+     "rlm",
+     "--harness",
+     "default",
+     "--controller-model",
+     "qwen3-4b",
+     "--lens",
+     "1024,2048,4096,8192,16384,32768",
+     "--per-cell",
+     "50",
+     "--concurrency",
+     "6"
+    ],
+    "pid": 3084678,
+    "started": "2026-10-24T12:41:05Z"
+   }
+  ],
+  "slots": {
+   "gpu0": 6,
+   "gpu1": 8,
+   "gpu1b": 2
+  },
+  "dispatcher": [
+   "2697506 .venv/bin/python experiments/ops/queue.py run"
+  ]
+ },
+ "versions": {
+  "serving": "{'python': '3.12.12', 'vllm': '0.27.1', 'torch': '2.13.0+cu130', 'transformers': '5.15.1', 'openai': '3.3.1'}",
+  "training": "{'python': '3.12.12', 'torch': '2.13.0+cu130', 'transformers': '5.15.1', 'peft': '0.20.0', 'openai': '2.53.0'}",
+  "evaluation": "{'python': '3.12.12', 'openai': '2.53.0'}",
+  "uv": "uv 0.9.7",
+  "nvidia_driver": [
+   "580.126.09"
+  ],
+  "gpus": [
+   "GPU 0: NVIDIA A100-PCIE-40GB (UUID: GPU-ad3b3f73-6016-89ee-6e2b-0a8cc96f4e32)",
+   "  MIG 7g.40gb     Device  0: (UUID: MIG-cfcfe369-9742-5104-84d9-7e0bfc536bc5)",
+   "GPU 1: NVIDIA A100-PCIE-40GB (UUID: GPU-a19c2dd7-9f2a-9529-9658-3f246796aeb7)",
+   "  MIG 7g.40gb     Device  0: (UUID: MIG-43a3375a-1942-592d-accf-d0884164dcb8)"
+  ]
+ },
+ "runs": [
+  {
+   "run": "e60h8-helperparse-8b-best8",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e60h8-helperparse-8b-best8",
+   "exists": true,
+   "families_started": 9,
+   "families_finished": 5,
+   "candidates": 59
+  },
+  {
+   "run": "e70-oolong-repl-prims-4b",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e70-oolong-repl-prims-4b",
+   "exists": true,
+   "rows.jsonl": 111
+  },
+  {
+   "run": "e70-longbench-repl-prims-4b",
+   "path": "/home/atowell/research-runs/selective-recursion-20261019/e70-longbench-repl-prims-4b",
+   "exists": false
+  },
+  {
+   "run": "e54-mrcr-8b-labelled4-s6",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e54-mrcr-8b-labelled4-s6",
+   "exists": true,
+   "candidates.jsonl": 13,
+   "PAUSED-not-failed.txt": "Paused (not failed) 2026-10-24 06:20 UTC: it slowed the pre-registered E58 8B arm; resumes from candidates.jsonl after e58b-8b-standard."
+  },
+  {
+   "run": "e54-mrcr-8b-labelled4-s9",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e54-mrcr-8b-labelled4-s9",
+   "exists": true,
+   "candidates.jsonl": 19,
+   "PAUSED-not-failed.txt": "Paused (not failed) 2026-10-24 06:20 UTC: it slowed the pre-registered E58 8B arm; resumes from candidates.jsonl after e58b-8b-standard."
+  },
+  {
+   "run": "e54-mrcr-8b-shown4-s7",
+   "path": "/project/alex_phd/runs/selective-recursion-20261019/e54-mrcr-8b-shown4-s7",
+   "exists": true,
+   "candidates.jsonl": 15,
+   "PAUSED-not-failed.txt": "Paused (not failed) 2026-10-24 06:20 UTC: it slowed the pre-registered E58 8B arm; resumes from candidates.jsonl after e58b-8b-standard."
+  }
+ ],
+ "stores": {
+  "runs": "/project/alex_phd/runs/selective-recursion-20261019",
+  "homes": "/home/atowell/research-runs/selective-recursion-20261019",
+  "adapters": "/home/atowell/research-runs/selective-recursion-20261019/adapters",
+  "sft_data": "/home/atowell/research-runs/selective-recursion-20261019/sft-data",
+  "models": "/project/alex_phd/research-cache/models",
+  "datasets": "/project/alex_phd/research-cache/datasets"
+ }
+}

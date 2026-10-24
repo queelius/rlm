@@ -40,6 +40,24 @@ Use the newest checkpoint manifest, `RUNS/CHECKPOINT-2026-10-24-*.json`, written
 It records every server's command line and device, the queue in full, and per-run progress.
 `RUNS` = `/project/alex_phd/runs/selective-recursion-20261019`; `H` = `/home/atowell/research-runs/selective-recursion-20261019`.
 
+### Update at the 1324 UTC checkpoint (supersedes the 08:50 state below)
+
+**Finished and recorded in the ledger:**
+- **E58 (pre-registered):** 75 vs 73 of 141. Non-inferior at the 10-point margin with families as the unit; not
+  under template clustering; 10 vs 0 false acceptances.
+- **E57, E51r.**
+- **E59, E60 (arms M, C, MC, H, H2), E61, E68, E69, E69b, E69b2:** the template-boundness and acquisition series.
+
+**Running:**
+- `e60h8-helperparse-8b-best8`: the 8B proposer with the helper-parsing instruction, on gpu1 port 8010.
+  Score it with `e59_stress.py`, then compare with `e39c-8b-best8` using `e60_analysis.py`.
+- `e70-oolong-repl-prims-4b`, then `e70-longbench-repl-prims-4b`, on lane gpu1b port 8001: tools-only reference
+  cells.
+- E54's three MRCR runs, on gpu0. Score all E54 runs with `mrcr_heldout_batch.py` in a fresh work directory.
+
+**Lane gpu1b** (slots.json: `gpu1b`: 2) is the 4B server's own lane. Keep two follow-ons queued on it; it goes
+idle fast.
+
 ### State at the 08:50 UTC checkpoint
 
 - **Finished, not yet analysed:**
