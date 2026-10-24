@@ -311,3 +311,45 @@ Run: `e60h-helperparse-4brl4-best8`.
 
 A failure would not show that neural question parsing cannot work. It jointly tests whether the 4B adopts the recipe,
 finds the question, and implements the parser and the computation.
+
+## E61: can a small model parse reworded questions into a family's parameters? (added 2026-10-24 09:40 UTC; exploratory)
+
+This sets the ceiling of the hybrid design: the helper parses the question, code computes the answer.
+
+**Method.**
+- Inputs: E39's 30 families, 30 stress tasks each under control, paraphrase 2 and nuisance 2.
+- The parser receives only the question's final paragraph or message (label and answer instruction included, no
+  records), plus the family's key schema with a one-line description per key (`e61_parse.py`).
+- It returns JSON, compared with oracle parameters read from the same task's original wording.
+- Parsers: `qwen3-4b` (helper, port 8006) and `qwen3-0.6b-nt` (port 8004).
+
+**Smoke test, which also fixed the prompt.**
+- Bare key names were ambiguous: the 4B returned the whole question as "user", and "fruit items" as the category.
+- With key descriptions, 2 tasks per condition: control 59/60, paraphrase 2 58/60, nuisance 2 59/60.
+
+**Predictions.**
+- The 4B parses at least 95% exactly in every condition.
+- The 0.6B parses at least 80%.
+- If both hold, E59's collapse is an architectural problem (question handling written as regex) and not a capacity
+  limit of small models.
+
+**E61 result (09:46 UTC; `H/e61/`).** Exact parameters, out of 900 tasks per condition:
+
+| Parser | Control | Paraphrase 2 | Nuisance 2 |
+| --- | --- | --- | --- |
+| `qwen3-4b` | 881 (97.9%) | 861 (95.7%) | 884 (98.2%) |
+| `qwen3-0.6b-nt` | 556 (62%) | 524 (58%) | 572 (64%) |
+
+4B failure modes:
+- first-after under paraphrase 2: 31/60; the time is returned with 'or later' attached;
+- day-span: 13 control failures, where 'user' is returned literally;
+- nth-item under paraphrase 2: 54/60.
+
+The 0.6B often returns empty or literal key values.
+
+Predictions:
+- 4B at least 95% in every condition: met (barely, on paraphrase 2).
+- 0.6B at least 80%: not met.
+
+Reading: question parsing at 4B scale is robust to the shifts that broke the regex libraries. The hybrid design is
+feasible with a 4B helper, not with this 0.6B prompt. Whether the proposer *writes* such libraries is arm H.
