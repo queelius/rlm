@@ -58,3 +58,10 @@ five seeds (0 to 4), 16 round-0 candidates with no repair and no early stopping 
 --repair-rounds 0 --threshold 2`): runs `e50-mrcr-8b-best16-s{0..4}`. Accept, per seed, the first valid candidate that
 reproduces the 3 shown examples; check accepted libraries held out (`run_routine.py --family mrcr`, 2 and 4 needles).
 Question: does three-label acceptance find MRCR's library as often as the labelled protocol, without false acceptances?
+
+## E51: more samples under the cheap protocol (added 2026-10-24 01:05 UTC, before the runs; exploratory)
+
+Arm A's protocol with 32 round-0 candidates instead of 8 (boot seed 0, same 30 families, same acceptance rule and
+fresh-task scoring), for the strongest checkpoint under E39 (`proposer-rl-17-40`) and the weakest on held-out
+discovery (`proposer-rl-9-40`): runs `e51-4br5b-s17-best32`, `e51-4br4-s9-best32`. Question: does sampling more push
+the 4B past the 8B with thirty labels (13 of 30), and does it close the gap between checkpoints?
