@@ -1234,7 +1234,11 @@ re-sampling the saved MuSiQue ablation (six real retrieval routines on the same 
 0.434, the top three within 0.03), choosing by mean F1 on k labelled questions picks the full-set best with
 probability 0.22, 0.27, 0.47 and 0.80 at k = 3, 10, 30, 60, at an expected F1 loss of 0.047, 0.033, 0.018 and 0.006
 (in-sample, so optimistic). Exact families need about three labels to accept a library; noisy ones need tens to rank
-close routines, though a wrong pick among close routines costs little.
+close routines, though a wrong pick among close routines costs little. On OOLONG counting (E49, 24 October 01:10 UTC; all 30 bootstrap
+candidates with a non-zero teaching score, scored on the 78 held-out counting rows), choosing by 1, 3, 5, 10 or 20
+random labelled rows gives held-out means of 0.434 to 0.462, no better than the median candidate (0.449) below about
+10 labels; all 30 teaching rows pick 0.500, against the best 0.513. A noisy family needs tens of labels where an
+exact one needs three.
 
 Cheap verification makes best-of-k a fair use of a small proposer (E38, 23 October 07:35 UTC). From the same draws,
 the expected number of held-out families the round-four 4B solves with k round-0 samples is 9.8, 14.7, 19.4 and 23.0

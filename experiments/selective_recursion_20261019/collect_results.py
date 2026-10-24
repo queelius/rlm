@@ -31,6 +31,7 @@ lists every file with its source path in the run store, size and SHA-256.
 | `rl/` | Proposer RL logs, one row per step: families, rewards per sample, loss, adapter name. | E26c, E26g, E36, E41, E42, E43 |
 | `analyses/e37-consensus/` | Per family: valid candidates, largest agreement group, oracle, exact/MBR/cross acceptance and correctness (`consensus_analysis.py`). | E37 |
 | `analyses/e39*-analysis/` | The pre-registered E39 analysis, its replication (`e39r`), arm C (`e39c`) and the checkpoint-robustness runs (`e39a-<checkpoint>`), from `e39_analysis.py`: per family acceptance, fresh-task score and tokens per arm; `analysis*.log` hold the summary lines. | E39 |
+| `analyses/e49-noisy-labels/` | Held-out scores of all 30 OOLONG counting candidates and the label curve (`e49_analysis.py`). | E49 |
 | `analyses/e35c-heldout-*` | Held-out OOLONG counting comparison of bootstrapped and shipped libraries (`e35c_heldout.py`). | E35c |
 | `calibration/` | Scores of the shipped OOLONG library on the bootstrap teaching sets (the match bars). | E35, E35c |
 
@@ -48,6 +49,8 @@ def sources() -> list[tuple[Path, str]]:
     for d in sorted(x.name for x in HOME.glob("e39*-analysis")):
         out += [(HOME / d / "e39_rows.jsonl", f"analyses/{d}/e39_rows.jsonl"), (HOME / d / "analysis.log", f"analyses/{d}/analysis.log"), (HOME / d / "analysis-c-vs-b.log", f"analyses/{d}/analysis-c-vs-b.log")]
     out += [(f, f"analyses/{f.parent.name}/run.log") for f in sorted(HOME.glob("e35c-heldout-*/run.log"))]
+    out += [(HOME / "e49-noisy-labels-heldout" / "launch.log", "analyses/e49-noisy-labels/heldout.log"),
+            (HOME / "e49-noisy-labels-heldout" / "e49_label_curve.json", "analyses/e49-noisy-labels/e49_label_curve.json")]
     out += [(HOME / "e35c-CALIBRATION.txt", "calibration/e35c-CALIBRATION.txt"),
             (HOME / "e35-boot-8b-oolong-s0" / "CALIBRATION.txt", "calibration/e35-CALIBRATION.txt")]
     return [(s, d) for s, d in out if s.exists()]

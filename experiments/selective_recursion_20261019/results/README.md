@@ -10,6 +10,7 @@ lists every file with its source path in the run store, size and SHA-256.
 | `rl/` | Proposer RL logs, one row per step: families, rewards per sample, loss, adapter name. | E26c, E26g, E36, E41, E42, E43 |
 | `analyses/e37-consensus/` | Per family: valid candidates, largest agreement group, oracle, exact/MBR/cross acceptance and correctness (`consensus_analysis.py`). | E37 |
 | `analyses/e39*-analysis/` | The pre-registered E39 analysis, its replication (`e39r`), arm C (`e39c`) and the checkpoint-robustness runs (`e39a-<checkpoint>`), from `e39_analysis.py`: per family acceptance, fresh-task score and tokens per arm; `analysis*.log` hold the summary lines. | E39 |
+| `analyses/e49-noisy-labels/` | Held-out scores of all 30 OOLONG counting candidates and the label curve (`e49_analysis.py`). | E49 |
 | `analyses/e35c-heldout-*` | Held-out OOLONG counting comparison of bootstrapped and shipped libraries (`e35c_heldout.py`). | E35c |
 | `calibration/` | Scores of the shipped OOLONG library on the bootstrap teaching sets (the match bars). | E35, E35c |
 
