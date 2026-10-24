@@ -1104,7 +1104,10 @@ at 7.1 percent of the tokens, one false acceptance against none. Exploratory arm
 seed 0) separates proposer from protocol: C 13 correct with 2 false acceptances at 76.3k tokens per family, B 13 with
 none at 54.1k, A 12 with none at 4.0k. Protocol (C against B, +3/-3) and proposer (A against C, +4/-5, p 1.0) effects
 are both undetectable at 30 families; the 8B's two false acceptances under three labels are libraries that fit the
-shown examples without generalizing. The saving comes from both changes together.
+shown examples without generalizing. The saving comes from both changes together. With boot seed 1 (00:05 UTC on 24 October) arm C finds 11 against B's 16 (+0/-5,
+p 0.062) and A's 14; pooled over 60 family attempts A 26, C 24, B 29. The 8B gains from its labelled repair rounds,
+which the cheap protocol drops; the trained 4B, whose samples cost about 500 tokens, is the proposer the cheap
+protocol suits.
 Checkpoint robustness (22:45 UTC). Arm A's checkpoint turned out to be the best of four RL seeds of its recipe (E43
 to E46), so arm A was rerun unchanged with the other checkpoints: round four's seeds 6, 9 and 10 give 13, 12 and 13
 correct libraries (0, 0 and 1 false acceptances) and the round-five recipe's seed 17 gives 16, against the 8B's 13,
