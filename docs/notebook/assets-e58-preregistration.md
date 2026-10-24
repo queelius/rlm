@@ -122,3 +122,19 @@ So E58's false acceptances have two mechanisms:
 1. A logic bug (day spans): caught by an invariance check (E72).
 2. An unreliable leaf (semantic totals): needs more labels, or a label-free consistency check on the leaf. For
    example, the same classification asked twice, or exclusivity across the five categories.
+
+## E73: how reliable is the semantic-total leaf? (added 2026-10-24 15:13 UTC, before the run; exploratory)
+
+No correct semantic-total library exists in any run (17 accepted, all wrong).
+
+**Method** (`e73_leaf.py`).
+- Ask the 4B helper about all 75 items in two forms:
+  - yes/no per (item, category), as the libraries do;
+  - one five-way choice per item.
+- Compute the leaf-induced ceiling on E58's 32 semantic-total families: the fraction of fresh tasks (30 per family)
+  whose exact answer survives the helper's classifications.
+
+**Prediction.**
+- Yes/no accuracy per pair at least 0.95, but a yes/no ceiling at most 0.6: exact totals need every bought item of
+  the category classified correctly.
+- The choice form is more accurate than yes/no, with a higher ceiling.
