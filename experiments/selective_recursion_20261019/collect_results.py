@@ -49,6 +49,7 @@ def sources() -> list[tuple[Path, str]]:
     for d in sorted(x.name for x in HOME.glob("e39*-analysis")) + sorted(x.name for x in HOME.glob("e51*-analysis")) + sorted(x.name for x in HOME.glob("e53*-analysis")):
         out += [(HOME / d / "e39_rows.jsonl", f"analyses/{d}/e39_rows.jsonl"), (HOME / d / "analysis.log", f"analyses/{d}/analysis.log"), (HOME / d / "analysis-c-vs-b.log", f"analyses/{d}/analysis-c-vs-b.log")]
     out += [(f, f"analyses/{f.parent.name}/run.log") for f in sorted(HOME.glob("e35c-heldout-*/run.log"))]
+    out += [(f, f"analyses/mrcr-heldout/{f.name}") for f in sorted((HOME / "mrcr-heldout").glob("*.jsonl"))]
     out += [(HOME / "e49-noisy-labels-heldout" / "launch.log", "analyses/e49-noisy-labels/heldout.log"),
             (HOME / "e49-noisy-labels-heldout" / "e49_label_curve.json", "analyses/e49-noisy-labels/e49_label_curve.json")]
     out += [(HOME / "e35c-CALIBRATION.txt", "calibration/e35c-CALIBRATION.txt"),
