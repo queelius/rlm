@@ -393,3 +393,34 @@ of the interface.
   attestations.
 - **E67: lifting trajectories into routines.** Turn successful REPL traces into verified library functions, as with
   TroVE or LILO, and compare them with proposer-written routines on yield and robustness.
+
+**User (2026-10-24 ~11:00 UTC): the Python REPL as the natural home for LLMs, in training as well as inference.**
+Python is Turing-complete and stateful, and its traces are consistent records usable for training and evaluation.
+Models should learn under RL to use the environment well. SFT needs traces, which were not available at first.
+
+**Agreements.**
+- RL inside code environments is where the field is going: Zhang and Khattab's RL-trained RLM, Prime Intellect's
+  environments, CodeAct-style training.
+- Our own scripted-expert traces followed by RL lifted OOLONG.
+
+**Corrections and nuances.**
+- **Reproducibility is not free.** Codex's review of `src/rlm` found that the runtime records model responses and
+  fingerprints traces. It does not provide deterministic execution or transactional rollback, and a failed cell can
+  leave mutations behind. Full replay also needs control over files, dependencies and randomness, and the executor
+  is not a security sandbox. Traces used as training data inherit hidden-state dependencies.
+- **The action space may be too large for small models.** "Python is universal" does not mean "unrestricted Python
+  is best for small models". The 4B reliably *calls* library functions, and so does the 0.6B (E14). But writing
+  open-ended programs needed the 8B, or SFT followed by RL. Practitioners report small CodeAgents looping on broken
+  Python.
+
+  Open question: how much expressivity should the environment expose for a given model size? The options range
+  from full Python, through a typed API or DSL inside Python (as λ-RLM's combinators do), to a single library call.
+  This is the action-space side of E65's granularity question.
+- **RL works when rewards are local and verifiable.** RL on the proposer, rewarded by verified teaching score,
+  worked. RL on the controller's route choice collapsed. The REPL helps RL because it makes rewards checkable,
+  through unit tests on functions; long-horizon credit assignment remains hard.
+- **The trace problem has a known fix in this project.** The library plus a scripted driver generates SFT traces,
+  and RL takes over from there.
+
+These points sharpen the thesis: the REPL is the environment for both training and inference. The research is in
+the interface it exposes and in what the model must learn within it, as a function of model size.
