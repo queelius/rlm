@@ -81,3 +81,7 @@ E53 (added 2026-10-24 02:20 UTC, before the run; exploratory): arm A's families 
 three-label repair (`discovery_bench.py --candidates 8 --repair-rounds 2 --shown-labels-only`, boot seed 0): run
 `e53-4br5b-s17-shownrepair`, scored with the arm A rule on its accepted libraries. Question: does three-label repair
 add to best-of-8 for the 4B on exact families, as labelled repair did for the 8B on MRCR?
+
+E52b (added 2026-10-24 02:45 UTC, before the runs; exploratory): E52's five runs continued from their 24 saved
+candidates to 4 repair rounds (rounds 3 and 4 added, same three-label rules): runs `e52b-mrcr-8b-shownrepair4-s{0..4}`
+(copies of E52's candidates; E52's own directories are unchanged).
