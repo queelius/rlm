@@ -51,7 +51,7 @@ def sources() -> list[tuple[Path, str]]:
     out += [(f, f"analyses/{f.parent.name}/run.log") for f in sorted(HOME.glob("e35c-heldout-*/run.log"))]
     out += [(f, f"analyses/mrcr-heldout/{f.name}") for f in sorted((HOME / "mrcr-heldout").glob("*.jsonl"))]
     # 24 October: E58 and its secondary arm, stress tests and interface/leaf experiments (rows and analyses, no work dirs)
-    for d in ("e58-analysis", "e58a2-analysis"):
+    for d in ("e58-analysis", "e58a2-analysis", "e74-typedleaf-4br5b-s16-best8-analysis", "e74b-typedleaf-8b-best8-analysis"):
         out += [(f, f"analyses/{d}/{f.name}") for f in sorted((HOME / d).glob("*")) if f.is_file()]
     for d, pats in (("e59-stress", ("rows*.jsonl",)), ("e60", ("rows.jsonl", "analysis*.txt")), ("e61", ("*.jsonl",)),
                     ("e68", ("rows.jsonl",)), ("e72", ("rows.jsonl",)), ("e73", ("*.json", "*.txt"))):

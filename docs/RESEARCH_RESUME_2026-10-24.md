@@ -40,6 +40,19 @@ Use the newest checkpoint manifest, `RUNS/CHECKPOINT-2026-10-24-*.json`, written
 It records every server's command line and device, the queue in full, and per-run progress.
 `RUNS` = `/project/alex_phd/runs/selective-recursion-20261019`; `H` = `/home/atowell/research-runs/selective-recursion-20261019`.
 
+### Last update (1754 UTC, before the allocation ended)
+
+- **E74 and E74b finished and analysed.** With the typed primitive, the 8B gets 20 of 32 semantic-total families
+  correct (1 false acceptance); the trained 4B gets 0 of 32. See ledger E74.
+- **Running at the stop:**
+  - `e74u-typedleaf-4bbase-best8-all32`: base 4B, all 32 families; 12 finished earlier.
+  - `e74b2-typedleaf-8b-best8-boot1`: 8B, gpu1, port 8010.
+  - `e74b3-typedleaf-8b-best8-boot2`: 8B, gpu0.
+- **On restart:** move `RUNS/queue/running/*.json` to `pending/`. Analyse each with `e39_analysis.py`, with
+  `BOOT_PRIMITIVES` set, against `RUNS/e58b-8b-standard` on `H/e73/semantic_total_families.txt`.
+- **Machine-readable:** `RUNS/CHECKPOINT-2026-10-24-1754.json`.
+- **Advisor deck:** add a slide on E73 and E74 (the typed leaf) next session.
+
 ### Final state of job 6618 (checkpoint 1717 UTC; supersedes everything below)
 
 Machine-readable: `RUNS/CHECKPOINT-2026-10-24-1717.json`, also `docs/checkpoints/2026-10-24-job6618-1717.json`.
