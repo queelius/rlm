@@ -525,3 +525,10 @@ questions.**
 - Reference points: direct reading 0.356 (E32e), the retrieve-then-read library 0.427 (E32e, 0.6B caller), and this
   harness on 150 questions 0.120 (E32).
 - Prediction: at most 0.30, below direct reading.
+
+**E69b8 (added 2026-10-24 13:26 UTC, before the run).** E69b with the thinking 8B (`qwen3-8b-awq`, 16k output
+tokens) editing the same frozen 4B libraries (E39 arm A, boot seed 0), with adoption required for acceptance.
+- Run: `e69b8-refactor-adopt-8b`, on gpu0 after E54.
+- Together with H8 (the 8B writing from scratch), it completes the who-can-supply-the-interface table: {4B, 8B} ×
+  {write, edit}.
+- Prediction: working adopting edits for at least 8 of 12 families, at least 6 of them robust on paraphrase 2.
