@@ -576,3 +576,11 @@ human-written interface around acquired executors is robust to the tested shifts
   - Both are about the teaching distribution, not the executor, and both point to the same acquisition rule:
     acceptance must cover the deployment distribution (lengths, wordings), or the interface must normalize it
     (E68).
+- **13:16 UTC, E58 (pre-registered).** Arm A 75 against arm B 73 of 141, interval [-0.078, +0.106]: non-inferior at
+  the 10-point margin with families as the unit. It is not robust to template clustering ([-0.113, +0.139]), it
+  costs 10 false acceptances, and the weakest checkpoint does not show it.
+  - This is the strongest single result for 'cheap acquisition' and supports the acquisition-centred thesis.
+  - Within that thesis, the most consequential weakness of three-label acquisition is now *false acceptance*
+    (10 of 85).
+  - That raises the value of label-free checks that catch wrong libraries: accepted research question 3, and
+    partition invariance.

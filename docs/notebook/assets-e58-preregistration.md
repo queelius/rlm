@@ -56,3 +56,36 @@ the margin or the arms.
   will rest on either checkpoint passing.
 - **Scope.** A pass establishes non-inferiority at a 10-point margin for this checkpoint, this protocol and this
   generator panel. It does not establish equivalence or label efficiency in general.
+
+## Result (unblinded 2026-10-24 ~13:20 UTC; arm B finished 12:56; analysis with `--require-complete`)
+
+Full output: `H/e58-analysis/RESULT.txt`.
+
+**Primary.**
+
+| Arm | Accepted | Correct on fresh tasks | False acceptances | Proposer tokens per family (output / input) |
+| --- | --- | --- | --- | --- |
+| A | 85 | 75 of 141 | 10 | 4.1k / 16.9k |
+| B | 73 | 73 of 141 | 0 | 50.2k / 13.6k |
+
+- Paired: +22/-20, exact McNemar p 0.878.
+- A - B = +0.014, 95% family-bootstrap interval [-0.078, +0.106]. The lower bound is above -0.10: **non-inferior,
+  as pre-registered.**
+- No accepted library in either arm had fresh-task execution errors.
+
+**Pre-specified sensitivity analyses** (Amendment 1).
+- Resampling the 37 format-question templates: [-0.113, +0.139]. The lower bound crosses the margin, so the verdict
+  is not robust to treating templates as the unit.
+- Fresh score with unaccepted families counted as 0: +0.064 [-0.025, +0.154].
+
+**Secondary arm (exploratory; weakest checkpoint, round-four seed 9).**
+- A 67 of 141 (76 accepted, 9 false acceptances) against B 73.
+- +19/-25, p 0.451; -0.043 [-0.135, +0.050]. Non-inferiority not shown.
+- Template-clustered interval [-0.167, +0.079].
+- As registered, the secondary arm does not rescue or qualify the primary verdict, but it bounds its scope to the
+  tested checkpoint.
+
+**What the result licenses** (per Amendment 1's scope): non-inferiority at a 10-point margin for this checkpoint,
+this protocol and this generator panel, with families as the unit. It is not established with templates as the
+unit, not for the weakest checkpoint, and not as equivalence or general label efficiency. It comes at the cost of
+10 false acceptances, against none for the labelled protocol.
