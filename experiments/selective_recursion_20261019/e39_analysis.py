@@ -59,6 +59,8 @@ def main():
     p.add_argument("--families", type=Path, required=True, help="comma-separated family list (families.txt)")
     p.add_argument("--work", type=Path, required=True)
     p.add_argument("--helper-base-url", default="http://127.0.0.1:8006/v1")
+    p.add_argument("--margin", type=float, default=None, help="E58: non-inferiority margin for A - B (e.g. 0.10)")
+    p.add_argument("--ci-draws", type=int, default=10000, help="family bootstrap draws for the 95%% interval")
     a = p.parse_args()
     fams = a.families.read_text().strip().split(",")
     rows = []
@@ -91,6 +93,15 @@ def main():
     m = x + y
     pval = min(1.0, 2 * sum(comb(m, i) for i in range(min(x, y) + 1)) / 2 ** m) if m else 1.0
     print(f"A vs B: +{x}/-{y}, exact McNemar p {pval:.3f}")
+    if a.margin is not None:  # E58: paired difference in success rate, 95% percentile interval over families
+        import random
+        d = [int(r["a_success"]) - int(r["b_success"]) for r in rows]
+        rng = random.Random(0)
+        boots = sorted(sum(rng.choice(d) for _ in d) / n for _ in range(a.ci_draws))
+        lo, hi = boots[int(0.025 * a.ci_draws)], boots[int(0.975 * a.ci_draws) - 1]
+        est = sum(d) / n
+        verdict = "non-inferior" if lo > -a.margin else "non-inferiority not shown"
+        print(f"A - B success rate {est:+.3f}, 95% interval [{lo:+.3f}, {hi:+.3f}] over {n} families; margin -{a.margin:.2f}: {verdict}")
 
 
 if __name__ == "__main__":
