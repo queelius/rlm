@@ -185,3 +185,24 @@ settings: 8 candidates, no repair, no early stop), the same 32 families and the 
   families (time-limited), otherwise as E74. Question: is the trained 4B's zero adoption caused by its training?
   Prediction: the base 4B uses `classify` in at least half of its candidates.
 - **E74b2:** E74b with bootstrap seed 1 on the second 8B server, after H8. A replication; same prediction as E74b.
+
+**E74 series, interim at the end of job 6618 (17:17 UTC; not the registered outcomes, which need fresh scoring).**
+
+| Run | Families finished | Candidates | Use `classify` | Teaching mean of 0.9 or more |
+| --- | --- | --- | --- | --- |
+| E74, trained 4B (`proposer-rl-16-40`) | 24 of 32 | 211 | 2 | 2 |
+| E74u, untrained base 4B (12 families) | 12 of 12 | 96 | 91 | 0 |
+| E74b, 8B | 25 of 32 | 208 | 198 | 53 |
+| E74b2, 8B, boot seed 1 | 0 of 32 | 28 | 26 | 9 |
+
+Reading so far:
+- Proposer training made the 4B competent at writing libraries but unwilling to use a new harness primitive.
+- The base 4B uses the primitive but cannot write a working library around it.
+- The 8B does both.
+
+To finish on return:
+- Let E74, E74b and E74b2 complete; they resume from saved candidates.
+- Run `e39_analysis.py` with `BOOT_PRIMITIVES` set to `skills/primitives/typed_classify.py`. Fresh scoring must
+  load the primitive.
+- Use the families file `H/e73/semantic_total_families.txt`. Compare against E58 arm B (`--b
+  RUNS/e58b-8b-standard`); E58 arm A's result on these families is known (0 correct).
