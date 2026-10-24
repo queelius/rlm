@@ -32,6 +32,7 @@ def main():
     p.add_argument("--boot-seed", type=int, default=0, help="bootstrap seed: which teaching examples are shown, and sampling")
     p.add_argument("--threshold", type=float, default=0.9,
                    help="acceptance threshold; above 1, no candidate is accepted and every one is drawn (E37 consensus)")
+    p.add_argument("--shown-labels-only", action="store_true", help="passed to bootstrap_library.py (E52, E53)")
     a = p.parse_args()
     fams = a.families.split(",") if a.families else G.family_ids(a.split, tuple(int(s) for s in a.seeds.split(",")))
     a.out.mkdir(parents=True, exist_ok=True)
@@ -46,6 +47,8 @@ def main():
                "--repair-rounds", str(a.repair_rounds), "--threshold", str(a.threshold), "--timeout", "600", "--seed", str(a.boot_seed)]
         if a.prompt_suffix:
             cmd += ["--prompt-suffix", a.prompt_suffix]
+        if a.shown_labels_only:
+            cmd += ["--shown-labels-only"]
         d.mkdir(parents=True, exist_ok=True)
         with open(d / "run.log", "a") as log:
             subprocess.run(cmd, cwd=HERE, stdout=log, stderr=subprocess.STDOUT)
