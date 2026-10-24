@@ -46,7 +46,7 @@ families for library discovery):
   three examples in its prompt is almost always correct (127 of 129, all generalizing to fresh, longer inputs).
   Pre-registered on 30 unseen families and replicated, the trained 4B with eight samples and three labels
   bootstrapped about as many correct libraries as the thinking 8B with thirty (26 against 29 of 60 attempts, p 0.61)
-  at 7 percent of the tokens, and every one of five trained checkpoints does (12 to 16 against 13 of 30), including
+  at 7 percent of the tokens, and every one of eight trained checkpoints does (12 to 16 against 13 of 30), including
   the weakest. Agreement among
   candidates is no substitute, and noisy families (MuSiQue, OOLONG) need tens of labels.
 - **Boundary: broad families.** No proposer bootstraps OOLONG, the study's own family, as one library (eleven
