@@ -112,7 +112,8 @@ normal two), which required cancelling job 6599 about 30 hours early. Work was c
    Lessons from the 2026-10-23 restart: launch servers that take adapters (8001, 8004) with
    `VLLM_ALLOW_RUNTIME_LORA_UPDATING=True`, or `load_lora_adapter` returns Not Found; start the GPU0 servers one at a
    time and wait for each to answer (8006 ran out of memory twice while the 8B was still starting; it now runs at
-   `--gpu-memory-utilization 0.36`).
+   `--gpu-memory-utilization 0.36`). Also start 8001 with `--max-loras 4` (the default holds one adapter at a time, so runs that
+   sample different proposer checkpoints at once are serialized; seen 2026-10-24 when three checkpoints shared it).
 2. On 8001, load the adapter the pending evaluations use:
    `curl -s -X POST http://127.0.0.1:8001/v1/load_lora_adapter -H "Authorization: Bearer local" -H "Content-Type: application/json" -d '{"lora_name": "proposer-rl-6-40", "lora_path": "/home/atowell/research-runs/selective-recursion-20261019/e43-rl-r4-s6/step-40"}'`
 3. Start the dispatcher from the repository root: `nohup .venv/bin/python experiments/ops/queue.py run > /dev/null 2>&1 &`.
