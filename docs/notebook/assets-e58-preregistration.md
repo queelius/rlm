@@ -206,3 +206,9 @@ To finish on return:
   load the primitive.
 - Use the families file `H/e73/semantic_total_families.txt`. Compare against E58 arm B (`--b
   RUNS/e58b-8b-standard`); E58 arm A's result on these families is known (0 correct).
+
+**Follow-ons queued at 17:41 UTC (resumable; they will not finish on job 6618).**
+- E74u extended to all 32 families, in the same output directory; finished families are skipped.
+- E74b3: E74b with bootstrap seed 2 on gpu0.
+
+Both carry E74b's prediction.
