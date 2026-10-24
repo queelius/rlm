@@ -45,3 +45,7 @@ acceptance rule and fresh-task scoring) with round four's other checkpoints (`pr
 and the round-five recipe's seed-17 checkpoint (`proposer-rl-17-40`): runs `e39a-4br4-s{6,9,10}-best8` and
 `e39a-4br5b-s17-best8`, each scored against arm B with `e39_analysis.py`. Question: does the three-label 4B match the
 8B with thirty labels for a typical checkpoint, or only for the best one?
+
+Further checkpoints (added 2026-10-24 00:20 UTC, before the runs; exploratory): arm A unchanged with the round-five
+recipe's other checkpoints (`proposer-rl-16-40`, mixed RL; `proposer-rl-25-40`, code-only RL) and round seven's seed
+27 (`proposer-rl-27-40`): runs `e39a-4br5b-s16-best8`, `e39a-4br5a-s25-best8`, `e39a-4br7-s27-best8`.
