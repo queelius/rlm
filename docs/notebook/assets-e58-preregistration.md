@@ -228,3 +228,11 @@ Both carry E74b's prediction.
 line added to the primitive's documentation (`skills/primitives/typed_classify_usage.py`; compare E25c-d).
 - Question: can documentation fix the trained 4B's non-adoption (2 of 211)?
 - Prediction: at least a third of its candidates call `classify` or `classify_many`.
+
+**Interim at the end of job 6618 (18:20 UTC).**
+- **E74c** (trained 4B, usage line added): 1 of 21 candidates call the primitive, so far below the predicted third.
+  The documentation fix that moved an untrained caller (E25c-d) does not move the trained proposer.
+- **E74b2** (8B, boot seed 1): 20 of 32 families; 170 of 177 candidates use `classify`; 43 pass teaching.
+- **E74b3** (8B, boot seed 2): 12 of 32 families; 98 of 105 use it; 36 pass teaching.
+
+All three resume next allocation; fresh scoring follows the E74 instructions.
