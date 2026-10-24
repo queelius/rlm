@@ -511,3 +511,11 @@ question settled by the crossed experiment rather than asserted.
     or typed-parameter wrapper around frozen routines), or acquire routines with a stronger proposer.
   - Next test: a canonicalization wrapper around E39's frozen libraries, using E61's 4B parses. This is the
     end-to-end frozen-executor test both Codex reviews ranked first.
+- **10:44 UTC, E68.** Supplying the question interface in the harness repairs E59 end to end: a 4B
+  canonicalizer takes reworded questions from 3 to 54 of 55, matching the oracle; a 0.6B gets 22.
+  - With E60 H, this splits the problem cleanly. Executors generalize, and a 4B can supply the semantic
+    interface, but a 4B *proposer* does not write that interface itself.
+  - The thesis centre moves further toward *acquisition*: who writes the interface and the executor, at what
+    cost. The interface itself is the known semantic-parser-plus-executor pattern.
+  - This is also a concrete datum for the crossed experiment's knowledge factor: a human-written interface plus
+    acquired executors already works on these shifts.

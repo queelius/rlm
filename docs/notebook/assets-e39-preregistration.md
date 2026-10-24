@@ -405,3 +405,20 @@ nuisance 2, for no wrapper (E59) and for each parser.
   parses it at 52%). 0.6B wrapper below 30 of 55.
 - Nuisance 2: label-only families (prose and chat) mostly repaired by the oracle and 4B wrappers. Structured formats
   stay limited by record parsing, so total oracle retention is between 11 (E59) and 40 of 55.
+
+**E68 result (10:44 UTC; `H/e68/rows.jsonl`).** Libraries still correct, out of 55 correct on control:
+
+| Condition | No wrapper (E59) | 4B parses | Oracle | 0.6B parses |
+| --- | --- | --- | --- | --- |
+| Paraphrase 2 | 3 | 54 (arm A 25 of 26, B 29 of 29) | 55 | 22 |
+| Nuisance 2 | 11 | 48 | 48 | 26 |
+
+- The 4B's only paraphrase-2 miss is an nth-item library at 0.87.
+- Nuisance 2 by format: prose and chat 26 of 26 with the 4B or the oracle; structured formats 22 of 29, where
+  the record layout changed.
+
+Predictions:
+- oracle 55: met;
+- 4B at least 44: met;
+- 0.6B below 30: met;
+- nuisance oracle between 11 and 40: not met (48).
