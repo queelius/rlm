@@ -504,3 +504,16 @@ E69b. It is a replication across checkpoints and carries E69b's prediction.
 - **Reading** (descriptive, as pre-registered): with sampling luck removed at round 0, three-label repair
   matched or exceeded thirty-label repair on these five seeds, and admitted one library that fails beyond the
   teaching lengths.
+
+**E69b2 result (12:40 UTC).**
+- 3 of 12 families get a working adopting edit: first-after (paraphrase 2: 0.0), xmlish-count (0.87) and
+  xmlish-total (1.0).
+- 1 is robust. The xmlish-total family is the one success in E60 H, E69, E69b and E69b2 alike.
+
+**E70 first cell (added 12:40 UTC, before the run): REPL with primitives only, OOLONG.**
+- Setup: the untrained 4B in this repository's runtime, default harness (REPL, helper calls, no library), on the
+  293 held-out rows. Same lengths and per-cell sampling as E09. Run: `e70-oolong-repl-prims-4b`.
+- This is not yet E70's matched design (that needs the adapter, equal budgets and normalized docs). It is the
+  plain 'tools alone' reference for OOLONG.
+- Reference points: direct 0.208, library 0.672, and this harness on a 72-row sample 0.111.
+- Prediction: at most 0.25.
