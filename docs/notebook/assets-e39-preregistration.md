@@ -85,3 +85,13 @@ add to best-of-8 for the 4B on exact families, as labelled repair did for the 8B
 E52b (added 2026-10-24 02:45 UTC, before the runs; exploratory): E52's five runs continued from their 24 saved
 candidates to 4 repair rounds (rounds 3 and 4 added, same three-label rules): runs `e52b-mrcr-8b-shownrepair4-s{0..4}`
 (copies of E52's candidates; E52's own directories are unchanged).
+
+## E54 and E55 (added 2026-10-24 03:15 UTC, before the runs; exploratory)
+
+E52b (four three-label repair rounds) found fully correct MRCR libraries on 2 of 5 seeds (1, 2; seed 0's accepted
+library fails beyond the teaching lengths), as did the standard protocol with two labelled repair rounds (seeds 0, 4),
+but the budgets differ. E54 compares the protocols at a matched budget on fresh seeds 5 to 9: the thinking 8B,
+8 candidates, 4 repair rounds, labelled (`e54-mrcr-8b-labelled4-s{5..9}`, threshold 0.9 over 30 labels) against
+three-label (`e54-mrcr-8b-shown4-s{5..9}`, `--shown-labels-only`). E55 runs the 14B with three-label repair, 4 rounds,
+seeds 0 to 4 (`e55-mrcr-14b-shown4-s{0..4}`; the 14B had 2 of 5 under the standard protocol). Accepted libraries are
+checked held out at 2 and 4 needles; success = 0.9 or more held out at both.
