@@ -475,3 +475,7 @@ The acceptance rule takes the first edit that reproduces the shown examples, whi
 reproduces the shown examples, and uses ask() plus json.loads. Run: `e69b-refactor-adopt-4brl4`.
 - Question: can a 4B produce a *working* helper-parsing edit?
 - Prediction: at least 6 of 12 families get an accepted adopting edit, and at least 4 are robust on paraphrase 2.
+
+**E69b2 (added 2026-10-24 11:51 UTC, before the run).** E69b with the round-five seed-16 checkpoint
+(`proposer-rl-16-40`), editing the same frozen E39 arm A libraries. Run: `e69b2-refactor-adopt-4br5b-s16`, after
+E69b. It is a replication across checkpoints and carries E69b's prediction.
