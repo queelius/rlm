@@ -27,3 +27,32 @@ Families: gen-prose-count-plain-s2,gen-prose-count-answer_line-s3,gen-prose-coun
 Secondary arm (added 2026-10-24 05:30 UTC, before it ran and before any E58 result; exploratory, not part of the primary
 test): arm A's protocol with the weakest checkpoint on held-out discovery, `proposer-rl-9-40` (round four, seed 9;
 22 of 74), run `e58a2-4br4-s9-best8`, analysed the same way against arm B.
+
+## Amendment 1 (2026-10-24 08:50 UTC, before unblinding)
+
+At the time of this amendment, arm B had 97 of 141 families finished, and neither arm's accepted libraries had been
+scored on fresh tasks or inspected. The amendment follows an independent design review by Codex
+(`codex-reviews/2026-10-24-design-and-next-experiments.md` in the run store). It does not change the primary analysis,
+the margin or the arms.
+
+- **Completeness.** The analysis runs only with `--require-complete`, which refuses to run unless all 141 families
+  have a finished run in both arms. The earlier code counted an unfinished family as not accepted, which would
+  have favoured the arm that finished first. An interrupted run resumes; it is never scored as a failure.
+- **Errors.** Fresh-task errors are counted per accepted library and reported apart from wrong answers. The
+  registered outcome, fresh mean of 0.9 or more, is unchanged.
+- **Tokens.** Input tokens are now reported alongside output tokens, as the registration promised. Candidates
+  without usage records are counted.
+- **Sensitivity analyses.** These are fixed now and do not change the primary verdict:
+  1. The same interval, resampling the 37 format-question templates instead of the 141 families. Families that
+     share a template are not independent.
+  2. The paired difference in fresh score, counting an unaccepted family as 0, with a family-bootstrap interval.
+
+  Percentile intervals can mislead when few families are discordant, and they say nothing about variation across
+  training seeds.
+- **Checkpoint rationale, corrected.** Seed 16's 36 of 74 is the highest of the round-five mixed-RL seeds (32, 36,
+  33), not the median. The checkpoint was still chosen before any E58 result, but it is not a typical checkpoint,
+  and the result applies to it alone.
+- **Secondary arm.** The secondary arm (seed 9) stays exploratory. It cannot rescue a primary failure, and no claim
+  will rest on either checkpoint passing.
+- **Scope.** A pass establishes non-inferiority at a 10-point margin for this checkpoint, this protocol and this
+  generator panel. It does not establish equivalence or label efficiency in general.

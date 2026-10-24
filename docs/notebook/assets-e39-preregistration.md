@@ -121,3 +121,39 @@ alone. Measure: per seed and arm, an accepted library correct held out (0.9 or m
 8B arm on GPU0, so all 15 E57 runs now use a second copy of the same 8B server on GPU1 (`qwen3-8b-awq`, same weights,
 vLLM build and flags, port 8010, gpu-memory-utilization 0.44 instead of 0.45). Pools and both branches of every seed use
 this one server, so the within-seed matched comparison is unaffected. Pools no longer wait for E58.
+
+**E57 analysis amendment (2026-10-24 08:50 UTC).** At this point three pools were running, and the branches of
+the other two (s13, s14) had just started. No E57 outcome had been inspected. The amendment follows the Codex design review
+(`codex-reviews/2026-10-24-design-and-next-experiments.md`).
+
+What E57 can and cannot attribute:
+- The two branches share a round-0 pool. Beyond that, they differ in repair feedback, in how they rank the pool
+  when picking the parent to repair, in acceptance and in stopping. Continuation sampling is not seeded (`--seed`
+  only selects teaching examples).
+- So E57 estimates a whole-protocol contrast given a shared pool. A difference cannot be attributed to the feedback
+  text alone.
+
+Reported per seed:
+- the pool's own best held-out result;
+- each branch's trajectory: rounds, candidates, and input and output tokens consumed;
+- acceptance;
+- held-out means at 2 and 4 needles at full precision, and exact-match counts out of 64;
+- false acceptances.
+
+Each branch's first rows will be checked against its pool's `candidates.jsonl` by hash. The analysis reports
+discordant pairs and an exact McNemar test. With five seeds, even five of five discordances favouring one branch
+give p = 0.0625, so the result is descriptive only: no equivalence or non-inferiority claim. A follow-up isolating
+the feedback (one frozen parent per pool, with matched continuations under thirty-label, three-label and generic
+feedback) is in the resume document's work list.
+
+**Held-out scorer fix (same time).** `mrcr_heldout_batch.py` used to parse the rounded mean from the log line, and it
+did not notice that `run_routine.py` appends to an existing `rows.jsonl`. It now:
+- recomputes the mean from per-task rows;
+- checks the row count against the tasks run;
+- refuses to reuse a work directory;
+- reports exact matches and errors.
+
+Recomputing the earlier E52b, E55 and E56 checks changes no conclusion:
+- Every library that scored 1.0 matched all 64 held-out tasks exactly at both needle counts.
+- E52b s0 scores 0.786 and 0.807 (exactly correct on 50 and 51 of 64).
+- E55 s0's work directories had held each row twice, from a rerun; all rows scored 1.0, so its mean was unaffected.
