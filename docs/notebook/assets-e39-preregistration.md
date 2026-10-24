@@ -353,3 +353,9 @@ Predictions:
 
 Reading: question parsing at 4B scale is robust to the shifts that broke the regex libraries. The hybrid design is
 feasible with a 4B helper, not with this 0.6B prompt. Whether the proposer *writes* such libraries is arm H.
+
+**E60 arm H2 (added 2026-10-24 10:05 UTC, before any arm H result was inspected).**
+- Arm H repeated with the round-five seed-16 checkpoint (`proposer-rl-16-40`, E58's arm A checkpoint), as
+  `e60h2-helperparse-4br5b-s16-best8`. It is queued to run after H.
+- It is scored the same way. Its baseline is C, and it is compared with H for checkpoint dependence.
+- No new prediction: H's prediction (robust yield at least 5 of 30) applies.
