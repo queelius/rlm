@@ -169,3 +169,7 @@ primitive available. Fresh scoring also loads the primitive.
 **Comparison.** E58 arm A on the same 32 families: 6 accepted, 0 correct. Arm B: 0 accepted.
 
 **Prediction.** At least 10 of 32 correct (0.9 or more on fresh tasks), with false acceptances at most 3.
+
+**E74b (added 2026-10-24 15:35 UTC, before the run).** E74 with the thinking 8B proposer (`qwen3-8b-awq`, E39 arm C's
+settings: 8 candidates, no repair, no early stop), the same 32 families and the same primitive. Helper on 8006. Run:
+`e74b-typedleaf-8b-best8`. Prediction: at least 16 of 32 correct.
